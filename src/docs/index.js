@@ -1,6 +1,6 @@
 import Vue from 'vue'
-import App from './App'
-import Vuikit from './'
+import App from './Docs'
+import Vuikit from '../vuikit'
 
 Vue.use(Vuikit)
 

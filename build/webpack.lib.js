@@ -2,27 +2,24 @@ var config = require('../config')
 var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-
-delete baseWebpackConfig.entry
-delete baseWebpackConfig.output
+var baseWebpackConfig = require('./webpack.base')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    Modal: './src/components/Modal.vue',
-    Pagination: './src/components/Pagination.vue'
+    modal: './src/vue/Modal.vue',
+    pagination: './src/vue/Pagination.vue'
   },
   output: {
-    path: config.lib.assetsRoot,
+    path: 'lib',
     filename: '[name].js'
   },
   externals: {
     vue: 'Vue'
   },
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.lib.productionSourceMap, extract: true })
+    loaders: utils.styleLoaders({ sourceMap: true, extract: true })
   },
-  devtool: config.lib.productionSourceMap ? '#source-map' : false,
+  devtool: '#source-map',
   plugins: [
     // http://vuejs.github.io/vue-loader/workflow/production.html
     new webpack.DefinePlugin({

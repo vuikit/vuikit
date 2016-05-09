@@ -26,21 +26,17 @@
 </template>
 
 <script>
-const docs = {
-  'Button': require('./docs/Button'),
-  'Modal': require('./docs/Modal'),
-  'Pagination': require('./docs/Pagination')
+const components = {
+  'Button': require('./components/Button'),
+  'Modal': require('./components/Modal'),
+  'Pagination': require('./components/Pagination')
 }
 
 export default {
-  components: docs,
+  components,
   data: () => ({
-    docs: Object.keys(docs),
-    current: Object.keys(docs)[0]
+    docs: Object.keys(components),
+    current: Object.keys(components)[0]
   })
 }
 </script>
-
-<style lang="less">
-  @import './uikit/uikit.less';
-</style>

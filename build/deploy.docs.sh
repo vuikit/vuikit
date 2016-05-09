@@ -1,4 +1,4 @@
-cd ../prod
+cd ../docs
 git init
 git add -A
 git commit -m 'update demo'

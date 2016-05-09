@@ -1,9 +1,11 @@
-import Button from './components/Button'
-import ButtonLink from './components/ButtonLink'
-import Modal from './components/Modal'
-import Pagination from './components/Pagination'
+import Button from './vue/Button'
+import ButtonLink from './vue/ButtonLink'
+import Modal from './vue/Modal'
+import Pagination from './vue/Pagination'
 
 export const components = {
+  Button,
+  ButtonLink,
   Pagination,
   Modal
 }

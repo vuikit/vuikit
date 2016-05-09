@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import Vuikit from './'
+import Vuikit from './vuikit'
 
 Vue.use(Vuikit)

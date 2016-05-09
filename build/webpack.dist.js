@@ -2,31 +2,28 @@ var config = require('../config')
 var utils = require('./utils')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
+var baseWebpackConfig = require('./webpack.base')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-
-delete baseWebpackConfig.entry
-delete baseWebpackConfig.output
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    vuikit: './src/dist.js'
+    'vuikit': './src/dist.js'
   },
   output: {
-    path: config.dist.assetsRoot,
-    filename: '[name].js',
-    chunkFilename: '[id].js'
+    path: 'dist',
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[id].js'
   },
   externals: {
     vue: 'Vue'
   },
   module: {
-    loaders: utils.styleLoaders({ sourceMap: config.dist.productionSourceMap, extract: true })
+    loaders: utils.styleLoaders({ sourceMap: true, extract: true })
   },
-  devtool: config.dist.productionSourceMap ? '#source-map' : false,
+  devtool: '#source-map',
   vue: {
     loaders: utils.cssLoaders({
-      sourceMap: config.dist.productionSourceMap,
+      sourceMap: true,
       extract: true
     })
   },
@@ -44,7 +41,7 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     // extract css into its own file
-    new ExtractTextPlugin(utils.assetsPath('[name].css')),
+    new ExtractTextPlugin('[name].css'),
     new webpack.BannerPlugin(config.banner, {
       raw: true,
       entryOnly: true

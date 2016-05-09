@@ -1,17 +1,13 @@
-var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
-var config = require('../config')
 var proxyMiddleware = require('http-proxy-middleware')
-var webpackConfig = process.env.NODE_ENV === 'testing'
-  ? require('./webpack.prod.conf')
-  : require('./webpack.dev.conf')
+var webpackConfig = require('./webpack.dev')
 
 // default port where dev server listens for incoming traffic
-var port = process.env.PORT || config.dev.port
+var port = process.env.PORT || 8080
 // Define HTTP proxies to your custom API backend
 // https://github.com/chimurai/http-proxy-middleware
-var proxyTable = config.dev.proxyTable
+var proxyTable = {}
 
 var app = express()
 var compiler = webpack(webpackConfig)
@@ -53,13 +49,10 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-var staticPath = path.posix.join(config.build.assetsPublicPath, config.build.assetsSubDirectory)
-app.use(staticPath, express.static('./static'))
+app.use('/static', express.static('./static'))
 
 // set assets paths
 app.use('/static/js', express.static('node_modules/uikit/dist/js'))
-app.use('/static/css', express.static('node_modules/uikit/dist/css'))
-app.use('/static/fonts', express.static('node_modules/uikit/dist/fonts'))
 app.use('/static/js', express.static('node_modules/uikit/vendor'))
 
 module.exports = app.listen(port, function (err) {

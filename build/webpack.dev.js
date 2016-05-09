@@ -1,19 +1,16 @@
-var config = require('../config')
 var webpack = require('webpack')
 var merge = require('webpack-merge')
 var utils = require('./utils')
-var baseWebpackConfig = require('./webpack.base.conf')
+var baseWebpackConfig = require('./webpack.base')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
-// add hot-reload related code to entry chunks
-Object.keys(baseWebpackConfig.entry).forEach(function (name) {
-  baseWebpackConfig.entry[name] = ['./build/dev-client'].concat(baseWebpackConfig.entry[name])
-})
-
-module.exports = merge(baseWebpackConfig, {
+var webpackConfig = merge(baseWebpackConfig, {
+  entry: {
+    app: './src/docs'
+  },
   output: {
-    path: config.build.assetsRoot,
-    publicPath: config.build.assetsPublicPath,
+    path: '/dev',
+    publicPath: '/',
     filename: '[name].js'
   },
   module: {
@@ -29,8 +26,15 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'build/index.html',
+      template: 'build/index.dev.html',
       inject: true
     })
   ]
 })
+
+// add hot-reload related code to entry chunks
+Object.keys(webpackConfig.entry).forEach(function (name) {
+  webpackConfig.entry[name] = ['./build/dev-client'].concat(webpackConfig.entry[name])
+})
+
+module.exports = webpackConfig

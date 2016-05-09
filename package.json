@@ -14,13 +14,11 @@
     "uikit",
     "interfaces"
   ],
+  "main": "dist/vuikit.js",
   "files": [
-    "dist",
+    "dist/vuikit.js",
     "lib",
-    "src",
-    "CHANGELOG.md",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "license": "MIT",
   "repository": {
@@ -33,8 +31,11 @@
   "homepage": "https://github.com/joolanders/vuikit",
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js",
-    "deploy": "cd build && ./deploy.sh"
+    "dist": "node build/build.dist.js",
+    "lib": "node build/build.lib.js",
+    "docs": "node build/build.docs.js",
+    "docs:deploy": "cd build && ./deploy.docs.sh",
+    "uikit": "lessc src/uikit/uikit.less static/css/uikit.css"
   },
   "dependencies": {
     "uikit": "^2.25.0",
