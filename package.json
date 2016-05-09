@@ -6,6 +6,14 @@
     "name": "ZOOlanders",
     "url": "http://www.zoolanders.com"
   },
+  "keywords": [
+    "browser",
+    "library",
+    "vue",
+    "vuejs",
+    "uikit",
+    "interfaces"
+  ],
   "files": [
     "dist",
     "lib",
