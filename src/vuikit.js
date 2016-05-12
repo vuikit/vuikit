@@ -1,20 +1,18 @@
-import Button from './vue/Button'
-import ButtonLink from './vue/ButtonLink'
-import Modal from './vue/Modal'
-import Pagination from './vue/Pagination'
-
 export const components = {
-  Button,
-  ButtonLink,
-  Pagination,
-  Modal
+  Button: require('./vue/Button'),
+  ButtonLink: require('./vue/ButtonLink'),
+  ButtonCheckbox: require('./vue/ButtonCheckbox'),
+  ButtonRadio: require('./vue/ButtonRadio'),
+  Modal: require('./vue/Modal'),
+  Pagination: require('./vue/Pagination')
 }
 
 export default {
   install (Vue) {
-    Vue.component('VkButton', Button)
-    Vue.component('VkButtonLink', ButtonLink)
-    Vue.component('VkModal', Modal)
-    Vue.component('VkPagination', Pagination)
+    const keys = Object.keys(components)
+    let i = keys.length
+    while (i--) {
+      Vue.component(`Vk${keys[i]}`, components[keys[i]])
+    }
   }
 }

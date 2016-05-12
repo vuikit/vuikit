@@ -18,7 +18,7 @@
             {{ current }}
           </h1>
           <hr class="uk-article-divider">
-          <component :is="current"></component>
+          <component :is="'Doc' + current"></component>
         </article>
       </div>
     </div>
@@ -26,14 +26,22 @@
 </template>
 
 <script>
+import Button from './page/Button'
+import Modal from './page/Modal'
+import Pagination from './page/Pagination'
+
 const components = {
-  'Button': require('./components/Button'),
-  'Modal': require('./components/Modal'),
-  'Pagination': require('./components/Pagination')
+  Button,
+  Modal,
+  Pagination
 }
 
 export default {
-  components,
+  components: {
+    DocButton: Button,
+    DocModal: Modal,
+    DocPagination: Pagination
+  },
   data: () => ({
     docs: Object.keys(components),
     current: Object.keys(components)[0]

@@ -3,13 +3,13 @@
     :class="classes"
     :disabled="disabled">
     <i
-      v-if="icon && !iconRight"
-      :class="iconClass">
+      v-if="iconLeft"
+      :class="iconClass(iconLeft)">
     </i>
     <slot></slot>
     <i
-      v-if="icon && iconRight"
-      :class="iconClass">
+      v-if="iconRight"
+      :class="iconClass(iconRight)">
     </i>
   </button>
 </template>
@@ -17,25 +17,25 @@
 <script>
 export default {
   props: {
-    color: {
+    style: {
       type: String,
-      default: ''
+      default: 'default'
     },
     size: {
       type: String,
-      default: ''
+      default: 'default'
     },
     width: {
       type: String,
-      default: ''
+      default: 'default'
     },
-    icon: {
+    iconLeft: {
       type: String,
       default: ''
     },
     iconRight: {
-      type: Boolean,
-      default: false
+      type: String,
+      default: ''
     },
     state: {
       type: Boolean,
@@ -44,29 +44,32 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
+    },
+    value: {}
   },
   computed: {
-    iconClass: function () {
-      return `uk-icon-justify uk-icon-${this.icon}`
-    },
     classes: function () {
       const classes = {
-        /* state */
-        'uk-active': this.state,
-        /* color */
-        'uk-button-primary': this.color === 'primary',
-        'uk-button-success': this.color === 'success',
-        'uk-button-danger': this.color === 'danger',
-        'uk-button-link': this.color === 'link',
+        /* style */
+        'uk-button-primary': this.style === 'primary',
+        'uk-button-success': this.style === 'success',
+        'uk-button-danger': this.style === 'danger',
+        'uk-button-link': this.style === 'link',
         /* size */
         'uk-button-mini': this.size === 'mini',
         'uk-button-small': this.size === 'small',
-        'uk-button-large': this.size === 'large'
+        'uk-button-large': this.size === 'large',
+        /* state */
+        'uk-active': this.state
       }
       /* width */
-      classes[`uk-width-${this.width}`] = this.width
+      classes[`uk-width-${this.width}`] = this.width !== 'default'
       return classes
+    }
+  },
+  methods: {
+    iconClass: function (icon) {
+      return `uk-icon-justify uk-icon-${icon}`
     }
   }
 }
