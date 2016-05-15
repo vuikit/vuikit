@@ -12,7 +12,7 @@
         <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
       </vk-tab-horizontal>
     </div>
-    <api-prop-table :rows="apiRows" :values="$data.api"></api-prop-table>
+    <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
   </div>
 </template>
 

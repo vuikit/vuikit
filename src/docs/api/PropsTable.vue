@@ -10,7 +10,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="ApiPropRow" v-for="row in sortedRows"
+      <tr is="Row" v-for="row in sortedRows"
         :name="row.name"
         :type="row.type
           ? row.type.name
@@ -25,9 +25,13 @@
 </template>
 
 <script>
+import Row from './PropsTableRow'
 import { sortBy } from 'lodash'
 
 export default {
+  components: {
+    Row
+  },
   props: {
     rows: {
       type: Object,

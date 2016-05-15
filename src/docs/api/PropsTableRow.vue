@@ -47,12 +47,8 @@ export default {
       default: ''
     },
     options: {
-      type: [Object, Array, Boolean],
+      type: [Object, Boolean],
       default: false
-    },
-    optionss: {
-      type: Object,
-      default: () => ({})
     },
     demoValue: {
       required: true,

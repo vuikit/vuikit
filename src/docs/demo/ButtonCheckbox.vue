@@ -10,7 +10,7 @@
         <vk-button value="3">Button 3</vk-button>
       </vk-button-checkbox>
     </div>
-    <api-prop-table :rows="apiRows" :values="$data.api"></api-prop-table>
+    <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
   </div>
 </template>
 

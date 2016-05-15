@@ -37,8 +37,7 @@ while (i--) {
 
 // register api components
 export const api = {
-  PropTable: require('./api/PropTable'),
-  PropRow: require('./api/PropRow')
+  PropsTable: require('./api/PropsTable')
 }
 
 keys = Object.keys(api)

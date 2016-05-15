@@ -13,7 +13,7 @@
         Button
       </vk-button>
     </div>
-    <api-prop-table :rows="apiRows" :values="$data.api"></api-prop-table>
+    <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
   </div>
 </template>
 
