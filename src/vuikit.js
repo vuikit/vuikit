@@ -4,7 +4,10 @@ export const components = {
   ButtonCheckbox: require('./vue/ButtonCheckbox'),
   ButtonRadio: require('./vue/ButtonRadio'),
   Modal: require('./vue/Modal'),
-  Pagination: require('./vue/Pagination')
+  Pagination: require('./vue/Pagination'),
+  TabHorizontal: require('./vue/TabHorizontal'),
+  TabVertical: require('./vue/TabVertical'),
+  Tab: require('./vue/Tab')
 }
 
 export default {

@@ -24,7 +24,9 @@ Vue.use(Vuikit)
 export const demo = {
   Button: require('./demo/Button'),
   ButtonCheckbox: require('./demo/ButtonCheckbox'),
-  ButtonRadio: require('./demo/ButtonRadio')
+  ButtonRadio: require('./demo/ButtonRadio'),
+  TabHorizontal: require('./demo/TabHorizontal'),
+  TabVertical: require('./demo/TabVertical')
 }
 
 keys = Object.keys(demo)

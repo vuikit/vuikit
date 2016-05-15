@@ -29,18 +29,21 @@
 import Button from './page/Button'
 import Modal from './page/Modal'
 import Pagination from './page/Pagination'
+import Tab from './page/Tab'
 
 const components = {
   Button,
   Modal,
-  Pagination
+  Pagination,
+  Tab
 }
 
 export default {
   components: {
     DocButton: Button,
     DocModal: Modal,
-    DocPagination: Pagination
+    DocPagination: Pagination,
+    DocTab: Tab
   },
   data: () => ({
     docs: Object.keys(components),
