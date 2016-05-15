@@ -1,16 +1,15 @@
 <template>
   <a class="uk-button"
     :href="href"
-    :class="classes"
-    :disabled="disabled">
+    :class="classes">
     <i
-      v-if="icon && !iconRight"
-      :class="iconClass">
+      v-if="iconLeft"
+      :class="iconClass(iconLeft)">
     </i>
     <slot></slot>
     <i
-      v-if="icon && iconRight"
-      :class="iconClass">
+      v-if="iconRight"
+      :class="iconClass(iconRight)">
     </i>
   </a>
 </template>

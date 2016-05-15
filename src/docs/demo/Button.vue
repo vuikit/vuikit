@@ -12,8 +12,22 @@
         :value.sync="api.value">
         Button
       </vk-button>
+      <vk-button-link
+        :style="api.style"
+        :size="api.size"
+        :width="api.width"
+        :icon-left="api.iconLeft"
+        :icon-right="api.iconRight"
+        :state="api.state"
+        :value.sync="api.value">
+        Link
+      </vk-button-link>
     </div>
-    <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
+    <vk-tab-horizontal>
+      <vk-tab title="Props">
+        <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
+      </vk-tab>
+    </vk-tab-horizontal>
   </div>
 </template>
 
@@ -36,7 +50,7 @@ const apiDemoData = {
   style: {
     description: 'Determines the style variation of the button.',
     options: {
-      Default: 'default',
+      Default: '',
       Primary: 'primary',
       Success: 'success',
       Danger: 'danger',
@@ -48,7 +62,7 @@ const apiDemoData = {
     options: {
       Mini: 'mini',
       Small: 'small',
-      Default: 'default',
+      Default: '',
       Large: 'large'
     }
   },
@@ -56,7 +70,7 @@ const apiDemoData = {
     description: `Determines the width of the button using the UIkit Grid
       classes.`,
     options: {
-      'Default': 'default',
+      'Auto': '',
       '1-1': '1-1',
       '1-2': '1-2',
       '1-3': '1-3',
@@ -95,8 +109,13 @@ const apiDemoData = {
     description: 'Determines whether or not the button is disabled.'
   },
   value: {
-    description: `Determines the value of the button when used with other
-      components.`
+    description: `Button specific. Determines the value of the button when used
+      with other components.`
+  },
+  href: {
+    name: 'href',
+    description: `ButtonLink specific. Determines the link to follow when the
+      button is pressed.`
   }
 }
 </script>

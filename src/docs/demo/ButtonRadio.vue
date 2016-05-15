@@ -10,7 +10,14 @@
         <vk-button value="3">Button 3</vk-button>
       </vk-button-radio>
     </div>
-    <api-props-table :rows="apiRows" :values="$data.api"></api-props-table>
+    <vk-tab-horizontal>
+      <vk-tab title="Props">
+        <api-props-table :rows="apiPropRows" :values="$data.api"></api-props-table>
+      </vk-tab>
+      <vk-tab title="Events">
+        <api-events-table :rows="apiEventsRows"></api-events-table>
+      </vk-tab>
+    </vk-tab-horizontal>
   </div>
 </template>
 
@@ -23,13 +30,16 @@ export default {
     api: Helper.getComponentPropsDefaults('ButtonRadio')
   }),
   computed: {
-    apiRows: function () {
-      return merge({}, Helper.getComponentProps('ButtonRadio'), apiDemoData)
+    apiPropRows: function () {
+      return merge({}, Helper.getComponentProps('ButtonRadio'), apiPropsInfo)
+    },
+    apiEventsRows: function () {
+      return apiEventsInfo
     }
   }
 }
 
-const apiDemoData = {
+const apiPropsInfo = {
   value: {
     description: 'The current value determined by the active button.'
   },
@@ -37,4 +47,9 @@ const apiDemoData = {
     description: 'Determines whether or not the buttons are grouped.'
   }
 }
+
+const apiEventsInfo = [{
+  name: 'change',
+  description: 'Emited when there was made some selection change.'
+}]
 </script>

@@ -19,15 +19,15 @@ export default {
   props: {
     style: {
       type: String,
-      default: 'default'
+      default: ''
     },
     size: {
       type: String,
-      default: 'default'
+      default: ''
     },
     width: {
       type: String,
-      default: 'default'
+      default: ''
     },
     iconLeft: {
       type: String,
@@ -63,7 +63,7 @@ export default {
         'uk-active': this.state
       }
       /* width */
-      classes[`uk-width-${this.width}`] = this.width !== 'default'
+      classes[`uk-width-${this.width}`] = this.width
       return classes
     }
   },
