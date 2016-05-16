@@ -2,9 +2,6 @@
   <tr class="uk-table-middle">
     <td v-text="name"></td>
     <td v-html="description"></td>
-    <td class="uk-form">
-      Event fired
-    </td>
   </tr>
 </template>
 

@@ -1,53 +1,82 @@
 <template>
-  <div class="uk-container uk-container-center uk-margin-large-top uk-margin-large-bottom">
-    <div class="uk-grid" data-uk-grid-margin>
-      <div class="tm-sidebar uk-width-medium-1-4">
-        <ul class="uk-list">
-          <li v-for="doc in docs">
-            <a href="" v-if="current !== doc"
-              @click.prevent="current = doc"
-              v-text="doc">
-            </a>
-            <span v-else v-text="doc"></span>
-          </li>
-        </ul>
-      </div>
-      <div class="uk-width-medium-3-4">
-        <article class="uk-article">
-          <h1 class="uk-article-title">
-            {{ current }}
-          </h1>
-          <hr class="uk-article-divider">
-          <component :is="'Doc' + current"></component>
-        </article>
+  <div class="tm-middle">
+    <div class="uk-container uk-container-center">
+      <div class="uk-grid" data-uk-grid-margin>
+        <div class="tm-sidebar uk-width-medium-1-4">
+          <ul class="uk-nav tm-nav">
+            <li v-for="doc in docs"
+              :class="{
+                'uk-active': current === doc
+              }">
+              <a href=""
+                @click.prevent="current = doc"
+                v-text="doc">
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="uk-width-medium-3-4">
+          <article class="uk-article">
+            <h1 class="uk-article-title">
+              {{ current }}
+            </h1>
+            <hr class="uk-article-divider">
+            <component :is="'Doc' + current"></component>
+          </article>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Button from './page/Button'
-import Modal from './page/Modal'
-import Pagination from './page/Pagination'
-import Tab from './page/Tab'
-
-const components = {
-  Button,
-  Modal,
-  Pagination,
-  Tab
+const Docs = {
+  Button: require('./doc/Button/index'),
+  Tab: require('./doc/Tab/index')
 }
 
 export default {
   components: {
-    DocButton: Button,
-    DocModal: Modal,
-    DocPagination: Pagination,
-    DocTab: Tab
+    DocButton: Docs.Button,
+    DocTab: Docs.Tab
   },
   data: () => ({
-    docs: Object.keys(components),
-    current: Object.keys(components)[0]
+    docs: Object.keys(Docs),
+    current: Object.keys(Docs)[0]
   })
 }
 </script>
+
+<style>
+/*
+ * Blocks
+ */
+
+.tm-middle,
+.tm-footer { padding: 50px 0; }
+
+/*
+ * Nav
+ */
+.tm-nav > li > a:hover,
+.tm-nav > li > a:focus,
+.tm-nav > li.uk-active > a {
+    background: #F5F5F5;
+    color: #444;
+}
+
+/*
+ * Sidebar
+ */
+.tm-sidebar {
+  border-right: 1px solid #E5E5E5;
+  margin-right: -1px !important;
+}
+
+/*
+ * Docs pages
+ */
+.tm-docs-subtitle {
+  margin: 60px 0 0 0;
+}
+</style>

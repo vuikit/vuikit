@@ -1,51 +1,17 @@
 import Vue from 'vue'
 import App from './Docs'
 import Vuikit from '../vuikit'
+import VEncode from './v-encode'
 
-let keys
-let i
-
+// init Vuikit
 Vue.use(Vuikit)
 
-// // register page components
-// export const page = {
-//   Button: require('./page/Button'),
-//   ButtonCheckbox: require('./page/ButtonCheckbox'),
-//   ButtonRadio: require('./page/ButtonRadio')
-// }
-//
-// keys = Object.keys(demo)
-// i = keys.length
-// while (i--) {
-//   Vue.component(`Demo${keys[i]}`, demo[keys[i]])
-// }
+// register custom directives
+Vue.directive('encode', VEncode)
 
-// register demo components
-export const demo = {
-  Button: require('./demo/Button'),
-  ButtonCheckbox: require('./demo/ButtonCheckbox'),
-  ButtonRadio: require('./demo/ButtonRadio'),
-  TabHorizontal: require('./demo/TabHorizontal'),
-  TabVertical: require('./demo/TabVertical')
-}
-
-keys = Object.keys(demo)
-i = keys.length
-while (i--) {
-  Vue.component(`Demo${keys[i]}`, demo[keys[i]])
-}
-
-// register api components
-export const api = {
-  PropsTable: require('./api/PropsTable'),
-  EventsTable: require('./api/EventsTable')
-}
-
-keys = Object.keys(api)
-i = keys.length
-while (i--) {
-  Vue.component(`Api${keys[i]}`, api[keys[i]])
-}
+// register table components
+Vue.component('TableApiProps', require('./table/ApiProps'))
+Vue.component('TableApiEvents', require('./table/ApiEvents'))
 
 /* eslint-disable no-new */
 new Vue({

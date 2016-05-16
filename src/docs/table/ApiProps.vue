@@ -16,16 +16,17 @@
           ? row.type.name
           : '*'"
         :description="row.description"
+        :defaults-to="row.default"
+        :editable="row.editable"
         :options="row.options"
-        :default-value="row.default"
-        :demo-value.sync="values[row.name]">
+        :demo.sync="values[row.name]">
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import Row from './PropsTableRow'
+import Row from './ApiPropsRow'
 import { sortBy } from 'lodash'
 
 export default {

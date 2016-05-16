@@ -4,11 +4,10 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Demo</th>
       </tr>
     </thead>
     <tbody>
-      <tr is="EventsTableRow" v-for="row in sortedRows"
+      <tr is="Row" v-for="row in sortedRows"
         :name="row.name"
         :description="row.description">
       </tr>
@@ -17,12 +16,12 @@
 </template>
 
 <script>
-import EventsTableRow from './EventsTableRow'
+import Row from './ApiEventsRow'
 import { sortBy } from 'lodash'
 
 export default {
   components: {
-    EventsTableRow
+    Row
   },
   props: {
     rows: {

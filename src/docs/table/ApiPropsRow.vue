@@ -6,27 +6,31 @@
     <td v-html="description"></td>
     <td class="uk-form">
       <!-- String with options -->
-      <select class="uk-width-1-1"
-        v-if="demoField === 'Select'"
-        v-model="demoValue">
-        <option v-for="(name, value) in options"
-          :value="value">
-          {{ name | capitalize }}
-        </option>
-      </select>
+      <div v-if="demoField === 'Select'"
+        class="uk-form-select"
+        data-uk-form-select="{ target: 'a' }">
+        <a href="" v-text="demo ? demo : 'default'"></a>
+        <select
+          v-model="demo">
+          <option v-for="opt in options"
+            :value="opt === 'default' ? '' : opt">
+            {{ opt }}
+          </option>
+        </select>
+      </div>
       <!-- String without -->
       <input v-if="demoField === 'String'"
-        class="uk-width-1-1"
         type="input"
-        v-model="demoValue">
+        v-model="value">
       <!-- Boolean -->
       <input v-if="demoField === 'Boolean'"
-        class="uk-width-1-1"
         type="checkbox"
-        :checked="demoValue"
-        @click="demoValue = !demoValue">
+        :checked="demo"
+        @click="demo = !demo">
       <!-- Otherwise is not editable, just show raw value -->
-      <span v-if="demoField === 'Raw'" v-text="demoValue"></span>
+      <span v-if="demoField === 'noEditable'"
+        v-text="demo">
+      </span>
     </td>
   </tr>
 </template>
@@ -34,6 +38,7 @@
 <script>
 export default {
   props: {
+    defaultsTo: {},
     name: {
       type: String,
       required: true
@@ -47,30 +52,39 @@ export default {
       default: ''
     },
     options: {
-      type: [Object, Boolean],
+      type: [Array, Boolean],
       default: false
     },
-    demoValue: {
+    editable: {
+      type: Boolean,
+      default: true
+    },
+    required: {
+      type: Boolean,
+      default: false
+    },
+    demo: {
       required: true,
       twoWay: true
-    },
-    defaultValue: {}
+    }
   },
   computed: {
     defValString: function () {
-      return this.defaultValue !== undefined
-        ? JSON.stringify(this.defaultValue)
+      return this.defaultsTo !== undefined
+        ? JSON.stringify(this.defaultsTo)
         : 'N/A'
     },
     demoField: function () {
-      if (this.type === 'String' && this.options) {
+      if (!this.editable) {
+        return 'noEditable'
+      } else if (this.type === 'String' && this.options) {
         return 'Select'
       } else if (this.type === 'String') {
         return 'String'
       } else if (this.type === 'Boolean') {
         return 'Boolean'
       } else {
-        return 'Raw'
+        return 'noEditable'
       }
     }
   }
