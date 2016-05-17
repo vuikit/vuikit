@@ -1,6 +1,6 @@
 # vuikit
 
-> [Vue](http://vuejs.org/) integration for the [UIkit](http://getuikit.com) framework
+> [Vue](http://vuejs.org/) [UIkit](http://getuikit.com) library
 
 ## Documentation and Demo
 [http://joolanders.github.io/vuikit/](http://joolanders.github.io/vuikit/)
@@ -18,8 +18,20 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 
-# build for production with minification
-npm run build
+# build for distribution
+npm run dist
+
+# build library for distribution
+npm run lib
+
+# build docs
+npm run docs
+
+# deploy docs
+npm run docs:deploy
+
+# compile UIkit less files
+npm run uikit
 ```
 
 ## License

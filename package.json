@@ -1,7 +1,7 @@
 {
   "name": "vuikit",
   "version": "0.0.1",
-  "description": "Vue integration for the UIkit framework",
+  "description": "Vue UIkit library",
   "author": {
     "name": "ZOOlanders",
     "url": "http://www.zoolanders.com"
