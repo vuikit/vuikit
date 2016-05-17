@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="Row" v-for="row in sortedRows"
+      <tr is="Row" v-for="row in rows"
         :name="row.name"
         :description="row.description">
       </tr>
@@ -17,7 +17,6 @@
 
 <script>
 import Row from './ApiEventsRow'
-import { sortBy } from 'lodash'
 
 export default {
   components: {
@@ -27,11 +26,6 @@ export default {
     rows: {
       type: Array,
       default: () => []
-    }
-  },
-  computed: {
-    sortedRows: function () {
-      return sortBy(this.rows, 'name')
     }
   }
 }

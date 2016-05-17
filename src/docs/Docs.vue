@@ -32,17 +32,19 @@
 <script>
 const Docs = {
   Button: require('./doc/Button/index'),
+  Modal: require('./doc/Modal/index'),
   Tab: require('./doc/Tab/index')
 }
 
 export default {
   components: {
     DocButton: Docs.Button,
-    DocTab: Docs.Tab
+    DocTab: Docs.Tab,
+    DocModal: Docs.Modal
   },
   data: () => ({
     docs: Object.keys(Docs),
-    current: Object.keys(Docs)[0]
+    current: 'Modal'
   })
 }
 </script>

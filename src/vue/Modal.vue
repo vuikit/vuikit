@@ -1,30 +1,8 @@
-<template>
-  <div class="uk-modal" v-el:modal>
-    <div class="uk-modal-dialog" :class="{
-      'uk-modal-dialog-large': large,
-      'uk-modal-dialog-lightbox': lightbox,
-      'uk-modal-dialog-blank': blank }">
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script>
-import Vue from 'vue'
 import UI from 'uikit'
 
 export default {
   props: {
-    options: {
-      type: Object,
-      coerce: (options) => Vue.util.extend({
-        keyboard: true,
-        bgclose: true,
-        minScrollHeight: 150,
-        center: false,
-        modal: true
-      }, options || {})
-    },
     show: {
       type: Boolean,
       default: false
@@ -33,67 +11,74 @@ export default {
       type: Boolean,
       default: false
     },
-    large: {
+    keyboard: {
       type: Boolean,
-      default: false
+      default: true
     },
-    lightbox: {
+    center: {
       type: Boolean,
       default: false
-    },
-    blank: {
-      type: Boolean,
-      default: false
+    }
+  },
+  computed: {
+    options: function () {
+      return {
+        keyboard: this.keyboard,
+        center: this.center,
+        bgclose: this.bgClose
+      }
     }
   },
   watch: {
     show: function (state) {
       if (state) {
-        this._show()
+        this.UImodal.show()
       } else if (this.UImodal.isActive()) {
-        this._hide()
+        this.UImodal.hide()
       }
     },
     block: function (state) {
-      state
-        ? this._block()
-        : this._unblock()
+      if (state) {
+        this.UImodal.options.bgclose = false
+        this.UImodal.options.keyboard = false
+        this.UImodal.options.modal = false
+        this.$emit('block')
+      } else {
+        this.UImodal.options.bgclose = true
+        this.UImodal.options.keyboard = true
+        this.UImodal.options.modal = true
+        this.$emit('unblock')
+      }
+    },
+    center: function (state) {
+      this.UImodal.options.center = state
+    },
+    bgClose: function (state) {
+      this.UImodal.options.bgclose = state
+    },
+    keyboard: function (state) {
+      this.UImodal.options.keyboard = state
     }
   },
   ready: function () {
-    var vm = this
-    this.UImodal = UI.modal(this.$els.modal, this.options)
-    this.UImodal.on('show.uk.modal', () => {
-      vm.show = true
-      vm.$dispatch('show')
-      setTimeout(function () {
-        // catch .uk-overflow-container
-        vm.UImodal.resize()
-      }, 1)
-    })
-    this.UImodal.on('hide.uk.modal', () => {
-      vm.show = false
-      vm.$dispatch('hide')
-    })
+    this.initModal()
   },
   methods: {
-    _show: function () {
-      this.UImodal.show()
-    },
-    _hide: function () {
-      this.UImodal.hide()
-    },
-    _block: function () {
-      this.UImodal.options.bgclose = false
-      this.UImodal.options.keyboard = false
-      this.UImodal.options.modal = false
-      this.$dispatch('block')
-    },
-    _unblock: function () {
-      this.UImodal.options.bgclose = true
-      this.UImodal.options.keyboard = true
-      this.UImodal.options.modal = true
-      this.$dispatch('unblock')
+    initModal: function () {
+      var vm = this
+      this.UImodal = UI.modal(this.$els.modal, this.options)
+      this.UImodal.on('show.uk.modal', () => {
+        vm.show = true
+        vm.$emit('show')
+        setTimeout(function () {
+          // catch .uk-overflow-container
+          vm.UImodal.resize()
+        }, 1)
+      })
+      this.UImodal.on('hide.uk.modal', () => {
+        vm.show = false
+        vm.$emit('hide')
+      })
     }
   }
 }
