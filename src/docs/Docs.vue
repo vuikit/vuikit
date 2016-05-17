@@ -33,18 +33,20 @@
 const Docs = {
   Button: require('./doc/Button/index'),
   Modal: require('./doc/Modal/index'),
+  Pagination: require('./doc/Pagination/index'),
   Tab: require('./doc/Tab/index')
 }
 
 export default {
   components: {
     DocButton: Docs.Button,
-    DocTab: Docs.Tab,
-    DocModal: Docs.Modal
+    DocModal: Docs.Modal,
+    DocPagination: Docs.Pagination,
+    DocTab: Docs.Tab
   },
   data: () => ({
     docs: Object.keys(Docs),
-    current: 'Modal'
+    current: Object.keys(Docs)[0]
   })
 }
 </script>

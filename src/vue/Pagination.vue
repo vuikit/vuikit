@@ -1,7 +1,17 @@
 <template>
-  <ul class="uk-pagination">
-    <li :class="{'uk-disabled': !prevPage}">
-      <a v-if="prevPage" href="" @click.prevent="setCurrent(prevPage)">
+  <ul class="uk-pagination"
+    :class="{
+      'uk-pagination-left': align === 'left',
+      'uk-pagination-right': align === 'right'
+    }">
+    <!-- prevPage -->
+    <li :class="{
+      'uk-disabled': !prevPage,
+      'uk-pagination-previous': compact
+    }">
+      <a v-if="prevPage"
+        href=""
+        @click.prevent="setCurrent(prevPage)">
         <i class="uk-icon-angle-double-left"></i>
       </a>
       <span v-else>
@@ -14,7 +24,9 @@
       <span v-if="page == current">
         {{ page }}
       </span>
-      <a v-else href="" @click.prevent="setCurrent(page)">
+      <a v-else
+        href=""
+        @click.prevent="setCurrent(page)">
         {{ page }}
       </a>
     </li>
@@ -28,7 +40,9 @@
       <span v-if="page == current">
         {{ page }}
       </span>
-      <a v-else href="" @click.prevent="setCurrent(page)">
+      <a v-else
+        href=""
+        @click.prevent="setCurrent(page)">
         {{ page }}
       </a>
     </li>
@@ -36,19 +50,26 @@
       && (totalPages - edges - interval.end != 1)">
       <span>...</span>
     </li>
-    <li
-      v-for="page in postPages"
+    <li v-for="page in postPages"
       :class="{'uk-active': page == current}">
       <!-- content -->
       <span v-if="page == current">
         {{ page }}
       </span>
-      <a v-else href="" @click.prevent="setCurrent(page)">
+      <a v-else
+        href=""
+        @click.prevent="setCurrent(page)">
         {{ page }}
       </a>
     </li>
-    <li :class="{'uk-disabled': !nextPage}">
-      <a v-if="nextPage" href="" @click.prevent="setCurrent(nextPage)">
+    <!-- nextPage -->
+    <li :class="{
+      'uk-disabled': !nextPage,
+      'uk-pagination-next': compact
+    }">
+      <a v-if="nextPage"
+        href=""
+        @click.prevent="setCurrent(nextPage)">
         <i class="uk-icon-angle-double-right"></i>
       </a>
       <span v-else>
@@ -61,10 +82,25 @@
 <script>
 export default {
   props: {
+    // alignement, left, center or right
+    align: {
+      type: String,
+      default: 'center'
+    },
+    // next/prev btns position
+    compact: {
+      type: Boolean,
+      default: true
+    },
     // current page
     current: {
       type: Number,
       default: 1
+    },
+    // max number of edge pages
+    edges: {
+      type: Number,
+      default: 3
     },
     // total number of Items
     items: {
@@ -76,19 +112,10 @@ export default {
       type: Number,
       default: 1
     },
-    // max number of edge pages
-    edges: {
-      type: Number,
-      default: 3
-    },
     // max numer of displayed pages
     visiblePages: {
       type: Number,
       default: 3
-    },
-    // page change fallback
-    onChange: {
-      type: Function
     }
   },
   computed: {
@@ -164,11 +191,8 @@ export default {
   },
   methods: {
     setCurrent: function (page) {
-      this.$set('current', page)
-      // execute callback
-      if (this.onChange) {
-        this.onChange()
-      }
+      this.current = page
+      this.$emit('select', page)
     }
   }
 }
