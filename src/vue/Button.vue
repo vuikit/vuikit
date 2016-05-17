@@ -1,12 +1,14 @@
 <template>
   <button class="uk-button"
     :class="classes"
-    :disabled="disabled">
+    :disabled="disabled"
+    :type="type">
     <i
       v-if="iconLeft"
       :class="iconClass(iconLeft)">
     </i>
-    <slot></slot>
+    <template v-if="text">{{ text }}</template>
+    <slot v-if="!text"></slot>
     <i
       v-if="iconRight"
       :class="iconClass(iconRight)">
@@ -44,6 +46,14 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    text: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: 'button'
     },
     value: {}
   },
