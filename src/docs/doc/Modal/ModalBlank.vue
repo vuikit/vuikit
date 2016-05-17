@@ -46,7 +46,7 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ModalBlank'),
+    api: Helper.getPropsDefaults(Helper.getProps('ModalBlank')),
     image: require('../../assets/placeholder_600x400.svg')
   }),
   computed: {
@@ -56,7 +56,7 @@ export default {
     },
     propRows: function () {
       return merge({},
-        Helper.getComponentProps('ModalBlank'),
+        Helper.getProps('ModalBlank'),
         this.$parent.$options.mainPropsInfo
       )
     }

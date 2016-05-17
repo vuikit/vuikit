@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { each } from 'lodash'
 
-export const getComponentProps = (component) => {
+export const getProps = (component) => {
   const props = Vue.options.components[`Vk${component}`].options.props
   // add the name as property, it's required later on
   each(props, (prop, name) => {
@@ -10,13 +10,14 @@ export const getComponentProps = (component) => {
   return props
 }
 
-export const getComponentPropsDefaults = (component) => {
+export const getPropsDefaults = (props) => {
   const defaults = {}
-  const props = getComponentProps(component)
   const keys = Object.keys(props)
   let i = keys.length
   while (i--) {
-    defaults[keys[i]] = props[keys[i]].default
+    defaults[keys[i]] = props[keys[i]].demo
+      ? props[keys[i]].demo
+      : props[keys[i]].default
   }
   return defaults
 }

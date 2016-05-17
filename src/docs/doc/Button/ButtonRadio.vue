@@ -32,13 +32,13 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ButtonRadio')
+    api: Helper.getPropsDefaults(Helper.getProps('ButtonRadio'))
   }),
   computed: {
     demoCode: () => demoCode,
     eventsRows: () => eventsInfo,
     propRows: () => merge({},
-      Helper.getComponentProps('ButtonRadio'),
+      Helper.getProps('ButtonRadio'),
       propsInfo
     )
   }

@@ -32,13 +32,13 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ButtonCheckbox')
+    api: Helper.getPropsDefaults(Helper.getProps('ButtonCheckbox'))
   }),
   computed: {
     demoCode: () => demoCode,
     eventsRows: () => eventsInfo,
     propsRows: () => merge({},
-      Helper.getComponentProps('ButtonCheckbox'),
+      Helper.getProps('ButtonCheckbox'),
       propsInfo
     )
   }

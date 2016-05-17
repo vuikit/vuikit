@@ -32,12 +32,12 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('TabVertical')
+    api: Helper.getPropsDefaults(Helper.getProps('TabVertical'))
   }),
   computed: {
     demoCode: () => demoCode,
     apiPropsRows: () => merge({},
-      Helper.getComponentProps('TabVertical'),
+      Helper.getProps('TabVertical'),
       demoApiProps
     )
   }

@@ -38,7 +38,7 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ModalConfirm'),
+    api: Helper.getPropsDefaults(Helper.getProps('ModalConfirm')),
     buttonText: 'Open'
   }),
   computed: {
@@ -48,7 +48,7 @@ export default {
     },
     propRows: function () {
       return merge({},
-        Helper.getComponentProps('ModalConfirm'),
+        Helper.getProps('ModalConfirm'),
         this.$parent.$options.mainPropsInfo,
         propsInfo
       )

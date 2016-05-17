@@ -36,7 +36,7 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ModalAlert')
+    api: Helper.getPropsDefaults(Helper.getProps('ModalAlert'))
   }),
   computed: {
     demoCode: () => demoCode,
@@ -45,7 +45,7 @@ export default {
     },
     propRows: function () {
       return merge({},
-        Helper.getComponentProps('ModalAlert'),
+        Helper.getProps('ModalAlert'),
         this.$parent.$options.mainPropsInfo,
         propsInfo
       )

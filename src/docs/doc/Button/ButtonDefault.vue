@@ -43,13 +43,13 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('Button')
+    api: Helper.getPropsDefaults(Helper.getProps('Button'))
   }),
   computed: {
     demoCode: () => demoCode,
     propsRows: () => merge({},
-      Helper.getComponentProps('Button'),
-      Helper.getComponentProps('ButtonLink'),
+      Helper.getProps('Button'),
+      Helper.getProps('ButtonLink'),
       propsInfo
     )
   }
@@ -65,6 +65,11 @@ const propsInfo = {
       <code>success</code>, <code>danger</code> or <code>link</code>. Leave empty
       for default.`,
     options: ['default', 'primary', 'success', 'danger', 'link']
+  },
+  text: {
+    description: `The text for the button inner content. For HTML use the
+      <code>default</code> slot instead.`,
+    editable: false
   },
   size: {
     description: `Determines the size of the button, <code>mini</code>,
@@ -101,6 +106,9 @@ const propsInfo = {
     editable: false,
     description: `Determines the link to follow when the button is pressed.
       Specific to <code>vk-button-link</code>.`
+  },
+  type: {
+    ignore: true
   }
 }
 </script>

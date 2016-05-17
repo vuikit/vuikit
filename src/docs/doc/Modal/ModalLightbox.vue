@@ -36,7 +36,7 @@ import { merge } from 'lodash'
 
 export default {
   data: () => ({
-    api: Helper.getComponentPropsDefaults('ModalLightbox')
+    api: Helper.getPropsDefaults(Helper.getProps('ModalLightbox'))
   }),
   computed: {
     demoCode: () => demoCode,
@@ -45,7 +45,7 @@ export default {
     },
     propRows: function () {
       return merge({},
-        Helper.getComponentProps('ModalLightbox'),
+        Helper.getProps('ModalLightbox'),
         this.$parent.$options.mainPropsInfo,
         propsInfo
       )

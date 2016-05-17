@@ -27,7 +27,7 @@
 
 <script>
 import Row from './ApiPropsRow'
-import { sortBy } from 'lodash'
+import { sortBy, reject } from 'lodash'
 
 export default {
   components: {
@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     sortedRows: function () {
-      return sortBy(this.rows, 'name')
+      return reject(sortBy(this.rows, 'name'), 'ignore')
     }
   }
 }

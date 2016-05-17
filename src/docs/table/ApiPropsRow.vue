@@ -18,10 +18,10 @@
           </option>
         </select>
       </div>
-      <!-- String without -->
-      <input v-if="demoField === 'String'"
+      <!-- String -->
+      <input v-if="(demoField === 'String') || demoField === 'Number'"
         type="input"
-        v-model="value">
+        v-model="demo">
       <!-- Boolean -->
       <input v-if="demoField === 'Boolean'"
         type="checkbox"
@@ -77,12 +77,14 @@ export default {
     demoField: function () {
       if (!this.editable) {
         return 'noEditable'
-      } else if (this.type === 'String' && this.options) {
+      } else if (this.options) {
         return 'Select'
       } else if (this.type === 'String') {
         return 'String'
       } else if (this.type === 'Boolean') {
         return 'Boolean'
+      } else if (this.type === 'Number') {
+        return 'Number'
       } else {
         return 'noEditable'
       }
