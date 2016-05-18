@@ -6,7 +6,7 @@
       :width="props.width.value"
       :icon-left="props.iconLeft.value"
       :icon-right="props.iconRight.value"
-      :state="props.state.value"
+      :active="props.active.value"
       :disabled="props.disabled.value"
       :value.sync="props.value.value"
       text="Button">
@@ -17,7 +17,7 @@
       :width="props.width.value"
       :icon-left="props.iconLeft.value"
       :icon-right="props.iconRight.value"
-      :state="props.state.value"
+      :active="props.active.value"
       :value.sync="props.value.value"
       text="Link"
       @click.prevent>
@@ -91,7 +91,7 @@ const props = {
       on the right of the button inner content.`,
     options: ['default', 'flag', 'microphone', 'gamepad']
   },
-  state: {
+  active: {
     description: 'Determines whether or not the button is active.'
   },
   disabled: {

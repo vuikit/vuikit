@@ -1,26 +1,39 @@
 <template>
   <div data-uk-button-radio
-    :class="classes">
+    :class="{
+      'uk-button-group': group
+    }">
     <slot></slot>
   </div>
 </template>
 
 <script>
-import ButtonGroup from './ButtonGroup'
+import UI from 'uikit'
 
 export default {
-  extends: ButtonGroup,
+  props: {
+    value: {},
+    group: {
+      type: Boolean,
+      default: true
+    }
+  },
   ready: function () {
-    this.$on('_click', () => {
-      const active = this.getActiveButtons().pop()
-      // if active button has changed
-      if (active && active.value !== this.value) {
-        // save new value determined by the active button
-        this.value = active.value
-        // trigger change event
-        this.$emit('change')
-      }
+    // on each change
+    UI.$(this.$el).on('change.uk.button', () => {
+      const selected = this.$el.querySelector('.uk-active').__vue__
+      // update radio value
+      this.value = selected.value
+      // trigger event
+      this.$emit('change')
     })
+    // update buttons active state
+    // on init and on each change
+    this.$watch('value', function (value) {
+      this.$children.forEach(btn => {
+        btn.active = btn.value === value
+      })
+    }, { immediate: true })
   }
 }
 </script>

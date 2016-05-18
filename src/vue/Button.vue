@@ -3,14 +3,12 @@
     :class="classes"
     :disabled="disabled"
     :type="type">
-    <i
-      v-if="iconLeft"
+    <i v-if="iconLeft"
       :class="iconClass(iconLeft)">
     </i>
     <template v-if="text">{{ text }}</template>
     <slot v-if="!text"></slot>
-    <i
-      v-if="iconRight"
+    <i v-if="iconRight"
       :class="iconClass(iconRight)">
     </i>
   </button>
@@ -39,7 +37,7 @@ export default {
       type: String,
       default: ''
     },
-    state: {
+    active: {
       type: Boolean,
       default: false
     },
@@ -69,8 +67,8 @@ export default {
         'uk-button-mini': this.size === 'mini',
         'uk-button-small': this.size === 'small',
         'uk-button-large': this.size === 'large',
-        /* state */
-        'uk-active': this.state
+        /* active */
+        'uk-active': this.active
       }
       /* width */
       classes[`uk-width-${this.width}`] = this.width

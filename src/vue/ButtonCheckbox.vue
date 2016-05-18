@@ -1,33 +1,41 @@
 <template>
   <div data-uk-button-checkbox
-    :class="classes">
+    :class="{
+      'uk-button-group': group
+    }">
     <slot></slot>
   </div>
 </template>
 
 <script>
-import ButtonGroup from './ButtonGroup'
+import UI from 'uikit'
+import Vue from 'vue'
 
 export default {
-  extends: ButtonGroup,
   props: {
-    value: {
-      type: Array,
-      description: 'The current value determined by the active buttons.'
+    value: {},
+    group: {
+      type: Boolean,
+      default: true
     }
   },
   ready: function () {
-    this.$on('_click', () => {
-      // get actives buttons raw values
-      const actives = this.getActiveButtons().map((btn, i) => btn.value)
-      // if active button has changed
-      if (actives !== this.value) {
-        // save new value determined by the actives button
-        this.value = actives
-        // trigger change event
-        this.$emit('change')
-      }
+    // on each change
+    UI.$(this.$el).on('click', () => {
+      // get actives btns
+      const actives = Vue.util.toArray(this.$el.querySelectorAll('.uk-active'))
+      // save its values as array
+      this.value = actives.map(btn => btn.__vue__.value)
+      // trigger event
+      this.$emit('change')
     })
+    // update buttons active state
+    // on init and on each change
+    this.$watch('value', function (value) {
+      this.$children.forEach(btn => {
+        btn.active = value && value.indexOf(btn.value) !== -1
+      })
+    }, { immediate: true })
   }
 }
 </script>
