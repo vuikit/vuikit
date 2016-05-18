@@ -19,7 +19,7 @@
         :defaults-to="row.default"
         :editable="row.editable"
         :options="row.options"
-        :demo.sync="values[row.name]">
+        :demo.sync="row.value">
       </tr>
     </tbody>
   </table>
@@ -35,10 +35,6 @@ export default {
   },
   props: {
     rows: {
-      type: Object,
-      default: () => ({})
-    },
-    values: {
       type: Object,
       default: () => ({})
     }

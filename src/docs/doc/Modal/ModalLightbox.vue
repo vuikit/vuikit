@@ -1,16 +1,16 @@
 <template>
   <div>
     <vk-button
-      @click="api.show = true"
+      @click="props.show.value = true"
       text="Open">
     </vk-button>
-    <vk-modal-lightbox
-      :show.sync="api.show"
-      :block="api.block"
-      :keyboard="api.keyboard"
-      :center="api.center"
-      :bg-close="api.bgClose"
-      :hide-close="api.hideClose">
+    <vk-modal-lightbox v-ref:demo
+      :show.sync="props.show.value"
+      :block="props.block.value"
+      :keyboard="props.keyboard.value"
+      :center="props.center.value"
+      :bg-close="props.bgClose.value"
+      :hide-close="props.hideClose.value">
       <img src="../../assets/placeholder_600x400.svg">
     </vk-modal-lightbox>
     <div class="uk-margin-large">
@@ -18,13 +18,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -33,32 +33,28 @@
 <script>
 import * as Helper from '../../helper'
 import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
-  data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('ModalLightbox'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: function () {
-      return this.$parent.$options.mainEventsInfo
-    },
-    propRows: function () {
-      return merge({},
-        Helper.getProps('ModalLightbox'),
-        this.$parent.$options.mainPropsInfo,
-        propsInfo
-      )
+  mixins: [mixins],
+  data: function () {
+    return {
+      props: merge(
+        Helper.getProps('ModalLightbox', this.$parent.$options.mainPropsInfo),
+        props
+      ),
+      events: this.$parent.$options.mainEventsInfo,
+      code
     }
   }
 }
 
-const demoCode =
+const code =
 `<vk-modal-lightbox>
-  <img src="" alt="">
+  <img />
 </vk-modal-lightbox>`
 
-const propsInfo = {
+const props = {
   bgClose: {
     description: 'Determines whether or not the modal can be closed by clicking the background.'
   },

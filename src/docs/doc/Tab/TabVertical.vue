@@ -1,11 +1,9 @@
 <template>
   <div>
-    <vk-tab-vertical
-      :flip="api.flip"
-      :bottom="api.bottom"
-      :align="api.align"
-      :tabs-width="api.tabsWidth"
-      :content-width="api.contentWidth">
+    <vk-tab-vertical v-ref:demo
+      :align="props.align.value"
+      :tabs-width="props.tabsWidth.value"
+      :content-width="props.contentWidth.value">
       <vk-tab title="Tab 1">Content Tab 1</vk-tab>
       <vk-tab title="Tab 2">Content Tab 2</vk-tab>
       <vk-tab title="Tab 3">Content Tab 3</vk-tab>
@@ -17,10 +15,10 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="apiPropsRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     <vk-tab-horizontal>
   </div>
@@ -28,22 +26,17 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
+  mixins: [mixins],
   data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('TabVertical'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    apiPropsRows: () => merge({},
-      Helper.getProps('TabVertical'),
-      demoApiProps
-    )
-  }
+    props: Helper.getProps('TabVertical', props),
+    code
+  })
 }
 
-const demoCode =
+const code =
 `<vk-tab-vertical>
   <vk-tab title="Tab 1">Content Tab 1</vk-tab>
   <vk-tab title="Tab 2">Content Tab 2</vk-tab>
@@ -51,7 +44,7 @@ const demoCode =
   <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
 </vk-tab-vertical>`
 
-const demoApiProps = {
+const props = {
   align: {
     description: 'Determines the tabs vertical alignment.',
     options: ['left', 'right']

@@ -1,16 +1,14 @@
 <template>
   <div>
     <vk-button
-      @click="api.show = true"
+      @click="props.show.value = true"
       text="Open">
     </vk-button>
-    <vk-modal-blank
-      :show.sync="api.show"
-      :block="api.block"
-      :keyboard="api.keyboard"
-      :center="api.center"
-      :bg-close="api.bgClose"
-      :hide-close="api.hideClose">
+    <vk-modal-blank v-ref:demo
+      :show.sync="props.show.value"
+      :block="props.block.value"
+      :keyboard="props.keyboard.value"
+      :center="props.center.value">
       <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
         <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
           :style="{'background-image': 'url(' + image + ')'}">
@@ -28,13 +26,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -42,28 +40,21 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
-  data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('ModalBlank')),
-    image: require('../../assets/placeholder_600x400.svg')
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: function () {
-      return this.$parent.$options.mainEventsInfo
-    },
-    propRows: function () {
-      return merge({},
-        Helper.getProps('ModalBlank'),
-        this.$parent.$options.mainPropsInfo
-      )
+  mixins: [mixins],
+  data: function () {
+    return {
+      image: require('../../assets/placeholder_600x400.svg'),
+      props: Helper.getProps('ModalBlank', this.$parent.$options.mainPropsInfo),
+      events: this.$parent.$options.mainEventsInfo,
+      code
     }
   }
 }
 
-const demoCode =
+const code =
 `<vk-modal-blank>
   <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
     <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"

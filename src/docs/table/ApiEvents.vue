@@ -4,12 +4,14 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
+        <th>Emited</th>
       </tr>
     </thead>
     <tbody>
-      <tr is="Row" v-for="row in rows"
-        :name="row.name"
-        :description="row.description">
+      <tr is="Row" v-for="(name, row) in rows"
+        :name="name"
+        :description="row.description"
+        :emited.sync="row.emited">
       </tr>
     </tbody>
   </table>
@@ -19,13 +21,11 @@
 import Row from './ApiEventsRow'
 
 export default {
-  components: {
-    Row
-  },
+  components: { Row },
   props: {
     rows: {
-      type: Array,
-      default: () => []
+      type: Object,
+      required: true
     }
   }
 }

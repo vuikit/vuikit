@@ -1,29 +1,26 @@
 <template>
   <div>
-    <vk-pagination
-      :align="api.align"
-      :current.sync="api.current"
-      :edges="api.edges"
-      :items="api.items"
-      :compact="api.compact"
-      :items-on-page="api.itemsOnPage"
-      :visible-pages="api.visiblePages">
+    <vk-pagination v-ref:demo
+      :align="props.align.value"
+      :current.sync="props.current.value"
+      :edges="props.edges.value"
+      :items="props.items.value"
+      :compact="props.compact.value"
+      :items-on-page="props.itemsOnPage.value"
+      :visible-pages="props.visiblePages.value">
     </vk-pagination>
     <div class="uk-margin-large">
       Easlily create a nicely looking pagination to navigate through pages.
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props
-          :rows="propsRows"
-          :values="$data.api">
-        </table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -31,28 +28,21 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
+  mixins: [mixins],
   data: () => ({
-    api: Helper.getPropsDefaults(merge(
-      {}, Helper.getProps('Pagination'), propsInfo
-    ))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: () => eventsInfo,
-    propsRows: () => merge({},
-      Helper.getProps('Pagination'),
-      propsInfo
-    )
-  }
+    props: Helper.getProps('Pagination', props),
+    events,
+    code
+  })
 }
 
-const demoCode =
+const code =
 '<vk-pagination></vk-pagination>'
 
-const propsInfo = {
+const props = {
   align: {
     description: `Determines the pagination vertical alignment, <code>left</code>,
       <code>center</code> or <code>right</code>.`,
@@ -73,7 +63,7 @@ const propsInfo = {
   items: {
     description: 'Determines the total number of items, accross all pages.',
     options: [10, 50, 100],
-    demo: 10
+    value: 10
   },
   itemsOnPage: {
     description: 'Determines the items to display for each page.',
@@ -85,8 +75,9 @@ const propsInfo = {
   }
 }
 
-const eventsInfo = [{
-  name: 'select',
-  description: 'Emited when the user clicks on a page.'
-}]
+const events = {
+  select: {
+    description: 'Emited when the user clicks on a page.'
+  }
+}
 </script>

@@ -1,17 +1,17 @@
 <template>
   <div>
     <vk-button
-      @click="(api.show = true) && ($refs.modal.state = false)"
+      @click="(props.show.value = true) && ($refs.modal.state = false)"
       :text="buttonText">
     </vk-button>
-    <vk-modal-confirm v-ref:modal
-      :show.sync="api.show"
-      :center="api.center"
-      :block="api.block"
-      :keyboard="api.keyboard"
+    <vk-modal-confirm v-ref:demo
+      :show.sync="props.show.value"
+      :center="props.center.value"
+      :block="props.block.value"
+      :keyboard="props.keyboard.value"
       @confirm="buttonText = 'Confirmed'"
       @dismiss="buttonText = 'Dismissed'"
-      :text="api.block
+      :text="props.block.value
         ? 'The modal is blocked, refresh the page to continue.'
         : 'Are you sure?'">
     </vk-modal-confirm>
@@ -20,13 +20,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -35,31 +35,27 @@
 <script>
 import * as Helper from '../../helper'
 import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
-  data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('ModalConfirm')),
-    buttonText: 'Open'
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: function () {
-      return this.$parent.$options.mainEventsInfo
-    },
-    propRows: function () {
-      return merge({},
-        Helper.getProps('ModalConfirm'),
-        this.$parent.$options.mainPropsInfo,
-        propsInfo
-      )
+  mixins: [mixins],
+  data: function () {
+    return {
+      buttonText: 'Open',
+      props: merge(
+        Helper.getProps('ModalConfirm', this.$parent.$options.mainPropsInfo),
+        props
+      ),
+      events: this.$parent.$options.mainEventsInfo,
+      code
     }
   }
 }
 
-const demoCode =
-'<vk-modal-confirm text="..."></vk-modal-confirm>'
+const code =
+'<vk-modal-confirm text="Text"></vk-modal-confirm>'
 
-const propsInfo = {
+const props = {
   text: {
     description: `The text for the modal content. For HTML use the
       <code>default</code> slot instead.`,

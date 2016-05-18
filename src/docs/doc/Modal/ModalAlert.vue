@@ -1,15 +1,15 @@
 <template>
   <div>
     <vk-button
-      @click="api.show = true"
+      @click="props.show.value = true"
       text="Open">
     </vk-button>
-    <vk-modal-alert
-      :show.sync="api.show"
-      :center="api.center"
-      :block="api.block"
-      :keyboard="api.keyboard"
-      :text="api.block
+    <vk-modal-alert v-ref:demo
+      :show.sync="props.show.value"
+      :center="props.center.value"
+      :block="props.block.value"
+      :keyboard="props.keyboard.value"
+      :text="props.block.value
         ? 'The alert is blocked, refresh the page to continue.'
         : 'Attention!'">
     </vk-modal-alert>
@@ -18,13 +18,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -33,30 +33,26 @@
 <script>
 import * as Helper from '../../helper'
 import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
-  data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('ModalAlert'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: function () {
-      return this.$parent.$options.mainEventsInfo
-    },
-    propRows: function () {
-      return merge({},
-        Helper.getProps('ModalAlert'),
-        this.$parent.$options.mainPropsInfo,
-        propsInfo
-      )
+  mixins: [mixins],
+  data: function () {
+    return {
+      props: merge(
+        Helper.getProps('ModalAlert', this.$parent.$options.mainPropsInfo),
+        props
+      ),
+      events: this.$parent.$options.mainEventsInfo,
+      code
     }
   }
 }
 
-const demoCode =
-'<vk-modal-alert text="..."></vk-modal-alert>'
+const code =
+'<vk-modal-alert text="Text"></vk-modal-alert>'
 
-const propsInfo = {
+const props = {
   text: {
     description: `The text for the modal content. For HTML use the
       <code>default</code> slot instead.`,

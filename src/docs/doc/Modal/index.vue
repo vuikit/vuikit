@@ -46,18 +46,19 @@ export default {
         value will show/hide the modal.`
     }
   },
-  mainEventsInfo: [{
-    name: 'show',
-    description: 'Emited when the modal was opened.'
-  }, {
-    name: 'hide',
-    description: 'Emited when the modal was closed.'
-  }, {
-    name: 'block',
-    description: 'Emited when the modal was blocked.'
-  }, {
-    name: 'unblock',
-    description: 'Emited when the modal was unblocked.'
-  }]
+  mainEventsInfo: {
+    show: {
+      description: 'Emited when the modal was opened.'
+    },
+    hide: {
+      description: 'Emited when the modal was closed.'
+    },
+    block: {
+      description: 'Emited when the modal was blocked.'
+    },
+    unblock: {
+      description: 'Emited when the modal was unblocked.'
+    }
+  }
 }
 </script>

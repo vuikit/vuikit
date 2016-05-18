@@ -1,25 +1,26 @@
 <template>
   <div>
     <vk-button
-      :style="api.style"
-      :size="api.size"
-      :width="api.width"
-      :icon-left="api.iconLeft"
-      :icon-right="api.iconRight"
-      :state="api.state"
-      :disabled="api.disabled"
-      :value.sync="api.value">
-      Button
+      :style="props.style.value"
+      :size="props.size.value"
+      :width="props.width.value"
+      :icon-left="props.iconLeft.value"
+      :icon-right="props.iconRight.value"
+      :state="props.state.value"
+      :disabled="props.disabled.value"
+      :value.sync="props.value.value"
+      text="Button">
     </vk-button>
     <vk-button-link
-      :style="api.style"
-      :size="api.size"
-      :width="api.width"
-      :icon-left="api.iconLeft"
-      :icon-right="api.iconRight"
-      :state="api.state"
-      :value.sync="api.value">
-      Link
+      :style="props.style.value"
+      :size="props.size.value"
+      :width="props.width.value"
+      :icon-left="props.iconLeft.value"
+      :icon-right="props.iconRight.value"
+      :state="props.state.value"
+      :value.sync="props.value.value"
+      text="Link"
+      @click.prevent>
     </vk-button-link>
     <div class="uk-margin-large">
       Despite minor specific attributes, <code>vk-button</code> and
@@ -28,10 +29,10 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propsRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -39,27 +40,26 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
+  mixins: [mixins],
   data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('Button'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    propsRows: () => merge({},
-      Helper.getProps('Button'),
-      Helper.getProps('ButtonLink'),
-      propsInfo
-    )
-  }
+    props: Helper.getProps('Button', Helper.getProps('ButtonLink', props)),
+    code
+  })
 }
 
-const demoCode =
-`<vk-button>Button</vk-button>
-<vk-button-link>Link</vk-button-link>`
+const code =
+`<vk-button
+  text="Button">
+</vk-button>
 
-const propsInfo = {
+<vk-button-link
+  text="Link">
+</vk-button-link>`
+
+const props = {
   style: {
     description: `Determines the style variation of the button, <code>'primary'</code>,
       <code>success</code>, <code>danger</code> or <code>link</code>. Leave empty

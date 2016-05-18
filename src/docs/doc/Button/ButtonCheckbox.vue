@@ -1,8 +1,8 @@
 <template>
   <div>
-    <vk-button-checkbox
-      :group.sync="api.group"
-      :value.sync="api.value">
+    <vk-button-checkbox v-ref:demo
+      :group="props.group.value"
+      :value.sync="props.value.value">
       <vk-button value="1">Button 1</vk-button>
       <vk-button value="2">Button 2</vk-button>
       <vk-button value="3">Button 3</vk-button>
@@ -14,13 +14,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propsRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -28,30 +28,25 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
+  mixins: [mixins],
   data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('ButtonCheckbox'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: () => eventsInfo,
-    propsRows: () => merge({},
-      Helper.getProps('ButtonCheckbox'),
-      propsInfo
-    )
-  }
+    props: Helper.getProps('ButtonCheckbox', props),
+    events,
+    code
+  })
 }
 
-const demoCode =
+const code =
 `<vk-button-checkbox>
   <vk-button value="1">Button 1</vk-button>
   <vk-button value="2">Button 2</vk-button>
   <vk-button value="3">Button 3</vk-button>
 </vk-button-checkbox>`
 
-const propsInfo = {
+const props = {
   value: {
     description: 'The current value determined by the active button.'
   },
@@ -60,8 +55,12 @@ const propsInfo = {
   }
 }
 
-const eventsInfo = [{
-  name: 'change',
-  description: 'Emited when there was made some selection change.'
-}]
+const events = {
+  change: {
+    description: 'Emited when there was made some selection change.'
+  },
+  select: {
+    description: 'Emited when there was made some selection change.'
+  }
+}
 </script>

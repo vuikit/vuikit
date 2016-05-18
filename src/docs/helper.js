@@ -1,23 +1,18 @@
 import Vue from 'vue'
-import { each } from 'lodash'
+import { each, merge } from 'lodash'
 
-export const getProps = (component) => {
-  const props = Vue.options.components[`Vk${component}`].options.props
-  // add the name as property, it's required later on
+export const getProps = (component, demo) => {
+  const props = merge({},
+    Vue.options.components[`Vk${component}`].options.props,
+    demo
+  )
   each(props, (prop, name) => {
+    // add the name as property, it's required later on
     prop.name = name
+    // add demo value property
+    prop.value = prop.value
+      ? prop.value
+      : prop.default
   })
   return props
-}
-
-export const getPropsDefaults = (props) => {
-  const defaults = {}
-  const keys = Object.keys(props)
-  let i = keys.length
-  while (i--) {
-    defaults[keys[i]] = props[keys[i]].demo
-      ? props[keys[i]].demo
-      : props[keys[i]].default
-  }
-  return defaults
 }

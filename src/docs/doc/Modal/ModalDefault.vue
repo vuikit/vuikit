@@ -1,25 +1,24 @@
 <template>
   <div>
     <vk-button
-      @click="api.show = true"
+      @click="props.show.value = true"
       text="Open">
     </vk-button>
-    <vk-modal
-      :show.sync="api.show"
-      :blank="api.blank"
-      :block="api.block"
-      :large="api.large"
-      :keyboard="api.keyboard"
-      :center="api.center"
-      :bg-close="api.bgClose"
-      :overflow="api.overflow"
-      :hide-close="api.hideClose">
+    <vk-modal v-ref:demo
+      :show.sync="props.show.value"
+      :block="props.block.value"
+      :large="props.large.value"
+      :keyboard="props.keyboard.value"
+      :center="props.center.value"
+      :bg-close="props.bgClose.value"
+      :overflow="props.overflow.value"
+      :hide-close="props.hideClose.value">
       <template slot="header">
         <h2>Headline</h2>
       </template>
       <template slot="content">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <template v-if="api.overflow">
+        <template v-if="props.overflow.value">
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -29,7 +28,7 @@
       </template>
       <template slot="caption">Caption</template>
       <template slot="footer">
-        <span v-text="api.block
+        <span v-text="props.block.value
           ? 'The modal is blocked, refresh the page to continue.'
           : 'Footer'">
         </span>
@@ -40,13 +39,13 @@
     </div>
     <vk-tab-horizontal>
       <vk-tab title="Props">
-        <table-api-props :rows="propRows" :values="$data.api"></table-api-props>
+        <table-api-props :rows="props"></table-api-props>
       </vk-tab>
       <vk-tab title="Events">
-        <table-api-events :rows="eventsRows"></table-api-events>
+        <table-api-events :rows="events"></table-api-events>
       </vk-tab>
       <vk-tab title="Code">
-        <pre><code v-encode></code></pre>
+        <pre><code v-encode="code"></code></pre>
       </vk-tab>
     </vk-tab-horizontal>
   </div>
@@ -55,27 +54,23 @@
 <script>
 import * as Helper from '../../helper'
 import { merge } from 'lodash'
+import mixins from '../../mixins'
 
 export default {
-  data: () => ({
-    api: Helper.getPropsDefaults(Helper.getProps('Modal'))
-  }),
-  computed: {
-    demoCode: () => demoCode,
-    eventsRows: function () {
-      return this.$parent.$options.mainEventsInfo
-    },
-    propRows: function () {
-      return merge({},
-        Helper.getProps('Modal'),
-        this.$parent.$options.mainPropsInfo,
-        propsInfo
-      )
+  mixins: [mixins],
+  data: function () {
+    return {
+      props: merge(
+        Helper.getProps('Modal', this.$parent.$options.mainPropsInfo),
+        props
+      ),
+      events: this.$parent.$options.mainEventsInfo,
+      code
     }
   }
 }
 
-const demoCode =
+const code =
 `<vk-modal>
   <template slot="header">Text/HTML content</template>
   <template slot="content">Text/HTML content</template>
@@ -83,7 +78,7 @@ const demoCode =
   <template slot="footer">Text/HTML content</template>
 </vk-modal>`
 
-const propsInfo = {
+const props = {
   bgClose: {
     description: 'Determines whether or not the modal can be closed by clicking the background.'
   },
