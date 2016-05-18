@@ -27,7 +27,7 @@ export default {
       // save its values as array
       this.value = actives.map(btn => btn.__vue__.value)
       // trigger event
-      this.$emit('change')
+      this.$emit('change', this.value)
     })
     // update buttons active state
     // on init and on each change

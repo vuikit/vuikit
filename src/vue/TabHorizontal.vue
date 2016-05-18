@@ -26,6 +26,7 @@
 
 <script>
 import TabTabs from './TabTabs'
+import UI from 'uikit'
 
 export default {
   components: {
@@ -61,6 +62,11 @@ export default {
         item.$options.name === 'VkTab'
       )
     }
+  },
+  ready () {
+    UI.$(this.$el).on('change.uk.tab', () => {
+      this.$emit('change')
+    })
   }
 }
 </script>

@@ -25,7 +25,7 @@ export default {
       // update radio value
       this.value = selected.value
       // trigger event
-      this.$emit('change')
+      this.$emit('change', this.value)
     })
     // update buttons active state
     // on init and on each change

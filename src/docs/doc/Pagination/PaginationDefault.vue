@@ -76,8 +76,8 @@ const props = {
 }
 
 const events = {
-  select: {
-    description: 'Emited when the user clicks on a page.'
+  change: {
+    description: 'Emited when there was made some page selection.'
   }
 }
 </script>

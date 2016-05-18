@@ -58,7 +58,7 @@ const props = {
 
 const events = {
   change: {
-    description: 'Emited when there was made some selection change.'
+    description: 'Emited when there was made some button selection.'
   }
 }
 </script>

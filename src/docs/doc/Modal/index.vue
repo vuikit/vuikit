@@ -52,12 +52,6 @@ export default {
     },
     hide: {
       description: 'Emited when the modal was closed.'
-    },
-    block: {
-      description: 'Emited when the modal was blocked.'
-    },
-    unblock: {
-      description: 'Emited when the modal was unblocked.'
     }
   }
 }

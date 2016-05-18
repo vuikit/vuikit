@@ -192,7 +192,7 @@ export default {
   methods: {
     setCurrent: function (page) {
       this.current = page
-      this.$emit('select', page)
+      this.$emit('change', page)
     }
   }
 }

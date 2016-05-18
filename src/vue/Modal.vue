@@ -42,12 +42,10 @@ export default {
         this.UImodal.options.bgclose = false
         this.UImodal.options.keyboard = false
         this.UImodal.options.modal = false
-        this.$emit('block')
       } else {
         this.UImodal.options.bgclose = true
         this.UImodal.options.keyboard = true
         this.UImodal.options.modal = true
-        this.$emit('unblock')
       }
     },
     center: function (state) {

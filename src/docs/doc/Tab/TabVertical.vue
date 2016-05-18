@@ -17,6 +17,9 @@
       <vk-tab title="Props">
         <table-api-props :rows="props"></table-api-props>
       </vk-tab>
+      <vk-tab title="Events">
+        <table-api-events :rows="events"></table-api-events>
+      </vk-tab>
       <vk-tab title="Code">
         <pre><code v-encode="code"></code></pre>
       </vk-tab>
@@ -32,6 +35,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('TabVertical', props),
+    events,
     code
   })
 }
@@ -58,4 +62,11 @@ const props = {
     options: ['1-2', '1-3', '1-4', '2-3']
   }
 }
+
+const events = {
+  change: {
+    description: 'Emited when there was made some tab selection.'
+  }
+}
+
 </script>
