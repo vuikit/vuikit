@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import Row from './ApiEventsRow'
+import Row from './TableEventsRow'
 
 export default {
   components: { Row },

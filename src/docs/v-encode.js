@@ -1,7 +1,7 @@
 export default {
   terminal: true,
   bind () {
-    this.el.innerHTML = this.encodeHtmlEntity(this.vm[this.expression])
+    this.el.innerHTML = this.encodeHtmlEntity(this.vm.code)
   },
   // encode(decode) html text into html entity
   decodeHtmlEntity (str) {

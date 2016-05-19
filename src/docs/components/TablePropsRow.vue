@@ -9,7 +9,7 @@
       <div v-if="demoField === 'Select'"
         class="uk-form-select"
         data-uk-form-select="{ target: 'a' }">
-        <a href="" v-text="demo ? demo : 'default'"></a>
+        <a href="" v-text="demo ? demo : '<>'"></a>
         <select
           v-model="demo">
           <option v-for="opt in options"

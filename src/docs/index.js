@@ -1,5 +1,6 @@
 import Vue from 'vue'
-import App from './Docs'
+import App from './App'
+import Doc from './components/Doc'
 import Vuikit from '../vuikit'
 import VEncode from './v-encode'
 
@@ -9,9 +10,8 @@ Vue.use(Vuikit)
 // register custom directives
 Vue.directive('encode', VEncode)
 
-// register table components
-Vue.component('TableApiProps', require('./table/ApiProps'))
-Vue.component('TableApiEvents', require('./table/ApiEvents'))
+// register global components
+Vue.component('DocsPage', Doc)
 
 /* eslint-disable no-new */
 new Vue({

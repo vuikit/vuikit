@@ -1,28 +1,24 @@
 <template>
   <div>
-    <vk-pagination v-ref:demo
-      :align="props.align.value"
-      :current.sync="props.current.value"
-      :edges="props.edges.value"
-      :items="props.items.value"
-      :compact="props.compact.value"
-      :items-on-page="props.itemsOnPage.value"
-      :visible-pages="props.visiblePages.value">
-    </vk-pagination>
-    <div class="uk-margin-large">
-      Easlily create a nicely looking pagination to navigate through pages.
-    </div>
-    <vk-tab-horizontal>
-      <vk-tab title="Props">
-        <table-api-props :rows="props"></table-api-props>
-      </vk-tab>
-      <vk-tab title="Events">
-        <table-api-events :rows="events"></table-api-events>
-      </vk-tab>
-      <vk-tab title="Code">
-        <pre><code v-encode="code"></code></pre>
-      </vk-tab>
-    </vk-tab-horizontal>
+    <docs-page
+      :props="props"
+      :events="events"
+      :code="code">
+      <div slot="demo">
+        <vk-pagination v-ref:demo
+          :align="props.align.value"
+          :current.sync="props.current.value"
+          :edges="props.edges.value"
+          :items="props.items.value"
+          :compact="props.compact.value"
+          :items-on-page="props.itemsOnPage.value"
+          :visible-pages="props.visiblePages.value">
+        </vk-pagination>
+      </div>
+      <div slot="desc">
+        Easlily create a nicely looking pagination to navigate through pages.
+      </div>
+    </docs-page>
   </div>
 </template>
 

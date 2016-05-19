@@ -30,23 +30,23 @@
 </template>
 
 <script>
-const Docs = {
-  Button: require('./doc/Button/index'),
-  Modal: require('./doc/Modal/index'),
-  Pagination: require('./doc/Pagination/index'),
-  Tab: require('./doc/Tab/index')
+const Pages = {
+  Button: require('./pages/Button/index'),
+  Modal: require('./pages/Modal/index'),
+  Pagination: require('./pages/Pagination/index'),
+  Tab: require('./pages/Tab/index')
 }
 
 export default {
   components: {
-    DocButton: Docs.Button,
-    DocModal: Docs.Modal,
-    DocPagination: Docs.Pagination,
-    DocTab: Docs.Tab
+    DocButton: Pages.Button,
+    DocModal: Pages.Modal,
+    DocPagination: Pages.Pagination,
+    DocTab: Pages.Tab
   },
   data: () => ({
-    docs: Object.keys(Docs),
-    current: Object.keys(Docs)[0]
+    docs: Object.keys(Pages),
+    current: Object.keys(Pages)[0]
   })
 }
 </script>

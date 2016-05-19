@@ -1,40 +1,38 @@
 <template>
   <div>
-    <vk-button
-      :style="props.style.value"
-      :size="props.size.value"
-      :width="props.width.value"
-      :icon-left="props.iconLeft.value"
-      :icon-right="props.iconRight.value"
-      :active="props.active.value"
-      :disabled="props.disabled.value"
-      :value.sync="props.value.value"
-      text="Button">
-    </vk-button>
-    <vk-button-link
-      :style="props.style.value"
-      :size="props.size.value"
-      :width="props.width.value"
-      :icon-left="props.iconLeft.value"
-      :icon-right="props.iconRight.value"
-      :active="props.active.value"
-      :value.sync="props.value.value"
-      text="Link"
-      @click.prevent>
-    </vk-button-link>
-    <div class="uk-margin-large">
-      Despite minor specific attributes, <code>vk-button</code> and
-      <code>vk-button-link</code> will render a nice looking button sharing the
-      same API, being the first a <i>button</i> and the last an <i>anchor</i>.
-    </div>
-    <vk-tab-horizontal>
-      <vk-tab title="Props">
-        <table-api-props :rows="props"></table-api-props>
-      </vk-tab>
-      <vk-tab title="Code">
-        <pre><code v-encode="code"></code></pre>
-      </vk-tab>
-    </vk-tab-horizontal>
+    <docs-page
+      :props="props"
+      :code="code">
+      <div slot="demo">
+        <vk-button
+          :style="props.style.value"
+          :size="props.size.value"
+          :width="props.width.value"
+          :icon-left="props.iconLeft.value"
+          :icon-right="props.iconRight.value"
+          :active="props.active.value"
+          :disabled="props.disabled.value"
+          :value.sync="props.value.value"
+          text="Button">
+        </vk-button>
+        <vk-button-link
+          :style="props.style.value"
+          :size="props.size.value"
+          :width="props.width.value"
+          :icon-left="props.iconLeft.value"
+          :icon-right="props.iconRight.value"
+          :active="props.active.value"
+          :value.sync="props.value.value"
+          text="Link"
+          @click.prevent>
+        </vk-button-link>
+      </div>
+      <div slot="desc">
+        Despite minor specific attributes, <code>vk-button</code> and
+        <code>vk-button-link</code> will render a nice looking button sharing the
+        same API, being the first a <i>button</i> and the last an <i>anchor</i>.
+      </div>
+    </docs-page>
   </div>
 </template>
 

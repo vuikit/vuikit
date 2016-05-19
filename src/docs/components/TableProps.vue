@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Row from './ApiPropsRow'
+import Row from './TablePropsRow'
 import { sortBy, reject } from 'lodash'
 
 export default {
