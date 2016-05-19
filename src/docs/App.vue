@@ -34,7 +34,7 @@ const Pages = {
   Button: require('./pages/Button/index'),
   Modal: require('./pages/Modal/index'),
   Pagination: require('./pages/Pagination/index'),
-  Tab: require('./pages/Tab/index')
+  Tabs: require('./pages/Tabs/index')
 }
 
 export default {
@@ -42,7 +42,7 @@ export default {
     DocButton: Pages.Button,
     DocModal: Pages.Modal,
     DocPagination: Pages.Pagination,
-    DocTab: Pages.Tab
+    DocTabs: Pages.Tabs
   },
   data: () => ({
     docs: Object.keys(Pages),

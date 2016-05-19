@@ -9,9 +9,9 @@ export const components = {
   ModalAlert: require('./vue/ModalAlert'),
   ModalConfirm: require('./vue/ModalConfirm'),
   Pagination: require('./vue/Pagination'),
-  TabHorizontal: require('./vue/TabHorizontal'),
-  TabVertical: require('./vue/TabVertical'),
-  Tab: require('./vue/Tab')
+  Tab: require('./vue/Tab'),
+  Tabs: require('./vue/TabsDefault'),
+  TabsVertical: require('./vue/TabsVertical')
 }
 
 export default {

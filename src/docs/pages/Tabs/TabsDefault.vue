@@ -5,19 +5,19 @@
       :events="events"
       :code="code">
       <div slot="demo">
-        <vk-tab-horizontal v-ref:demo
+        <vk-tabs v-ref:demo
           :flip="props.flip.value"
           :bottom="props.bottom.value"
           :center="props.center.value"
           :width="props.width.value">
-          <vk-tab title="Tab 1">Content Tab 1</vk-tab>
-          <vk-tab title="Tab 2">Content Tab 2</vk-tab>
-          <vk-tab title="Tab 3">Content Tab 3</vk-tab>
-          <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
-        </vk-tab-horizontal>
+          <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+          <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+          <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+          <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
+        </vk-tabs>
       </div>
       <div slot="desc">
-        The <code>vk-tab-horizontal</code> component consists of clickable
+        The <code>vk-tabs</code> component consists of clickable
         <code>vk-tab</code> tabs, that are aligned side by side.
       </div>
     </docs-page>
@@ -31,19 +31,19 @@ import mixins from '../../mixins'
 export default {
   mixins: [mixins],
   data: () => ({
-    props: Helper.getProps('TabHorizontal', props),
+    props: Helper.getProps('Tabs', props),
     events,
     code
   })
 }
 
 const code =
-`<vk-tab-horizontal>
-  <vk-tab title="Tab 1">Content Tab 1</vk-tab>
-  <vk-tab title="Tab 2">Content Tab 2</vk-tab>
-  <vk-tab title="Tab 3">Content Tab 3</vk-tab>
-  <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
-</vk-tab-horizontal>`
+`<vk-tabs>
+  <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+  <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+  <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+  <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
+</vk-tabs>`
 
 const props = {
   flip: {

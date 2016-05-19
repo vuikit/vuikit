@@ -5,18 +5,18 @@
       :events="events"
       :code="code">
       <div slot="demo">
-        <vk-tab-vertical v-ref:demo
+        <vk-tabs-vertical v-ref:demo
           :align="props.align.value"
-          :tabs-width="props.tabsWidth.value"
-          :content-width="props.contentWidth.value">
-          <vk-tab title="Tab 1">Content Tab 1</vk-tab>
-          <vk-tab title="Tab 2">Content Tab 2</vk-tab>
-          <vk-tab title="Tab 3">Content Tab 3</vk-tab>
-          <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
-        </vk-tab-vertical>
+          :header-width="props.headerWidth.value"
+          :body-width="props.bodyWidth.value">
+          <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+          <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+          <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+          <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
+        </vk-tabs-vertical>
       </div>
       <div slot="desc">
-        The <code>vk-tab-vertical</code> component consists of clickable
+        The <code>vk-tabs-vertical</code> component consists of clickable
         <code>vk-tab</code> tabs, that are aligned in a column.
       </div>
     </docs-page>
@@ -30,30 +30,30 @@ import mixins from '../../mixins'
 export default {
   mixins: [mixins],
   data: () => ({
-    props: Helper.getProps('TabVertical', props),
+    props: Helper.getProps('TabsVertical', props),
     events,
     code
   })
 }
 
 const code =
-`<vk-tab-vertical>
-  <vk-tab title="Tab 1">Content Tab 1</vk-tab>
-  <vk-tab title="Tab 2">Content Tab 2</vk-tab>
-  <vk-tab title="Tab 3">Content Tab 3</vk-tab>
-  <vk-tab title="Tab 4" disabled>Content Tab 4</vk-tab>
-</vk-tab-vertical>`
+`<vk-tabs-vertical>
+  <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+  <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+  <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+  <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
+</vk-tabs-vertical>`
 
 const props = {
   align: {
     description: 'Determines the tabs vertical alignment.',
     options: ['left', 'right']
   },
-  tabsWidth: {
+  headerWidth: {
     description: 'Determines the tabs width using the <i>UIkit Grid</i> classes.',
     options: ['1-2', '1-3', '1-4', '2-3']
   },
-  contentWidth: {
+  bodyWidth: {
     description: 'Determines the content width using the <i>UIkit Grid</i> classes.',
     options: ['1-2', '1-3', '1-4', '2-3']
   }
@@ -64,5 +64,4 @@ const events = {
     description: 'Emited when there was made some tab selection.'
   }
 }
-
 </script>

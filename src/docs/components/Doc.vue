@@ -4,17 +4,17 @@
     <div class="uk-margin-large">
       <slot name="desc"></slot>
     </div>
-    <vk-tab-horizontal>
-      <vk-tab title="Props">
+    <vk-tabs>
+      <vk-tab label="Props">
         <table-props :rows="props"></table-props>
       </vk-tab>
-      <vk-tab title="Events" v-if="events">
+      <vk-tab label="Events" v-if="events">
         <table-events :rows="events"></table-events>
       </vk-tab>
-      <vk-tab title="Code">
+      <vk-tab label="Code">
         <pre><code v-encode></code></pre>
       </vk-tab>
-    </vk-tab-horizontal>
+    </vk-tabs>
   </div>
 </template>
 

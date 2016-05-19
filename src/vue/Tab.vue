@@ -5,7 +5,7 @@
 <script>
 export default {
   props: {
-    title: {
+    label: {
       type: String,
       default: ''
     },
