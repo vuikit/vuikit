@@ -88,11 +88,11 @@ export default {
         return 'noEditable'
       } else if (this.options) {
         return 'Select'
-      } else if (this.type === 'String') {
+      } else if (this.theType === 'String') {
         return 'String'
-      } else if (this.type === 'Boolean') {
+      } else if (this.theType === 'Boolean') {
         return 'Boolean'
-      } else if (this.type === 'Number') {
+      } else if (this.theType === 'Number') {
         return 'Number'
       } else {
         return 'noEditable'
