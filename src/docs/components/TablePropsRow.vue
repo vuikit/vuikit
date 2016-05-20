@@ -1,7 +1,7 @@
 <template>
   <tr class="uk-table-middle">
     <td v-text="name"></td>
-    <td v-text="type"></td>
+    <td v-text="theType"></td>
     <td><code v-text="defValString"></code></td>
     <td v-html="description"></td>
     <td class="uk-form">
@@ -10,8 +10,7 @@
         class="uk-form-select"
         data-uk-form-select="{ target: 'a' }">
         <a href="" v-text="demo ? demo : '<>'"></a>
-        <select
-          v-model="demo">
+        <select v-model="demo">
           <option v-for="opt in options"
             :value="opt === 'default' ? '' : opt">
             {{ opt }}
@@ -36,6 +35,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   props: {
     defaultsTo: {},
@@ -44,7 +45,6 @@ export default {
       required: true
     },
     type: {
-      type: String,
       required: true
     },
     description: {
@@ -69,12 +69,21 @@ export default {
     }
   },
   computed: {
-    defValString: function () {
+    theType () {
+      if (!this.type) {
+        return '*'
+      } else if (Vue.util.isArray(this.type)) {
+        return this.type.map(type => ` ${type.name}`) // keep the space
+      } else {
+        return this.type.name
+      }
+    },
+    defValString () {
       return this.defaultsTo !== undefined
         ? JSON.stringify(this.defaultsTo)
         : 'N/A'
     },
-    demoField: function () {
+    demoField () {
       if (!this.editable) {
         return 'noEditable'
       } else if (this.options) {

@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="Row" v-for="(name, row) in rows"
+      <tr is="EventsRow" v-for="(name, row) in rows"
         :name="name"
         :description="row.description"
         :emited.sync="row.emited">
@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import Row from './TableEventsRow'
+import EventsRow from './TableEventsRow'
 
 export default {
-  components: { Row },
+  components: { EventsRow },
   props: {
     rows: {
       type: Object,

@@ -10,11 +10,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr is="Row" v-for="row in sortedRows"
+      <tr is="PropsRow" v-for="row in sortedRows"
         :name="row.name"
-        :type="row.type
-          ? row.type.name
-          : '*'"
+        :type="row.type"
         :description="row.description"
         :defaults-to="row.default"
         :editable="row.editable"
@@ -26,13 +24,11 @@
 </template>
 
 <script>
-import Row from './TablePropsRow'
+import PropsRow from './TablePropsRow'
 import { sortBy, reject } from 'lodash'
 
 export default {
-  components: {
-    Row
-  },
+  components: { PropsRow },
   props: {
     rows: {
       type: Object,
