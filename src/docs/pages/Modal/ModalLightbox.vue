@@ -28,18 +28,17 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
 import mixins from '../../mixins'
+import { merge } from 'lodash'
+import events from './events'
+import commonProps from './props'
 
 export default {
   mixins: [mixins],
   data: function () {
     return {
-      props: merge(
-        Helper.getProps('ModalLightbox', this.$parent.$options.mainPropsInfo),
-        props
-      ),
-      events: this.$parent.$options.mainEventsInfo,
+      props: Helper.getProps('ModalLightbox', props),
+      events,
       code
     }
   }
@@ -50,12 +49,13 @@ const code =
   <img />
 </vk-modal-lightbox>`
 
-const props = {
+const props = merge(commonProps, {
   bgClose: {
-    description: 'Determines whether or not the modal can be closed by clicking the background.'
+    description: `Determines whether or not the modal can be closed by clicking
+      the background.`
   },
   hideClose: {
     description: 'Determines whether or not the close button is displayed.'
   }
-}
+})
 </script>

@@ -43,12 +43,12 @@ const code =
 </vk-button-radio>`
 
 const props = {
+  group: {
+    description: 'Determines whether or not the buttons are grouped.'
+  },
   value: {
     description: 'The current value determined by the active button.',
     options: [1, 2, 3]
-  },
-  group: {
-    description: 'Determines whether or not the buttons are grouped.'
   }
 }
 

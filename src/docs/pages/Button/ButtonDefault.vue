@@ -39,11 +39,15 @@
 <script>
 import * as Helper from '../../helper'
 import mixins from '../../mixins'
+import { merge } from 'lodash'
 
 export default {
   mixins: [mixins],
   data: () => ({
-    props: Helper.getProps('Button', Helper.getProps('ButtonLink', props)),
+    props: merge(
+      Helper.getProps('Button', props),
+      Helper.getProps('ButtonLink', props)
+    ),
     code
   })
 }
@@ -58,16 +62,18 @@ const code =
 </vk-button-link>`
 
 const props = {
+  active: {
+    description: 'Determines whether or not the button is active.'
+  },
+  disabled: {
+    description: `Determines whether or not the button is disabled.
+      Specific to <code>vk-button</code>.`
+  },
   style: {
     description: `Determines the style variation of the button, <code>'primary'</code>,
       <code>success</code>, <code>danger</code> or <code>link</code>. Leave empty
       for default.`,
     options: ['default', 'primary', 'success', 'danger', 'link']
-  },
-  text: {
-    description: `The text for the button inner content. For HTML use the
-      <code>default</code> slot instead.`,
-    editable: false
   },
   size: {
     description: `Determines the size of the button, <code>mini</code>,
@@ -89,24 +95,19 @@ const props = {
       on the right of the button inner content.`,
     options: ['default', 'flag', 'microphone', 'gamepad']
   },
-  active: {
-    description: 'Determines whether or not the button is active.'
-  },
-  disabled: {
-    description: `Determines whether or not the button is disabled.
-      Specific to <code>vk-button</code>.`
-  },
   value: {
     description: `Determines the value of the button when used with other
       components. Specific to <code>vk-button</code>.`
   },
-  href: {
-    editable: false,
-    description: `Determines the link to follow when the button is pressed.
-      Specific to <code>vk-button-link</code>.`
+  text: {
+    description: `The text for the button inner content. For HTML use the
+      <code>default</code> slot instead.`,
+    editable: false
   },
-  type: {
-    ignore: true
+  href: {
+    description: `Determines the link to follow when the button is pressed.
+      Specific to <code>vk-button-link</code>.`,
+    editable: false
   }
 }
 </script>

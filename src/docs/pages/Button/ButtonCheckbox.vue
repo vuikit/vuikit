@@ -43,12 +43,12 @@ const code =
 </vk-button-checkbox>`
 
 const props = {
+  group: {
+    description: 'Determines whether or not the buttons are grouped.'
+  },
   value: {
     description: 'The current value determined by the active buttons.',
     options: [[1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
-  },
-  group: {
-    description: 'Determines whether or not the buttons are grouped.'
   }
 }
 

@@ -49,18 +49,17 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
 import mixins from '../../mixins'
+import events from './events'
+import commonProps from './props'
+import { merge } from 'lodash'
 
 export default {
   mixins: [mixins],
-  data: function () {
+  data () {
     return {
-      props: merge(
-        Helper.getProps('Modal', this.$parent.$options.mainPropsInfo),
-        props
-      ),
-      events: this.$parent.$options.mainEventsInfo,
+      props: Helper.getProps('Modal', props),
+      events,
       code
     }
   }
@@ -74,7 +73,7 @@ const code =
   <template slot="footer">Text/HTML content</template>
 </vk-modal>`
 
-const props = {
+const props = merge(commonProps, {
   bgClose: {
     description: 'Determines whether or not the modal can be closed by clicking the background.'
   },
@@ -90,5 +89,5 @@ const props = {
       scrollable container. The modal will automatically expand and fill the site's
       height.`
   }
-}
+})
 </script>

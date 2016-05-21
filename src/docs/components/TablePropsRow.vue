@@ -2,11 +2,11 @@
   <tr class="uk-table-middle">
     <td v-text="name"></td>
     <td v-text="type"></td>
-    <td><code v-text="default"></code></td>
+    <td class="uk-text-truncate"><code v-text="default"></code></td>
     <td v-html="description"></td>
     <!-- if not editable just show raw value -->
     <td v-if="!editable || type === '*'" v-text="value"></td>
-    <td class="uk-form" v-else>
+    <td class="uk-form uk-text-truncate" v-else>
       <!-- Select -->
       <div v-if="demoField === 'Select'"
         class="uk-form-select"

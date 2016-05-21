@@ -37,14 +37,16 @@
 <script>
 import * as Helper from '../../helper'
 import mixins from '../../mixins'
+import events from './events'
+import commonProps from './props'
 
 export default {
   mixins: [mixins],
   data: function () {
     return {
       image: require('../../assets/placeholder_600x400.svg'),
-      props: Helper.getProps('ModalBlank', this.$parent.$options.mainPropsInfo),
-      events: this.$parent.$options.mainEventsInfo,
+      props: Helper.getProps('ModalBlank', commonProps),
+      events,
       code
     }
   }

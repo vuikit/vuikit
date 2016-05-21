@@ -3,13 +3,15 @@ import { each } from 'lodash'
 
 export default {
   ready: function () {
-    each(this.events, (obj, $event) => {
-      // preset the emited property on the fly
-      Vue.set(obj, 'emited')
-      // fires emited signal when events triggered
-      this.$refs.demo.$on($event, () => {
-        this.events[$event].emited = true
+    if (this.$refs.demo) {
+      each(this.events, (obj, $event) => {
+        // preset the emited property on the fly
+        Vue.set(obj, 'emited')
+        // fires emited signal when events triggered
+        this.$refs.demo.$on($event, () => {
+          this.events[$event].emited = true
+        })
       })
-    })
+    }
   }
 }

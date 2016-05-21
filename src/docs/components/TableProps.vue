@@ -25,7 +25,7 @@
 
 <script>
 import PropsRow from './TablePropsRow'
-import { sortBy, reject } from 'lodash'
+import { sortBy } from 'lodash'
 
 export default {
   components: { PropsRow },
@@ -37,7 +37,7 @@ export default {
   },
   computed: {
     sortedRows: function () {
-      return reject(sortBy(this.rows, 'name'), 'ignore')
+      return sortBy(this.rows, 'order')
     }
   }
 }

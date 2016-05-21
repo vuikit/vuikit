@@ -30,29 +30,27 @@
 import * as Helper from '../../helper'
 import { merge } from 'lodash'
 import mixins from '../../mixins'
+import events from './events'
+import commonProps from './props'
 
 export default {
   mixins: [mixins],
   data: function () {
     return {
-      props: merge(
-        Helper.getProps('ModalAlert', this.$parent.$options.mainPropsInfo),
-        props
-      ),
-      events: this.$parent.$options.mainEventsInfo,
+      props: Helper.getProps('ModalAlert', props),
+      events,
       code
     }
   }
 }
 
-const code =
-'<vk-modal-alert text="Text"></vk-modal-alert>'
+const code = '<vk-modal-alert text="Text"></vk-modal-alert>'
 
-const props = {
+const props = merge({}, commonProps, {
   text: {
     description: `The text for the modal content. For HTML use the
       <code>default</code> slot instead.`,
     editable: false
   }
-}
+})
 </script>

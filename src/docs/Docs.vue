@@ -46,7 +46,7 @@ export default {
   },
   data: () => ({
     docs: Object.keys(Pages),
-    current: Object.keys(Pages)[0]
+    current: 'Modal'
   })
 }
 </script>

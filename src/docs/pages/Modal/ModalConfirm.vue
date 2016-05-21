@@ -30,19 +30,18 @@
 
 <script>
 import * as Helper from '../../helper'
-import { merge } from 'lodash'
 import mixins from '../../mixins'
+import { merge } from 'lodash'
+import events from './events'
+import commonProps from './props'
 
 export default {
   mixins: [mixins],
   data: function () {
     return {
       buttonText: 'Open',
-      props: merge(
-        Helper.getProps('ModalConfirm', this.$parent.$options.mainPropsInfo),
-        props
-      ),
-      events: this.$parent.$options.mainEventsInfo,
+      props: Helper.getProps('ModalConfirm', props),
+      events,
       code
     }
   }
@@ -51,11 +50,11 @@ export default {
 const code =
 '<vk-modal-confirm text="Text"></vk-modal-confirm>'
 
-const props = {
+const props = merge({}, commonProps, {
   text: {
     description: `The text for the modal content. For HTML use the
       <code>default</code> slot instead.`,
     editable: false
   }
-}
+})
 </script>
