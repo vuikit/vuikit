@@ -14,10 +14,10 @@
         :name="row.name"
         :type="row.type"
         :description="row.description"
-        :defaults-to="row.default"
+        :default="row.default"
         :editable="row.editable"
         :options="row.options"
-        :demo.sync="row.value">
+        :value.sync="row.value">
       </tr>
     </tbody>
   </table>
