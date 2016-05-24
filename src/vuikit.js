@@ -11,7 +11,8 @@ export const components = {
   Pagination: require('./vue/Pagination'),
   Tab: require('./vue/Tab'),
   Tabs: require('./vue/TabsDefault'),
-  TabsVertical: require('./vue/TabsVertical')
+  TabsVertical: require('./vue/TabsVertical'),
+  Badge: require('./vue/Badge')
 }
 
 export default {
