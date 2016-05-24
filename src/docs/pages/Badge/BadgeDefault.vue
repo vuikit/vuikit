@@ -1,16 +1,16 @@
 <template>
   <div>
-    <docs-page 
+    <docs-page
       :props="props"
       :code="code">
       <div slot="demo">
         <vk-badge v-ref:demo
           :style="props.style.value">
-          Information
+          Info
         </vk-badge>
       </div>
       <div slot="desc">
-        Badge component <code>vk-badge</code> will render a nice looking highlighted text. Check the additional attributes of badge below.
+        Badge component <code>vk-badge</code> will render a nice looking highlighted text.
       </div>
     </docs-page>
   </div>
@@ -33,7 +33,7 @@ const code = '<vk-badge>Information</vk-badge>'
 const props = {
   style: {
     description: 'Determines the style of badge.',
-    options: ['notice', 'success', 'warning', 'danger']
+    options: ['default', 'notice', 'success', 'warning', 'danger']
   }
 }
 
