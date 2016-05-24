@@ -4,13 +4,13 @@
       <div class="uk-grid" data-uk-grid-margin>
         <div class="tm-sidebar uk-width-medium-1-4">
           <ul class="uk-nav tm-nav">
-            <li v-for="doc in docs"
+            <li v-for="page in pages"
               :class="{
-                'uk-active': current === doc
+                'uk-active': current === page
               }">
-              <a href=""
-                @click.prevent="current = doc"
-                v-text="doc">
+              <a :href="'#' + page.toLowerCase()"
+                @click="current = page"
+                v-text="page">
               </a>
             </li>
           </ul>
@@ -21,7 +21,7 @@
               {{ current }}
             </h1>
             <hr class="uk-article-divider">
-            <component :is="'Doc' + current"></component>
+            <component :is="'Page' + current"></component>
           </article>
         </div>
       </div>
@@ -38,15 +38,22 @@ const Pages = {
 }
 
 export default {
+  created () {
+    // set inital current page
+    const hash = window.location.hash.replace('#', '')
+    this.current = hash
+      ? `${hash.charAt(0).toUpperCase()}${hash.slice(1)}`
+      : Object.keys(Pages)[0]
+  },
   components: {
-    DocButton: Pages.Button,
-    DocModal: Pages.Modal,
-    DocPagination: Pages.Pagination,
-    DocTabs: Pages.Tabs
+    PageButton: Pages.Button,
+    PageModal: Pages.Modal,
+    PagePagination: Pages.Pagination,
+    PageTabs: Pages.Tabs
   },
   data: () => ({
-    docs: Object.keys(Pages),
-    current: 'Modal'
+    pages: Object.keys(Pages),
+    current: ''
   })
 }
 </script>
