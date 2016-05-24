@@ -38,9 +38,10 @@
     "uikit": "lessc src/uikit/uikit.less static/css/uikit.css"
   },
   "dependencies": {
+    "babel-runtime": "^6.0.0",
+    "moment": "^2.13.0",
     "uikit": "^2.25.0",
-    "vue": "^1.0.22",
-    "babel-runtime": "^6.0.0"
+    "vue": "^1.0.22"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",

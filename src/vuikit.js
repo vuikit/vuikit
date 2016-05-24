@@ -3,6 +3,8 @@ export const components = {
   ButtonLink: require('./vue/ButtonLink'),
   ButtonCheckbox: require('./vue/ButtonCheckbox'),
   ButtonRadio: require('./vue/ButtonRadio'),
+  Calendar: require('./vue/Calendar'),
+  Datepicker: require('./vue/Datepicker'),
   Modal: require('./vue/ModalDefault'),
   ModalLightbox: require('./vue/ModalLightbox'),
   ModalBlank: require('./vue/ModalBlank'),

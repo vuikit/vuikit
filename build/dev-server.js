@@ -54,6 +54,7 @@ app.use('/static', express.static('./static'))
 // set assets paths
 app.use('/static/js', express.static('node_modules/uikit/dist/js'))
 app.use('/static/js', express.static('node_modules/uikit/vendor'))
+app.use('/static/js', express.static('node_modules/moment'))
 
 module.exports = app.listen(port, function (err) {
   if (err) {

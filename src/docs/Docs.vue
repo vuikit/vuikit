@@ -32,6 +32,8 @@
 <script>
 const Pages = {
   Button: require('./pages/Button/index'),
+  Calendar: require('./pages/Calendar/index'),
+  Datepicker: require('./pages/Datepicker/index'),
   Modal: require('./pages/Modal/index'),
   Pagination: require('./pages/Pagination/index'),
   Tabs: require('./pages/Tabs/index'),
@@ -48,6 +50,8 @@ export default {
   },
   components: {
     PageButton: Pages.Button,
+    PageCalendar: Pages.Calendar,
+    PageDatepicker: Pages.Datepicker,
     PageModal: Pages.Modal,
     PagePagination: Pages.Pagination,
     PageTabs: Pages.Tabs,
