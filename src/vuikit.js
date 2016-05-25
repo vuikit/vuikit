@@ -1,4 +1,6 @@
 export const components = {
+  Breadcrumb: require('./vue/Breadcrumb'),
+  Crumb: require('./vue/BreadcrumbItem'),
   Button: require('./vue/Button'),
   ButtonLink: require('./vue/ButtonLink'),
   ButtonCheckbox: require('./vue/ButtonCheckbox'),

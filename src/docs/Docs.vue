@@ -31,6 +31,7 @@
 
 <script>
 const Pages = {
+  Breadcrumb: require('./pages/Breadcrumb/index'),
   Button: require('./pages/Button/index'),
   Calendar: require('./pages/Calendar/index'),
   Datepicker: require('./pages/Datepicker/index'),
@@ -49,6 +50,7 @@ export default {
       : Object.keys(Pages)[0]
   },
   components: {
+    PageBreadcrumb: Pages.Breadcrumb,
     PageButton: Pages.Button,
     PageCalendar: Pages.Calendar,
     PageDatepicker: Pages.Datepicker,

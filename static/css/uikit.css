@@ -2418,12 +2418,6 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 .uk-breadcrumb > li:not(.uk-active) > span {
   color: rgba(170, 170, 170, 0.5);
 }
-.uk-breadcrumb > li > a {
-  color: #aaa;
-}
-.uk-breadcrumb > li > a:hover {
-  color: #666;
-}
 /* ========================================================================
    Component: Pagination
  ========================================================================== */
