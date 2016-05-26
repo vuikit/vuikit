@@ -2836,6 +2836,9 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
     border-left-color: transparent;
   }
 }
+.uk-tab > li:nth-child(n+2) > a {
+  margin-left: 0;
+}
 /* Modifier: 'tab-bottom'
   ========================================================================== */
 .uk-tab-bottom > li > a:after {

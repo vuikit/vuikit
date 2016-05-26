@@ -71,7 +71,7 @@ export default {
   ready () {
     // workaround to preserve the tabs order which seems is
     // altered when used v-if with vk-tab
-    this.tabs = Vue.util.toArray(this.$els.tabsBody.querySelectorAll('li'))
+    this.tabs = Vue.util.toArray(this.$els.tabsBody.querySelectorAll(':scope > li'))
       .map(el => el.__vue__)
     // on tab change
     UI.$(this.$el).on('change.uk.tab', () => {
