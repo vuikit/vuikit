@@ -4,30 +4,34 @@
       'uk-pagination-left': align === 'left',
       'uk-pagination-right': align === 'right'
     }">
-    <!-- prevPage -->
     <li :class="{
       'uk-disabled': !prevPage,
-      'uk-pagination-previous': compact
+      'uk-pagination-previous': !compact
     }">
-      <a v-if="prevPage"
-        href=""
-        @click.prevent="setCurrent(prevPage)">
+      <!-- firstPage -->
+      <a href="" v-if="prevPage"
+        @click.prevent="current = 1">
         <i class="uk-icon-angle-double-left"></i>
       </a>
       <span v-else>
         <i class="uk-icon-angle-double-left"></i>
       </span>
+      <!-- prevPage -->
+      <a href="" v-if="prevPage"
+        @click.prevent="current = prevPage">
+        <i class="uk-icon-angle-left"></i>
+      </a>
+      <span v-else>
+        <i class="uk-icon-angle-left"></i>
+      </span>
     </li>
     <li v-for="page in prePages"
-      :class="{'uk-active': page == current}">
+      :class="{'uk-active': page === current}">
       <!-- content -->
-      <span v-if="page == current">
-        {{ page }}
-      </span>
-      <a v-else
-        href=""
-        @click.prevent="setCurrent(page)">
-        {{ page }}
+      <span v-if="page === current" v-text="page"></span>
+      <a href="" v-else
+        @click.prevent="current = page"
+        v-text="page">
       </a>
     </li>
     <li v-if="edges < interval.start && (interval.start - edges != 1)">
@@ -35,15 +39,13 @@
     </li>
     <li
       v-for="page in pages"
-      :class="{'uk-active': page == current}">
+      :class="{'uk-active': page === current}">
       <!-- content -->
-      <span v-if="page == current">
-        {{ page }}
-      </span>
+      <span v-if="page === current" v-text="page"></span>
       <a v-else
         href=""
-        @click.prevent="setCurrent(page)">
-        {{ page }}
+        @click.prevent="current = page"
+        v-text="page">
       </a>
     </li>
     <li v-if="totalPages - edges > interval.end
@@ -51,25 +53,31 @@
       <span>...</span>
     </li>
     <li v-for="page in postPages"
-      :class="{'uk-active': page == current}">
+      :class="{'uk-active': page === current}">
       <!-- content -->
-      <span v-if="page == current">
+      <span v-if="page === current">
         {{ page }}
       </span>
-      <a v-else
-        href=""
-        @click.prevent="setCurrent(page)">
-        {{ page }}
+      <a href="" v-else
+        @click.prevent="current = page"
+        v-text="page">
       </a>
     </li>
-    <!-- nextPage -->
     <li :class="{
       'uk-disabled': !nextPage,
-      'uk-pagination-next': compact
+      'uk-pagination-next': !compact
     }">
-      <a v-if="nextPage"
-        href=""
-        @click.prevent="setCurrent(nextPage)">
+      <!-- nextPage -->
+      <a href="" v-if="nextPage"
+        @click.prevent="current = nextPage">
+        <i class="uk-icon-angle-right"></i>
+      </a>
+      <span v-else>
+        <i class="uk-icon-angle-right"></i>
+      </span>
+      <!-- last page -->
+      <a href="" v-if="nextPage"
+        @click.prevent="current = totalPages">
         <i class="uk-icon-angle-double-right"></i>
       </a>
       <span v-else>
@@ -132,6 +140,9 @@ export default {
         ? this.current + 1
         : null
     },
+    lastPage: function () {
+      return this.totalPages - 1
+    },
     totalPages: function () {
       return Math.ceil(this.items / this.itemsOnPage)
         ? Math.ceil(this.items / this.itemsOnPage)
@@ -189,9 +200,8 @@ export default {
       return pages
     }
   },
-  methods: {
-    setCurrent: function (page) {
-      this.current = page
+  watch: {
+    current: function (page) {
       this.$emit('change', page)
     }
   }
