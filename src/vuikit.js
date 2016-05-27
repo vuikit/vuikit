@@ -15,6 +15,8 @@ export const components = {
   Pagination: require('./vue/Pagination'),
   Subnav: require('./vue/Subnav'),
   SubnavItem: require('./vue/SubnavItem'),
+  Switcher: require('./vue/Switcher'),
+  Switch: require('./vue/SwitcherItem'),
   Tab: require('./vue/Tab'),
   Tabs: require('./vue/TabsDefault'),
   TabsVertical: require('./vue/TabsVertical')
