@@ -6,8 +6,27 @@ var baseWebpackConfig = require('./webpack.base')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    modal: './src/vue/Modal.vue',
-    pagination: './src/vue/Pagination.vue'
+    Breadcrumb: ['./src/vue/Breadcrumb'],
+    Crumb: ['./src/vue/BreadcrumbItem'],
+    Button: ['./src/vue/Button'],
+    ButtonLink: ['./src/vue/ButtonLink'],
+    ButtonCheckbox: ['./src/vue/ButtonCheckbox'],
+    ButtonRadio: ['./src/vue/ButtonRadio'],
+    Calendar: ['./src/vue/Calendar'],
+    Datepicker: ['./src/vue/Datepicker'],
+    Modal: ['./src/vue/ModalDefault'],
+    ModalLightbox: ['./src/vue/ModalLightbox'],
+    ModalBlank: ['./src/vue/ModalBlank'],
+    ModalAlert: ['./src/vue/ModalAlert'],
+    ModalConfirm: ['./src/vue/ModalConfirm'],
+    Pagination: ['./src/vue/Pagination'],
+    Subnav: ['./src/vue/Subnav'],
+    SubnavItem: ['./src/vue/SubnavItem'],
+    Switcher: ['./src/vue/Switcher'],
+    Switch: ['./src/vue/SwitcherItem'],
+    Tab: ['./src/vue/Tab'],
+    Tabs: ['./src/vue/TabsDefault'],
+    TabsVertical: ['./src/vue/TabsVertical']
   },
   output: {
     path: 'lib',

@@ -16,7 +16,7 @@
   ],
   "main": "dist/vuikit.js",
   "files": [
-    "dist/vuikit.js",
+    "dist",
     "lib",
     "src"
   ],

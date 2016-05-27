@@ -10,8 +10,7 @@ var spinner = ora()
 spinner.text = 'building lib...'
 spinner.start()
 
-utils.cleanPath('dist')
-cp('-R', 'static/', 'dist') // eslint-disable-line no-undef
+utils.cleanPath('lib')
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()
