@@ -37,7 +37,8 @@ const Pages = {
   Datepicker: require('./pages/Datepicker/index'),
   Modal: require('./pages/Modal/index'),
   Pagination: require('./pages/Pagination/index'),
-  Tabs: require('./pages/Tabs/index')
+  Tabs: require('./pages/Tabs/index'),
+  Subnav: require('./pages/Subnav/index')
 }
 
 export default {
@@ -55,7 +56,8 @@ export default {
     PageDatepicker: Pages.Datepicker,
     PageModal: Pages.Modal,
     PagePagination: Pages.Pagination,
-    PageTabs: Pages.Tabs
+    PageTabs: Pages.Tabs,
+    PageSubnav: Pages.Subnav
   },
   data: () => ({
     pages: Object.keys(Pages),

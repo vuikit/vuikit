@@ -13,6 +13,8 @@ export const components = {
   ModalAlert: require('./vue/ModalAlert'),
   ModalConfirm: require('./vue/ModalConfirm'),
   Pagination: require('./vue/Pagination'),
+  Subnav: require('./vue/Subnav'),
+  SubnavItem: require('./vue/SubnavItem'),
   Tab: require('./vue/Tab'),
   Tabs: require('./vue/TabsDefault'),
   TabsVertical: require('./vue/TabsVertical')
