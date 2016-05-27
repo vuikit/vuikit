@@ -6,7 +6,9 @@
     </div>
     <vk-tabs>
       <vk-tab label="Props">
-        <table-props :rows="props"></table-props>
+        <slot name="props">
+          <table-props :rows="props"></table-props>
+        </slot>
       </vk-tab>
       <vk-tab label="Events" v-if="events">
         <table-events :rows="events"></table-events>
@@ -19,21 +21,14 @@
 </template>
 
 <script>
-import TableProps from './TableProps'
-import TableEvents from './TableEvents'
-
 export default {
   data: () => ({
     showEvents: false
   }),
-  components: {
-    TableProps,
-    TableEvents
-  },
   props: {
     props: {
       type: Object,
-      required: true
+      required: false
     },
     events: {
       type: [Object, Boolean],

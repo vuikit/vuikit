@@ -1,7 +1,6 @@
 <template>
   <div>
     <docs-page
-      :props="props"
       :events="events"
       :code="code">
       <div slot="demo">
@@ -15,6 +14,20 @@
       </div>
       <div slot="desc">
       </div>
+      <div slot="props">
+        <vk-subnav style="line" v-ref:nav>
+          <vk-subnav-item>vk-subnav</vk-subnav-item>
+          <vk-subnav-item>vk-subnav-item</vk-subnav-item>
+        </vk-subnav>
+        <vk-switcher :connect="$refs.nav">
+          <vk-switch>
+            <table-props :rows="props"></table-props>
+          </vk-switch>
+          <vk-switch>
+            <table-props :rows="itemProps" :demo="false"></table-props>
+          </vk-switch>
+        </vk-switcher>
+      </div>
     </docs-page>
   </div>
 </template>
@@ -27,6 +40,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Subnav', props),
+    itemProps: Helper.getProps('SubnavItem', itemProps),
     events,
     code
   })
@@ -43,6 +57,15 @@ const props = {
   style: {
     description: 'Determines the style of the list.',
     options: ['default', 'line', 'pill']
+  }
+}
+
+const itemProps = {
+  active: {
+    description: 'Determines whether or not the item is active.'
+  },
+  disabled: {
+    description: 'Determines whether or not the item is disabled.'
   }
 }
 

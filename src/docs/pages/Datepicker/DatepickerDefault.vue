@@ -37,8 +37,10 @@ export default {
   watch: {
     'props.format.value': function (newFormat, oldFormat) {
       // force date format update
-      const moment = this.$refs.demo.moment(this.$refs.demo.value)
-      this.$refs.demo.value = moment.format(newFormat)
+      const moment = this.$refs.demo.$moment(this.$refs.demo.value)
+      if (this.$refs.demo.value) {
+        this.$refs.demo.value = moment.format(newFormat)
+      }
     }
   }
 }

@@ -20,6 +20,20 @@
         The <code>vk-tabs</code> component consists of clickable
         <code>vk-tab</code> tabs, that are aligned side by side.
       </div>
+      <div slot="props">
+        <vk-subnav style="line" v-ref:nav>
+          <vk-subnav-item>vk-tabs</vk-subnav-item>
+          <vk-subnav-item>vk-tab</vk-subnav-item>
+        </vk-subnav>
+        <vk-switcher :connect="$refs.nav">
+          <vk-switch>
+            <table-props :rows="props"></table-props>
+          </vk-switch>
+          <vk-switch>
+            <table-props :rows="tabProps" :demo="false"></table-props>
+          </vk-switch>
+        </vk-switcher>
+      </div>
     </docs-page>
   </div>
 </template>
@@ -32,6 +46,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Tabs', props),
+    tabProps: Helper.getProps('Tab', tabProps),
     events,
     code
   })
@@ -60,6 +75,15 @@ const props = {
     description: `Determines the width of the tabs items using the <i>UIkit Grid</i>
       classes.`,
     options: ['default', '1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
+  }
+}
+
+const tabProps = {
+  label: {
+    description: 'Determines the tab header text.'
+  },
+  disabled: {
+    description: 'Determines whether or not the tab can be selected.'
   }
 }
 

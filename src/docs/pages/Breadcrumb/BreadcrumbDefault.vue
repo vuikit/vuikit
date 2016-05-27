@@ -1,7 +1,6 @@
 <template>
   <div>
     <docs-page
-      :props="props"
       :events="events"
       :code="code">
       <div slot="demo">
@@ -16,6 +15,20 @@
       <div slot="desc">
         Create breadcrumbs to show users their location within a website.
       </div>
+      <div slot="props">
+        <vk-subnav style="line" v-ref:nav>
+          <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
+          <vk-subnav-item>vk-crumb</vk-subnav-item>
+        </vk-subnav>
+        <vk-switcher :connect="$refs.nav">
+          <vk-switch>
+            <table-props :rows="props"></table-props>
+          </vk-switch>
+          <vk-switch>
+            <table-props :rows="CrumbProps" :demo="false"></table-props>
+          </vk-switch>
+        </vk-switcher>
+      </div>
     </docs-page>
   </div>
 </template>
@@ -28,13 +41,14 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Breadcrumb', props),
+    CrumbProps: Helper.getProps('Crumb', CrumbProps),
     events,
     code
   })
 }
 
 const code =
-`<vk-breadcrumb :crumbs="crumbs">
+`<vk-breadcrumb>
   <vk-crumb path="/">Home</vk-crumb>
   <vk-crumb path="/blog">Blog</vk-crumb>
   <vk-crumb path="/blog/category">Category</vk-crumb>
@@ -43,14 +57,27 @@ const code =
 
 const props = {
   location: {
-    description: 'Determines the current active location.',
-    editable: false
+    description: 'Determines the active location path. Defaults to last crumb path if omited.',
+    options: {
+      '/': 'Home',
+      '/blog': 'Blog',
+      '/blog/category/post': 'Post'
+    }
+  }
+}
+
+const CrumbProps = {
+  path: {
+    description: 'Determines the crumb full path.'
+  },
+  disabled: {
+    description: 'Determines the crumb disabled state.'
   }
 }
 
 const events = {
   change: {
-    description: 'Emited on page selection.'
+    description: 'Emited on path selection.'
   }
 }
 </script>

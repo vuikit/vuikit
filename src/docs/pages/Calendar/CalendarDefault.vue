@@ -6,8 +6,8 @@
       :code="code">
       <div slot="demo">
         <vk-calendar v-ref:demo
-          :year.sync="props.year.value"
-          :month.sync="props.month.value"
+          :year.sync="props.year.value | number"
+          :month.sync="props.month.value | number"
           :min-date="props.minDate.value"
           :max-date="props.maxDate.value">
         </vk-calendar>
@@ -29,7 +29,12 @@ export default {
     props: Helper.getProps('Calendar', props),
     events,
     code
-  })
+  }),
+  filters: {
+    number (val) {
+      return parseInt(val)
+    }
+  }
 }
 
 const code =
@@ -49,7 +54,7 @@ const props = {
     description: `Determines the calendar month. If using numbers notice that
       are zero indexed, so January is month <code>0</code>. Defaults to current
       month if omited.`,
-    options: Moment.monthsShort(),
+    options: { 0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec' },
     default: Moment().month(),
     value: Moment().month()
   },

@@ -8,14 +8,13 @@
 export default {
   props: {
     location: {
-      type: String,
-      default: ''
+      type: String
     }
   },
   ready: function () {
     // set last crumb as default
     // if no location is set
-    if (this.location === '') {
+    if (!this.location) {
       this.location = this.$children[this.$children.length - 1].path
     }
   },
