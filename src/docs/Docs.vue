@@ -39,7 +39,8 @@ const Pages = {
   Pagination: require('./pages/Pagination/index'),
   Tabs: require('./pages/Tabs/index'),
   Subnav: require('./pages/Subnav/index'),
-  Switcher: require('./pages/Switcher/index')
+  Switcher: require('./pages/Switcher/index'),
+  Alert: require('./pages/Alert/index')
 }
 
 export default {
@@ -59,7 +60,8 @@ export default {
     PagePagination: Pages.Pagination,
     PageTabs: Pages.Tabs,
     PageSubnav: Pages.Subnav,
-    PageSwitcher: Pages.Switcher
+    PageSwitcher: Pages.Switcher,
+    PageAlert: Pages.Alert
   },
   data: () => ({
     pages: Object.keys(Pages),
