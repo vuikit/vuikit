@@ -32,7 +32,7 @@
 import * as Helper from '../../helper'
 import mixins from '../../mixins'
 import { merge } from 'lodash'
-import events from './events'
+import commonEvents from './events'
 import commonProps from './props'
 
 export default {
@@ -55,6 +55,12 @@ const props = merge({}, commonProps, {
     description: `The text for the modal content. For HTML use the
       <code>default</code> slot instead.`,
     editable: false
+  }
+})
+
+const events = merge({}, commonEvents, {
+  confirm: {
+    description: 'Emited on user confirmation'
   }
 })
 </script>
