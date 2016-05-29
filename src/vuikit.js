@@ -19,7 +19,8 @@ export const components = {
   Switch: require('./vue/SwitcherItem'),
   Tab: require('./vue/Tab'),
   Tabs: require('./vue/TabsDefault'),
-  TabsVertical: require('./vue/TabsVertical')
+  TabsVertical: require('./vue/TabsVertical'),
+  Alert: require('./vue/Alert')
 }
 
 export default {
