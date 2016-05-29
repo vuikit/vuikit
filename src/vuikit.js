@@ -1,4 +1,5 @@
 export const components = {
+  Alert: require('./vue/Alert'),
   Breadcrumb: require('./vue/Breadcrumb'),
   Crumb: require('./vue/BreadcrumbItem'),
   Button: require('./vue/Button'),
@@ -19,8 +20,7 @@ export const components = {
   Switch: require('./vue/SwitcherItem'),
   Tab: require('./vue/Tab'),
   Tabs: require('./vue/TabsDefault'),
-  TabsVertical: require('./vue/TabsVertical'),
-  Alert: require('./vue/Alert')
+  TabsVertical: require('./vue/TabsVertical')
 }
 
 export default {

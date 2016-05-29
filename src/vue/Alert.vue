@@ -1,6 +1,5 @@
 <template>
-  <div
-    v-if="show"
+  <div v-if="show"
     transition="fade"
     class="uk-alert"
     :class="{
@@ -9,10 +8,9 @@
       'uk-alert-danger': style === 'danger',
       'uk-alert-large': size === 'large'
     }">
-    <a href=""
-      class="uk-close uk-alert-close"
+    <a href="" class="uk-close uk-alert-close"
       v-if="close"
-      @click.prevent="toggleMessage()">
+      @click.prevent="show = !show">
     </a>
     <slot></slot>
   </div>
@@ -49,13 +47,8 @@ export default {
     }
   },
   computed: {
-    transitionOptions: function () {
+    transitionOptions () {
       return Vue.util.extend(this.$options.props.transition.default(), this.transition)
-    }
-  },
-  methods: {
-    toggleMessage () {
-      this.show = !this.show
     }
   },
   transitions: {
@@ -63,7 +56,7 @@ export default {
       css: false,
       leave: function (el, done) {
         if (this.transitionOptions.fade) {
-          UI.$(el).animate({opacity: 0}, this.transitionOptions.duration, done)
+          UI.$(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
         } else {
           done()
         }

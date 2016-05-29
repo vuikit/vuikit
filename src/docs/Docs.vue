@@ -31,6 +31,7 @@
 
 <script>
 const Pages = {
+  Alert: require('./pages/Alert/index'),
   Breadcrumb: require('./pages/Breadcrumb/index'),
   Button: require('./pages/Button/index'),
   Calendar: require('./pages/Calendar/index'),
@@ -39,8 +40,7 @@ const Pages = {
   Pagination: require('./pages/Pagination/index'),
   Tabs: require('./pages/Tabs/index'),
   Subnav: require('./pages/Subnav/index'),
-  Switcher: require('./pages/Switcher/index'),
-  Alert: require('./pages/Alert/index')
+  Switcher: require('./pages/Switcher/index')
 }
 
 export default {
