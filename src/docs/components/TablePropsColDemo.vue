@@ -5,8 +5,7 @@
     <template v-else>
       <!-- Select -->
       <div v-if="demoField === 'Select'"
-        class="uk-form-select"
-        data-uk-form-select="{ target: 'a' }">
+        class="uk-form-select">
         <a href="" v-text="value === '' ? '<>' : selectOptions[value]"></a>
         <select v-model="value">
           <option v-for="(value, opt) in selectOptions"
