@@ -35,6 +35,7 @@
     "lib": "node build/build.lib.js",
     "docs": "node build/build.docs.js",
     "docs:deploy": "cd build && ./deploy.docs.sh",
+    "bower": "cd build && ./bower.sh",
     "uikit": "lessc src/uikit/uikit.less static/css/uikit.css"
   },
   "dependencies": {
