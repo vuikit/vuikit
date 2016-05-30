@@ -1,82 +1,88 @@
+<template>
+  <div class="uk-modal" v-el:modal>
+    <div class="uk-modal-dialog"
+      :class="{
+        'uk-modal-dialog-large': large
+      }">
+      <!-- close button -->
+      <a class="uk-modal-close uk-close"
+        href=""
+        v-if="!block && !hideClose">
+      </a>
+      <!-- header -->
+      <div v-el:header class="uk-modal-header">
+        <slot name="header"></slot>
+      </div>
+      <!-- content -->
+      <div v-el:content class="uk-modal-content"
+        :class="{
+          'uk-overflow-container': overflow
+        }">
+        <slot name="content"></slot>
+      </div>
+      <!-- footer -->
+      <div v-el:footer class="uk-modal-footer">
+        <slot name="footer"></slot>
+      </div>
+      <!-- caption -->
+      <div v-el:caption class="uk-modal-caption">
+        <slot name="caption"></slot>
+      </div>
+      <!-- default slot -->
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
 <script>
-import UI from 'uikit'
+import ModalBase from './ModalBase'
 
 export default {
+  extends: ModalBase,
   props: {
-    show: {
+    overflow: {
       type: Boolean,
       default: false
     },
-    block: {
+    hideClose: {
       type: Boolean,
       default: false
     },
-    keyboard: {
+    large: {
+      type: Boolean,
+      default: false
+    },
+    bgClose: {
       type: Boolean,
       default: true
-    },
-    center: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    options: function () {
-      return {
-        keyboard: this.keyboard,
-        center: this.center,
-        bgclose: this.bgClose
-      }
-    }
-  },
-  watch: {
-    show: function (state) {
-      if (state) {
-        this.UImodal.show()
-      } else if (this.UImodal.isActive()) {
-        this.UImodal.hide()
-      }
-    },
-    block: function (state) {
-      if (state) {
-        this.UImodal.options.bgclose = false
-        this.UImodal.options.keyboard = false
-        this.UImodal.options.modal = false
-      } else {
-        this.UImodal.options.bgclose = true
-        this.UImodal.options.keyboard = true
-        this.UImodal.options.modal = true
-      }
-    },
-    center: function (state) {
-      this.UImodal.options.center = state
-    },
-    bgClose: function (state) {
-      this.UImodal.options.bgclose = state
-    },
-    keyboard: function (state) {
-      this.UImodal.options.keyboard = state
     }
   },
   ready: function () {
+    // remove parents nodes of slots
+    // that were not set
+    if (!this.isModalSlotSet('header')) {
+      this.removeModalSlot('header')
+    }
+    if (!this.isModalSlotSet('content')) {
+      this.removeModalSlot('content')
+    }
+    if (!this.isModalSlotSet('footer')) {
+      this.removeModalSlot('footer')
+    }
+    if (!this.isModalSlotSet('caption')) {
+      this.removeModalSlot('caption')
+    }
+    // init
     this.initModal()
   },
   methods: {
-    initModal: function () {
-      var vm = this
-      this.UImodal = UI.modal(this.$els.modal, this.options)
-      this.UImodal.on('show.uk.modal', () => {
-        vm.show = true
-        vm.$emit('show')
-        setTimeout(function () {
-          // catch .uk-overflow-container
-          vm.UImodal.resize()
-        }, 1)
-      })
-      this.UImodal.on('hide.uk.modal', () => {
-        vm.show = false
-        vm.$emit('hide')
-      })
+    removeModalSlot: function (slot) {
+      if (this.$els[slot]) {
+        this.$els[slot].parentNode.removeChild(this.$els[slot])
+      }
+    },
+    isModalSlotSet: function (slot) {
+      return this.$els[slot] && (this.$els[slot].innerHTML.trim() !== '')
     }
   }
 }

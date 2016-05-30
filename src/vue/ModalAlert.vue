@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import Modal from './Modal'
+import ModalBase from './ModalBase'
 
 export default {
-  extends: Modal,
+  extends: ModalBase,
   props: {
     text: {
       type: String,

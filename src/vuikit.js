@@ -8,7 +8,7 @@ export const components = {
   ButtonRadio: require('./vue/ButtonRadio'),
   Calendar: require('./vue/Calendar'),
   Datepicker: require('./vue/Datepicker'),
-  Modal: require('./vue/ModalDefault'),
+  Modal: require('./vue/Modal'),
   ModalLightbox: require('./vue/ModalLightbox'),
   ModalBlank: require('./vue/ModalBlank'),
   ModalAlert: require('./vue/ModalAlert'),
@@ -19,7 +19,7 @@ export const components = {
   Switcher: require('./vue/Switcher'),
   Switch: require('./vue/SwitcherItem'),
   Tab: require('./vue/Tab'),
-  Tabs: require('./vue/TabsDefault'),
+  Tabs: require('./vue/Tabs'),
   TabsVertical: require('./vue/TabsVertical')
 }
 
