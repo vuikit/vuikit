@@ -17,7 +17,6 @@
   "main": "dist/vuikit.js",
   "files": [
     "dist",
-    "lib",
     "src"
   ],
   "license": "MIT",
@@ -32,7 +31,6 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "dist": "node build/build.dist.js",
-    "lib": "node build/build.lib.js",
     "docs": "node build/build.docs.js",
     "docs:deploy": "cd build && ./deploy.docs.sh",
     "bower": "cd build && ./bower.sh",
