@@ -135,7 +135,7 @@ export default {
   methods: {
     select (moment) {
       // trigger change event
-      if (!moment.isSame(this.selected, 'day')) {
+      if (!this.value || !moment.isSame(this.selected, 'day')) {
         this.selected = moment.clone()
         this.$nextTick(() => this.$emit('change', this.selected))
       }
