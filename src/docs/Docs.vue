@@ -1,8 +1,28 @@
 <template>
+  <nav class="uk-navbar">
+      <a href="#tm-offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
+  </nav>
+
+  <div id="tm-offcanvas" class="uk-offcanvas">
+    <div class="uk-offcanvas-bar">
+      <ul class="uk-nav tm-nav uk-nav-offcanvas">
+        <li v-for="page in pages"
+          :class="{
+            'uk-active': current === page
+           }">
+          <a :href="'#' + page.toLowerCase()"
+            @click="current = page"
+            v-text="page">
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
   <div class="tm-middle">
     <div class="uk-container uk-container-center">
       <div class="uk-grid" data-uk-grid-margin>
-        <div class="tm-sidebar uk-width-medium-1-4">
+        <div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
           <ul class="uk-nav tm-nav">
             <li v-for="page in pages"
               :class="{
