@@ -1,6 +1,6 @@
 # vuikit
 
-> [Vue](http://vuejs.org/) [UIkit](http://getuikit.com) library
+> UIkit with all the power of Vue
 
 ## Documentation and Demo
 [http://joolanders.github.io/vuikit/](http://joolanders.github.io/vuikit/)
