@@ -49,7 +49,8 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-app.use('/static', express.static('./static'))
+app.use('/static/css', express.static('./static/css'))
+app.use('/static/fonts', express.static('node_modules/uikit/dist/fonts'))
 
 // set assets paths
 app.use('/static/js', express.static('node_modules/uikit/dist/js'))

@@ -7,12 +7,12 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    'vuikit': './src/dist.js'
+    'vuikit': './src/vue'
   },
   output: {
     path: 'dist',
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[id].js'
+    filename: '[name].js',
+    chunkFilename: '[id].js'
   },
   externals: {
     vue: 'Vue'

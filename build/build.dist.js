@@ -11,7 +11,6 @@ spinner.text = 'building dist...'
 spinner.start()
 
 utils.cleanPath('dist')
-cp('-R', 'static/', 'dist') // eslint-disable-line no-undef
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()

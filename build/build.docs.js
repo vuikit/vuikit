@@ -10,8 +10,10 @@ var spinner = ora()
 spinner.text = 'building docs...'
 spinner.start()
 
+/* eslint-disable no-undef */
 utils.cleanPath('docs')
-cp('-R', 'static/', 'docs') // eslint-disable-line no-undef
+cp('-R', 'static/', 'docs')
+cp('-R', 'node_modules/uikit/dist/fonts/', 'docs/fonts')
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()

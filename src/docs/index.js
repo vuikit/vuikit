@@ -3,7 +3,7 @@ import App from './Docs'
 import Doc from './components/Doc'
 import TableProps from './components/TableProps'
 import TableEvents from './components/TableEvents'
-import Vuikit from '../vuikit'
+import Vuikit from '../vue'
 import VEncode from './v-encode'
 
 // init Vuikit
