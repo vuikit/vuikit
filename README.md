@@ -1,15 +1,91 @@
-# vuikit
+# Vuikit
 
 > UIkit with all the power of Vue
 
+Vuikit is a collection of native Vue components that embrace and extend the UIkit framework. As such, both [UIkit](http://getuikit.com/) and [Vue](http://vuejs.org/) are Vuikit direct dependencies.
+
+While it is possible to use UIkit by its own when building Vue components, you may find your self building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, well documented API.
+
+## Code Samples
+
+All Vuikit components are registered globally and ready to use immediately.
+
+```js
+import Vue from 'vue'
+import Vuikit from 'vuikit'
+
+Vue.use(vuikit)
+```
+
+```html
+<template>
+  <div>
+    <vk-button-checkbox>
+      <vk-button style="primary">Buttonvk-button>
+      <vk-button active>Button</vk-button>
+      <vk-button>Button</vk-button>
+    </vk-button-checkbox>
+  </div>
+</template>
+```
+
+Although, there is no need to load them all, is recommended to register individually only the required ones.
+
+```js
+import Vue from 'vue'
+import Button from 'vuikit/src/Button'
+import Alert from 'vuikit/src/Alert'
+
+// globally
+Vue.component('VkButton', Button)
+Vue.component('VkAlert', Alert)
+
+// or locally
+new Vue({
+  components: {
+    VkButton: Button,
+    VkAlert: Alert,
+  }
+})
+```
+
+Extending the component allows changing the output or adding specific features.
+
+```js
+import Vue from 'vue'
+import Button from 'vuikit/src/Button'
+
+Vue.component('TmButton', {
+  extends: Button,
+  template: '', // the new output
+  props: {} // new features
+  ...
+})
+```
+
+## Configuration and Usage
+
+### NPM
+
+```bash
+npm install vuikit --save
+```
+```js
+import Vue from 'vue'
+import Vuikit from 'vuikit'
+
+Vue.use(Vuikit) // or register individually
+```
+
+### Browser
+
+Make sure UIkit and Vue latest version assets are loaded upfront and then load `dist/vuikit.css` and `dist/vuikit.js`.
+
 ## Documentation and Demo
-[http://joolanders.github.io/vuikit/](http://joolanders.github.io/vuikit/)
 
-## Requirements
-* [UIkit](http://getuikit.com/) (^2.26.0)
-* [Vue](http://vuejs.org/) (^v1.0.21)
+See the [documentation](http://joolanders.github.io/vuikit/) with live editable examples.
 
-## Build Setup
+## Developers
 
 ``` bash
 # install dependencies
@@ -21,17 +97,8 @@ npm run dev
 # build for distribution
 npm run dist
 
-# build library for distribution
-npm run lib
-
 # build docs
 npm run docs
-
-# deploy docs
-npm run docs:deploy
-
-# compile UIkit less files
-npm run uikit
 ```
 
 ## License
