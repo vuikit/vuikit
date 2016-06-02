@@ -48,7 +48,8 @@ const props = {
   },
   value: {
     description: 'The current value determined by the active buttons.',
-    options: [[1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
+    options: [[1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]],
+    value: []
   }
 }
 

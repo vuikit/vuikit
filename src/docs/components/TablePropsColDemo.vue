@@ -1,12 +1,15 @@
 <template>
   <td class="uk-form uk-text-truncate">
     <!-- if not editable just show raw value -->
-    <template v-if="!editable || type === '*'" v-text="value"></template>
+    <span v-if="!editable || !demoField" v-text="value"></span>
     <template v-else>
       <!-- Select -->
       <div v-if="demoField === 'Select'"
         class="uk-form-select">
-        <a href="" v-text="value === '' ? '<>' : selectOptions[value]"></a>
+        <a href="" v-text="value === '' || !selectOptions[value]
+          ? '<>'
+          : selectOptions[value]">
+        </a>
         <select v-model="value">
           <option v-for="(value, opt) in selectOptions"
             :value="value === 'default' ? '' : value"

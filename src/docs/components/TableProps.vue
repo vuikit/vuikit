@@ -60,6 +60,9 @@ export default {
       return type || '*'
     },
     default (value) {
+      value = value && value.name === '_default'
+        ? value()
+        : value
       return value === undefined
         ? 'N/A'
         : JSON.stringify(value)
