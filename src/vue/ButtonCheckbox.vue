@@ -13,13 +13,25 @@ import Vue from 'vue'
 
 export default {
   props: {
-    value: {},
+    value: {
+      type: Array,
+      default: () => []
+    },
     group: {
       type: Boolean,
       default: true
     }
   },
+  computed: {
+    buttons () {
+      return this.$children.filter(btn => btn.$options.name === 'VkButton')
+    }
+  },
   ready: function () {
+    // inherit value from initially active buttons
+    this.buttons.filter(btn => btn.active).forEach(btn => {
+      this.value.push(btn.value)
+    })
     // on each change
     UI.$(this.$el).on('click', () => {
       // get actives btns
@@ -32,7 +44,7 @@ export default {
     // update buttons active state
     // on init and on each change
     this.$watch('value', function (value) {
-      this.$children.forEach(btn => {
+      this.buttons.forEach(btn => {
         btn.active = value && value.indexOf(btn.value) !== -1
       })
     }, { immediate: true })
