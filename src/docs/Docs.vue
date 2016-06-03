@@ -42,6 +42,7 @@
             </h1>
             <hr class="uk-article-divider">
             <component :is="'Page' + current"></component>
+            <span class="uk-hidden-large uk-text-small uk-text-muted">Note: Rotate the screen to see the rest of the options.</span>
           </article>
         </div>
       </div>
@@ -122,4 +123,19 @@ export default {
 .tm-docs-subtitle {
   margin: 60px 0 0 0;
 }
+
+/*
+ * Responsive
+ */
+@media (min-width: 501px) and (max-width: 959px) {
+  .tm-docs-hidden-medium {
+    display: none !important;
+  }
+}
+@media (max-width: 500px) {
+  .tm-docs-hidden-small {
+    display: none !important;
+  }
+}
+
 </style>
