@@ -73,7 +73,7 @@ const code =
   <template slot="footer">Text/HTML content</template>
 </vk-modal>`
 
-const props = merge(commonProps, {
+const props = merge({}, commonProps, {
   bgClose: {
     description: 'Determines whether or not the modal can be closed by clicking the background.'
   },

@@ -85,7 +85,8 @@ const props = {
   locale: {
     description: `Determines the locale data object, <code>months</code>,
       <code>weekDays</code> and <code>weekStart</code>.`,
-    default: {}
+    default: {},
+    value: ''
   }
 }
 

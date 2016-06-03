@@ -49,7 +49,7 @@ const code =
   <img />
 </vk-modal-lightbox>`
 
-const props = merge(commonProps, {
+const props = merge({}, commonProps, {
   bgClose: {
     description: `Determines whether or not the modal can be closed by clicking
       the background.`
