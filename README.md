@@ -12,8 +12,9 @@ Vuikit is a collection of native Vue components that embrace and extend the UIki
 - [jQuery](https://jquery.com//) (Inherited UIkit dependency)
 
 ## Code Samples
+> Note that all code examples are using ES6 syntax
 
-All Vuikit components are registered globally and ready to use immediately.
+Vuikit components are registered globally by default and ready to use immediately.
 
 ```js
 import Vue from 'vue'
@@ -21,7 +22,6 @@ import Vuikit from 'vuikit'
 
 Vue.use(vuikit)
 ```
-
 ```html
 <template>
   <div>
@@ -34,7 +34,7 @@ Vue.use(vuikit)
 </template>
 ```
 
-Although, there is no need to load them all, is recommended to register individually only the required ones.
+Although is recommended to load and register them individually as required.
 
 ```js
 import Vue from 'vue'
@@ -54,7 +54,7 @@ new Vue({
 })
 ```
 
-Extending the component allows changing the output or adding specific features.
+Changing the output or adding specific features is straight forward by extending a component.
 
 ```js
 import Vue from 'vue'
@@ -67,6 +67,8 @@ Vue.component('TmButton', {
   ...
 })
 ```
+
+We have set a live example at [codepen](http://codepen.io/miljan/pen/YWXVKj) for show and test purposes.
 
 ## Configuration and Usage
 
