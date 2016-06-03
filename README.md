@@ -2,9 +2,14 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of native Vue components that embrace and extend the UIkit framework. As such, both [UIkit](http://getuikit.com/) and [Vue](http://vuejs.org/) are Vuikit direct dependencies.
+Vuikit is a collection of native Vue components that embrace and extend the UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find your self building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, well documented API.
 
-While it is possible to use UIkit by its own when building Vue components, you may find your self building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, well documented API.
+## Dependencies
+
+- [Vue](http://vuejs.org/) (^1.0.24)
+- [UIkit](http://getuikit.com/) (^2.26.0)
+- [Moment](http://momentjs.com/) (^2.13.0 only if using VkCalendar or VkDatepicker)
+- [jQuery](https://jquery.com//) (Inherited UIkit dependency)
 
 ## Code Samples
 
