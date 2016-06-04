@@ -35,14 +35,14 @@ const code = '<vk-alert></vk-alert>'
 
 const props = {
   show: {
-    description: 'Determines whether to show alert.'
+    description: 'Determines whether or not the alert is displayed.'
   },
   style: {
-    description: 'Determines the color of alert.',
+    description: 'Determines the style of the alert.',
     options: ['default', 'success', 'warning', 'danger']
   },
   size: {
-    description: 'Determines the size of alert.',
+    description: 'Determines the size of the alert.',
     options: ['default', 'large']
   },
   close: {

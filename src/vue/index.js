@@ -14,6 +14,7 @@ const components = {
   ModalAlert: require('./ModalAlert'),
   ModalConfirm: require('./ModalConfirm'),
   Pagination: require('./Pagination'),
+  Progress: require('./Progress'),
   Subnav: require('./Subnav'),
   SubnavItem: require('./SubnavItem'),
   Switcher: require('./Switcher'),

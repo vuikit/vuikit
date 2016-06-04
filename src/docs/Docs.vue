@@ -59,6 +59,7 @@ const Pages = {
   Datepicker: require('./pages/Datepicker/index'),
   Modal: require('./pages/Modal/index'),
   Pagination: require('./pages/Pagination/index'),
+  Progress: require('./pages/Progress/index'),
   Subnav: require('./pages/Subnav/index'),
   Switcher: require('./pages/Switcher/index'),
   Tabs: require('./pages/Tabs/index')
@@ -80,6 +81,7 @@ export default {
     PageDatepicker: Pages.Datepicker,
     PageModal: Pages.Modal,
     PagePagination: Pages.Pagination,
+    PageProgress: Pages.Progress,
     PageSubnav: Pages.Subnav,
     PageSwitcher: Pages.Switcher,
     PageTabs: Pages.Tabs
