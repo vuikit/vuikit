@@ -22,7 +22,7 @@
 @pagination-active-color:                       @global-color;
 
 @pagination-disabled-background:                transparent;
-@pagination-disabled-color:                     @global-muted-color;
+@pagination-disabled-color:                     transparent;
 
 
 // Component
@@ -51,4 +51,11 @@
 // Miscellaneous
 // ========================================================================
 
-.hook-pagination-misc() {}
+.hook-pagination-misc() {
+
+  // fix unnecessary space
+  .uk-pagination-previous > a,
+  .uk-pagination-previous > span,
+  .uk-pagination-next > a,
+  .uk-pagination-next > span { float: left }
+}

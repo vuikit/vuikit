@@ -2517,7 +2517,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
  */
 .uk-pagination > .uk-disabled > span {
   background-color: transparent;
-  color: #aaa;
+  color: transparent;
 }
 /* Previous and next navigation
  ========================================================================== */
@@ -2534,6 +2534,12 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 }
 .uk-pagination-right {
   text-align: right;
+}
+.uk-pagination-previous > a,
+.uk-pagination-previous > span,
+.uk-pagination-next > a,
+.uk-pagination-next > span {
+  float: left;
 }
 /* ========================================================================
    Component: Tab

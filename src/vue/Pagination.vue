@@ -98,7 +98,7 @@ export default {
     // next/prev btns position
     compact: {
       type: Boolean,
-      default: true
+      default: false
     },
     // current page
     current: {
