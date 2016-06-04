@@ -2,20 +2,20 @@
   <div class="uk-modal" v-el:modal>
     <div class="uk-modal-dialog">
       <div class="uk-modal-content">
-        <template v-if="text">{{ text }}</template>
-        <slot v-if="!text"></slot>
+        <slot></slot>
       </div>
       <div class="uk-modal-footer uk-text-right">
-        <vk-button
+        <button class="uk-button"
           :disabled="block"
-          @click="show = false"
-          text="Cancel">
-        </vk-button>
-        <vk-button style="primary"
+          @click="show = false">
+          Cancel
+        </button>
+        <button class="uk-button uk-button-primary"
+          type="button"
           :disabled="block"
-          @click="confirm()"
-          text="Ok">
-        </vk-button>
+          @click="confirm()">
+          OK
+        </button>
       </div>
     </div>
   </div>

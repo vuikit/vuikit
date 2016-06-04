@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :events="events"
+      :slots="slots"
       :code="code">
       <div slot="demo">
         <vk-tabs-vertical v-ref:demo
@@ -44,6 +45,7 @@ export default {
   data: () => ({
     props: Helper.getProps('TabsVertical', props),
     tabProps: Helper.getProps('Tab', tabProps),
+    slots,
     events,
     code
   })
@@ -84,6 +86,12 @@ const tabProps = {
 const events = {
   change: {
     description: 'Emited when there was made some tab selection.'
+  }
+}
+
+const slots = {
+  default: {
+    description: 'The default slot on each <code>vk-tab</code> holds the tab content.'
   }
 }
 </script>

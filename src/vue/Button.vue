@@ -4,12 +4,11 @@
     :disabled="disabled"
     :type="type">
     <i v-if="iconLeft"
-      :class="iconClass(iconLeft)">
+      class="uk-icon-justify uk-icon-{{ iconLeft }}">
     </i>
-    <template v-if="text">{{ text }}</template>
-    <slot v-if="!text"></slot>
+    <slot></slot>
     <i v-if="iconRight"
-      :class="iconClass(iconRight)">
+      class="uk-icon-justify uk-icon-{{ iconRight }}">
     </i>
   </button>
 </template>
@@ -17,6 +16,7 @@
 <script>
 export default {
   props: {
+    value: {},
     style: {
       type: String,
       default: ''
@@ -45,15 +45,10 @@ export default {
       type: Boolean,
       default: false
     },
-    text: {
-      type: String,
-      default: ''
-    },
     type: {
       type: String,
       default: 'button'
-    },
-    value: {}
+    }
   },
   computed: {
     classes: function () {
@@ -73,11 +68,6 @@ export default {
       /* width */
       classes[`uk-width-${this.width}`] = this.width
       return classes
-    }
-  },
-  methods: {
-    iconClass: function (icon) {
-      return `uk-icon-justify uk-icon-${icon}`
     }
   }
 }

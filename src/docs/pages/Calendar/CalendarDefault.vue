@@ -64,12 +64,6 @@ const props = {
       <code>object</code>. Defaults to current day if omited.`,
     default: Moment().date()
   },
-  locale: {
-    description: `Determines the locale data object, <code>months</code>,
-      <code>weekDays</code> and <code>weekStart</code>.`,
-    default: {},
-    value: ''
-  },
   minDate: {
     description: `Determines the earliest selectable date. Accepted values are date
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
@@ -81,6 +75,12 @@ const props = {
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
     as offset days from current day. Set to <code>false</code> to ignore the option.`,
     options: ['default', 5, 10]
+  },
+  locale: {
+    description: `Determines the locale data object, <code>months</code>,
+      <code>weekDays</code> and <code>weekStart</code>.`,
+    default: {},
+    value: ''
   }
 }
 

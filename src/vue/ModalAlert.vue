@@ -6,11 +6,11 @@
         <slot v-if="!text"></slot>
       </div>
       <div class="uk-modal-footer uk-text-right">
-        <vk-button style="primary"
+        <button class="uk-button uk-button-primary"
           :disabled="block"
-          @click="show = false"
-          text="Ok">
-        </vk-button>
+          @click="show = false">
+          Ok
+        </button>
       </div>
     </div>
   </div>

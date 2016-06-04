@@ -13,8 +13,8 @@
           :icon-right="props.iconRight.value"
           :active="props.active.value"
           :disabled="props.disabled.value"
-          :value.sync="props.value.value"
-          text="Button">
+          :value.sync="props.value.value">
+          Button
         </vk-button>
         <vk-button-link
           :style="props.style.value"
@@ -24,8 +24,8 @@
           :icon-right="props.iconRight.value"
           :active="props.active.value"
           :value.sync="props.value.value"
-          text="Link"
           @click.prevent>
+          Link
         </vk-button-link>
       </div>
       <div slot="desc">
@@ -62,6 +62,15 @@ const code =
 </vk-button-link>`
 
 const props = {
+  value: {
+    description: `Determines the value of the button when used with other
+      components. Specific to <code>vk-button</code>.`
+  },
+  href: {
+    description: `Determines the link to follow when the button is pressed.
+      Specific to <code>vk-button-link</code>.`,
+    editable: false
+  },
   active: {
     description: 'Determines whether or not the button is active.'
   },
@@ -94,20 +103,6 @@ const props = {
     description: `Determines the icon from the <i>Font Awesome</i> library to be placed
       on the right of the button inner content.`,
     options: ['default', 'flag', 'microphone', 'gamepad']
-  },
-  value: {
-    description: `Determines the value of the button when used with other
-      components. Specific to <code>vk-button</code>.`
-  },
-  text: {
-    description: `The text for the button inner content. For HTML use the
-      <code>default</code> slot instead.`,
-    editable: false
-  },
-  href: {
-    description: `Determines the link to follow when the button is pressed.
-      Specific to <code>vk-button-link</code>.`,
-    editable: false
   }
 }
 

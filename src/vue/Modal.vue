@@ -18,7 +18,7 @@
         :class="{
           'uk-overflow-container': overflow
         }">
-        <slot name="content"></slot>
+        <slot></slot>
       </div>
       <!-- footer -->
       <div v-el:footer class="uk-modal-footer">
@@ -28,8 +28,6 @@
       <div v-el:caption class="uk-modal-caption">
         <slot name="caption"></slot>
       </div>
-      <!-- default slot -->
-      <slot></slot>
     </div>
   </div>
 </template>

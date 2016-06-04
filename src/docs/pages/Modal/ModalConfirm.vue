@@ -2,12 +2,13 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :events="events"
       :code="code">
       <div slot="demo">
         <vk-button
-          @click="(props.show.value = true) && ($refs.demo.state = false)"
-          :text="buttonText">
+          @click="(props.show.value = true) && ($refs.demo.state = false)">
+          {{ buttonText }}
         </vk-button>
         <vk-modal-confirm v-ref:demo
           :show.sync="props.show.value"
@@ -15,10 +16,10 @@
           :block="props.block.value"
           :keyboard="props.keyboard.value"
           @confirm="buttonText = 'Confirmed'"
-          @dismiss="buttonText = 'Dismissed'"
-          :text="props.block.value
+          @dismiss="buttonText = 'Dismissed'">
+          {{ props.block.value
             ? 'The modal is blocked, refresh the page to continue.'
-            : 'Are you sure?'">
+            : 'Are you sure?' }}
         </vk-modal-confirm>
       </div>
       <div slot="desc">
@@ -41,6 +42,7 @@ export default {
     return {
       buttonText: 'Open',
       props: Helper.getProps('ModalConfirm', props),
+      slots,
       events,
       code
     }
@@ -48,19 +50,19 @@ export default {
 }
 
 const code =
-'<vk-modal-confirm text="Text"></vk-modal-confirm>'
+'<vk-modal-confirm></vk-modal-confirm>'
 
-const props = merge({}, commonProps, {
-  text: {
-    description: `The text for the modal content. For HTML use the
-      <code>default</code> slot instead.`,
-    editable: false
-  }
-})
+const props = merge({}, commonProps)
 
 const events = merge({}, commonEvents, {
   confirm: {
     description: 'Emited on user confirmation'
   }
 })
+
+const slots = {
+  default: {
+    description: 'The default slot holds the modal text content.'
+  }
+}
 </script>

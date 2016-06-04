@@ -2,21 +2,22 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :events="events"
       :code="code">
       <div slot="demo">
         <vk-button
-          @click="props.show.value = true"
-          text="Open">
+          @click="props.show.value = true">
+          Open
         </vk-button>
         <vk-modal-alert v-ref:demo
           :show.sync="props.show.value"
           :center="props.center.value"
           :block="props.block.value"
-          :keyboard="props.keyboard.value"
-          :text="props.block.value
+          :keyboard="props.keyboard.value">
+          {{ props.block.value
             ? 'The alert is blocked, refresh the page to continue.'
-            : 'Attention!'">
+            : 'Attention!' }}
         </vk-modal-alert>
       </div>
       <div slot="desc">
@@ -38,19 +39,20 @@ export default {
   data: function () {
     return {
       props: Helper.getProps('ModalAlert', props),
+      slots,
       events,
       code
     }
   }
 }
 
-const code = '<vk-modal-alert text="Text"></vk-modal-alert>'
+const code = '<vk-modal-alert></vk-modal-alert>'
 
-const props = merge({}, commonProps, {
-  text: {
-    description: `The text for the modal content. For HTML use the
-      <code>default</code> slot instead.`,
-    editable: false
+const props = merge({}, commonProps)
+
+const slots = {
+  default: {
+    description: 'The default slot holds the modal text content.'
   }
-})
+}
 </script>

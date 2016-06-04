@@ -7,8 +7,8 @@
       :code="code">
       <div slot="demo">
         <vk-button
-          @click="props.show.value = true"
-          text="Open">
+          @click="props.show.value = true">
+          Open
         </vk-button>
         <vk-modal-lightbox v-ref:demo
           :show.sync="props.show.value"

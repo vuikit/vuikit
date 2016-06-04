@@ -8,9 +8,9 @@
         <vk-button-checkbox v-ref:demo
           :group="props.group.value"
           :value.sync="props.value.value">
-          <vk-button :value="1">Button 1</vk-button>
-          <vk-button :value="2">Button 2</vk-button>
-          <vk-button :value="3">Button 3</vk-button>
+          <vk-button value="1">Button 1</vk-button>
+          <vk-button value="2">Button 2</vk-button>
+          <vk-button value="3">Button 3</vk-button>
         </vk-button-checkbox>
       </div>
       <div slot="desc">
@@ -35,19 +35,18 @@ export default {
 
 const code =
 `<vk-button-checkbox>
-  <vk-button :value="1">Button 1</vk-button>
-  <vk-button :value="2">Button 2</vk-button>
-  <vk-button :value="3">Button 3</vk-button>
+  <vk-button value="1">Button 1</vk-button>
+  <vk-button value="2">Button 2</vk-button>
+  <vk-button value="3">Button 3</vk-button>
 </vk-button-checkbox>`
 
 const props = {
-  group: {
-    description: 'Determines whether or not the buttons are grouped.'
-  },
   value: {
     description: 'The current value determined by the active buttons.',
-    options: [[1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]],
     value: []
+  },
+  group: {
+    description: 'Determines whether or not the buttons are grouped.'
   }
 }
 
