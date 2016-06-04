@@ -4,20 +4,19 @@
     :slots="slots"
     :code="code">
     <div slot="demo">
-      <vk-button
+      <vk-button-link v-ref:demo
         :style="props.style.value"
         :size="props.size.value"
         :width="props.width.value"
         :icon-left="props.iconLeft.value"
         :icon-right="props.iconRight.value"
         :active="props.active.value"
-        :disabled="props.disabled.value"
-        :value.sync="props.value.value">
-        Button
-      </vk-button>
+        @click.prevent>
+        Link
+      </vk-button-link>
     </div>
     <div slot="desc">
-      The <code>vk-button</code> component renders a standard button.
+      The <code>vk-button-link</code> component is a variation that renders an anchor that looks like a button.
     </div>
   </docs-page>
 </template>
@@ -29,27 +28,24 @@ import mixins from '../../mixins'
 export default {
   mixins: [mixins],
   data: () => ({
-    props: Helper.getProps('Button', props),
+    props: Helper.getProps('ButtonLink', props),
     slots,
     code
   })
 }
 
 const code =
-`<vk-button>
-  Button
-</vk-button>`
+`<vk-button-link>
+  Link
+</vk-button-link>`
 
 const props = {
-  value: {
-    description: `Determines the value of the button when used with other
-      components.`
+  href: {
+    description: 'Determines the link to follow when the button is pressed.',
+    editable: false
   },
   active: {
     description: 'Determines whether or not the button is active.'
-  },
-  disabled: {
-    description: 'Determines whether or not the button is disabled.'
   },
   style: {
     description: `Determines the style variation of the button, <code>'primary'</code>,
