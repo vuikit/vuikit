@@ -1,36 +1,34 @@
 <template>
-  <div>
-    <docs-page
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-breadcrumb v-ref:demo
-          :location.sync="props.location.value">
-          <vk-crumb path="/">Home</vk-crumb>
-          <vk-crumb path="/blog">Blog</vk-crumb>
-          <vk-crumb disabled path="/blog/category">Category</vk-crumb>
-          <vk-crumb path="/blog/category/post">Post</vk-crumb>
-        </vk-breadcrumb>
-      </div>
-      <div slot="desc">
-        The <code>vk-breadcrumb</code> component together with <code>vk-crumb</code> renders a breadcrumb showing any kind of location.
-      </div>
-      <div slot="props">
-        <vk-subnav style="line" v-ref:nav>
-          <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
-          <vk-subnav-item>vk-crumb</vk-subnav-item>
-        </vk-subnav>
-        <vk-switcher :connect="$refs.nav">
-          <vk-switch>
-            <table-props :rows="props"></table-props>
-          </vk-switch>
-          <vk-switch>
-            <table-props :rows="CrumbProps" :demo="false"></table-props>
-          </vk-switch>
-        </vk-switcher>
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-breadcrumb v-ref:demo
+        :location.sync="props.location.value">
+        <vk-crumb path="/">Home</vk-crumb>
+        <vk-crumb path="/blog">Blog</vk-crumb>
+        <vk-crumb disabled path="/blog/category">Category</vk-crumb>
+        <vk-crumb path="/blog/category/post">Post</vk-crumb>
+      </vk-breadcrumb>
+    </div>
+    <div slot="desc">
+      The <code>vk-breadcrumb</code> component together with <code>vk-crumb</code> renders a breadcrumb showing any kind of location.
+    </div>
+    <div slot="props">
+      <vk-subnav style="line" v-ref:nav>
+        <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
+        <vk-subnav-item>vk-crumb</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher :connect="$refs.nav">
+        <vk-switch>
+          <table-props :rows="props"></table-props>
+        </vk-switch>
+        <vk-switch>
+          <table-props :rows="CrumbProps" :demo="false"></table-props>
+        </vk-switch>
+      </vk-switcher>
+    </div>
+  </docs-page>
 </template>
 
 <script>

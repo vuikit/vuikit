@@ -1,30 +1,28 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :slots="slots"
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-button
-          @click="props.show.value = true">
-          Open
-        </vk-button>
-        <vk-modal-alert v-ref:demo
-          :show.sync="props.show.value"
-          :center="props.center.value"
-          :block="props.block.value"
-          :keyboard="props.keyboard.value">
-          {{ props.block.value
-            ? 'The alert is blocked, refresh the page to continue.'
-            : 'Attention!' }}
-        </vk-modal-alert>
-      </div>
-      <div slot="desc">
-        The <code>vk-modal-alert</code> component is an alternative for the native window.alert dialog.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :slots="slots"
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-button
+        @click="props.show.value = true">
+        Open
+      </vk-button>
+      <vk-modal-alert v-ref:demo
+        :show.sync="props.show.value"
+        :center="props.center.value"
+        :block="props.block.value"
+        :keyboard="props.keyboard.value">
+        {{ props.block.value
+          ? 'The alert is blocked, refresh the page to continue.'
+          : 'Attention!' }}
+      </vk-modal-alert>
+    </div>
+    <div slot="desc">
+      The <code>vk-modal-alert</code> component is an alternative for the native window.alert dialog.
+    </div>
+  </docs-page>
 </template>
 
 <script>

@@ -1,39 +1,37 @@
 <template>
-  <div>
-    <docs-page
-      :events="events"
-      :slots="slots"
-      :code="code">
-      <div slot="demo">
-        <vk-tabs-vertical v-ref:demo
-          :align="props.align.value"
-          :header-width="props.headerWidth.value"
-          :body-width="props.bodyWidth.value">
-          <vk-tab label="Tab 1">Content Tab 1</vk-tab>
-          <vk-tab label="Tab 2">Content Tab 2</vk-tab>
-          <vk-tab label="Tab 3">Content Tab 3</vk-tab>
-          <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
-        </vk-tabs-vertical>
-      </div>
-      <div slot="desc">
-        The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
-      </div>
-      <div slot="props">
-        <vk-subnav style="line" v-ref:nav>
-          <vk-subnav-item>vk-tabs</vk-subnav-item>
-          <vk-subnav-item>vk-tab</vk-subnav-item>
-        </vk-subnav>
-        <vk-switcher :connect="$refs.nav">
-          <vk-switch>
-            <table-props :rows="props"></table-props>
-          </vk-switch>
-          <vk-switch>
-            <table-props :rows="tabProps" :demo="false"></table-props>
-          </vk-switch>
-        </vk-switcher>
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :events="events"
+    :slots="slots"
+    :code="code">
+    <div slot="demo">
+      <vk-tabs-vertical v-ref:demo
+        :align="props.align.value"
+        :header-width="props.headerWidth.value"
+        :body-width="props.bodyWidth.value">
+        <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+        <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+        <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+        <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
+      </vk-tabs-vertical>
+    </div>
+    <div slot="desc">
+      The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
+    </div>
+    <div slot="props">
+      <vk-subnav style="line" v-ref:nav>
+        <vk-subnav-item>vk-tabs</vk-subnav-item>
+        <vk-subnav-item>vk-tab</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher :connect="$refs.nav">
+        <vk-switch>
+          <table-props :rows="props"></table-props>
+        </vk-switch>
+        <vk-switch>
+          <table-props :rows="tabProps" :demo="false"></table-props>
+        </vk-switch>
+      </vk-switcher>
+    </div>
+  </docs-page>
 </template>
 
 <script>

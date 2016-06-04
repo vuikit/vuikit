@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-pagination v-ref:demo
-          :align="props.align.value"
-          :current.sync="props.current.value"
-          :edges="props.edges.value"
-          :items="props.items.value"
-          :compact="props.compact.value"
-          :items-on-page="props.itemsOnPage.value"
-          :visible-pages="props.visiblePages.value">
-        </vk-pagination>
-      </div>
-      <div slot="desc">
-        The <code>vk-pagination</code> component renders a pagination navigation.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-pagination v-ref:demo
+        :align="props.align.value"
+        :current.sync="props.current.value"
+        :edges="props.edges.value"
+        :items="props.items.value"
+        :compact="props.compact.value"
+        :items-on-page="props.itemsOnPage.value"
+        :visible-pages="props.visiblePages.value">
+      </vk-pagination>
+    </div>
+    <div slot="desc">
+      The <code>vk-pagination</code> component renders a pagination navigation.
+    </div>
+  </docs-page>
 </template>
 
 <script>

@@ -1,29 +1,27 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-subnav style="pill" v-ref:nav>
-          <vk-subnav-item>Item 1</vk-subnav-item>
-          <vk-subnav-item>Item 2</vk-subnav-item>
-          <vk-subnav-item>Item 3</vk-subnav-item>
-        </vk-subnav>
-        <vk-switcher v-ref:demo
-          :connect="$refs.nav"
-          :animation="props.animation.value"
-          :swiping="props.swiping.value">
-          <vk-switch>Content 1</vk-switch>
-          <vk-switch>Content 2</vk-switch>
-          <vk-switch>Content 3</vk-switch>
-        </vk-switcher>
-      </div>
-      <div slot="desc">
-        The <code>vk-switcher</code> component, when combined with nav components, allows transitioning through different content panes.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-subnav style="pill" v-ref:nav>
+        <vk-subnav-item>Item 1</vk-subnav-item>
+        <vk-subnav-item>Item 2</vk-subnav-item>
+        <vk-subnav-item>Item 3</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher v-ref:demo
+        :connect="$refs.nav"
+        :animation="props.animation.value"
+        :swiping="props.swiping.value">
+        <vk-switch>Content 1</vk-switch>
+        <vk-switch>Content 2</vk-switch>
+        <vk-switch>Content 3</vk-switch>
+      </vk-switcher>
+    </div>
+    <div slot="desc">
+      The <code>vk-switcher</code> component, when combined with nav components, allows transitioning through different content panes.
+    </div>
+  </docs-page>
 </template>
 
 <script>

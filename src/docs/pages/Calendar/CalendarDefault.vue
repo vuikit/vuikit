@@ -1,22 +1,20 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-calendar v-ref:demo
-          :year.sync="props.year.value | number"
-          :month.sync="props.month.value | number"
-          :min-date="props.minDate.value"
-          :max-date="props.maxDate.value">
-        </vk-calendar>
-      </div>
-      <div slot="desc">
-        The <code>vk-calendar</code> component renders a table based calendar.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-calendar v-ref:demo
+        :year.sync="props.year.value | number"
+        :month.sync="props.month.value | number"
+        :min-date="props.minDate.value"
+        :max-date="props.maxDate.value">
+      </vk-calendar>
+    </div>
+    <div slot="desc">
+      The <code>vk-calendar</code> component renders a table based calendar.
+    </div>
+  </docs-page>
 </template>
 
 <script>

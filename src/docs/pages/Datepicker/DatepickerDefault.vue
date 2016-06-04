@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :events="events"
-      :code="code">
-      <div slot="demo" class="uk-form">
-        <vk-datepicker v-ref:demo
-          :value.sync="props.value.value"
-          :format="props.format.value"
-          :position="props.position.value"
-          :mobile="props.mobile.value"
-          :min-date="props.minDate.value"
-          :max-date="props.maxDate.value"
-          :offset-top="props.offsetTop.value">
-        </vk-datepicker>
-      </div>
-      <div slot="desc">
-        The <code>vk-datepicker</code> component renders an input with a toggleable datepicker.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :events="events"
+    :code="code">
+    <div slot="demo" class="uk-form">
+      <vk-datepicker v-ref:demo
+        :value.sync="props.value.value"
+        :format="props.format.value"
+        :position="props.position.value"
+        :mobile="props.mobile.value"
+        :min-date="props.minDate.value"
+        :max-date="props.maxDate.value"
+        :offset-top="props.offsetTop.value">
+      </vk-datepicker>
+    </div>
+    <div slot="desc">
+      The <code>vk-datepicker</code> component renders an input with a toggleable datepicker.
+    </div>
+  </docs-page>
 </template>
 
 <script>

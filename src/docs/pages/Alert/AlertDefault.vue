@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :slots="slots"
-      :code="code">
-      <div slot="demo">
-        <vk-alert v-ref:demo
-          :show.sync="props.show.value"
-          :style="props.style.value"
-          :size="props.size.value"
-          :close="props.close.value">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.
-        </vk-alert>
-      </div>
-      <div slot="desc">
-        The <code>vk-alert</code> component renders success, warning and error messages.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :slots="slots"
+    :code="code">
+    <div slot="demo">
+      <vk-alert v-ref:demo
+        :show.sync="props.show.value"
+        :style="props.style.value"
+        :size="props.size.value"
+        :close="props.close.value">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.
+      </vk-alert>
+    </div>
+    <div slot="desc">
+      The <code>vk-alert</code> component renders success, warning and error messages.
+    </div>
+  </docs-page>
 </template>
 
 <script>

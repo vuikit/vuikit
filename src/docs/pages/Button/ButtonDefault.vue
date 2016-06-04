@@ -1,38 +1,36 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :slots="slots"
-      :code="code">
-      <div slot="demo">
-        <vk-button
-          :style="props.style.value"
-          :size="props.size.value"
-          :width="props.width.value"
-          :icon-left="props.iconLeft.value"
-          :icon-right="props.iconRight.value"
-          :active="props.active.value"
-          :disabled="props.disabled.value"
-          :value.sync="props.value.value">
-          Button
-        </vk-button>
-        <vk-button-link
-          :style="props.style.value"
-          :size="props.size.value"
-          :width="props.width.value"
-          :icon-left="props.iconLeft.value"
-          :icon-right="props.iconRight.value"
-          :active="props.active.value"
-          :value.sync="props.value.value"
-          @click.prevent>
-          Link
-        </vk-button-link>
-      </div>
-      <div slot="desc">
-        Despite minor specific attributes, <code>vk-button</code> and <code>vk-button-link</code> render a nice looking button, being the first a <i>button</i> and the last an <i>anchor</i>.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :slots="slots"
+    :code="code">
+    <div slot="demo">
+      <vk-button
+        :style="props.style.value"
+        :size="props.size.value"
+        :width="props.width.value"
+        :icon-left="props.iconLeft.value"
+        :icon-right="props.iconRight.value"
+        :active="props.active.value"
+        :disabled="props.disabled.value"
+        :value.sync="props.value.value">
+        Button
+      </vk-button>
+      <vk-button-link
+        :style="props.style.value"
+        :size="props.size.value"
+        :width="props.width.value"
+        :icon-left="props.iconLeft.value"
+        :icon-right="props.iconRight.value"
+        :active="props.active.value"
+        :value.sync="props.value.value"
+        @click.prevent>
+        Link
+      </vk-button-link>
+    </div>
+    <div slot="desc">
+      Despite minor specific attributes, <code>vk-button</code> and <code>vk-button-link</code> render a nice looking button, being the first a <i>button</i> and the last an <i>anchor</i>.
+    </div>
+  </docs-page>
 </template>
 
 <script>

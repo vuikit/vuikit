@@ -1,32 +1,30 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :slots="slots"
-      :events="events"
-      :code="code">
-      <div slot="demo">
-        <vk-button
-          @click="(props.show.value = true) && ($refs.demo.state = false)">
-          {{ buttonText }}
-        </vk-button>
-        <vk-modal-confirm v-ref:demo
-          :show.sync="props.show.value"
-          :center="props.center.value"
-          :block="props.block.value"
-          :keyboard="props.keyboard.value"
-          @confirm="buttonText = 'Confirmed'"
-          @dismiss="buttonText = 'Dismissed'">
-          {{ props.block.value
-            ? 'The modal is blocked, refresh the page to continue.'
-            : 'Are you sure?' }}
-        </vk-modal-confirm>
-      </div>
-      <div slot="desc">
-        The <code>vk-modal-confirm</code> component is an alternative for the native window.confirm dialog.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    :props="props"
+    :slots="slots"
+    :events="events"
+    :code="code">
+    <div slot="demo">
+      <vk-button
+        @click="(props.show.value = true) && ($refs.demo.state = false)">
+        {{ buttonText }}
+      </vk-button>
+      <vk-modal-confirm v-ref:demo
+        :show.sync="props.show.value"
+        :center="props.center.value"
+        :block="props.block.value"
+        :keyboard="props.keyboard.value"
+        @confirm="buttonText = 'Confirmed'"
+        @dismiss="buttonText = 'Dismissed'">
+        {{ props.block.value
+          ? 'The modal is blocked, refresh the page to continue.'
+          : 'Are you sure?' }}
+      </vk-modal-confirm>
+    </div>
+    <div slot="desc">
+      The <code>vk-modal-confirm</code> component is an alternative for the native window.confirm dialog.
+    </div>
+  </docs-page>
 </template>
 
 <script>
