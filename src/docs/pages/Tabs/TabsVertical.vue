@@ -15,8 +15,7 @@
         </vk-tabs-vertical>
       </div>
       <div slot="desc">
-        The <code>vk-tabs-vertical</code> component consists of clickable
-        <code>vk-tab</code> tabs, that are aligned in a column.
+        The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
       </div>
       <div slot="props">
         <vk-subnav style="line" v-ref:nav>

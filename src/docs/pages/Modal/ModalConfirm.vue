@@ -22,7 +22,7 @@
         </vk-modal-confirm>
       </div>
       <div slot="desc">
-        An alternative for the native window.confirm dialog.
+        The <code>vk-modal-confirm</code> component is an alternative for the native window.confirm dialog.
       </div>
     </docs-page>
   </div>

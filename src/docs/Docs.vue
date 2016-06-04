@@ -1,15 +1,14 @@
 <template>
   <nav class="uk-navbar">
-      <a href="#tm-offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>
+    <a href="#tm-offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
   </nav>
-
   <div id="tm-offcanvas" class="uk-offcanvas">
     <div class="uk-offcanvas-bar">
       <ul class="uk-nav tm-nav uk-nav-offcanvas">
         <li v-for="page in pages"
           :class="{
             'uk-active': current === page
-           }">
+          }">
           <a :href="'#' + page.toLowerCase()"
             @click="current = page"
             v-text="page">
@@ -18,7 +17,6 @@
       </ul>
     </div>
   </div>
-
   <div class="tm-middle">
     <div class="uk-container uk-container-center">
       <div class="uk-grid" data-uk-grid-margin>
@@ -42,7 +40,9 @@
             </h1>
             <hr class="uk-article-divider">
             <component :is="'Page' + current"></component>
-            <span class="uk-hidden-large uk-text-small uk-text-muted">Note: Rotate the screen to see the rest of the options.</span>
+            <span class="uk-hidden-large uk-text-small uk-text-muted">
+              Note: Rotate the screen to see the rest of the options.
+            </span>
           </article>
         </div>
       </div>
@@ -59,9 +59,9 @@ const Pages = {
   Datepicker: require('./pages/Datepicker/index'),
   Modal: require('./pages/Modal/index'),
   Pagination: require('./pages/Pagination/index'),
-  Tabs: require('./pages/Tabs/index'),
   Subnav: require('./pages/Subnav/index'),
-  Switcher: require('./pages/Switcher/index')
+  Switcher: require('./pages/Switcher/index'),
+  Tabs: require('./pages/Tabs/index')
 }
 
 export default {
@@ -73,16 +73,16 @@ export default {
       : Object.keys(Pages)[0]
   },
   components: {
+    PageAlert: Pages.Alert,
     PageBreadcrumb: Pages.Breadcrumb,
     PageButton: Pages.Button,
     PageCalendar: Pages.Calendar,
     PageDatepicker: Pages.Datepicker,
     PageModal: Pages.Modal,
     PagePagination: Pages.Pagination,
-    PageTabs: Pages.Tabs,
     PageSubnav: Pages.Subnav,
     PageSwitcher: Pages.Switcher,
-    PageAlert: Pages.Alert
+    PageTabs: Pages.Tabs
   },
   data: () => ({
     pages: Object.keys(Pages),

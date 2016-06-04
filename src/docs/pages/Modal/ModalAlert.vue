@@ -20,7 +20,7 @@
         </vk-modal-alert>
       </div>
       <div slot="desc">
-        An alternative for the native window.alert dialog.
+        The <code>vk-modal-alert</code> component is an alternative for the native window.alert dialog.
       </div>
     </docs-page>
   </div>

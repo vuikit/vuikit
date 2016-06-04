@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :events="events"
       :code="code">
       <div slot="demo">
@@ -41,7 +42,7 @@
         </vk-modal>
       </div>
       <div slot="desc">
-        The <code>vk-modal</code> component is used to show modals and dialog boxes. It's header, main content, caption and footer can be fully customized using slots.
+        The <code>vk-modal</code> component renders a modal which can be displayed by other components or actions.
       </div>
     </docs-page>
   </div>
@@ -59,6 +60,7 @@ export default {
   data () {
     return {
       props: Helper.getProps('Modal', props),
+      slots,
       events,
       code
     }
@@ -90,4 +92,19 @@ const props = merge({}, commonProps, {
       height.`
   }
 })
+
+const slots = {
+  header: {
+    description: 'Holds the modal header content.'
+  },
+  content: {
+    description: 'Holds the modal main content.'
+  },
+  footer: {
+    description: 'Holds the modal footer content.'
+  },
+  caption: {
+    description: 'Holds the modal caption content.'
+  }
+}
 </script>

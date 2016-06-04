@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :code="code">
       <div slot="demo">
         <vk-alert v-ref:demo
@@ -13,8 +14,7 @@
         </vk-alert>
       </div>
       <div slot="desc">
-        Display success, warning or error messages with <code>vk-alert</code> component. It's possible to adjust
-        the message size, color and display a close button.
+        The <code>vk-alert</code> component renders success, warning and error messages.
       </div>
     </docs-page>
   </div>
@@ -28,6 +28,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Alert', props),
+    slots,
     code
   })
 }
@@ -53,7 +54,15 @@ const props = {
     description: `Determines the transition options data object:
       </br><code>fade</code> - whether or not the alert will fade on close,
       </br><code>duration</code> - the time in ms for alert fade animation on close.`,
-    default: {}
+    default: {},
+    value: '',
+    editable: false
+  }
+}
+
+const slots = {
+  default: {
+    description: 'The default slot holds the alert message content.'
   }
 }
 </script>

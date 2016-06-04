@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :events="events"
       :code="code">
       <div slot="demo">
@@ -20,7 +21,7 @@
         </vk-modal-lightbox>
       </div>
       <div slot="desc">
-        A variation if you want to use the modal as a lightbox for your images.
+        The <code>vk-modal-lightbox</code> component is a variation suited for displaying images.
       </div>
     </docs-page>
   </div>
@@ -38,6 +39,7 @@ export default {
   data: function () {
     return {
       props: Helper.getProps('ModalLightbox', props),
+      slots,
       events,
       code
     }
@@ -58,4 +60,10 @@ const props = merge({}, commonProps, {
     description: 'Determines whether or not the close button is displayed.'
   }
 })
+
+const slots = {
+  default: {
+    description: 'Holds the modal default content, usually an image.'
+  }
+}
 </script>

@@ -16,7 +16,7 @@
         </vk-pagination>
       </div>
       <div slot="desc">
-        Easily create a nice looking pagination to navigate through pages.
+        The <code>vk-pagination</code> component renders a pagination navigation.
       </div>
     </docs-page>
   </div>

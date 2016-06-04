@@ -20,8 +20,7 @@
         </vk-switcher>
       </div>
       <div slot="desc">
-        Dynamically transition through different content panes. <i>VkSwitcher</i> is usualy
-        cobmined with other components, as <i>VkSubnav</i> of the example above.
+        The <code>vk-switcher</code> component, when combined with nav components, allows transitioning through different content panes.
       </div>
     </docs-page>
   </div>
@@ -66,7 +65,7 @@ const props = {
       <code>slide-horizontal</code> and <code>slide-vertical</code>, but you can
       apply multiple or custom animations by using the <code>uk-animation-*</code> classes
       from the <a href="http://getuikit.com/docs/animation.html" target="_blank">UIkit Animation</a> component.`,
-    options: ['', 'fade', 'scale', 'slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'slide-horizontal', 'slide-vertical']
+    options: ['default', 'fade', 'scale', 'slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'slide-horizontal', 'slide-vertical']
   },
   swiping: {
     description: 'Determines whether or not the content can be changed on swipe.'

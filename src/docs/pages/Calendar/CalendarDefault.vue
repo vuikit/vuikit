@@ -13,6 +13,7 @@
         </vk-calendar>
       </div>
       <div slot="desc">
+        The <code>vk-calendar</code> component renders a table based calendar.
       </div>
     </docs-page>
   </div>
@@ -54,12 +55,12 @@ const props = {
     description: `Determines the calendar month. If using numbers notice that
       are zero indexed, so January is month <code>0</code>. Defaults to current
       month if omited.`,
-    options: { 0: 'Jan', 1: 'Feb', 2: 'Mar', 3: 'Apr', 4: 'May', 5: 'Jun', 6: 'Jul', 7: 'Aug', 8: 'Sep', 9: 'Oct', 10: 'Nov', 11: 'Dec' },
+    options: { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 },
     default: Moment().month(),
     value: Moment().month()
   },
   selected: {
-    description: `Determines the selected date/s represented with a Moment
+    description: `Determines the selected dates represented with a Moment
       <code>object</code>. Defaults to current day if omited.`,
     default: Moment().date()
   },
@@ -73,13 +74,13 @@ const props = {
     description: `Determines the earliest selectable date. Accepted values are date
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
     as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['', 5, 10]
+    options: ['default', 5, 10]
   },
   maxDate: {
     description: `Determines the latest selectable date. Accepted values are date
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
     as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['', 5, 10]
+    options: ['default', 5, 10]
   }
 }
 

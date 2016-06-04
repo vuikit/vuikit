@@ -16,7 +16,7 @@
         </vk-datepicker>
       </div>
       <div slot="desc">
-        Create a toggleable dropdown with a datepicker.
+        The <code>vk-datepicker</code> component renders an input with a toggleable datepicker.
       </div>
     </docs-page>
   </div>
@@ -74,13 +74,13 @@ const props = {
     description: `Determines the earliest selectable date. Accepted values are date
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
     as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['', 5, 10]
+    options: ['default', 5, 10]
   },
   maxDate: {
     description: `Determines the latest selectable date. Accepted values are date
     <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
     as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['', 5, 10]
+    options: ['default', 5, 10]
   },
   locale: {
     description: `Determines the locale data object, <code>months</code>,

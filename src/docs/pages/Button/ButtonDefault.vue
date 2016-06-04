@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :code="code">
       <div slot="demo">
         <vk-button
@@ -28,9 +29,7 @@
         </vk-button-link>
       </div>
       <div slot="desc">
-        Despite minor specific attributes, <code>vk-button</code> and
-        <code>vk-button-link</code> will render a nice looking button sharing the
-        same API, being the first a <i>button</i> and the last an <i>anchor</i>.
+        Despite minor specific attributes, <code>vk-button</code> and <code>vk-button-link</code> render a nice looking button, being the first a <i>button</i> and the last an <i>anchor</i>.
       </div>
     </docs-page>
   </div>
@@ -48,6 +47,7 @@ export default {
       Helper.getProps('Button', props),
       Helper.getProps('ButtonLink', props)
     ),
+    slots,
     code
   })
 }
@@ -108,6 +108,12 @@ const props = {
     description: `Determines the link to follow when the button is pressed.
       Specific to <code>vk-button-link</code>.`,
     editable: false
+  }
+}
+
+const slots = {
+  default: {
+    description: 'The default slot holds the button text content.'
   }
 }
 </script>

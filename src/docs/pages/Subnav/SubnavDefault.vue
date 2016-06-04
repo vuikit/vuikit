@@ -13,6 +13,7 @@
         </vk-subnav>
       </div>
       <div slot="desc">
+        The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
       </div>
       <div slot="props">
         <vk-subnav style="line" v-ref:nav>

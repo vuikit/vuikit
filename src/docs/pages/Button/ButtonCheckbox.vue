@@ -14,9 +14,7 @@
         </vk-button-checkbox>
       </div>
       <div slot="desc">
-        Acting like a checkbox <code>vk-button-checkbox</code> allows toggling a
-        group of <code>vk-button</code> buttons. It value will reflect an
-        array of active buttons values.
+        The <code>vk-button-checkbox</code> component, acting like a checkbox form field, allows toggling a group of <code>vk-button</code> buttons. It value will reflect an array of the active buttons values.
       </div>
     </docs-page>
   </div>

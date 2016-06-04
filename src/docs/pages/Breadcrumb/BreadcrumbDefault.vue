@@ -13,7 +13,7 @@
         </vk-breadcrumb>
       </div>
       <div slot="desc">
-        Create breadcrumbs to show users their location within a website.
+        The <code>vk-breadcrumb</code> component together with <code>vk-crumb</code> renders a breadcrumb showing any kind of location.
       </div>
       <div slot="props">
         <vk-subnav style="line" v-ref:nav>
@@ -59,9 +59,9 @@ const props = {
   location: {
     description: 'Determines the active location path. Defaults to last crumb path if omited.',
     options: {
-      '/': 'Home',
-      '/blog': 'Blog',
-      '/blog/category/post': 'Post'
+      'Home': '/',
+      'Blog': '/blog',
+      'Post': '/blog/category/post'
     }
   }
 }

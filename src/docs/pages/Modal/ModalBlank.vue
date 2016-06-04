@@ -28,7 +28,7 @@
         </vk-modal-blank>
       </div>
       <div slot="desc">
-        A variation that resets all styling, like padding and margin. Useful if you want to create a fullscreen modal.
+        The <code>vk-modal-blank</code> component is a variation that resets the paddings and margins. Useful for displaying a fullscreen modal.
       </div>
     </docs-page>
   </div>

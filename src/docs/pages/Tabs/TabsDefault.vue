@@ -2,6 +2,7 @@
   <div>
     <docs-page
       :props="props"
+      :slots="slots"
       :events="events"
       :code="code">
       <div slot="demo">
@@ -17,8 +18,7 @@
         </vk-tabs>
       </div>
       <div slot="desc">
-        The <code>vk-tabs</code> component consists of clickable
-        <code>vk-tab</code> tabs, that are aligned side by side.
+        The <code>vk-tabs</code> component together with a <code>vk-tab</code> renders a tabbed navigation.
       </div>
       <div slot="props">
         <vk-subnav style="line" v-ref:nav>
@@ -47,6 +47,7 @@ export default {
   data: () => ({
     props: Helper.getProps('Tabs', props),
     tabProps: Helper.getProps('Tab', tabProps),
+    slots,
     events,
     code
   })
@@ -90,6 +91,12 @@ const tabProps = {
 const events = {
   change: {
     description: 'Emited when there was made some tab selection.'
+  }
+}
+
+const slots = {
+  default: {
+    description: 'The default slot on each <code>vk-tab</code> holds the tab content.'
   }
 }
 </script>

@@ -4,16 +4,13 @@
     <span v-if="!editable || !demoField" v-text="value"></span>
     <template v-else>
       <!-- Select -->
-      <div v-if="demoField === 'Select'"
-        class="uk-form-select">
-        <a href="" v-text="value === '' || !selectOptions[value]
-          ? '<>'
-          : selectOptions[value]">
-        </a>
+      <div class="uk-form-select"
+        v-if="demoField === 'Select'">
+        <a href="" v-text="selectValue ? selectValue : '<>'"></a>
         <select v-model="value">
-          <option v-for="(value, opt) in selectOptions"
+          <option v-for="(key, value) in selectOptions"
             :value="value === 'default' ? '' : value"
-            v-text="opt">
+            v-text="key">
           </option>
         </select>
       </div>
@@ -32,6 +29,7 @@
 
 <script>
 import Vue from 'vue'
+import { findKey } from 'lodash'
 
 export default {
   props: {
@@ -71,6 +69,9 @@ export default {
       } else if (this.type === 'Number') {
         return 'Number'
       }
+    },
+    selectValue () {
+      return findKey(this.selectOptions, val => val === this.value)
     }
   }
 }

@@ -14,9 +14,7 @@
         </vk-button-radio>
       </div>
       <div slot="desc">
-        Acting like a radio <code>vk-button-radio</code> allows toggling between a
-        group of <code>vk-button</code> buttons. It value will reflect the active
-        button value.
+        The <code>vk-button-radio</code> component, acting like a radio form field, allows toggling between a group of <code>vk-button</code> buttons. It value will reflect the active button value.
       </div>
     </docs-page>
   </div>
