@@ -10,6 +10,9 @@
           <table-props :rows="props"></table-props>
         </slot>
       </vk-tab>
+      <vk-tab label="Slots" v-if="slots">
+        <table-slots :rows="slots"></table-slots>
+      </vk-tab>
       <vk-tab label="Events" v-if="events">
         <table-events :rows="events"></table-events>
       </vk-tab>
@@ -29,6 +32,10 @@ export default {
     props: {
       type: Object,
       required: false
+    },
+    slots: {
+      type: [Object, Boolean],
+      default: false
     },
     events: {
       type: [Object, Boolean],

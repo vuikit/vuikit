@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './Docs'
 import Doc from './components/Doc'
 import TableProps from './components/TableProps'
+import TableSlots from './components/TableSlots'
 import TableEvents from './components/TableEvents'
 import Vuikit from '../vue'
 import VEncode from './v-encode'
@@ -15,6 +16,7 @@ Vue.directive('encode', VEncode)
 // register global components
 Vue.component('DocsPage', Doc)
 Vue.component('TableProps', TableProps)
+Vue.component('TableSlots', TableSlots)
 Vue.component('TableEvents', TableEvents)
 
 /* eslint-disable no-new */
