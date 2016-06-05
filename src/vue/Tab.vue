@@ -12,6 +12,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   }
 }

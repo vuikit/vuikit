@@ -17,6 +17,7 @@
           v-for="tab in tabs"
           :label="tab.label"
           :width="width"
+          :active="tab.active"
           :disabled="tab.disabled">
         </tab-header>
       </ul>

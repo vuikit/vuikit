@@ -19,6 +19,10 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    active: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -26,6 +30,7 @@ export default {
       const classes = {}
       classes['uk-width-' + this.width] = this.width
       classes['uk-disabled'] = this.disabled
+      classes['uk-active'] = this.active
       return classes
     }
   }
