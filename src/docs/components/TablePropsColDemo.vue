@@ -6,7 +6,10 @@
       <!-- Select -->
       <div class="uk-form-select"
         v-if="demoField === 'Select'">
-        <a href="" v-text="selectValue ? selectValue : '<>'"></a>
+        <a href="" v-text="!selectValue || selectValue === 'default'
+          ? '<>'
+          : selectValue">
+        </a>
         <select v-model="value">
           <option v-for="(key, value) in selectOptions"
             :value="value === 'default' ? '' : value"
