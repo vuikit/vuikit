@@ -5,7 +5,7 @@
     :code="code">
     <div slot="demo">
       <vk-button
-        :style="props.style.value"
+        :color="props.color.value"
         :size="props.size.value"
         :width="props.width.value"
         :icon-left="props.iconLeft.value"
@@ -51,8 +51,8 @@ const props = {
   disabled: {
     description: 'Determines whether or not the button is disabled.'
   },
-  style: {
-    description: `Determines the style variation of the button, <code>'primary'</code>,
+  color: {
+    description: `Determines the color variation of the button, <code>'primary'</code>,
       <code>success</code>, <code>danger</code> or <code>link</code>. Leave empty
       for default.`,
     options: ['default', 'primary', 'success', 'danger', 'link']

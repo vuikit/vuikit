@@ -1,9 +1,9 @@
 <template>
   <div class="uk-progress"
     :class="{
-      'uk-progress-success': style === 'success',
-      'uk-progress-warning': style === 'warning',
-      'uk-progress-danger': style === 'danger',
+      'uk-progress-success': color === 'success',
+      'uk-progress-warning': color === 'warning',
+      'uk-progress-danger': color === 'danger',
       'uk-progress-mini': size === 'mini',
       'uk-progress-small': size === 'small',
       'uk-progress-striped': stripe,
@@ -25,7 +25,7 @@ export default {
       type: [Number, String],
       default: 0
     },
-    style: { // success, warning or danger
+    color: { // default, success, warning or danger
       type: String,
       default: ''
     },

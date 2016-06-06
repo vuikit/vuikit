@@ -4,7 +4,7 @@
     :code="code">
     <div slot="demo">
       <vk-subnav v-ref:demo
-        :style="props.style.value">
+        :color="props.color.value">
         <vk-subnav-item>Item</vk-subnav-item>
         <vk-subnav-item>Item</vk-subnav-item>
         <vk-subnav-item>Item</vk-subnav-item>
@@ -15,7 +15,7 @@
       The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
     </div>
     <div slot="props">
-      <vk-subnav style="line" v-ref:nav>
+      <vk-subnav color="line" v-ref:nav>
         <vk-subnav-item>vk-subnav</vk-subnav-item>
         <vk-subnav-item>vk-subnav-item</vk-subnav-item>
       </vk-subnav>

@@ -1,8 +1,8 @@
 <template>
   <ul class="uk-subnav"
     :class="{
-      'uk-subnav-line': style === 'line',
-      'uk-subnav-pill': style === 'pill'
+      'uk-subnav-line': color === 'line',
+      'uk-subnav-pill': color === 'pill'
      }">
     <slot></slot>
   </ul>
@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    style: {
+    color: {
       type: String,
       default: ''
     }

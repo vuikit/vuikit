@@ -17,7 +17,7 @@
 export default {
   props: {
     value: {},
-    style: {
+    color: {
       type: String,
       default: ''
     },
@@ -53,11 +53,11 @@ export default {
   computed: {
     classes: function () {
       const classes = {
-        /* style */
-        'uk-button-primary': this.style === 'primary',
-        'uk-button-success': this.style === 'success',
-        'uk-button-danger': this.style === 'danger',
-        'uk-button-link': this.style === 'link',
+        /* color */
+        'uk-button-primary': this.color === 'primary',
+        'uk-button-success': this.color === 'success',
+        'uk-button-danger': this.color === 'danger',
+        'uk-button-link': this.color === 'link',
         /* size */
         'uk-button-mini': this.size === 'mini',
         'uk-button-small': this.size === 'small',

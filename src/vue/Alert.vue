@@ -3,9 +3,9 @@
     transition="fade"
     class="uk-alert"
     :class="{
-      'uk-alert-success': style === 'success',
-      'uk-alert-warning': style === 'warning',
-      'uk-alert-danger': style === 'danger',
+      'uk-alert-success': color === 'success',
+      'uk-alert-warning': color === 'warning',
+      'uk-alert-danger': color === 'danger',
       'uk-alert-large': size === 'large'
     }">
     <a href="" class="uk-close uk-alert-close"
@@ -22,7 +22,7 @@ import Vue from 'vue'
 
 export default {
   props: {
-    style: {
+    color: {
       type: String,
       default: ''
     },

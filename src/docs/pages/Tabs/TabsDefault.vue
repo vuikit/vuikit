@@ -20,7 +20,7 @@
       The <code>vk-tabs</code> component together with a <code>vk-tab</code> renders a tabbed navigation.
     </div>
     <div slot="props">
-      <vk-subnav style="line" v-ref:nav>
+      <vk-subnav color="line" v-ref:nav>
         <vk-subnav-item>vk-tabs</vk-subnav-item>
         <vk-subnav-item>vk-tab</vk-subnav-item>
       </vk-subnav>

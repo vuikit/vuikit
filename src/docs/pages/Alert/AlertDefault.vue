@@ -6,7 +6,7 @@
     <div slot="demo">
       <vk-alert v-ref:demo
         :show.sync="props.show.value"
-        :style="props.style.value"
+        :color="props.color.value"
         :size="props.size.value"
         :close="props.close.value">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.
@@ -37,12 +37,12 @@ const props = {
   show: {
     description: 'Determines whether or not the alert is displayed.'
   },
-  style: {
-    description: 'Determines the style of the alert.',
+  color: {
+    description: 'Determines the color of the alert. Leave empty for default.',
     options: ['default', 'success', 'warning', 'danger']
   },
   size: {
-    description: 'Determines the size of the alert.',
+    description: 'Determines the size of the alert. Leave empty for default.',
     options: ['default', 'large']
   },
   close: {

@@ -4,7 +4,7 @@
     :events="events"
     :code="code">
     <div slot="demo">
-      <vk-subnav style="pill" v-ref:nav>
+      <vk-subnav color="pill" v-ref:nav>
         <vk-subnav-item>Item 1</vk-subnav-item>
         <vk-subnav-item>Item 2</vk-subnav-item>
         <vk-subnav-item>Item 3</vk-subnav-item>

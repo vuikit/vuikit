@@ -7,7 +7,7 @@
       <div slot="demo">
         <vk-progress v-ref:demo
           :progress="props.progress.value"
-          :style="props.style.value"
+          :color="props.color.value"
           :size="props.size.value"
           :stripe="props.stripe.value">
           <span v-if="props.size.value === ''">
@@ -43,13 +43,14 @@ const props = {
     options: [1, 5, 40, 50, 100],
     value: 40
   },
-  style: {
-    description: `Determines the bar style, <code>success</code>, <code>warning</code>
-      or <code>danger</code>.`,
+  color: {
+    description: `Determines the bar color, <code>success</code>, <code>warning</code>
+      or <code>danger</code>. Leave empty for default.`,
     options: ['default', 'success', 'warning', 'danger']
   },
   size: {
-    description: 'Determines the bar size, <code>small</code> or <code>mini</code>.',
+    description: `Determines the bar size, <code>small</code> or <code>mini</code>.
+      Leave empty for default.`,
     options: ['default', 'small', 'mini']
   },
   stripe: {

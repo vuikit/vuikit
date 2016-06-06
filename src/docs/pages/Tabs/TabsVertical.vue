@@ -18,7 +18,7 @@
       The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
     </div>
     <div slot="props">
-      <vk-subnav style="line" v-ref:nav>
+      <vk-subnav color="line" v-ref:nav>
         <vk-subnav-item>vk-tabs</vk-subnav-item>
         <vk-subnav-item>vk-tab</vk-subnav-item>
       </vk-subnav>

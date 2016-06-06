@@ -15,7 +15,7 @@
       The <code>vk-breadcrumb</code> component together with <code>vk-crumb</code> renders a breadcrumb showing any kind of location.
     </div>
     <div slot="props">
-      <vk-subnav style="line" v-ref:nav>
+      <vk-subnav color="line" v-ref:nav>
         <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
         <vk-subnav-item>vk-crumb</vk-subnav-item>
       </vk-subnav>

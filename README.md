@@ -26,7 +26,7 @@ Vue.use(vuikit)
 <template>
   <div>
     <vk-button-checkbox>
-      <vk-button style="primary">Buttonvk-button>
+      <vk-button color="primary">Buttonvk-button>
       <vk-button active>Button</vk-button>
       <vk-button>Button</vk-button>
     </vk-button-checkbox>
