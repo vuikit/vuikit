@@ -32,7 +32,7 @@
 
 <script>
 import Vue from 'vue'
-import { findKey } from 'lodash'
+import { findKey, isEqual } from 'lodash'
 
 export default {
   props: {
@@ -74,7 +74,7 @@ export default {
       }
     },
     selectValue () {
-      return findKey(this.selectOptions, val => val === this.value)
+      return findKey(this.selectOptions, val => isEqual(val, this.value))
     }
   }
 }
