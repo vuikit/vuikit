@@ -18,7 +18,7 @@ export default {
       this.$moment = function (date) {
         const moment = (!date || Vue.util.isArray(date) || Vue.util.isObject(date))
           ? Moment(date || undefined)
-          : Moment(date, this.format, true)
+          : Moment(date, this.format)
         if (!moment.isValid()) {
           Vue.util.warn(`Moment object creation failed with date input '${date}'`)
         }

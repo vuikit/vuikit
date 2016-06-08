@@ -50,8 +50,8 @@ export default {
   },
   props: {
     value: {
-      type: [String, Object],
-      required: true
+      type: String,
+      default: ''
     },
     // dropdown position
     position: {
