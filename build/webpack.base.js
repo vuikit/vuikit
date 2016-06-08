@@ -4,8 +4,7 @@ var projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
   externals: {
-    uikit: 'UIkit',
-    moment: 'moment'
+    uikit: 'UIkit'
   },
   resolve: {
     extensions: ['', '.js', '.vue'],

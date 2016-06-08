@@ -69,16 +69,18 @@ const props = {
     description: 'Determines if the dropdown should be rendered in mobile devices.'
   },
   minDate: {
-    description: `Determines the earliest selectable date. Accepted values are date
-    <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
-    as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['default', 5, 10]
+    description: `The minimum date that is selectable. Supports any input
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
+    options: ['default', 5, 10],
+    value: ''
   },
   maxDate: {
-    description: `Determines the latest selectable date. Accepted values are date
-    <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
-    as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['default', 5, 10]
+    description: `The maximum date that is selectable. Supports any input
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
+    options: ['default', 5, 10],
+    value: ''
   },
   locale: {
     description: `Determines the locale data object, <code>months</code>,

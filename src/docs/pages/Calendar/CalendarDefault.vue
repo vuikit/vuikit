@@ -7,8 +7,10 @@
       <vk-calendar v-ref:demo
         :year.sync="props.year.value | number"
         :month.sync="props.month.value | number"
-        :min-date="props.minDate.value"
-        :max-date="props.maxDate.value">
+        :disabled-dates="props.disabledDates.value"
+        :selected-dates="props.selectedDates.value"
+        :min="props.min.value"
+        :max="props.max.value">
       </vk-calendar>
     </div>
     <div slot="desc">
@@ -41,42 +43,65 @@ const code =
 
 const props = {
   year: {
-    description: 'Determines the calendar year. Defaults to current if omited.',
+    description: 'The year currently being displayed. Defaults to current if omited.',
     options: [
       Moment().add(-1, 'year').year(),
       Moment().year(),
       Moment().add(1, 'year').year()
     ],
-    default: Moment().year()
+    default: Moment().year(),
+    value: Moment().year()
   },
   month: {
-    description: `Determines the calendar month. If using numbers notice that
-      are zero indexed, so January is month <code>0</code>. Defaults to current
+    description: `The month currently being displayed. Notice that the months
+      are zero indexed, being January represented as <code>0</code>. Defaults to current
       month if omited.`,
     options: { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 },
     default: Moment().month(),
     value: Moment().month()
   },
-  selected: {
-    description: `Determines the selected dates represented with a Moment
-      <code>object</code>. Defaults to current day if omited.`,
-    default: Moment().date()
+  min: {
+    description: `The minimum month that can be displayed. Supports any input
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+    options: {
+      default: '1980-01-01',
+      'Last Month': Moment().add(-1, 'months').format('YYYY-MM-DD')
+    }
   },
-  minDate: {
-    description: `Determines the earliest selectable date. Accepted values are date
-    <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
-    as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['default', 5, 10]
+  max: {
+    description: `The maximum month that can be displayed. Supports any input
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+    options: {
+      default: '2050-12-31',
+      'Next Month': Moment().add(1, 'months').format('YYYY-MM-DD')
+    }
   },
-  maxDate: {
-    description: `Determines the latest selectable date. Accepted values are date
-    <code>object</code>, date <code>string</code> as in locale format or <code>integer</code>
-    as offset days from current day. Set to <code>false</code> to ignore the option.`,
-    options: ['default', 5, 10]
+  selectedDates: {
+    description: `Array of arbitrary dates that should be disabled. Supports any
+      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+    options: {
+      default: [],
+      Today: [Moment().format('YYYY-MM-DD')],
+      Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
+      Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
+    },
+    value: [Moment().format('YYYY-MM-DD')]
+  },
+  disabledDates: {
+    description: `Array of arbitrary dates that should be disabled. Supports any
+      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+    options: {
+      default: [],
+      Today: [Moment().format('YYYY-MM-DD')],
+      Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
+      Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
+    },
+    value: []
   },
   locale: {
-    description: `Determines the locale data object, <code>months</code>,
-      <code>weekDays</code> and <code>weekStart</code>.`,
+    description: `By default, VkCalendar comes with the English locale strings.
+      You can use this to change the language, or change the first day of the week.
+      See <a href="http://momentjs.com/docs/#/i18n/">moment.js documentation</a> for more details`,
     default: {},
     value: ''
   }

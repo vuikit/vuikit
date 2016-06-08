@@ -9760,6 +9760,15 @@ a.uk-datepicker-table-muted {
   background: #489be0;
   color: #fff;
 }
+/* disabled */
+.uk-datepicker-table-disabled {
+  cursor: not-allowed;
+}
+a.uk-datepicker-table-disabled:hover,
+a.uk-datepicker-table-disabled:focus {
+  background-color: inherit;
+  color: #aaa;
+}
 /* ========================================================================
    Component: HTML editor
  ========================================================================== */

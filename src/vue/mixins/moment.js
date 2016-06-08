@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Moment from 'moment'
-import UUID from '../helpers/uuid'
+import { merge } from 'lodash'
 
-function localeId (prefix) {
-  return UUID.short(`${prefix}-`)
+const defaultLocale = {
+  name: 'en',
+  week: {
+    dow: 1
+  }
 }
 
 export default {
@@ -13,31 +16,23 @@ export default {
       this.$destroy()
     } else {
       this.$moment = function (date) {
-        const moment = date && Moment(date, this.format, true).isValid()
-          ? Moment(date, this.format, true)
-          : Moment()
-        moment.locale(localeId(this.$options.name))
+        const moment = (!date || Vue.util.isArray(date) || Vue.util.isObject(date))
+          ? Moment(date || undefined)
+          : Moment(date, this.format, true)
+        if (!moment.isValid()) {
+          Vue.util.warn(`Moment object creation failed with date input '${date}'`)
+        }
         return moment
       }
     }
   },
   created () {
     // define custom locale at created event
-    // as we need to access to props
-    const globalLocale = Moment.locale()
-    Moment.defineLocale(localeId(this.$options.name), {
-      parentLocale: 'en',
-      months: this.locale.months,
-      weekdaysShort: this.locale.weekDays,
-      week: {
-        dow: 1
-      }
-    })
-    // as defineLocale applies the new locale
-    // we must get back the previous one
-    Moment.locale(globalLocale)
+    // as we need props access
+    const locale = merge({}, defaultLocale, this.locale)
+    Moment.updateLocale(locale.name, locale)
   },
   filters: {
-    date: (moment, format) => moment.format(format)
+    format: (moment, format) => moment.format(format)
   }
 }

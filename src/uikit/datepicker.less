@@ -1,6 +1,8 @@
 //
 // Component: Datepicker
 //
+// Modifiers:       `uk-datepicker-table-disabled`
+//
 // ========================================================================
 
 
@@ -43,4 +45,17 @@
 // Miscellaneous
 // ========================================================================
 
-.hook-datepicker-misc() {}
+.hook-datepicker-misc() {
+
+  /* disabled */
+  .uk-datepicker-table-disabled {
+    cursor: not-allowed;
+  }
+
+  a.uk-datepicker-table-disabled:hover,
+  a.uk-datepicker-table-disabled:focus {
+    background-color: inherit;
+    color: @global-muted-color;
+  }
+
+}

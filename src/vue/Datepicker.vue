@@ -4,39 +4,49 @@
     v-model="value"
     @focus="show = true">
   <div class="uk-dropdown uk-datepicker"
+    v-if="renderDropdown"
     v-el:dropdown
-    v-if="dropdown"
     :style="dropdownCss">
-    <vk-calendar v-ref:calendar
-      :selected.sync="selected"
-      :min-date.sync="minDate"
-      :max-date.sync="maxDate"
+    <calendar v-ref:calendar
+      :min="minDateMoment"
+      :max="maxDateMoment"
+      :disabled-dates="disabledDates"
+      :selected-dates="selectedDates"
+      :locale="locale"
       @select="select">
-    </vk-calendar>
+    </calendar>
   </div>
 </template>
 
 <script>
+import Calendar from './Calendar'
 import moment from './mixins/moment'
 import UI from 'uikit'
+import { flatten } from 'lodash'
+import { getCalendarMatrix, isBetween } from './utils/dates'
 
 export default {
+  components: {
+    Calendar
+  },
   init () {
     // this.$options.template = '<input>'
   },
   mixins: [moment],
   ready () {
-    // hide on outter click/focus
     const vm = this
-    UI.$html.on('click focus', '*', function (e) {
-      if (vm.show &&
-        e.target !== vm.$els.dropdown &&
-        e.target !== vm.$els.input &&
-        !UI.$(e.target).parents('.uk-datepicker:first').length
-      ) {
-        vm.show = false
-      }
-    })
+    // hide dropdown on outter click/focus
+    if (this.renderDropdown) {
+      UI.$html.on('click focus', '*', function (e) {
+        if (vm.show &&
+          e.target !== vm.$els.dropdown &&
+          e.target !== vm.$els.input &&
+          !UI.$(e.target).parents('.uk-datepicker:first').length
+        ) {
+          vm.show = false
+        }
+      })
+    }
   },
   props: {
     value: {
@@ -58,13 +68,15 @@ export default {
       type: Boolean,
       default: false
     },
+    // the minimum date that can be selected
     minDate: {
-      type: [String, Object, Number, Boolean],
-      default: false
+      type: [String, Number],
+      default: '1980-01-01'
     },
+    // the maximum date that can be selected
     maxDate: {
-      type: [String, Object, Number, Boolean],
-      default: false
+      type: [String, Number],
+      default: '2050-12-31'
     },
     format: {
       type: String,
@@ -84,20 +96,18 @@ export default {
     // the selected date
     selected: {
       get () {
-        return this.$moment(this.value)
+        return this.value && this.$moment(this.value).isValid()
+          ? this.$moment(this.value)
+          : null
       },
       set: function (moment) {
         this.value = moment.format(this.format)
       }
     },
-    dropdown () {
-      // should it render on touch devices?
-      if (!this.mobile && UI.support.touch &&
-        UI.$(this.$els.input).attr('type') === 'date'
-      ) {
-        return false
-      }
-      return true
+    // should dropdown display on touch
+    // devices or use native picker
+    renderDropdown () {
+      return this.mobile || (!UI.support.touch && UI.$(this.$els.input).attr('type') !== 'date')
     },
     dropdownCss () {
       if (!this.show) {
@@ -130,17 +140,45 @@ export default {
         right: `${css.right}px`,
         display: 'block'
       }
+    },
+    minDateMoment () {
+      return Number.isInteger(this.minDate)
+        ? this.$moment().add(-this.minDate - 1, 'days')
+        : this.$moment(this.minDate || this.$options.props.minDate.default)
+    },
+    maxDateMoment () {
+      return Number.isInteger(this.maxDate)
+        ? this.$moment().add(this.maxDate, 'days')
+        : this.$moment(this.maxDate || this.$options.props.maxDate.default)
+    },
+    selectedDates () {
+      return this.selected
+        ? [this.selected]
+        : []
+    },
+    disabledDates () {
+      const min = this.minDateMoment
+      const max = this.maxDateMoment
+      const matrix = getCalendarMatrix(this.selected
+        ? this.selected
+        : this.$moment())
+      return flatten(matrix).filter(moment => {
+        return !isBetween(moment, min, max)
+      })
     }
   },
   methods: {
+    isDisabled (moment) {
+      return this.disabledDates.some(date => moment.isSame(date, 'day'))
+    },
     select (moment) {
-      // trigger change event
-      if (!this.value || !moment.isSame(this.selected, 'day')) {
+      if (!this.isDisabled(moment) && !moment.isSame(this.selected, 'day')) {
         this.selected = moment.clone()
+        // trigger change event
         this.$nextTick(() => this.$emit('change', this.selected))
+        // hide dropdown
+        this.show = false
       }
-      // hide dropdown
-      this.show = false
     }
   },
   watch: {
@@ -154,20 +192,12 @@ export default {
   },
   events: {
     hide () {
-      // reset calendar date
-      this.$refs.calendar.month = this.selected.month()
+      // reset the currently displayed
+      // month on the calendar
+      this.$refs.calendar.month = this.selected
+        ? this.selected.month()
+        : this.$moment().month()
     }
   }
 }
 </script>
-
-<style>
-/* disabled state */
-a.uk-datepicker-date-disabled {
-  text-decoration: line-through;
-}
-a.uk-datepicker-date-disabled:hover,
-a.uk-datepicker-date-disabled:focus {
-  background-color: inherit;
-}
-</style>
