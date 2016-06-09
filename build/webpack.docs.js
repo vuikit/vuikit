@@ -59,6 +59,8 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.BannerPlugin(config.banner, {
       raw: true,
       entryOnly: true
-    })
+    }),
+    // workaround to exclude moment.js locales
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
   ]
 })

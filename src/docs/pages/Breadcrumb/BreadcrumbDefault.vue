@@ -1,7 +1,9 @@
 <template>
   <docs-page
-    :events="events"
-    :code="code">
+    component="breadcrumb"
+    :code-slot="codeSlot"
+    :slots="true"
+    :events="events">
     <div slot="demo">
       <vk-breadcrumb v-ref:demo
         :location.sync="props.location.value">
@@ -15,7 +17,7 @@
       The <code>vk-breadcrumb</code> component together with <code>vk-crumb</code> renders a breadcrumb showing any kind of location.
     </div>
     <div slot="props">
-      <vk-subnav color="line" v-ref:nav>
+      <vk-subnav line v-ref:nav>
         <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
         <vk-subnav-item>vk-crumb</vk-subnav-item>
       </vk-subnav>
@@ -24,7 +26,21 @@
           <table-props :rows="props"></table-props>
         </vk-switch>
         <vk-switch>
-          <table-props :rows="CrumbProps" :demo="false"></table-props>
+          <table-props :rows="propsCrumb" :demo="false"></table-props>
+        </vk-switch>
+      </vk-switcher>
+    </div>
+    <div slot="slots">
+      <vk-subnav line v-ref:slots-nav>
+        <vk-subnav-item>vk-breadcrumb</vk-subnav-item>
+        <vk-subnav-item>vk-crumb</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher :connect="$refs.slotsNav">
+        <vk-switch>
+          <table-slots :rows="slotsBreadcrumb"></table-slots>
+        </vk-switch>
+        <vk-switch>
+          <table-slots :rows="slotsCrumb"></table-slots>
         </vk-switch>
       </vk-switcher>
     </div>
@@ -39,23 +55,23 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Breadcrumb', props),
-    CrumbProps: Helper.getProps('Crumb', CrumbProps),
+    propsCrumb: Helper.getProps('BreadcrumbItem', propsCrumb),
     events,
-    code
+    codeSlot,
+    slotsBreadcrumb,
+    slotsCrumb
   })
 }
 
-const code =
-`<vk-breadcrumb>
-  <vk-crumb path="/">Home</vk-crumb>
-  <vk-crumb path="/blog">Blog</vk-crumb>
-  <vk-crumb path="/blog/category">Category</vk-crumb>
-  <vk-crumb path="/blog/category/post">Post</vk-crumb>
-</vk-breadcrumb>`
+const codeSlot =
+`<vk-crumb path="/">Home</vk-crumb>
+<vk-crumb path="/blog">Blog</vk-crumb>
+<vk-crumb path="/blog/category">Category</vk-crumb>
+<vk-crumb path="/blog/category/post">Post</vk-crumb>`
 
 const props = {
   location: {
-    description: 'Determines the active location path. Defaults to last crumb path if omited.',
+    description: 'The currently active path. Defaults to last crumb path if omited.',
     options: {
       'Home': '/',
       'Blog': '/blog',
@@ -64,12 +80,24 @@ const props = {
   }
 }
 
-const CrumbProps = {
+const propsCrumb = {
   path: {
-    description: 'Determines the crumb full path.'
+    description: 'The full path of the crumb. Is a <code>required</code> value.'
   },
   disabled: {
-    description: 'Determines the crumb disabled state.'
+    description: 'Wheter the crumb path can be selected.'
+  }
+}
+
+const slotsBreadcrumb = {
+  default: {
+    description: 'The list of <code>vk-crumb</code> components.'
+  }
+}
+
+const slotsCrumb = {
+  default: {
+    description: 'The title of the crumb.'
   }
 }
 

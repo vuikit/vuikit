@@ -1,15 +1,14 @@
 export default {
   show: {
-    description: `Determines whether or not the modal is shown. Toggling this
-    value will show/hide the modal.`
+    description: 'Display state that when toggled will hide/show the modal.'
   },
   block: {
-    description: 'Determines whether or not the modal can be closed by user action.'
-  },
-  center: {
-    description: 'Determines whether or not the modal is centered vertically.'
+    description: 'Whether to allow closing the modal by user action.'
   },
   keyboard: {
-    description: 'Determines whether or not the modal can be closed by the ESC key.'
+    description: 'Whether to allows closing the modal by pressing the ESC key.'
+  },
+  center: {
+    description: 'Whether to center the modal vertically.'
   }
 }

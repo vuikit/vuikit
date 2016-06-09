@@ -14,14 +14,16 @@
         <td v-text="row.name"></td>
         <td class="tm-docs-hidden-medium" v-text="row.type | type"></td>
         <td class="tm-docs-hidden-medium uk-text-truncate">
-          <code v-text="row.default | default"></code>
+          <code v-text="row.default | stringify"></code>
         </td>
         <td class="tm-docs-hidden-small" v-html="row.description"></td>
         <td class="tm-docs-hidden-small" v-if="demo" is="PropsColDemo"
-          :editable="row.editable"
-          :options="row.options"
+          :value.sync="row.value"
+          :default="row.default"
           :type="row.type | type"
-          :value.sync="row.value">
+          :demo="row.demo"
+          :options="row.options"
+          :editable="row.editable">
         </td>
       </tr>
     </tbody>
@@ -59,13 +61,21 @@ export default {
       }
       return type || '*'
     },
-    default (value) {
-      value = value && value.name === '_default'
-        ? value()
-        : value
-      return value === undefined
-        ? 'N/A'
-        : JSON.stringify(value)
+    stringify (value) {
+      // special case if not empty object
+      if (Vue.util.isObject(value) && Object.keys(value).length) {
+        return '{...}'
+      }
+      // or non empty array
+      if (Vue.util.isArray(value) && value.length) {
+        return '[...]'
+      }
+      // no defined means any value accepted
+      if (value === undefined) {
+        return 'N/A'
+      }
+      // for the rest
+      return JSON.stringify(value)
     }
   }
 }

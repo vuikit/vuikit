@@ -1,8 +1,9 @@
 <template>
   <docs-page
+    component="button-checkbox"
+    :code-slot="codeSlot"
     :props="props"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-button-checkbox v-ref:demo
         :group="props.group.value"
@@ -13,7 +14,7 @@
       </vk-button-checkbox>
     </div>
     <div slot="desc">
-      The <code>vk-button-checkbox</code> component, acting like a checkbox form field, allows toggling a group of <code>vk-button</code> buttons. It value will reflect an array of the active buttons values.
+      The <code>vk-button-checkbox</code> component, acting like a checkbox form field, allows toggling a group of <code>vk-button</code> buttons.
     </div>
   </docs-page>
 </template>
@@ -27,30 +28,27 @@ export default {
   data: () => ({
     props: Helper.getProps('ButtonCheckbox', props),
     events,
-    code
+    codeSlot
   })
 }
 
-const code =
-`<vk-button-checkbox>
-  <vk-button value="1">Button 1</vk-button>
-  <vk-button value="2">Button 2</vk-button>
-  <vk-button value="3">Button 3</vk-button>
-</vk-button-checkbox>`
+const codeSlot =
+`<vk-button value="1">Button 1</vk-button>
+<vk-button value="2">Button 2</vk-button>
+<vk-button value="3">Button 3</vk-button>`
 
 const props = {
   value: {
-    description: 'The current value determined by the active buttons.',
-    value: []
+    description: 'Array reflecting the values of the currently active buttons.'
   },
   group: {
-    description: 'Determines whether or not the buttons are grouped.'
+    description: 'Whether to display the buttons grouped together.'
   }
 }
 
 const events = {
   change: {
-    description: 'Emited when there was made some button selection.'
+    description: 'Emited on button selection.'
   }
 }
 </script>

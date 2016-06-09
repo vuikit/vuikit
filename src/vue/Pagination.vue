@@ -90,10 +90,10 @@
 <script>
 export default {
   props: {
-    // alignement, left, center or right
+    // left or right, defaults to center
     align: {
       type: String,
-      default: 'center'
+      default: ''
     },
     // next/prev btns position
     compact: {

@@ -1,10 +1,14 @@
 <template>
   <docs-page
-    :events="events"
-    :code="code">
+    :slots="true"
+    component="subnav"
+    :props="props"
+    :code-slot="codeSlot"
+    :events="events">
     <div slot="demo">
       <vk-subnav v-ref:demo
-        :color="props.color.value">
+        :line="props.line.value"
+        :pill="props.pill.value">
         <vk-subnav-item>Item</vk-subnav-item>
         <vk-subnav-item>Item</vk-subnav-item>
         <vk-subnav-item>Item</vk-subnav-item>
@@ -15,7 +19,7 @@
       The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
     </div>
     <div slot="props">
-      <vk-subnav color="line" v-ref:nav>
+      <vk-subnav line v-ref:nav>
         <vk-subnav-item>vk-subnav</vk-subnav-item>
         <vk-subnav-item>vk-subnav-item</vk-subnav-item>
       </vk-subnav>
@@ -24,10 +28,23 @@
           <table-props :rows="props"></table-props>
         </vk-switch>
         <vk-switch>
-          <table-props :rows="itemProps" :demo="false"></table-props>
+          <table-props :rows="propsItem" :demo="false"></table-props>
         </vk-switch>
       </vk-switcher>
     </div>
+    <div slot="slots">
+      <vk-subnav line v-ref:slots-nav>
+        <vk-subnav-item>vk-subnav</vk-subnav-item>
+        <vk-subnav-item>vk-subnav-item</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher :connect="$refs.slotsNav">
+        <vk-switch>
+          <table-slots :rows="slotsSubnav"></table-slots>
+        </vk-switch>
+        <vk-switch>
+          <table-slots :rows="slotsSubnavItem"></table-slots>
+        </vk-switch>
+      </vk-switcher>
   </docs-page>
 </template>
 
@@ -39,38 +56,53 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Subnav', props),
-    itemProps: Helper.getProps('SubnavItem', itemProps),
+    propsItem: Helper.getProps('SubnavItem', propsItem),
     events,
-    code
+    codeSlot,
+    slotsSubnav,
+    slotsSubnavItem
   })
 }
 
-const code =
-`<vk-subnav>
-  <vk-subnav-item active>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-</vk-subnav>`
+const codeSlot =
+`<vk-subnav-item>Item</vk-subnav-item>
+<vk-subnav-item>Item</vk-subnav-item>
+<vk-subnav-item>Item</vk-subnav-item>
+<vk-subnav-item disabled>Item</vk-subnav-item>`
 
 const props = {
-  style: {
-    description: 'Determines the style of the list.',
-    options: ['default', 'line', 'pill']
+  line: {
+    description: 'Style modifier that will add a line bitween the items.'
+  },
+  pill: {
+    description: 'Style modifier that will wrap the selected and active items.'
   }
 }
 
-const itemProps = {
+const propsItem = {
   active: {
-    description: 'Determines whether or not the item is active.'
+    description: 'Determines whether the item is active.'
   },
   disabled: {
-    description: 'Determines whether or not the item is disabled.'
+    description: 'Determines whether the item is disabled.'
+  }
+}
+
+const slotsSubnav = {
+  default: {
+    description: 'The list of <code>vk-subnav-item</code> components.'
+  }
+}
+
+const slotsSubnavItem = {
+  default: {
+    description: 'The item title.'
   }
 }
 
 const events = {
   change: {
-    description: 'Emited on item selection change'
+    description: 'Emited on item selection.'
   }
 }
 

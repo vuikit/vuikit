@@ -6,10 +6,10 @@
       'uk-alert-success': color === 'success',
       'uk-alert-warning': color === 'warning',
       'uk-alert-danger': color === 'danger',
-      'uk-alert-large': size === 'large'
+      'uk-alert-large': large
     }">
-    <a href="" class="uk-close uk-alert-close"
-      v-if="close"
+    <a href="" class="uk-close"
+      v-if="!block"
       @click.prevent="show = !show">
     </a>
     <slot></slot>
@@ -22,22 +22,28 @@ import Vue from 'vue'
 
 export default {
   props: {
-    color: {
-      type: String,
-      default: ''
-    },
-    size: {
-      type: String,
-      default: ''
-    },
-    close: {
-      type: Boolean,
-      default: true
-    },
+    // display status
     show: {
       type: Boolean,
       default: true
     },
+    // color modifier
+    color: {
+      type: String,
+      default: ''
+    },
+    // size modifier
+    large: {
+      type: Boolean,
+      default: false
+    },
+    // when blocked can't be
+    // closed by user action
+    block: {
+      type: Boolean,
+      default: false
+    },
+    // on close transition
     transition: {
       type: Object,
       default: () => ({

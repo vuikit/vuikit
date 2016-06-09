@@ -1,25 +1,24 @@
 <template>
-  <div>
-    <docs-page
-      :props="props"
-      :slots="slots"
-      :code="code">
-      <div slot="demo">
-        <vk-progress v-ref:demo
-          :progress="props.progress.value"
-          :color="props.color.value"
-          :size="props.size.value"
-          :stripe="props.stripe.value">
-          <span v-if="props.size.value === ''">
-            {{ props.progress.value }}%
-          </span>
-        </vk-progress>
-      </div>
-      <div slot="desc">
-        Renders a progress bar with different styles.
-      </div>
-    </docs-page>
-  </div>
+  <docs-page
+    component="progress"
+    :code-slot="codeSlot"
+    :props="props"
+    :slots="slots">
+    <div slot="demo">
+      <vk-progress v-ref:demo
+        :progress="props.progress.value"
+        :color="props.color.value"
+        :size="props.size.value"
+        :stripe="props.stripe.value">
+        <span v-if="props.size.value === ''">
+          {{ props.progress.value }}%
+        </span>
+      </vk-progress>
+    </div>
+    <div slot="desc">
+      The <code>vk-progress</code> component renders a progress bar.
+    </div>
+  </docs-page>
 </template>
 
 <script>
@@ -31,38 +30,38 @@ export default {
   data: () => ({
     props: Helper.getProps('Progress', props),
     slots,
-    code
+    codeSlot
   })
 }
 
-const code = '<vk-progress></vk-progress>'
+const codeSlot = '{{ progress }}%'
 
 const props = {
   progress: {
-    description: 'Determines the bar progress, from <code>0</code> to <code>100</code>.',
-    options: [1, 5, 40, 50, 100],
+    description: 'The percentage value representing the progress.',
+    options: [5, 40, 100],
     value: 40
   },
   color: {
-    description: `Determines the bar color, <code>success</code>, <code>warning</code>
-      or <code>danger</code>. Leave empty for default.`,
-    options: ['default', 'success', 'warning', 'danger']
+    description: `The color modifier accepting as values <code>success</code>,
+      <code>warning</code> or <code>danger</code>.`,
+    options: ['success', 'warning', 'danger']
   },
   size: {
-    description: `Determines the bar size, <code>small</code> or <code>mini</code>.
-      Leave empty for default.`,
-    options: ['default', 'small', 'mini']
+    description: `The size modifier accepting as values <code>small</code>,
+      or <code>mini</code>.`,
+    options: ['small', 'mini']
   },
   stripe: {
-    description: `Determines whether or not the progress bar is striped. Set as
-      <code>animated</code> for animating the stripe.`,
-    options: {'default': false, 'enabled': true, 'animated': 'animated'}
+    description: `Whether to present the progress bar as striped. If set as
+      <code>animated</code> the stripe bar will be as well animated.`,
+    options: {'enabled': true, 'animated': 'animated'}
   }
 }
 
 const slots = {
   default: {
-    description: 'The optional default slot holds the progress bar text content.'
+    description: 'The progress bar content.'
   }
 }
 </script>

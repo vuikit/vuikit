@@ -1,9 +1,10 @@
 <template>
   <docs-page
+    component="modal-alert"
+    code-slot="Attention!"
     :props="props"
     :slots="slots"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-button
         @click="props.show.value = true">
@@ -38,19 +39,16 @@ export default {
     return {
       props: Helper.getProps('ModalAlert', props),
       slots,
-      events,
-      code
+      events
     }
   }
 }
-
-const code = '<vk-modal-alert></vk-modal-alert>'
 
 const props = merge({}, commonProps)
 
 const slots = {
   default: {
-    description: 'The default slot holds the modal text content.'
+    description: 'The main content.'
   }
 }
 </script>

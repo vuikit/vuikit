@@ -3,7 +3,7 @@
     <div class="uk-modal-dialog uk-modal-dialog-lightbox">
       <a class="uk-modal-close uk-close uk-close-alt"
         href=""
-        v-if="!block && !hideClose">
+        v-if="!block && closeBtn">
       </a>
       <slot></slot>
     </div>
@@ -16,9 +16,9 @@ import ModalBase from './ModalBase'
 export default {
   extends: ModalBase,
   props: {
-    hideClose: {
+    closeBtn: {
       type: Boolean,
-      default: false
+      default: true
     },
     bgClose: {
       type: Boolean,

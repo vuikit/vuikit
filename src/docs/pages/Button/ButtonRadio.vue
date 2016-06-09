@@ -1,8 +1,9 @@
 <template>
   <docs-page
+    component="button-radio"
+    :code-slot="codeSlot"
     :props="props"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-button-radio v-ref:demo
         :group="props.group.value"
@@ -13,7 +14,7 @@
       </vk-button-radio>
     </div>
     <div slot="desc">
-      The <code>vk-button-radio</code> component, acting like a radio form field, allows toggling between a group of <code>vk-button</code> buttons. It value will reflect the active button value.
+      The <code>vk-button-radio</code> component, acting like a radio form field, allows toggling between a group of <code>vk-button</code> buttons.
     </div>
   </docs-page>
 </template>
@@ -27,24 +28,21 @@ export default {
   data: () => ({
     props: Helper.getProps('ButtonRadio', props),
     events,
-    code
+    codeSlot
   })
 }
 
-const code =
-`<vk-button-radio>
-  <vk-button value="1">Button 1</vk-button>
-  <vk-button value="2">Button 2</vk-button>
-  <vk-button value="3">Button 3</vk-button>
-</vk-button-radio>`
+const codeSlot =
+`<vk-button value="1">Button 1</vk-button>
+<vk-button value="2">Button 2</vk-button>
+<vk-button value="3">Button 3</vk-button>`
 
 const props = {
   value: {
-    description: 'The current value determined by the active button.',
-    value: ''
+    description: 'Value reflecting the value of the currently active button.'
   },
   group: {
-    description: 'Determines whether or not the buttons are grouped.'
+    description: 'Whether to display the buttons grouped together.'
   }
 }
 

@@ -1,8 +1,9 @@
 <template>
   <docs-page
+    component="button-link"
+    code-slot="Link"
     :props="props"
-    :slots="slots"
-    :code="code">
+    :slots="slots">
     <div slot="demo">
       <vk-button-link v-ref:demo
         :color="props.color.value"
@@ -29,55 +30,51 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('ButtonLink', props),
-    slots,
-    code
+    slots
   })
 }
 
-const code =
-`<vk-button-link>
-  Link
-</vk-button-link>`
-
 const props = {
   href: {
-    description: 'Determines the link to follow when the button is pressed.',
-    editable: false
+    description: 'The link to be followed when the button is pressed.',
+    demo: false
   },
   active: {
-    description: 'Determines whether or not the button is active.'
+    description: 'Whether to present the button as active.'
   },
   color: {
-    description: `Determines the color variation of the button, <code>'primary'</code>,
-      <code>success</code>, <code>danger</code> or <code>link</code>. Leave empty
-      for default.`,
-    options: ['default', 'primary', 'success', 'danger', 'link']
+    description: `The color modifier accepting as values <code>primary</code>, <code>success</code>,
+      <code>danger</code> or <code>link</code>.`,
+    options: ['primary', 'success', 'danger', 'link']
   },
   size: {
-    description: `Determines the size of the button, <code>mini</code>,
-      <code>small</code> or <code>large</code>. Leave empty for default.`,
-    options: ['mini', 'small', 'default', 'large']
+    description: `The size modifier accepting as values <code>mini</code>, <code>small</code>,
+      or <code>large</code>.`,
+    options: ['mini', 'small', 'large']
   },
   width: {
-    description: `Determines the width of the button using the <i>UIkit Grid</i>
-      classes.`,
-    options: ['default', '1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
+    description: `The width of the button. Can be any class from the
+      <a href="http://getuikit.com/docs/grid.html">UIkit Grid</a>
+      without the <code>uk-width-</code> prefix.`,
+    options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
   },
   iconLeft: {
-    description: `Determines the icon from the <i>Font Awesome</i> library to be
-      placed on the left of the button inner content.`,
-    options: ['default', 'flag', 'microphone', 'gamepad']
+    description: `The left icon of the button. Can be any icon of
+      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
+      without the <code>uk-icon-</code> prefix.`,
+    options: ['flag', 'microphone', 'gamepad']
   },
   iconRight: {
-    description: `Determines the icon from the <i>Font Awesome</i> library to be placed
-      on the right of the button inner content.`,
-    options: ['default', 'flag', 'microphone', 'gamepad']
+    description: `The right icon of the button. Can be any icon of
+      <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+      without the <code>uk-icon-</code> prefix.`,
+    options: ['flag', 'microphone', 'gamepad']
   }
 }
 
 const slots = {
   default: {
-    description: 'The default slot holds the button text content.'
+    description: 'The button inner text.'
   }
 }
 </script>

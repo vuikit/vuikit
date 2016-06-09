@@ -1,8 +1,10 @@
 <template>
   <docs-page
+    component="modal-blank"
+    :code-slot="codeSlot"
     :props="props"
-    :events="events"
-    :code="code">
+    :slots="slots"
+    :events="events">
     <div slot="demo">
       <vk-button
         @click="props.show.value = true">
@@ -37,31 +39,37 @@ import * as Helper from '../../helper'
 import mixins from '../../mixins'
 import events from './events'
 import commonProps from './props'
+import { merge } from 'lodash'
 
 export default {
   mixins: [mixins],
   data: function () {
     return {
       image: require('../../assets/placeholder_600x400.svg'),
-      props: Helper.getProps('ModalBlank', commonProps),
+      props: Helper.getProps('ModalBlank', props),
       events,
-      code
+      slots,
+      codeSlot
     }
   }
 }
 
-const code =
-`<vk-modal-blank>
-  <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
-    <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
-      style="background-image: url(...)">
-    </div>
-    <div class="uk-width-medium-1-2">
-      <h1>Headline</h1>
-      <div class="uk-width-medium-1-3">
-        ...
-      </div>
+const codeSlot =
+`<div class="uk-grid uk-flex-middle" data-uk-grid-margin>
+  <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first" style="background-image: url(...)"></div>
+  <div class="uk-width-medium-1-2">
+    <h1>Headline</h1>
+    <div class="uk-width-medium-1-3">
+      <p>Content</p>
     </div>
   </div>
-</vk-modal-blank>`
+</div>`
+
+const props = merge({}, commonProps)
+
+const slots = {
+  default: {
+    description: 'The main content.'
+  }
+}
 </script>

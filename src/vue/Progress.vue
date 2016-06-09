@@ -11,7 +11,7 @@
     }">
     <div class="uk-progress-bar"
       :style="{
-        width: progressed + '%'
+        width: progress + '%'
       }">
       <slot></slot>
     </div>
@@ -21,30 +21,30 @@
 <script>
 export default {
   props: {
+    // the bar progress, 0 to 100
     progress: {
-      type: [Number, String],
+      type: Number,
       default: 0
     },
-    color: { // default, success, warning or danger
+    // default, success, warning or danger
+    color: {
       type: String,
       default: ''
     },
+    // mini or small
     size: {
-      type: String, // mini or small
+      type: String,
       default: ''
     },
-    stripe: { // bool, 'animated'
+    // bool, 'animated'
+    stripe: {
       type: [Boolean, String],
       default: false
     },
-    stripeAnimate: { // animate the striped bar
+    // animate the striped bar
+    stripeAnimate: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    progressed () {
-      return parseInt(this.progress)
     }
   }
 }

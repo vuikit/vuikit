@@ -13,7 +13,8 @@
       :disabled-dates="disabledDates"
       :selected-dates="selectedDates"
       :locale="locale"
-      @select="select">
+      @select="select"
+      @update="$emit('update')">
     </calendar>
   </div>
 </template>
@@ -172,6 +173,7 @@ export default {
       return this.disabledDates.some(date => moment.isSame(date, 'day'))
     },
     select (moment) {
+      this.$emit('select', moment)
       if (!this.isDisabled(moment) && !moment.isSame(this.selected, 'day')) {
         this.selected = moment.clone()
         // trigger change event

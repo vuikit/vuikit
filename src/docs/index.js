@@ -5,13 +5,9 @@ import TableProps from './components/TableProps'
 import TableSlots from './components/TableSlots'
 import TableEvents from './components/TableEvents'
 import Vuikit from '../vue'
-import VEncode from './v-encode'
 
 // init Vuikit
 Vue.use(Vuikit)
-
-// register custom directives
-Vue.directive('encode', VEncode)
 
 // register global components
 Vue.component('DocsPage', Doc)

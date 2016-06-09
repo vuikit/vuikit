@@ -1,19 +1,20 @@
 <template>
   <docs-page
+    component="alert"
+    code-slot="Alert!"
     :props="props"
-    :slots="slots"
-    :code="code">
+    :slots="slots">
     <div slot="demo">
       <vk-alert v-ref:demo
         :show.sync="props.show.value"
         :color="props.color.value"
-        :size="props.size.value"
-        :close="props.close.value">
+        :large="props.large.value"
+        :block="props.block.value">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore.
       </vk-alert>
     </div>
     <div slot="desc">
-      The <code>vk-alert</code> component renders success, warning and error messages.
+      The <code>vk-alert</code> component renders an alert message.
     </div>
   </docs-page>
 </template>
@@ -26,41 +27,36 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Alert', props),
-    slots,
-    code
+    slots
   })
 }
 
-const code = '<vk-alert></vk-alert>'
-
 const props = {
   show: {
-    description: 'Determines whether or not the alert is displayed.'
+    description: 'Display state that when toggled will hide/show the alert.'
   },
   color: {
-    description: 'Determines the color of the alert. Leave empty for default.',
-    options: ['default', 'success', 'warning', 'danger']
+    description: `The color modifier accepting as values <code>success</code>,
+      <code>warning</code> or <code>danger</code>.`,
+    options: ['success', 'warning', 'danger']
   },
-  size: {
-    description: 'Determines the size of the alert. Leave empty for default.',
-    options: ['default', 'large']
+  large: {
+    description: 'Whether to increase the spacing arount the text.'
   },
-  close: {
-    description: 'Determines whether or not the close button is displayed.'
+  block: {
+    description: 'Whether to allow hiding the alert by user action.'
   },
   transition: {
-    description: `Determines the transition options data object:
-      </br><code>fade</code> - whether or not the alert will fade on close,
-      </br><code>duration</code> - the time in ms for alert fade animation on close.`,
-    default: {},
-    value: '',
-    editable: false
+    description: `The transition options for the alert hiding effect. Check
+      <a href="https://github.com/JOOlanders/vuikit/blob/master/src/vue/Alert.vue#L43">the defaults</a>
+      for more details.`,
+    demo: false
   }
 }
 
 const slots = {
   default: {
-    description: 'The default slot holds the alert message content.'
+    description: 'The container for the message of the alert.'
   }
 }
 </script>

@@ -1,8 +1,10 @@
 <template>
   <docs-page
+    component="tabs-vertical"
+    :props="props"
+    :slots="true"
     :events="events"
-    :slots="slots"
-    :code="code">
+    :code-slot="codeSlot">
     <div slot="demo">
       <vk-tabs-vertical v-ref:demo
         :align="props.align.value"
@@ -18,7 +20,7 @@
       The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
     </div>
     <div slot="props">
-      <vk-subnav color="line" v-ref:nav>
+      <vk-subnav line v-ref:nav>
         <vk-subnav-item>vk-tabs</vk-subnav-item>
         <vk-subnav-item>vk-tab</vk-subnav-item>
       </vk-subnav>
@@ -27,7 +29,21 @@
           <table-props :rows="props"></table-props>
         </vk-switch>
         <vk-switch>
-          <table-props :rows="tabProps" :demo="false"></table-props>
+          <table-props :rows="propsTab" :demo="false"></table-props>
+        </vk-switch>
+      </vk-switcher>
+    </div>
+    <div slot="slots">
+      <vk-subnav line v-ref:slots-nav>
+        <vk-subnav-item>vk-tabs-vertical</vk-subnav-item>
+        <vk-subnav-item>vk-tab</vk-subnav-item>
+      </vk-subnav>
+      <vk-switcher :connect="$refs.slotsNav">
+        <vk-switch>
+          <table-slots :rows="slotsTabs"></table-slots>
+        </vk-switch>
+        <vk-switch>
+          <table-slots :rows="slotsTab"></table-slots>
         </vk-switch>
       </vk-switcher>
     </div>
@@ -42,37 +58,35 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('TabsVertical', props),
-    tabProps: Helper.getProps('Tab', tabProps),
-    slots,
-    events,
-    code
+    propsTab: Helper.getProps('Tab', propsTab),
+    slotsTabs,
+    slotsTab,
+    codeSlot,
+    events
   })
 }
 
-const code =
-`<vk-tabs-vertical>
-  <vk-tab label="Tab 1">Content Tab 1</vk-tab>
-  <vk-tab label="Tab 2">Content Tab 2</vk-tab>
-  <vk-tab label="Tab 3">Content Tab 3</vk-tab>
-  <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
-</vk-tabs-vertical>`
+const codeSlot =
+`<vk-tab label="Tab 1">Content Tab 1</vk-tab>
+<vk-tab label="Tab 2">Content Tab 2</vk-tab>
+<vk-tab label="Tab 3">Content Tab 3</vk-tab>`
 
 const props = {
   align: {
     description: 'Determines the tabs vertical alignment.',
-    options: ['left', 'right']
+    options: ['right']
   },
   headerWidth: {
     description: 'Determines the tabs width using the <i>UIkit Grid</i> classes.',
-    options: ['1-2', '1-3', '1-4', '2-3']
+    options: ['1-2', '1-4', '2-3']
   },
   bodyWidth: {
     description: 'Determines the content width using the <i>UIkit Grid</i> classes.',
-    options: ['1-2', '1-3', '1-4', '2-3']
+    options: ['1-2', '1-3', '1-4']
   }
 }
 
-const tabProps = {
+const propsTab = {
   label: {
     description: 'Determines the tab header text.'
   },
@@ -81,15 +95,21 @@ const tabProps = {
   }
 }
 
-const events = {
-  change: {
-    description: 'Emited when there was made some tab selection.'
+const slotsTabs = {
+  default: {
+    description: 'The list of <code>vk-tab</code> components.'
   }
 }
 
-const slots = {
+const slotsTab = {
   default: {
-    description: 'The default slot on each <code>vk-tab</code> holds the tab content.'
+    description: 'The content of the tab. Can be text, HTML or event other components.'
+  }
+}
+
+const events = {
+  change: {
+    description: 'Emited when the selected tab has changed.'
   }
 }
 </script>

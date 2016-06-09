@@ -7,7 +7,7 @@
       <!-- close button -->
       <a class="uk-modal-close uk-close"
         href=""
-        v-if="!block && !hideClose">
+        v-if="!block && closeBtn">
       </a>
       <!-- header -->
       <div v-el:header class="uk-modal-header">
@@ -42,9 +42,9 @@ export default {
       type: Boolean,
       default: false
     },
-    hideClose: {
+    closeBtn: {
       type: Boolean,
-      default: false
+      default: true
     },
     large: {
       type: Boolean,

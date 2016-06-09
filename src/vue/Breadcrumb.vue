@@ -9,12 +9,13 @@ export default {
   props: {
     location: {
       type: String
+      // on ready, defaults to
+      // last crumb path
     }
   },
   ready: function () {
-    // set last crumb as default
-    // if no location is set
     if (!this.location) {
+      // set location default
       this.location = this.$children[this.$children.length - 1].path
     }
   },

@@ -1,9 +1,10 @@
 <template>
   <docs-page
+    component="modal-confirm"
+    code-slot="Are you sure?"
     :props="props"
     :slots="slots"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-button
         @click="(props.show.value = true) && ($refs.demo.state = false)">
@@ -41,26 +42,22 @@ export default {
       buttonText: 'Open',
       props: Helper.getProps('ModalConfirm', props),
       slots,
-      events,
-      code
+      events
     }
   }
 }
-
-const code =
-'<vk-modal-confirm></vk-modal-confirm>'
 
 const props = merge({}, commonProps)
 
 const events = merge({}, commonEvents, {
   confirm: {
-    description: 'Emited on user confirmation'
+    description: 'Emited on user confirmation.'
   }
 })
 
 const slots = {
   default: {
-    description: 'The default slot holds the modal text content.'
+    description: 'The main content.'
   }
 }
 </script>

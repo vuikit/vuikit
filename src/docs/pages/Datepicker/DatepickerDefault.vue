@@ -1,8 +1,8 @@
 <template>
   <docs-page
+    component="datepicker"
     :props="props"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo" class="uk-form">
       <vk-datepicker v-ref:demo
         :value.sync="props.value.value"
@@ -29,64 +29,49 @@ export default {
   data: () => ({
     props: Helper.getProps('Datepicker', props),
     events,
-    code,
     demoValue: ''
-  }),
-  watch: {
-    'props.format.value': function (newFormat, oldFormat) {
-      // force date format update
-      const moment = this.$refs.demo.$moment(this.$refs.demo.value)
-      if (this.$refs.demo.value) {
-        this.$refs.demo.value = moment.format(newFormat)
-      }
-    }
-  }
+  })
 }
-
-const code =
-'<vk-datepicker></vk-datepicker>'
 
 const props = {
   value: {
-    description: 'Determines the currently selected date.',
-    editable: false,
-    value: ''
+    description: 'The selected date that will be reflected on the input.',
+    editable: false
   },
   format: {
-    description: `Determines the date format with any combination of
-      <code>DD</code>, <code>MM</code> and <code>YYYY</code>.`,
-    options: ['YYYY-MM-DD', 'YYYY.MM.DD', 'DD/MM/YYYY']
+    description: `The date format that will be applied on the input. Supports any input
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>`,
+    demo: false
   },
   offsetTop: {
     description: 'Determines the dropdown top offset relative to the input.',
-    options: [5, 20, 50]
+    options: [20, 50]
   },
   position: {
     description: 'Determines the dropdown position relative to the input.',
-    options: ['auto', 'top', 'bottom']
+    options: ['top', 'bottom']
   },
   mobile: {
-    description: 'Determines if the dropdown should be rendered in mobile devices.'
+    description: 'Wheter to render the dropdown on mobile devices or use their native date input.'
   },
   minDate: {
     description: `The minimum date that is selectable. Supports any input
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
       or an <code>integer</code> as offset days from current day.`,
-    options: ['default', 5, 10],
-    value: ''
+    options: [5, 10]
   },
   maxDate: {
     description: `The maximum date that is selectable. Supports any input
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
       or an <code>integer</code> as offset days from current day.`,
-    options: ['default', 5, 10],
-    value: ''
+    options: [5, 10]
   },
   locale: {
-    description: `Determines the locale data object, <code>months</code>,
-      <code>weekDays</code> and <code>weekStart</code>.`,
+    description: `By default, VkDatepicker comes with the English locale strings.
+      You can use this to change the language, or change the first day of the week.
+      See <a href="http://momentjs.com/docs/#/i18n/">moment.js documentation</a> for more details.`,
     default: {},
-    value: ''
+    demo: false
   }
 }
 
@@ -98,11 +83,13 @@ const events = {
     description: 'Emited on dropdown hide.'
   },
   update: {
-    description: 'Emited on calendar rendering.'
+    description: 'Emited on month view update.'
+  },
+  select: {
+    description: 'Emited on day selection with its <code>moment.js</code> object as argument.'
   },
   change: {
-    description: `Emited on date selection passing as argument the
-      <code>Moment</code> object.`
+    description: 'Emited on selection change with its <code>moment.js</code> object as argument.'
   }
 }
 </script>

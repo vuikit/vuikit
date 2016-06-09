@@ -10,7 +10,7 @@ import UI from 'uikit'
 
 export default {
   props: {
-    // the nav el or component that
+    // the node el or component that
     // the switcher relies on
     connect: {
       required: true

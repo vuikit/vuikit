@@ -107,8 +107,8 @@ export default {
 .tm-nav > li > a:hover,
 .tm-nav > li > a:focus,
 .tm-nav > li.uk-active > a {
-    background: #F5F5F5;
-    color: #444;
+  background: #F5F5F5;
+  color: #444;
 }
 
 /*

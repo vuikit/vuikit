@@ -1,8 +1,8 @@
 <template>
   <docs-page
+    component="calendar"
     :props="props"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-calendar v-ref:demo
         :year.sync="props.year.value | number"
@@ -28,8 +28,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Calendar', props),
-    events,
-    code
+    events
   }),
   filters: {
     number (val) {
@@ -38,33 +37,25 @@ export default {
   }
 }
 
-const code =
-'<vk-calendar></vk-calendar>'
-
 const props = {
   year: {
-    description: 'The year currently being displayed. Defaults to current if omited.',
+    description: 'The year of the month currently being displayed. Defaults to current year if omited.',
     options: [
       Moment().add(-1, 'year').year(),
       Moment().year(),
       Moment().add(1, 'year').year()
-    ],
-    default: Moment().year(),
-    value: Moment().year()
+    ]
   },
   month: {
     description: `The month currently being displayed. Notice that the months
       are zero indexed, being January represented as <code>0</code>. Defaults to current
       month if omited.`,
-    options: { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 },
-    default: Moment().month(),
-    value: Moment().month()
+    options: { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 }
   },
   min: {
     description: `The minimum month that can be displayed. Supports any input
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     options: {
-      default: '1980-01-01',
       'Last Month': Moment().add(-1, 'months').format('YYYY-MM-DD')
     }
   },
@@ -72,7 +63,6 @@ const props = {
     description: `The maximum month that can be displayed. Supports any input
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     options: {
-      default: '2050-12-31',
       'Next Month': Moment().add(1, 'months').format('YYYY-MM-DD')
     }
   },
@@ -80,7 +70,6 @@ const props = {
     description: `Array of arbitrary dates that should be disabled. Supports any
       input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     options: {
-      default: [],
       Today: [Moment().format('YYYY-MM-DD')],
       Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
       Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
@@ -91,29 +80,27 @@ const props = {
     description: `Array of arbitrary dates that should be disabled. Supports any
       input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     options: {
-      default: [],
       Today: [Moment().format('YYYY-MM-DD')],
       Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
       Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
     },
-    value: []
+    value: [Moment().add(1, 'days').format('YYYY-MM-DD')]
   },
   locale: {
     description: `By default, VkCalendar comes with the English locale strings.
       You can use this to change the language, or change the first day of the week.
-      See <a href="http://momentjs.com/docs/#/i18n/">moment.js documentation</a> for more details`,
+      See <a href="http://momentjs.com/docs/#/i18n/">moment.js documentation</a> for more details.`,
     default: {},
-    value: ''
+    demo: false
   }
 }
 
 const events = {
   select: {
-    description: `Emited on day selection passing as argument the
-      <code>Moment</code> object.`
+    description: 'Emited on day selection with its <code>moment.js</code> object as argument.'
   },
   update: {
-    description: 'Emited on calendar view update.'
+    description: 'Emited on month view update.'
   }
 }
 </script>

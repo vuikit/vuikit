@@ -1,9 +1,9 @@
 <template>
   <docs-page
+    component="modal-lightbox"
     :props="props"
     :slots="slots"
-    :events="events"
-    :code="code">
+    :events="events">
     <div slot="demo">
       <vk-button
         @click="props.show.value = true">
@@ -15,7 +15,7 @@
         :keyboard="props.keyboard.value"
         :center="props.center.value"
         :bg-close="props.bgClose.value"
-        :hide-close="props.hideClose.value">
+        :close-btn="props.closeBtn.value">
         <img src="../../assets/placeholder_600x400.svg">
       </vk-modal-lightbox>
     </div>
@@ -38,30 +38,23 @@ export default {
     return {
       props: Helper.getProps('ModalLightbox', props),
       slots,
-      events,
-      code
+      events
     }
   }
 }
 
-const code =
-`<vk-modal-lightbox>
-  <img />
-</vk-modal-lightbox>`
-
 const props = merge({}, commonProps, {
   bgClose: {
-    description: `Determines whether or not the modal can be closed by clicking
-      the background.`
+    description: 'Whether to allow closing the modal by clicking on the background.'
   },
-  hideClose: {
-    description: 'Determines whether or not the close button is displayed.'
+  closeBtn: {
+    description: 'Whether to display the modal close button.'
   }
 })
 
 const slots = {
   default: {
-    description: 'Holds the modal default content, usually an image.'
+    description: 'The default content, usually an image.'
   }
 }
 </script>
