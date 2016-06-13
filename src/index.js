@@ -21,6 +21,7 @@ import Switch from './SwitcherItem'
 import Tab from './Tab'
 import Tabs from './Tabs'
 import TabsVertical from './TabsVertical'
+import Upload from './Upload'
 
 const vuikit = {
   Alert,
@@ -46,6 +47,7 @@ const vuikit = {
   Tab,
   Tabs,
   TabsVertical,
+  Upload,
   install (Vue) {
     if (this.installed) {
       return
@@ -87,5 +89,6 @@ export {
   Tab,
   Tabs,
   TabsVertical,
+  Upload,
   vuikit as default
 }

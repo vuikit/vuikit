@@ -62,7 +62,8 @@ const Pages = {
   Progress: require('./pages/Progress/index'),
   Subnav: require('./pages/Subnav/index'),
   Switcher: require('./pages/Switcher/index'),
-  Tabs: require('./pages/Tabs/index')
+  Tabs: require('./pages/Tabs/index'),
+  Upload: require('./pages/Upload/index')
 }
 
 export default {
@@ -84,7 +85,8 @@ export default {
     PageProgress: Pages.Progress,
     PageSubnav: Pages.Subnav,
     PageSwitcher: Pages.Switcher,
-    PageTabs: Pages.Tabs
+    PageTabs: Pages.Tabs,
+    PageUpload: Pages.Upload
   },
   data: () => ({
     pages: Object.keys(Pages),
