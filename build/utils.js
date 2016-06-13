@@ -1,4 +1,5 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require('webpack')
 
 exports.cssLoaders = function (options) {
   options = options || {}
@@ -49,8 +50,23 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-/* eslint-disable no-undef */
+// delete all content from a folder
 exports.cleanPath = function (_path) {
+  /* eslint-disable no-undef */
   rm('-rf', _path)
   mkdir('-p', _path)
+}
+
+exports.webpackBuild = function (config, spinner) {
+  webpack(config, function (err, stats) {
+    spinner.stop()
+    if (err) throw err
+    process.stdout.write(stats.toString({
+      colors: true,
+      modules: false,
+      children: false,
+      chunks: false,
+      chunkModules: false
+    }) + '\n')
+  })
 }
