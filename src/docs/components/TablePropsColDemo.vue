@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { findKey, isEqual } from 'lodash'
+import { findKey, isEqual, isArray } from 'lodash'
 
 export default {
   props: {
@@ -69,7 +68,7 @@ export default {
   },
   computed: {
     selectOptions () {
-      if (Vue.util.isArray(this.options)) {
+      if (isArray(this.options)) {
         const options = {}
         this.options.forEach(opt => { options[opt] = opt })
         return options

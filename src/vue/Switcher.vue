@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import UI from 'uikit'
+import { isObject } from 'lodash'
 
 export default {
   props: {
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     nav () {
-      return Vue.util.isPlainObject(this.connect) && this.connect.$el
+      return isObject(this.connect) && this.connect.$el
         ? this.connect.$el
         : this.connect
     }

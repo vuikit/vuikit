@@ -31,9 +31,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import { isObject, isArray, sortBy } from 'lodash'
 import PropsColDemo from './TablePropsColDemo'
-import { sortBy } from 'lodash'
 
 export default {
   components: { PropsColDemo },
@@ -54,7 +53,7 @@ export default {
   },
   filters: {
     type (type) {
-      if (Vue.util.isArray(type)) {
+      if (isArray(type)) {
         type = type.map(t => t.name).join(', ')
       } else if (type) {
         type = type.name
@@ -63,11 +62,11 @@ export default {
     },
     stringify (value) {
       // special case if not empty object
-      if (Vue.util.isObject(value) && Object.keys(value).length) {
+      if (isObject(value) && Object.keys(value).length) {
         return '{...}'
       }
       // or non empty array
-      if (Vue.util.isArray(value) && value.length) {
+      if (isArray(value) && value.length) {
         return '[...]'
       }
       // no defined means any value accepted

@@ -26,11 +26,19 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import { mapValues, pickBy, each, isEqual, isEmpty } from 'lodash'
 import { getComponentDefaults } from '../helper'
 import hljs from 'highlight.js/lib/highlight'
 import beautify from 'js-beautify'
+import {
+  mapValues,
+  pickBy,
+  each,
+  isEqual,
+  isEmpty,
+  isArray,
+  isObject,
+  kebabCase
+} from 'lodash'
 
 // init highlight language
 hljs.registerLanguage('html', require('highlight.js/lib/languages/xml'))
@@ -78,7 +86,7 @@ export default {
         if (value === true) {
           value = ''
         }
-        if (Vue.util.isArray(value) || Vue.util.isPlainObject(value)) {
+        if (isArray(value) || isObject(value)) {
           if (isEmpty(value)) {
             return true
           }
@@ -90,7 +98,7 @@ export default {
         } else if (Number.isInteger(value) || value === false) {
           key = `:${key}`
         }
-        el.setAttribute(Vue.util.hyphenate(key), value)
+        el.setAttribute(kebabCase(key), value)
       })
       // add el inner text
       if (this.codeSlot) {
@@ -107,7 +115,7 @@ export default {
     propsCustomValues () {
       const propsDefaults = getComponentDefaults(this.component)
       return pickBy(mapValues(this.props, 'value'), (value, name) => {
-        if (Vue.util.isPlainObject(value) && !isEmpty(value)) {
+        if (isObject(value) && !isEmpty(value)) {
           return false
         } else {
           return !isEqual(propsDefaults[name], value)

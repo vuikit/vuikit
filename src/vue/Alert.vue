@@ -18,7 +18,7 @@
 
 <script>
 import UI from 'uikit'
-import Vue from 'vue'
+import { merge } from 'lodash'
 
 export default {
   props: {
@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     transitionOptions () {
-      return Vue.util.extend(this.$options.props.transition.default(), this.transition)
+      return merge(this.$options.props.transition.default(), this.transition)
     }
   },
   transitions: {

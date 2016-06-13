@@ -9,7 +9,7 @@
 
 <script>
 import UI from 'uikit'
-import Vue from 'vue'
+import { toArray } from 'lodash'
 
 export default {
   props: {
@@ -35,7 +35,7 @@ export default {
     // on each change
     UI.$(this.$el).on('click', () => {
       // get actives btns
-      const actives = Vue.util.toArray(this.$el.querySelectorAll('.uk-active'))
+      const actives = toArray(this.$el.querySelectorAll('.uk-active'))
       // save its values as array
       this.value = actives.map(btn => btn.__vue__.value)
       // trigger event

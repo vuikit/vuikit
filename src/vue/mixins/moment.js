@@ -1,6 +1,6 @@
-import Vue from 'vue'
 import Moment from 'moment'
-import { merge } from 'lodash'
+import { merge, isArray, isObject } from 'lodash'
+import { warn } from '../utils'
 
 const defaultLocale = {
   name: 'en',
@@ -12,15 +12,15 @@ const defaultLocale = {
 export default {
   init () {
     if (Moment === undefined) {
-      Vue.util.warn(`${this.$options.name} stopped executing due to missing Moment.js dependency.`)
+      warn(`${this.$options.name} stopped executing due to missing Moment.js dependency.`)
       this.$destroy()
     } else {
       this.$moment = function (date) {
-        const moment = (!date || Vue.util.isArray(date) || Vue.util.isObject(date))
+        const moment = (!date || isArray(date) || isObject(date))
           ? Moment(date || undefined)
           : Moment(date, this.format)
         if (!moment.isValid()) {
-          Vue.util.warn(`Moment object creation failed with date input '${date}'`)
+          warn(`Moment object creation failed with date input '${date}'`)
         }
         return moment
       }
