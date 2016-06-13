@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Vuikit from '../src'
 import {
   each,
   merge,
@@ -10,7 +11,7 @@ import {
 
 export function getComponent (component) {
   component = upperFirst(camelCase(component))
-  const comp = require(`../vue/${component}`)
+  const comp = Vuikit[component]
   if (!comp) {
     Vue.util.warn(`Vk${component} not found, did you registered it?`)
   }

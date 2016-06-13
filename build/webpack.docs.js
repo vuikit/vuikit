@@ -9,10 +9,10 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    docs: './src/docs'
+    docs: './docs'
   },
   output: {
-    path: 'docs',
+    path: 'docs-dist',
     filename: 'js/[name].[chunkhash].js',
     chunkFilename: 'js/[id].[chunkhash].js'
   },
@@ -45,7 +45,7 @@ module.exports = merge(baseWebpackConfig, {
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: path.resolve(__dirname, '../docs/index.html'),
+      filename: path.resolve(__dirname, '../docs-dist/index.html'),
       template: 'build/index.docs.html',
       inject: true,
       minify: {

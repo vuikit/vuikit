@@ -55,7 +55,7 @@ export default {
   mixins: [mixins],
   data: () => ({
     props: Helper.getProps('Breadcrumb', props),
-    propsCrumb: Helper.getProps('BreadcrumbItem', propsCrumb),
+    propsCrumb: Helper.getProps('Crumb', propsCrumb),
     events,
     codeSlot,
     slotsBreadcrumb,

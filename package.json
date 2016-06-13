@@ -7,14 +7,12 @@
     "url": "http://www.zoolanders.com"
   },
   "keywords": [
-    "browser",
     "library",
     "vue",
     "vuejs",
-    "uikit",
-    "interfaces"
+    "uikit"
   ],
-  "main": "dist/vuikit.js",
+  "main": "dist/vuikit.common.js",
   "files": [
     "dist",
     "src"
@@ -34,7 +32,7 @@
     "docs": "node build/build.docs.js",
     "docs:deploy": "cd build && ./deploy.docs.sh",
     "bower": "cd build && ./bower.sh",
-    "uikit": "lessc src/uikit/uikit.less static/css/uikit.css"
+    "uikit": "lessc uikit/uikit.less static/css/uikit.css"
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",

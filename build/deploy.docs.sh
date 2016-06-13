@@ -1,4 +1,4 @@
-cd ../docs
+cd ../docs-dist
 git init
 git add -A
 git commit -m 'update demo'

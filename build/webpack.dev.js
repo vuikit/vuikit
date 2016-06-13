@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 var webpackConfig = merge(baseWebpackConfig, {
   entry: {
-    app: './src/docs'
+    app: './docs'
   },
   output: {
     path: '/dev',

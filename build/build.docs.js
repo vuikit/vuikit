@@ -11,9 +11,9 @@ spinner.text = 'building docs...'
 spinner.start()
 
 /* eslint-disable no-undef */
-utils.cleanPath('docs')
-cp('-R', 'static/', 'docs')
-cp('-R', 'node_modules/uikit/dist/fonts/', 'docs/fonts')
+utils.cleanPath('docs-dist')
+cp('-R', 'static/', 'docs-dist')
+cp('-R', 'node_modules/uikit/dist/fonts/', 'docs-dist/fonts')
 
 webpack(webpackConfig, function (err, stats) {
   spinner.stop()

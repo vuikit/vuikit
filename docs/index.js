@@ -4,7 +4,7 @@ import Doc from './components/Doc'
 import TableProps from './components/TableProps'
 import TableSlots from './components/TableSlots'
 import TableEvents from './components/TableEvents'
-import Vuikit from '../vue'
+import Vuikit from '../src'
 
 // init Vuikit
 Vue.use(Vuikit)
