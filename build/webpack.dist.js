@@ -14,9 +14,6 @@ module.exports = merge(baseWebpackConfig, {
     filename: '[name].js',
     chunkFilename: '[id].js'
   },
-  externals: {
-    vue: 'Vue'
-  },
   module: {
     loaders: utils.styleLoaders({ sourceMap: true, extract: true })
   },

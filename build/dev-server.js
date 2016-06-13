@@ -1,13 +1,9 @@
 var express = require('express')
 var webpack = require('webpack')
-var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || 8080
-// Define HTTP proxies to your custom API backend
-// https://github.com/chimurai/http-proxy-middleware
-var proxyTable = {}
 
 var app = express()
 var compiler = webpack(webpackConfig)
@@ -27,15 +23,6 @@ compiler.plugin('compilation', function (compilation) {
     hotMiddleware.publish({ action: 'reload' })
     cb()
   })
-})
-
-// proxy api requests
-Object.keys(proxyTable).forEach(function (context) {
-  var options = proxyTable[context]
-  if (typeof options === 'string') {
-    options = { target: options }
-  }
-  app.use(proxyMiddleware(context, options))
 })
 
 // handle fallback for HTML5 history API
