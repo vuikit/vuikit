@@ -33,12 +33,11 @@ Vue.use(vuikit)
 </template>
 ```
 
-Although is recommended to load and register them individually as required.
+Although is possible to load and register them individually.
 
 ```js
 import Vue from 'vue'
-import Button from 'vuikit/src/Button'
-import Alert from 'vuikit/src/Alert'
+import { Button, Alert } from 'vuikit'
 
 // globally
 Vue.component('VkButton', Button)
@@ -57,7 +56,7 @@ Changing the output or adding specific features is straightforward by extending 
 
 ```js
 import Vue from 'vue'
-import Button from 'vuikit/src/Button'
+import { Button } from 'vuikit'
 
 Vue.component('TmButton', {
   extends: Button,
