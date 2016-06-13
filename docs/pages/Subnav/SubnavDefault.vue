@@ -2,7 +2,7 @@
   <docs-page
     :slots="true"
     component="subnav"
-    :props="props"
+    :props="true"
     :code-slot="codeSlot"
     :events="events">
     <div slot="demo">

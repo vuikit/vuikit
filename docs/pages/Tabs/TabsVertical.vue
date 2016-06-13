@@ -1,7 +1,7 @@
 <template>
   <docs-page
     component="tabs-vertical"
-    :props="props"
+    :props="true"
     :slots="true"
     :events="events"
     :code-slot="codeSlot">

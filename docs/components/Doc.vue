@@ -5,7 +5,7 @@
       <slot name="desc"></slot>
     </div>
     <vk-tabs>
-      <vk-tab label="Props">
+      <vk-tab label="Props" v-if="props">
         <slot name="props">
           <table-props :rows="props"></table-props>
         </slot>
@@ -64,8 +64,8 @@ export default {
       default: ''
     },
     props: {
-      type: Object,
-      required: false
+      type: [Object, Boolean],
+      default: false
     },
     slots: {
       type: [Object, Boolean],

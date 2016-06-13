@@ -3,6 +3,7 @@
     component="breadcrumb"
     :code-slot="codeSlot"
     :slots="true"
+    :props="true"
     :events="events">
     <div slot="demo">
       <vk-breadcrumb v-ref:demo

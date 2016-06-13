@@ -2,7 +2,7 @@
   <docs-page
     component="tabs"
     :slots="true"
-    :props="props"
+    :props="true"
     :events="events"
     :code-slot="codeSlot">
     <div slot="demo">
