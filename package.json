@@ -20,12 +20,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joolanders/vuikit.git"
+    "url": "git+https://github.com/vuikit/vuikit.git"
   },
   "bugs": {
-    "url": "https://github.com/joolanders/vuikit/issues"
+    "url": "https://github.com/vuikit/vuikit/issues"
   },
-  "homepage": "https://github.com/joolanders/vuikit",
+  "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
     "dev": "node build/dev-server.js",
     "dist": "node build/build.dist.js",

@@ -86,7 +86,7 @@ Make sure UIkit and Vue latest version assets are loaded upfront and then load `
 
 ## Documentation, Demo & Playground
 
-We have setup a site with a live demo of each component listing its props, events and slots information. The props can be adjusted and the demo as the code example will update to reflect it. [Try it out!](http://joolanders.github.io/vuikit/).
+We have setup a site with a live demo of each component listing its props, events and slots information. The props can be adjusted and the demo as the code example will update to reflect it. [Try it out!](http://vuikit.github.io/vuikit/).
 
 Additionally there is a [codepen pen](http://codepen.io/miljan/pen/YWXVKj) for further testing.
 

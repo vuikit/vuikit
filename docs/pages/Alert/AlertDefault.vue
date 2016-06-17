@@ -48,7 +48,7 @@ const props = {
   },
   transition: {
     description: `The transition options for the alert hiding effect. Check
-      <a href="https://github.com/JOOlanders/vuikit/blob/master/src/vue/Alert.vue#L43">the defaults</a>
+      <a href="https://github.com/vuikit/vuikit/blob/master/src/vue/Alert.vue#L43">the defaults</a>
       for more details.`,
     demo: false
   }
