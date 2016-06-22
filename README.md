@@ -19,7 +19,7 @@ Vuikit components are registered globally by default and ready to use immediatel
 import Vue from 'vue'
 import Vuikit from 'vuikit'
 
-Vue.use(vuikit)
+Vue.use(Vuikit)
 ```
 ```html
 <template>
