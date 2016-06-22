@@ -6,6 +6,9 @@ var baseWebpackConfig = require('./webpack.base')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 baseWebpackConfig = merge(baseWebpackConfig, {
+  externals: {
+    uikit: 'uikit'
+  },
   entry: {
     'vuikit': './src'
   },
