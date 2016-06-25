@@ -1,7 +1,7 @@
 <template>
-  <div v-if="show"
+  <div class="uk-alert"
+    v-show="show"
     transition="fade"
-    class="uk-alert"
     :class="{
       'uk-alert-success': color === 'success',
       'uk-alert-warning': color === 'warning',
@@ -60,7 +60,14 @@ export default {
   transitions: {
     fade: {
       css: false,
-      leave: function (el, done) {
+      enter (el, done) {
+        if (this.transitionOptions.fade) {
+          UI.$(el).animate({ opacity: 1 }, this.transitionOptions.duration, done)
+        } else {
+          done()
+        }
+      },
+      leave (el, done) {
         if (this.transitionOptions.fade) {
           UI.$(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
         } else {
