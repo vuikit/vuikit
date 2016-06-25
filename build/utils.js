@@ -1,5 +1,12 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var path = require('path')
+var config = require('../config')
 var webpack = require('webpack')
+var ora = require('ora')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+exports.assetsPath = function (_path) {
+  return path.posix.join(config.build.assetsSubDirectory, _path)
+}
 
 exports.cssLoaders = function (options) {
   options = options || {}
@@ -51,13 +58,15 @@ exports.styleLoaders = function (options) {
 }
 
 // delete all content from a folder
-exports.cleanPath = function (_path) {
-  /* eslint-disable no-undef */
-  rm('-rf', _path)
-  mkdir('-p', _path)
+exports.cleanPath = function (path) {
+  rm('-rf', path)
+  mkdir('-p', path)
 }
 
-exports.webpackBuild = function (config, spinner) {
+// runs a webpack build
+exports.webpackBuild = function (config, msg) {
+  var spinner = ora(msg || 'building for production...')
+  spinner.start()
   webpack(config, function (err, stats) {
     spinner.stop()
     if (err) throw err

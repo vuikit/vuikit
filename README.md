@@ -100,10 +100,7 @@ npm install
 npm run dev
 
 # build for distribution
-npm run dist
-
-# build docs
-npm run docs
+npm run build
 ```
 
 ## License

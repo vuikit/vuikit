@@ -10,7 +10,8 @@
     "library",
     "vue",
     "vuejs",
-    "uikit"
+    "uikit",
+    "vuikit"
   ],
   "main": "dist/vuikit.common.js",
   "files": [
@@ -28,11 +29,9 @@
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
     "dev": "node build/dev-server.js",
-    "dist": "node build/build.dist.js",
+    "build": "node build/build.js",
     "docs": "node build/build.docs.js",
-    "docs:deploy": "cd build && ./deploy.docs.sh",
-    "bower": "cd build && ./bower.sh",
-    "uikit": "lessc uikit/uikit.less static/css/uikit.css"
+    "deploy": "cd build && ./deploy.sh"
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
@@ -40,7 +39,7 @@
     "moment-range": "^2.2.0",
     "lodash": "^4.12.0",
     "uikit": "^2.26.0",
-    "vue": "^1.0.24"
+    "vue": "^1.0.25"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
@@ -51,9 +50,9 @@
     "babel-preset-stage-2": "^6.0.0",
     "connect-history-api-fallback": "^1.1.0",
     "css-loader": "^0.23.0",
-    "eslint": "^2.0.0",
+    "eslint": "^2.10.2",
     "eslint-config-standard": "^5.1.0",
-    "eslint-friendly-formatter": "^1.2.2",
+    "eslint-friendly-formatter": "^2.0.5",
     "eslint-loader": "^1.3.0",
     "eslint-plugin-html": "^1.3.0",
     "eslint-plugin-promise": "^1.0.8",
@@ -67,14 +66,13 @@
     "html-webpack-plugin": "^2.8.1",
     "js-beautify": "^1.6.3",
     "json-loader": "^0.5.4",
-    "less": "^2.7.0",
-    "less-loader": "^2.2.3",
     "ora": "^0.2.0",
     "shelljs": "^0.6.0",
     "url-loader": "^0.5.7",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
     "vue-loader": "^8.3.0",
+    "vue-router": "^0.7.13",
     "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.4.0",
