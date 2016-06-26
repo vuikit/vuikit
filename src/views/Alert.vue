@@ -24,12 +24,8 @@
       <vk-tab label="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code>
-<vk-alert>
-  Alert!
-</vk-alert>
-        </vk-docs-code>
+      <vk-tab label="Example" active>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -38,11 +34,14 @@
 <script>
 import { merge, pick } from 'lodash'
 import Component from '../lib/Alert'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
-    slots
+    slots,
+    example
   })
 }
 
@@ -78,4 +77,9 @@ const slots = {
     description: 'The container for the message of the alert.'
   }
 }
+
+const example =
+`<vk-alert {attrs}>
+  Alert!
+</vk-alert>`
 </script>

@@ -26,11 +26,7 @@
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-button-link>
-  Link
-</vk-button-link>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -40,8 +36,10 @@
 import { merge, pick } from 'lodash'
 import Button from '../../lib/Button'
 import Component from '../../lib/ButtonLink'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(
       props,
@@ -49,7 +47,8 @@ export default {
       pick(Button.props, Object.keys(props)),
       pick(Component.props, Object.keys(props))
     ),
-    slots
+    slots,
+    example
   })
 }
 
@@ -106,4 +105,9 @@ const slots = {
     description: 'The button inner text.'
   }
 }
+
+const example =
+`<vk-button-link {attrs}>
+  Link
+</vk-button-link>`
 </script>

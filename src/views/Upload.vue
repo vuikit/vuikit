@@ -26,21 +26,21 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-upload>
-  <a class="uk-form-file">Select File<input type="file"></a>
-</vk-upload>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
 </template>
 
 <script>
+import mixin from './_mixin'
+
 export default {
+  mixins: [mixin],
   data: () => ({
     slots,
-    events
+    events,
+    example
   })
 }
 
@@ -58,4 +58,9 @@ const events = {
     description: 'Emited on file selection passing as arguments the file.'
   }
 }
+
+const example =
+`<vk-upload {attrs}>
+  <a class="uk-form-file">Select File<input type="file"></a>
+</vk-upload>`
 </script>

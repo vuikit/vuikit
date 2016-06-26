@@ -52,14 +52,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-subnav>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item disabled>Item</vk-subnav-item>
-</vk-subnav>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -69,14 +62,17 @@
 import { merge, pick } from 'lodash'
 import Subnav from '../lib/Subnav'
 import SubnavItem from '../lib/SubnavItem'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Subnav.props, Object.keys(props))),
     propsItem: merge(propsItem, pick(SubnavItem.props, Object.keys(propsItem))),
     slotsSubnav,
     slotsSubnavItem,
-    events
+    events,
+    example
   })
 }
 
@@ -118,4 +114,11 @@ const events = {
   }
 }
 
+const example =
+`<vk-subnav {attrs}>
+  <vk-subnav-item>Item</vk-subnav-item>
+  <vk-subnav-item>Item</vk-subnav-item>
+  <vk-subnav-item>Item</vk-subnav-item>
+  <vk-subnav-item disabled>Item</vk-subnav-item>
+</vk-subnav>`
 </script>

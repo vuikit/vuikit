@@ -53,14 +53,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-modal>
-  <template slot="header">Headline</template>
-  <div>Main content</div>
-  <template slot="footer">Footer</template>
-  <template slot="caption">Caption</template>
-</vk-modal>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -72,8 +65,10 @@ import events from './events'
 import commonProps from './props'
 import ModalBase from '../../lib/ModalBase'
 import Component from '../../lib/Modal'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data () {
     return {
       props: merge(
@@ -82,7 +77,8 @@ export default {
         pick(Component.props, Object.keys(props))
       ),
       slots,
-      events
+      events,
+      example
     }
   }
 }
@@ -121,4 +117,12 @@ const slots = {
     description: 'The caption content.'
   }
 }
+
+const example =
+`<vk-modal {attrs}>
+  <template slot="header">Headline</template>
+  <div>Main content</div>
+  <template slot="footer">Footer</template>
+  <template slot="caption">Caption</template>
+</vk-modal>`
 </script>

@@ -34,11 +34,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-modal-confirm>
-  Are you sure?
-</vk-modal-confirm>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -49,14 +45,17 @@ import { merge, pick } from 'lodash'
 import commonEvents from './events'
 import commonProps from './props'
 import ModalBase from '../../lib/ModalBase'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data () {
     return {
       buttonText: 'Open',
       props: merge({}, commonProps, pick(ModalBase.props, Object.keys(commonProps))),
       slots,
-      events
+      events,
+      example
     }
   }
 }
@@ -72,4 +71,9 @@ const slots = {
     description: 'The main content.'
   }
 }
+
+const example =
+`<vk-modal-confirm {attrs}>
+  Are you sure?
+</vk-modal-confirm>`
 </script>

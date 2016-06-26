@@ -37,14 +37,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-breadcrumb>
-  <vk-crumb path="/">Home</vk-crumb>
-  <vk-crumb path="/blog">Blog</vk-crumb>
-  <vk-crumb path="/blog/category">Category</vk-crumb>
-  <vk-crumb path="/blog/category/post">Post</vk-crumb>
-</vk-breadcrumb>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -54,14 +47,17 @@
 import { merge, pick } from 'lodash'
 import Breadcrumb from '../lib/Breadcrumb'
 import Crumb from '../lib/BreadcrumbItem'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Breadcrumb.props, Object.keys(props))),
     propsCrumb: merge(propsCrumb, pick(Crumb.props, Object.keys(propsCrumb))),
     events,
     slotsBreadcrumb,
-    slotsCrumb
+    slotsCrumb,
+    example
   })
 }
 
@@ -104,4 +100,12 @@ const events = {
     description: 'Emited on path selection.'
   }
 }
+
+const example =
+`<vk-breadcrumb {attrs}>
+  <vk-crumb path="/">Home</vk-crumb>
+  <vk-crumb path="/blog">Blog</vk-crumb>
+  <vk-crumb path="/blog/category">Category</vk-crumb>
+  <vk-crumb path="/blog/category/post">Post</vk-crumb>
+</vk-breadcrumb>`
 </script>

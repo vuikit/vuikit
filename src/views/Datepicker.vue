@@ -29,9 +29,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-datepicker></vk-datepicker>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -40,11 +38,14 @@
 <script>
 import { merge, pick } from 'lodash'
 import Component from '../lib/Datepicker'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
-    events
+    events,
+    example
   })
 }
 
@@ -115,4 +116,8 @@ const events = {
     description: 'Emited on selection change with its <code>moment.js</code> object as argument.'
   }
 }
+
+const example =
+`<vk-datepicker {attrs}>
+</vk-datepicker>`
 </script>

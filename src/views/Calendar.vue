@@ -27,9 +27,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-calendar></vk-calendar>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -39,11 +37,14 @@
 import Moment from 'moment'
 import { merge, pick } from 'lodash'
 import Component from '../lib/Calendar'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
-    events
+    events,
+    example
   }),
   filters: {
     number (val) {
@@ -124,4 +125,8 @@ const events = {
     description: 'Emited on month view update.'
   }
 }
+
+const example =
+`<vk-calendar {attrs}>
+</vk-calendar>`
 </script>

@@ -54,13 +54,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-tabs>
-  <vk-tab label="Tab 1">Content Tab 1</vk-tab>
-  <vk-tab label="Tab 2">Content Tab 2</vk-tab>
-  <vk-tab label="Tab 3">Content Tab 3</vk-tab>
-</vk-tabs>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -70,14 +64,17 @@
 import { merge, pick } from 'lodash'
 import Tabs from '../../lib/Tabs'
 import Tab from '../../lib/Tab'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Tabs.props, Object.keys(props))),
     propsTab: merge(propsTab, pick(Tab.props, Object.keys(propsTab))),
     slotsTabs,
     slotsTab,
-    events
+    events,
+    example
   })
 }
 
@@ -130,4 +127,11 @@ const events = {
     description: 'Emited when the selected tab has changed.'
   }
 }
+
+const example =
+`<vk-tabs {attrs}>
+  <vk-tab label="Tab 1">Content Tab 1</vk-tab>
+  <vk-tab label="Tab 2">Content Tab 2</vk-tab>
+  <vk-tab label="Tab 3">Content Tab 3</vk-tab>
+</vk-tabs>`
 </script>

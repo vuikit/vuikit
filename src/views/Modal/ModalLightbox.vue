@@ -33,11 +33,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-modal-lightbox>
-  // img
-</vk-modal-lightbox>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -49,8 +45,10 @@ import events from './events'
 import commonProps from './props'
 import ModalBase from '../../lib/ModalBase'
 import Component from '../../lib/ModalLightbox'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data () {
     return {
       props: merge(
@@ -59,7 +57,8 @@ export default {
         pick(Component.props, Object.keys(props))
       ),
       slots,
-      events
+      events,
+      example
     }
   }
 }
@@ -80,4 +79,9 @@ const slots = {
     description: 'The default content, usually an image.'
   }
 }
+
+const example =
+`<vk-modal-lightbox {attrs}>
+  <img src="...">
+</vk-modal-lightbox>`
 </script>

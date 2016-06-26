@@ -46,19 +46,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-subnav v-ref:nav>
-  <vk-subnav-item>Item 1</vk-subnav-item>
-  <vk-subnav-item>Item 2</vk-subnav-item>
-  <vk-subnav-item>Item 3</vk-subnav-item>
-</vk-subnav>
-<vk-switcher
-  :connect="$refs.nav">
-  <vk-switch>Content 1</vk-switch>
-  <vk-switch>Content 2</vk-switch>
-  <vk-switch>Content 3</vk-switch>
-</vk-switcher>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -68,13 +56,16 @@
 import { merge, pick } from 'lodash'
 import Switcher from '../lib/Switcher'
 import UI from 'uikit'
+import mixin from './_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Switcher.props, Object.keys(props))),
     slotsSwitcher,
     slotsSwitch,
-    events
+    events,
+    example
   }),
   watch: {
     // update demo animation when changed
@@ -124,4 +115,16 @@ const events = {
   }
 }
 
+const example =
+`<vk-subnav v-ref:nav {attrs}>
+  <vk-subnav-item>Item 1</vk-subnav-item>
+  <vk-subnav-item>Item 2</vk-subnav-item>
+  <vk-subnav-item>Item 3</vk-subnav-item>
+</vk-subnav>
+<vk-switcher
+  :connect="$refs.nav">
+  <vk-switch>Content 1</vk-switch>
+  <vk-switch>Content 2</vk-switch>
+  <vk-switch>Content 3</vk-switch>
+</vk-switcher>`
 </script>

@@ -29,13 +29,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-button-checkbox>
-  <vk-button value="1">Button 1</vk-button>
-  <vk-button value="2">Button 2</vk-button>
-  <vk-button value="3">Button 3</vk-button>
-</vk-button-checkbox>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -44,12 +38,15 @@
 <script>
 import { merge, pick } from 'lodash'
 import Component from '../../lib/ButtonCheckbox'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
     slots,
-    events
+    events,
+    example
   })
 }
 
@@ -75,4 +72,11 @@ const events = {
     description: 'Emited on button selection.'
   }
 }
+
+const example =
+`<vk-button-checkbox {attrs}>
+  <vk-button value="1">Button 1</vk-button>
+  <vk-button value="2">Button 2</vk-button>
+  <vk-button value="3">Button 3</vk-button>
+</vk-button-checkbox>`
 </script>

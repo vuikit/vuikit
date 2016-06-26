@@ -40,19 +40,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code>
-<vk-modal-blank>
-  <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
-    <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first" style="background-image: url(...)"></div>
-    <div class="uk-width-medium-1-2">
-      <h1>Headline</h1>
-      <div class="uk-width-medium-1-3">
-        <p>Content</p>
-      </div>
-    </div>
-  </div>
-</vk-modal-blank>
-        </vk-docs-code>
+        <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -63,14 +51,17 @@ import { merge, pick } from 'lodash'
 import events from './events'
 import commonProps from './props'
 import ModalBase from '../../lib/ModalBase'
+import mixin from '../_mixin'
 
 export default {
+  mixins: [mixin],
   data () {
     return {
       image: require('../assets/placeholder_600x400.svg'),
       props: merge({}, commonProps, pick(ModalBase.props, Object.keys(commonProps))),
       slots,
-      events
+      events,
+      example
     }
   }
 }
@@ -80,4 +71,17 @@ const slots = {
     description: 'The main content.'
   }
 }
+
+const example =
+`<vk-modal-blank {attrs}>
+  <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
+    <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first" style="background-image: url(...)"></div>
+    <div class="uk-width-medium-1-2">
+      <h1>Headline</h1>
+      <div class="uk-width-medium-1-3">
+        <p>Content</p>
+      </div>
+    </div>
+  </div>
+</vk-modal-blank>`
 </script>
