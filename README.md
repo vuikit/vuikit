@@ -1,4 +1,4 @@
-# Vuikit
+<p align="center"><img width="150" src="static/logotype.png"></p>
 
 > UIkit with all the power of Vue
 
@@ -82,7 +82,7 @@ Vue.use(Vuikit) // or register individually
 
 ### Browser
 
-Make sure UIkit and Vue latest version assets are loaded upfront and then load `dist/vuikit.css` and `dist/vuikit.js`.
+Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
 
 ## Documentation, Demo & Playground
 
