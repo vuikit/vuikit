@@ -10,7 +10,7 @@
         :mobile="props.mobile.demo.value"
         :min-date="props.minDate.demo.value"
         :max-date="props.maxDate.demo.value"
-        :offset-top="props.offsetTop.demo.value">
+        :offset="props.offset.demo.value">
       </vk-datepicker>
     </div>
     <!-- DESC -->
@@ -60,7 +60,7 @@ const props = {
     description: `The date format that will be applied on the input. Supports any input
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>`
   },
-  offsetTop: {
+  offset: {
     description: 'Determines the dropdown top offset relative to the input.',
     demo: {
       options: [20, 50]

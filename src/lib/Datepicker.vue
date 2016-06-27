@@ -1,22 +1,8 @@
 <template>
-  <input type="text"
-    v-el:input
+  <input v-el:input
+    type="text"
     v-model="value"
     @focus="show = true">
-  <div class="uk-dropdown uk-datepicker"
-    v-if="renderDropdown"
-    v-el:dropdown
-    :style="dropdownCss">
-    <calendar v-ref:calendar
-      :min="minDateMoment"
-      :max="maxDateMoment"
-      :disabled-dates="disabledDates"
-      :selected-dates="selectedDates"
-      :locale="locale"
-      @select="select"
-      @update="$emit('update')">
-    </calendar>
-  </div>
 </template>
 
 <script>
@@ -26,27 +12,36 @@ import UI from 'uikit'
 import { flatten } from 'lodash'
 import { getCalendarMatrix, isBetween } from './utils/dates'
 
+// dropdown layout is separated to avoid fragment instance
+// http://vuejs.org/guide/components.html#Fragment-Instance
+const dropdownTmpl =
+`<div v-el:dropdown
+  class="uk-dropdown uk-datepicker"
+  :style="dropdownCss">
+  <calendar v-ref:calendar
+    :min="minDateMoment"
+    :max="maxDateMoment"
+    :disabled-dates="disabledDates"
+    :selected-dates="selectedDates"
+    :locale="locale"
+    @select="select"
+    @update="$emit('update')">
+  </calendar>
+</div>`
+
 export default {
+  mixins: [moment],
   components: {
     Calendar
   },
-  init () {
-    // this.$options.template = '<input>'
+  data () {
+    return {
+      show: false
+    }
   },
-  mixins: [moment],
   ready () {
-    const vm = this
-    // hide dropdown on outter click/focus
-    if (this.renderDropdown) {
-      UI.$html.on('click focus', '*', function (e) {
-        if (vm.show &&
-          e.target !== vm.$els.dropdown &&
-          e.target !== vm.$els.input &&
-          !UI.$(e.target).parents('.uk-datepicker:first').length
-        ) {
-          vm.show = false
-        }
-      })
+    if (this.displayDropdown) {
+      this.renderDropdown()
     }
   },
   props: {
@@ -57,10 +52,10 @@ export default {
     // dropdown position
     position: {
       type: String,
-      default: 'auto' // auto, top or bottom
+      default: 'auto' // auto, top, bottom
     },
-    // the dropdown offset
-    offsetTop: {
+    // the dropdown vertical offset
+    offset: {
       type: Number,
       default: 5
     },
@@ -88,11 +83,6 @@ export default {
       default: () => ({})
     }
   },
-  data () {
-    return {
-      show: false
-    }
-  },
   computed: {
     // the selected date
     selected: {
@@ -107,7 +97,7 @@ export default {
     },
     // should dropdown display on touch
     // devices or use native picker
-    renderDropdown () {
+    displayDropdown () {
       return this.mobile || (!UI.support.touch && UI.$(this.$els.input).attr('type') !== 'date')
     },
     dropdownCss () {
@@ -119,9 +109,9 @@ export default {
       const offset = input.offset()
       const posTop = (
         (offset.top - input.outerHeight() + input.height()) -
-        this.offsetTop - dropdown.outerHeight()
+        this.offset - dropdown.outerHeight()
       )
-      const posBottom = offset.top + input.outerHeight() + this.offsetTop
+      const posBottom = offset.top + input.outerHeight() + this.offset
       const css = { left: offset.left, right: '' }
       if (UI.langdirection === 'right') {
         css.right = window.innerWidth - (css.left + input.outerWidth())
@@ -181,6 +171,23 @@ export default {
         // hide dropdown
         this.show = false
       }
+    },
+    renderDropdown () {
+      const node = document.createElement('div')
+      node.innerHTML = dropdownTmpl
+      document.body.appendChild(node)
+      this.$compile(node, this, this._scope, this._frag)
+      // hide dropdown on outter click/focus
+      const vm = this
+      UI.$('html').on('click focus', '*', function (e) {
+        if (vm.show &&
+          e.target !== vm.$els.dropdown &&
+          e.target !== vm.$els.input &&
+          !UI.$(e.target).parents('.uk-datepicker:first').length
+        ) {
+          vm.show = false
+        }
+      })
     }
   },
   watch: {
