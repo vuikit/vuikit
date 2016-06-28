@@ -24,7 +24,7 @@
       <vk-tab label="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
-      <vk-tab label="Example" active>
+      <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
     </vk-tabs>
