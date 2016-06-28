@@ -14,6 +14,8 @@
     </vk-progress>
     <!-- DESC -->
     <div class="uk-margin-large">
+      The <code>vk-progress</code> component renders a progress bar.
+    </div>
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Props">
