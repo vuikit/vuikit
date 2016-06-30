@@ -23,7 +23,7 @@ import Tabs from './Tabs'
 import TabsVertical from './TabsVertical'
 import Upload from './Upload'
 
-const vuikit = {
+const Vuikit = {
   Alert,
   Breadcrumb,
   Button,
@@ -49,9 +49,6 @@ const vuikit = {
   TabsVertical,
   Upload,
   install (Vue) {
-    if (this.installed) {
-      return
-    }
     const keys = Object.keys(this)
     keys.pop() // remove 'install' from keys
     let i = keys.length
@@ -62,33 +59,7 @@ const vuikit = {
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(vuikit)
+  window.Vue.use(Vuikit)
 }
 
-export {
-  Alert,
-  Breadcrumb,
-  Button,
-  Crumb,
-  ButtonLink,
-  ButtonCheckbox,
-  ButtonRadio,
-  Calendar,
-  Datepicker,
-  Modal,
-  ModalLightbox,
-  ModalBlank,
-  ModalAlert,
-  ModalConfirm,
-  Pagination,
-  Progress,
-  Subnav,
-  SubnavItem,
-  Switcher,
-  Switch,
-  Tab,
-  Tabs,
-  TabsVertical,
-  Upload,
-  vuikit as default
-}
+module.exports = Vuikit
