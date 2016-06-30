@@ -51,7 +51,7 @@ Vue.component('VkAlert', Alert)
 new Vue({
   components: {
     VkButton: Button,
-    VkAlert: Alert,
+    VkAlert: Alert
   }
 })
 ```
