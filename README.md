@@ -88,6 +88,21 @@ Vue.use(Vuikit) // or register individually
 
 Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
 
+If you are using vue-cli generated project, please edit the file `build/webpack.base.conf.js` and add the following
+block after the `vue:` property:
+
+```
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      "window.jQuery": "jquery"
+    })
+  ]
+```
+
+You will have to add the `var webpack = require('webpack');` at the top of the file.
+
 ## Documentation, Demo & Playground
 
 We have setup a site with a live demo of each component listing its props, events and slots information. The props can be adjusted and the demo as the code example will update to reflect it. [Try it out!](http://vuikit.github.io/vuikit/).
