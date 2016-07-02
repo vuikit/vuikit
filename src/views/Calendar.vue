@@ -87,7 +87,7 @@ const props = {
     }
   },
   selectedDates: {
-    description: `Array of arbitrary dates that should be disabled. Supports any
+    description: `Array of arbitrary pre-selected dates. Supports any
       input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     demo: {
       options: {
