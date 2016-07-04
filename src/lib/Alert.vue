@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import UI from 'uikit'
+import $ from 'jquery'
 import { merge } from 'lodash'
 
 export default {
@@ -62,14 +62,14 @@ export default {
       css: false,
       enter (el, done) {
         if (this.transitionOptions.fade) {
-          UI.$(el).animate({ opacity: 1 }, this.transitionOptions.duration, done)
+          $(el).animate({ opacity: 1 }, this.transitionOptions.duration, done)
         } else {
           done()
         }
       },
       leave (el, done) {
         if (this.transitionOptions.fade) {
-          UI.$(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
+          $(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
         } else {
           done()
         }

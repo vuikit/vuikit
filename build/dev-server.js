@@ -46,8 +46,7 @@ app.use(staticPath, express.static('./static'))
 // set assets paths
 app.use(staticPath + '/fonts', express.static('node_modules/uikit/dist/fonts'))
 app.use(staticPath + '/js', express.static('node_modules/uikit/dist/js'))
-app.use(staticPath + '/js', express.static('node_modules/uikit/vendor'))
-app.use('/static/js', express.static('node_modules/moment'))
+app.use(staticPath + '/js', express.static('node_modules/jquery/dist'))
 
 module.exports = app.listen(port, function (err) {
   if (err) {

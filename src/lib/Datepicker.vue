@@ -8,6 +8,7 @@
 <script>
 import Calendar from './Calendar'
 import moment from './mixins/moment'
+import $ from 'jquery'
 import UI from 'uikit'
 import { flatten } from 'lodash'
 import { getCalendarMatrix, isBetween } from './utils/dates'
@@ -98,14 +99,14 @@ export default {
     // should dropdown display on touch
     // devices or use native picker
     displayDropdown () {
-      return this.mobile || (!UI.support.touch && UI.$(this.$els.input).attr('type') !== 'date')
+      return this.mobile || (!UI.support.touch && $(this.$els.input).attr('type') !== 'date')
     },
     dropdownCss () {
       if (!this.show) {
         return { display: 'none' }
       }
-      const input = UI.$(this.$els.input)
-      const dropdown = UI.$(this.$els.dropdown)
+      const input = $(this.$els.input)
+      const dropdown = $(this.$els.dropdown)
       const offset = input.offset()
       const posTop = (
         (offset.top - input.outerHeight() + input.height()) -
@@ -179,11 +180,11 @@ export default {
       this.$compile(node, this, this._scope, this._frag)
       // hide dropdown on outter click/focus
       const vm = this
-      UI.$('html').on('click focus', '*', function (e) {
+      $('html').on('click focus', '*', function (e) {
         if (vm.show &&
           e.target !== vm.$els.dropdown &&
           e.target !== vm.$els.input &&
-          !UI.$(e.target).parents('.uk-datepicker:first').length
+          !$(e.target).parents('.uk-datepicker:first').length
         ) {
           vm.show = false
         }

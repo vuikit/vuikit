@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import UI from 'uikit'
+import $ from 'jquery'
 
 export default {
   data: () => ({
@@ -21,7 +21,7 @@ export default {
   ready () {
     const vm = this
     // deal with possible file inputs
-    UI.$('input[type="file"]', this.$el).on('change', function () {
+    $('input[type="file"]', this.$el).on('change', function () {
       vm.$emit('selected', this.files)
     })
   },

@@ -32,7 +32,7 @@
 
 <script>
 import TabHeader from './TabHeader'
-import UI from 'uikit'
+import $ from 'jquery'
 import { toArray } from 'lodash'
 
 export default {
@@ -75,7 +75,7 @@ export default {
     this.tabs = toArray(this.$els.tabsBody.querySelectorAll(':scope > li'))
       .map(el => el.__vue__)
     // on tab change
-    UI.$(this.$el).on('change.uk.tab', () => {
+    $(this.$el).on('change.uk.tab', () => {
       this.$emit('change')
     })
   }
