@@ -17,7 +17,7 @@ Vuikit is a collection of Vue components built on top of the awesome UIkit frame
 ## Code Samples
 > Note that all code examples are using ES6 syntax
 
-Vuikit components are registered globally by default and ready to use immediately.
+Vuikit components are registered globally by default and ready to be used immediately.
 
 ```js
 import Vue from 'vue'
@@ -84,11 +84,11 @@ import Vuikit from 'vuikit'
 Vue.use(Vuikit) // or register individually
 ```
 
-By default all dependencies will be retrieved from `node_modules`, but that will not work straightforward as *UIkit* expects *jQuery* to be loaded globally. To avoid this and other related issues is recommended to solve the dependencies loading externally. When building with *Webpack* or *Browserify* you can do so by setting the `externals` or `external` config property.
+By default all dependencies will be retrieved from `node_modules`, but that will not work straightforward as UIkit expects jQuery to be loaded globally. To avoid this and other related issues is recommended to solve the dependencies loading externally. When building with Webpack or Browserify you can do so by setting the `externals` or `external` config property.
 
 ### Browser
 
-Make sure *jQuery*, *UIkit* and *Vue* are loaded upfront and then load `dist/vuikit.js`.
+Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
 
 ## Documentation, Demo & Playground
 
