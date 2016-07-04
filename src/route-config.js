@@ -20,6 +20,10 @@ export function configRouter (router) {
       name: 'Datepicker',
       component: require('./views/Datepicker')
     },
+    '/dropdown': {
+      name: 'Dropdown',
+      component: require('./views/Dropdown')
+    },
     '/modal': {
       name: 'Modal',
       component: require('./views/Modal')
