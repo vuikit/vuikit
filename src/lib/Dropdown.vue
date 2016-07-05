@@ -42,8 +42,12 @@ if ('ontouchstart' in document.documentElement) {
 
 export default {
   compiled () {
-    this.setupEvents()
-    this.initTether()
+    if (this.target) {
+      this.setupEvents()
+      this.initTether()
+    } else {
+      this.$destroy
+    }
   },
   props: {
     target: {
@@ -289,8 +293,10 @@ export default {
     }
   },
   beforeDestroy () {
+    if (this.$tether !== undefined) {
+      this.$tether.destroy()
+    }
     this.removeEvents()
-    this.$tether.destroy()
     this.$remove()
   }
 }
