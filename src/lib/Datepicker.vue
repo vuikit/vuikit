@@ -1,14 +1,11 @@
 <template>
-  <input v-el:input
-    type="text"
-    v-model="value"
-    @focus="show = true">
+  <input type="text" v-model="value">
 </template>
 
 <script>
+import Dropdown from './Dropdown'
 import Calendar from './Calendar'
 import moment from './mixins/moment'
-import $ from 'jquery'
 import UI from 'uikit'
 import { flatten } from 'lodash'
 import { getCalendarMatrix, isBetween } from './utils/dates'
@@ -16,9 +13,14 @@ import { getCalendarMatrix, isBetween } from './utils/dates'
 // dropdown layout is separated to avoid fragment instance
 // http://vuejs.org/guide/components.html#Fragment-Instance
 const dropdownTmpl =
-`<div v-el:dropdown
-  class="uk-dropdown uk-datepicker"
-  :style="dropdownCss">
+`<dropdown v-ref:dropdown
+  class="uk-datepicker"
+  :show.sync="show"
+  :target="$el"
+  :position="dropdownPosition"
+  :offset="offset + 'px 0'"
+  :constrain-to-window="this.position === 'auto'"
+  :constrain-to-parent="false">
   <calendar v-ref:calendar
     :min="minDateMoment"
     :max="maxDateMoment"
@@ -28,11 +30,12 @@ const dropdownTmpl =
     @select="select"
     @update="$emit('update')">
   </calendar>
-</div>`
+</dropdown>`
 
 export default {
   mixins: [moment],
   components: {
+    Dropdown,
     Calendar
   },
   data () {
@@ -40,9 +43,12 @@ export default {
       show: false
     }
   },
-  ready () {
+  compiled () {
     if (this.displayDropdown) {
-      this.renderDropdown()
+      const node = document.createElement('div')
+      node.innerHTML = dropdownTmpl
+      document.body.appendChild(node)
+      this.$compile(node, this, this._scope, this._frag)
     }
   },
   props: {
@@ -99,39 +105,7 @@ export default {
     // should dropdown display on touch
     // devices or use native picker
     displayDropdown () {
-      return this.mobile || (!UI.support.touch && $(this.$els.input).attr('type') !== 'date')
-    },
-    dropdownCss () {
-      if (!this.show) {
-        return { display: 'none' }
-      }
-      const input = $(this.$els.input)
-      const dropdown = $(this.$els.dropdown)
-      const offset = input.offset()
-      const posTop = (
-        (offset.top - input.outerHeight() + input.height()) -
-        this.offset - dropdown.outerHeight()
-      )
-      const posBottom = offset.top + input.outerHeight() + this.offset
-      const css = { left: offset.left, right: '' }
-      if (UI.langdirection === 'right') {
-        css.right = window.innerWidth - (css.left + input.outerWidth())
-        css.left = ''
-      }
-      css.top = posBottom
-      if (this.position === 'top') {
-        css.top = posTop
-      } else if (this.position === 'auto' &&
-        (window.innerHeight - posBottom - dropdown.outerHeight() < 0 && posTop >= 0)
-      ) {
-        css.top = posTop
-      }
-      return {
-        top: `${css.top}px`,
-        left: `${css.left}px`,
-        right: `${css.right}px`,
-        display: 'block'
-      }
+      return this.mobile || (!UI.support.touch && this.$el.getAttribute('type') !== 'date')
     },
     minDateMoment () {
       return Number.isInteger(this.minDate)
@@ -157,6 +131,11 @@ export default {
       return flatten(matrix).filter(moment => {
         return !isBetween(moment, min, max)
       })
+    },
+    dropdownPosition () {
+      return this.position === 'top' || this.position === 'auto'
+        ? 'top left'
+        : 'bottom left'
     }
   },
   methods: {
@@ -172,27 +151,19 @@ export default {
         // hide dropdown
         this.show = false
       }
-    },
-    renderDropdown () {
-      const node = document.createElement('div')
-      node.innerHTML = dropdownTmpl
-      document.body.appendChild(node)
-      this.$compile(node, this, this._scope, this._frag)
-      // hide dropdown on outter click/focus
-      const vm = this
-      $('html').on('click focus', '*', function (e) {
-        if (vm.show &&
-          e.target !== vm.$els.dropdown &&
-          e.target !== vm.$els.input &&
-          !$(e.target).parents('.uk-datepicker:first').length
-        ) {
-          vm.show = false
-        }
-      })
     }
   },
   watch: {
     show (value) {
+      // update offset depending on
+      // top or bottom attachment
+      const dropdown = this.$refs.dropdown.$el
+      const $tether = this.$refs.dropdown.$tether
+      const topClass = 'vk-tether-target-attached-top'
+      $tether.offset.top = dropdown.classList.contains(topClass)
+        ? $tether.offset.top.replace('-', '')
+        : '-' + $tether.offset.top.replace('-', '')
+      $tether.position()
       // trigger events
       this.$nextTick(() => this.$emit(value
         ? 'show'

@@ -40,13 +40,28 @@ import { merge, pick } from 'lodash'
 import Component from '../lib/Datepicker'
 import mixin from './_mixin'
 
+const resetTethler = function () {
+  return {
+    handler () {
+      const dropdown = this.$refs.demo.$refs.dropdown
+      dropdown.$tether.destroy()
+      dropdown.initTether()
+    },
+    immediate: false
+  }
+}
+
 export default {
   mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
     events,
     example
-  })
+  }),
+  watch: {
+    'props.position.demo.value': resetTethler(),
+    'props.offset.demo.value': resetTethler()
+  }
 }
 
 const props = {
@@ -63,13 +78,15 @@ const props = {
   offset: {
     description: 'Determines the dropdown top offset relative to the input.',
     demo: {
-      options: [20, 50]
+      options: [0, 20, 50],
+      value: 5
     }
   },
   position: {
     description: 'Determines the dropdown position relative to the input.',
     demo: {
-      options: ['top', 'bottom']
+      options: ['top', 'bottom'],
+      value: 'auto'
     }
   },
   mobile: {
@@ -93,7 +110,7 @@ const props = {
     }
   },
   locale: {
-    description: `By default, VkDatepicker comes with the English locale strings.
+    description: `By default, Datepicker comes with the English locale strings.
       You can use this to change the language, or change the first day of the week.
       See <a href="http://momentjs.com/docs/#/i18n/">moment.js documentation</a> for more details.`
   }

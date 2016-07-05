@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-datepicker">
+  <div>
     <div class="uk-datepicker-nav">
       <a href="" class="uk-datepicker-previous"
         v-if="isDisplayable(prevMonth)"
