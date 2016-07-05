@@ -8,6 +8,12 @@
 
 Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
 
+## Documentation and examples
+
+We have setup a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information for each component.
+
+We also have a [codepen](http://codepen.io/miljan/pen/YWXVKj) available as a playground.
+
 ## Dependencies
 
 - [Vue](http://vuejs.org/) (^1.0.24)
@@ -89,12 +95,6 @@ By default all dependencies will be retrieved from `node_modules`, but that will
 ### Browser
 
 Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
-
-## Documentation, Demo & Playground
-
-We have setup a site with a live demo of each component listing its props, events and slots information. The props can be adjusted and the demo as the code example will update to reflect it. [Try it out!](http://vuikit.github.io/vuikit/).
-
-Additionally there is a [codepen pen](http://codepen.io/miljan/pen/YWXVKj) for further testing.
 
 ## Developers
 
