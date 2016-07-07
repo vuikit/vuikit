@@ -10,7 +10,7 @@
     <vk-dropdown v-ref:demo
       :target="$els.button"
       :blank="props.blank.demo.value"
-      :fixed-width="props.fixedWidth.demo.value"
+      :fix-width="props.fixWidth.demo.value"
       :open-on="props.openOn.demo.value"
       :position="props.position.demo.value"
       :scrollable="props.scrollable.demo.value"
@@ -99,7 +99,7 @@ const props = {
     description: 'Wheter to render the dropdown without any styling.',
     demo: {}
   },
-  fixedWidth: {
+  fixWidth: {
     description: 'Wether to set a dropdown fixed width and wrap its text content into the next line.',
     demo: {}
   },

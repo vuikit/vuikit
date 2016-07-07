@@ -2,7 +2,7 @@
   <div :class="{
       'uk-dropdown': !blank,
       'uk-dropdown-blank': blank,
-      'uk-dropdown-small': !fixedWidth,
+      'uk-dropdown-small': !fixWidth,
       'uk-dropdown-scrollable': scrollable
     }"
     :style="{
@@ -61,9 +61,9 @@ export default {
       type: Boolean,
       default: false
     },
-    fixedWidth: {
+    fixWidth: {
       type: Boolean,
-      default: true
+      default: false
     },
     openOn: {
       type: [String, Boolean],
