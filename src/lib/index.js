@@ -19,6 +19,7 @@ import Subnav from './Subnav'
 import SubnavItem from './SubnavItem'
 import Switcher from './Switcher'
 import Switch from './SwitcherItem'
+import Table from './Table'
 import Tab from './Tab'
 import Tabs from './Tabs'
 import TabsVertical from './TabsVertical'
@@ -46,6 +47,7 @@ const Vuikit = {
   SubnavItem,
   Switcher,
   Switch,
+  Table,
   Tab,
   Tabs,
   TabsVertical,

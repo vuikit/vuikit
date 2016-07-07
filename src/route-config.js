@@ -44,6 +44,10 @@ export function configRouter (router) {
       name: 'Switcher',
       component: require('./views/Switcher')
     },
+    '/table': {
+      name: 'Table',
+      component: require('./views/Table')
+    },
     '/tabs': {
       name: 'Tabs',
       component: require('./views/Tabs')
