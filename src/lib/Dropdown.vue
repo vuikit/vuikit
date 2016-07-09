@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import Tether from 'tether'
 import { merge } from 'lodash'
 
@@ -41,8 +42,8 @@ if ('ontouchstart' in document.documentElement) {
 }
 
 export default {
-  compiled () {
-    if (this.target) {
+  ready () {
+    if (this.targetNode) {
       this.setupEvents()
       this.initTether()
     } else {
@@ -127,6 +128,11 @@ export default {
   data: () => ({
     boundEvents: []
   }),
+  computed: {
+    targetNode () {
+      return Vue.util.query(this.target)
+    }
+  },
   methods: {
     open () {
       this.show = true
@@ -175,7 +181,7 @@ export default {
 
       const opts = {
         element: this.$el,
-        target: this.target,
+        target: this.targetNode,
         attachment: sortAttach(dropAttach),
         targetAttachment: sortAttach(this.position),
         classPrefix: 'vk-tether',
@@ -214,14 +220,14 @@ export default {
             return
           }
           // Clicking target
-          if (event.target === this.target || this.target.contains(event.target)) {
+          if (event.target === this.targetNode || this.targetNode.contains(event.target)) {
             return
           }
           this.show = false
         }
         for (let i = 0; i < clickEvents.length; ++i) {
           const clickEvent = clickEvents[i]
-          this._on(this.target, clickEvent, openHandler)
+          this._on(this.targetNode, clickEvent, openHandler)
           this._on(document, clickEvent, closeHandler)
         }
       }
@@ -253,15 +259,15 @@ export default {
         }
       }
       if (events.indexOf('hover') >= 0) {
-        this._on(this.target, 'mouseover', inHandler)
+        this._on(this.targetNode, 'mouseover', inHandler)
         this._on(this.$el, 'mouseover', inHandler)
-        this._on(this.target, 'mouseout', outHandler)
+        this._on(this.targetNode, 'mouseout', outHandler)
         this._on(this.$el, 'mouseout', outHandler)
       }
       if (events.indexOf('focus') >= 0) {
-        this._on(this.target, 'focus', inHandler)
+        this._on(this.targetNode, 'focus', inHandler)
         this._on(this.$el, 'focus', inHandler)
-        this._on(this.target, 'blur', outHandler)
+        this._on(this.targetNode, 'blur', outHandler)
         this._on(this.$el, 'blur', outHandler)
       }
     },

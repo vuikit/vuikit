@@ -90,7 +90,7 @@ export default {
 
 const props = {
   target: {
-    description: 'The element the dropdown should stay adjacent to on the page.'
+    description: 'The element node or query string that the dropdown should stay adjacent to.'
   },
   show: {
     description: 'Display state that when toggled will hide/show the dropdown.'
