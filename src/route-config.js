@@ -32,6 +32,10 @@ export function configRouter (router) {
       name: 'Pagination',
       component: require('./views/Pagination')
     },
+    '/picker': {
+      name: 'Picker',
+      component: require('./views/Picker')
+    },
     '/progress': {
       name: 'Progress',
       component: require('./views/Progress')
