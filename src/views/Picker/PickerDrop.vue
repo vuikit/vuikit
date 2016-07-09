@@ -3,11 +3,13 @@
     <h2>Picker Drop</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-button v-el:button id="picker">Pick</vk-button>
+    <div class="uk-form">
+      <input type="text" v-model="input" v-el:input>
+    </div>
     <vk-picker-drop v-ref:demo
       :pickables="[{ name: 'id' }, 'hits']"
       :dropdown="{
-        target: $els.button
+        target: $els.input
       }"
       :table="{
         fields: ['name', 'hits', 'description'],
@@ -23,7 +25,7 @@
           description: 'The item description'
         }]
       }"
-      @pick="picked">
+      @pick="input = $arguments[0]">
     </vk-picker-drop>
     <span v-html="message"></span>
     <!-- DESC -->
@@ -54,16 +56,11 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
-    message: '',
+    input: '',
     props: merge(props, Picker.props, Component.props),
     example,
     events
-  }),
-  methods: {
-    picked (value, field) {
-      this.message = `Picked field <code>${field}</code> which returned value <code>${value}</code>.`
-    }
-  }
+  })
 }
 
 const props = {
@@ -89,11 +86,11 @@ const events = {
 }
 
 const example =
-`<vk-button v-el:button>Pick</vk-button>
+`<input type="text" v-model="input" v-el:input>
 <vk-picker-drop {attrs}
   :pickables="[{ name: 'id' }, 'hits']"
   :dropdown="{
-    target: $els.button
+    target: $els.input
   }"
   :table="{
     fields: ['name', 'hits', 'description'],
@@ -108,6 +105,7 @@ const example =
       hits: 56,
       description: 'The item description'
     }]
-  }">
+  }"
+  @pick="input = $arguments[0]">
 </vk-picker-drop>`
 </script>
