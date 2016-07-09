@@ -25,15 +25,17 @@ export default {
   directives: {
     field: {
       update () {
-        const field = this.el
         const host = this.vm
-        const context = host._context
         const template = host.fieldTemplate
-        const scope = Object.create(context)
-        scope.$row = this._frag.parentFrag.scope.row
-        scope.$field = this._frag.scope.field
-        field.innerHTML = template
-        context.$compile(field, host, scope, this._frag)
+        if (template) {
+          const field = this.el
+          const context = host._context
+          const scope = Object.create(context)
+          scope.$row = this._frag.parentFrag.scope.row
+          scope.$field = this._frag.scope.field
+          field.innerHTML = template
+          context.$compile(field, host, scope, this._frag)
+        }
       }
     }
   },
@@ -57,6 +59,10 @@ export default {
     hover: {
       type: Boolean,
       default: false
+    },
+    template: {
+      type: String,
+      default: ''
     }
   },
   computed: {
@@ -66,11 +72,15 @@ export default {
         : field
       )
     },
+    // can be provided as slot or prop
     fieldTemplate () {
-      const node = document.createElement('div')
-      const slot = this._slotContents.default
-      node.appendChild(slot.cloneNode(true))
-      return node.innerHTML
+      if (this._slotContents && this._slotContents.default) {
+        const node = document.createElement('div')
+        node.appendChild(this._slotContents.default.cloneNode(true))
+        return node.innerHTML
+      } else {
+        return this.template
+      }
     }
   }
 }
