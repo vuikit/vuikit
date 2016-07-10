@@ -94,14 +94,14 @@ export default {
     // the minimum month that can be displayed
     // supports all moment.js formats
     min: {
-      type: [String, Object, Array],
+      type: [String, Number, Object, Array],
       default: '1980-01-01',
       validator: validDate
     },
     // the maximum month that can be displayed
     // supports all moment.js formats
     max: {
-      type: [String, Object, Array],
+      type: [String, Number, Object, Array],
       default: '2050-12-31',
       validator: validDate
     },
@@ -122,10 +122,10 @@ export default {
   },
   computed: {
     yearsList () {
-      return listYears(this.min, this.max)
+      return listYears(this.minMoment, this.maxMoment)
     },
     monthsList () {
-      return listMonths(this.date.year(), this.min, this.max)
+      return listMonths(this.date.year(), this.minMoment, this.maxMoment)
     },
     listWeekDays,
     date: {
@@ -152,6 +152,16 @@ export default {
     },
     _selectedDates () {
       return this.selectedDates.map(date => this.$moment(date))
+    },
+    minMoment () {
+      return Number.isInteger(this.min)
+        ? this.$moment().add(-this.min - 1, 'days')
+        : this.$moment(this.min || this.$options.props.min.default)
+    },
+    maxMoment () {
+      return Number.isInteger(this.max)
+        ? this.$moment().add(this.max, 'days')
+        : this.$moment(this.max || this.$options.props.max.default)
     }
   },
   methods: {
@@ -163,7 +173,7 @@ export default {
       return this._selectedDates.some(date => moment.isSame(date, 'day'))
     },
     isDisplayable (moment) {
-      return isBetween(moment, this.min, this.max)
+      return isBetween(moment, this.minMoment, this.maxMoment)
     },
     isInCurrentMonth (moment) {
       return moment.isSame(this.date, 'month')

@@ -50,6 +50,18 @@ export default {
     number (val) {
       return parseInt(val)
     }
+  },
+  watch: {
+    'props.min.demo.value' () {
+      // reset calendar
+      this.props.year.demo.value = Moment().year()
+      this.props.month.demo.value = Moment().month()
+    },
+    'props.max.demo.value' () {
+      // reset calendar
+      this.props.year.demo.value = Moment().year()
+      this.props.month.demo.value = Moment().month()
+    }
   }
 }
 
@@ -74,16 +86,26 @@ const props = {
   },
   min: {
     description: `The minimum month that can be displayed. Supports any input
-      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
     demo: {
-      options: { 'Last Month': Moment().add(-1, 'months').format('YYYY-MM-DD') }
+      options: [
+        Moment().add(-1, 'months').format('YYYY-MM-DD'),
+        5,
+        10
+      ]
     }
   },
   max: {
     description: `The maximum month that can be displayed. Supports any input
-      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
     demo: {
-      options: { 'Next Month': Moment().add(1, 'months').format('YYYY-MM-DD') }
+      options: [
+        Moment().add(1, 'months').format('YYYY-MM-DD'),
+        5,
+        10
+      ]
     }
   },
   selectedDates: {
