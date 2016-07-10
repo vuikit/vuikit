@@ -6,10 +6,9 @@
     <vk-calendar v-ref:demo
       :year.sync="props.year.demo.value | number"
       :month.sync="props.month.demo.value | number"
-      :disabled-dates="props.disabledDates.demo.value"
-      :selected-dates="props.selectedDates.demo.value"
       :min="props.min.demo.value"
       :max="props.max.demo.value">
+      {{ $day.date() }}
     </vk-calendar>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -19,6 +18,9 @@
     <vk-tabs>
       <vk-tab label="Props">
         <vk-docs-props :props="props"></vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Slots">
+        <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Events">
         <vk-docs-events
@@ -43,6 +45,7 @@ export default {
   mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
+    slots,
     events,
     example
   }),
@@ -108,30 +111,6 @@ const props = {
       ]
     }
   },
-  selectedDates: {
-    description: `Array of arbitrary pre-selected dates. Supports any
-      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
-    demo: {
-      options: {
-        Today: [Moment().format('YYYY-MM-DD')],
-        Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
-        Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
-      },
-      value: [Moment().format('YYYY-MM-DD')]
-    }
-  },
-  disabledDates: {
-    description: `Array of arbitrary dates that should be disabled. Supports any
-      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
-    demo: {
-      options: {
-        Today: [Moment().format('YYYY-MM-DD')],
-        Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
-        Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
-      },
-      value: [Moment().add(1, 'days').format('YYYY-MM-DD')]
-    }
-  },
   locale: {
     description: `By default, VkCalendar comes with the English locale strings.
       You can use this to change the language, or change the first day of the week.
@@ -139,16 +118,21 @@ const props = {
   }
 }
 
+const slots = {
+  default: {
+    description: `The template that will be used to render each day. The <code>$day</code>
+      moment.js variable is available representing the current day being rendered.`
+  }
+}
+
 const events = {
-  select: {
-    description: 'Emited on day selection with its <code>moment.js</code> object as argument.'
-  },
   update: {
-    description: 'Emited on month view update.'
+    description: 'Emited on each calendar view update.'
   }
 }
 
 const example =
 `<vk-calendar {attrs}>
+  {{ $day.date() }}
 </vk-calendar>`
 </script>
