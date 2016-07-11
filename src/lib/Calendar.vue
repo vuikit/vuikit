@@ -15,7 +15,7 @@
             v-text="date | format 'MMMM'"
             @click.prevent>
           </a>
-          <select v-model="month">
+          <select v-model="month" number>
             <option v-for="(m, name) in monthsList"
               :value="m"
               v-text="name">
@@ -27,7 +27,7 @@
             v-text="date | format 'YYYY'"
             @click.prevent>
           </a>
-          <select v-model="year">
+          <select v-model="year" number>
             <option v-for="year in yearsList"
               :value="year"
               v-text="year">
