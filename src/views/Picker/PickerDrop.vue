@@ -30,15 +30,13 @@
     <span v-html="message"></span>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-picker-drop</code> component extends <code>vk-picker</code> wrapping it into a dropdown.
+      The <code>vk-picker-drop</code> component extends <code>vk-picker</code>
+      wrapping it into a dropdown, thus the demo only reflects the differences.
     </div>
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Props">
         <vk-docs-props :props="props"></vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events :events="events" :connect="$refs.demo"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
@@ -49,7 +47,6 @@
 
 <script>
 import { merge } from 'lodash'
-import Picker from '../../lib/Picker'
 import Component from '../../lib/PickerDrop'
 import mixin from '../_mixin'
 
@@ -57,31 +54,15 @@ export default {
   mixins: [mixin],
   data: () => ({
     input: '',
-    props: merge(props, Picker.props, Component.props),
-    example,
-    events
+    props: merge({}, Component.props, props),
+    example
   })
 }
 
 const props = {
-  pickables: {
-    description: `Array of fields names that should allow picking data. A picked field
-    can return a different field value by passing a field/data mapping <code>Object</code>
-    instead. Eg. <code>[{ name: 'id' }, 'hits']</code>.`
-  },
-  table: {
-    description: `Options passed to the underlying Table instance
-      used to render the table. See the <a href="/#!/table">Table documentation</a> for more information.`
-  },
   dropdown: {
-    description: `Options passed to the underlying Dropdown instance
-      used to render the dropdown. See the <a href="/#!/dropdown">Dropdown documentation</a> for more information.`
-  }
-}
-
-const events = {
-  pick: {
-    description: 'Emited when a data is picked passing as argument the picked value and it field name.'
+    description: `Props passed to the underlying Dropdown instance. See the
+      <a href="/#!/dropdown">Dropdown documentation</a> for the possible values.`
   }
 }
 

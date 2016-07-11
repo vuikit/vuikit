@@ -47,8 +47,8 @@ export default {
 
 const props = {
   dropdown: {
-    description: `Options passed to the underlying Dropdown instance
-      used to render the dropdown. See the <a href="/#!/dropdown">Dropdown documentation</a> for more information.`
+    description: `Props passed to the underlying Dropdown instance. See the
+      <a href="/#!/dropdown">Dropdown documentation</a> for the possible values.`
   }
 }
 
