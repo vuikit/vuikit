@@ -15,6 +15,7 @@ Table.options.props.fields.required = false
 Table.options.props.rows.required = false
 
 export default {
+  name: 'VkPicker',
   compiled () {
     // init Table
     this.$table = new Table({

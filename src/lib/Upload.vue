@@ -15,6 +15,7 @@
 import $ from 'jquery'
 
 export default {
+  name: 'VkUpload',
   data: () => ({
     dragged: false
   }),

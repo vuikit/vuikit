@@ -11,6 +11,7 @@
 import $ from 'jquery'
 
 export default {
+  name: 'VkButtonRadio',
   props: {
     value: {},
     group: {

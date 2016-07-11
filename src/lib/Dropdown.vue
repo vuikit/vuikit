@@ -42,6 +42,7 @@ if ('ontouchstart' in document.documentElement) {
 }
 
 export default {
+  name: 'VkDropdown',
   ready () {
     if (this.targetNode) {
       this.setupEvents()

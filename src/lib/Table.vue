@@ -22,6 +22,7 @@
 import { map, isString } from 'lodash'
 
 export default {
+  name: 'VkTable',
   directives: {
     field: {
       update () {

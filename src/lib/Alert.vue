@@ -21,6 +21,7 @@ import $ from 'jquery'
 import { merge } from 'lodash'
 
 export default {
+  name: 'VkAlert',
   props: {
     // display status
     show: {

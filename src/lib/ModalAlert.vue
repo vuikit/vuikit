@@ -20,6 +20,7 @@
 import ModalBase from './ModalBase'
 
 export default {
+  name: 'VkModalAlert',
   extends: ModalBase,
   props: {
     text: {

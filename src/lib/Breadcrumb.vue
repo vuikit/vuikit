@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'VkBreadcrumb',
   props: {
     location: {
       type: String

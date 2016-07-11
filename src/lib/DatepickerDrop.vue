@@ -8,6 +8,7 @@ const Dropdown = Vue.extend(require('./Dropdown'))
 Dropdown.options.props.target.required = false
 
 export default {
+  name: 'VkDatepickerDrop',
   extends: Datepicker,
   created () {
     // init Dropdown

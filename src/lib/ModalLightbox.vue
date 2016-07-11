@@ -14,6 +14,7 @@
 import ModalBase from './ModalBase'
 
 export default {
+  name: 'VkModalLightbox',
   extends: ModalBase,
   props: {
     closeBtn: {

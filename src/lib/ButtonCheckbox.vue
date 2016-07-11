@@ -12,6 +12,7 @@ import $ from 'jquery'
 import { toArray } from 'lodash'
 
 export default {
+  name: 'VkButtonCheckbox',
   props: {
     value: {
       type: Array,

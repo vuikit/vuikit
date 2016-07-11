@@ -10,6 +10,7 @@ import { getCalendarMatrix, isBetween } from './utils/dates'
 const Calendar = Vue.extend(require('./Calendar'))
 
 export default {
+  name: 'VkDatepicker',
   mixins: [moment],
   compiled () {
     // init picked array

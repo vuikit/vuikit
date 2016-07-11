@@ -67,6 +67,7 @@ import {
 } from './utils/dates'
 
 export default {
+  name: 'VkCalendar',
   mixins: [momentMixin],
   directives: {
     renderDay: {

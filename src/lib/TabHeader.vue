@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'vk-tab-header',
+  name: 'VkTabHeader',
   props: {
     label: {
       type: String,

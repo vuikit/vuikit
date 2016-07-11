@@ -33,6 +33,7 @@ import $ from 'jquery'
 import { toArray } from 'lodash'
 
 export default {
+  name: 'VkTabsVertical',
   components: {
     TabHeader
   },
