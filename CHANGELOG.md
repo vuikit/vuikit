@@ -2,10 +2,10 @@
 
 ### WIP
 
- - Add Dropdown component
- - Add Picker component
- - Add Table component
- - Refactor Datepicker
+ - Add Dropdown
+ - Add Picker
+ - Add Table
+ - Refactor Calendar & Datepicker (braking changes)
 
 ### 0.3.0
 
