@@ -14,6 +14,7 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     'vuikit': './src/lib/'
   },
   externals: {
+    vue: 'vue',
     // override the exported namespace
     // to match the node folder name
     jquery: 'jquery',
