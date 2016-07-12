@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  name: 'VkSubnav',
   props: {
     // line modifier
     line: {

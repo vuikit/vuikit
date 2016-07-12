@@ -20,6 +20,7 @@
 
 <script>
 export default {
+  name: 'VkProgress',
   props: {
     // the bar progress, 0 to 100
     progress: {

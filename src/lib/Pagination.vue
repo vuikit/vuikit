@@ -89,6 +89,7 @@
 
 <script>
 export default {
+  name: 'VkPagination',
   props: {
     // left or right, defaults to center
     align: {

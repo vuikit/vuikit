@@ -25,6 +25,7 @@
 import ModalBase from './ModalBase'
 
 export default {
+  name: 'VkModalConfirm',
   extends: ModalBase,
   props: {
     text: {

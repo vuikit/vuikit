@@ -1,211 +1,138 @@
 <template>
-  <input v-el:input
-    type="text"
-    v-model="value"
-    @focus="show = true">
+  <div></div>
 </template>
 
 <script>
-import Calendar from './Calendar'
+import Vue from 'vue'
 import moment from './mixins/moment'
-import UI from 'uikit'
-import { flatten } from 'lodash'
+import { flatten, merge } from 'lodash'
 import { getCalendarMatrix, isBetween } from './utils/dates'
-
-// dropdown layout is separated to avoid fragment instance
-// http://vuejs.org/guide/components.html#Fragment-Instance
-const dropdownTmpl =
-`<div v-el:dropdown
-  class="uk-dropdown uk-datepicker"
-  :style="dropdownCss">
-  <calendar v-ref:calendar
-    :min="minDateMoment"
-    :max="maxDateMoment"
-    :disabled-dates="disabledDates"
-    :selected-dates="selectedDates"
-    :locale="locale"
-    @select="select"
-    @update="$emit('update')">
-  </calendar>
-</div>`
+const Calendar = Vue.extend(require('./Calendar'))
 
 export default {
+  name: 'VkDatepicker',
   mixins: [moment],
-  components: {
-    Calendar
+  compiled () {
+    // init picked array
+    this.picked = this.prePicked
+      .map(date => this.$moment(date))
+      .filter(date => !this.isDisabled(date))
+    // init Calendar with New in order to
+    // be able to pass propsData at once
+    this.$refs.calendar = new Calendar({
+      parent: this,
+      el: document.createElement('table'),
+      _context: this,
+      propsData: merge(
+        this.$options.props.calendar.default(),
+        this.calendar
+      )
+    }).$appendTo(this.$el)
   },
   data () {
     return {
-      show: false
-    }
-  },
-  ready () {
-    if (this.displayDropdown) {
-      this.renderDropdown()
+      // currently picked dates
+      picked: []
     }
   },
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
-    // dropdown position
-    position: {
-      type: String,
-      default: 'auto' // auto, top, bottom
-    },
-    // the dropdown vertical offset
-    offset: {
-      type: Number,
-      default: 5
-    },
-    // display dropdown on mobiles
-    mobile: {
+    // multi picks support
+    multi: {
       type: Boolean,
       default: false
     },
     // the minimum date that can be selected
-    minDate: {
+    min: {
       type: [String, Number],
       default: '1980-01-01'
     },
     // the maximum date that can be selected
-    maxDate: {
+    max: {
       type: [String, Number],
       default: '2050-12-31'
     },
-    format: {
-      type: String,
-      default: 'YYYY-MM-DD'
+    prePicked: {
+      type: Array,
+      default: () => []
     },
-    locale: {
+    disabledDates: {
+      type: Array,
+      default: () => []
+    },
+    // calendar component options
+    calendar: {
       type: Object,
-      default: () => ({})
+      default: () => ({
+        template:
+          `<a href=""
+            :class="{
+              'uk-active': isPicked($day),
+              'uk-datepicker-table-disabled': isDisabled($day),
+              'uk-datepicker-table-muted': !isInCalendarMonth($day) || isDisabled($day)
+            }"
+            @click.prevent="pick($day)"
+            v-text="$day | format 'D'">
+          </a>`
+      })
     }
   },
   computed: {
-    // the selected date
-    selected: {
-      get () {
-        return this.value && this.$moment(this.value).isValid()
-          ? this.$moment(this.value)
-          : null
-      },
-      set: function (moment) {
-        this.value = moment.format(this.format)
-      }
+    minMoment () {
+      return Number.isInteger(this.min)
+        ? this.$moment().add(-this.min - 1, 'days')
+        : this.$moment(this.min || this.$options.props.min.default)
     },
-    // should dropdown display on touch
-    // devices or use native picker
-    displayDropdown () {
-      return this.mobile || (!UI.support.touch && UI.$(this.$els.input).attr('type') !== 'date')
+    maxMoment () {
+      return Number.isInteger(this.max)
+        ? this.$moment().add(this.max, 'days')
+        : this.$moment(this.max || this.$options.props.max.default)
     },
-    dropdownCss () {
-      if (!this.show) {
-        return { display: 'none' }
-      }
-      const input = UI.$(this.$els.input)
-      const dropdown = UI.$(this.$els.dropdown)
-      const offset = input.offset()
-      const posTop = (
-        (offset.top - input.outerHeight() + input.height()) -
-        this.offset - dropdown.outerHeight()
-      )
-      const posBottom = offset.top + input.outerHeight() + this.offset
-      const css = { left: offset.left, right: '' }
-      if (UI.langdirection === 'right') {
-        css.right = window.innerWidth - (css.left + input.outerWidth())
-        css.left = ''
-      }
-      css.top = posBottom
-      if (this.position === 'top') {
-        css.top = posTop
-      } else if (this.position === 'auto' &&
-        (window.innerHeight - posBottom - dropdown.outerHeight() < 0 && posTop >= 0)
-      ) {
-        css.top = posTop
-      }
-      return {
-        top: `${css.top}px`,
-        left: `${css.left}px`,
-        right: `${css.right}px`,
-        display: 'block'
-      }
+    _disabledDates () {
+      return this.disabledDates.map(date => this.$moment(date))
     },
-    minDateMoment () {
-      return Number.isInteger(this.minDate)
-        ? this.$moment().add(-this.minDate - 1, 'days')
-        : this.$moment(this.minDate || this.$options.props.minDate.default)
-    },
-    maxDateMoment () {
-      return Number.isInteger(this.maxDate)
-        ? this.$moment().add(this.maxDate, 'days')
-        : this.$moment(this.maxDate || this.$options.props.maxDate.default)
-    },
-    selectedDates () {
-      return this.selected
-        ? [this.selected]
-        : []
-    },
-    disabledDates () {
-      const min = this.minDateMoment
-      const max = this.maxDateMoment
-      const matrix = getCalendarMatrix(this.selected
-        ? this.selected
-        : this.$moment())
+    disabledDatesRange () {
+      const min = this.minMoment
+      const max = this.maxMoment
+      const matrix = this.$refs.calendar
+        ? this.$refs.calendar.matrix
+        : getCalendarMatrix(this.$moment())
       return flatten(matrix).filter(moment => {
         return !isBetween(moment, min, max)
       })
     }
   },
   methods: {
-    isDisabled (moment) {
-      return this.disabledDates.some(date => moment.isSame(date, 'day'))
-    },
-    select (moment) {
-      this.$emit('select', moment)
-      if (!this.isDisabled(moment) && !moment.isSame(this.selected, 'day')) {
-        this.selected = moment.clone()
-        // trigger change event
-        this.$nextTick(() => this.$emit('change', this.selected))
-        // hide dropdown
-        this.show = false
+    pick (moment) {
+      if (this.isDisabled(moment)) {
+        return
       }
+      this.isPicked(moment)
+        ? this.doUnpick(moment)
+        : this.doPick(moment)
     },
-    renderDropdown () {
-      const node = document.createElement('div')
-      node.innerHTML = dropdownTmpl
-      document.body.appendChild(node)
-      this.$compile(node, this, this._scope, this._frag)
-      // hide dropdown on outter click/focus
-      const vm = this
-      UI.$('html').on('click focus', '*', function (e) {
-        if (vm.show &&
-          e.target !== vm.$els.dropdown &&
-          e.target !== vm.$els.input &&
-          !UI.$(e.target).parents('.uk-datepicker:first').length
-        ) {
-          vm.show = false
-        }
-      })
-    }
-  },
-  watch: {
-    show (value) {
-      // trigger events
-      this.$nextTick(() => this.$emit(value
-        ? 'show'
-        : 'hide'
-      ))
-    }
-  },
-  events: {
-    hide () {
-      // reset the currently displayed
-      // month on the calendar
-      this.$refs.calendar.month = this.selected
-        ? this.selected.month()
-        : this.$moment().month()
+    doPick (moment) {
+      this.multi
+        ? this.picked.push(moment)
+        : this.picked = [moment]
+      this.$emit('pick', moment, this.picked)
+    },
+    doUnpick (moment) {
+      this.picked.splice(this.picked.indexOf(moment), 1)
+      this.$emit('unpick', moment, this.picked)
+    },
+    isDisabled (moment) {
+      const dates = this.disabledDates.map(date => this.$moment(date))
+      const datesRange = this.disabledDatesRange
+      return dates.concat(datesRange).some(date => moment.isSame(date, 'day'))
+    },
+    isPicked (moment) {
+      return this.picked.some(date => moment.isSame(date, 'day'))
+    },
+    isInCalendarMonth (moment) {
+      const calendarMonth = this.$refs.calendar
+        ? this.$refs.calendar.month
+        : (new Date()).getMonth() // current month
+      return calendarMonth === moment.month()
     }
   }
 }

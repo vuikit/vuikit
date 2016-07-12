@@ -6,10 +6,9 @@
     <vk-calendar v-ref:demo
       :year.sync="props.year.demo.value | number"
       :month.sync="props.month.demo.value | number"
-      :disabled-dates="props.disabledDates.demo.value"
-      :selected-dates="props.selectedDates.demo.value"
       :min="props.min.demo.value"
       :max="props.max.demo.value">
+      {{ $day.date() }}
     </vk-calendar>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -19,6 +18,9 @@
     <vk-tabs>
       <vk-tab label="Props">
         <vk-docs-props :props="props"></vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Slots">
+        <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Events">
         <vk-docs-events
@@ -43,12 +45,25 @@ export default {
   mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
+    slots,
     events,
     example
   }),
   filters: {
     number (val) {
       return parseInt(val)
+    }
+  },
+  watch: {
+    'props.min.demo.value' () {
+      // reset calendar
+      this.props.year.demo.value = Moment().year()
+      this.props.month.demo.value = Moment().month()
+    },
+    'props.max.demo.value' () {
+      // reset calendar
+      this.props.year.demo.value = Moment().year()
+      this.props.month.demo.value = Moment().month()
     }
   }
 }
@@ -74,40 +89,26 @@ const props = {
   },
   min: {
     description: `The minimum month that can be displayed. Supports any input
-      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
     demo: {
-      options: { 'Last Month': Moment().add(-1, 'months').format('YYYY-MM-DD') }
+      options: [
+        Moment().add(-1, 'months').format('YYYY-MM-DD'),
+        5,
+        10
+      ]
     }
   },
   max: {
     description: `The maximum month that can be displayed. Supports any input
-      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
+      format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
+      or an <code>integer</code> as offset days from current day.`,
     demo: {
-      options: { 'Next Month': Moment().add(1, 'months').format('YYYY-MM-DD') }
-    }
-  },
-  selectedDates: {
-    description: `Array of arbitrary dates that should be disabled. Supports any
-      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
-    demo: {
-      options: {
-        Today: [Moment().format('YYYY-MM-DD')],
-        Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
-        Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
-      },
-      value: [Moment().format('YYYY-MM-DD')]
-    }
-  },
-  disabledDates: {
-    description: `Array of arbitrary dates that should be disabled. Supports any
-      input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
-    demo: {
-      options: {
-        Today: [Moment().format('YYYY-MM-DD')],
-        Tomorrow: [Moment().add(1, 'days').format('YYYY-MM-DD')],
-        Both: [Moment().format('YYYY-MM-DD'), Moment().add(1, 'days').format('YYYY-MM-DD')]
-      },
-      value: [Moment().add(1, 'days').format('YYYY-MM-DD')]
+      options: [
+        Moment().add(1, 'months').format('YYYY-MM-DD'),
+        5,
+        10
+      ]
     }
   },
   locale: {
@@ -117,16 +118,21 @@ const props = {
   }
 }
 
+const slots = {
+  default: {
+    description: `The template that will be used to render each day. The <code>$day</code>
+      moment.js variable is available representing the current day being rendered.`
+  }
+}
+
 const events = {
-  select: {
-    description: 'Emited on day selection with its <code>moment.js</code> object as argument.'
-  },
   update: {
-    description: 'Emited on month view update.'
+    description: 'Emited on each calendar view update.'
   }
 }
 
 const example =
 `<vk-calendar {attrs}>
+  {{ $day.date() }}
 </vk-calendar>`
 </script>

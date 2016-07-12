@@ -6,7 +6,11 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of native Vue components that embrace and extend the UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
+Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
+
+## Documentation and examples
+
+There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information about each component. As well as a [codepen](http://codepen.io/miljan/pen/YWXVKj) playground.
 
 ## Dependencies
 
@@ -17,7 +21,7 @@ Vuikit is a collection of native Vue components that embrace and extend the UIki
 ## Code Samples
 > Note that all code examples are using ES6 syntax
 
-Vuikit components are registered globally by default and ready to use immediately.
+Vuikit components are registered globally by default and ready to be used immediately.
 
 ```js
 import Vue from 'vue'
@@ -51,7 +55,7 @@ Vue.component('VkAlert', Alert)
 new Vue({
   components: {
     VkButton: Button,
-    VkAlert: Alert,
+    VkAlert: Alert
   }
 })
 ```
@@ -84,15 +88,11 @@ import Vuikit from 'vuikit'
 Vue.use(Vuikit) // or register individually
 ```
 
+By default all dependencies will be retrieved from `node_modules`, but that will not work straightforward as UIkit expects jQuery to be loaded globally. To avoid this and other related issues is recommended to solve the dependencies loading externally. When building with Webpack or Browserify you can do so by setting the `externals` or `external` config property.
+
 ### Browser
 
 Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
-
-## Documentation, Demo & Playground
-
-We have setup a site with a live demo of each component listing its props, events and slots information. The props can be adjusted and the demo as the code example will update to reflect it. [Try it out!](http://vuikit.github.io/vuikit/).
-
-Additionally there is a [codepen pen](http://codepen.io/miljan/pen/YWXVKj) for further testing.
 
 ## Developers
 

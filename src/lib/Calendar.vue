@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-datepicker">
+  <div>
     <div class="uk-datepicker-nav">
       <a href="" class="uk-datepicker-previous"
         v-if="isDisplayable(prevMonth)"
@@ -15,7 +15,7 @@
             v-text="date | format 'MMMM'"
             @click.prevent>
           </a>
-          <select v-model="month">
+          <select v-model="month" number>
             <option v-for="(m, name) in monthsList"
               :value="m"
               v-text="name">
@@ -27,7 +27,7 @@
             v-text="date | format 'YYYY'"
             @click.prevent>
           </a>
-          <select v-model="year">
+          <select v-model="year" number>
             <option v-for="year in yearsList"
               :value="year"
               v-text="year">
@@ -45,16 +45,8 @@
       <tbody>
         <tr v-for="week in matrix">
           <td v-for="day in week"
-            track-by="$index">
-            <a href=""
-              :class="{
-                'uk-active': isSelected(day),
-                'uk-datepicker-table-disabled': isDisabled(day) && !isSelected(day),
-                'uk-datepicker-table-muted': !isInCurrentMonth(day) || isDisabled(day)
-              }"
-              @click.prevent="$emit('select', day)"
-              v-text="day | format 'D'">
-            </a>
+            track-by="$index"
+            v-render-day>
           </td>
         </tr>
       </tbody>
@@ -75,7 +67,24 @@ import {
 } from './utils/dates'
 
 export default {
+  name: 'VkCalendar',
   mixins: [momentMixin],
+  directives: {
+    renderDay: {
+      update () {
+        const host = this.vm
+        const template = host.dayTemplate
+        if (template) {
+          const node = this.el
+          const context = host._context
+          const scope = Object.create(context)
+          scope.$day = this._frag.scope.day
+          node.innerHTML = template
+          context.$compile(node, host, scope, this._frag)
+        }
+      }
+    }
+  },
   props: {
     // currently displayed year
     year: {
@@ -94,14 +103,14 @@ export default {
     // the minimum month that can be displayed
     // supports all moment.js formats
     min: {
-      type: [String, Object, Array],
+      type: [String, Number, Object, Array],
       default: '1980-01-01',
       validator: validDate
     },
     // the maximum month that can be displayed
     // supports all moment.js formats
     max: {
-      type: [String, Object, Array],
+      type: [String, Number, Object, Array],
       default: '2050-12-31',
       validator: validDate
     },
@@ -118,15 +127,13 @@ export default {
     locale: {
       type: Object,
       default: () => ({})
+    },
+    template: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    yearsList () {
-      return listYears(this.min, this.max)
-    },
-    monthsList () {
-      return listMonths(this.date.year(), this.min, this.max)
-    },
     listWeekDays,
     date: {
       get () {
@@ -141,29 +148,43 @@ export default {
       this.$nextTick(() => this.$emit('update'))
       return getCalendarMatrix(this.date)
     },
+    yearsList () {
+      return listYears(this.minMoment, this.maxMoment)
+    },
+    monthsList () {
+      return listMonths(this.date.year(), this.minMoment, this.maxMoment)
+    },
     prevMonth () {
       return this.date.clone().subtract(1, 'month')
     },
     nextMonth () {
       return this.date.clone().add(1, 'month')
     },
-    _disabledDates () {
-      return this.disabledDates.map(date => this.$moment(date))
+    minMoment () {
+      return Number.isInteger(this.min)
+        ? this.$moment().add(-this.min - 1, 'days')
+        : this.$moment(this.min || this.$options.props.min.default)
     },
-    _selectedDates () {
-      return this.selectedDates.map(date => this.$moment(date))
+    maxMoment () {
+      return Number.isInteger(this.max)
+        ? this.$moment().add(this.max, 'days')
+        : this.$moment(this.max || this.$options.props.max.default)
+    },
+    // can be provided as slot or prop
+    dayTemplate () {
+      if (this._slotContents && this._slotContents.default) {
+        const node = document.createElement('div')
+        node.appendChild(this._slotContents.default.cloneNode(true))
+        return node.innerHTML
+      } else {
+        return this.template
+      }
     }
   },
   methods: {
     isToday,
-    isDisabled (moment) {
-      return this._disabledDates.some(date => moment.isSame(date, 'day'))
-    },
-    isSelected (moment) {
-      return this._selectedDates.some(date => moment.isSame(date, 'day'))
-    },
     isDisplayable (moment) {
-      return isBetween(moment, this.min, this.max)
+      return isBetween(moment, this.minMoment, this.maxMoment)
     },
     isInCurrentMonth (moment) {
       return moment.isSame(this.date, 'month')

@@ -36,6 +36,7 @@
 import ModalBase from './ModalBase'
 
 export default {
+  name: 'VkModal',
   extends: ModalBase,
   props: {
     overflow: {

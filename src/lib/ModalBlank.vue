@@ -11,6 +11,7 @@
 import ModalBase from './ModalBase'
 
 export default {
+  name: 'VkModalBlank',
   extends: ModalBase
 }
 </script>

@@ -9,6 +9,7 @@ import UI from 'uikit'
 import { isObject } from 'lodash'
 
 export default {
+  name: 'VkSwitcher',
   props: {
     // the node el or component that
     // the switcher relies on

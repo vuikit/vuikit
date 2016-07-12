@@ -16,6 +16,7 @@
 import Button from './Button'
 
 export default {
+  name: 'VkButtonLink',
   extends: Button,
   props: {
     href: {

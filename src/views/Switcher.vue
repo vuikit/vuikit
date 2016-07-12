@@ -55,7 +55,7 @@
 <script>
 import { merge, pick } from 'lodash'
 import Switcher from '../lib/Switcher'
-import UI from 'uikit'
+import $ from 'jquery'
 import mixin from './_mixin'
 
 export default {
@@ -70,7 +70,7 @@ export default {
   watch: {
     // update demo animation when changed
     'props.animation.demo.value' (value) {
-      UI.$(this.$refs.nav.$el).data('switcher').options.animation = value
+      $(this.$refs.nav.$el).data('switcher').options.animation = value
     }
   }
 }

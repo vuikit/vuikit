@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  name: 'VkButton',
   props: {
     value: {},
     color: {

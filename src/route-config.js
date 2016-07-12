@@ -20,6 +20,10 @@ export function configRouter (router) {
       name: 'Datepicker',
       component: require('./views/Datepicker')
     },
+    '/dropdown': {
+      name: 'Dropdown',
+      component: require('./views/Dropdown')
+    },
     '/modal': {
       name: 'Modal',
       component: require('./views/Modal')
@@ -27,6 +31,10 @@ export function configRouter (router) {
     '/pagination': {
       name: 'Pagination',
       component: require('./views/Pagination')
+    },
+    '/picker': {
+      name: 'Picker',
+      component: require('./views/Picker')
     },
     '/progress': {
       name: 'Progress',
@@ -39,6 +47,10 @@ export function configRouter (router) {
     '/switcher': {
       name: 'Switcher',
       component: require('./views/Switcher')
+    },
+    '/table': {
+      name: 'Table',
+      component: require('./views/Table')
     },
     '/tabs': {
       name: 'Tabs',

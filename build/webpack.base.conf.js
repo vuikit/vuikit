@@ -9,6 +9,13 @@ module.exports = {
     publicPath: config.build.assetsPublicPath,
     filename: '[name].js'
   },
+  externals: {
+    // As UIkit is not optimized to be imported with node
+    // (as for jQuery caching and other issues),
+    // both UIkit and jQuery are required to be externals
+    uikit: 'UIkit',
+    jquery: 'jQuery'
+  },
   resolve: {
     extensions: ['', '.js', '.vue'],
     fallback: [path.join(__dirname, '../node_modules')],

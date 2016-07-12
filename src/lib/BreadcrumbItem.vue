@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: 'VkCrumb',
   props: {
     path: {
       type: String,

@@ -8,9 +8,10 @@
 </template>
 
 <script>
-import UI from 'uikit'
+import $ from 'jquery'
 
 export default {
+  name: 'VkButtonRadio',
   props: {
     value: {},
     group: {
@@ -35,7 +36,7 @@ export default {
       this.value = this.active.value
     }
     // on each change
-    UI.$(this.$el).on('change.uk.button', () => {
+    $(this.$el).on('change.uk.button', () => {
       const selected = this.$el.querySelector('.uk-active').__vue__
       // update radio value
       this.value = selected.value

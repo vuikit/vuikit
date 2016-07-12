@@ -11,6 +11,7 @@
 
 <script>
 export default {
+  name: 'VkSubnavItem',
   created () {
     // set active
     if (this.active || !this.$parent.active) {
