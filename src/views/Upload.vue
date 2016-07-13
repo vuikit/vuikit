@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>Alert</h2>
+    <h2>Upload</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-upload v-ref:demo>
