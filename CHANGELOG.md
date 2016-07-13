@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.4.1
+
+ - Added missing dependency
+ - Fixed build which was including Vue in dist bundle
+
 ### 0.4.0
 
  - Add Dropdown
