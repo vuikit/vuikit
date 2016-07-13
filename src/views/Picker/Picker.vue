@@ -70,7 +70,7 @@ const props = {
   },
   table: {
     description: `Options passed to the underlying Table instance
-      used to render the table. See the <a href="/#!/table">Table documentation</a> for more information.`
+      used to render the table. See the <a href="vuikit/#!/table">Table documentation</a> for more information.`
   }
 }
 
