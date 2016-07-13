@@ -48,7 +48,7 @@ export default {
 const props = {
   dropdown: {
     description: `Props passed to the underlying Dropdown instance. See the
-      <a href="/#!/dropdown">Dropdown documentation</a> for the possible values.`
+      <a href="/vuikit/#!/dropdown">Dropdown documentation</a> for the possible values.`
   }
 }
 

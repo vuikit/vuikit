@@ -87,7 +87,7 @@ const props = {
   },
   calendar: {
     description: `Props passed to the underlying Calendar instance. See the
-      <a href="/#!/calendar">Calendar documentation</a> for the possible values.`
+      <a href="/vuikit/#!/calendar">Calendar documentation</a> for the possible values.`
   }
 }
 
