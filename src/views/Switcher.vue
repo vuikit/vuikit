@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>Subnav</h2>
+    <h2>Switcher</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-subnav pill v-ref:nav>
