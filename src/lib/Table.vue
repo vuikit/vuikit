@@ -14,7 +14,7 @@
             @click.prevent="emitSort(field)">
             {{ field.header }}
             <i :class="{
-                'uk-icon-justify': true,
+                'uk-icon-justify uk-position-absolute': true,
                 'uk-icon-caret-up': this.sortOrder[field.name] === 'asc',
                 'uk-icon-caret-down': this.sortOrder[field.name] === 'desc'
               }">
