@@ -114,16 +114,6 @@ export default {
       default: '2050-12-31',
       validator: validDate
     },
-    // the disabled days
-    disabledDates: {
-      type: Array,
-      default: () => []
-    },
-    // the selected days
-    selectedDates: {
-      type: Array,
-      default: () => []
-    },
     locale: {
       type: Object,
       default: () => ({})

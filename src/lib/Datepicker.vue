@@ -1,33 +1,43 @@
 <template>
-  <div></div>
+  <div>
+    <vk-calendar
+      :year="calendarYear"
+      :month="calendarMonth"
+      :min="calendarMin"
+      :max="calendarMax"
+      :locale="calendarLocale"
+      :template="calendarTemplate"
+      @update="$emit('calendar-update', $arguments[0])">
+      <a href=""
+        :class="{
+          'uk-active': isPicked($day),
+          'uk-datepicker-table-disabled': isDisabled($day),
+          'uk-datepicker-table-muted': !isInCalendarMonth($day) || isDisabled($day)
+        }"
+        @click.prevent="pick($day)"
+        v-text="$day | format 'D'">
+      </a>
+    </vk-calendar>
+  </div>
 </template>
 
 <script>
-import Vue from 'vue'
 import moment from './mixins/moment'
-import { flatten, merge } from 'lodash'
+import { flatten, merge, mapKeys, upperFirst } from 'lodash'
 import { getCalendarMatrix, isBetween } from './utils/dates'
-const Calendar = Vue.extend(require('./Calendar'))
+import Calendar from './Calendar'
 
 export default {
   name: 'VkDatepicker',
   mixins: [moment],
+  components: {
+    VkCalendar: Calendar
+  },
   compiled () {
     // init picked array
     this.picked = this.prePicked
       .map(date => this.$moment(date))
       .filter(date => !this.isDisabled(date))
-    // init Calendar with New in order to
-    // be able to pass propsData at once
-    this.$refs.calendar = new Calendar({
-      parent: this,
-      el: document.createElement('table'),
-      _context: this,
-      propsData: merge(
-        this.$options.props.calendar.default(),
-        this.calendar
-      )
-    }).$appendTo(this.$el)
   },
   data () {
     return {
@@ -35,7 +45,7 @@ export default {
       picked: []
     }
   },
-  props: {
+  props: merge({
     // multi picks support
     multi: {
       type: Boolean,
@@ -58,24 +68,10 @@ export default {
     disabledDates: {
       type: Array,
       default: () => []
-    },
-    // calendar component options
-    calendar: {
-      type: Object,
-      default: () => ({
-        template:
-          `<a href=""
-            :class="{
-              'uk-active': isPicked($day),
-              'uk-datepicker-table-disabled': isDisabled($day),
-              'uk-datepicker-table-muted': !isInCalendarMonth($day) || isDisabled($day)
-            }"
-            @click.prevent="pick($day)"
-            v-text="$day | format 'D'">
-          </a>`
-      })
     }
-  },
+  }, // get and prefix subcomponent props
+    mapKeys(Calendar.props, (value, key) => 'calendar' + upperFirst(key))
+  ),
   computed: {
     minMoment () {
       return Number.isInteger(this.min)

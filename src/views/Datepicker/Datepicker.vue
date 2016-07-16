@@ -35,14 +35,14 @@
 
 <script>
 import Moment from 'moment'
-import { merge } from 'lodash'
+import { merge, pick } from 'lodash'
 import Component from '../../lib/Datepicker'
 import mixin from '../_mixin'
 
 export default {
   mixins: [mixin],
   data: () => ({
-    props: merge(props, Component.props),
+    props: merge({}, pick(Component.props, Object.keys(props)), props),
     events,
     example
   })
@@ -85,9 +85,10 @@ const props = {
       editable: false
     }
   },
-  calendar: {
-    description: `Props passed to the underlying Calendar instance. See the
-      <a href="/vuikit/#!/calendar">Calendar documentation</a> for the possible values.`
+  'calendar-*': {
+    description: `Props passed to the underlying Calendar instance prefixed with
+      <code>calendar-</code>. See the <a href="/vuikit/#!/calendar">Calendar documentation</a>
+      for all possible values.`
   }
 }
 
