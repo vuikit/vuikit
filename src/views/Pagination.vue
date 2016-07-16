@@ -4,13 +4,13 @@
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-pagination v-ref:demo
-      :align="props.align.demo.value"
-      :current.sync="props.current.demo.value"
-      :edges="props.edges.demo.value"
       :items="props.items.demo.value"
+      :selected="props.selected.demo.value"
+      :page-range="props.pageRange.demo.value"
+      :per-page="props.perPage.demo.value"
+      :align="props.align.demo.value"
       :compact="props.compact.demo.value"
-      :items-on-page="props.itemsOnPage.demo.value"
-      :visible-pages="props.visiblePages.demo.value">
+      @change="props.selected.demo.value = $arguments[0]">
     </vk-pagination>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -28,24 +28,44 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
+import { merge } from 'lodash'
 import Component from '../lib/Pagination'
 import mixin from './_mixin'
 
 export default {
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: merge({}, Component.props, props),
     events,
     example
   })
 }
 
 const props = {
-  current: {
+  items: {
+    description: 'The total number of items, accross all pages.',
+    demo: {
+      options: [10, 50, 100],
+      value: 100
+    }
+  },
+  selected: {
     description: 'The page being currently selected.',
     demo: {
-      editable: false
+      editable: false,
+      value: 1
+    }
+  },
+  pageRange: {
+    description: 'Amounth of visible pages around the selected page.',
+    demo: {
+      options: [1, 5]
+    }
+  },
+  perPage: {
+    description: 'The items to display for each page.',
+    demo: {
+      options: [5, 10, 20]
     }
   },
   align: {
@@ -57,31 +77,6 @@ const props = {
   compact: {
     description: 'The next/prev buttons position, compacted or floating to the edges.',
     demo: {}
-  },
-  edges: {
-    description: 'The maximum number of edge pages.',
-    demo: {
-      options: [1, 5]
-    }
-  },
-  items: {
-    description: 'The total number of items, accross all pages.',
-    demo: {
-      options: [10, 50, 100],
-      value: 10
-    }
-  },
-  itemsOnPage: {
-    description: 'The items to display for each page.',
-    demo: {
-      options: [5, 10, 20]
-    }
-  },
-  visiblePages: {
-    description: 'The maximum number of pages to display.',
-    demo: {
-      options: [1, 5, 10]
-    }
   }
 }
 

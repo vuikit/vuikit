@@ -10,7 +10,7 @@
     }">
       <!-- firstPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="current = 1">
+        @click.prevent="$emit('change', 1)">
         <i class="uk-icon-angle-double-left"></i>
       </a>
       <span v-else>
@@ -18,7 +18,7 @@
       </span>
       <!-- prevPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="current = prevPage">
+        @click.prevent="$emit('change', prevPage)">
         <i class="uk-icon-angle-left"></i>
       </a>
       <span v-else>
@@ -26,41 +26,44 @@
       </span>
     </li>
     <li v-for="page in prePages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
-      <span v-if="page === current" v-text="page"></span>
-      <a href="" v-else
-        @click.prevent="current = page"
-        v-text="page">
-      </a>
-    </li>
-    <li v-if="edges < interval.start && (interval.start - edges != 1)">
-      <span>...</span>
-    </li>
-    <li
-      v-for="page in pages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
-      <span v-if="page === current" v-text="page"></span>
+      :class="{
+        'uk-active': page === selected
+      }">
+      <span v-if="page === selected" v-text="page"></span>
       <a v-else
         href=""
-        @click.prevent="current = page"
+        v-text="page"
+        @click.prevent="$emit('change', page)">
+      </a>
+    </li>
+    <li v-if="range.start > (prePages.length + 1)">
+      <span>...</span>
+    </li>
+    <li v-for="page in pages"
+      :class="{
+        'uk-active': page === selected
+      }">
+      <span v-if="page === selected" v-text="page"></span>
+      <a v-else
+        href=""
+        @click.prevent="$emit('change', page)"
         v-text="page">
       </a>
     </li>
-    <li v-if="totalPages - edges > interval.end
-      && (totalPages - edges - interval.end != 1)">
+    <li v-if="(range.end + 1) < postPages[0]">
       <span>...</span>
     </li>
     <li v-for="page in postPages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
-      <span v-if="page === current">
+      :class="{
+        'uk-active': page === selected
+      }">
+      <span v-if="page === selected">
         {{ page }}
       </span>
-      <a href="" v-else
-        @click.prevent="current = page"
-        v-text="page">
+      <a v-else
+        href=""
+        v-text="page"
+        @click.prevent="$emit('change', page)">
       </a>
     </li>
     <li :class="{
@@ -69,7 +72,7 @@
     }">
       <!-- nextPage -->
       <a href="" v-if="nextPage"
-        @click.prevent="current = nextPage">
+        @click.prevent="$emit('change', nextPage)">
         <i class="uk-icon-angle-right"></i>
       </a>
       <span v-else>
@@ -77,7 +80,7 @@
       </span>
       <!-- last page -->
       <a href="" v-if="nextPage"
-        @click.prevent="current = totalPages">
+        @click.prevent="$emit('change', totalPages)">
         <i class="uk-icon-angle-double-right"></i>
       </a>
       <span v-else>
@@ -88,9 +91,31 @@
 </template>
 
 <script>
+import { range } from 'lodash'
+
 export default {
   name: 'VkPagination',
   props: {
+    // total cross page number of items
+    items: {
+      type: Number,
+      required: true
+    },
+    // the selected page
+    selected: {
+      type: Number,
+      default: 1
+    },
+    // amount of pages around selected page
+    pageRange: {
+      type: Number,
+      default: 2
+    },
+    // items for each page
+    perPage: {
+      type: Number,
+      default: 5
+    },
     // left or right, defaults to center
     align: {
       type: String,
@@ -100,110 +125,60 @@ export default {
     compact: {
       type: Boolean,
       default: false
-    },
-    // current page
-    current: {
-      type: Number,
-      default: 1
-    },
-    // max number of edge pages
-    edges: {
-      type: Number,
-      default: 3
-    },
-    // total number of Items
-    items: {
-      type: Number,
-      default: 1
-    },
-    // items for each page
-    itemsOnPage: {
-      type: Number,
-      default: 1
-    },
-    // max numer of displayed pages
-    visiblePages: {
-      type: Number,
-      default: 3
     }
   },
   computed: {
-    index: function () {
-      return this.current - 1
-    },
-    prevPage: function () {
-      return (this.current - 1) !== 0
-        ? this.current - 1
+    prevPage () {
+      return (this.selected - 1) !== 0
+        ? this.selected - 1
         : null
     },
-    nextPage: function () {
-      return (this.current + 1) <= this.totalPages
-        ? this.current + 1
+    nextPage () {
+      return (this.selected + 1) <= this.totalPages
+        ? this.selected + 1
         : null
     },
-    lastPage: function () {
-      return this.totalPages - 1
+    totalPages () {
+      return Math.ceil(this.items / this.perPage)
     },
-    totalPages: function () {
-      return Math.ceil(this.items / this.itemsOnPage)
-        ? Math.ceil(this.items / this.itemsOnPage)
-        : 1
-    },
-    interval: function () {
-      var pages = this.totalPages
-      var halfDisplayed = this.visiblePages / 2
-      return {
-        start: Math.ceil(this.index > halfDisplayed
-          ? Math.max(Math.min(
-              this.index - halfDisplayed, (pages - this.visiblePages)
-            ), 0)
-          : 0),
-
-        end: Math.ceil(this.index > halfDisplayed
-          ? Math.min(this.index + halfDisplayed, pages)
-          : Math.min(this.visiblePages, pages))
+    range () {
+      let start = this.selected - this.pageRange
+      let end = this.selected + this.pageRange
+      if (end > this.totalPages) {
+        end = this.totalPages
+        start = this.totalPages - this.pageRange * 2
+        start = start < 1 ? 1 : start
       }
-    },
-    pages: function () {
-      var pages = []
-      var interval = this.interval
-      var i
-      for (i = interval.start; i < interval.end; i++) {
-        pages.push(i + 1)
+      if (start <= 1) {
+        start = 1
+        end = Math.min(this.pageRange * 2 + 1, this.totalPages)
       }
-      return pages
+      return { start, end }
     },
-    prePages: function () {
-      var pages = []
-      var interval = this.interval
-      var edges = this.edges
-      var end = Math.min(edges, interval.start)
-      var i
-      if (interval.start > 0 && edges > 0) {
-        for (i = 0; i < end; i++) {
-          pages.push(i + 1)
+    prePages () {
+      const pages = []
+      if (this.range.start <= 3) {
+        for (let i = 1; i < this.range.start; i++) {
+          pages.push(i)
         }
+      } else {
+        pages.push(1)
       }
       return pages
     },
-    postPages: function () {
-      var pages = []
-      var totalPages = this.totalPages
-      var interval = this.interval
-      var edges = this.edges
-      var begin = Math.max(totalPages - edges, interval.end)
-      var i
-      if (interval.end < totalPages && edges > 0) {
-        for (i = begin; i < totalPages; i++) {
-          pages.push(i + 1)
+    pages () {
+      return range(this.range.start, this.range.end + 1)
+    },
+    postPages () {
+      const pages = []
+      if (this.range.end >= this.totalPages - 2) {
+        for (let i = this.range.end + 1; i <= this.totalPages; i++) {
+          pages.push(i)
         }
+      } else {
+        pages.push(this.totalPages)
       }
       return pages
-    }
-  },
-  watch: {
-    current: function (page) {
-      this.$emit('change', page)
     }
   }
 }
