@@ -7,19 +7,38 @@
     }">
     <thead>
       <tr>
-        <th v-for="field in fieldsDef" v-text="field.title"></th>
+        <th v-for="field in fieldsDef"
+          :class="field.headerClass">
+          <a href=""
+            v-if="field.sortBy"
+            @click.prevent="emitSort(field)">
+            {{ field.header }}
+            <i :class="{
+                'uk-icon-justify': true,
+                'uk-icon-caret-up': this.sortOrder[field.name] === 'asc',
+                'uk-icon-caret-down': this.sortOrder[field.name] === 'desc'
+              }">
+            </i>
+          </a>
+          <template v-else>
+            {{ field.header }}
+          </template>
+        </th>
       </tr>
     </thead>
     <tbody v-el:body>
       <tr v-for="row in rows">
-        <td v-for="field in fieldsDef" v-field></td>
+        <td v-for="field in fieldsDef"
+          :class="field.cellClass"
+          v-field>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import { map, isString } from 'lodash'
+import { map, isString, merge } from 'lodash'
 
 export default {
   name: 'VkTable',
@@ -64,14 +83,30 @@ export default {
     template: {
       type: String,
       default: ''
+    },
+    sortOrder: {
+      type: Object,
+      default: () => ({}) // field: asc|desc
     }
   },
   computed: {
     fieldsDef () {
-      return map(this.fields, field => isString(field)
-        ? { name: field, title: field }
-        : field
-      )
+      return map(this.fields, field => {
+        const obj = {
+          name: '',
+          header: '',
+          headerClass: '',
+          cellClass: '',
+          sortBy: ''
+        }
+        isString(field)
+          ? merge(obj, { name: field })
+          : merge(obj, field)
+        if (obj.header !== false && obj.header === '') {
+          obj.header = this.titleCase(obj.name)
+        }
+        return obj
+      })
     },
     // can be provided as slot or prop
     fieldTemplate () {
@@ -82,6 +117,28 @@ export default {
       } else {
         return this.template
       }
+    }
+  },
+  methods: {
+    titleCase (str) {
+      return str.replace(/\w+/g, txt =>
+        txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+      )
+    },
+    emitSort (field) {
+      const sortBy = field.sortBy === true
+        ? field.name
+        : field.sortBy
+      const sortOrder = {}
+      // prepare the final order object state
+      if (this.sortOrder[sortBy]) {
+        sortOrder[sortBy] = this.sortOrder[sortBy] === 'asc'
+          ? 'desc'
+          : 'asc'
+      } else {
+        sortOrder[sortBy] = 'asc'
+      }
+      this.$emit('sort', sortOrder)
     }
   }
 }
