@@ -10,7 +10,7 @@
     }">
       <!-- firstPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="$emit('change', 1)">
+        @click.prevent="current = 1">
         <i class="uk-icon-angle-double-left"></i>
       </a>
       <span v-else>
@@ -18,7 +18,7 @@
       </span>
       <!-- prevPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="$emit('change', prevPage)">
+        @click.prevent="current = prevPage">
         <i class="uk-icon-angle-left"></i>
       </a>
       <span v-else>
@@ -27,43 +27,43 @@
     </li>
     <li v-for="page in prePages"
       :class="{
-        'uk-active': page === selected
+        'uk-active': page === current
       }">
-      <span v-if="page === selected" v-text="page"></span>
+      <span v-if="page === current" v-text="page"></span>
       <a v-else
         href=""
         v-text="page"
-        @click.prevent="$emit('change', page)">
+        @click.prevent="current = page">
       </a>
     </li>
-    <li v-if="range.start > (prePages.length + 1)">
+    <li v-if="mainPages[0] > (prePages.length + 1)">
       <span>...</span>
     </li>
-    <li v-for="page in pages"
+    <li v-for="page in mainPages"
       :class="{
-        'uk-active': page === selected
+        'uk-active': page === current
       }">
-      <span v-if="page === selected" v-text="page"></span>
+      <span v-if="page === current" v-text="page"></span>
       <a v-else
         href=""
-        @click.prevent="$emit('change', page)"
+        @click.prevent="current = page"
         v-text="page">
       </a>
     </li>
-    <li v-if="(range.end + 1) < postPages[0]">
+    <li v-if="(mainPages[mainPages.length - 1] + 1) < postPages[0]">
       <span>...</span>
     </li>
     <li v-for="page in postPages"
       :class="{
-        'uk-active': page === selected
+        'uk-active': page === current
       }">
-      <span v-if="page === selected">
+      <span v-if="page === current">
         {{ page }}
       </span>
       <a v-else
         href=""
         v-text="page"
-        @click.prevent="$emit('change', page)">
+        @click.prevent="current = page">
       </a>
     </li>
     <li :class="{
@@ -72,7 +72,7 @@
     }">
       <!-- nextPage -->
       <a href="" v-if="nextPage"
-        @click.prevent="$emit('change', nextPage)">
+        @click.prevent="current = nextPage">
         <i class="uk-icon-angle-right"></i>
       </a>
       <span v-else>
@@ -80,7 +80,7 @@
       </span>
       <!-- last page -->
       <a href="" v-if="nextPage"
-        @click.prevent="$emit('change', totalPages)">
+        @click.prevent="current = totalPages">
         <i class="uk-icon-angle-double-right"></i>
       </a>
       <span v-else>
@@ -96,54 +96,65 @@ import { range } from 'lodash'
 export default {
   name: 'VkPagination',
   props: {
-    // total cross page number of items
-    items: {
+    // total items
+    total: {
       type: Number,
       required: true
     },
-    // the selected page
-    selected: {
+    // items on each page
+    limit: {
+      type: Number,
+      default: 10
+    },
+    // current page initial state
+    initCurrent: {
       type: Number,
       default: 1
     },
-    // amount of pages around selected page
+    // amount of pages around current one
     pageRange: {
       type: Number,
       default: 2
-    },
-    // items for each page
-    perPage: {
-      type: Number,
-      default: 5
     },
     // left or right, defaults to center
     align: {
       type: String,
       default: ''
     },
-    // next/prev btns position
+    // toggle next/prev buttons float
     compact: {
       type: Boolean,
       default: false
     }
   },
+  data () {
+    return {
+      current: this.initCurrent
+    }
+  },
   computed: {
+    from () {
+      return (this.current - 1) * this.limit + 1
+    },
+    to () {
+      return Math.min(this.total, this.current * this.limit)
+    },
     prevPage () {
-      return (this.selected - 1) !== 0
-        ? this.selected - 1
+      return (this.current - 1) !== 0
+        ? this.current - 1
         : null
     },
     nextPage () {
-      return (this.selected + 1) <= this.totalPages
-        ? this.selected + 1
+      return (this.current + 1) <= this.totalPages
+        ? this.current + 1
         : null
     },
     totalPages () {
-      return Math.ceil(this.items / this.perPage)
+      return Math.ceil(this.total / this.limit)
     },
-    range () {
-      let start = this.selected - this.pageRange
-      let end = this.selected + this.pageRange
+    mainPages () {
+      let start = this.current - this.pageRange
+      let end = this.current + this.pageRange
       if (end > this.totalPages) {
         end = this.totalPages
         start = this.totalPages - this.pageRange * 2
@@ -153,32 +164,34 @@ export default {
         start = 1
         end = Math.min(this.pageRange * 2 + 1, this.totalPages)
       }
-      return { start, end }
+      return range(start, end + 1)
     },
     prePages () {
-      const pages = []
-      if (this.range.start <= 3) {
-        for (let i = 1; i < this.range.start; i++) {
-          pages.push(i)
-        }
-      } else {
-        pages.push(1)
-      }
-      return pages
-    },
-    pages () {
-      return range(this.range.start, this.range.end + 1)
+      return range(1,
+        this.mainPages[0] <= 3
+          ? this.mainPages[0]
+          : 2
+      )
     },
     postPages () {
-      const pages = []
-      if (this.range.end >= this.totalPages - 2) {
-        for (let i = this.range.end + 1; i <= this.totalPages; i++) {
-          pages.push(i)
-        }
-      } else {
-        pages.push(this.totalPages)
-      }
-      return pages
+      const mainLast = this.mainPages[this.mainPages.length - 1]
+      return range(
+        mainLast >= this.totalPages - 2
+          ? mainLast + 1
+          : this.totalPages,
+        this.totalPages + 1
+      )
+    }
+  },
+  watch: {
+    current () {
+      this.$emit('change', {
+        current: this.current,
+        total: this.total,
+        limit: this.limit,
+        from: this.from,
+        to: this.to
+      })
     }
   }
 }
