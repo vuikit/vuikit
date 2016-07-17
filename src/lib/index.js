@@ -9,6 +9,7 @@ import Calendar from './Calendar'
 import Datepicker from './Datepicker'
 import DatepickerDrop from './DatepickerDrop'
 import Dropdown from './Dropdown'
+import Filter from './Filter'
 import Modal from './Modal'
 import ModalLightbox from './ModalLightbox'
 import ModalBlank from './ModalBlank'
@@ -40,6 +41,7 @@ const Vuikit = {
   Datepicker,
   DatepickerDrop,
   Dropdown,
+  Filter,
   Modal,
   ModalLightbox,
   ModalBlank,

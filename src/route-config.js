@@ -24,6 +24,10 @@ export function configRouter (router) {
       name: 'Dropdown',
       component: require('./views/Dropdown')
     },
+    '/filter': {
+      name: 'Filter',
+      component: require('./views/Filter')
+    },
     '/modal': {
       name: 'Modal',
       component: require('./views/Modal')
