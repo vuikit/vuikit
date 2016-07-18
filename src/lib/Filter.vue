@@ -44,6 +44,7 @@ import Dropdown from './Dropdown'
 import sQuery from 'search-query-parser'
 
 export default {
+  name: 'VkFilter',
   components: {
     VkButton: Button,
     VkDropdown: Dropdown
