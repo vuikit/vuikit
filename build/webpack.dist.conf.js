@@ -13,13 +13,6 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
   entry: {
     'vuikit': './src/lib/'
   },
-  externals: {
-    vue: 'vue',
-    // override the exported namespace
-    // to match the node folder name
-    jquery: 'jquery',
-    uikit: 'uikit'
-  },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
   },

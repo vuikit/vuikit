@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import UI from 'uikit'
 import { isObject } from 'lodash'
+
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   name: 'VkSwitcher',
