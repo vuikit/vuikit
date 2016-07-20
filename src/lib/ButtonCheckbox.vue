@@ -1,6 +1,5 @@
 <template>
-  <div data-uk-button-checkbox
-    :class="{
+  <div :class="{
       'uk-button-group': group
     }">
     <slot></slot>
@@ -8,40 +7,32 @@
 </template>
 
 <script>
-import $ from 'jquery'
+import { each, addClass, removeClass } from '../util'
 import { toArray } from 'lodash'
 
 export default {
   name: 'VkButtonCheckbox',
   props: {
-    value: {
-      type: Array,
-      default: () => []
-    },
     group: {
       type: Boolean,
       default: true
     }
   },
-  computed: {
-    buttons () {
-      return this.$children.filter(btn => btn.$options.name === 'VkButton')
-    }
-  },
-  ready: function () {
+  data: () => ({
+    value: null
+  }),
+  mounted: function () {
     // inherit value from initially active buttons
     this.buttons.filter(btn => btn.active).forEach(btn => {
       this.value.push(btn.value)
     })
     // on each change
-    $(this.$el).on('click', () => {
-      // get actives btns
-      const actives = toArray(this.$el.querySelectorAll('.uk-active'))
-      // save its values as array
-      this.value = actives.map(btn => btn.__vue__.value)
-      // trigger event
-      this.$emit('change', this.value)
-    })
+    // UI.$(this.$el).on('click', () => {
+    //   // get actives btns
+    //   const actives = toArray(this.$el.querySelectorAll('.uk-active'))
+    //   // trigger event
+    //   this.$emit('change', actives.map(btn => btn.__vue__.value))
+    // })
     // update buttons active state
     // on init and on each change
     this.$watch('value', function (value) {
@@ -49,6 +40,27 @@ export default {
         btn.active = value && value.indexOf(btn.value) !== -1
       })
     }, { immediate: true })
+  },
+  methods: {
+    setAsActive (button) {
+      addClass(button.$el, 'uk-active')
+      button.$el.setAttribute('aria-checked', true)
+      this.value = button.value
+    },
+    setAsInactive (button) {
+      removeClass(button.$el, 'uk-active')
+      button.$el.setAttribute('aria-checked', false)
+    },
+    doSelect (button) {
+      // reset all buttons
+      each(this.$children, (button) => {
+        this.setAsInactive(button)
+      })
+      // select button
+      this.setAsActive(button)
+      // trigger event
+      this.$emit('change', this.value)
+    }
   }
 }
 </script>

@@ -4,12 +4,12 @@
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-button
-      :value.sync="props.value.demo.value"
+      :value="props.value.demo.value"
       :color="props.color.demo.value"
       :size="props.size.demo.value"
       :width="props.width.demo.value"
+      :icon="props.icon.demo.value"
       :icon-left="props.iconLeft.demo.value"
-      :icon-right="props.iconRight.demo.value"
       :active="props.active.demo.value"
       :disabled="props.disabled.demo.value">
       Button
@@ -39,6 +39,7 @@ import Component from '../../lib/Button'
 import mixin from '../_mixin'
 
 export default {
+  name: 'PageButtonDefault',
   mixins: [mixin],
   data: () => ({
     props: merge(props, pick(Component.props, Object.keys(props))),
@@ -82,17 +83,17 @@ const props = {
       options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
     }
   },
-  iconLeft: {
-    description: `The left icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
-      without the <code>uk-icon-</code> prefix.`,
+  icon: {
+    description: `The right icon of the button. Can be any icon of
+    <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+    without the <code>uk-icon-</code> prefix.`,
     demo: {
       options: ['flag', 'microphone', 'gamepad']
     }
   },
-  iconRight: {
-    description: `The right icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+  iconLeft: {
+    description: `The left icon of the button. Can be any icon of
+      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
       without the <code>uk-icon-</code> prefix.`,
     demo: {
       options: ['flag', 'microphone', 'gamepad']

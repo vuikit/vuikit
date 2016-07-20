@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <vk-docs-layout-page>
     <button-default></button-default>
     <button-link></button-link>
     <button-checkbox></button-checkbox>
     <button-radio><button-radio>
-  </div>
+  </vk-docs-layout-page>
 </template>
 
 <script>
@@ -14,6 +14,7 @@ import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'
 
 export default {
+  name: 'PageButton',
   components: {
     ButtonDefault,
     ButtonLink,

@@ -8,8 +8,8 @@
       :color="props.color.demo.value"
       :size="props.size.demo.value"
       :width="props.width.demo.value"
+      :icon="props.icon.demo.value"
       :icon-left="props.iconLeft.demo.value"
-      :icon-right="props.iconRight.demo.value"
       @click.prevent>
       Link
     </vk-button-link>
@@ -39,6 +39,7 @@ import Component from '../../lib/ButtonLink'
 import mixin from '../_mixin'
 
 export default {
+  name: 'PageButtonLink',
   mixins: [mixin],
   data: () => ({
     props: merge(
@@ -82,17 +83,17 @@ const props = {
       options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
     }
   },
-  iconLeft: {
-    description: `The left icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
-      without the <code>uk-icon-</code> prefix.`,
+  icon: {
+    description: `The right icon of the button. Can be any icon of
+    <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+    without the <code>uk-icon-</code> prefix.`,
     demo: {
       options: ['flag', 'microphone', 'gamepad']
     }
   },
-  iconRight: {
-    description: `The right icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+  iconLeft: {
+    description: `The left icon of the button. Can be any icon of
+      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
       without the <code>uk-icon-</code> prefix.`,
     demo: {
       options: ['flag', 'microphone', 'gamepad']

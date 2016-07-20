@@ -10,14 +10,14 @@
     }">
     <a href="" class="uk-close"
       v-if="!block"
-      @click.prevent="show = !show">
+      @click.prevent="$emit('hide')">
     </a>
     <slot></slot>
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
+import UI from 'uikit'
 import { merge } from 'lodash'
 
 export default {
@@ -63,14 +63,14 @@ export default {
       css: false,
       enter (el, done) {
         if (this.transitionOptions.fade) {
-          $(el).animate({ opacity: 1 }, this.transitionOptions.duration, done)
+          UI.$(el).animate({ opacity: 1 }, this.transitionOptions.duration, done)
         } else {
           done()
         }
       },
       leave (el, done) {
         if (this.transitionOptions.fade) {
-          $(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
+          UI.$(el).animate({ opacity: 0 }, this.transitionOptions.duration, done)
         } else {
           done()
         }

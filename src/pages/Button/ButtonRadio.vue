@@ -3,13 +3,19 @@
     <h2>Button Radio</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-button-radio v-ref:demo
+    <vk-button-radio
       :group="props.group.demo.value"
-      :value.sync="props.value.demo.value">
+      @change="
+        events.change.emited = true,
+        value = arguments[0]
+      ">
       <vk-button value="1">Button 1</vk-button>
       <vk-button value="2">Button 2</vk-button>
       <vk-button value="3">Button 3</vk-button>
     </vk-button-radio>
+    <template v-if="value">
+      Selected value is <code>{{ value }}</code>
+    </template>
     <!-- DESC -->
     <div class="uk-margin-large">
       The <code>vk-button-radio</code> component, acting like a radio form field, allows toggling between a group of <code>vk-button</code> buttons.
@@ -23,10 +29,7 @@
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Events">
-        <vk-docs-events
-          :events="events"
-          :connect="$refs.demo">
-        </vk-docs-events>
+        <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
@@ -41,9 +44,11 @@ import Component from '../../lib/ButtonRadio'
 import mixin from '../_mixin'
 
 export default {
+  name: 'PageButtonRadio',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    value: '',
+    props: merge({}, pick(Component.props, Object.keys(props)), props),
     slots,
     events,
     example
@@ -51,10 +56,6 @@ export default {
 }
 
 const props = {
-  value: {
-    description: 'Value reflecting the value of the currently active button.',
-    demo: {}
-  },
   group: {
     description: 'Whether to display the buttons grouped together.',
     demo: {}
@@ -69,7 +70,8 @@ const slots = {
 
 const events = {
   change: {
-    description: 'Emited when there was made some button selection.'
+    description: 'Emited when there was made some button selection.',
+    emited: false
   }
 }
 

@@ -1,5 +1,9 @@
 {
   "presets": ["es2015", "stage-2"],
-  "plugins": ["lodash", "transform-runtime"],
+  "plugins": [
+    "lodash",
+    "transform-runtime",
+    "transform-vue-jsx"
+  ],
   "comments": false
 }

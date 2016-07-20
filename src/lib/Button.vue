@@ -4,11 +4,13 @@
     :disabled="disabled"
     :type="type">
     <i v-if="iconLeft"
-      class="uk-icon-justify uk-icon-{{ iconLeft }}">
+      class="uk-icon-justify"
+      :class="[`uk-icon-${iconLeft}`]">
     </i>
     <slot></slot>
-    <i v-if="iconRight"
-      class="uk-icon-justify uk-icon-{{ iconRight }}">
+    <i v-if="icon"
+      class="uk-icon-justify"
+      :class="[`uk-icon-${icon}`]">
     </i>
   </button>
 </template>
@@ -30,11 +32,11 @@ export default {
       type: String,
       default: ''
     },
-    iconLeft: {
+    icon: {
       type: String,
       default: ''
     },
-    iconRight: {
+    iconLeft: {
       type: String,
       default: ''
     },

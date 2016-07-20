@@ -3,11 +3,13 @@
     :href="href"
     :class="classes">
     <i v-if="iconLeft"
-      :class="iconClass(iconLeft)">
+      class="uk-icon-justify"
+      :class="[`uk-icon-${iconLeft}`]">
     </i>
     <slot></slot>
-    <i v-if="iconRight"
-      :class="iconClass(iconRight)">
+    <i v-if="icon"
+      class="uk-icon-justify"
+      :class="[`uk-icon-${icon}`]">
     </i>
   </a>
 </template>
