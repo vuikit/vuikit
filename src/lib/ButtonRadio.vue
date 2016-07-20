@@ -1,17 +1,25 @@
-<template>
-  <div data-uk-button-radio
-    :class="{
-      'uk-button-group': group
-    }">
-    <slot></slot>
-  </div>
-</template>
-
 <script>
-import $ from 'jquery'
+import { each } from '../util'
 
 export default {
   name: 'VkButtonRadio',
+  render (h) {
+    // override button props
+    each(this.$slots.default, node => {
+      if (node.componentOptions) {
+        const button = node.componentOptions.propsData
+        button.ariaType = 'checked'
+        button.active = button.value === this.value
+      }
+    })
+    return (
+      <div class={{
+        'uk-button-group': this.group
+      }}>{
+        this.$slots.default
+      }</div>
+    )
+  },
   props: {
     value: {},
     group: {
@@ -19,37 +27,10 @@ export default {
       default: true
     }
   },
-  computed: {
-    buttons () {
-      return this.$children.filter(btn => btn.$options.name === 'VkButton')
-    },
-    active () {
-      const active = this.buttons.filter(btn => btn.active)
-      return active[0]
-        ? active[0]
-        : false
-    }
-  },
-  ready: function () {
-    // inherit value from initially active button
-    if (this.active) {
-      this.value = this.active.value
-    }
-    // on each change
-    $(this.$el).on('change.uk.button', () => {
-      const selected = this.$el.querySelector('.uk-active').__vue__
-      // update radio value
-      this.value = selected.value
-      // trigger event
-      this.$emit('change', this.value)
+  mounted () {
+    each(this.$children, button => {
+      button.$el.addEventListener('click', () => this.$emit('change', button.value))
     })
-    // update buttons active state
-    // on init and on each change
-    this.$watch('value', function (value) {
-      this.buttons.forEach(btn => {
-        btn.active = btn.value === value
-      })
-    }, { immediate: true })
   }
 }
 </script>

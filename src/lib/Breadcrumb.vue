@@ -1,6 +1,18 @@
 <template>
   <ul class="uk-breadcrumb">
-    <slot></slot>
+    <li v-for="(crumb, path) in crumbs"
+      :class="{
+        'uk-active': path === location
+      }">
+      <span v-if="crumb.disabled || (path === location)"
+        v-text="crumb.name">
+      </span>
+      <a v-else
+        href=""
+        v-text="crumb.name"
+        @click.prevent="$emit('change', path)">
+      </a>
+    </li>
   </ul>
 </template>
 
@@ -8,21 +20,12 @@
 export default {
   name: 'VkBreadcrumb',
   props: {
+    crumbs: {
+      type: Object
+    },
     location: {
-      type: String
-      // on ready, defaults to
-      // last crumb path
-    }
-  },
-  ready: function () {
-    if (!this.location) {
-      // set location default
-      this.location = this.$children[this.$children.length - 1].path
-    }
-  },
-  watch: {
-    location: function (path) {
-      this.$emit('change', path)
+      type: String,
+      default: '/'
     }
   }
 }

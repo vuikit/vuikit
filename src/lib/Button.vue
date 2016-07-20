@@ -1,23 +1,48 @@
-<template>
-  <button class="uk-button"
-    :class="classes"
-    :disabled="disabled"
-    :type="type">
-    <i v-if="iconLeft"
-      class="uk-icon-justify uk-icon-{{ iconLeft }}">
-    </i>
-    <slot></slot>
-    <i v-if="iconRight"
-      class="uk-icon-justify uk-icon-{{ iconRight }}">
-    </i>
-  </button>
-</template>
-
 <script>
 export default {
   name: 'VkButton',
+  render (h) {
+    return h('button', {
+      attrs: {
+        [`aria-${this.ariaType}`]: `${this.active}`,
+        type: this.type,
+        disabled: this.disabled
+      },
+      class: this.classes
+    }, () => {
+      const children = []
+      children.push(this.$slots.default)
+      if (this.icon) {
+        children.push(h('i', {
+          class: `uk-icon-justify uk-icon-${this.icon}`
+        }))
+      }
+      return children
+    })
+  },
   props: {
     value: {},
+    type: {
+      type: String,
+      default: 'button'
+    },
+    ariaType: {
+      type: String,
+      default: 'pressed'
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
+    // class related
     color: {
       type: String,
       default: ''
@@ -29,31 +54,14 @@ export default {
     width: {
       type: String,
       default: ''
-    },
-    iconLeft: {
-      type: String,
-      default: ''
-    },
-    iconRight: {
-      type: String,
-      default: ''
-    },
-    active: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    type: {
-      type: String,
-      default: 'button'
     }
   },
   computed: {
-    classes: function () {
-      const classes = {
+    classes () {
+      return {
+        'uk-button': true,
+        'uk-active': this.active,
+        [`uk-width-${this.width}`]: this.width,
         /* color */
         'uk-button-primary': this.color === 'primary',
         'uk-button-success': this.color === 'success',
@@ -62,13 +70,8 @@ export default {
         /* size */
         'uk-button-mini': this.size === 'mini',
         'uk-button-small': this.size === 'small',
-        'uk-button-large': this.size === 'large',
-        /* active */
-        'uk-active': this.active
+        'uk-button-large': this.size === 'large'
       }
-      /* width */
-      classes[`uk-width-${this.width}`] = this.width
-      return classes
     }
   }
 }

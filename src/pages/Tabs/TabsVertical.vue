@@ -1,27 +1,26 @@
 <template>
   <div class="uk-block">
-    <h2>Tabs</h2>
+    <h2>Tabs Vertical</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-tabs v-ref:demo
-      :flip="props.flip.demo.value"
-      :bottom="props.bottom.demo.value"
-      :center="props.center.demo.value"
-      :width="props.width.demo.value">
+    <vk-tabs-vertical ref="demo"
+      :align="props.align.demo.value"
+      :header-width="props.headerWidth.demo.value"
+      :body-width="props.bodyWidth.demo.value">
       <vk-tab label="Tab 1">Content Tab 1</vk-tab>
       <vk-tab label="Tab 2">Content Tab 2</vk-tab>
       <vk-tab label="Tab 3">Content Tab 3</vk-tab>
       <vk-tab label="Tab 4" disabled>Content Tab 4</vk-tab>
-    </vk-tabs>
+    </vk-tabs-vertical>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-tabs</code> component together with a <code>vk-tab</code> renders a tabbed navigation.
+      The <code>vk-tabs-vertical</code> component is a variation that renders a vertical tabbed navigation.
     </div>
     <!-- TABS -->
-    <vk-tabs>
+    <!-- <vk-tabs>
       <vk-tab label="Props">
         <vk-subnav line v-ref:nav>
-          <vk-subnav-item>vk-tabs</vk-subnav-item>
+          <vk-subnav-item>vk-tabs-vertical</vk-subnav-item>
           <vk-subnav-item>vk-tab</vk-subnav-item>
         </vk-subnav>
         <vk-switcher :connect="$refs.nav">
@@ -35,7 +34,7 @@
       </vk-tab>
       <vk-tab label="Slots">
         <vk-subnav line v-ref:slots-nav>
-          <vk-subnav-item>vk-tabs</vk-subnav-item>
+          <vk-subnav-item>vk-tabs-vertical</vk-subnav-item>
           <vk-subnav-item>vk-tab</vk-subnav-item>
         </vk-subnav>
         <vk-switcher :connect="$refs.slotsNav">
@@ -56,20 +55,20 @@
       <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
-    </vk-tabs>
+    </vk-tabs> -->
   </div>
 </template>
 
 <script>
 import { merge, pick } from 'lodash'
-import Tabs from '../../lib/Tabs'
+import TabsVertical from '../../lib/TabsVertical'
 import Tab from '../../lib/Tab'
 import mixin from '../_mixin'
 
 export default {
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Tabs.props, Object.keys(props))),
+    props: merge(props, pick(TabsVertical.props, Object.keys(props))),
     propsTab: merge(propsTab, pick(Tab.props, Object.keys(propsTab))),
     slotsTabs,
     slotsTab,
@@ -79,24 +78,22 @@ export default {
 }
 
 const props = {
-  flip: {
-    description: `Determines whether or not the tabs are aligned to the right
-      and in reversed order.`,
-    demo: {}
-  },
-  bottom: {
-    description: 'Determines whether or not the tabs are placed at the bottom.',
-    demo: {}
-  },
-  center: {
-    description: 'Determines whether or not the tabs are centered.',
-    demo: {}
-  },
-  width: {
-    description: `Determines the width of the tabs items using the <i>UIkit Grid</i>
-      classes.`,
+  align: {
+    description: 'Determines the tabs vertical alignment.',
     demo: {
-      options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
+      options: ['right']
+    }
+  },
+  headerWidth: {
+    description: 'Determines the tabs width using the <i>UIkit Grid</i> classes.',
+    demo: {
+      options: ['1-2', '1-4', '2-3']
+    }
+  },
+  bodyWidth: {
+    description: 'Determines the content width using the <i>UIkit Grid</i> classes.',
+    demo: {
+      options: ['1-2', '1-3', '1-4']
     }
   }
 }
@@ -129,9 +126,9 @@ const events = {
 }
 
 const example =
-`<vk-tabs {attrs}>
+`<vk-tabs-vertical {attrs}>
   <vk-tab label="Tab 1">Content Tab 1</vk-tab>
   <vk-tab label="Tab 2">Content Tab 2</vk-tab>
   <vk-tab label="Tab 3">Content Tab 3</vk-tab>
-</vk-tabs>`
+</vk-tabs-vertical>`
 </script>

@@ -1,23 +1,34 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import Vuikit from './lib'
 import VuikitDocs from 'vuikit-docs'
-import { configRouter } from './route-config'
+import routes from './routes'
+
+const App = Vue.extend(require('./App'))
 
 // install
 Vue.use(Vuikit)
 Vue.use(VuikitDocs)
-Vue.use(VueRouter)
 
-// create router
-const router = new VueRouter({
-  root: 'vuikit',
-  linkActiveClass: 'uk-active'
+const app = new App({
+  el: '#app',
+  data: {
+    routes,
+    currentRoute: window.location.pathname !== '/'
+      ? window.location.pathname
+      : '/alert'
+  },
+  computed: {
+    ViewComponent () {
+      const matchingView = routes[this.currentRoute]
+      return matchingView
+        ? matchingView.component.default
+        : require('./pages/404.vue').default
+    }
+  },
+  render (h) { return h(this.ViewComponent) }
 })
 
-// configure router
-configRouter(router)
-
-// boostrap the app
-const App = Vue.extend(require('./App.vue'))
-router.start(App, '#app')
+window.addEventListener('popstate', () => {
+  console.log(34)
+  app.currentRoute = window.location.pathname
+})

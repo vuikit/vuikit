@@ -1,26 +1,32 @@
 <template>
   <div class="uk-block">
-    <h2>Button Link</h2>
+    <h2>Button</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-button-link
+    <vk-button ref="button"
+      :type="props.type.demo.value"
+      :aria-type="props.ariaType.demo.value"
+      :value="props.value.demo.value"
+      :disabled="props.disabled.demo.value"
       :active="props.active.demo.value"
       :color="props.color.demo.value"
       :size="props.size.demo.value"
       :width="props.width.demo.value"
-      :icon-left="props.iconLeft.demo.value"
-      :icon-right="props.iconRight.demo.value"
-      @click.prevent>
-      Link
-    </vk-button-link>
+      :icon="props.icon.demo.value"
+      @click.native="props.active.demo.value = !$refs.button.active">
+      Button
+    </vk-button>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-button-link</code> component is a variation that renders an anchor that looks like a button.
+      The <code>vk-button</code> component renders a standard button.
     </div>
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
       </vk-tab>
       <vk-tab label="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
@@ -34,30 +40,42 @@
 
 <script>
 import { merge, pick } from 'lodash'
-import Button from '../../lib/Button'
-import Component from '../../lib/ButtonLink'
+import Component from '../../lib/Button'
 import mixin from '../_mixin'
 
 export default {
+  name: 'PageButtonDefault',
   mixins: [mixin],
   data: () => ({
-    props: merge(
-      props,
-      // remember, ButtonLinks extends Button
-      pick(Button.props, Object.keys(props)),
-      pick(Component.props, Object.keys(props))
-    ),
+    props: merge({}, pick(Component.props, Object.keys(props)), props),
     slots,
     example
   })
 }
 
 const props = {
-  href: {
-    description: 'The link to be followed when the button is pressed.'
+  value: {
+    description: 'The value of the button usually used in combination with others components.',
+    demo: {}
+  },
+  type: {
+    description: 'The HTML button type.',
+    demo: {
+      options: ['submit', 'reset']
+    }
+  },
+  ariaType: {
+    description: 'The HTML ARIA type.',
+    demo: {
+      options: ['checked']
+    }
   },
   active: {
-    description: 'Whether to present the button as active.',
+    description: 'The initial state of the <code>active</code> local state.',
+    demo: {}
+  },
+  disabled: {
+    description: 'Whether to present the button as disabled.',
     demo: {}
   },
   color: {
@@ -82,18 +100,10 @@ const props = {
       options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
     }
   },
-  iconLeft: {
-    description: `The left icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit icons</a>
-      without the <code>uk-icon-</code> prefix.`,
-    demo: {
-      options: ['flag', 'microphone', 'gamepad']
-    }
-  },
-  iconRight: {
-    description: `The right icon of the button. Can be any icon of
-      <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
-      without the <code>uk-icon-</code> prefix.`,
+  icon: {
+    description: `An icon placed on the right. Can be any icon of
+    <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
+    without the <code>uk-icon-</code> prefix.`,
     demo: {
       options: ['flag', 'microphone', 'gamepad']
     }
@@ -107,7 +117,10 @@ const slots = {
 }
 
 const example =
-`<vk-button-link {attrs}>
-  Link
-</vk-button-link>`
+`<vk-button ref="button" {attrs}>
+  Button
+  @click.native="
+    active = !$refs.button.active
+  ">
+</vk-button>`
 </script>

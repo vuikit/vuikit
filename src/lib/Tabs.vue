@@ -1,39 +1,6 @@
-<template>
-  <div :class="{
-    'uk-flex uk-flex-column-reverse': bottom
-  }">
-    <div :class="{
-      'uk-tab-center': center,
-      'uk-tab-center-bottom': center && bottom
-    }">
-      <ul class="uk-tab"
-        :data-uk-tab="{ connect: '#' + id } | json"
-        :class="{
-          'uk-tab-grid': width,
-          'uk-tab-flip': flip,
-          'uk-tab-bottom': bottom
-        }">
-        <tab-header
-          v-for="tab in tabs"
-          :label="tab.label"
-          :width="width"
-          :active="tab.active"
-          :disabled="tab.disabled">
-        </tab-header>
-      </ul>
-    </div>
-    <ul class="uk-switcher uk-margin"
-      :id="id"
-      v-el:tabs-body>
-      <slot></slot>
-    </ul>
-  </div>
-</template>
-
 <script>
+const UI = typeof window !== 'undefined' && window.UIkit
 import TabHeader from './TabHeader'
-import $ from 'jquery'
-import { toArray } from 'lodash'
 
 export default {
   name: 'VkTabs',
@@ -62,21 +29,56 @@ export default {
       default: ''
     }
   },
-  data: () => ({
-    tabs: []
-  }),
   computed: {
     id: function () {
       return `vk-tabs-${this._uid}`
     }
   },
-  ready () {
-    // workaround to preserve the tabs order which seems is
-    // altered when used v-if with vk-tab
-    this.tabs = toArray(this.$els.tabsBody.querySelectorAll(':scope > li'))
-      .map(el => el.__vue__)
+  render (h) {
+    let headers = this.$slots.default.filter(node =>
+      node.componentOptions && node.componentOptions.tag === 'vk-tab'
+    )
+    return (
+      <div class={{
+        'uk-flex uk-flex-column-reverse': this.bottom
+      }}>
+        <div class={{
+          'uk-tab-center': this.center,
+          'uk-tab-center-bottom': this.center && this.bottom
+        }}>{
+          h('ul', {
+            attrs: {
+              'data-uk-tab': `{ connect: '#${this.id}' }`
+            },
+            class: {
+              'uk-tab': true,
+              'uk-tab-grid': this.width,
+              'uk-tab-flip': this.flip,
+              'uk-tab-bottom': this.bottom
+            }
+          }, headers.map(node => {
+            const tab = node.componentOptions.propsData
+            return h('TabHeader', {
+              props: {
+                label: tab.label,
+                width: this.width,
+                active: tab.active,
+                disabled: tab.disabled
+              }
+            })
+          }))
+        }</div>
+        <ul class='uk-switcher uk-margin'
+          ref='tabs-body'
+          id={this.id}>
+          { this.$slots.default }
+        </ul>
+      </div>
+    )
+  },
+  mounted () {
     // on tab change
-    $(this.$el).on('change.uk.tab', () => {
+    UI.$(this.$el).on('change.uk.tab', () => {
       this.$emit('change')
     })
   }

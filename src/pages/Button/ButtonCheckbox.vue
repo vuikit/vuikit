@@ -3,12 +3,16 @@
     <h2>Button Checkbox</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-button-checkbox v-ref:demo
+    <vk-button-checkbox
       :group="props.group.demo.value"
-      :value.sync="props.value.demo.value">
-      <vk-button value="1">Button 1</vk-button>
-      <vk-button value="2">Button 2</vk-button>
-      <vk-button value="3">Button 3</vk-button>
+      :value="props.value.demo.value"
+      @change="
+        events.change.emited = true,
+        props.value.demo.value = arguments[0]
+      ">
+      <vk-button :value="1">Button 1</vk-button>
+      <vk-button :value="2">Button 2</vk-button>
+      <vk-button :value="3">Button 3</vk-button>
     </vk-button-checkbox>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -17,16 +21,16 @@
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
       </vk-tab>
       <vk-tab label="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Events">
-        <vk-docs-events
-          :events="events"
-          :connect="$refs.demo">
-        </vk-docs-events>
+        <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
@@ -41,9 +45,10 @@ import Component from '../../lib/ButtonCheckbox'
 import mixin from '../_mixin'
 
 export default {
+  name: 'PageButtonCheckbox',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: merge({}, pick(Component.props, Object.keys(props)), props),
     slots,
     events,
     example
@@ -52,12 +57,17 @@ export default {
 
 const props = {
   value: {
-    description: 'Array reflecting the values of the currently active buttons.',
-    demo: {}
+    description: 'The current value reflecting the selected button one.',
+    demo: {
+      options: [ [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3] ],
+      value: [1, 3]
+    }
   },
   group: {
     description: 'Whether to display the buttons grouped together.',
-    demo: {}
+    demo: {
+      value: true
+    }
   }
 }
 
@@ -69,14 +79,16 @@ const slots = {
 
 const events = {
   change: {
-    description: 'Emited on button selection.'
+    description: 'Emited when there was made some button selection.',
+    emited: false
   }
 }
 
 const example =
 `<vk-button-checkbox {attrs}>
-  <vk-button value="1">Button 1</vk-button>
-  <vk-button value="2">Button 2</vk-button>
-  <vk-button value="3">Button 3</vk-button>
+  @change="value = arguments[0]">
+  <vk-button :value="1">Button 1</vk-button>
+  <vk-button :value="2">Button 2</vk-button>
+  <vk-button :value="3">Button 3</vk-button>
 </vk-button-checkbox>`
 </script>

@@ -1,6 +1,6 @@
 <template>
   <li :class="classes">
-    <a href="" v-text="label"></a>
+    <a href="" v-text="label" @click.prevent></a>
   </li>
 </template>
 

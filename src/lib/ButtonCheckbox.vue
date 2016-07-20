@@ -1,18 +1,25 @@
-<template>
-  <div data-uk-button-checkbox
-    :class="{
-      'uk-button-group': group
-    }">
-    <slot></slot>
-  </div>
-</template>
-
 <script>
-import $ from 'jquery'
-import { toArray } from 'lodash'
+import { each, inArray } from '../util'
 
 export default {
   name: 'VkButtonCheckbox',
+  render (h) {
+    // override button props
+    each(this.$slots.default, node => {
+      if (node.componentOptions) {
+        const button = node.componentOptions.propsData
+        button.ariaType = 'checked'
+        button.active = inArray(this.value, button.value)
+      }
+    })
+    return (
+      <div class={{
+        'uk-button-group': this.group
+      }}>{
+        this.$slots.default
+      }</div>
+    )
+  },
   props: {
     value: {
       type: Array,
@@ -23,32 +30,21 @@ export default {
       default: true
     }
   },
-  computed: {
-    buttons () {
-      return this.$children.filter(btn => btn.$options.name === 'VkButton')
-    }
+  mounted () {
+    each(this.$children, button => {
+      button.$el.addEventListener('click', () => this.toggle(button))
+    })
   },
-  ready: function () {
-    // inherit value from initially active buttons
-    this.buttons.filter(btn => btn.active).forEach(btn => {
-      this.value.push(btn.value)
-    })
-    // on each change
-    $(this.$el).on('click', () => {
-      // get actives btns
-      const actives = toArray(this.$el.querySelectorAll('.uk-active'))
-      // save its values as array
-      this.value = actives.map(btn => btn.__vue__.value)
-      // trigger event
-      this.$emit('change', this.value)
-    })
-    // update buttons active state
-    // on init and on each change
-    this.$watch('value', function (value) {
-      this.buttons.forEach(btn => {
-        btn.active = value && value.indexOf(btn.value) !== -1
-      })
-    }, { immediate: true })
+  methods: {
+    toggle (selected) {
+      // recreate new value respecting buttons order
+      const value = this.$children
+        .filter(button => button === selected
+          ? !button.active
+          : button.active)
+        .map(button => button.value)
+      this.$emit('change', value)
+    }
   }
 }
 </script>

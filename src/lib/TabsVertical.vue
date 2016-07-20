@@ -20,7 +20,7 @@
     <div :class="'uk-width-medium-' + bodyWidth">
       <ul class="uk-switcher uk-margin"
         :id="id"
-        v-el:tabs-body>
+        ref="tabs-body">
         <slot></slot>
       </ul>
     </div>
@@ -28,8 +28,8 @@
 </template>
 
 <script>
+const UI = typeof window !== 'undefined' && window.UIkit
 import TabHeader from './TabHeader'
-import $ from 'jquery'
 import { toArray } from 'lodash'
 
 export default {
@@ -62,10 +62,10 @@ export default {
   ready () {
     // workaround to preserve the tabs order which seems is
     // altered when used v-if with vk-tab
-    this.tabs = toArray(this.$els.tabsBody.querySelectorAll(':scope > li'))
+    this.tabs = toArray(this.$refs.tabsBody.querySelectorAll(':scope > li'))
       .map(el => el.__vue__)
     // on tab change
-    $(this.$el).on('change.uk.tab', () => {
+    UI.$(this.$el).on('change.uk.tab', () => {
       this.$emit('change')
     })
   }
