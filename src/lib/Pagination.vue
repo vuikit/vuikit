@@ -203,7 +203,7 @@ export default {
   },
   watch: {
     current: function (page) {
-      this.$emit('change', page)
+      this.$dispatch('change', page)
     }
   }
 }
