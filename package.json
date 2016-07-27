@@ -31,7 +31,8 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "docs": "node build/build.docs.js",
-    "deploy": "cd build && ./deploy.sh"
+    "deploy": "cd build && ./deploy.sh",
+    "test": "karma start build/karma.conf.js"
   },
   "dependencies": {
     "babel-runtime": "^6.0.0",
@@ -85,6 +86,24 @@
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.4.0",
     "webpack-hot-middleware": "^2.6.0",
-    "webpack-merge": "^0.14.0"
+    "webpack-merge": "^0.14.0",
+    "inject-loader": "^2.0.1",
+    "jasmine": "^2.4.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.15",
+    "karma-jasmine": "^0.3.6",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "karma-spec-reporter": "0.0.23",
+    "karma-webpack": "^1.7.0",
+    "phantomjs": "^1.9.19",
+    "chromedriver": "^2.21.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-coverage": "^1.0.0",
+    "karma-firefox-launcher": "^1.0.0",
+    "karma-mocha-reporter": "^2.0.4",
+    "karma-safari-launcher": "^1.0.0",
+    "karma-sauce-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.0",
+    "phantomjs-prebuilt": "^2.1.1"
   }
 }
