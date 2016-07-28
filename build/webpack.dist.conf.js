@@ -13,9 +13,6 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
   entry: {
     'vuikit': './src/lib/'
   },
-  externals: {
-    vue: 'vue'
-  },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
   },
@@ -51,6 +48,9 @@ module.exports = [
       filename: '[name].js',
       chunkFilename: '[id].js'
     },
+    externals: {
+      vue: 'Vue'
+    },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
@@ -68,6 +68,9 @@ module.exports = [
       chunkFilename: '[id].common.js',
       library: 'Vuikit',
       libraryTarget: 'commonjs2'
+    },
+    externals: {
+      vue: 'vue'
     },
     devtool: false,
   })
