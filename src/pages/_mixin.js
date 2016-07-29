@@ -51,6 +51,8 @@ function toAttrs (props) {
       value = value.replace(/"/g, '\'')
       // bind is required
       key = `:${key}`
+    } else if (value === '' || value === null || value === undefined) {
+      return true
     }
     attrs += value || value === false
       ? `${key}="${value}" `

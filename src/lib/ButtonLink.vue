@@ -2,10 +2,6 @@
   <a :href="href"
     :class="classes">
     <slot></slot>
-    <i v-if="icon"
-      class="uk-icon-justify"
-      :class="[`uk-icon-${icon}`]">
-    </i>
   </a>
 </template>
 

@@ -12,7 +12,6 @@
       :color="props.color.demo.value"
       :size="props.size.demo.value"
       :width="props.width.demo.value"
-      :icon="props.icon.demo.value"
       @click.native="props.active.demo.value = !$refs.button.active">
       Button
     </vk-button>
@@ -32,22 +31,22 @@
         <vk-docs-slots :slots="slots"></vk-docs-slots>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Component from '../../lib/Button'
 import mixin from '../_mixin'
+import { mergeProps } from '../helper'
 
 export default {
   name: 'PageButtonDefault',
   mixins: [mixin],
   data: () => ({
-    props: merge({}, pick(Component.props, Object.keys(props)), props),
+    props: mergeProps(Component.props, props),
     slots,
     example
   })
@@ -56,40 +55,72 @@ export default {
 const props = {
   value: {
     description: 'The value of the button usually used in combination with others components.',
-    demo: {}
+    demo: {
+      editable: false
+    }
   },
   type: {
     description: 'The HTML button type.',
     demo: {
-      options: ['submit', 'reset']
+      type: 'Select',
+      options: [
+        { text: 'button', value: 'button' },
+        { text: 'submit', value: 'submit' },
+        { text: 'reset', value: 'reset' }
+      ],
+      value: 'button'
     }
   },
   ariaType: {
     description: 'The HTML ARIA type.',
     demo: {
-      options: ['checked']
+      type: 'Select',
+      options: [
+        { text: 'pressed', value: 'pressed' },
+        { text: 'checked', value: 'checked' }
+      ],
+      value: 'pressed'
     }
   },
   active: {
     description: 'The initial state of the <code>active</code> local state.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   disabled: {
     description: 'Whether to present the button as disabled.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   color: {
     description: `The color modifier accepting as values <code>primary</code>, <code>success</code>,
       <code>danger</code> or <code>link</code>.`,
     demo: {
-      options: ['primary', 'success', 'danger', 'link']
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: 'primary', value: 'primary' },
+        { text: 'success', value: 'success' },
+        { text: 'danger', value: 'danger' },
+        { text: 'link', value: 'link' }
+      ],
+      value: ''
     }
   },
   size: {
     description: `The size modifier accepting as values <code>mini</code>, <code>small</code>,
       or <code>large</code>.`,
     demo: {
-      options: ['mini', 'small', 'large']
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: 'mini', value: 'mini' },
+        { text: 'small', value: 'small' },
+        { text: 'large', value: 'large' }
+      ],
+      value: ''
     }
   },
   width: {
@@ -97,15 +128,18 @@ const props = {
       <a href="http://getuikit.com/docs/grid.html">UIkit Grid</a>
       without the <code>uk-width-</code> prefix.`,
     demo: {
-      options: ['1-1', '1-2', '1-3', '1-4', '1-5', '1-6', '1-10']
-    }
-  },
-  icon: {
-    description: `An icon placed on the right. Can be any icon of
-    <a href="http://getuikit.com/docs/icon.html">UIkit Icons</a>
-    without the <code>uk-icon-</code> prefix.`,
-    demo: {
-      options: ['flag', 'microphone', 'gamepad']
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: '1-1', value: '1-1' },
+        { text: '1-2', value: '1-2' },
+        { text: '1-3', value: '1-3' },
+        { text: '1-4', value: '1-4' },
+        { text: '1-5', value: '1-5' },
+        { text: '1-6', value: '1-6' },
+        { text: '1-10', value: '1-10' }
+      ],
+      value: ''
     }
   }
 }
@@ -117,10 +151,10 @@ const slots = {
 }
 
 const example =
-`<vk-button ref="button" {attrs}>
+`<vk-button ref="button"
+  {attrs}
+  :active="active"
+  @click.native="active = !$refs.button.active">
   Button
-  @click.native="
-    active = !$refs.button.active
-  ">
 </vk-button>`
 </script>

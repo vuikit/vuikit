@@ -9,16 +9,7 @@ export default {
         disabled: this.disabled
       },
       class: this.classes
-    }, () => {
-      const children = []
-      children.push(this.$slots.default)
-      if (this.icon) {
-        children.push(h('i', {
-          class: `uk-icon-justify uk-icon-${this.icon}`
-        }))
-      }
-      return children
-    })
+    }, this.$slots.default)
   },
   props: {
     value: {},
@@ -37,10 +28,6 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    icon: {
-      type: String,
-      default: ''
     },
     // class related
     color: {

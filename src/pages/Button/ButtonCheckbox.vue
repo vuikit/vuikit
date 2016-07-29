@@ -33,22 +33,22 @@
         <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Component from '../../lib/ButtonCheckbox'
 import mixin from '../_mixin'
+import { mergeProps } from '../helper'
 
 export default {
   name: 'PageButtonCheckbox',
   mixins: [mixin],
   data: () => ({
-    props: merge({}, pick(Component.props, Object.keys(props)), props),
+    props: mergeProps(Component.props, props),
     slots,
     events,
     example
@@ -59,8 +59,18 @@ const props = {
   value: {
     description: 'The current value reflecting the selected button one.',
     demo: {
-      options: [ [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3] ],
-      value: [1, 3]
+      type: 'Select',
+      options: [
+        { text: 'default', value: [] },
+        { text: '[1]', value: [1] },
+        { text: '[2]', value: [2] },
+        { text: '[3]', value: [3] },
+        { text: '[1, 2]', value: [1, 2] },
+        { text: '[1, 3]', value: [1, 3] },
+        { text: '[2, 3]', value: [2, 3] },
+        { text: '[1, 2, 3]', value: [1, 2, 3] }
+      ],
+      value: []
     }
   },
   group: {
@@ -85,7 +95,7 @@ const events = {
 }
 
 const example =
-`<vk-button-checkbox {attrs}>
+`<vk-button-checkbox {attrs}
   @change="value = arguments[0]">
   <vk-button :value="1">Button 1</vk-button>
   <vk-button :value="2">Button 2</vk-button>

@@ -1,25 +1,25 @@
 <template>
   <vk-docs-layout-page>
-    <!-- <button-default></button-default> -->
-    <!-- <button-link></button-link> -->
+    <button-default></button-default>
+    <button-link></button-link>
+    <button-radio></button-radio>
     <button-checkbox></button-checkbox>
-    <!-- <button-radio><button-radio> -->
   </vk-docs-layout-page>
 </template>
 
 <script>
 import ButtonDefault from './ButtonDefault'
 import ButtonLink from './ButtonLink'
-import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'
+import ButtonCheckbox from './ButtonCheckbox'
 
 export default {
   name: 'PageButton',
   components: {
     ButtonDefault,
     ButtonLink,
-    ButtonCheckbox,
-    ButtonRadio
+    ButtonRadio,
+    ButtonCheckbox
   }
 }
 </script>

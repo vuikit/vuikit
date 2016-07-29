@@ -33,22 +33,22 @@
         <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Component from '../../lib/ButtonRadio'
 import mixin from '../_mixin'
+import { mergeProps } from '../helper'
 
 export default {
   name: 'PageButtonRadio',
   mixins: [mixin],
   data: () => ({
-    props: merge({}, pick(Component.props, Object.keys(props)), props),
+    props: mergeProps(Component.props, props),
     slots,
     events,
     example
@@ -59,12 +59,21 @@ const props = {
   value: {
     description: 'The current value reflecting the selected button one.',
     demo: {
-      options: [1, 2, 3]
+      type: 'Select',
+      options: [
+        { text: 'default', value: null },
+        { text: '1', value: 1 },
+        { text: '2', value: 2 },
+        { text: '3', value: 3 }
+      ],
+      value: ''
     }
   },
   group: {
     description: 'Whether to display the buttons grouped together.',
-    demo: {}
+    demo: {
+      value: true
+    }
   }
 }
 
@@ -82,7 +91,7 @@ const events = {
 }
 
 const example =
-`<vk-button-radio {attrs}>
+`<vk-button-radio {attrs}
   @change="value = arguments[0]">
   <vk-button :value="1">Button 1</vk-button>
   <vk-button :value="2">Button 2</vk-button>
