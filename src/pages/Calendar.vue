@@ -52,7 +52,6 @@ export default {
   name: 'PageCalendar',
   mixins: [mixin],
   data: () => ({
-    value: '1',
     props: mergeProps(Component.props, props),
     slots,
     events,

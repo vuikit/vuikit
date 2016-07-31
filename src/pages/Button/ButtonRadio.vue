@@ -85,7 +85,8 @@ const slots = {
 
 const events = {
   change: {
-    description: 'Emited when there was made some button selection.',
+    description: `Emited on the intention to change the selection passing as argument the
+      resulting value.`,
     emited: false
   }
 }

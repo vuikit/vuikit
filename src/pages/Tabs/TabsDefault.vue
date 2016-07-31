@@ -54,7 +54,7 @@
         </vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
