@@ -1,59 +1,63 @@
 <template>
-  <div class="uk-block">
-    <h2>Calendar</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-calendar v-ref:demo
-      :year.sync="props.year.demo.value | number"
-      :month.sync="props.month.demo.value | number"
-      :min="props.min.demo.value"
-      :max="props.max.demo.value">
-      {{ $day.date() }}
-    </vk-calendar>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-calendar</code> component renders a table based calendar.
+  <vk-docs-layout-page>
+    <div class="uk-block">
+      <h2>Calendar</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-calendar ref="calendar"
+        :year="props.year.demo.value"
+        :month="props.month.demo.value"
+        :min="props.min.demo.value"
+        :max="props.max.demo.value"
+        @change="
+          events.change.emited = true,
+          props.year.demo.value = arguments[0].year(),
+          props.month.demo.value = arguments[0].month()
+        ">
+        {{ $refs.calendar.$renderingDay.date() }}
+      </vk-calendar>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-calendar</code> component renders a table based calendar.
+      </div>
+      <!-- TABS -->
+      <vk-tabs>
+        <vk-tab label="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tab>
+        <vk-tab label="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tab>
+        <vk-tab label="Events">
+          <vk-docs-events :events="events"></vk-docs-events>
+        </vk-tab>
+        <vk-tab label="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tab>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events
-          :events="events"
-          :connect="$refs.demo">
-        </vk-docs-events>
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </div>
+  </vk-docs-layout-page>
 </template>
 
 <script>
 import Moment from 'moment'
-import { merge, pick } from 'lodash'
 import Component from '../lib/Calendar'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 export default {
+  name: 'PageCalendar',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    value: '1',
+    props: mergeProps(Component.props, props),
     slots,
     events,
     example
   }),
-  filters: {
-    number (val) {
-      return parseInt(val)
-    }
-  },
   watch: {
     'props.min.demo.value' () {
       // reset calendar
@@ -70,21 +74,30 @@ export default {
 
 const props = {
   year: {
-    description: 'The year of the month currently being displayed. Defaults to current year if omited.',
+    description: `The year of the month currently being displayed. Defaults to
+      current year.`,
     demo: {
+      type: 'Select',
       options: [
-        Moment().add(-1, 'year').year(),
-        Moment().year(),
-        Moment().add(1, 'year').year()
-      ]
+        { text: 'Current', value: undefined },
+        { text: 'Previous', value: Moment().add(-1, 'year').year() },
+        { text: 'Next', value: Moment().add(1, 'year').year() }
+      ],
+      value: undefined
     }
   },
   month: {
     description: `The month currently being displayed. Notice that the months
       are zero indexed, being January represented as <code>0</code>. Defaults to current
-      month if omited.`,
+      month.`,
     demo: {
-      options: { 'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5, 'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11 }
+      type: 'Select',
+      options: [
+        { text: 'Current', value: undefined },
+        { text: 'Previous', value: Moment().add(-1, 'month').month() },
+        { text: 'Next', value: Moment().add(1, 'month').month() }
+      ],
+      value: undefined
     }
   },
   min: {
@@ -92,11 +105,13 @@ const props = {
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
       or an <code>integer</code> as offset days from current day.`,
     demo: {
+      type: 'Select',
       options: [
-        Moment().add(-1, 'months').format('YYYY-MM-DD'),
-        5,
-        10
-      ]
+        { text: 'Default', value: undefined },
+        { text: 'Specific date', value: Moment().add(-2, 'months').format('YYYY-MM-DD') },
+        { text: '5 days from today', value: 5 }
+      ],
+      value: undefined
     }
   },
   max: {
@@ -104,11 +119,13 @@ const props = {
       format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
       or an <code>integer</code> as offset days from current day.`,
     demo: {
+      type: 'Select',
       options: [
-        Moment().add(1, 'months').format('YYYY-MM-DD'),
-        5,
-        10
-      ]
+        { text: 'Default', value: undefined },
+        { text: 'Specific date', value: Moment().add(2, 'months').format('YYYY-MM-DD') },
+        { text: '5 days from today', value: 5 }
+      ],
+      value: undefined
     }
   },
   locale: {
@@ -120,19 +137,27 @@ const props = {
 
 const slots = {
   default: {
-    description: `The template that will be used to render each day. The <code>$day</code>
-      moment.js variable is available representing the current day being rendered.`
+    description: `The template for each day field rendering. The
+      <a href="http://momentjs.com/docs/#/parsing/">moment.js</a> object of the day
+      being currently rendered can be accessed at the component <code>$renderingDay</code>.
+      Use with combination of <code>ref</code>, eg. <code>$refs.calendar.$renderingDay</code>.`
   }
 }
 
 const events = {
-  update: {
-    description: 'Emited on each calendar view update.'
+  change: {
+    description: `Emited on the intention to change the calendar date passing as argument the
+      <a href="http://momentjs.com/docs/#/parsing/">moment.js</a> object.`,
+    emited: false
   }
 }
 
 const example =
-`<vk-calendar {attrs}>
-  {{ $day.date() }}
+`<vk-calendar ref="calendar" {attrs}
+  @change="
+    yearh = arguments[0].year(),
+    month = arguments[0].month()
+  ">
+  {{ $refs.calendar.$renderingDay.date() }}
 </vk-calendar>`
 </script>

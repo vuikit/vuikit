@@ -11,10 +11,10 @@ export default {
     name: 'Button',
     component: require('./pages/Button')
   },
-  // '/calendar': {
-  //   name: 'Calendar',
-  //   component: require('./pages/Calendar')
-  // },
+  '/calendar': {
+    name: 'Calendar',
+    component: require('./pages/Calendar')
+  },
   // '/datepicker': {
   //   name: 'Datepicker',
   //   component: require('./pages/Datepicker')

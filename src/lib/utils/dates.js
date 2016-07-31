@@ -19,10 +19,10 @@ export function listMonths (currentYear, min, max) {
   const maxDate = $moment(max)
   const inMinYear = currentYear === minDate.year()
   const inMaxYear = currentYear === maxDate.year()
-  const months = {}
+  const months = []
   $moment.months().forEach((name, m) => {
     if ((!inMinYear || m >= minDate.month()) && (!inMaxYear || m <= maxDate.month())) {
-      months[m] = name
+      months.push({ text: name, value: m })
     }
   })
   return months

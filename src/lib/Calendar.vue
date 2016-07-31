@@ -3,31 +3,31 @@
     <div class="uk-datepicker-nav">
       <a href="" class="uk-datepicker-previous"
         v-if="isDisplayable(prevMonth)"
-        @click.prevent="date = prevMonth">
+        @click.prevent="$emit('change', prevMonth)">
       </a>
       <a href="" class="uk-datepicker-next"
         v-if="isDisplayable(nextMonth)"
-        @click.prevent="date = nextMonth">
+        @click.prevent="$emit('change', nextMonth)">
       </a>
       <div class="uk-datepicker-heading">
         <span class="uk-form-select">
           <a href=""
-            v-text="date | format 'MMMM'"
             @click.prevent>
+            {{ date | format('MMMM') }}
           </a>
-          <select v-model="month" number>
-            <option v-for="(m, name) in monthsList"
-              :value="m"
-              v-text="name">
+          <select v-model="selectedMonth">
+            <option v-for="month in monthsList"
+              :value="month.value"
+              v-text="month.text">
             </option>
           </select>
         </span>
         <span class="uk-form-select">
           <a href=""
-            v-text="date | format 'YYYY'"
             @click.prevent>
+            {{ date | format('YYYY') }}
           </a>
-          <select v-model="year" number>
+          <select v-model="selectedYear">
             <option v-for="year in yearsList"
               :value="year"
               v-text="year">
@@ -39,15 +39,17 @@
     <table class="uk-datepicker-table">
       <thead>
         <tr>
-          <th v-for="day in listWeekDays" v-text="day"></th>
+          <th v-for="day in listWeekDays"
+            v-text="day">
+          </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="week in matrix">
-          <td v-for="day in week"
-            track-by="$index"
-            v-render-day>
-          </td>
+        <tr v-for="week in weeks">
+          <td-day v-for="(day, index) in week"
+            :key="index"
+            :day="day">
+          </td-day>
         </tr>
       </tbody>
     </table>
@@ -69,19 +71,25 @@ import {
 export default {
   name: 'VkCalendar',
   mixins: [momentMixin],
-  directives: {
-    renderDay: {
-      update () {
-        const host = this.vm
-        const template = host.dayTemplate
-        if (template) {
-          const node = this.el
-          const context = host._context
-          const scope = Object.create(context)
-          scope.$day = this._frag.scope.day
-          node.innerHTML = template
-          context.$compile(node, host, scope, this._frag)
-        }
+  beforeCreate () {
+    // set component ref earlier
+    // so it can be used in the slot
+    const host = this.$parent.$vnode.context
+    const ref = this.$options._parentVnode.data.ref
+    if (ref) {
+      host.$refs[ref] = this
+    }
+    // null slot rendering, keep the function for later
+    this._renderChildren = this.$options._renderChildren
+    this.$options._renderChildren = null
+  },
+  components: {
+    tdDay: {
+      functional: true,
+      render (h, { parent, data }) {
+        // set current day in context
+        parent.$renderingDay = data.attrs.day
+        return h('td', parent._renderChildren)
       }
     }
   },
@@ -124,18 +132,29 @@ export default {
     }
   },
   computed: {
-    listWeekDays,
-    date: {
+    selectedYear: {
       get () {
-        return this.$moment().set({ year: this.year, month: this.month })
+        return this.year
       },
-      set (moment) {
-        this.year = moment.year()
-        this.month = moment.month()
+      set (year) {
+        const date = this.$moment().set({ year, month: this.month })
+        this.$emit('change', date)
       }
     },
-    matrix () {
-      this.$nextTick(() => this.$emit('update'))
+    selectedMonth: {
+      get () {
+        return this.month
+      },
+      set (month) {
+        const date = this.$moment().set({ year: this.year, month })
+        this.$emit('change', date)
+      }
+    },
+    listWeekDays,
+    date () {
+      return this.$moment().set({ year: this.year, month: this.month })
+    },
+    weeks () {
       return getCalendarMatrix(this.date)
     },
     yearsList () {
@@ -159,16 +178,6 @@ export default {
       return Number.isInteger(this.max)
         ? this.$moment().add(this.max, 'days')
         : this.$moment(this.max || this.$options.props.max.default)
-    },
-    // can be provided as slot or prop
-    dayTemplate () {
-      if (this._slotContents && this._slotContents.default) {
-        const node = document.createElement('div')
-        node.appendChild(this._slotContents.default.cloneNode(true))
-        return node.innerHTML
-      } else {
-        return this.template
-      }
     }
   },
   methods: {

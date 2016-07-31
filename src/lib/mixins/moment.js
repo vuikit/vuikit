@@ -10,7 +10,7 @@ const defaultLocale = {
 }
 
 export default {
-  init () {
+  beforeCreate () {
     if (Moment === undefined) {
       warn(`${this.$options.name} stopped executing due to missing Moment.js dependency.`)
       this.$destroy()
