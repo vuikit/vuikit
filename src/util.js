@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 /**
  * Utility functions
  */
@@ -26,53 +28,19 @@ export function inArray (array, value) {
   return (array || []).indexOf(value) !== -1
 }
 
-// /**
-//  * Add class with compatibility for SVG since classList is not supported on
-//  * SVG elements in IE
-//  */
-// export function addClass (el, cls) {
-//   /* istanbul ignore else */
-//   if (el.classList) {
-//     if (cls.indexOf(' ') > -1) {
-//       cls.split(/\s+/).forEach(c => el.classList.add(c))
-//     } else {
-//       el.classList.add(cls)
-//     }
-//   } else {
-//     const cur = ' ' + el.getAttribute('class') + ' '
-//     if (cur.indexOf(' ' + cls + ' ') < 0) {
-//       el.setAttribute('class', (cur + cls).trim())
-//     }
-//   }
-// }
-//
-// /**
-//  * Remove class with compatibility for SVG since classList is not supported on
-//  * SVG elements in IE
-//  */
-// export function removeClass (el, cls) {
-//   /* istanbul ignore else */
-//   if (el.classList) {
-//     if (cls.indexOf(' ') > -1) {
-//       cls.split(/\s+/).forEach(c => el.classList.remove(c))
-//     } else {
-//       el.classList.remove(cls)
-//     }
-//   } else {
-//     let cur = ' ' + el.getAttribute('class') + ' '
-//     const tar = ' ' + cls + ' '
-//     while (cur.indexOf(tar) >= 0) {
-//       cur = cur.replace(tar, ' ')
-//     }
-//     el.setAttribute('class', cur.trim())
-//   }
-// }
-//
-// /**
-//  * Checks the presence of the class in the element
-//  */
-// export function hasClass (el, cls) {
-//   return el.classList
-//     ? el.classList.contains(cls)
-//     : new RegExp('(^| )' + cls + '( |$)', 'gi').test(el.cls)
-// }
+/**
+ * Query an element selector if it's not an element already.
+ */
+export function query (el) {
+  if (typeof el === 'string') {
+    const selector = el
+    el = document.querySelector(el)
+    if (!el) {
+      Vue.util.warn(
+        'Cannot find element: ' + selector
+      )
+      return document.createElement('div')
+    }
+  }
+  return el
+}

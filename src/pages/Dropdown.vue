@@ -1,85 +1,102 @@
 <template>
-  <div class="uk-block">
-    <h2>Dropdown</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-button v-el:button>
-      Trigger
-      <i class="uk-icon-caret-down"></i>
-    </vk-button>
-    <vk-dropdown v-ref:demo
-      :target="$els.button"
-      :blank="props.blank.demo.value"
-      :fix-width="props.fixWidth.demo.value"
-      :open-on="props.openOn.demo.value"
-      :position="props.position.demo.value"
-      :scrollable="props.scrollable.demo.value"
-      :offset="props.offset.demo.value"
-      :offset-target="props.offsetTarget.demo.value"
-      :constrain-to-window="props.constrainToWindow.demo.value"
-      :constrain-to-parent="props.constrainToParent.demo.value">
-      <ul class="uk-nav uk-nav-dropdown">
-        <li><a href="#" @click.prevent>Item</a></li>
-        <li><a href="#" @click.prevent>Another item</a></li>
-        <li class="uk-nav-header">Header</li>
-        <li><a href="#" @click.prevent>Item</a></li>
-        <li><a href="#" @click.prevent>Another item</a></li>
-        <li class="uk-nav-divider"></li>
-        <li><a href="#" @click.prevent>Separated item</a></li>
-      </ul>
-    </vk-dropdown>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-dropdown</code> component renders a toggleable dropdown.
+  <vk-docs-layout-page>
+    <div class="uk-block">
+      <h2>Dropdown</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-dropdown ref="dropdown"
+        :show="props.show.demo.value"
+        :position="props.position.demo.value"
+        :offset="props.offset.demo.value"
+        :offset-target="props.offsetTarget.demo.value"
+        :constrain-to-window="props.constrainToWindow.demo.value"
+        :constrain-to-parent="props.constrainToParent.demo.value"
+        :blank="props.blank.demo.value"
+        :fix-width="props.fixWidth.demo.value"
+        :scrollable="props.scrollable.demo.value"
+        @clickIn="events.clickIn.emited = true"
+        @clickOut="onClickOut"
+        @targetHoverIn="events.targetHoverIn.emited = true"
+        @targetHoverOut="events.targetHoverOut.emited = true">
+        <vk-button slot="trigger"
+          @click.native="props.show.demo.value = true">
+          Trigger
+          <i class="uk-icon-caret-down"></i>
+        </vk-button>
+        <ul class="uk-nav uk-nav-dropdown">
+          <li><a href="#" @click.prevent>Item</a></li>
+          <li><a href="#" @click.prevent>Another item</a></li>
+          <li class="uk-nav-header">Header</li>
+          <li><a href="#" @click.prevent>Item</a></li>
+          <li><a href="#" @click.prevent>Another item</a></li>
+          <li class="uk-nav-divider"></li>
+          <li><a href="#" @click.prevent>Separated item</a></li>
+        </ul>
+      </vk-dropdown>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-dropdown</code> component renders a toggleable dropdown.
+      </div>
+      <!-- TABS -->
+      <vk-tabs>
+        <vk-tab label="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tab>
+        <vk-tab label="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tab>
+        <vk-tab label="Events">
+          <vk-docs-events :events="events"></vk-docs-events>
+        </vk-tab>
+        <vk-tab label="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tab>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </div>
+  </vk-docs-layout-page>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
-import Component from '../lib/Dropdown'
+import Component from '../lib/Dropdown/Dropdown'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 const resetTethler = function () {
   return {
-    handler () {
-      const dropdown = this.$refs.demo
-      dropdown.$tether.destroy()
-      dropdown.initTether()
+    handler (val) {
+      const dropdown = this.$refs.dropdown
+      dropdown.$nextTick(() => {
+        dropdown.$tether.destroy()
+        dropdown.initTether()
+      })
     },
     immediate: false
   }
 }
 
 export default {
+  name: 'PageDropdown',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: mergeProps(Component.props, props),
     slots,
+    events,
     example
   }),
+  methods: {
+    onClickOut (event) {
+      this.events.clickOut.emited = true
+      const propsCheckbox = document.querySelector('.vk-docs-props input[type=checkbox]')
+      if (event.target === propsCheckbox || propsCheckbox.contains(event.target)) {
+        return
+      }
+      this.props.show.demo.value = false
+    }
+  },
   watch: {
-    'props.openOn.demo.value': {
-      handler () {
-        const dropdown = this.$refs.demo
-        // reset node events
-        dropdown.removeEvents()
-        dropdown.setupEvents()
-      },
-      immediate: false
-    },
     'props.position.demo.value': resetTethler(),
     'props.offset.demo.value': resetTethler(),
     'props.offsetTarget.demo.value': resetTethler(),
@@ -90,57 +107,49 @@ export default {
 
 const props = {
   target: {
-    description: 'The element node or query string that the dropdown should stay adjacent to.'
+    description: `An alternative way to the recommended <code>target</code> slot
+      to specify the element the dropdown should stay adjacent to. Expects a query
+      string.`,
+    default: '',
+    type: 'String'
   },
   show: {
-    description: 'Display state that when toggled will hide/show the dropdown.'
-  },
-  blank: {
-    description: 'Wheter to render the dropdown without any styling.',
-    demo: {}
-  },
-  fixWidth: {
-    description: 'Wether to set a dropdown fixed width and wrap its text content into the next line.',
-    demo: {}
-  },
-  openOn: {
-    description: `Specifies what event on the target opens the dropdown. If set
-      to <code>false</code> the dropdown instance will have to be opened externally.
-      If set as <code>always</code> the dropdown will be open immediately when it's
-      rendered and left open.`,
+    description: 'Display state that when toggled will hide/show the dropdown.',
     demo: {
-      options: ['hover', 'focus', 'always'],
-      value: 'click'
+      value: false
     }
   },
   position: {
     description: 'Specifies the attachment point on the target to attach the dropdown to.',
     demo: {
+      type: 'Select',
       options: [
-        'top left',
-        'left top',
-        'left middle',
-        'left bottom',
-        'bottom center',
-        'bottom right',
-        'right bottom',
-        'right middle',
-        'right top',
-        'top right',
-        'top center'
+        { text: 'top left', value: 'top left' },
+        { text: 'left top', value: 'left top' },
+        { text: 'left middle', value: 'left middle' },
+        { text: 'left bottom', value: 'left bottom' },
+        { text: 'bottom left', value: 'bottom left' },
+        { text: 'bottom center', value: 'bottom center' },
+        { text: 'bottom right', value: 'bottom right' },
+        { text: 'right bottom', value: 'right bottom' },
+        { text: 'right middle', value: 'right middle' },
+        { text: 'right top', value: 'right top' },
+        { text: 'top right', value: 'top right' },
+        { text: 'top center', value: 'top center' }
       ],
       value: 'bottom left'
     }
-  },
-  scrollable: {
-    description: 'Whether to give the dropdown a fixed height and enable its content to scroll.',
-    demo: {}
   },
   offset: {
     description: `The dropdown attachment point offset with <code>vertical horizontal</code> syntax.
       Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`,
     demo: {
-      options: ['10px 10px', '-10px -10px'],
+      type: 'Select',
+      options: [
+        { text: 'default', value: '0 0' },
+        { text: '10px 10px', value: '10px 10px' },
+        { text: '-10px -10px', value: '-10px -10px' }
+      ],
       value: '0 0'
     }
   },
@@ -148,7 +157,12 @@ const props = {
     description: `The target attachment point offset with <code>vertical horizontal</code> syntax.
       Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`,
     demo: {
-      options: ['10px 10px', '-10px -10px'],
+      type: 'Select',
+      options: [
+        { text: 'default', value: '0 0' },
+        { text: '10px 10px', value: '10px 10px' },
+        { text: '-10px -10px', value: '-10px -10px' }
+      ],
       value: '0 0'
     }
   },
@@ -168,6 +182,24 @@ const props = {
       value: true
     }
   },
+  blank: {
+    description: 'Wheter to render the dropdown without any styling.',
+    demo: {
+      value: false
+    }
+  },
+  fixWidth: {
+    description: 'Wether to set a dropdown fixed width and wrap its text content into the next line.',
+    demo: {
+      value: false
+    }
+  },
+  scrollable: {
+    description: 'Whether to give the dropdown a fixed height and enable its content to scroll.',
+    demo: {
+      value: false
+    }
+  },
   tetherOptions: {
     description: `Additional options can be passed to the underlying Tether instance used
       to position the dropdown. See the the <a href="http://tether.io/" target="_blank">Tether</a>
@@ -178,15 +210,39 @@ const props = {
 const slots = {
   default: {
     description: 'The container for the dropdown content.'
+  },
+  trigger: {
+    description: `The element the dropdown should stay adjacent to. Is an alternative
+      to the <code>target</code> prop query.`
+  }
+}
+
+const events = {
+  clickIn: {
+    description: 'Emited when a click was performed inside of the dropdown.',
+    emited: false
+  },
+  clickOut: {
+    description: 'Emited when a click was performed outside of the dropdown while open.',
+    emited: false
+  },
+  targetHoverIn: {
+    description: 'Emited when a mouse enter the target hover area.',
+    emited: false
+  },
+  targetHoverOut: {
+    description: 'Emited when a mouse left the target hover area.',
+    emited: false
   }
 }
 
 const example =
-`<vk-button v-el:button>
-  Trigger
-  <i class="uk-icon-caret-down"></i>
-</vk-button>
-<vk-dropdown :target="$els.button" {attrs}>
-  Dropdown
+`<vk-dropdown {attrs}
+  @clickOut="show = false">
+  <vk-button slot="trigger"
+    @click.native="show = true">
+    Trigger
+  </vk-button>
+  Dropdown Content
 </vk-dropdown>`
 </script>

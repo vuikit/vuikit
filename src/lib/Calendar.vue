@@ -74,22 +74,22 @@ export default {
   beforeCreate () {
     // set component ref earlier
     // so it can be used in the slot
-    const host = this.$parent.$vnode.context
+    const context = this.$options._parentVnode.context
     const ref = this.$options._parentVnode.data.ref
     if (ref) {
-      host.$refs[ref] = this
+      context.$refs[ref] = this
     }
-    // null slot rendering, keep the function for later
-    this._renderChildren = this.$options._renderChildren
+    // keep the template, null slot rendering
+    this.$renderingTemplate = this.$options._renderChildren
     this.$options._renderChildren = null
   },
   components: {
     tdDay: {
       functional: true,
       render (h, { parent, data }) {
-        // set current day in context
+        // set rendering day
         parent.$renderingDay = data.attrs.day
-        return h('td', parent._renderChildren)
+        return h('td', parent.$renderingTemplate)
       }
     }
   },

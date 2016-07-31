@@ -7,7 +7,7 @@ import ButtonRadio from './ButtonRadio'
 import Calendar from './Calendar'
 // import Datepicker from './Datepicker'
 // import DatepickerDrop from './DatepickerDrop'
-// import Dropdown from './Dropdown'
+import Dropdown from './Dropdown'
 // import Filter from './Filter'
 // import Modal from './Modal'
 // import ModalLightbox from './ModalLightbox'
@@ -38,7 +38,7 @@ const Vuikit = {
   Calendar,
   // Datepicker,
   // DatepickerDrop,
-  // Dropdown,
+  Dropdown,
   // Filter,
   // Modal,
   // ModalLightbox,

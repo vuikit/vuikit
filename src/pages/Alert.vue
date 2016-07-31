@@ -19,7 +19,10 @@
       <!-- TABS -->
       <vk-tabs>
         <vk-tab label="Props">
-          <vk-docs-props :props="props"></vk-docs-props>
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
         </vk-tab>
         <vk-tab label="Slots">
           <vk-docs-slots :slots="slots"></vk-docs-slots>
@@ -33,15 +36,15 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Component from '../lib/Alert'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 export default {
   name: 'PageAlert',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: mergeProps(Component.props, props),
     slots,
     example
   })
@@ -58,16 +61,27 @@ const props = {
     description: `The color modifier accepting as values <code>success</code>,
       <code>warning</code> or <code>danger</code>.`,
     demo: {
-      options: ['success', 'warning', 'danger']
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: 'success', value: 'success' },
+        { text: 'warning', value: 'warning' },
+        { text: 'danger', value: 'danger' }
+      ],
+      value: undefined
     }
   },
   large: {
     description: 'Whether to increase the spacing arount the text.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   block: {
     description: 'Whether to allow hiding the alert by user action.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   transition: {
     description: `The transition options for the alert hiding effect. Check

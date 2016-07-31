@@ -33,7 +33,10 @@
       <!-- TABS -->
       <vk-tabs>
         <vk-tab label="Props">
-          <vk-docs-props :props="props"></vk-docs-props>
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
         </vk-tab>
         <vk-tab label="Events">
           <vk-docs-events
@@ -49,15 +52,15 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
-import Breadcrumb from '../lib/Breadcrumb'
+import Component from '../lib/Breadcrumb'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 export default {
   name: 'PageBreadcrumb',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Breadcrumb.props, Object.keys(props))),
+    props: mergeProps(Component.props, props),
     slots,
     events,
     example
@@ -68,11 +71,12 @@ const props = {
   location: {
     description: 'The currently active path.',
     demo: {
-      options: {
-        'Home': '/',
-        'Blog': '/blog',
-        'Post': '/blog/category/post'
-      },
+      type: 'Select',
+      options: [
+        { text: 'Home', value: '/' },
+        { text: 'Blog', value: '/blog' },
+        { text: 'Post', value: '/blog/category/post' }
+      ],
       value: '/'
     }
   }

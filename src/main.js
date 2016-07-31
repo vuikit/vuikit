@@ -21,8 +21,8 @@ const app = new App({
     ViewComponent () {
       const matchingView = routes[this.currentRoute]
       return matchingView
-        ? matchingView.component.default
-        : require('./pages/404.vue').default
+        ? matchingView.component
+        : require('./pages/404.vue')
     }
   },
   render (h) { return h(this.ViewComponent) }

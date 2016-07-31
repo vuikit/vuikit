@@ -61,16 +61,16 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Tabs from '../../lib/Tabs'
 import Tab from '../../lib/Tab'
 import mixin from '../_mixin'
+import { mergeProps } from '../helper'
 
 export default {
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Tabs.props, Object.keys(props))),
-    propsTab: merge(propsTab, pick(Tab.props, Object.keys(propsTab))),
+    props: mergeProps(Tabs.props, props),
+    propsTab: mergeProps(Tab.props, propsTab),
     slotsTabs,
     slotsTab,
     events,

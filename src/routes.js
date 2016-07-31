@@ -19,10 +19,10 @@ export default {
   //   name: 'Datepicker',
   //   component: require('./pages/Datepicker')
   // },
-  // '/dropdown': {
-  //   name: 'Dropdown',
-  //   component: require('./pages/Dropdown')
-  // },
+  '/dropdown': {
+    name: 'Dropdown',
+    component: require('./pages/Dropdown')
+  },
   // '/filter': {
   //   name: 'Filter',
   //   component: require('./pages/Filter')
