@@ -6,12 +6,12 @@ export default {
   functional: true,
   render (h, { slots, data }) {
     const $slots = slots()
-    if ($slots.trigger) {
+    if ($slots.target) {
       return [
-        $slots.trigger,
+        $slots.target,
         h(Dropdown, merge(data, {
           attrs: {
-            target: $slots.trigger[0]
+            target: $slots.target[0]
           }
         }), () => $slots.default)
       ]

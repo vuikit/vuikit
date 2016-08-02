@@ -18,7 +18,7 @@
         @clickOut="onClickOut"
         @targetHoverIn="events.targetHoverIn.emited = true"
         @targetHoverOut="events.targetHoverOut.emited = true">
-        <vk-button slot="trigger"
+        <vk-button slot="target"
           @click.native="props.show.demo.value = true">
           Trigger
           <i class="uk-icon-caret-down"></i>
@@ -211,7 +211,7 @@ const slots = {
   default: {
     description: 'The container for the dropdown content.'
   },
-  trigger: {
+  target: {
     description: `The element the dropdown should stay adjacent to. Is an alternative
       to the <code>target</code> prop query.`
   }
@@ -239,7 +239,7 @@ const events = {
 const example =
 `<vk-dropdown {attrs}
   @clickOut="show = false">
-  <vk-button slot="trigger"
+  <vk-button slot="target"
     @click.native="show = true">
     Trigger
   </vk-button>
