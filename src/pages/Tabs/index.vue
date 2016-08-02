@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import TabsDefault from './TabsDefault'
-import TabsVertical from './TabsVertical'
+import TabsDefault from './Default'
+import TabsVertical from './Vertical'
 
 export default {
   name: 'pageTabs',

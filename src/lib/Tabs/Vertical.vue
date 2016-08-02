@@ -29,7 +29,7 @@
 
 <script>
 const UI = typeof window !== 'undefined' && window.UIkit
-import TabHeader from './TabHeader'
+import TabHeader from './Header'
 import { toArray } from 'lodash'
 
 export default {

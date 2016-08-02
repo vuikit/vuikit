@@ -1,6 +1,6 @@
 <script>
 const UI = typeof window !== 'undefined' && window.UIkit
-import TabHeader from './TabHeader'
+import TabHeader from './Header'
 
 export default {
   name: 'VkTabs',
@@ -70,7 +70,7 @@ export default {
         }</div>
         <ul class='uk-switcher uk-margin'
           ref='tabs-body'
-          id={this.id}>
+          id={ this.id }>
           { this.$slots.default }
         </ul>
       </div>
