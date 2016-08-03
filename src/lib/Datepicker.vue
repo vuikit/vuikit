@@ -24,7 +24,7 @@
 <script>
 import moment from './mixins/moment'
 import { flatten, merge, mapKeys, upperFirst } from 'lodash'
-import { getCalendarMatrix, isBetween } from './utils/dates'
+import { getCalendarMatrix, isBetween } from './helpers/dates'
 import Calendar from './Calendar'
 
 export default {

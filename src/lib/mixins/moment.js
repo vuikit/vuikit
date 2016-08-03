@@ -1,6 +1,6 @@
 import Moment from 'moment'
 import { merge, isArray, isObject } from 'lodash'
-import { warn } from '../utils'
+import { warn } from '../../util'
 
 const defaultLocale = {
   name: 'en',

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import * as Tether from '../utils/tether'
+import * as Tether from '../helpers/tether'
 import props from './props'
 import { query } from '../../util'
 

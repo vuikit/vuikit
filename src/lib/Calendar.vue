@@ -66,7 +66,7 @@ import {
   listMonths,
   isToday,
   isBetween
-} from './utils/dates'
+} from './helpers/dates'
 
 export default {
   name: 'VkCalendar',

@@ -46,7 +46,7 @@ const props = {
   href: {
     description: 'The link to be followed when the button is pressed.',
     demo: {
-      editable: false,
+      type: 'Overview',
       value: '#'
     }
   }

@@ -56,7 +56,7 @@ const props = {
   value: {
     description: 'The value of the button usually used in combination with others components.',
     demo: {
-      editable: false
+      type: 'Overview'
     }
   },
   type: {

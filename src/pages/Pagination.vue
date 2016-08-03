@@ -75,7 +75,7 @@ const props = {
     description: `The initially selected page. The subsequent state of the selected page
       can be accessed through the <code>current</code> local property.`,
     demo: {
-      editable: false
+      type: 'Overview'
     }
   },
   pageRange: {

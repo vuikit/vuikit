@@ -74,7 +74,7 @@ const props = {
       Supports any input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     demo: {
       value: [ Moment().format('YYYY-MM-DD') ],
-      editable: false
+      type: 'Overview'
     }
   },
   disabledDates: {
@@ -82,7 +82,7 @@ const props = {
       Supports any input format supported by <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>.`,
     demo: {
       value: [ Moment().add(1, 'days').format('YYYY-MM-DD') ],
-      editable: false
+      type: 'Overview'
     }
   },
   'calendar-*': {

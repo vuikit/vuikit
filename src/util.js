@@ -29,6 +29,23 @@ export function inArray (array, value) {
 }
 
 /**
+ * Warn about errors only in no production
+ */
+
+let warn
+
+if (process.env.NODE_ENV !== 'production') {
+  const hasConsole = typeof console !== 'undefined'
+  warn = (msg, vm) => {
+    if (hasConsole) {
+      console.error('[Vuikit warn]: ' + msg)
+    }
+  }
+}
+
+export { warn }
+
+/**
  * Query an element selector if it's not an element already.
  */
 export function query (el) {
