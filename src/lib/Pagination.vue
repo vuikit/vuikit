@@ -10,7 +10,7 @@
     }">
       <!-- firstPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="current = 1">
+        @click.prevent="change({ current: 1 })">
         <i class="uk-icon-angle-double-left"></i>
       </a>
       <span v-else>
@@ -18,7 +18,7 @@
       </span>
       <!-- prevPage -->
       <a href="" v-if="prevPage"
-        @click.prevent="current = prevPage">
+        @click.prevent="change({ current: prevPage })">
         <i class="uk-icon-angle-left"></i>
       </a>
       <span v-else>
@@ -33,7 +33,7 @@
       <a v-else
         href=""
         v-text="page"
-        @click.prevent="current = page">
+        @click.prevent="change({ current: page })">
       </a>
     </li>
     <li v-if="mainPages[0] > (prePages.length + 1)">
@@ -46,7 +46,7 @@
       <span v-if="page === current" v-text="page"></span>
       <a v-else
         href=""
-        @click.prevent="current = page"
+        @click.prevent="change({ current: page })"
         v-text="page">
       </a>
     </li>
@@ -63,7 +63,7 @@
       <a v-else
         href=""
         v-text="page"
-        @click.prevent="current = page">
+        @click.prevent="change({ current: page })">
       </a>
     </li>
     <li :class="{
@@ -72,7 +72,7 @@
     }">
       <!-- nextPage -->
       <a href="" v-if="nextPage"
-        @click.prevent="current = nextPage">
+        @click.prevent="change({ current: nextPage })">
         <i class="uk-icon-angle-right"></i>
       </a>
       <span v-else>
@@ -80,7 +80,7 @@
       </span>
       <!-- last page -->
       <a href="" v-if="nextPage"
-        @click.prevent="current = totalPages">
+        @click.prevent="change({ current: totalPages })">
         <i class="uk-icon-angle-double-right"></i>
       </a>
       <span v-else>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import { range } from 'lodash'
+import { merge, range } from 'lodash'
 
 export default {
   name: 'VkPagination',
@@ -106,8 +106,8 @@ export default {
       type: Number,
       default: 10
     },
-    // current page initial state
-    initCurrent: {
+    // current page
+    current: {
       type: Number,
       default: 1
     },
@@ -125,11 +125,6 @@ export default {
     compact: {
       type: Boolean,
       default: false
-    }
-  },
-  data () {
-    return {
-      current: this.initCurrent
     }
   },
   computed: {
@@ -183,15 +178,18 @@ export default {
       )
     }
   },
-  watch: {
-    current () {
-      this.$emit('change', {
+  methods: {
+    change (changes) {
+      const state = merge({
         current: this.current,
         total: this.total,
-        limit: this.limit,
-        from: this.from,
-        to: this.to
-      })
+        limit: this.limit
+      }, changes)
+      // calculate since new state
+      state.from = (state.current - 1) * state.limit + 1
+      state.to = Math.min(state.total, state.current * state.limit)
+      // event
+      this.$emit('change', state)
     }
   }
 }

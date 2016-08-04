@@ -13,7 +13,7 @@ import Dropdown from './Dropdown'
 // import ModalBlank from './ModalBlank'
 // import ModalAlert from './ModalAlert'
 // import ModalConfirm from './ModalConfirm'
-// import Pagination from './Pagination'
+import Pagination from './Pagination'
 import Picker from './Picker'
 import Progress from './Progress'
 // import Subnav from './Subnav'
@@ -42,7 +42,7 @@ const Vuikit = {
   // ModalBlank,
   // ModalAlert,
   // ModalConfirm,
-  // Pagination,
+  Pagination,
   Picker,
   Progress,
   // Subnav,

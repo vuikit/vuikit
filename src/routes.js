@@ -31,10 +31,10 @@ export default {
   //   name: 'Modal',
   //   component: require('./pages/Modal')
   // },
-  // '/pagination': {
-  //   name: 'Pagination',
-  //   component: require('./pages/Pagination')
-  // },
+  '/pagination': {
+    name: 'Pagination',
+    component: require('./pages/Pagination')
+  },
   '/picker': {
     name: 'Picker',
     component: require('./pages/Picker')
