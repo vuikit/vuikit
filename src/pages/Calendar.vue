@@ -14,7 +14,7 @@
           props.year.demo.value = arguments[0].year(),
           props.month.demo.value = arguments[0].month()
         ">
-        {{ $refs.calendar.$renderingDay.date() }}
+        {{ $refs.calendar.$renderingDate.date() }}
       </vk-calendar>
       <!-- DESC -->
       <div class="uk-margin-large">
