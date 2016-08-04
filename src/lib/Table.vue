@@ -15,8 +15,8 @@
             {{ field.header }}
             <i :class="{
                 'uk-icon-justify uk-position-absolute': true,
-                'uk-icon-caret-up': this.sortOrder[field.name] === 'asc',
-                'uk-icon-caret-down': this.sortOrder[field.name] === 'desc'
+                'uk-icon-caret-up': sortOrder[field.name] === 'asc',
+                'uk-icon-caret-down': sortOrder[field.name] === 'desc'
               }">
             </i>
           </a>
@@ -26,12 +26,14 @@
         </th>
       </tr>
     </thead>
-    <tbody v-el:body>
+    <tbody>
       <tr v-for="row in rows">
-        <td v-for="field in fieldsDef"
+        <td-field v-for="(field, index) in fieldsDef"
           :class="field.cellClass"
-          v-field>
-        </td>
+          :key="index"
+          :row="row"
+          :field="field">
+        </td-field>
       </tr>
     </tbody>
   </table>
@@ -42,20 +44,27 @@ import { map, isString, merge } from 'lodash'
 
 export default {
   name: 'VkTable',
-  directives: {
-    field: {
-      update () {
-        const host = this.vm
-        const template = host.fieldTemplate
-        if (template) {
-          const field = this.el
-          const context = host._context
-          const scope = Object.create(context)
-          scope.$row = this._frag.parentFrag.scope.row
-          scope.$field = this._frag.scope.field
-          field.innerHTML = template
-          context.$compile(field, host, scope, this._frag)
-        }
+  beforeCreate () {
+    // set component ref earlier
+    // so it can be used in the slot
+    const context = this.$options._parentVnode.context
+    const ref = this.$options._parentVnode.data.ref
+    if (ref) {
+      context.$refs[ref] = this
+    }
+    // keep the template, null slot rendering
+    this.$renderingTemplate = this.$options._renderChildren
+    this.$options._renderChildren = null
+  },
+  components: {
+    tdField: {
+      functional: true,
+      render (h, { parent, data }) {
+        parent.$renderingRow = data.attrs.row
+        parent.$renderingField = data.attrs.field
+        return h('td', {
+          attrs: { class: data.class }
+        }, parent.$renderingTemplate)
       }
     }
   },
@@ -80,10 +89,6 @@ export default {
       type: Boolean,
       default: false
     },
-    template: {
-      type: String,
-      default: ''
-    },
     sortOrder: {
       type: Object,
       default: () => ({}) // field: asc|desc
@@ -107,16 +112,6 @@ export default {
         }
         return obj
       })
-    },
-    // can be provided as slot or prop
-    fieldTemplate () {
-      if (this._slotContents && this._slotContents.default) {
-        const node = document.createElement('div')
-        node.appendChild(this._slotContents.default.cloneNode(true))
-        return node.innerHTML
-      } else {
-        return this.template
-      }
     }
   },
   methods: {

@@ -1,64 +1,71 @@
 <template>
-  <div class="uk-block">
-    <h2>Table</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-table v-ref:demo
-      :fields="[{
-        name: 'id',
-        sortBy: true
-      }, {
-        name: 'name',
-        sortBy: true
-      }, {
-        name: 'desc',
-        header: 'Description',
-        headerClass: 'uk-text-right',
-        cellClass: 'uk-text-right'
-      }]"
-      :rows="rows"
-      :striped="props.striped.demo.value"
-      :condensed="props.condensed.demo.value"
-      :hover="props.hover.demo.value"
-      :sort-order="sortOrder"
-      @sort="sortRows">
-      {{ $row[$field.name] }}
-    </vk-table>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-table</code> component renders a table based on the provided fields
-      definition and data.
+  <vk-docs-layout-page>
+    <div class="uk-block">
+      <h2>Table</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-table ref="table"
+        :fields="[{
+          name: 'id',
+          sortBy: true
+        }, {
+          name: 'name',
+          sortBy: true
+        }, {
+          name: 'desc',
+          header: 'Description',
+          headerClass: 'uk-text-right',
+          cellClass: 'uk-text-right'
+        }]"
+        :rows="rows"
+        :striped="props.striped.demo.value"
+        :condensed="props.condensed.demo.value"
+        :hover="props.hover.demo.value"
+        :sort-order="sortOrder"
+        @sort="
+          events.sort.emited = true,
+          sortRows(arguments[0])
+        ">
+        {{ $refs.table.$renderingRow[ $refs.table.$renderingField.name ] }}
+      </vk-table>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-table</code> component renders a table based on the provided fields
+        definition and data.
+      </div>
+      <!-- TABS -->
+      <vk-tabs>
+        <vk-tab label="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tab>
+        <vk-tab label="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tab>
+        <vk-tab label="Events">
+          <vk-docs-events :events="events"></vk-docs-events>
+        </vk-tab>
+        <vk-tab label="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tab>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events
-          :events="events"
-          :connect="$refs.demo">
-        </vk-docs-events>
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </div>
+  </vk-docs-layout-page>
 </template>
 
 <script>
-import { merge, pick, orderBy } from 'lodash'
+import { orderBy } from 'lodash'
 import Component from '../lib/Table'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 export default {
+  name: 'PageTable',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: mergeProps(Component.props, props),
     slots,
     events,
     example,
@@ -106,31 +113,37 @@ const props = {
   },
   striped: {
     description: 'Whether to display the rows with zebra-striping style.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   hover: {
     description: 'Whether to display a hover state on rows.',
-    demo: {}
+    demo: {
+      value: false
+    }
   }
 }
 
 const slots = {
   default: {
-    description: `The template that will be used to render each field. Both
-      <code>$row</code> and <code>$field</code> variables are available representing
-      the current row and field being rendered.`
+    description: `The template for each field rendering. The field and row data being
+      currently rendered can be accessed at the component <code>$renderingRow</code> and
+      <code>$renderingField</code> respectively. Use with combination of <code>ref</code>,
+      eg. <code>$refs.calendar.$renderingRow</code>.`
   }
 }
 
 const events = {
   sort: {
     description: `Emited when a sortable field header has been clicked passing
-      as arguments the field data.`
+      as arguments the field data.`,
+    emited: false
   }
 }
 
 const example =
-`<vk-table {attrs}
+`<vk-table ref="table" {attrs}
   :fields="[
     'id',
     'name',
@@ -145,6 +158,6 @@ const example =
     { name: 'Item 1', id: 1, desc: 'Description' },
     { name: 'Item 2', id: 2, desc: 'Description' }
   ]">
-  {{ $row[$field] }}
+  {{ $refs.table.$renderingRow[ $refs.table.$renderingField.name ] }}
 </vk-table>`
 </script>

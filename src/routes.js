@@ -51,10 +51,10 @@ export default {
   //   name: 'Switcher',
   //   component: require('./pages/Switcher')
   // },
-  // '/table': {
-  //   name: 'Table',
-  //   component: require('./pages/Table')
-  // }
+  '/table': {
+    name: 'Table',
+    component: require('./pages/Table')
+  },
   '/tabs': {
     name: 'Tabs',
     component: require('./pages/Tabs')
