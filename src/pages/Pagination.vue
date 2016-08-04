@@ -20,16 +20,16 @@
     </div>
     <vk-tabs>
       <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
       </vk-tab>
       <vk-tab label="Events">
-        <vk-docs-events
-          :events="events"
-          :connect="$refs.demo">
-        </vk-docs-events>
+        <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
@@ -41,6 +41,7 @@ import Component from '../lib/Pagination'
 import mixin from './_mixin'
 
 export default {
+  name: 'PagePagination',
   mixins: [mixin],
   data: () => ({
     props: merge({}, Component.props, props),

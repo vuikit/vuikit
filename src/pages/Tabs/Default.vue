@@ -27,7 +27,10 @@
         </vk-subnav>
         <vk-switcher :connect="$refs.nav">
           <vk-switch>
-            <vk-docs-props :props="props"></vk-docs-props>
+            <vk-docs-props
+              :props="props"
+              @change="props[arguments[0]].demo.value = arguments[1]">
+            </vk-docs-props>
           </vk-switch>
           <vk-switch>
             <vk-docs-props :props="propsTab"></vk-docs-props>

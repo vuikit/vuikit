@@ -136,7 +136,7 @@ const props = {
 
 const slots = {
   default: {
-    description: `The template for each day field rendering. The
+    description: `The template for each date rendering. The
       <a href="http://momentjs.com/docs/#/parsing/">moment.js</a> object of the day
       being currently rendered can be accessed at the component <code>$renderingDate</code>.
       Use with combination of <code>ref</code>, eg. <code>$refs.calendar.$renderingDate</code>.`

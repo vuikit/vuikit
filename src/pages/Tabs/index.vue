@@ -10,7 +10,7 @@ import TabsDefault from './Default'
 import TabsVertical from './Vertical'
 
 export default {
-  name: 'pageTabs',
+  name: 'PageTabs',
   components: {
     TabsDefault,
     TabsVertical

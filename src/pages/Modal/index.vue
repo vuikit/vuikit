@@ -16,6 +16,7 @@ import ModalAlert from './ModalAlert'
 import ModalConfirm from './ModalConfirm'
 
 export default {
+  name: 'PageModal',
   components: {
     ModalDefault,
     ModalLightbox,

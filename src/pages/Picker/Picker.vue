@@ -3,7 +3,7 @@
     <h2>Picker</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-picker v-ref:demo
+    <vk-picker
       :pickables="[{ name: 'id' }, 'hits']"
       :table-fields="['name', 'hits', 'description']"
       :table-rows="[{
@@ -28,28 +28,31 @@
     <!-- TABS -->
     <vk-tabs>
       <vk-tab label="Props">
-        <vk-docs-props :props="props"></vk-docs-props>
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
       </vk-tab>
       <vk-tab label="Events">
-        <vk-docs-events :events="events" :connect="$refs.demo"></vk-docs-events>
+        <vk-docs-events :events="events"></vk-docs-events>
       </vk-tab>
       <vk-tab label="Example">
-        <vk-docs-code :code="code"></vk-docs-code>
+        <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
   </div>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
 import Component from '../../lib/Picker'
 import mixin from '../_mixin'
+import { mergeProps } from './helper'
 
 export default {
   mixins: [mixin],
   data: () => ({
     message: '',
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: mergeProps(Component.props, props),
     example,
     events
   }),
