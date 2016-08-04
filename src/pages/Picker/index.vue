@@ -1,7 +1,7 @@
 <template>
   <vk-docs-layout-page>
     <picker></picker>
-    <!-- <picker-drop></picker-drop> -->
+    <picker-drop></picker-drop>
   </vk-docs-layout-page>
 </template>
 

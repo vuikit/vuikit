@@ -35,10 +35,10 @@ export default {
   //   name: 'Pagination',
   //   component: require('./pages/Pagination')
   // },
-  // '/picker': {
-  //   name: 'Picker',
-  //   component: require('./pages/Picker')
-  // },
+  '/picker': {
+    name: 'Picker',
+    component: require('./pages/Picker')
+  },
   // '/progress': {
   //   name: 'Progress',
   //   component: require('./pages/Progress')

@@ -1,44 +1,55 @@
-<template>
-  <div>
-    <vk-table v-ref:table
-      :fields="tableFields"
-      :rows="tableRows"
-      :condensed="tableCondensed"
-      :striped="tableStriped"
-      :hover="tableHover"
-      :sort-order="tableSortOrder"
-      @sort="$emit('table-sort', $arguments[0])">
-      <a href=""
-        v-if="isPickable($field.name)"
-        v-text="$row[$field.name]"
-        @click.prevent="pick($field.name, $row)">
-      </a>
-      <span v-else>
-        {{ $row[$field.name] }}
-      </span>
-    </vk-table>
-  </div>
-</template>
-
 <script>
-import Table from './Table'
-import { isObject, reduce, merge, mapKeys, upperFirst } from 'lodash'
+import { warn } from '../util'
+import { isObject, reduce, merge } from 'lodash'
 
 export default {
   name: 'VkPicker',
-  components: {
-    VkTable: Table
+  render (h) {
+    if (this.$slots.default !== undefined) {
+      const tableVnode = this.$slots.default[0]
+      tableVnode.componentOptions.children = () => [
+        h('PickField', {
+          props: {
+            row: tableVnode.child.$renderingRow,
+            field: tableVnode.child.$renderingField,
+            $picker: this
+          }
+        })
+      ]
+      return tableVnode
+    } else {
+      warn('VkPicker expects VkTable as child.')
+    }
   },
-  props: merge({
+  components: {
+    PickField: {
+      functional: true,
+      props: ['row', 'field', '$picker'],
+      render (h, { props }) {
+        const $picker = props.$picker
+        return ($picker.isPickable(props.field.name))
+          ? (<a href=""
+            v-text=""
+            on-click={e => {
+              e.preventDefault()
+              $picker.pick(props.field.name, props.row)
+            }}>
+            { props.row[ props.field.name ] }
+          </a>)
+          : (<span>
+            { props.row[ props.field.name ] }
+          </span>)
+      }
+    }
+  },
+  props: {
     // Array of pickable fields
     // eg: [{ id: 'name' }, 'hits']
     pickables: {
       type: Array,
       required: true
     }
-  }, // get and prefix subcomponent props
-    mapKeys(Table.props, (value, key) => 'table' + upperFirst(key))
-  ),
+  },
   computed: {
     // returns a field/data pickables map
     pickablesMap () {
