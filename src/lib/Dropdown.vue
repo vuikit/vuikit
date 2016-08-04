@@ -44,10 +44,6 @@ export default {
       type: Boolean,
       default: false
     },
-    openOn: {
-      type: [String, Boolean],
-      default: 'click' // hover, focus, always, false
-    },
     position: {
       type: String,
       default: 'bottom left'
@@ -72,32 +68,6 @@ export default {
       type: Boolean,
       default: true
     },
-    openDelay: {
-      type: Number,
-      default: 0
-    },
-    closeDelay: {
-      type: Number,
-      default: 0
-    },
-    // inherited from openDelay and closeDelay
-    // if not explicitly defined
-    focusDelay: {
-      type: Number,
-      default: 0
-    },
-    blurDelay: {
-      type: Number,
-      default: 0
-    },
-    hoverOpenDelay: {
-      type: Number,
-      default: 0
-    },
-    hoverCloseDelay: {
-      type: Number,
-      default: 0
-    },
     tetherOptions: {
       type: Object,
       default: () => ({})
@@ -110,7 +80,7 @@ export default {
     targetNode () {
       return (typeof this.target === 'string')
         ? query(this.target)
-        : this.target.elm
+        : this.target
     }
   },
   methods: {
