@@ -24,7 +24,7 @@ import Table from './Table'
 import Tab from './Tabs/Tab'
 import Tabs from './Tabs/Default'
 // import TabsVertical from './TabsVertical'
-// import Upload from './Upload'
+import Upload from './Upload'
 
 const Vuikit = {
   Alert,
@@ -53,7 +53,7 @@ const Vuikit = {
   Tab,
   Tabs,
   // TabsVertical,
-  // Upload,
+  Upload,
   install (Vue) {
     const keys = Object.keys(this)
     keys.pop() // remove 'install' from keys

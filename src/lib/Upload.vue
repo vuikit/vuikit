@@ -19,7 +19,7 @@ export default {
   data: () => ({
     dragged: false
   }),
-  ready () {
+  mounted () {
     const vm = this
     // deal with possible file inputs
     $('input[type="file"]', this.$el).on('change', function () {

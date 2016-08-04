@@ -58,9 +58,9 @@ export default {
   '/tabs': {
     name: 'Tabs',
     component: require('./pages/Tabs')
+  },
+  '/upload': {
+    name: 'Upload',
+    component: require('./pages/Upload')
   }
-  // '/upload': {
-  //   name: 'Upload',
-  //   component: require('./pages/Upload')
-  // }
 }
