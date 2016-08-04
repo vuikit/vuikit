@@ -1,13 +1,15 @@
 <template>
-  <div class="vk-filter uk-form">
+  <div class="vk-filter uk-form" :data-uid="uid">
     <div class="uk-flex">
-      <vk-button v-ref:button
+      <button type="button"
         v-if="filters"
-        icon-right="caret-down">
+        class="uk-button"
+        @click="dropdown.show = true">
         Filters
-      </vk-button>
+        <i class="uk-icon-caret-down"></i>
+      </button>
       <div class="uk-form-icon uk-flex-item-1">
-        <i v-if="query && enableReset"
+        <i v-if="query && showReset"
           class="uk-icon-remove uk-link"
           style="pointer-events: auto;"
           @click="query = ''">
@@ -15,22 +17,27 @@
         <i v-else
           class="uk-icon-search">
         </i>
-        <input v-el:input
+        <input
           type="text"
           class="uk-width-1-1"
           debounce="500"
           v-model="query">
       </div>
     </div>
-    <vk-dropdown v-ref:dropdown
-      v-if="$refs.button"
-      :target="$refs.button.$el"
-      fix-width>
+    <vk-dropdown
+      v-if="filters"
+      :target="'.vk-filter[data-uid=\'' + uid + '\']'"
+      :show="dropdown.show"
+      fix-width
+      @clickOut="dropdown.show = false">
       <ul class="uk-nav uk-nav-dropdown">
-        <li v-for="(filter, filterQuery) in filters">
+        <li v-for="(filterQuery, filter) in filters">
           <a href=""
             v-text="filter"
-            @click.prevent="query = filterQuery, $refs.dropdown.close()">
+            @click.prevent="
+              query = filterQuery,
+              dropdown.show = false
+            ">
           </a>
         </li>
       </ul>
@@ -39,14 +46,12 @@
 </template>
 
 <script>
-import Button from './Button'
 import Dropdown from './Dropdown'
 import sQuery from 'search-query-parser'
 
 export default {
   name: 'VkFilter',
   components: {
-    VkButton: Button,
     VkDropdown: Dropdown
   },
   props: {
@@ -62,18 +67,25 @@ export default {
         ranges: []
       })
     },
-    // enables the reset btn
-    enableReset: {
+    // shows the reset btn
+    showReset: {
       type: Boolean,
       default: false
     }
   },
   data: () => ({
+    dropdown: {
+      show: false,
+      target: ''
+    },
     query: ''
   }),
   computed: {
     parsed () {
       return sQuery.parse(this.query, this.parser)
+    },
+    uid () {
+      return this._uid
     }
   },
   watch: {

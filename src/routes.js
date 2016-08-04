@@ -23,10 +23,10 @@ export default {
     name: 'Dropdown',
     component: require('./pages/Dropdown')
   },
-  // '/filter': {
-  //   name: 'Filter',
-  //   component: require('./pages/Filter')
-  // },
+  '/filter': {
+    name: 'Filter',
+    component: require('./pages/Filter')
+  },
   // '/modal': {
   //   name: 'Modal',
   //   component: require('./pages/Modal')
