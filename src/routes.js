@@ -39,10 +39,10 @@ export default {
     name: 'Picker',
     component: require('./pages/Picker')
   },
-  // '/progress': {
-  //   name: 'Progress',
-  //   component: require('./pages/Progress')
-  // },
+  '/progress': {
+    name: 'Progress',
+    component: require('./pages/Progress')
+  },
   // '/subnav': {
   //   name: 'Subnav',
   //   component: require('./pages/Subnav')
