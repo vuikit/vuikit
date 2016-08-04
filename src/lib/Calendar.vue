@@ -46,10 +46,10 @@
       </thead>
       <tbody>
         <tr v-for="week in weeks">
-          <td-day v-for="(day, index) in week"
+          <td-date v-for="(date, index) in week"
             :key="index"
-            :day="day">
-          </td-day>
+            :date="date">
+          </td-date>
         </tr>
       </tbody>
     </table>
@@ -84,11 +84,11 @@ export default {
     this.$options._renderChildren = null
   },
   components: {
-    tdDay: {
+    tdDate: {
       functional: true,
       render (h, { parent, data }) {
-        // set rendering day
-        parent.$renderingDay = data.attrs.day
+        // set rendering date
+        parent.$renderingDate = data.attrs.date
         return h('td', parent.$renderingTemplate)
       }
     }
@@ -125,10 +125,6 @@ export default {
     locale: {
       type: Object,
       default: () => ({})
-    },
-    template: {
-      type: String,
-      default: ''
     }
   },
   computed: {

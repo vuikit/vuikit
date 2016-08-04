@@ -5,8 +5,7 @@ import ButtonLink from './ButtonLink'
 import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'
 import Calendar from './Calendar'
-// import Datepicker from './Datepicker'
-// import DatepickerDrop from './DatepickerDrop'
+import Datepicker from './Datepicker'
 import Dropdown from './Dropdown'
 // import Filter from './Filter'
 // import Modal from './Modal'
@@ -36,8 +35,7 @@ const Vuikit = {
   ButtonCheckbox,
   ButtonRadio,
   Calendar,
-  // Datepicker,
-  // DatepickerDrop,
+  Datepicker,
   Dropdown,
   // Filter,
   // Modal,

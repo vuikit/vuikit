@@ -15,10 +15,10 @@ export default {
     name: 'Calendar',
     component: require('./pages/Calendar')
   },
-  // '/datepicker': {
-  //   name: 'Datepicker',
-  //   component: require('./pages/Datepicker')
-  // },
+  '/datepicker': {
+    name: 'Datepicker',
+    component: require('./pages/Datepicker')
+  },
   '/dropdown': {
     name: 'Dropdown',
     component: require('./pages/Dropdown')

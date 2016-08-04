@@ -4,7 +4,13 @@
       <h2>Dropdown</h2>
       <hr class="uk-article-divider">
       <!-- DEMO -->
+      <vk-button id="target"
+        @click.native="props.show.demo.value = !props.show.demo.value">
+        Toggle
+        <i class="uk-icon-caret-down"></i>
+      </vk-button>
       <vk-dropdown ref="dropdown"
+        target="#target"
         :show="props.show.demo.value"
         :position="props.position.demo.value"
         :offset="props.offset.demo.value"
@@ -15,14 +21,9 @@
         :fix-width="props.fixWidth.demo.value"
         :scrollable="props.scrollable.demo.value"
         @clickIn="events.clickIn.emited = true"
-        @clickOut="onClickOut"
+        @clickOut="events.clickOut.emited = true"
         @targetHoverIn="events.targetHoverIn.emited = true"
         @targetHoverOut="events.targetHoverOut.emited = true">
-        <vk-button slot="target"
-          @click.native="props.show.demo.value = true">
-          Trigger
-          <i class="uk-icon-caret-down"></i>
-        </vk-button>
         <ul class="uk-nav uk-nav-dropdown">
           <li><a href="#" @click.prevent>Item</a></li>
           <li><a href="#" @click.prevent>Another item</a></li>
@@ -60,7 +61,7 @@
 </template>
 
 <script>
-import Component from '../lib/Dropdown/Dropdown'
+import Component from '../lib/Dropdown'
 import mixin from './_mixin'
 import { mergeProps } from './helper'
 
@@ -86,16 +87,6 @@ export default {
     events,
     example
   }),
-  methods: {
-    onClickOut (event) {
-      this.events.clickOut.emited = true
-      const propsCheckbox = document.querySelector('.vk-docs-props input[type=checkbox]')
-      if (event.target === propsCheckbox || propsCheckbox.contains(event.target)) {
-        return
-      }
-      this.props.show.demo.value = false
-    }
-  },
   watch: {
     'props.position.demo.value': resetTethler(),
     'props.offset.demo.value': resetTethler(),
@@ -107,11 +98,8 @@ export default {
 
 const props = {
   target: {
-    description: `An alternative way to the recommended <code>target</code> slot
-      to specify the element the dropdown should stay adjacent to. Expects a query
-      string.`,
-    default: '',
-    type: 'String'
+    description: `The element or string to query the element to which the
+      dropdown should stay adjacent.`
   },
   show: {
     description: 'Display state that when toggled will hide/show the dropdown.',
@@ -210,10 +198,6 @@ const props = {
 const slots = {
   default: {
     description: 'The container for the dropdown content.'
-  },
-  target: {
-    description: `The element the dropdown should stay adjacent to. Is an alternative
-      to the <code>target</code> prop query.`
   }
 }
 
@@ -237,12 +221,12 @@ const events = {
 }
 
 const example =
-`<vk-dropdown {attrs}
-  @clickOut="show = false">
-  <vk-button slot="target"
-    @click.native="show = true">
-    Trigger
-  </vk-button>
-  Dropdown Content
+`<vk-button id="target"
+  @click.native="show = !show">
+  Toggle
+</vk-button>
+<vk-dropdown {attrs}
+  target="#target">
+  Dropdown
 </vk-dropdown>`
 </script>
