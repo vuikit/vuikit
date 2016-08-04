@@ -1,8 +1,9 @@
 <template>
-  <div class="vk-filter uk-form" :data-uid="uid">
+  <div class="vk-filter uk-form">
     <div class="uk-flex">
-      <button type="button"
-        v-if="filters"
+      <button v-if="filters"
+        ref="button"
+        type="button"
         class="uk-button"
         @click="dropdown.show = true">
         Filters
@@ -24,9 +25,9 @@
           v-model="query">
       </div>
     </div>
-    <vk-dropdown
-      v-if="filters"
-      :target="'.vk-filter[data-uid=\'' + uid + '\']'"
+    <vk-dropdown v-if="filters"
+      ref="dropdown"
+      :target="dropdown.target"
       :show="dropdown.show"
       fix-width
       @clickOut="dropdown.show = false">
@@ -54,6 +55,11 @@ export default {
   components: {
     VkDropdown: Dropdown
   },
+  mounted () {
+    // set dropdown target and init it
+    this.dropdown.target = this.$refs.button
+    setTimeout(() => this.$refs.dropdown.init())
+  },
   props: {
     // eg: { 'Filter Foo': 'is:bar', 'Filter Bar'... }
     filters: {
@@ -76,16 +82,13 @@ export default {
   data: () => ({
     dropdown: {
       show: false,
-      target: ''
+      target: false
     },
     query: ''
   }),
   computed: {
     parsed () {
       return sQuery.parse(this.query, this.parser)
-    },
-    uid () {
-      return this._uid
     }
   },
   watch: {

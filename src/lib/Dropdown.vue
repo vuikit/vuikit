@@ -22,15 +22,12 @@ export default {
   name: 'VkDropdown',
   mounted () {
     if (this.targetNode) {
-      this.initEvents()
-      this.initTether()
-    } else {
-      this.$destroy()
+      this.init()
     }
   },
   props: {
     target: {
-      default: 'body'
+      default: false
     },
     show: {
       type: Boolean,
@@ -84,7 +81,8 @@ export default {
     }
   },
   methods: {
-    initTether () {
+    init () {
+      this.initEvents()
       this.$tether = Tether.init(
         this.$el,
         this.targetNode,
