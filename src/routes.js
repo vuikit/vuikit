@@ -27,10 +27,10 @@ export default {
     name: 'Filter',
     component: require('./pages/Filter')
   },
-  // '/modal': {
-  //   name: 'Modal',
-  //   component: require('./pages/Modal')
-  // },
+  '/modal': {
+    name: 'Modal',
+    component: require('./pages/Modal')
+  },
   '/pagination': {
     name: 'Pagination',
     component: require('./pages/Pagination')
