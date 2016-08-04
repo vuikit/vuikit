@@ -70,16 +70,16 @@ const example =
   type="text"
   placeholder="Pick a date"
   v-model="date"
-  @focus="dropdownShow = true">
+  @focus="show = true">
 <vk-dropdown
   target="#target"
-  :show="dropdownShow"
-  @clickOut="dropdownShow = false">
+  :show="show"
+  @clickOut="show = false">
   <vk-datepicker
     :dates="[date]"
     @pick="
       date = arguments[0].format('YYYY-MM-DD'),
-      dropdownShow = false
+      show = false
     ">
     <vk-calendar
       :year="calendar.year"

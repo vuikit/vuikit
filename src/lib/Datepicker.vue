@@ -2,6 +2,7 @@
 import moment from './mixins/moment'
 import { flatten } from 'lodash'
 import { getCalendarMatrix, isBetween } from './helpers/dates'
+import { warn } from '../util'
 
 export default {
   name: 'VkDatepicker',
@@ -20,6 +21,8 @@ export default {
         ]
       }
       return calendarVnode
+    } else {
+      warn('VkDatepicker expects VkCalendar as child.')
     }
   },
   mixins: [moment],
