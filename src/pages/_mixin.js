@@ -28,16 +28,12 @@ export default {
  */
 function toAttrs (props) {
   let attrs = ''
-  each(props, (value, key) => {
-    // make sure key is kebabCase
-    key = kebabCase(key)
-    // literal trues can be set without value, eg. disabled
-    if (value === true) {
-      value = ''
-    }
+  each(props, (value, prop) => {
+    // make sure prop is kebabCase
+    prop = kebabCase(prop)
     // literal numbers requires binding (:) to be evaluated as such
     if (Number.isInteger(value) || value === false) {
-      key = `:${key}`
+      prop = `:${prop}`
     }
     // Arrays and Objects
     if (isArray(value) || isObject(value)) {
@@ -50,13 +46,17 @@ function toAttrs (props) {
       // convert double quotes
       value = value.replace(/"/g, '\'')
       // bind is required
-      key = `:${key}`
+      prop = `:${prop}`
     } else if (value === '' || value === null || value === undefined) {
       return true
     }
+    // literal trues can be set without value, eg. disabled
+    if (value === true) {
+      value = ''
+    }
     attrs += value || value === false
-      ? `${key}="${value}" `
-      : `${key} `
+      ? `${prop}="${value}" `
+      : `${prop} `
   })
   return attrs
 }

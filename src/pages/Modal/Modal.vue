@@ -1,18 +1,7 @@
 <template>
-  <div class="uk-block" style="height: 1900px;">
+  <div class="uk-block">
     <h2>Modal</h2>
     <hr class="uk-article-divider">
-    <!-- UK modal test -->
-    <!-- This is a button toggling the modal -->
-<button class="uk-button" data-uk-modal="{target:'#my-id'}">...</button>
-
-<!-- This is the modal -->
-<div id="my-id" class="uk-modal">
-    <div class="uk-modal-dialog">
-        <a class="uk-modal-close uk-close"></a>
-        ... UIkit
-    </div>
-</div>
     <!-- DEMO -->
     <vk-button
       @click.native="props.show.demo.value = true">
@@ -20,8 +9,10 @@
     </vk-button>
     <vk-modal
       :show="props.show.demo.value"
-      :large="props.large.demo.value"
       :center="props.center.demo.value"
+      :large="props.large.demo.value"
+      :lightbox="props.lightbox.demo.value"
+      :blank="props.blank.demo.value"
       @clickOut="
         props.show.demo.value = false,
         events.clickOut.emited = true
@@ -35,10 +26,47 @@
         props.show.demo.value = false,
         events.keyEsc.emited = true
       ">
-        <a class="uk-modal-close uk-close"
-          @click="props.show.demo.value = false"
-        ></a>
-        ...
+      <!-- DEFAULT -->
+      <template v-if="
+        props.lightbox.demo.value === false &&
+        props.blank.demo.value === false
+      ">
+        <a class="uk-close"
+          @click="props.show.demo.value = false">
+        </a>
+        <div class="uk-modal-header">
+          <h2>Headline</h2>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <div class="uk-modal-footer">
+          Footer
+        </div>
+        <div class="uk-modal-caption">Caption</div>
+      </template>
+      <!-- LIGHTBOX -->
+      <template v-if="props.lightbox.demo.value">
+        <a class="uk-close uk-close-alt"
+          @click="props.show.demo.value = false">
+        </a>
+        <img src="../assets/placeholder_600x400.svg" class="uk-align-center">
+      </template>
+      <!-- BLANK -->
+      <template v-if="props.blank.demo.value">
+        <a class="uk-close uk-close-alt"
+          @click="props.show.demo.value = false">
+        </a>
+        <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
+          <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
+            :style="{'background-image': 'url(' + imageBlank + ')'}">
+          </div>
+          <div class="uk-width-medium-1-2">
+            <h1>Headline</h1>
+            <div class="uk-width-medium-1-3">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+          </div>
+        </div>
+      </template>
     </vk-modal>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -70,7 +98,7 @@ import { mergeProps } from '../helper'
 export default {
   mixins: [mixin],
   data: () => ({
-    modal2show: false,
+    imageBlank: require('../assets/placeholder_600x400.svg'),
     props: mergeProps(Component.props, props),
     slots,
     events,
@@ -95,6 +123,18 @@ const props = {
   },
   large: {
     description: 'Whether to set the modal width as large as the site\'s container width.',
+    demo: {
+      value: false
+    }
+  },
+  lightbox: {
+    description: 'Whether to display the modal as lightbox, better suited for showing images.',
+    demo: {
+      value: false
+    }
+  },
+  blank: {
+    description: 'Whether to display the modal with paddings and margins reseted, useful for displaying a fullscreen modal.',
     demo: {
       value: false
     }
@@ -128,10 +168,24 @@ const events = {
 }
 
 const example =
-`<vk-modal {attrs}>
-  <template slot="header">Headline</template>
-  <div>Main content</div>
-  <template slot="footer">Footer</template>
-  <template slot="caption">Caption</template>
+`<vk-button
+  @click.native="show = true">
+  Open
+</vk-button>
+<vk-modal {attrs}
+  @clickOut="show = false"
+  @inactive="show = false"
+  @keyEsc="show = false">
+  <a class="uk-close"
+    @click="show = false">
+  </a>
+  <div class="uk-modal-header">
+    <h2>Headline</h2>
+  </div>
+  <p>Lorem ipsum...</p>
+  <div class="uk-modal-footer">
+    Footer
+  </div>
+  <div class="uk-modal-caption">Caption</div>
 </vk-modal>`
 </script>
