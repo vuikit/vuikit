@@ -7,39 +7,13 @@ export default {
   render (h) {
     if (this.$slots.default !== undefined) {
       const tableVnode = this.$slots.default[0]
-      tableVnode.componentOptions.children = () => [
-        h('PickField', {
-          props: {
-            row: tableVnode.child.$renderingRow,
-            field: tableVnode.child.$renderingField,
-            $picker: this
-          }
-        })
-      ]
+      tableVnode.componentOptions.propsData.fieldComponent = RowField
+      tableVnode.componentOptions.propsData.fieldProps = {
+        $picker: this
+      }
       return tableVnode
     } else {
       warn('VkPicker expects VkTable as child.')
-    }
-  },
-  components: {
-    PickField: {
-      functional: true,
-      props: ['row', 'field', '$picker'],
-      render (h, { props }) {
-        const $picker = props.$picker
-        return ($picker.isPickable(props.field.name))
-          ? (<a href=""
-            v-text=""
-            on-click={e => {
-              e.preventDefault()
-              $picker.pick(props.field.name, props.row)
-            }}>
-            { props.row[ props.field.name ] }
-          </a>)
-          : (<span>
-            { props.row[ props.field.name ] }
-          </span>)
-      }
     }
   },
   props: {
@@ -73,4 +47,36 @@ export default {
     }
   }
 }
+
+const RowField = {
+  name: 'RowField',
+  functional: true,
+  props: {
+    row: {
+      required: true
+    },
+    field: {
+      required: true
+    },
+    $picker: {
+      required: true
+    }
+  },
+  render (h, { parent: $calendar, props }) {
+    const $picker = props.$picker
+    if ($picker.isPickable(props.field.name)) {
+      return h('a', {
+        on: {
+          click: e => {
+            e.preventDefault()
+            $picker.pick(props.field.name, props.row)
+          }
+        }
+      }, [ props.row[props.field.name] ])
+    } else {
+      return h('span', [ props.row[props.field.name] ])
+    }
+  }
+}
+
 </script>

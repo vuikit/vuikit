@@ -46,10 +46,10 @@
       </thead>
       <tbody>
         <tr v-for="week in weeks">
-          <td-date v-for="(date, index) in week"
+          <date-field v-for="(date, index) in week"
             :key="index"
             :date="date">
-          </td-date>
+          </date-field>
         </tr>
       </tbody>
     </table>
@@ -58,6 +58,7 @@
 
 <script>
 import momentMixin from './mixins/moment'
+import { merge } from 'lodash'
 import {
   validDate,
   getCalendarMatrix,
@@ -71,25 +72,33 @@ import {
 export default {
   name: 'VkCalendar',
   mixins: [momentMixin],
-  beforeCreate () {
-    // set component ref earlier
-    // so it can be used in the slot
-    const context = this.$options._parentVnode.context
-    const ref = this.$options._parentVnode.data.ref
-    if (ref) {
-      context.$refs[ref] = this
-    }
-    // keep the template, null slot rendering
-    this.$renderingTemplate = this.$options._renderChildren
-    this.$options._renderChildren = null
-  },
   components: {
-    tdDate: {
+    DateField: {
+      name: 'DateField',
       functional: true,
-      render (h, { parent, data }) {
-        // set rendering date
-        parent.$renderingDate = data.attrs.date
-        return h('td', parent.$renderingTemplate)
+      props: {
+        date: {
+          required: true
+        }
+      },
+      render (h, { parent, props }) {
+        if (parent.fieldComponent) {
+          return h('td', [
+            h(parent.fieldComponent, {
+              props: merge({}, parent.fieldProps, props)
+            })
+          ])
+        } else {
+          return (
+            <td>
+              <a class={{
+                'uk-datepicker-table-muted': !parent.isInCurrentMonth(props.date)
+              }}>
+                { props.date.format('D') }
+              </a>
+            </td>
+          )
+        }
       }
     }
   },
@@ -123,6 +132,14 @@ export default {
       validator: validDate
     },
     locale: {
+      type: Object,
+      default: () => ({})
+    },
+    fieldComponent: {
+      type: [Object, Boolean],
+      default: false
+    },
+    fieldProps: {
       type: Object,
       default: () => ({})
     }

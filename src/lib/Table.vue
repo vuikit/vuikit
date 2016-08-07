@@ -28,12 +28,12 @@
     </thead>
     <tbody>
       <tr v-for="row in rows">
-        <td-field v-for="(field, index) in fieldsDef"
+        <row-field v-for="(field, index) in fieldsDef"
           :class="field.cellClass"
           :key="index"
           :row="row"
           :field="field">
-        </td-field>
+        </row-field>
       </tr>
     </tbody>
   </table>
@@ -44,27 +44,28 @@ import { map, isString, merge } from 'lodash'
 
 export default {
   name: 'VkTable',
-  beforeCreate () {
-    // set component ref earlier
-    // so it can be used in the slot
-    const context = this.$options._parentVnode.context
-    const ref = this.$options._parentVnode.data.ref
-    if (ref) {
-      context.$refs[ref] = this
-    }
-    // keep the template, null slot rendering
-    this.$renderingTemplate = this.$options._renderChildren
-    this.$options._renderChildren = null
-  },
   components: {
-    tdField: {
+    RowField: {
+      name: 'RowField',
       functional: true,
-      render (h, { parent, data }) {
-        parent.$renderingRow = data.attrs.row
-        parent.$renderingField = data.attrs.field
-        return h('td', {
-          attrs: { class: data.class }
-        }, parent.$renderingTemplate)
+      props: {
+        row: {
+          required: true
+        },
+        field: {
+          required: true
+        }
+      },
+      render (h, { parent, props, data }) {
+        if (parent.fieldComponent) {
+          return h('td', data, [
+            h(parent.fieldComponent, {
+              props: merge({}, parent.fieldProps, props)
+            })
+          ])
+        } else {
+          return h('td', data, [props.row[ props.field.name ]])
+        }
       }
     }
   },
@@ -92,6 +93,14 @@ export default {
     sortOrder: {
       type: Object,
       default: () => ({}) // field: asc|desc
+    },
+    fieldComponent: {
+      type: [Object, Boolean],
+      default: false
+    },
+    fieldProps: {
+      type: Object,
+      default: () => ({})
     }
   },
   computed: {

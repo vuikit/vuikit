@@ -157,6 +157,7 @@ export default {
       this.$tether.destroy()
     }
     this.removeEvents()
+    this.$el.parentNode.removeChild(this.$el)
   }
 }
 </script>

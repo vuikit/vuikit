@@ -9,16 +9,9 @@ export default {
   render (h) {
     if (this.$slots.default !== undefined) {
       const calendarVnode = this.$slots.default[0]
-      calendarVnode.componentOptions.children = () => {
-        return [
-          h('PickDate', {
-            props: {
-              date: calendarVnode.child.$renderingDate,
-              $datepicker: this,
-              $calendar: calendarVnode.child
-            }
-          })
-        ]
+      calendarVnode.componentOptions.propsData.fieldComponent = DateField
+      calendarVnode.componentOptions.propsData.fieldProps = {
+        $datepicker: this
       }
       return calendarVnode
     } else {
@@ -26,30 +19,6 @@ export default {
     }
   },
   mixins: [moment],
-  components: {
-    PickDate: {
-      functional: true,
-      props: ['date', '$datepicker', '$calendar'],
-      render (h, { props }) {
-        const $datepicker = props.$datepicker
-        const $calendar = props.$calendar
-        return (
-          <a class={{
-            'uk-active': $datepicker.isPicked(props.date),
-            'uk-datepicker-table-disabled': $datepicker.isDisabled(props.date),
-            'uk-datepicker-table-muted': !$calendar.isInCurrentMonth(props.date) ||
-              $datepicker.isDisabled(props.date)
-          }} on-click={() => {
-            if (!$datepicker.isDisabled(props.date)) {
-              $datepicker.toggle(props.date)
-            }
-          }}>
-            { props.date.format('D') }
-          </a>
-        )
-      }
-    }
-  },
   props: {
     dates: {
       type: Array,
@@ -109,6 +78,36 @@ export default {
         ? this.$emit('unpick', moment)
         : this.$emit('pick', moment)
     }
+  }
+}
+
+const DateField = {
+  name: 'DateField',
+  functional: true,
+  props: {
+    date: {
+      required: true
+    },
+    $datepicker: {
+      required: true
+    }
+  },
+  render (h, { parent: $calendar, props }) {
+    const $datepicker = props.$datepicker
+    return (
+      <a class={{
+        'uk-active': $datepicker.isPicked(props.date),
+        'uk-datepicker-table-disabled': $datepicker.isDisabled(props.date),
+        'uk-datepicker-table-muted': !$calendar.isInCurrentMonth(props.date) ||
+          $datepicker.isDisabled(props.date)
+      }} on-click={() => {
+        if (!$datepicker.isDisabled(props.date)) {
+          $datepicker.toggle(props.date)
+        }
+      }}>
+        { props.date.format('D') }
+      </a>
+    )
   }
 }
 </script>

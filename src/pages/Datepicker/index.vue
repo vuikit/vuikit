@@ -1,7 +1,7 @@
 <template>
   <vk-docs-layout-page>
     <datepicker></datepicker>
-    <datepicker-drop></datepicker-drop>
+    <!-- <datepicker-drop></datepicker-drop> -->
   </vk-docs-layout-page>
 </template>
 

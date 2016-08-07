@@ -26,7 +26,6 @@
           events.sort.emited = true,
           sortRows(arguments[0])
         ">
-        {{ $refs.table.$renderingRow[ $refs.table.$renderingField.name ] }}
       </vk-table>
       <!-- DESC -->
       <div class="uk-margin-large">

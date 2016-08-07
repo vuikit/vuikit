@@ -29,6 +29,5 @@ const app = new App({
 })
 
 window.addEventListener('popstate', () => {
-  console.log(34)
   app.currentRoute = window.location.pathname
 })

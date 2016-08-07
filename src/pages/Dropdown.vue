@@ -21,7 +21,10 @@
         :fix-width="props.fixWidth.demo.value"
         :scrollable="props.scrollable.demo.value"
         @clickIn="events.clickIn.emited = true"
-        @clickOut="events.clickOut.emited = true"
+        @clickOut="
+          props.show.demo.value = false,
+          events.clickOut.emited = true
+        "
         @targetHoverIn="events.targetHoverIn.emited = true"
         @targetHoverOut="events.targetHoverOut.emited = true">
         <ul class="uk-nav uk-nav-dropdown">
