@@ -1,39 +1,52 @@
 <template>
   <div class="uk-block">
-    <h2>Modal Confirm</h2>
+    <h2>Modal as Confirm Dialog</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-button
-      @click="(props.show.demo.value = true) && ($refs.demo.state = false)">
-      {{ buttonText }}
+      @click.native="show = true">
+      {{ confirmed ? 'Confirmed' : 'Open' }}
     </vk-button>
-    <vk-modal-confirm v-ref:demo
-      :show.sync="props.show.demo.value"
-      :center="props.center.demo.value"
-      :block="props.block.demo.value"
-      :keyboard="props.keyboard.demo.value"
-      @confirm="buttonText = 'Confirmed'"
-      @dismiss="buttonText = 'Dismissed'">
-      {{ props.block.demo.value
-        ? 'The modal is blocked, refresh the page to continue.'
-        : 'Are you sure?' }}
-    </vk-modal-confirm>
+    <vk-modal
+      :show="show"
+      @clickOut="
+        show = false,
+        confirmed = false
+      "
+      @keyEsc="
+        show = false,
+        confirmed = false
+      ">
+      Please confirm.
+      <div class="uk-modal-footer uk-text-right">
+        <vk-button
+          @click.native="
+            confirmed = false,
+            show = false
+          ">
+          Cancel
+        </vk-button>
+        <vk-button
+          color="primary"
+          @click.native="
+            confirmed = true,
+            show = false
+          ">
+          OK
+        </vk-button>
+      </div>
+    </vk-modal>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-modal-confirm</code> component is an alternative for the native window.confirm dialog.
+      <p>A very common usage of <code>vk-modal</code> is to display a confirm dialog.
+        That can be acomplished with just a specific slot layout.</p>
+      <p><span class="uk-badge uk-badge-notification">Note</span> If your project
+      requires this combination quite often it would be wise to wrap it all up into
+      a custom component.</p>
     </div>
     <!-- TABS -->
     <vk-tabs>
-      <vk-tab label="Props">
-        <vk-docs-props
-          :props="props"
-          @change="props[arguments[0]].demo.value = arguments[1]">
-        </vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events :events="events"></vk-docs-events>
-      </vk-tab>
-      <vk-tab label="Example">
+      <vk-tab label="Code">
         <vk-docs-code>{{ code }}</vk-docs-code>
       </vk-tab>
     </vk-tabs>
@@ -41,39 +54,49 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
-import commonEvents from './events'
-import commonProps from './props'
-import ModalBase from '../../lib/ModalBase'
 import mixin from '../_mixin'
 
 export default {
   mixins: [mixin],
-  data () {
-    return {
-      buttonText: 'Open',
-      props: merge({}, commonProps, pick(ModalBase.props, Object.keys(commonProps))),
-      slots,
-      events,
-      example
-    }
-  }
-}
-
-const events = merge({}, commonEvents, {
-  confirm: {
-    description: 'Emited on user confirmation.'
-  }
-})
-
-const slots = {
-  default: {
-    description: 'The main content.'
-  }
+  data: () => ({
+    show: false,
+    confirmed: false,
+    example
+  })
 }
 
 const example =
-`<vk-modal-confirm {attrs}>
-  Are you sure?
-</vk-modal-confirm>`
+`<vk-button
+  @click.native="show = true">
+  {{ confirmed ? 'Confirmed' : 'Open' }}
+</vk-button>
+<vk-modal
+  :show="show"
+  @clickOut="
+    show = false,
+    confirmed = false
+  "
+  @keyEsc="
+    show = false,
+    confirmed = false
+  ">
+  Please confirm.
+  <div class="uk-modal-footer uk-text-right">
+    <vk-button
+      @click.native="
+        confirmed = false,
+        show = false
+      ">
+      Cancel
+    </vk-button>
+    <vk-button
+      color="primary"
+      @click.native="
+        confirmed = true,
+        show = false
+      ">
+      OK
+    </vk-button>
+  </div>
+</vk-modal>`
 </script>

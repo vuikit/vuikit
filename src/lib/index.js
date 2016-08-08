@@ -9,10 +9,6 @@ import Datepicker from './Datepicker'
 import Dropdown from './Dropdown'
 import Filter from './Filter'
 import Modal from './Modal'
-// import ModalLightbox from './ModalLightbox'
-// import ModalBlank from './ModalBlank'
-// import ModalAlert from './ModalAlert'
-// import ModalConfirm from './ModalConfirm'
 import Pagination from './Pagination'
 import Picker from './Picker'
 import Progress from './Progress'
@@ -38,10 +34,6 @@ const Vuikit = {
   Dropdown,
   Filter,
   Modal,
-  // ModalLightbox,
-  // ModalBlank,
-  // ModalAlert,
-  // ModalConfirm,
   Pagination,
   Picker,
   Progress,
