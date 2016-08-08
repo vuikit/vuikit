@@ -3,8 +3,16 @@
     :class="{
       'uk-subnav-line': line,
       'uk-subnav-pill': pill
-     }">
-    <slot></slot>
+    }">
+    <li v-for="(item, slug) in items"
+      :class="{
+        'uk-active': slug === active,
+        'uk-disabled': item.disabled
+      }">
+      <a @click.prevent="select(slug)">
+        {{ item.name }}
+      </a>
+    </li>
   </ul>
 </template>
 
@@ -12,27 +20,29 @@
 export default {
   name: 'VkSubnav',
   props: {
-    // line modifier
+    items: {
+      type: Object,
+      required: true
+    },
+    active: {
+      type: String,
+      default: ''
+    },
     line: {
       type: Boolean,
       default: false
     },
-    // pill modifier
     pill: {
       type: Boolean,
       default: false
     }
   },
-  data: () => ({
-    active: null
-  }),
-  watch: {
-    active (item) {
-      this.$emit('change', item)
-      // deselect others
-      this.$children.forEach(child => {
-        child.active = child._uid === item._uid
-      })
+  methods: {
+    select (selected) {
+      const item = this.items[selected]
+      if (!item.disabled && selected !== this.active) {
+        this.$emit('change', selected)
+      }
     }
   }
 }

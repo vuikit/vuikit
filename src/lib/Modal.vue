@@ -3,7 +3,12 @@
     @after-enter="afterEnter"
     @before-leave="beforeLeave"
     @after-leave="afterLeave">
-    <div class="uk-modal" v-show="show" v-keep-display>
+    <div class="uk-modal"
+      v-show="show" v-keep-display
+      :aria-hidden="show
+        ? 'false'
+        : 'true'
+      ">
       <div ref="dialog" :class="{
         'uk-modal-dialog': true,
         'uk-modal-dialog-large': large,

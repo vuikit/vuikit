@@ -43,10 +43,10 @@ export default {
     name: 'Progress',
     component: require('./pages/Progress')
   },
-  // '/subnav': {
-  //   name: 'Subnav',
-  //   component: require('./pages/Subnav')
-  // },
+  '/subnav': {
+    name: 'Subnav',
+    component: require('./pages/Subnav')
+  },
   // '/switcher': {
   //   name: 'Switcher',
   //   component: require('./pages/Switcher')
