@@ -1,125 +1,128 @@
 <template>
-  <div class="uk-block">
-    <h2>Subnav</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-subnav v-ref:demo
-      :line="props.line.demo.value"
-      :pill="props.pill.demo.value">
-      <vk-subnav-item>Item</vk-subnav-item>
-      <vk-subnav-item>Item</vk-subnav-item>
-      <vk-subnav-item>Item</vk-subnav-item>
-      <vk-subnav-item disabled>Item</vk-subnav-item>
-    </vk-subnav>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
+  <vk-docs-layout-page>
+    <div class="uk-block">
+      <h2>Subnav</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-subnav
+        :line="props.line.demo.value"
+        :pill="props.pill.demo.value"
+        :active="props.active.demo.value"
+        :items="{
+          'item-0': {
+            name: 'Item'
+          },
+          'item-1': {
+            name: 'Item'
+          },
+          'item-2': {
+            name: 'Item',
+            disabled: true
+          }
+        }"
+        @change="
+          events.change.emited = true,
+          props.active.demo.value = arguments[0]
+        ">
+      </vk-subnav>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
+      </div>
+      <!-- TABS -->
+      <vk-tabs>
+        <vk-tab label="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tab>
+        <vk-tab label="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tab>
+        <vk-tab label="Events">
+          <vk-docs-events :events="events"></vk-docs-events>
+        </vk-tab>
+        <vk-tab label="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tab>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
-        <vk-subnav line v-ref:nav>
-          <vk-subnav-item>vk-subnav</vk-subnav-item>
-          <vk-subnav-item>vk-subnav-item</vk-subnav-item>
-        </vk-subnav>
-        <vk-switcher :connect="$refs.nav">
-          <vk-switch>
-            <vk-docs-props
-              :props="props"
-              @change="props[arguments[0]].demo.value = arguments[1]">
-            </vk-docs-props>
-          </vk-switch>
-          <vk-switch>
-            <vk-docs-props :props="propsItem"></vk-docs-props>
-          </vk-switch>
-        </vk-switcher>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-subnav line v-ref:slots-nav>
-          <vk-subnav-item>vk-subnav</vk-subnav-item>
-          <vk-subnav-item>vk-subnav-item</vk-subnav-item>
-        </vk-subnav>
-        <vk-switcher :connect="$refs.slotsNav">
-          <vk-switch>
-            <vk-docs-slots :slots="slotsSubnav"></vk-docs-slots>
-          </vk-switch>
-          <vk-switch>
-            <vk-docs-slots :slots="slotsSubnavItem"></vk-docs-slots>
-          </vk-switch>
-        </vk-switcher>
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events :events="events"></vk-docs-events>
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </div>
+  </vk-docs-layout-page>
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
-import Subnav from '../lib/Subnav'
-import SubnavItem from '../lib/SubnavItem'
+import Component from '../lib/Subnav'
 import mixin from './_mixin'
+import { mergeProps } from './helper'
 
 export default {
   name: 'PageSubnav',
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Subnav.props, Object.keys(props))),
-    propsItem: merge(propsItem, pick(SubnavItem.props, Object.keys(propsItem))),
-    slotsSubnav,
-    slotsSubnavItem,
+    props: mergeProps(Component.props, props),
+    slots,
     events,
     example
   })
 }
 
 const props = {
+  items: {
+    description: 'A definition <code>Object</code> of items to be displayed.'
+  },
+  active: {
+    description: 'The currently active item determined by it slug',
+    demo: {
+      type: 'Select',
+      options: [
+        { text: 'Item 0', value: 'item-0' },
+        { text: 'Item 1', value: 'item-1' }
+      ],
+      value: 'item-0'
+    }
+  },
   line: {
     description: 'Style modifier that will add a line bitween the items.',
-    demo: {}
+    demo: {
+      value: false
+    }
   },
   pill: {
     description: 'Style modifier that will wrap the selected and active items.',
-    demo: {}
+    demo: {
+      value: false
+    }
   }
 }
 
-const propsItem = {
-  active: {
-    description: 'Determines whether the item is active.'
-  },
-  disabled: {
-    description: 'Determines whether the item is disabled.'
-  }
-}
-
-const slotsSubnav = {
+const slots = {
   default: {
     description: 'The list of <code>vk-subnav-item</code> components.'
   }
 }
 
-const slotsSubnavItem = {
-  default: {
-    description: 'The item title.'
-  }
-}
-
 const events = {
   change: {
-    description: 'Emited on item selection.'
+    description: 'Emited on item selection change.',
+    emited: false
   }
 }
 
 const example =
-`<vk-subnav {attrs}>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item>Item</vk-subnav-item>
-  <vk-subnav-item disabled>Item</vk-subnav-item>
+`<vk-subnav {attrs}
+  :items="{
+    'item-0': {
+      name: 'Item'
+    },
+    'item-1': {
+      name: 'Item'
+    },
+    'item-2': {
+      name: 'Item',
+      disabled: true
+    }
+  }"
+  @change="active = arguments[0]">
 </vk-subnav>`
 </script>

@@ -12,8 +12,7 @@ import Modal from './Modal'
 import Pagination from './Pagination'
 import Picker from './Picker'
 import Progress from './Progress'
-// import Subnav from './Subnav'
-// import SubnavItem from './SubnavItem'
+import Subnav from './Subnav'
 // import Switcher from './Switcher'
 // import Switch from './SwitcherItem'
 import Table from './Table'
@@ -37,8 +36,7 @@ const Vuikit = {
   Pagination,
   Picker,
   Progress,
-  // Subnav,
-  // SubnavItem,
+  Subnav,
   // Switcher,
   // Switch,
   Table,

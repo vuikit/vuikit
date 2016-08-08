@@ -79,6 +79,9 @@ const props = {
       ],
       value: '/'
     }
+  },
+  crumbs: {
+    description: 'A definition <code>Object</code> of crumbs to be displayed.'
   }
 }
 
