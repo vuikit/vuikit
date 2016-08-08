@@ -116,9 +116,9 @@ const slots = {
 }
 
 const example =
-`<vk-pagination {attrs}>
+`<vk-progress {attrs}>
   <span v-if="progress >= 5">
     {{ progress }}%
   </span>
-</vk-pagination>`
+</vk-progress>`
 </script>

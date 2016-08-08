@@ -11,7 +11,7 @@
             name: 'Home'
           },
           '/blog': {
-            name: 'Home'
+            name: 'Blog'
           },
           '/blog/category': {
             name: 'Category',
@@ -105,7 +105,7 @@ const example =
       name: 'Home'
     },
     '/blog': {
-      name: 'Home'
+      name: 'Blog'
     },
     '/blog/category': {
       name: 'Category',
