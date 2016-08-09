@@ -29,8 +29,9 @@
 
 <script>
 import TabHeader from './TabHeader'
-import $ from 'jquery'
 import { toArray } from 'lodash'
+
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   name: 'VkTabsVertical',
@@ -65,7 +66,7 @@ export default {
     this.tabs = toArray(this.$els.tabsBody.querySelectorAll(':scope > li'))
       .map(el => el.__vue__)
     // on tab change
-    $(this.$el).on('change.uk.tab', () => {
+    UI.$(this.$el).on('change.uk.tab', () => {
       this.$emit('change')
     })
   }

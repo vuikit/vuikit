@@ -8,8 +8,9 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import { toArray } from 'lodash'
+
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   name: 'VkButtonCheckbox',
@@ -34,7 +35,7 @@ export default {
       this.value.push(btn.value)
     })
     // on each change
-    $(this.$el).on('click', () => {
+    UI.$(this.$el).on('click', () => {
       // get actives btns
       const actives = toArray(this.$el.querySelectorAll('.uk-active'))
       // save its values as array

@@ -1,58 +1,44 @@
 <template>
   <div>
-    <table v-el:table></table>
+    <vk-table v-ref:table
+      :fields="tableFields"
+      :rows="tableRows"
+      :condensed="tableCondensed"
+      :striped="tableStriped"
+      :hover="tableHover"
+      :sort-order="tableSortOrder"
+      @sort="$emit('table-sort', $arguments[0])">
+      <a href=""
+        v-if="isPickable($field.name)"
+        v-text="$row[$field.name]"
+        @click.prevent="pick($field.name, $row)">
+      </a>
+      <span v-else>
+        {{ $row[$field.name] }}
+      </span>
+    </vk-table>
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
-import { isObject, reduce, merge } from 'lodash'
-const Table = Vue.extend(require('./Table'))
-
-// workaround for required props notice
-// that arise when using manual instanciation
-Table.options.props.fields.required = false
-Table.options.props.rows.required = false
+import Table from './Table'
+import { isObject, reduce, merge, mapKeys, upperFirst } from 'lodash'
 
 export default {
   name: 'VkPicker',
-  compiled () {
-    // init Table
-    this.$table = new Table({
-      parent: this,
-      el: this.$els.table,
-      _context: this,
-      propsData: merge(this.table, {
-        template:
-          `<a href=""
-            v-if="isPickable($field.name)"
-            v-text="$row[$field.name]"
-            @click.prevent="pick($field.name, $row)">
-          </a>
-          <span v-else>
-            {{ $row[$field.name] }}
-          </span>`
-      })
-    })
+  components: {
+    VkTable: Table
   },
-  data () {
-    return {
-      show: false
-    }
-  },
-  props: {
+  props: merge({
     // Array of pickable fields
     // eg: [{ id: 'name' }, 'hits']
     pickables: {
       type: Array,
       required: true
-    },
-    // table component options
-    table: {
-      type: Object,
-      default: () => ({})
     }
-  },
+  }, // get and prefix subcomponent props
+    mapKeys(Table.props, (value, key) => 'table' + upperFirst(key))
+  ),
   computed: {
     // returns a field/data pickables map
     pickablesMap () {

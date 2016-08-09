@@ -13,13 +13,6 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
   entry: {
     'vuikit': './src/lib/'
   },
-  externals: {
-    vue: 'vue',
-    // override the exported namespace
-    // to match the node folder name
-    jquery: 'jquery',
-    uikit: 'uikit'
-  },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
   },
@@ -55,6 +48,9 @@ module.exports = [
       filename: '[name].js',
       chunkFilename: '[id].js'
     },
+    externals: {
+      vue: 'Vue' // uppercased as the global variable
+    },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     plugins: [
       new webpack.optimize.UglifyJsPlugin({
@@ -72,6 +68,9 @@ module.exports = [
       chunkFilename: '[id].common.js',
       library: 'Vuikit',
       libraryTarget: 'commonjs2'
+    },
+    externals: {
+      vue: 'vue' // lowercased as the node folder
     },
     devtool: false,
   })

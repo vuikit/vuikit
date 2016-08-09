@@ -26,21 +26,23 @@
       </span>
     </li>
     <li v-for="page in prePages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
+      :class="{
+        'uk-active': page === current
+      }">
       <span v-if="page === current" v-text="page"></span>
-      <a href="" v-else
-        @click.prevent="current = page"
-        v-text="page">
+      <a v-else
+        href=""
+        v-text="page"
+        @click.prevent="current = page">
       </a>
     </li>
-    <li v-if="edges < interval.start && (interval.start - edges != 1)">
+    <li v-if="mainPages[0] > (prePages.length + 1)">
       <span>...</span>
     </li>
-    <li
-      v-for="page in pages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
+    <li v-for="page in mainPages"
+      :class="{
+        'uk-active': page === current
+      }">
       <span v-if="page === current" v-text="page"></span>
       <a v-else
         href=""
@@ -48,19 +50,20 @@
         v-text="page">
       </a>
     </li>
-    <li v-if="totalPages - edges > interval.end
-      && (totalPages - edges - interval.end != 1)">
+    <li v-if="(mainPages[mainPages.length - 1] + 1) < postPages[0]">
       <span>...</span>
     </li>
     <li v-for="page in postPages"
-      :class="{'uk-active': page === current}">
-      <!-- content -->
+      :class="{
+        'uk-active': page === current
+      }">
       <span v-if="page === current">
         {{ page }}
       </span>
-      <a href="" v-else
-        @click.prevent="current = page"
-        v-text="page">
+      <a v-else
+        href=""
+        v-text="page"
+        @click.prevent="current = page">
       </a>
     </li>
     <li :class="{
@@ -88,122 +91,107 @@
 </template>
 
 <script>
+import { range } from 'lodash'
+
 export default {
   name: 'VkPagination',
   props: {
+    // total items
+    total: {
+      type: Number,
+      required: true
+    },
+    // items on each page
+    limit: {
+      type: Number,
+      default: 10
+    },
+    // current page initial state
+    initCurrent: {
+      type: Number,
+      default: 1
+    },
+    // amount of pages around current one
+    pageRange: {
+      type: Number,
+      default: 2
+    },
     // left or right, defaults to center
     align: {
       type: String,
       default: ''
     },
-    // next/prev btns position
+    // toggle next/prev buttons float
     compact: {
       type: Boolean,
       default: false
-    },
-    // current page
-    current: {
-      type: Number,
-      default: 1
-    },
-    // max number of edge pages
-    edges: {
-      type: Number,
-      default: 3
-    },
-    // total number of Items
-    items: {
-      type: Number,
-      default: 1
-    },
-    // items for each page
-    itemsOnPage: {
-      type: Number,
-      default: 1
-    },
-    // max numer of displayed pages
-    visiblePages: {
-      type: Number,
-      default: 3
+    }
+  },
+  data () {
+    return {
+      current: this.initCurrent
     }
   },
   computed: {
-    index: function () {
-      return this.current - 1
+    from () {
+      return (this.current - 1) * this.limit + 1
     },
-    prevPage: function () {
+    to () {
+      return Math.min(this.total, this.current * this.limit)
+    },
+    prevPage () {
       return (this.current - 1) !== 0
         ? this.current - 1
         : null
     },
-    nextPage: function () {
+    nextPage () {
       return (this.current + 1) <= this.totalPages
         ? this.current + 1
         : null
     },
-    lastPage: function () {
-      return this.totalPages - 1
+    totalPages () {
+      return Math.ceil(this.total / this.limit)
     },
-    totalPages: function () {
-      return Math.ceil(this.items / this.itemsOnPage)
-        ? Math.ceil(this.items / this.itemsOnPage)
-        : 1
-    },
-    interval: function () {
-      var pages = this.totalPages
-      var halfDisplayed = this.visiblePages / 2
-      return {
-        start: Math.ceil(this.index > halfDisplayed
-          ? Math.max(Math.min(
-              this.index - halfDisplayed, (pages - this.visiblePages)
-            ), 0)
-          : 0),
-
-        end: Math.ceil(this.index > halfDisplayed
-          ? Math.min(this.index + halfDisplayed, pages)
-          : Math.min(this.visiblePages, pages))
+    mainPages () {
+      let start = this.current - this.pageRange
+      let end = this.current + this.pageRange
+      if (end > this.totalPages) {
+        end = this.totalPages
+        start = this.totalPages - this.pageRange * 2
+        start = start < 1 ? 1 : start
       }
-    },
-    pages: function () {
-      var pages = []
-      var interval = this.interval
-      var i
-      for (i = interval.start; i < interval.end; i++) {
-        pages.push(i + 1)
+      if (start <= 1) {
+        start = 1
+        end = Math.min(this.pageRange * 2 + 1, this.totalPages)
       }
-      return pages
+      return range(start, end + 1)
     },
-    prePages: function () {
-      var pages = []
-      var interval = this.interval
-      var edges = this.edges
-      var end = Math.min(edges, interval.start)
-      var i
-      if (interval.start > 0 && edges > 0) {
-        for (i = 0; i < end; i++) {
-          pages.push(i + 1)
-        }
-      }
-      return pages
+    prePages () {
+      return range(1,
+        this.mainPages[0] <= 3
+          ? this.mainPages[0]
+          : 2
+      )
     },
-    postPages: function () {
-      var pages = []
-      var totalPages = this.totalPages
-      var interval = this.interval
-      var edges = this.edges
-      var begin = Math.max(totalPages - edges, interval.end)
-      var i
-      if (interval.end < totalPages && edges > 0) {
-        for (i = begin; i < totalPages; i++) {
-          pages.push(i + 1)
-        }
-      }
-      return pages
+    postPages () {
+      const mainLast = this.mainPages[this.mainPages.length - 1]
+      return range(
+        mainLast >= this.totalPages - 2
+          ? mainLast + 1
+          : this.totalPages,
+        this.totalPages + 1
+      )
     }
   },
   watch: {
-    current: function (page) {
-      this.$emit('change', page)
+    current () {
+      this.$emit('change', {
+        current: this.current,
+        total: this.total,
+        limit: this.limit,
+        from: this.from,
+        to: this.to
+      })
     }
   }
 }

@@ -1,5 +1,5 @@
 <script>
-import UI from 'uikit'
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   props: {

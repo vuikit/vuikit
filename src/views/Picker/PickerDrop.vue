@@ -8,23 +8,19 @@
     </div>
     <vk-picker-drop v-ref:demo
       :pickables="[{ name: 'id' }, 'hits']"
-      :dropdown="{
-        target: $els.input
-      }"
-      :table="{
-        fields: ['name', 'hits', 'description'],
-        rows: [{
-          id: 1,
-          name: 'Item 1',
-          hits: 34,
-          description: 'The item description'
-        }, {
-          id: 2,
-          name: 'Item 2',
-          hits: 56,
-          description: 'The item description'
-        }]
-      }"
+      :dropdown-target="$els.input"
+      :table-fields="['name', 'hits', 'description']"
+      :table-rows="[{
+        id: 1,
+        name: 'Item 1',
+        hits: 34,
+        description: 'The item description'
+      }, {
+        id: 2,
+        name: 'Item 2',
+        hits: 56,
+        description: 'The item description'
+      }]"
       @pick="input = $arguments[0]">
     </vk-picker-drop>
     <span v-html="message"></span>
@@ -46,7 +42,7 @@
 </template>
 
 <script>
-import { merge } from 'lodash'
+import { merge, pick } from 'lodash'
 import Component from '../../lib/PickerDrop'
 import mixin from '../_mixin'
 
@@ -54,15 +50,21 @@ export default {
   mixins: [mixin],
   data: () => ({
     input: '',
-    props: merge({}, Component.props, props),
+    props: merge({}, pick(Component.props, Object.keys(props)), props),
     example
   })
 }
 
 const props = {
-  dropdown: {
-    description: `Props passed to the underlying Dropdown instance. See the
-      <a href="/#!/dropdown">Dropdown documentation</a> for the possible values.`
+  'table-*': {
+    description: `Props passed to the underlying Table instance prefixed with
+      <code>table-</code>. See the <a href="/vuikit/#!/table">Table documentation</a>
+      for all possible values.`
+  },
+  'dropdown-*': {
+    description: `Props passed to the underlying Dropdown instance prefixed with
+      <code>dropdown-</code>. See the <a href="/vuikit/#!/dropdown">Dropdown documentation</a>
+      for all possible values.`
   }
 }
 
@@ -70,23 +72,19 @@ const example =
 `<input type="text" v-model="input" v-el:input>
 <vk-picker-drop {attrs}
   :pickables="[{ name: 'id' }, 'hits']"
-  :dropdown="{
-    target: $els.input
-  }"
-  :table="{
-    fields: ['name', 'hits', 'description'],
-    rows: [{
-      id: 1,
-      name: 'Item 1',
-      hits: 34,
-      description: 'The item description'
-    }, {
-      id: 2,
-      name: 'Item 2',
-      hits: 56,
-      description: 'The item description'
-    }]
-  }"
+  :dropdown-target="$els.input"
+  :table-fields="['name', 'hits', 'description']"
+  :table-rows="[{
+    id: 1,
+    name: 'Item 1',
+    hits: 34,
+    description: 'The item description'
+  }, {
+    id: 2,
+    name: 'Item 2',
+    hits: 56,
+    description: 'The item description'
+  }]"
   @pick="input = $arguments[0]">
 </vk-picker-drop>`
 </script>

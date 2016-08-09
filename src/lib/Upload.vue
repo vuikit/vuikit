@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   name: 'VkUpload',
@@ -22,7 +22,7 @@ export default {
   ready () {
     const vm = this
     // deal with possible file inputs
-    $('input[type="file"]', this.$el).on('change', function () {
+    UI.$('input[type="file"]', this.$el).on('change', function () {
       vm.$emit('selected', this.files)
     })
   },

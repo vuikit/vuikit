@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>Subnav</h2>
+    <h2>Switcher</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-subnav pill v-ref:nav>
@@ -55,8 +55,9 @@
 <script>
 import { merge, pick } from 'lodash'
 import Switcher from '../lib/Switcher'
-import $ from 'jquery'
 import mixin from './_mixin'
+
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   mixins: [mixin],
@@ -70,7 +71,7 @@ export default {
   watch: {
     // update demo animation when changed
     'props.animation.demo.value' (value) {
-      $(this.$refs.nav.$el).data('switcher').options.animation = value
+      UI.$(this.$refs.nav.$el).data('switcher').options.animation = value
     }
   }
 }

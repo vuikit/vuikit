@@ -8,9 +8,7 @@
         <input type="text" v-model="input" v-el:input>
       </div>
       <vk-datepicker-drop v-ref:demo
-        :dropdown="{
-          target: $els.input
-        }"
+        :dropdown-target="$els.input"
         @pick="input = $arguments[0].format('YYYY-MM-DD')">
       </vk-datepicker-drop>
     </div>
@@ -46,18 +44,17 @@ export default {
 }
 
 const props = {
-  dropdown: {
-    description: `Props passed to the underlying Dropdown instance. See the
-      <a href="/#!/dropdown">Dropdown documentation</a> for the possible values.`
+  'dropdown-*': {
+    description: `Props passed to the underlying Dropdown instance prefixed with
+      <code>dropdown-</code>. See the <a href="/vuikit/#!/dropdown">Dropdown documentation</a>
+      for all possible values.`
   }
 }
 
 const example =
 `<input type="text" v-model="input" v-el:input>
 <vk-datepicker-drop {attrs}
-  :dropdown="{
-    target: $els.input
-  }"
+  :dropdown-target="$els.input"
   @pick="input = $arguments[0].format('YYYY-MM-DD')">
 </vk-datepicker-drop>`
 </script>

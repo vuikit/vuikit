@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>ModalLightbox</h2>
+    <h2>Modal Lightbox</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-button

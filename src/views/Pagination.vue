@@ -3,14 +3,16 @@
     <h2>Pagination</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
+    <div class="uk-text-center">
+      Displaying <code>{{ $refs.demo.from }}</code> to <code>{{ $refs.demo.to }}</code> of <code>{{ $refs.demo.total }}</code> items
+    </div>
     <vk-pagination v-ref:demo
+      :total="props.total.demo.value"
+      :limit="props.limit.demo.value"
+      :init-current="props.initCurrent.demo.value"
+      :page-range="props.pageRange.demo.value"
       :align="props.align.demo.value"
-      :current.sync="props.current.demo.value"
-      :edges="props.edges.demo.value"
-      :items="props.items.demo.value"
-      :compact="props.compact.demo.value"
-      :items-on-page="props.itemsOnPage.demo.value"
-      :visible-pages="props.visiblePages.demo.value">
+      :compact="props.compact.demo.value">
     </vk-pagination>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -20,6 +22,12 @@
       <vk-tab label="Props">
         <vk-docs-props :props="props"></vk-docs-props>
       </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events
+          :events="events"
+          :connect="$refs.demo">
+        </vk-docs-events>
+      </vk-tab>
       <vk-tab label="Example">
         <vk-docs-code :code="code"></vk-docs-code>
       </vk-tab>
@@ -28,28 +36,56 @@
 </template>
 
 <script>
-import { merge, pick } from 'lodash'
+import { merge } from 'lodash'
 import Component from '../lib/Pagination'
 import mixin from './_mixin'
 
 export default {
   mixins: [mixin],
   data: () => ({
-    props: merge(props, pick(Component.props, Object.keys(props))),
+    props: merge({}, Component.props, props),
     events,
     example
-  })
+  }),
+  watch: {
+    'props.total.demo.value' () {
+      this.$refs.demo.current = 1
+    },
+    'props.limit.demo.value' () {
+      this.$refs.demo.current = 1
+    }
+  }
 }
 
 const props = {
-  current: {
-    description: 'The page being currently selected.',
+  total: {
+    description: 'The amount of items accross all pages.',
+    demo: {
+      options: [10, 50, 99],
+      value: 200
+    }
+  },
+  limit: {
+    description: 'Amount of items each page is displaying.',
+    demo: {
+      options: [20, 50]
+    }
+  },
+  initCurrent: {
+    description: `The initially selected page. The subsequent state of the selected page
+      can be accessed through the <code>current</code> local property.`,
     demo: {
       editable: false
     }
   },
+  pageRange: {
+    description: 'Amount of visible pages around the selected page.',
+    demo: {
+      options: [1, 5]
+    }
+  },
   align: {
-    description: 'The pagination vertical alignment. Defaults to center if omited.',
+    description: 'The pagination vertical alignment, defaults to center if omited.',
     demo: {
       options: ['left', 'right']
     }
@@ -57,37 +93,12 @@ const props = {
   compact: {
     description: 'The next/prev buttons position, compacted or floating to the edges.',
     demo: {}
-  },
-  edges: {
-    description: 'The maximum number of edge pages.',
-    demo: {
-      options: [1, 5]
-    }
-  },
-  items: {
-    description: 'The total number of items, accross all pages.',
-    demo: {
-      options: [10, 50, 100],
-      value: 10
-    }
-  },
-  itemsOnPage: {
-    description: 'The items to display for each page.',
-    demo: {
-      options: [5, 10, 20]
-    }
-  },
-  visiblePages: {
-    description: 'The maximum number of pages to display.',
-    demo: {
-      options: [1, 5, 10]
-    }
   }
 }
 
 const events = {
   change: {
-    description: 'Emited on page selection with the selected page number as argument.'
+    description: 'Emited on page change passing as argument an <code>Object</code> with the pagination new state.'
   }
 }
 

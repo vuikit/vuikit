@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import $ from 'jquery'
+const UI = typeof window !== 'undefined' && window.UIkit
 
 export default {
   name: 'VkButtonRadio',
@@ -36,7 +36,7 @@ export default {
       this.value = this.active.value
     }
     // on each change
-    $(this.$el).on('change.uk.button', () => {
+    UI.$(this.$el).on('change.uk.button', () => {
       const selected = this.$el.querySelector('.uk-active').__vue__
       // update radio value
       this.value = selected.value

@@ -1,5 +1,10 @@
 # Changelog
 
+### 0.5.0
+
+ - Add Filter
+ - Picker, Datepicker, Pagination and Table refactored
+
 ### 0.4.1
 
  - Added missing dependency

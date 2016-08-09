@@ -5,20 +5,18 @@
     <!-- DEMO -->
     <vk-picker v-ref:demo
       :pickables="[{ name: 'id' }, 'hits']"
-      :table="{
-        fields: ['name', 'hits', 'description'],
-        rows: [{
-          id: 1,
-          name: 'Item 1',
-          hits: 34,
-          description: 'The item description'
-        }, {
-          id: 2,
-          name: 'Item 2',
-          hits: 56,
-          description: 'The item description'
-        }]
-      }"
+      :table-fields="['name', 'hits', 'description']"
+      :table-rows="[{
+        id: 1,
+        name: 'Item 1',
+        hits: 34,
+        description: 'The item description'
+      }, {
+        id: 2,
+        name: 'Item 2',
+        hits: 56,
+        description: 'The item description'
+      }]"
       @pick="picked">
     </vk-picker>
     <span v-html="message"></span>
@@ -68,9 +66,10 @@ const props = {
     can return a different field value by passing a field/data mapping <code>Object</code>
     instead. Eg. <code>[{ name: 'id' }, 'hits']</code>.`
   },
-  table: {
-    description: `Options passed to the underlying Table instance
-      used to render the table. See the <a href="/#!/table">Table documentation</a> for more information.`
+  'table-*': {
+    description: `Props passed to the underlying Table instance prefixed with
+      <code>table-</code>. See the <a href="/vuikit/#!/table">Table documentation</a>
+      for all possible values.`
   }
 }
 
@@ -83,19 +82,17 @@ const events = {
 const example =
 `<vk-picker {attrs}
   :pickables="[{ name: 'id' }, 'hits']"
-  :table="{
-    fields: ['name', 'hits', 'description'],
-    rows: [{
-      id: 1,
-      name: 'Item 1',
-      hits: 34,
-      description: 'The item description'
-    }, {
-      id: 2,
-      name: 'Item 2',
-      hits: 56,
-      description: 'The item description'
-    }]
-  }">
+  :table-fields="['name', 'hits', 'description']"
+  :table-rows="[{
+    id: 1,
+    name: 'Item 1',
+    hits: 34,
+    description: 'The item description'
+  }, {
+    id: 2,
+    name: 'Item 2',
+    hits: 56,
+    description: 'The item description'
+  }]">
 </vk-picker>`
 </script>
