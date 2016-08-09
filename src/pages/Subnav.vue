@@ -5,48 +5,40 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <vk-subnav
+        :index="props.index.demo.value"
         :line="props.line.demo.value"
         :pill="props.pill.demo.value"
-        :active="props.active.demo.value"
-        :items="{
-          'item-0': {
-            name: 'Item'
-          },
-          'item-1': {
-            name: 'Item'
-          },
-          'item-2': {
-            name: 'Item',
-            disabled: true
-          }
-        }"
         @change="
           events.change.emited = true,
-          props.active.demo.value = arguments[0]
+          props.index.demo.value = arguments[0]
         ">
+        <vk-subnav-item>Item</vk-subnav-item>
+        <vk-subnav-item>Item</vk-subnav-item>
+        <vk-subnav-item>Item</vk-subnav-item>
+        <vk-subnav-item disabled>Item</vk-subnav-item>
       </vk-subnav>
       <!-- DESC -->
       <div class="uk-margin-large">
         The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
       </div>
       <!-- TABS -->
-      <vk-tabs>
-        <vk-tab label="Props">
+      <tm-tabs>
+        <tm-tabs-item name="Props">
           <vk-docs-props
             :props="props"
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Slots">
+        </tm-tabs-item>
+        <tm-tabs-item name="Slots">
           <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
+        </tm-tabs-item>
+        <tm-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
+        </tm-tabs-item>
+        <tm-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
+        </tm-tabs-item>
+      </tm-tabs>
     </div>
   </vk-docs-layout-page>
 </template>
@@ -68,18 +60,16 @@ export default {
 }
 
 const props = {
-  items: {
-    description: 'A definition <code>Object</code> of items to be displayed.'
-  },
-  active: {
-    description: 'The currently active item determined by it slug',
+  index: {
+    description: 'The currently active item referenced by its order index.',
     demo: {
       type: 'Select',
       options: [
-        { text: 'Item 0', value: 'item-0' },
-        { text: 'Item 1', value: 'item-1' }
+        { text: '0', value: 0 },
+        { text: '1', value: 1 },
+        { text: '2', value: 2 }
       ],
-      value: 'item-0'
+      value: 0
     }
   },
   line: {

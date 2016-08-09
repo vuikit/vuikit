@@ -1,4 +1,3 @@
-<script>
 import moment from './mixins/moment'
 import { flatten } from 'lodash'
 import { getCalendarMatrix, isBetween } from './helpers/dates'
@@ -6,18 +5,6 @@ import { warn } from '../util'
 
 export default {
   name: 'VkDatepicker',
-  render (h) {
-    if (this.$slots.default !== undefined) {
-      const calendarVnode = this.$slots.default[0]
-      calendarVnode.componentOptions.propsData.fieldComponent = DateField
-      calendarVnode.componentOptions.propsData.fieldProps = {
-        $datepicker: this
-      }
-      return calendarVnode
-    } else {
-      warn('VkDatepicker expects VkCalendar as child.')
-    }
-  },
   mixins: [moment],
   props: {
     dates: {
@@ -37,6 +24,18 @@ export default {
     max: {
       type: [String, Number],
       default: '2050-12-31'
+    }
+  },
+  render (h) {
+    if (this.$slots.default !== undefined) {
+      const calendarVnode = this.$slots.default[0]
+      calendarVnode.componentOptions.propsData.fieldComponent = DateField
+      calendarVnode.componentOptions.propsData.fieldProps = {
+        $datepicker: this
+      }
+      return calendarVnode
+    } else {
+      warn('VkDatepicker expects VkCalendar as child.')
     }
   },
   computed: {
@@ -110,4 +109,3 @@ const DateField = {
     )
   }
 }
-</script>

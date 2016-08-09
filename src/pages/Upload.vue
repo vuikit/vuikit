@@ -18,17 +18,17 @@
         The <code>vk-upload</code> component deals with the UI part of an upload placeholder.
       </div>
       <!-- TABS -->
-      <vk-tabs>
-        <vk-tab label="Slots">
+      <tm-tabs>
+        <tm-tabs-item name="Slots">
           <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
+        </tm-tabs-item>
+        <tm-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
+        </tm-tabs-item>
+        <tm-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
+        </tm-tabs-item>
+      </tm-tabs>
     </div>
   </vk-docs-layout-page>
 </template>
@@ -55,10 +55,6 @@ const slots = {
 const events = {
   dropped: {
     description: 'Emited on file drop passing as arguments the files.',
-    emited: false
-  },
-  selected: {
-    description: 'Emited on file selection passing as arguments the file.',
     emited: false
   }
 }

@@ -1,16 +1,5 @@
-<script>
 export default {
   name: 'VkButton',
-  render (h) {
-    return h('button', {
-      attrs: {
-        [`aria-${this.ariaType}`]: `${this.active}`,
-        type: this.type,
-        disabled: this.disabled
-      },
-      class: this.classes
-    }, this.$slots.default)
-  },
   props: {
     value: {},
     type: {
@@ -43,9 +32,12 @@ export default {
       default: ''
     }
   },
-  computed: {
-    classes () {
-      return {
+  render (h) {
+    const data = {
+      attrs: {
+        [`aria-${this.ariaType}`]: `${this.active}`
+      },
+      class: {
         'uk-button': true,
         'uk-active': this.active,
         [`uk-width-${this.width}`]: this.width,
@@ -60,6 +52,10 @@ export default {
         'uk-button-large': this.size === 'large'
       }
     }
+    return (
+      <button type={ this.type } disabled={ this.disabled } {...data}>
+        { this.$slots.default }
+      </button>
+    )
   }
 }
-</script>

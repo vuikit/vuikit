@@ -43,11 +43,6 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.build.assetsPublicPath, config.build.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-// set assets paths
-app.use(staticPath + '/fonts', express.static('node_modules/uikit/dist/fonts'))
-app.use(staticPath + '/js', express.static('node_modules/uikit/dist/js'))
-app.use(staticPath + '/js', express.static('node_modules/jquery/dist'))
-
 module.exports = app.listen(port, function (err) {
   if (err) {
     console.log(err)

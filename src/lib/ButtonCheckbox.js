@@ -1,8 +1,17 @@
-<script>
 import { each, inArray } from '../util'
 
 export default {
   name: 'VkButtonCheckbox',
+  props: {
+    value: {
+      type: Array,
+      default: () => []
+    },
+    group: {
+      type: Boolean,
+      default: true
+    }
+  },
   render (h) {
     // override button props
     each(this.$slots.default, node => {
@@ -19,16 +28,6 @@ export default {
         this.$slots.default
       }</div>
     )
-  },
-  props: {
-    value: {
-      type: Array,
-      default: () => []
-    },
-    group: {
-      type: Boolean,
-      default: true
-    }
   },
   mounted () {
     each(this.$children, button => {
@@ -47,4 +46,3 @@ export default {
     }
   }
 }
-</script>

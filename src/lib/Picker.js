@@ -1,9 +1,16 @@
-<script>
 import { warn } from '../util'
 import { isObject, reduce, merge } from 'lodash'
 
 export default {
   name: 'VkPicker',
+  props: {
+    // Array of pickable fields
+    // eg: [{ id: 'name' }, 'hits']
+    pickables: {
+      type: Array,
+      required: true
+    }
+  },
   render (h) {
     if (this.$slots.default !== undefined) {
       const tableVnode = this.$slots.default[0]
@@ -14,14 +21,6 @@ export default {
       return tableVnode
     } else {
       warn('VkPicker expects VkTable as child.')
-    }
-  },
-  props: {
-    // Array of pickable fields
-    // eg: [{ id: 'name' }, 'hits']
-    pickables: {
-      type: Array,
-      required: true
     }
   },
   computed: {
@@ -78,5 +77,3 @@ const RowField = {
     }
   }
 }
-
-</script>

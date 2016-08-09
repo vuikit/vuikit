@@ -42,23 +42,23 @@
         The <code>vk-dropdown</code> component renders a toggleable dropdown.
       </div>
       <!-- TABS -->
-      <vk-tabs>
-        <vk-tab label="Props">
+      <tm-tabs>
+        <tm-tabs-item name="Props">
           <vk-docs-props
             :props="props"
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Slots">
+        </tm-tabs-item>
+        <tm-tabs-item name="Slots">
           <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
+        </tm-tabs-item>
+        <tm-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
+        </tm-tabs-item>
+        <tm-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
+        </tm-tabs-item>
+      </tm-tabs>
     </div>
   </vk-docs-layout-page>
 </template>
@@ -74,7 +74,7 @@ const resetTethler = function () {
       const dropdown = this.$refs.dropdown
       dropdown.$nextTick(() => {
         dropdown.$tether.destroy()
-        dropdown.initTether()
+        dropdown.init()
       })
     },
     immediate: false

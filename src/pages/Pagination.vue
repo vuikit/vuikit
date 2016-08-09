@@ -26,20 +26,20 @@
       <div class="uk-margin-large">
         The <code>vk-pagination</code> component renders a pagination navigation.
       </div>
-      <vk-tabs>
-        <vk-tab label="Props">
+      <tm-tabs>
+        <tm-tabs-item name="Props">
           <vk-docs-props
             :props="props"
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Events">
+        </tm-tabs-item>
+        <tm-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
+        </tm-tabs-item>
+        <tm-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
+        </tm-tabs-item>
+      </tm-tabs>
     </div>
   </vk-docs-layout-page>
 </template>

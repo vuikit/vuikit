@@ -1,27 +1,3 @@
-<template>
-  <transition name="vk-modal"
-    @after-enter="afterEnter"
-    @before-leave="beforeLeave"
-    @after-leave="afterLeave">
-    <div class="uk-modal"
-      v-show="show" v-keep-display
-      :aria-hidden="show
-        ? 'false'
-        : 'true'
-      ">
-      <div ref="dialog" :class="{
-        'uk-modal-dialog': true,
-        'uk-modal-dialog-large': large,
-        'uk-modal-dialog-lightbox': lightbox,
-        'uk-modal-dialog-blank': blank
-      }">
-        <slot></slot>
-      </div>
-    </div>
-  </transition>
-</template>
-
-<script>
 import { debounce } from 'lodash'
 import { on, offAll, css, addClass, removeClass } from './helpers/dom'
 
@@ -53,6 +29,37 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  render (h) {
+    console.log(this.$slots)
+    const modal = (
+      <div class="uk-modal"
+        aria-hidden={ this.show
+          ? 'false'
+          : 'true'
+        }>
+        <div ref="dialog" class={{
+          'uk-modal-dialog': true,
+          'uk-modal-dialog-large': this.large,
+          'uk-modal-dialog-lightbox': this.lightbox,
+          'uk-modal-dialog-blank': this.blank
+        }}>
+          { this.$slots.default }
+        </div>
+      </div>
+    )
+    const data = {
+      on: {
+        'after-enter': this.afterEnter,
+        'before-leave': this.beforeLeave,
+        'after-leave': this.afterLeave
+      }
+    }
+    return (
+      <transition name="vk-modal" {...data}>
+        { modal }
+      </transition>
+    )
   },
   directives: {
     // avoids style.display being removed by v-show
@@ -104,7 +111,7 @@ export default {
       }
     },
     // just a shortcut to avoid setting up
-    // the namespace all the time
+    // the namespace every time
     on (el, event, handler) {
       on(el, event, handler, this._uid)
     },
@@ -185,4 +192,3 @@ export default {
     offAll(this._uid)
   }
 }
-</script>

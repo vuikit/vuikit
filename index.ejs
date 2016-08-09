@@ -10,12 +10,7 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-    <% if (htmlWebpackPlugin.options.env === '"development"') { %>
-    <script src="static/js/jquery.js"></script>
-    <script src="static/js/uikit.js"></script>
-    <% } else { %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/2.26.2/js/uikit.min.js"></script>
+    <% if (htmlWebpackPlugin.options.env !== '"development"') { %>
     <div class="tm-footer">
       <div class="uk-container uk-container-center uk-text-center">
         <ul class="uk-subnav uk-subnav-line uk-flex-center">

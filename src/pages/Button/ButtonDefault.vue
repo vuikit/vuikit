@@ -3,7 +3,7 @@
     <h2>Button</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
-    <vk-button ref="button"
+    <vk-button
       :type="props.type.demo.value"
       :aria-type="props.ariaType.demo.value"
       :value="props.value.demo.value"
@@ -12,7 +12,7 @@
       :color="props.color.demo.value"
       :size="props.size.demo.value"
       :width="props.width.demo.value"
-      @click.native="props.active.demo.value = !$refs.button.active">
+      @click.native="props.active.demo.value = !props.active.demo.value">
       Button
     </vk-button>
     <!-- DESC -->
@@ -20,20 +20,20 @@
       The <code>vk-button</code> component renders a standard button.
     </div>
     <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Props">
+    <tm-tabs>
+      <tm-tabs-item name="Props">
         <vk-docs-props
           :props="props"
           @change="props[arguments[0]].demo.value = arguments[1]">
         </vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
+      </tm-tabs-item>
+      <tm-tabs-item name="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tab>
-      <vk-tab label="Example">
+      </tm-tabs-item>
+      <tm-tabs-item name="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
+      </tm-tabs-item>
+    </tm-tabs>
   </div>
 </template>
 
@@ -151,10 +151,8 @@ const slots = {
 }
 
 const example =
-`<vk-button ref="button"
-  {attrs}
-  :active="active"
-  @click.native="active = !$refs.button.active">
+`<vk-button :active="active" {attrs}
+  @click.native="active = !active">
   Button
 </vk-button>`
 </script>

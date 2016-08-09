@@ -45,11 +45,11 @@
       a custom component.</p>
     </div>
     <!-- TABS -->
-    <vk-tabs>
-      <vk-tab label="Code">
+    <tm-tabs>
+      <tm-tabs-item name="Code">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
+      </tm-tabs-item>
+    </tm-tabs>
   </div>
 </template>
 

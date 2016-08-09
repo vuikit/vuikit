@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuikit from './lib'
 import VuikitDocs from 'vuikit-docs'
+import TmComponents from './pages/tm-components'
 import routes from './routes'
 
 const App = Vue.extend(require('./App'))
@@ -8,6 +9,7 @@ const App = Vue.extend(require('./App'))
 // install
 Vue.use(Vuikit)
 Vue.use(VuikitDocs)
+Vue.use(TmComponents)
 
 const app = new App({
   el: '#app',
@@ -15,7 +17,7 @@ const app = new App({
     routes,
     currentRoute: window.location.pathname !== '/'
       ? window.location.pathname
-      : '/alert'
+      : '/button'
   },
   computed: {
     ViewComponent () {

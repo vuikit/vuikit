@@ -1,8 +1,14 @@
-<script>
 import { each } from '../util'
 
 export default {
   name: 'VkButtonRadio',
+  props: {
+    value: {},
+    group: {
+      type: Boolean,
+      default: true
+    }
+  },
   render (h) {
     // override button props
     each(this.$slots.default, node => {
@@ -20,17 +26,9 @@ export default {
       }</div>
     )
   },
-  props: {
-    value: {},
-    group: {
-      type: Boolean,
-      default: true
-    }
-  },
   mounted () {
     each(this.$children, button => {
       button.$el.addEventListener('click', () => this.$emit('change', button.value))
     })
   }
 }
-</script>

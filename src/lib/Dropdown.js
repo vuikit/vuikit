@@ -1,22 +1,6 @@
-<template>
-  <div :class="{
-      'uk-dropdown': !blank,
-      'uk-dropdown-blank': blank,
-      'uk-dropdown-small': !fixWidth,
-      'uk-dropdown-scrollable': scrollable
-    }"
-    :style="{
-      display: show
-        ? 'block'
-        : 'none'
-    }">
-    <slot></slot>
-  </div>
-</template>
-
-<script>
 import * as Tether from './helpers/tether'
 import { query } from '../util'
+import { on, offAll } from './helpers/dom'
 
 export default {
   name: 'VkDropdown',
@@ -70,15 +54,28 @@ export default {
       default: () => ({})
     }
   },
-  data: () => ({
-    boundEvents: []
-  }),
   computed: {
     targetNode () {
       return (typeof this.target === 'string')
         ? query(this.target)
         : this.target
     }
+  },
+  render (h) {
+    return (
+      <div class={{
+        'uk-dropdown': !this.blank,
+        'uk-dropdown-blank': this.blank,
+        'uk-dropdown-small': !this.fixWidth,
+        'uk-dropdown-scrollable': this.scrollable
+      }} style={{
+        display: this.show
+          ? 'block'
+          : 'none'
+      }}>
+        { this.$slots.default }
+      </div>
+    )
   },
   methods: {
     init () {
@@ -116,16 +113,16 @@ export default {
         }
       }
       for (let i = 0; i < clickEvents.length; ++i) {
-        this._on(document, clickEvents[i], clickHandler)
+        this.on(document, clickEvents[i], clickHandler)
       }
-      this._on(this.targetNode, 'mouseover', event => {
+      this.on(this.targetNode, 'mouseover', event => {
         // ignore childs triggers
         if (this.targetNode.contains(event.fromElement)) {
           return
         }
         this.$emit('targetHoverIn', event)
       })
-      this._on(this.targetNode, 'mouseout', event => {
+      this.on(this.targetNode, 'mouseout', event => {
         // ignore childs triggers
         if (event.relatedTarget === this.targetNode || this.targetNode.contains(event.relatedTarget)) {
           return
@@ -133,16 +130,10 @@ export default {
         this.$emit('targetHoverOut', event)
       })
     },
-    removeEvents () {
-      for (let i = 0; i < this.boundEvents.length; ++i) {
-        const { element, event, handler } = this.boundEvents[i]
-        element.removeEventListener(event, handler)
-      }
-    },
-    // add event listener shorthand
-    _on (element, event, handler) {
-      this.boundEvents.push({ element, event, handler })
-      element.addEventListener(event, handler)
+    // just a shortcut to avoid setting up
+    // the namespace every time
+    on (el, event, handler) {
+      on(el, event, handler, this._uid)
     }
   },
   watch: {
@@ -156,8 +147,7 @@ export default {
     if (this.$tether !== undefined) {
       this.$tether.destroy()
     }
-    this.removeEvents()
+    offAll(this._uid)
     this.$el.parentNode.removeChild(this.$el)
   }
 }
-</script>

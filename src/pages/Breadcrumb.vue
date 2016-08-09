@@ -6,47 +6,36 @@
       <!-- DEMO -->
       <vk-breadcrumb
         :location="props.location.demo.value"
-        :crumbs="{
-          '/': {
-            name: 'Home'
-          },
-          '/blog': {
-            name: 'Blog'
-          },
-          '/blog/category': {
-            name: 'Category',
-            disabled: true
-          },
-          '/blog/category/post': {
-            name: 'Post'
-          }
-        }"
         @change="
           events.change.emited = true,
           props.location.demo.value = arguments[0]
         ">
+        <vk-breadcrumb-item path="/">Home</vk-breadcrumb-item>
+        <vk-breadcrumb-item path="/blog">Blog</vk-breadcrumb-item>
+        <vk-breadcrumb-item path="/blog/category">Category</vk-breadcrumb-item>
+        <vk-breadcrumb-item path="/blog/category/post" disabled>Post</vk-breadcrumb-item>
       </vk-breadcrumb>
       <!-- DESC -->
       <div class="uk-margin-large">
         The <code>vk-breadcrumb</code> component renders a breadcrumb from an <code>Object</code> paths definition.
       </div>
       <!-- TABS -->
-      <vk-tabs>
-        <vk-tab label="Props">
+      <tm-tabs>
+        <tm-tabs-item name="Props">
           <vk-docs-props
             :props="props"
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Events">
+        </tm-tabs-item>
+        <tm-tabs-item name="Events">
           <vk-docs-events
             :events="events">
           </vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
+        </tm-tabs-item>
+        <tm-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
+        </tm-tabs-item>
+      </tm-tabs>
     </div>
   </vk-docs-layout-page>
 </template>
@@ -69,7 +58,7 @@ export default {
 
 const props = {
   location: {
-    description: 'The currently active path.',
+    description: 'The current breadcrumb location.',
     demo: {
       type: 'Select',
       options: [
@@ -79,41 +68,30 @@ const props = {
       ],
       value: '/'
     }
-  },
-  crumbs: {
-    description: 'A definition <code>Object</code> of crumbs to be displayed.'
   }
 }
 
 const slots = {
   default: {
-    description: 'The list of <code>vk-crumb</code> components.'
+    description: 'The list of <code>vk-breadcrumb-item</code> components.'
   }
 }
 
 const events = {
   change: {
-    description: 'Emited on path selection.',
+    description: `Emited on the intention to change the location passing as
+      argument the new path`,
     emited: false
   }
 }
 
 const example =
 `<vk-breadcrumb {attrs}
-  :crumbs="{
-    '/': {
-      name: 'Home'
-    },
-    '/blog': {
-      name: 'Blog'
-    },
-    '/blog/category': {
-      name: 'Category',
-      disabled: true
-    },
-    '/blog/category/post': {
-      name: 'Post'
-    }
-  }">
+  :location="location"
+  @change="location = arguments[0]">
+  <vk-breadcrumb-item path="/">Home</vk-breadcrumb-item>
+  <vk-breadcrumb-item path="/blog">Blog</vk-breadcrumb-item>
+  <vk-breadcrumb-item path="/blog/category">Category</vk-breadcrumb-item>
+  <vk-breadcrumb-item path="/blog/category/post" disabled>Post</vk-breadcrumb-item>
 </vk-breadcrumb>`
 </script>

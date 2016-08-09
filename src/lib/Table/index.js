@@ -1,74 +1,9 @@
-<template>
-  <table class="uk-table"
-    :class="{
-      'uk-table-striped': striped,
-      'uk-table-condensed': condensed,
-      'uk-table-hover': hover
-    }">
-    <thead>
-      <tr>
-        <th v-for="field in fieldsDef"
-          :class="field.headerClass">
-          <a href=""
-            v-if="field.sortBy"
-            @click.prevent="emitSort(field)">
-            {{ field.header }}
-            <i :class="{
-                'uk-icon-justify uk-position-absolute': true,
-                'uk-icon-caret-up': sortOrder[field.name] === 'asc',
-                'uk-icon-caret-down': sortOrder[field.name] === 'desc'
-              }">
-            </i>
-          </a>
-          <template v-else>
-            {{ field.header }}
-          </template>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="row in rows">
-        <row-field v-for="(field, index) in fieldsDef"
-          :class="field.cellClass"
-          :key="index"
-          :row="row"
-          :field="field">
-        </row-field>
-      </tr>
-    </tbody>
-  </table>
-</template>
-
-<script>
 import { map, isString, merge } from 'lodash'
+import render from './render'
 
 export default {
   name: 'VkTable',
-  components: {
-    RowField: {
-      name: 'RowField',
-      functional: true,
-      props: {
-        row: {
-          required: true
-        },
-        field: {
-          required: true
-        }
-      },
-      render (h, { parent, props, data }) {
-        if (parent.fieldComponent) {
-          return h('td', data, [
-            h(parent.fieldComponent, {
-              props: merge({}, parent.fieldProps, props)
-            })
-          ])
-        } else {
-          return h('td', data, [props.row[ props.field.name ]])
-        }
-      }
-    }
-  },
+  render,
   props: {
     fields: {
       type: Array,
@@ -146,4 +81,3 @@ export default {
     }
   }
 }
-</script>

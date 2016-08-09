@@ -1,7 +1,6 @@
-import Alert from './Alert'
 import Breadcrumb from './Breadcrumb'
+import BreadcrumbItem from './BreadcrumbItem'
 import Button from './Button'
-import ButtonLink from './ButtonLink'
 import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'
 import Calendar from './Calendar'
@@ -11,21 +10,20 @@ import Filter from './Filter'
 import Modal from './Modal'
 import Pagination from './Pagination'
 import Picker from './Picker'
-import Progress from './Progress'
 import Subnav from './Subnav'
-// import Switcher from './Switcher'
-// import Switch from './SwitcherItem'
+import SubnavItem from './SubnavItem'
+import Switcher from './Switcher'
+import SwitcherItem from './SwitcherItem'
 import Table from './Table'
-import Tab from './Tabs/Tab'
-import Tabs from './Tabs/Default'
-// import TabsVertical from './TabsVertical'
+import Tabs from './Tabs'
+import TabsItem from './TabsItem'
+import TabsVertical from './TabsVertical'
 import Upload from './Upload'
 
 const Vuikit = {
-  Alert,
   Breadcrumb,
+  BreadcrumbItem,
   Button,
-  ButtonLink,
   ButtonCheckbox,
   ButtonRadio,
   Calendar,
@@ -35,14 +33,14 @@ const Vuikit = {
   Modal,
   Pagination,
   Picker,
-  Progress,
   Subnav,
-  // Switcher,
-  // Switch,
+  SubnavItem,
+  Switcher,
+  SwitcherItem,
   Table,
-  Tab,
   Tabs,
-  // TabsVertical,
+  TabsItem,
+  TabsVertical,
   Upload,
   install (Vue) {
     const keys = Object.keys(this)
