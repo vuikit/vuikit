@@ -49,7 +49,7 @@ module.exports = [
       chunkFilename: '[id].js'
     },
     externals: {
-      vue: 'Vue'
+      vue: 'Vue' // uppercased as the global variable
     },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     plugins: [
@@ -70,7 +70,7 @@ module.exports = [
       libraryTarget: 'commonjs2'
     },
     externals: {
-      vue: 'vue'
+      vue: 'vue' // lowercased as the node folder
     },
     devtool: false,
   })
