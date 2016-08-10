@@ -1,64 +1,5 @@
-<template>
-  <div>
-    <div class="uk-datepicker-nav">
-      <a href="" class="uk-datepicker-previous"
-        v-if="isDisplayable(prevMonth)"
-        @click.prevent="$emit('change', prevMonth)">
-      </a>
-      <a href="" class="uk-datepicker-next"
-        v-if="isDisplayable(nextMonth)"
-        @click.prevent="$emit('change', nextMonth)">
-      </a>
-      <div class="uk-datepicker-heading">
-        <span class="uk-form-select">
-          <a href=""
-            @click.prevent>
-            {{ date | format('MMMM') }}
-          </a>
-          <select v-model="selectedMonth">
-            <option v-for="month in monthsList"
-              :value="month.value"
-              v-text="month.text">
-            </option>
-          </select>
-        </span>
-        <span class="uk-form-select">
-          <a href=""
-            @click.prevent>
-            {{ date | format('YYYY') }}
-          </a>
-          <select v-model="selectedYear">
-            <option v-for="year in yearsList"
-              :value="year"
-              v-text="year">
-            </option>
-          </select>
-        </span>
-      </div>
-    </div>
-    <table class="uk-datepicker-table">
-      <thead>
-        <tr>
-          <th v-for="day in listWeekDays"
-            v-text="day">
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="week in weeks">
-          <date-field v-for="(date, index) in week"
-            :key="index"
-            :date="date">
-          </date-field>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</template>
-
-<script>
-import momentMixin from './mixins/moment'
-import { merge } from 'lodash'
+import render from './render'
+import momentMixin from '../mixins/moment'
 import {
   validDate,
   getCalendarMatrix,
@@ -67,41 +8,12 @@ import {
   listMonths,
   isToday,
   isBetween
-} from './helpers/dates'
+} from '../helpers/dates'
 
 export default {
   name: 'VkCalendar',
   mixins: [momentMixin],
-  components: {
-    DateField: {
-      name: 'DateField',
-      functional: true,
-      props: {
-        date: {
-          required: true
-        }
-      },
-      render (h, { parent, props }) {
-        if (parent.fieldComponent) {
-          return h('td', [
-            h(parent.fieldComponent, {
-              props: merge({}, parent.fieldProps, props)
-            })
-          ])
-        } else {
-          return (
-            <td>
-              <a class={{
-                'uk-datepicker-table-muted': !parent.isInCurrentMonth(props.date)
-              }}>
-                { props.date.format('D') }
-              </a>
-            </td>
-          )
-        }
-      }
-    }
-  },
+  render,
   props: {
     // currently displayed year
     year: {
@@ -203,4 +115,3 @@ export default {
     }
   }
 }
-</script>
