@@ -5,16 +5,17 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <vk-filter
-        :filters="{
-          'Filter Foo': 'from:hi@retrace.io,foo@gmail.com subject:vacations date:1/10/2013-15/04/2014 photos',
-          'Filter Bar': 'subject:bar date:-15/04/2014'
-        }"
+        :filters="[
+          { name: 'Filter Foo', query: 'from:hi@retrace.io,foo@gmail.com subject:vacations date:1/10/2013-15/04/2014 photos' },
+          { name: 'Filter Bar', query: 'subject:bar date:-15/04/2014' }
+        ]"
         :parser="{
           keywords: ['from', 'subject'],
           ranges: ['date']
         }"
         :showReset="props.showReset.demo.value"
         @query="events.query.emited = true">
+        <input v-model="query" debounce="500" />
       </vk-filter>
       <!-- DESC -->
       <div class="uk-margin-large">
@@ -49,6 +50,7 @@ export default {
   name: 'PageFilter',
   mixins: [mixin],
   data: () => ({
+    query: 'the query',
     props: mergeProps(Component.props, props),
     events,
     example
