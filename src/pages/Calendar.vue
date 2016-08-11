@@ -159,11 +159,10 @@ const events = {
 }
 
 const example =
-`<vk-calendar ref="calendar" {attrs}
+`<vk-calendar {attr}
   @change="
-    yearh = arguments[0].year(),
+    year = arguments[0].year(),
     month = arguments[0].month()
   ">
-  {{ $refs.calendar.$renderingDay.date() }}
 </vk-calendar>`
 </script>
