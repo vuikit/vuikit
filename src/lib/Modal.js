@@ -31,7 +31,6 @@ export default {
     }
   },
   render (h) {
-    console.log(this.$slots)
     const modal = (
       <div class="uk-modal"
         aria-hidden={ this.show

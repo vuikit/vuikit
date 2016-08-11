@@ -1,5 +1,5 @@
-import { map, isString, merge } from 'lodash'
 import render from './render'
+import { isString, merge } from '../../util'
 
 export default {
   name: 'VkTable',
@@ -40,7 +40,7 @@ export default {
   },
   computed: {
     fieldsDef () {
-      return map(this.fields, field => {
+      return this.fields.map(field => {
         const obj = {
           name: '',
           header: '',

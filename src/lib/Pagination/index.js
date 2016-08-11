@@ -1,4 +1,5 @@
-import { merge, range } from 'lodash'
+import { range } from 'lodash'
+import { merge } from '../../util'
 import render from './render'
 
 export default {

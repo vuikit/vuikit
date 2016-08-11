@@ -1,4 +1,4 @@
-import { merge } from 'lodash'
+import { merge } from '../../util'
 
 export default function (h) {
   return (

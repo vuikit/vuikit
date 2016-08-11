@@ -1,4 +1,5 @@
-import { mapValues, pickBy, isEqual, each, isArray, isObject, isEmpty, kebabCase } from 'lodash'
+import { mapValues, pickBy, isEqual, isEmpty, kebabCase } from 'lodash'
+import { each, isArray, isObject } from '../util'
 
 export default {
   computed: {
@@ -13,11 +14,12 @@ export default {
     // get demo props which value
     // differ from defaults
     demoUniqueProps () {
-      const propsDefaults = mapValues(this.props, prop => typeof prop.default === 'function'
+      const propsDefaultValues = mapValues(this.props, prop => typeof prop.default === 'function'
         ? prop.default.call()
         : prop.default)
-      return pickBy(mapValues(this.props, 'demo.value'), (value, key) => {
-        return value !== undefined && !isEqual(value, propsDefaults[key])
+      const propsValues = mapValues(this.props, prop => prop.demo && prop.demo.value)
+      return pickBy(propsValues, (value, key) => {
+        return value !== undefined && !isEqual(value, propsDefaultValues[key])
       })
     }
   }

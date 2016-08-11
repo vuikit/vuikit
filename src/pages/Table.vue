@@ -80,7 +80,7 @@ export default {
     rows () {
       const by = Object.keys(this.sortOrder)[0]
       const dir = this.sortOrder[by]
-      return orderBy(this.rawRows, by, dir)
+      return orderBy(this.rawRows, [item => item[by]], dir)
     }
   },
   methods: {

@@ -73,6 +73,7 @@
     "html-webpack-plugin": "^2.8.1",
     "js-beautify": "^1.6.3",
     "json-loader": "^0.5.4",
+    "lodash-webpack-plugin": "^0.9.4",
     "ora": "^0.2.0",
     "shelljs": "^0.6.0",
     "url-loader": "^0.5.7",

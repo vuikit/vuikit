@@ -4,6 +4,7 @@ var merge = require('webpack-merge')
 var utils = require('./utils')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
@@ -15,6 +16,9 @@ module.exports = merge(baseWebpackConfig, {
   // eval-source-map is faster for development
   devtool: '#eval-source-map',
   plugins: [
+    new LodashModuleReplacementPlugin({
+      'collections': true
+    }),
     new webpack.DefinePlugin({
       'process.env': config.dev.env
     }),

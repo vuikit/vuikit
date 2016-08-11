@@ -1,5 +1,5 @@
 import Tether from 'tether'
-import { merge } from 'lodash'
+import { merge } from '../../util'
 
 const MIRROR_ATTACH = {
   left: 'right',
