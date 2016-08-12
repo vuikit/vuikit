@@ -39,6 +39,7 @@ export default {
       const data = node.componentOptions.propsData
       data.index = index
       data.active = index === this.index
+      data.width = this.width
       return node
     })
     return (

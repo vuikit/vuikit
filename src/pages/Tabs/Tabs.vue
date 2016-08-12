@@ -99,14 +99,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
+        { text: 'default', value: '' },
         { text: '1-1', value: '1-1' },
-        { text: '1-2', value: '1-2' },
-        { text: '1-3', value: '1-3' },
-        { text: '1-4', value: '1-4' },
-        { text: '1-5', value: '1-5' },
-        { text: '1-6', value: '1-6' },
-        { text: '1-10', value: '1-10' }
-      ]
+        { text: '1-4', value: '1-4' }
+      ],
+      value: ''
     }
   }
 }
