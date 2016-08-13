@@ -4,26 +4,26 @@
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-button
-      @click.native="props.show.demo.value = true">
+      @click.native="show = true">
       Open
     </vk-button>
     <vk-modal
-      :show="props.show.demo.value"
+      v-show="show"
       :center="props.center.demo.value"
       :large="props.large.demo.value"
       :lightbox="props.lightbox.demo.value"
       :blank="props.blank.demo.value"
       @clickOut="
-        props.show.demo.value = false,
+        show = false,
         events.clickOut.emited = true
       "
       @clickIn="events.clickIn.emited = true"
       @inactive="
-        props.show.demo.value = false,
+        show = false,
         events.inactive.emited = true
       "
       @keyEsc="
-        props.show.demo.value = false,
+        show = false,
         events.keyEsc.emited = true
       ">
       <!-- DEFAULT -->
@@ -32,7 +32,7 @@
         props.blank.demo.value === false
       ">
         <a class="uk-close"
-          @click="props.show.demo.value = false">
+          @click="show = false">
         </a>
         <div class="uk-modal-header">
           <h2>Headline</h2>
@@ -46,14 +46,14 @@
       <!-- LIGHTBOX -->
       <template v-if="props.lightbox.demo.value">
         <a class="uk-close uk-close-alt"
-          @click="props.show.demo.value = false">
+          @click="show = false">
         </a>
         <img src="../assets/placeholder_600x400.svg" class="uk-align-center">
       </template>
       <!-- BLANK -->
       <template v-if="props.blank.demo.value">
         <a class="uk-close uk-close-alt"
-          @click="props.show.demo.value = false">
+          @click="show = false">
         </a>
         <div class="uk-grid uk-flex-middle" data-uk-grid-margin>
           <div class="uk-width-medium-1-2 uk-height-viewport uk-cover-background uk-row-first"
@@ -98,6 +98,7 @@ import { mergeProps } from '../helper'
 export default {
   mixins: [mixin],
   data: () => ({
+    show: false,
     imageBlank: require('../assets/placeholder_600x400.svg'),
     props: mergeProps(Component.props, props),
     slots,
@@ -107,13 +108,6 @@ export default {
 }
 
 const props = {
-  show: {
-    type: Boolean,
-    description: 'Display state that when toggled will hide/show the modal.',
-    demo: {
-      value: false
-    }
-  },
   center: {
     type: Boolean,
     description: 'Whether to center the modal vertically.',
@@ -173,6 +167,7 @@ const example =
   Open
 </vk-button>
 <vk-modal {attrs}
+  v-show="show"
   @clickOut="show = false"
   @inactive="show = false"
   @keyEsc="show = false">

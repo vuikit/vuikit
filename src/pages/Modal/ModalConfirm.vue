@@ -8,7 +8,7 @@
       {{ confirmed ? 'Confirmed' : 'Open' }}
     </vk-button>
     <vk-modal
-      :show="show"
+      v-show="show"
       @clickOut="
         show = false,
         confirmed = false

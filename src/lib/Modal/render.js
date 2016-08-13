@@ -2,17 +2,15 @@ export default function (h) {
   return (
     <transition name="vk-modal" {...{
       on: {
+        'before-enter': this.beforeEnter,
         'after-enter': this.afterEnter,
         'before-leave': this.beforeLeave,
         'after-leave': this.afterLeave
       }
     }}>
-      <div class="uk-modal" {...{
-        directives: [
-          { name: 'show', value: this.show }
-        ]}}
+      <div class="uk-modal"
         style="display: block;"
-        aria-hidden={ this.show
+        aria-hidden={ this.isOpen
           ? 'false'
           : 'true'
         }>

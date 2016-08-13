@@ -10,10 +10,6 @@ export default {
   name: 'VkModal',
   render,
   props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
     center: {
       type: Boolean,
       default: false
@@ -32,6 +28,14 @@ export default {
     }
   },
   computed: {
+    isOpen () {
+      // return v-show directive value
+      const data = this.$vnode.data
+      const show = data.directives && data.directives.find(dir => dir.name === 'show')
+      return !data.directives || !show
+        ? false
+        : show.value
+    },
     languageDir () {
       const html = document.documentElement
       return html.getAttribute('dir') === 'rtl'
@@ -48,6 +52,14 @@ export default {
     this.initEvents()
   },
   methods: {
+    beforeEnter () {
+      const html = document.documentElement
+      this.$nextTick(() => {
+        addClass(this.$el, 'uk-open')
+        addClass(html, 'uk-modal-page')
+        this.resize(true)
+      })
+    },
     afterEnter () {
       if (currentlyActive) {
         currentlyActive.$emit('inactive')
@@ -56,7 +68,6 @@ export default {
     },
     beforeLeave () {
       removeClass(this.$el, 'uk-open')
-      currentlyActive = null
     },
     afterLeave () {
       const html = document.documentElement
@@ -88,7 +99,7 @@ export default {
       }
       // keyboard events
       this.on(document, 'keyup', (event) => {
-        if (this.show && event.keyCode === 27) {
+        if (this.isOpen && event.keyCode === 27) {
           event.preventDefault()
           this.$emit('keyEsc')
         }
@@ -111,7 +122,7 @@ export default {
       }
     },
     resize (force) {
-      if (!this.show && !force) {
+      if (!this.isOpen && !force) {
         return
       }
       const body = document.body
@@ -135,18 +146,6 @@ export default {
         }
       } else {
         dialog.style.top = ''
-      }
-    }
-  },
-  watch: {
-    show (state) {
-      if (state) {
-        const html = document.documentElement
-        this.$nextTick(() => {
-          this.resize(true)
-          addClass(this.$el, 'uk-open')
-          addClass(html, 'uk-modal-page')
-        })
       }
     }
   },
