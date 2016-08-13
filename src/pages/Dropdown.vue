@@ -5,13 +5,13 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <vk-button id="target"
-        @click.native="props.show.demo.value = !props.show.demo.value">
+        @click.native="show = !show">
         Toggle
         <i class="uk-icon-caret-down"></i>
       </vk-button>
       <vk-dropdown ref="dropdown"
+        v-show="show"
         target="#target"
-        :show="props.show.demo.value"
         :position="props.position.demo.value"
         :offset="props.offset.demo.value"
         :offset-target="props.offsetTarget.demo.value"
@@ -22,7 +22,7 @@
         :scrollable="props.scrollable.demo.value"
         @clickIn="events.clickIn.emited = true"
         @clickOut="
-          props.show.demo.value = false,
+          show = false,
           events.clickOut.emited = true
         "
         @targetHoverIn="events.targetHoverIn.emited = true"
@@ -85,6 +85,7 @@ export default {
   name: 'PageDropdown',
   mixins: [mixin],
   data: () => ({
+    show: false,
     props: mergeProps(Component.props, props),
     slots,
     events,
@@ -103,12 +104,6 @@ const props = {
   target: {
     description: `The element or string to query the element to which the
       dropdown should stay adjacent.`
-  },
-  show: {
-    description: 'Display state that when toggled will hide/show the dropdown.',
-    demo: {
-      value: false
-    }
   },
   position: {
     description: 'Specifies the attachment point on the target to attach the dropdown to.',

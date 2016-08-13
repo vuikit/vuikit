@@ -1,20 +1,13 @@
-import * as Tether from './helpers/tether'
-import { query } from '../util'
-import { on, offAll } from './helpers/dom'
+import * as Tether from '../helpers/tether'
+import { query } from '../../util'
+import { on, offAll } from '../helpers/dom'
+import render from './render'
 
 export default {
   name: 'VkDropdown',
-  mounted () {
-    if (this.targetNode) {
-      this.init()
-    }
-  },
+  render,
   props: {
     target: {
-      default: false
-    },
-    show: {
-      type: Boolean,
       default: false
     },
     blank: {
@@ -55,35 +48,38 @@ export default {
     }
   },
   computed: {
+    isOpen () {
+      // return v-show directive value
+      const data = this.$vnode.data
+      const show = data.directives && data.directives.find(dir => dir.name === 'show')
+      return !data.directives || !show
+        ? false
+        : show.value
+    },
     targetNode () {
       return (typeof this.target === 'string')
         ? query(this.target)
         : this.target
     }
   },
-  render (h) {
-    return (
-      <div class={{
-        'uk-dropdown': !this.blank,
-        'uk-dropdown-blank': this.blank,
-        'uk-dropdown-small': !this.fixWidth,
-        'uk-dropdown-scrollable': this.scrollable
-      }} style={{
-        display: this.show
-          ? 'block'
-          : 'none'
-      }}>
-        { this.$slots.default }
-      </div>
-    )
+  mounted () {
+    if (this.targetNode) {
+      this.init()
+    }
   },
   methods: {
+    beforeEnter () {
+      this.$nextTick(() => this.$tether.enable())
+    },
+    afterLeave () {
+      this.$nextTick(() => this.$tether.disable())
+    },
     init () {
       this.initEvents()
       this.$tether = Tether.init(
         this.$el,
         this.targetNode,
-        this.show,
+        this.isOpen,
         this.position,
         this.offset,
         this.offsetTarget,
@@ -99,7 +95,7 @@ export default {
         clickEvents.push('touchstart')
       }
       const clickHandler = event => {
-        if (this.show) {
+        if (this.isOpen) {
           // clicking target
           if (event.target === this.targetNode || this.targetNode.contains(event.target)) {
             return
@@ -134,13 +130,6 @@ export default {
     // the namespace every time
     on (el, event, handler) {
       on(el, event, handler, this._uid)
-    }
-  },
-  watch: {
-    show (value) {
-      value
-        ? this.$tether.enable()
-        : this.$tether.disable()
     }
   },
   beforeDestroy () {
