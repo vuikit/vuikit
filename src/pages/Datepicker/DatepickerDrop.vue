@@ -8,16 +8,18 @@
         type="text"
         placeholder="Pick a date"
         v-model="date"
-        @focus="dropdownShow = true">
+        @focus="show = true">
       <vk-dropdown
+        v-show="show"
         target="#target"
-        :show="dropdownShow"
-        @clickOut="dropdownShow = false">
+        @clickOut="show = false">
         <vk-datepicker
-          :dates="[date]"
+          :dates="date
+            ? [date]
+            : []"
           @pick="
             date = arguments[0].format('YYYY-MM-DD'),
-            dropdownShow = false
+            show = false
           ">
           <vk-calendar
             :year="calendar.year"
@@ -55,12 +57,12 @@ export default {
   name: 'Block',
   mixins: [mixin],
   data: () => ({
+    show: false,
     date: '',
     calendar: {
       year: undefined,
       month: undefined
     },
-    dropdownShow: false,
     example
   })
 }

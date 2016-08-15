@@ -17,7 +17,7 @@ const app = new App({
     routes,
     currentRoute: window.location.pathname !== '/'
       ? window.location.pathname
-      : '/button'
+      : Object.keys(routes)[0] // first route
   },
   computed: {
     ViewComponent () {
