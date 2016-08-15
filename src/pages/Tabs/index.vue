@@ -1,8 +1,8 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <tabs-default></tabs-default>
     <tabs-vertical></tabs-vertical>
-  </vk-docs-layout-page>
+  </layouts-default>
 </template>
 
 <script>

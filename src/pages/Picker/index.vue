@@ -1,8 +1,8 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <picker></picker>
     <picker-drop></picker-drop>
-  </vk-docs-layout-page>
+  </layouts-default>
 </template>
 
 <script>

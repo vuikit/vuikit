@@ -1,5 +1,5 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <div class="uk-block">
       <h2>Upload</h2>
       <hr class="uk-article-divider">
@@ -30,7 +30,7 @@
         </tm-tabs-item>
       </tm-tabs>
     </div>
-  </vk-docs-layout-page>
+  </layouts-default>
 </template>
 
 <script>

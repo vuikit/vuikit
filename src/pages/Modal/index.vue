@@ -1,8 +1,8 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <modal-default></modal-default>
     <modal-confirm></modal-confirm>
-  </vk-docs-layout-page>
+  </layouts-default>
 </template>
 
 <script>

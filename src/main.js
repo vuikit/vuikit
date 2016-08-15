@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuikit from './lib'
 import VuikitDocs from 'vuikit-docs'
+import Layouts from './layouts'
 import TmComponents from './pages/tm-components'
 import routes from './routes'
 
@@ -9,6 +10,7 @@ const App = Vue.extend(require('./App'))
 // install
 Vue.use(Vuikit)
 Vue.use(VuikitDocs)
+Vue.use(Layouts)
 Vue.use(TmComponents)
 
 const app = new App({

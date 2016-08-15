@@ -1,9 +1,9 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <button-default></button-default>
     <button-radio></button-radio>
     <button-checkbox></button-checkbox>
-  </vk-docs-layout-page>
+  </layouts-default>
 </template>
 
 <script>

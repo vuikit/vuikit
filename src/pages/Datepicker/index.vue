@@ -1,8 +1,8 @@
 <template>
-  <vk-docs-layout-page>
+  <layouts-default>
     <datepicker></datepicker>
-    <!-- <datepicker-drop></datepicker-drop> -->
-  </vk-docs-layout-page>
+    <datepicker-drop></datepicker-drop>
+  </layouts-default>
 </template>
 
 <script>
