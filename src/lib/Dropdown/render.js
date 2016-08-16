@@ -1,19 +1,25 @@
 export default function (h) {
+  const directives = [{
+    name: 'show', value: this.show
+  }]
   return (
-    <transition name="vk-dropdown" {...{
+    <transition name={ this.transition } {...{
       on: {
-        'before-enter': this.beforeEnter,
-        'after-leave': this.afterLeave
+        'before-enter': () => {
+          this.$nextTick(() => this.$tether.enable())
+        },
+        'after-leave': () => {
+          this.$nextTick(() => this.$tether.disable())
+        }
       }
     }}>
-      <div class={{
+      <div {...{ directives }} class={{
         'uk-dropdown': !this.blank,
         'uk-dropdown-blank': this.blank,
         'uk-dropdown-small': !this.fixWidth,
         'uk-dropdown-scrollable': this.scrollable
       }}
-      style="display: block;"
-      aria-hidden={ this.isOpen
+      aria-hidden={ this.show
         ? 'false'
         : 'true'
       }>

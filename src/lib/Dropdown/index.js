@@ -7,6 +7,10 @@ export default {
   name: 'VkDropdown',
   render,
   props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
     target: {
       default: false
     },
@@ -21,6 +25,10 @@ export default {
     position: {
       type: String,
       default: 'bottom left'
+    },
+    transition: {
+      type: String,
+      default: 'vk-transition-dropdown'
     },
     scrollable: {
       type: Boolean,
@@ -48,14 +56,6 @@ export default {
     }
   },
   computed: {
-    isOpen () {
-      // return v-show directive value
-      const data = this.$vnode.data
-      const show = data.directives && data.directives.find(dir => dir.name === 'show')
-      return !data.directives || !show
-        ? false
-        : show.value
-    },
     targetNode () {
       return (typeof this.target === 'string')
         ? query(this.target)
@@ -68,18 +68,12 @@ export default {
     }
   },
   methods: {
-    beforeEnter () {
-      this.$nextTick(() => this.$tether.enable())
-    },
-    afterLeave () {
-      this.$nextTick(() => this.$tether.disable())
-    },
     init () {
       this.initEvents()
       this.$tether = Tether.init(
         this.$el,
         this.targetNode,
-        this.isOpen,
+        this.show,
         this.position,
         this.offset,
         this.offsetTarget,
@@ -95,7 +89,7 @@ export default {
         clickEvents.push('touchstart')
       }
       const clickHandler = event => {
-        if (this.isOpen) {
+        if (this.show) {
           // clicking target
           if (event.target === this.targetNode || this.targetNode.contains(event.target)) {
             return

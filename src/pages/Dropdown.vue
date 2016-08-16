@@ -5,13 +5,13 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <vk-button id="target"
-        @click.native="show = !show">
+        @click.native="props.show.demo.value = !props.show.demo.value">
         Toggle
         <i class="uk-icon-caret-down"></i>
       </vk-button>
       <vk-dropdown ref="dropdown"
-        v-show="show"
         target="#target"
+        :show="props.show.demo.value"
         :position="props.position.demo.value"
         :offset="props.offset.demo.value"
         :offset-target="props.offsetTarget.demo.value"
@@ -22,7 +22,7 @@
         :scrollable="props.scrollable.demo.value"
         @clickIn="events.clickIn.emited = true"
         @clickOut="
-          show = false,
+          props.show.demo.value = false,
           events.clickOut.emited = true
         "
         @targetHoverIn="events.targetHoverIn.emited = true"
@@ -85,7 +85,6 @@ export default {
   name: 'PageDropdown',
   mixins: [mixin],
   data: () => ({
-    show: false,
     props: mergeProps(Component.props, props),
     slots,
     events,
@@ -101,6 +100,12 @@ export default {
 }
 
 const props = {
+  show: {
+    description: 'Display state that when toggled will hide/show the dropdown.',
+    demo: {
+      value: false
+    }
+  },
   target: {
     description: `The element or string to query the element to which the
       dropdown should stay adjacent.`
@@ -125,6 +130,10 @@ const props = {
       ],
       value: 'bottom left'
     }
+  },
+  transition: {
+    description: `Specifies the transition name that will be used by the transition
+      wrapper component.`
   },
   offset: {
     description: `The dropdown attachment point offset with <code>vertical horizontal</code> syntax.
@@ -224,7 +233,8 @@ const example =
   Toggle
 </vk-button>
 <vk-dropdown {attrs}
-  target="#target">
+  target="#target"
+  :show="show">
   Dropdown
 </vk-dropdown>`
 </script>

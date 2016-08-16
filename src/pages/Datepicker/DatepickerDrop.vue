@@ -10,7 +10,7 @@
         v-model="date"
         @focus="show = true">
       <vk-dropdown
-        v-show="show"
+        :show="show"
         target="#target"
         @clickOut="show = false">
         <vk-datepicker
