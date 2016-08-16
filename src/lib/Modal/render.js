@@ -1,16 +1,17 @@
 export default function (h) {
+  const directives = [{
+    name: 'show', value: this.show
+  }]
   return (
-    <transition name="vk-modal" {...{
+    <transition name={ this.transition } {...{
       on: {
         'before-enter': this.beforeEnter,
         'after-enter': this.afterEnter,
-        'before-leave': this.beforeLeave,
         'after-leave': this.afterLeave
       }
     }}>
-      <div class="uk-modal"
-        style="display: block;"
-        aria-hidden={ this.isOpen
+      <div {...{ directives }} class="uk-modal"
+        aria-hidden={ this.show
           ? 'false'
           : 'true'
         }>

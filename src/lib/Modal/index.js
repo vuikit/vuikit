@@ -10,6 +10,10 @@ export default {
   name: 'VkModal',
   render,
   props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
     center: {
       type: Boolean,
       default: false
@@ -25,17 +29,13 @@ export default {
     blank: {
       type: Boolean,
       default: false
+    },
+    transition: {
+      type: String,
+      default: 'vk-modal-transition'
     }
   },
   computed: {
-    isOpen () {
-      // return v-show directive value
-      const data = this.$vnode.data
-      const show = data.directives && data.directives.find(dir => dir.name === 'show')
-      return !data.directives || !show
-        ? false
-        : show.value
-    },
     languageDir () {
       const html = document.documentElement
       return html.getAttribute('dir') === 'rtl'
@@ -55,7 +55,6 @@ export default {
     beforeEnter () {
       const html = document.documentElement
       this.$nextTick(() => {
-        addClass(this.$el, 'uk-open')
         addClass(html, 'uk-modal-page')
         this.resize(true)
       })
@@ -65,9 +64,6 @@ export default {
         currentlyActive.$emit('inactive')
       }
       currentlyActive = this
-    },
-    beforeLeave () {
-      removeClass(this.$el, 'uk-open')
     },
     afterLeave () {
       const html = document.documentElement
@@ -99,7 +95,7 @@ export default {
       }
       // keyboard events
       this.on(document, 'keyup', (event) => {
-        if (this.isOpen && event.keyCode === 27) {
+        if (this.show && event.keyCode === 27) {
           event.preventDefault()
           this.$emit('keyEsc')
         }
@@ -122,7 +118,7 @@ export default {
       }
     },
     resize (force) {
-      if (!this.isOpen && !force) {
+      if (!this.show && !force) {
         return
       }
       const body = document.body
