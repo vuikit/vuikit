@@ -43,14 +43,14 @@ export default function (h) {
 }
 
 function renderPage (h, page) {
-  const isCurrent = page === this.current
+  const isCurrent = page === this.page
   const setAsCurrent = e => {
     e.preventDefault()
-    this.change({ current: page })
+    this.change({ page })
   }
   return (
     <li class={{
-      'uk-active': page === this.current
+      'uk-active': page === this.page
     }}>{
       isCurrent
         ? (<span>{ page }</span>)
@@ -63,7 +63,7 @@ function renderButton (h, icon, page) {
   icon = (<i class={ `uk-icon-${icon}` }></i>)
   const setPage = e => {
     e.preventDefault()
-    this.change({ current: page })
+    this.change({ page })
   }
   return page
     ? (<a on-click={ setPage }>{ icon }</a>)

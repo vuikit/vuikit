@@ -5,20 +5,20 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <div class="uk-text-center">
-        Displaying <code>{{ pagination.from }}</code> to <code>{{ pagination.to }}</code>
+        Displaying <code>{{ pagination.offset }}</code> to <code>{{ pagination.to }}</code>
         of <code>{{ props.total.demo.value }}</code> items
       </div>
       <vk-pagination
         :total="props.total.demo.value"
         :limit="props.limit.demo.value"
-        :current="props.current.demo.value"
+        :page="props.page.demo.value"
         :page-range="props.pageRange.demo.value"
         :align="props.align.demo.value"
         :compact="props.compact.demo.value"
         @change="
           events.change.emited = true,
-          props.current.demo.value = arguments[0].current
-          pagination.from = arguments[0].from,
+          props.page.demo.value = arguments[0].page
+          pagination.offset = arguments[0].offset,
           pagination.to = arguments[0].to
         ">
       </vk-pagination>
@@ -54,7 +54,7 @@ export default {
   mixins: [mixin],
   data: () => ({
     pagination: {
-      from: 1,
+      offset: 1,
       to: 20
     },
     props: mergeProps(Component.props, props),
@@ -63,15 +63,22 @@ export default {
   }),
   watch: {
     'props.total.demo.value' () {
-      props.current.demo.value = 1
+      props.page.demo.value = 1
     },
     'props.limit.demo.value' () {
-      props.current.demo.value = 1
+      props.page.demo.value = 1
     }
   }
 }
 
 const props = {
+  page: {
+    description: 'The page being displayed.',
+    demo: {
+      type: 'Overview',
+      value: 1
+    }
+  },
   total: {
     description: 'The amount of items accross all pages.',
     demo: {
@@ -79,7 +86,8 @@ const props = {
       options: [
         { text: '50', value: 50 },
         { text: '99', value: 99 },
-        { text: '200', value: 200 }
+        { text: '200', value: 200 },
+        { text: '1000', value: 1000 }
       ],
       value: 200
     }
@@ -91,16 +99,10 @@ const props = {
       options: [
         { text: '10', value: 10 },
         { text: '20', value: 20 },
-        { text: '50', value: 50 }
+        { text: '50', value: 50 },
+        { text: '100', value: 100 }
       ],
       value: 10
-    }
-  },
-  current: {
-    description: 'The currently selected page.',
-    demo: {
-      type: 'Overview',
-      value: 1
     }
   },
   pageRange: {
@@ -145,6 +147,6 @@ const events = {
 
 const example =
 `<vk-pagination {attrs}
-  @change="current = arguments[0].current">
+  @change="page = arguments[0].page">
 </vk-pagination>`
 </script>

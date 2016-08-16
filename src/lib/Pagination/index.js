@@ -6,6 +6,11 @@ export default {
   name: 'VkPagination',
   render,
   props: {
+    // displayed page
+    page: {
+      type: Number,
+      default: 1
+    },
     // total items
     total: {
       type: Number,
@@ -15,11 +20,6 @@ export default {
     limit: {
       type: Number,
       default: 10
-    },
-    // current page
-    current: {
-      type: Number,
-      default: 1
     },
     // amount of pages around current one
     pageRange: {
@@ -38,28 +38,22 @@ export default {
     }
   },
   computed: {
-    from () {
-      return (this.current - 1) * this.limit + 1
-    },
-    to () {
-      return Math.min(this.total, this.current * this.limit)
-    },
     prevPage () {
-      return (this.current - 1) !== 0
-        ? this.current - 1
+      return (this.page - 1) !== 0
+        ? this.page - 1
         : null
     },
     nextPage () {
-      return (this.current + 1) <= this.totalPages
-        ? this.current + 1
+      return (this.page + 1) <= this.totalPages
+        ? this.page + 1
         : null
     },
     totalPages () {
       return Math.ceil(this.total / this.limit)
     },
     mainPages () {
-      let start = this.current - this.pageRange
-      let end = this.current + this.pageRange
+      let start = this.page - this.pageRange
+      let end = this.page + this.pageRange
       if (end > this.totalPages) {
         end = this.totalPages
         start = this.totalPages - this.pageRange * 2
@@ -91,13 +85,13 @@ export default {
   methods: {
     change (changes) {
       const state = merge({
-        current: this.current,
+        page: this.page,
         total: this.total,
         limit: this.limit
       }, changes)
       // calculate since new state
-      state.from = (state.current - 1) * state.limit + 1
-      state.to = Math.min(state.total, state.current * state.limit)
+      state.offset = (state.page - 1) * state.limit + 1
+      state.to = Math.min(state.total, state.page * state.limit)
       // event
       this.$emit('change', state)
     }
