@@ -27,10 +27,6 @@ export default {
     name: 'Switcher',
     component: require('./pages/Switcher')
   },
-  '/filter': {
-    name: 'Filter',
-    component: require('./pages/Filter')
-  },
   '/table': {
     name: 'Table',
     component: require('./pages/Table')
