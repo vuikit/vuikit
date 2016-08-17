@@ -88,7 +88,7 @@ export function query (el) {
     el = document.querySelector(el)
     if (!el) {
       Vue.util.warn(
-        'Cannot find element: ' + selector
+        `Cannot find dom element with selector '${selector}'.`
       )
       return document.createElement('div')
     }
