@@ -1,6 +1,46 @@
 import { merge } from 'lodash'
 
 export default function (h) {
+  const nodes = {}
+  // headers
+  nodes.headers = this.fieldsDef.map(field => {
+    const orderedBy = this.sortOrder[field.name]
+    const icon = <i class={{
+      'uk-icon-justify uk-margin-small-left': true,
+      'uk-invisible': !orderedBy,
+      'vk-icon-arrow-down': orderedBy === 'asc' || orderedBy === undefined,
+      'vk-icon-arrow-up': orderedBy === 'desc'
+    }}></i>
+    return (
+      <th class={{
+        'uk-visible-hover-inline': true,
+        'vk-table-order': field.sortBy,
+        'uk-active': orderedBy,
+        [field.headerClass]: field.headerClass
+      }}
+      on-click={e => {
+        e.preventDefault()
+        this.emitSort(field)
+      }}>
+        { field.header }{ field.sortBy && icon }
+      </th>
+    )
+  })
+  // rows
+  nodes.rows = this.rows.map(row => (
+    <tr>{
+      this.fieldsDef.map((field, index) => (
+        h(fieldComponent, {
+          key: index,
+          class: field.cellClass,
+          props: {
+            row: row,
+            field: field
+          }
+        })
+      ))
+    }</tr>
+  ))
   return (
     <table class={{
       'uk-table': true,
@@ -9,41 +49,9 @@ export default function (h) {
       'uk-table-hover': this.hover
     }}>
       <thead>
-        <tr>{
-          this.fieldsDef.map(field => (
-            <th class={ field.headerClass }>{ field.sortBy
-              ? (<a on-click={event => {
-                event.preventDefault()
-                this.emitSort(field)
-              }}>
-                { field.header }
-                <i class={{
-                  'uk-icon-justify uk-position-absolute': true,
-                  'uk-icon-caret-up': this.sortOrder[field.name] === 'asc',
-                  'uk-icon-caret-down': this.sortOrder[field.name] === 'desc'
-                }}></i>
-              </a>)
-              : field.header
-            }</th>
-          ))
-        }</tr>
+        <tr>{ nodes.headers }</tr>
       </thead>
-      <tbody>{
-        this.rows.map(row => (
-          <tr>{
-            this.fieldsDef.map((field, index) => (
-              h(fieldComponent, {
-                key: index,
-                class: field.cellClass,
-                props: {
-                  row: row,
-                  field: field
-                }
-              })
-            ))
-          }</tr>
-        ))
-      }</tbody>
+      <tbody>{ nodes.rows }</tbody>
     </table>
   )
 }

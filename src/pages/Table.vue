@@ -73,7 +73,7 @@ export default {
       { name: 'Item A', id: 2, desc: 'Description' }
     ],
     sortOrder: {
-      name: 'desc'
+      name: 'asc'
     }
   }),
   computed: {
