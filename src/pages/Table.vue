@@ -68,10 +68,6 @@ export default {
     slots,
     events,
     example,
-    rawRows: [
-      { name: 'Item B', id: 1, desc: 'Description' },
-      { name: 'Item A', id: 2, desc: 'Description' }
-    ],
     sortOrder: {
       name: 'asc'
     }
@@ -80,7 +76,7 @@ export default {
     rows () {
       const by = Object.keys(this.sortOrder)[0]
       const dir = this.sortOrder[by]
-      return orderBy(this.rawRows, [item => item[by]], dir)
+      return orderBy(rows, [item => item[by]], dir)
     }
   },
   methods: {
@@ -89,6 +85,11 @@ export default {
     }
   }
 }
+
+const rows = [
+  { name: 'Item B', id: 1, desc: 'Description' },
+  { name: 'Item A', id: 2, desc: 'Description' }
+]
 
 const props = {
   fields: {

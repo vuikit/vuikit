@@ -13,7 +13,7 @@ export default function (h) {
     }}></i>
     return (
       <th class={{
-        'uk-visible-hover-inline': true,
+        'uk-visible-hover-inline': field.sortBy,
         'vk-table-order': field.sortBy,
         'uk-active': orderedBy,
         [field.headerClass]: field.headerClass
