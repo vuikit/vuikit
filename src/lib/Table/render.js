@@ -17,10 +17,11 @@ export default function (h) {
         'vk-table-order': field.sortBy,
         'uk-active': orderedBy,
         [field.headerClass]: field.headerClass
-      }}
-      on-click={e => {
+      }} on-click={e => {
         e.preventDefault()
-        this.emitSort(field)
+        if (field.sortBy) {
+          this.emitSort(field)
+        }
       }}>
         <span class="uk-position-relative">
           { field.header }{ field.sortBy && icon }
