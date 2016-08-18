@@ -61,4 +61,3 @@ describe('VkButtonRadio', () => {
     }).then(done)
   })
 })
-

@@ -79,4 +79,3 @@ describe('VkButtonCheckbox', () => {
     }).then(done)
   })
 })
-

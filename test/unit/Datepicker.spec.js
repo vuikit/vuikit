@@ -90,4 +90,3 @@ describe('VkDatepicker', () => {
     }).then(done)
   })
 })
-

@@ -123,7 +123,7 @@ describe('VkTabs Vertical', () => {
         bodyWidth: '2-3',
         index: 0
       },
-      template: `<vk-tabs-vertical 
+      template: `<vk-tabs-vertical
         :align="align"
         :width="width"
         :body-width="bodyWidth"
