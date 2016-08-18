@@ -17,7 +17,7 @@ describe('VkPagination', () => {
         pagination: {
           offset: 1,
           to: 20
-        },
+        }
       },
       template: `<vk-pagination
         :total="total"
@@ -111,4 +111,3 @@ describe('VkPagination', () => {
     }).then(done)
   })
 })
-

@@ -67,4 +67,3 @@ describe('VkBreadcrumb', () => {
     }).then(done)
   })
 })
-

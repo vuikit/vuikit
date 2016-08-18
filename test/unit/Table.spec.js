@@ -19,7 +19,7 @@ describe('VkTable', () => {
         rawRows: [
           { name: 'Item B', id: 1, desc: 'Description 1' },
           { name: 'Item A', id: 2, desc: 'Description 2' }
-        ],
+        ]
       },
       computed: {
         rows () {
@@ -140,4 +140,3 @@ describe('VkTable', () => {
     expect(tr[id2].children[2].innerHTML).toBe('Description 2')
   }
 })
-
