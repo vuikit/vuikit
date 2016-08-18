@@ -1,0 +1,14 @@
+{
+  "env": {
+    "jasmine": true
+  },
+  "globals": {
+    "beforeEach": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "waitForUpdate": true,
+    "triggerEvent": true,
+    "createTextVNode": true
+  }
+}
