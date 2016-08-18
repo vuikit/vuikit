@@ -7,15 +7,14 @@
       <vk-table ref="table"
         :fields="[{
           name: 'id',
-          sortBy: true
+          sortBy: true,
+          headerClass: 'vk-table-width-minimum'
         }, {
           name: 'name',
           sortBy: true
         }, {
           name: 'desc',
-          header: 'Description',
-          headerClass: 'uk-text-right',
-          cellClass: 'uk-text-right'
+          header: 'Description'
         }]"
         :rows="rows"
         :striped="props.striped.demo.value"

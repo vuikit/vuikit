@@ -22,7 +22,9 @@ export default function (h) {
         e.preventDefault()
         this.emitSort(field)
       }}>
-        { field.header }{ field.sortBy && icon }
+        <span class="uk-position-relative">
+          { field.header }{ field.sortBy && icon }
+        </span>
       </th>
     )
   })
