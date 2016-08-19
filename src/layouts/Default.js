@@ -6,7 +6,14 @@ export default {
   render (h, { children, props, parent, data }) {
     // prepare menu items
     const menuItems = createMenu(h, parent.$root.routes)
-    const menuItemsOffcanvas = createMenu(h, parent.$root.routes)
+    // const menuItemsOffcanvas = createMenu(h, parent.$root.routes)
+    // <div id="tm-offcanvas" class="uk-offcanvas">
+    //   <div class="uk-offcanvas-bar">
+    //     <ul class="uk-nav tm-nav">{
+    //       menuItemsOffcanvas
+    //     }</ul>
+    //   </div>
+    // </div>
     return (
       <div>
         <nav class="uk-navbar">
@@ -15,13 +22,6 @@ export default {
             data-uk-offcanvas>
           </a>
         </nav>
-        <div id="tm-offcanvas" class="uk-offcanvas">
-          <div class="uk-offcanvas-bar">
-            <ul class="uk-nav tm-nav">{
-              menuItemsOffcanvas
-            }</ul>
-          </div>
-        </div>
         <div class="uk-block">
           <div class="uk-container uk-container-center">
             <div class="uk-grid" data-uk-grid-margin>

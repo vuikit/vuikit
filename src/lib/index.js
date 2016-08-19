@@ -7,6 +7,7 @@ import Calendar from './Calendar'
 import Datepicker from './Datepicker'
 import Dropdown from './Dropdown'
 import Modal from './Modal'
+import Offcanvas from './Offcanvas'
 import Pagination from './Pagination'
 import Picker from './Picker'
 import Subnav from './Subnav'
@@ -29,6 +30,7 @@ const Vuikit = {
   Datepicker,
   Dropdown,
   Modal,
+  Offcanvas,
   Pagination,
   Picker,
   Subnav,

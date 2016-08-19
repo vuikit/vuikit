@@ -7,6 +7,10 @@ export default {
     name: 'Modal',
     component: require('./pages/Modal')
   },
+  '/offcanvas': {
+    name: 'Offcanvas',
+    component: require('./pages/Offcanvas')
+  },
   '/tabs': {
     name: 'Tabs',
     component: require('./pages/Tabs')
