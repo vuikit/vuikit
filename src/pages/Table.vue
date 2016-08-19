@@ -39,9 +39,6 @@
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
         </tm-tabs-item>
-        <tm-tabs-item name="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </tm-tabs-item>
         <tm-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
         </tm-tabs-item>
@@ -64,7 +61,6 @@ export default {
   mixins: [mixin],
   data: () => ({
     props: mergeProps(Component.props, props),
-    slots,
     events,
     example,
     sortOrder: {
@@ -121,15 +117,7 @@ const props = {
     demo: {
       value: false
     }
-  }
-}
-
-const slots = {
-  default: {
-    description: `The template for each field rendering. The field and row data being
-      currently rendered can be accessed at the component <code>$renderingRow</code> and
-      <code>$renderingField</code> respectively. Use with combination of <code>ref</code>,
-      eg. <code>$refs.calendar.$renderingRow</code>.`
+  },
   }
 }
 
