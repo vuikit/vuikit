@@ -4,21 +4,23 @@
       <h2>Table</h2>
       <hr class="uk-article-divider">
       <!-- DEMO -->
-      <vk-table ref="table"
+      <vk-table class="uk-form" ref="table"
         :fields="[{
-          name: 'id',
-          sortBy: true,
-          headerClass: 'vk-table-width-minimum'
-        }, {
           name: 'name',
           sortBy: true
+        }, {
+          name: 'hits',
+          sortBy: true,
+          headerClass: 'vk-table-width-minimum'
         }, {
           name: 'desc',
           header: 'Description'
         }]"
         :rows="rows"
-        :striped="props.striped.demo.value"
+        trackBy="id"
+        :selectable="props.selectable.demo.value"
         :condensed="props.condensed.demo.value"
+        :striped="props.striped.demo.value"
         :hover="props.hover.demo.value"
         :sort-order="sortOrder"
         @sort="
@@ -82,8 +84,9 @@ export default {
 }
 
 const rows = [
-  { name: 'Item B', id: 1, desc: 'Description' },
-  { name: 'Item A', id: 2, desc: 'Description' }
+  { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+  { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+  { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
 ]
 
 const props = {
@@ -95,10 +98,15 @@ const props = {
   rows: {
     description: 'A collection of <code>Objects</code> representing the rows data.'
   },
-  sortOrder: {
-    description: `Object defining the current order being the <code>key</code> the
-      field being sorted by and the <code>value</code> the direction, <code>asc</code>
-      or <code>desc</code>.`
+  trackBy: {
+    description: `A unique key for the rows to be tracked by. Used among others
+      to optimize the rendering of the rows.`
+  },
+  selectable: {
+    description: 'Whether to display the rows select checkboxes.',
+    demo: {
+      value: true
+    }
   },
   condensed: {
     description: 'Whether to display the rows compacted.',
@@ -118,6 +126,10 @@ const props = {
       value: false
     }
   },
+  sortOrder: {
+    description: `Object defining the current order being the <code>key</code> the
+    field being sorted by and the <code>value</code> the direction, <code>asc</code>
+    or <code>desc</code>.`
   }
 }
 

@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import render from './render'
 import { isString, merge } from '../../util'
 
@@ -12,6 +13,14 @@ export default {
     rows: {
       type: Array,
       required: true
+    },
+    trackBy: {
+      type: String,
+      required: true
+    },
+    selectable: {
+      type: Boolean,
+      default: false
     },
     condensed: {
       type: Boolean,
@@ -38,7 +47,13 @@ export default {
       default: () => ({})
     }
   },
+  data: () => ({
+    selected: Object.create(null)
+  }),
   computed: {
+    isAllSelected () {
+      return this.rows.length === Object.keys(this.selected).length
+    },
     fieldsDef () {
       return this.fields.map(field => {
         const obj = {
@@ -58,7 +73,35 @@ export default {
       })
     }
   },
+  watch: {
+    rows () {
+      // reset selected if rows change
+      this.selected = Object.create(null)
+    }
+  },
   methods: {
+    isSelected (row) {
+      const key = row[this.trackBy]
+      return this.selected[key]
+    },
+    toggleSelected (row) {
+      const key = row[this.trackBy]
+      this.selected[key]
+        ? Vue.delete(this.selected, key)
+        : Vue.set(this.selected, key, true)
+    },
+    toggleAllSelected () {
+      if (this.isAllSelected) {
+        this.selected = Object.create(null)
+      } else {
+        const allSelected = {}
+        this.rows.forEach(row => {
+          const key = row[this.trackBy]
+          allSelected[key] = true
+        })
+        this.selected = allSelected
+      }
+    },
     titleCase (str) {
       return str.replace(/\w+/g, txt =>
         txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()

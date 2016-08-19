@@ -1,83 +1,29 @@
-import { merge } from 'lodash'
+import Checkbox from './Checkbox'
+import Header from './Header'
+import Row from './Row'
 
 export default function (h) {
-  const nodes = {}
-  // headers
-  nodes.headers = this.fieldsDef.map(field => {
-    const orderedBy = this.sortOrder[field.name]
-    const icon = <i class={{
-      'uk-icon-justify uk-margin-small-left': true,
-      'uk-invisible': !orderedBy,
-      'vk-icon-arrow-down': orderedBy === 'asc' || orderedBy === undefined,
-      'vk-icon-arrow-up': orderedBy === 'desc'
-    }}></i>
-    return (
-      <th class={{
-        'uk-visible-hover-inline': field.sortBy,
-        'vk-table-order': field.sortBy,
-        'uk-active': orderedBy,
-        [field.headerClass]: field.headerClass
-      }} on-click={e => {
-        e.preventDefault()
-        if (field.sortBy) {
-          this.emitSort(field)
-        }
-      }}>
-        <span class="uk-position-relative">
-          { field.header }{ field.sortBy && icon }
-        </span>
-      </th>
-    )
-  })
-  // rows
-  nodes.rows = this.rows.map(row => (
-    <tr>{
-      this.fieldsDef.map((field, index) => (
-        h(fieldComponent, {
-          key: index,
-          class: field.cellClass,
-          props: {
-            row: row,
-            field: field
-          }
-        })
-      ))
-    }</tr>
-  ))
   return (
-    <table class={{
-      'uk-table': true,
+    <table staticClass="uk-table" class={{
       'uk-table-striped': this.striped,
       'uk-table-condensed': this.condensed,
       'uk-table-hover': this.hover
     }}>
       <thead>
-        <tr>{ nodes.headers }</tr>
+        <tr>{
+          this.selectable && h('th', [ h(Checkbox, {
+            props: {
+              checked: this.isAllSelected,
+              onChange: e => this.toggleAllSelected()
+            }
+          }) ])
+        }
+        { this.fieldsDef.map(field => h(Header, { props: {field} })) }
+        </tr>
       </thead>
-      <tbody>{ nodes.rows }</tbody>
+      <tbody>{
+        this.rows.map(row => h(Row, { props: {row} }))
+      }</tbody>
     </table>
   )
-}
-
-const fieldComponent = {
-  functional: true,
-  props: {
-    row: {
-      required: true
-    },
-    field: {
-      required: true
-    }
-  },
-  render (h, { parent, props, data }) {
-    let customComponent = false
-    if (parent.fieldComponent) {
-      customComponent = h(parent.fieldComponent, {
-        props: merge({}, parent.fieldProps, props)
-      })
-    }
-    return (
-      <td {...data}>{ customComponent || props.row[ props.field.name ] }</td>
-    )
-  }
 }
