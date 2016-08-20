@@ -90,9 +90,9 @@ describe('VkTable', () => {
 
   it('should render correct header fields', () => {
     let th = $vm.$el.querySelectorAll('thead th')
-    expect(th[0].innerHTML).toBe('Id<i class="uk-icon-justify uk-margin-small-left uk-invisible vk-icon-arrow-down"></i>')
-    expect(th[1].innerHTML).toBe('Name<i class="uk-icon-justify uk-margin-small-left vk-icon-arrow-up"></i>')
-    expect(th[2].innerHTML).toBe('Description')
+    expect(th[0].innerHTML).toBe('<span class="uk-position-relative">Id<i class="uk-icon-justify uk-margin-small-left uk-invisible vk-icon-arrow-down"></i></span>')
+    expect(th[1].innerHTML).toBe('<span class="uk-position-relative">Name<i class="uk-icon-justify uk-margin-small-left vk-icon-arrow-up"></i></span>')
+    expect(th[2].innerHTML).toBe('<span class="uk-position-relative">Description</span>')
   })
 
   it('should sort the rows by ID', done => {
