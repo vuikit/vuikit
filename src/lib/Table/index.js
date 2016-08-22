@@ -1,4 +1,3 @@
-import Vue from 'vue'
 import render from './render'
 import { isString, merge } from '../../util'
 
@@ -88,8 +87,8 @@ export default {
     toggleSelected (row) {
       const key = row[this.trackBy]
       this.selected[key]
-        ? Vue.delete(this.selected, key)
-        : Vue.set(this.selected, key, true)
+        ? this.$delete(this.selected, key)
+        : this.$set(this.selected, key, true)
     },
     toggleAllSelected () {
       if (this.isAllSelected) {
