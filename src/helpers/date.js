@@ -1,36 +1,9 @@
 import $moment from 'moment'
 import 'moment-range'
-import { range } from 'lodash'
 
 // Custom date prop validation
 export function validDate (moment) {
   return moment && $moment(moment).isValid()
-}
-
-// get a list of years withing a range
-export function listYears (min, max) {
-  const range = $moment.range($moment(min), $moment(max))
-  return range.toArray('years').map(moment => moment.year())
-}
-
-// get a list of months withing a range
-export function listMonths (currentYear, min, max) {
-  const minDate = $moment(min)
-  const maxDate = $moment(max)
-  const inMinYear = currentYear === minDate.year()
-  const inMaxYear = currentYear === maxDate.year()
-  const months = []
-  $moment.months().forEach((name, m) => {
-    if ((!inMinYear || m >= minDate.month()) && (!inMaxYear || m <= maxDate.month())) {
-      months.push({ text: name, value: m })
-    }
-  })
-  return months
-}
-
-// get a list of the week days
-export function listWeekDays () {
-  return range(0, 7).map((val, index) => $moment().weekday(index).format('ddd'))
 }
 
 // check if a moment is withing a range of dates

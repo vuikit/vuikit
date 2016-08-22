@@ -3,9 +3,6 @@ import momentMixin from '../mixins/moment'
 import {
   validDate,
   getCalendarMatrix,
-  listWeekDays,
-  listYears,
-  listMonths,
   isToday,
   isBetween
 } from '../../helpers/date'
@@ -75,18 +72,11 @@ export default {
         this.$emit('change', date)
       }
     },
-    listWeekDays,
     date () {
       return this.$moment().set({ year: this.year, month: this.month })
     },
     weeks () {
       return getCalendarMatrix(this.date)
-    },
-    yearsList () {
-      return listYears(this.minMoment, this.maxMoment)
-    },
-    monthsList () {
-      return listMonths(this.date.year(), this.minMoment, this.maxMoment)
     },
     prevMonth () {
       return this.date.clone().subtract(1, 'month')
