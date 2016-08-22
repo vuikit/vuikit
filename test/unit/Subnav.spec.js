@@ -31,6 +31,10 @@ describe('VkSubnav', () => {
     document.body.appendChild($vm.$el)
   })
 
+  afterEach(() => {
+    document.body.removeChild($vm.$el)
+  })
+
   it('should set tab disabled', () => {
     expect($vm.$el.children[3].classList.contains('uk-disabled')).toBeTruthy()
   })

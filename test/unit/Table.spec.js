@@ -59,6 +59,10 @@ describe('VkTable', () => {
     document.body.appendChild($vm.$el)
   })
 
+  afterEach(() => {
+    document.body.removeChild($vm.$el)
+  })
+
   it('should set condensed style', done => {
     expect($vm.$el.classList.contains('uk-table-condensed')).toBeFalsy()
     $vm.condensed = true
