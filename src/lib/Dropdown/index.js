@@ -1,5 +1,4 @@
 import * as Tether from '../../helpers/tether'
-import { query } from '../../helpers/util'
 import { on, offAll } from '../../helpers/dom'
 import render from './render'
 
@@ -58,7 +57,7 @@ export default {
   computed: {
     targetNode () {
       return (typeof this.target === 'string')
-        ? query(this.target)
+        ? document.querySelector(this.target)
         : this.target
     }
   },

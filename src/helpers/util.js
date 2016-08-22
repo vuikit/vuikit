@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * Utility functions
  */
@@ -78,20 +76,3 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 export { warn }
-
-/**
- * Query an element selector if it's not an element already.
- */
-export function query (el) {
-  if (typeof el === 'string') {
-    const selector = el
-    el = document.querySelector(el)
-    if (!el) {
-      Vue.util.warn(
-        `Cannot find dom element with selector '${selector}'.`
-      )
-      return document.createElement('div')
-    }
-  }
-  return el
-}
