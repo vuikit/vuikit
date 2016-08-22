@@ -19,6 +19,7 @@
             dropdownShow = false
           ">
           <vk-table
+            track-by="id"
             :fields="['name', 'hits', 'description']"
             :rows="[{
               id: 1,
