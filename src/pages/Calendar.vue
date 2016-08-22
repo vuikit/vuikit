@@ -73,11 +73,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Current', value: undefined },
+        { text: 'Current', value: Moment().year() },
         { text: 'Previous', value: Moment().add(-1, 'year').year() },
         { text: 'Next', value: Moment().add(1, 'year').year() }
       ],
-      value: undefined
+      value: Moment().year()
     }
   },
   month: {
@@ -87,11 +87,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Current', value: undefined },
+        { text: 'Current', value: Moment().month() },
         { text: 'Previous', value: Moment().add(-1, 'month').month() },
         { text: 'Next', value: Moment().add(1, 'month').month() }
       ],
-      value: undefined
+      value: Moment().month()
     }
   },
   min: {
@@ -101,11 +101,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: undefined },
+        { text: 'Default', value: '1980-01-01' },
         { text: 'Specific date', value: Moment().add(-2, 'months').format('YYYY-MM-DD') },
         { text: '5 days from today', value: 5 }
       ],
-      value: undefined
+      value: '1980-01-01'
     }
   },
   max: {
@@ -115,11 +115,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: undefined },
+        { text: 'Default', value: '2050-12-31' },
         { text: 'Specific date', value: Moment().add(2, 'months').format('YYYY-MM-DD') },
         { text: '5 days from today', value: 5 }
       ],
-      value: undefined
+      value: '2050-12-31'
     }
   },
   fieldComponent: {
