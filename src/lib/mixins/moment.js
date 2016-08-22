@@ -1,5 +1,5 @@
 import Moment from 'moment'
-import { merge, isArray, isObject, warn } from '../../util'
+import { merge, isArray, isObject, warn } from '../../helpers/util'
 
 const defaultLocale = {
   name: 'en',

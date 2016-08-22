@@ -1,4 +1,4 @@
-import { merge } from '../../util'
+import { merge } from '../../helpers/util'
 
 export default {
   functional: true,

@@ -1,5 +1,5 @@
 import { reduce } from 'lodash'
-import { isObject, merge } from '../../util'
+import { isObject, merge } from '../../helpers/util'
 import render from './render'
 
 export default {

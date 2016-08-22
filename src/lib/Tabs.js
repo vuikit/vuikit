@@ -1,4 +1,4 @@
-import { warn } from '../util.js'
+import { warn } from '../helpers/util.js'
 
 export default {
   name: 'VkTabs',

@@ -1,5 +1,5 @@
 import render from './render'
-import { isString, merge } from '../../util'
+import { isString, merge } from '../../helpers/util'
 
 export default {
   name: 'VkTable',

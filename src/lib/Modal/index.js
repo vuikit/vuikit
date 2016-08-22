@@ -1,5 +1,5 @@
 import { debounce } from 'lodash'
-import { on, offAll, css, addClass, removeClass } from '../helpers/dom'
+import { on, offAll, css, addClass, removeClass } from '../../helpers/dom'
 import render from './render'
 
 // active modal ref

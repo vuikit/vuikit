@@ -1,4 +1,4 @@
-import { each, inArray } from '../util'
+import { each, inArray } from '../helpers/util'
 
 export default {
   name: 'VkButtonCheckbox',

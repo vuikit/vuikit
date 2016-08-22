@@ -1,4 +1,4 @@
-import { warn } from '../../util'
+import { warn } from '../../helpers/util'
 
 export default function (h) {
   if (this.$slots.default !== undefined) {

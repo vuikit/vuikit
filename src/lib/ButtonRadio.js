@@ -1,4 +1,4 @@
-import { each } from '../util'
+import { each } from '../helpers/util'
 
 export default {
   name: 'VkButtonRadio',

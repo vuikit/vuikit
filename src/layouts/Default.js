@@ -1,4 +1,4 @@
-import { each, merge } from '../util'
+import { each, merge } from '../helpers/util'
 
 export default {
   name: 'VkDocsLayoutPage',

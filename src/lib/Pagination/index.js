@@ -1,5 +1,5 @@
 import { range } from 'lodash'
-import { merge } from '../../util'
+import { merge } from '../../helpers/util'
 import render from './render'
 
 export default {

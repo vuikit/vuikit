@@ -1,5 +1,5 @@
 import { mapValues, pickBy, isEqual, isEmpty, kebabCase } from 'lodash'
-import { each, isArray, isObject } from '../util'
+import { each, isArray, isObject } from '../helpers/util'
 
 export default {
   computed: {
