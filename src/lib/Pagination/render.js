@@ -1,3 +1,6 @@
+import Page from './Page'
+import Button from './Button'
+
 export default function (h) {
   return (
     <ul class={{
@@ -10,62 +13,34 @@ export default function (h) {
         'uk-pagination-previous': !this.compact
       }}>
         { this.prevPage
-          ? renderButton.call(this, h, 'angle-double-left', 1)
-          : renderButton.call(this, h, 'angle-double-left')
+          ? h(Button, {props: { icon: 'angle-double-left', page: 1 }})
+          : h(Button, {props: { icon: 'angle-double-left' }})
         }
         { this.prevPage
-          ? renderButton.call(this, h, 'angle-left', this.prevPage)
-          : renderButton.call(this, h, 'angle-left')
+          ? h(Button, {props: { icon: 'angle-left', page: this.prevPage }})
+          : h(Button, {props: { icon: 'angle-left' }})
         }
       </li>
-      { this.prePages.map(page => renderPage.call(this, h, page)) }
+      { this.prePages.map(page => h(Page, { props: {page} })) }
       { (this.mainPages[0] > (this.prePages.length + 1)) &&
         (<li><span>...</span></li>) }
-      { this.mainPages.map(page => renderPage.call(this, h, page)) }
+      { this.mainPages.map(page => h(Page, { props: {page} })) }
       { ((this.mainPages[this.mainPages.length - 1] + 1) < this.postPages[0]) &&
         (<li><span>...</span></li>) }
-      { this.postPages.map(page => renderPage.call(this, h, page)) }
+      { this.postPages.map(page => h(Page, { props: {page} })) }
       <li class={{
         'uk-disabled': !this.nextPage,
         'uk-pagination-next': !this.compact
       }}>
         { this.nextPage
-          ? renderButton.call(this, h, 'angle-right', this.nextPage)
-          : renderButton.call(this, h, 'angle-right')
+          ? h(Button, {props: { icon: 'angle-right', page: this.nextPage }})
+          : h(Button, {props: { icon: 'angle-right' }})
         }
         { this.nextPage
-          ? renderButton.call(this, h, 'angle-double-right', this.totalPages)
-          : renderButton.call(this, h, 'angle-double-right')
+          ? h(Button, {props: { icon: 'angle-double-right', page: this.totalPages }})
+          : h(Button, {props: { icon: 'angle-double-right' }})
         }
       </li>
     </ul>
   )
-}
-
-function renderPage (h, page) {
-  const isCurrent = page === this.page
-  const setAsCurrent = e => {
-    e.preventDefault()
-    this.change({ page })
-  }
-  return (
-    <li class={{
-      'uk-active': page === this.page
-    }}>{
-      isCurrent
-        ? (<span>{ page }</span>)
-        : (<a on-click={ setAsCurrent }>{ page }</a>)
-    }</li>
-  )
-}
-
-function renderButton (h, icon, page) {
-  icon = (<i class={ `uk-icon-${icon}` }></i>)
-  const setPage = e => {
-    e.preventDefault()
-    this.change({ page })
-  }
-  return page
-    ? (<a on-click={ setPage }>{ icon }</a>)
-    : (<span>{ icon }</span>)
 }
