@@ -43,7 +43,7 @@
 <script>
 import Component from '../lib/Breadcrumb'
 import mixin from './_mixin'
-import { mergeProps } from './helper'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'PageBreadcrumb',

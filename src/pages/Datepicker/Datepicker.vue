@@ -54,7 +54,7 @@
 import Moment from 'moment'
 import Component from '../../lib/Datepicker'
 import mixin from '../_mixin'
-import { mergeProps } from '../helper'
+import { mergeProps } from '../../helpers/pages'
 
 export default {
   name: 'Block',

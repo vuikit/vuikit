@@ -56,7 +56,7 @@
 import { orderBy } from 'lodash'
 import Component from '../lib/Table'
 import mixin from './_mixin'
-import { mergeProps } from './helper'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'PageTable',

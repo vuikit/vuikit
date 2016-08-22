@@ -42,7 +42,7 @@
 import Moment from 'moment'
 import Component from '../lib/Calendar'
 import mixin from './_mixin'
-import { mergeProps } from './helper'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'PageCalendar',

@@ -40,7 +40,7 @@
 <script>
 import Component from '../../lib/Button'
 import mixin from '../_mixin'
-import { mergeProps } from '../helper'
+import { mergeProps } from '../../helpers/pages'
 
 export default {
   name: 'PageButtonDefault',

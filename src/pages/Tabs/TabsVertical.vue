@@ -46,7 +46,7 @@
 <script>
 import Component from '../../lib/TabsVertical'
 import mixin from '../_mixin'
-import { mergeProps } from '../helper'
+import { mergeProps } from '../../helpers/pages'
 
 export default {
   mixins: [mixin],

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mergeProps } from './helper'
+import { mergeProps } from '../helpers/pages'
 import Component from '../lib/Pagination'
 import mixin from './_mixin'
 

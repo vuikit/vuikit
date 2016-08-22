@@ -52,7 +52,7 @@
 <script>
 import Component from '../../lib/Picker'
 import mixin from '../_mixin'
-import { mergeProps } from '../helper'
+import { mergeProps } from '../../helpers/pages'
 
 export default {
   mixins: [mixin],

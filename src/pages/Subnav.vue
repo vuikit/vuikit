@@ -46,7 +46,7 @@
 <script>
 import Component from '../lib/Subnav'
 import mixin from './_mixin'
-import { mergeProps } from './helper'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'PageSubnav',
