@@ -52,7 +52,8 @@ export default {
   }),
   computed: {
     isAllSelected () {
-      return this.rows.length === Object.keys(this.selected).length
+      const totalSelected = Object.keys(this.selected).length
+      return totalSelected && totalSelected === this.rows.length
     },
     fieldsDef () {
       return this.fields.map(field => {
