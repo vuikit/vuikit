@@ -1,6 +1,6 @@
 import moment from '../mixins/moment'
 import { flatten } from 'lodash'
-import { getCalendarMatrix, isBetween } from '../../helpers/dates'
+import { getCalendarMatrix, isBetween } from '../../helpers/date'
 import render from './render'
 
 export default {
