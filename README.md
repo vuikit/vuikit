@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://vuikit.github.io/vuikit/#!/alert">
+  <a href="https://vuikit.github.io/vuikit">
     <img width="150" src="https://cdn.rawgit.com/vuikit/vuikit/master/static/logo-vuikit.svg">
   </a>
 </p>
@@ -14,9 +14,9 @@ There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io
 
 ## Dependencies
 
-- [Vue](http://vuejs.org/) (^1.0.24)
-- [UIkit](http://getuikit.com/) (^2.26.0)
-- [jQuery](https://jquery.com//) (Inherited UIkit dependency)
+- [Vue](http://vuejs.org/) (^2.0.0)
+
+Yeah! Since Vuikit 0.6.0 the only dependency is Vue!
 
 ## Code Samples
 > Note that all code examples are using ES6 syntax
@@ -45,17 +45,17 @@ Although is possible to load and register them individually.
 
 ```js
 import Vue from 'vue'
-import { Button, Alert } from 'vuikit'
+import { Button, Modal } from 'vuikit'
 
 // globally
 Vue.component('VkButton', Button)
-Vue.component('VkAlert', Alert)
+Vue.component('VkModal', Modal)
 
 // or locally
 new Vue({
   components: {
     VkButton: Button,
-    VkAlert: Alert
+    VkModal: Modal
   }
 })
 ```
@@ -88,11 +88,9 @@ import Vuikit from 'vuikit'
 Vue.use(Vuikit) // or register individually
 ```
 
-By default all dependencies will be retrieved from `node_modules`, but that will not work straightforward as UIkit expects jQuery to be loaded globally. To avoid this and other related issues is recommended to solve the dependencies loading externally. When building with Webpack or Browserify you can do so by setting the `externals` or `external` config property.
-
 ### Browser
 
-Make sure jQuery, UIkit and Vue are loaded upfront and then load `dist/vuikit.js`.
+Make sure Vue is loaded upfront and then load `dist/vuikit.js`.
 
 ## Developers
 
