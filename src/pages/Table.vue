@@ -5,6 +5,7 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <vk-table class="uk-form" ref="table"
+        trackBy="id"
         :fields="[{
           name: 'name',
           sortBy: true
@@ -16,8 +17,8 @@
           name: 'desc',
           header: 'Description'
         }]"
-        :rows="rows"
-        trackBy="id"
+        :rows="sortedRows"
+        :selectedRows="selectedRows"
         :selectable="props.selectable.demo.value"
         :condensed="props.condensed.demo.value"
         :striped="props.striped.demo.value"
@@ -25,7 +26,15 @@
         :sort-order="sortOrder"
         @sort="
           events.sort.emited = true,
-          sortRows(arguments[0])
+          sortOrder = arguments[0]
+        "
+        @select="
+          events.select.emited = true,
+          selectedRows = arguments[0]
+        "
+        @unselect="
+          events.unselect.emited = true,
+          selectedRows = arguments[0]
         ">
       </vk-table>
       <!-- DESC -->
@@ -67,27 +76,22 @@ export default {
     example,
     sortOrder: {
       name: 'asc'
-    }
+    },
+    selectedRows: [],
+    rows: [
+      { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+      { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+      { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
+    ]
   }),
   computed: {
-    rows () {
+    sortedRows () {
       const by = Object.keys(this.sortOrder)[0]
       const dir = this.sortOrder[by]
-      return orderBy(rows, [item => item[by]], dir)
-    }
-  },
-  methods: {
-    sortRows (sortOrder) {
-      this.sortOrder = sortOrder
+      return orderBy(this.rows, [item => item[by]], dir)
     }
   }
 }
-
-const rows = [
-  { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
-  { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
-  { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
-]
 
 const props = {
   fields: {
@@ -96,17 +100,23 @@ const props = {
       <code>Object</code>.`
   },
   rows: {
-    description: 'A collection of <code>Objects</code> representing the rows data.'
+    description: `A collection of <code>Objects</code> representing the rows data.
+      The row object doesn't require any specific structure, but the key
+      <code>_selected</code> is reserved for the component workflow.`
   },
   trackBy: {
     description: `A unique key for the rows to be tracked by. Used among others
-      to optimize the rendering of the rows.`
+    to optimize the rendering of the rows.`
   },
   selectable: {
     description: 'Whether to display the rows select checkboxes.',
     demo: {
       value: true
     }
+  },
+  selectedRows: {
+    description: `An <code>Array</code> of selected rows ids determined by
+      <code>trackBy</code>.`
   },
   condensed: {
     description: 'Whether to display the rows compacted.',
@@ -135,28 +145,42 @@ const props = {
 
 const events = {
   sort: {
-    description: `Emited when a sortable field header has been clicked passing
-      as arguments the field data.`,
+    description: `Emited on the intention to sort the rows passing as argument
+      the sorting data.`,
+    emited: false
+  },
+  select: {
+    description: `Emited on the intention to change the rows state to selected passing as
+      first argument the <code>selectedRows</code> new state and as second the involved rows.`,
+    emited: false
+  },
+  unselect: {
+    description: `Emited on the intention to change the rows state to unselected passing as
+      first argument the <code>selectedRows</code> new state and as second the involved rows.`,
     emited: false
   }
 }
 
 const example =
-`<vk-table ref="table" {attrs}
-  :fields="[
-    'id',
-    'name',
-    {
-      name: 'desc',
-      header: 'Description',
-      headerClass: 'uk-text-right',
-      cellClass: 'uk-text-right'
-    }
-  ]"
+`<vk-table {attrs}
+  trackBy="id"
+  :fields="[{
+    name: 'name',
+    sortBy: true
+  }, {
+    name: 'hits',
+    sortBy: true,
+    headerClass: 'vk-table-width-minimum'
+  }, {
+    name: 'desc',
+    header: 'Description'
+  }]"
   :rows="[
-    { name: 'Item 1', id: 1, desc: 'Description' },
-    { name: 'Item 2', id: 2, desc: 'Description' }
-  ]">
-  {{ $refs.table.$renderingRow[ $refs.table.$renderingField.name ] }}
+    { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+    { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+    { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
+  ]"
+  @sort="sortOrder = arguments[0]"
+  @change="rows = arguments[0]">
 </vk-table>`
 </script>

@@ -1,6 +1,6 @@
 export default {
   functional: true,
-  props: ['checked', 'onChange'],
+  props: ['checked', 'onClick'],
   render (h, { parent, props }) {
     return h('input', {
       attrs: {
@@ -10,7 +10,12 @@ export default {
         checked: props.checked
       },
       on: {
-        change: props.onChange
+        click: e => {
+          // ensure the browser doesnt apply
+          // the checked state on click
+          e.target.checked = props.checked
+          props.onClick()
+        }
       }
     })
   }

@@ -21,6 +21,10 @@ export default {
       type: Boolean,
       default: false
     },
+    selectedRows: {
+      type: Array,
+      default: () => []
+    },
     condensed: {
       type: Boolean,
       default: false
@@ -46,14 +50,7 @@ export default {
       default: () => ({})
     }
   },
-  data: () => ({
-    selected: Object.create(null)
-  }),
   computed: {
-    isAllSelected () {
-      const totalSelected = Object.keys(this.selected).length
-      return totalSelected && totalSelected === this.rows.length
-    },
     fieldsDef () {
       return this.fields.map(field => {
         const obj = {
@@ -67,46 +64,13 @@ export default {
           ? merge(obj, { name: field })
           : merge(obj, field)
         if (obj.header !== false && obj.header === '') {
-          obj.header = this.titleCase(obj.name)
+          obj.header = titleCase(obj.name)
         }
         return obj
       })
     }
   },
-  watch: {
-    rows () {
-      // reset selected if rows change
-      this.selected = Object.create(null)
-    }
-  },
   methods: {
-    isSelected (row) {
-      const key = row[this.trackBy]
-      return this.selected[key]
-    },
-    toggleSelected (row) {
-      const key = row[this.trackBy]
-      this.selected[key]
-        ? this.$delete(this.selected, key)
-        : this.$set(this.selected, key, true)
-    },
-    toggleAllSelected () {
-      if (this.isAllSelected) {
-        this.selected = Object.create(null)
-      } else {
-        const allSelected = {}
-        this.rows.forEach(row => {
-          const key = row[this.trackBy]
-          allSelected[key] = true
-        })
-        this.selected = allSelected
-      }
-    },
-    titleCase (str) {
-      return str.replace(/\w+/g, txt =>
-        txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-      )
-    },
     emitSort (field) {
       const sortBy = field.sortBy === true
         ? field.name
@@ -123,4 +87,10 @@ export default {
       this.$emit('sort', sortOrder)
     }
   }
+}
+
+function titleCase (str) {
+  return str.replace(/\w+/g, txt =>
+    txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+  )
 }

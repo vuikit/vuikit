@@ -3,6 +3,9 @@ import Header from './Header'
 import Row from './Row'
 
 export default function (h) {
+  const allSelected = this.rows.every(row =>
+    this.selectedRows.find(id => id === row[this.trackBy])
+  )
   return (
     <table staticClass="uk-table" class={{
       'uk-table-striped': this.striped,
@@ -13,8 +16,20 @@ export default function (h) {
         <tr>{
           this.selectable && h('th', [ h(Checkbox, {
             props: {
-              checked: this.isAllSelected,
-              onChange: e => this.toggleAllSelected()
+              checked: allSelected,
+              onClick: e => {
+                if (allSelected) {
+                  const affectedRows = this.rows.slice() // clone array
+                  this.$emit('unselect', [], affectedRows)
+                } else {
+                  const newState = this.rows.map(row => row[this.trackBy])
+                  const affectedRows = this.rows.filter(row =>
+                    // filter out selected rows
+                    !this.selectedRows.find(id => row[this.trackBy] === id)
+                  )
+                  this.$emit('select', newState, affectedRows)
+                }
+              }
             }
           }) ])
         }
