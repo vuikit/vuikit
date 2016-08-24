@@ -8,6 +8,9 @@
 
 Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
 
+
+> If you are looking for dependent less, Vue 2.0 compatible version, checkout  [Vuikit next](https://github.com/vuikit/vuikit/tree/next)!
+
 ## Documentation and examples
 
 There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information about each component. As well as a [codepen](http://codepen.io/miljan/pen/YWXVKj) playground.
