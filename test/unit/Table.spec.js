@@ -10,50 +10,52 @@ describe('VkTable', () => {
   beforeEach(() => {
     $vm = new Vue({
       data: {
+        selectable: true,
         striped: false,
         condensed: false,
         hover: false,
+        selectedRows: [],
         sortOrder: {
-          name: 'desc'
+          name: 'asc'
         },
-        rawRows: [
-          { name: 'Item B', id: 1, desc: 'Description 1' },
-          { name: 'Item A', id: 2, desc: 'Description 2' }
+        rows: [
+          { id: 1, name: 'Item A', hits: 100, desc: 'Description 1' },
+          { id: 2, name: 'Item B', hits: 40, desc: 'Description 2' },
+          { id: 3, name: 'Item C', hits: 700, desc: 'Description 3' }
         ]
       },
       computed: {
-        rows () {
+        sortedRows () {
           const by = Object.keys(this.sortOrder)[0]
           const dir = this.sortOrder[by]
-          return orderBy(this.rawRows, [item => item[by]], dir)
+          return orderBy(this.rows, [item => item[by]], dir)
         }
       },
-      methods: {
-        sortRows (sortOrder) {
-          this.sortOrder = sortOrder
-        }
-      },
-      template: `<vk-table ref="table"
+      template: `<vk-table class="uk-form" ref="table"
+        trackBy="id"
         :fields="[{
-          name: 'id',
-          sortBy: true
-        }, {
           name: 'name',
           sortBy: true
+        }, {
+          name: 'hits',
+          sortBy: true,
+          headerClass: 'vk-table-width-minimum'
         }, {
           name: 'desc',
           header: 'Description',
           headerClass: 'uk-text-right',
           cellClass: 'uk-text-right'
         }]"
-        :rows="rows"
+        :rows="sortedRows"
         :striped="striped"
+        :selectedRows="selectedRows"
+        :selectable="selectable"
         :condensed="condensed"
         :hover="hover"
         :sort-order="sortOrder"
-        @sort="
-          sortRows(arguments[0])
-        ">
+        @sort="sortOrder = arguments[0]"
+        @select="selectedRows = arguments[0]"
+        @unselect="selectedRows = arguments[0]">
       </vk-table>`
     }).$mount()
     document.body.appendChild($vm.$el)
@@ -89,58 +91,96 @@ describe('VkTable', () => {
 
   it('should render correct rows and columns', () => {
     let tr = $vm.$el.querySelectorAll('tbody tr')
-    checkRowOrdering(tr, 'id', 'asc')
+    checkRowOrdering(tr)
   })
 
   it('should render correct header fields', () => {
     let th = $vm.$el.querySelectorAll('thead th')
-    expect(th[0].innerHTML).toBe('<span class="uk-position-relative">Id<i class="uk-icon-justify uk-margin-small-left uk-invisible vk-icon-arrow-down"></i></span>')
-    expect(th[1].innerHTML).toBe('<span class="uk-position-relative">Name<i class="uk-icon-justify uk-margin-small-left vk-icon-arrow-up"></i></span>')
-    expect(th[2].innerHTML).toBe('<span class="uk-position-relative">Description</span>')
-  })
-
-  it('should sort the rows by ID', done => {
-    let tr = $vm.$el.querySelectorAll('tbody tr')
-    $vm.$el.querySelectorAll('thead th')[0].click()
-    waitForUpdate(() => {
-      checkRowOrdering(tr, 'id', $vm.sortOrder.id)
-      $vm.$el.querySelectorAll('thead th')[1].click()
-    }).then(() => {
-      checkRowOrdering(tr, 'id', $vm.sortOrder.id)
-      $vm.$el.querySelectorAll('thead th')[0].click()
-    }).then(() => {
-      checkRowOrdering(tr, 'id', $vm.sortOrder.id)
-    }).then(done)
+    expect(th[0].innerHTML).toBe('<input type="checkbox">')
+    expect(th[1].innerHTML).toBe('<span class="uk-position-relative">Name<i class="uk-icon-justify uk-margin-small-left vk-icon-arrow-down"></i></span>')
+    expect(th[2].innerHTML).toBe('<span class="uk-position-relative">Hits<i class="uk-icon-justify uk-margin-small-left uk-invisible vk-icon-arrow-down"></i></span>')
+    expect(th[3].innerHTML).toBe('<span class="uk-position-relative">Description</span>')
   })
 
   it('should sort the rows by name', done => {
     let tr = $vm.$el.querySelectorAll('tbody tr')
-    $vm.$el.querySelectorAll('thead th')[0].click()
+    $vm.$el.querySelectorAll('thead th')[1].click()
     waitForUpdate(() => {
-      checkRowOrdering(tr, 'name', $vm.sortOrder.name)
+      checkRowOrdering(tr)
       $vm.$el.querySelectorAll('thead th')[1].click()
     }).then(() => {
-      checkRowOrdering(tr, 'name', $vm.sortOrder.name)
+      checkRowOrdering(tr)
       $vm.$el.querySelectorAll('thead th')[0].click()
     }).then(() => {
-      checkRowOrdering(tr, 'name', $vm.sortOrder.name)
+      checkRowOrdering(tr)
     }).then(done)
   })
 
-  function checkRowOrdering (tr, field, direction) {
-    let id1, id2
-    if (field === 'id') {
-      id1 = direction === 'asc' ? 0 : 1
-      id2 = direction === 'asc' ? 1 : 0
-    } else if (field === 'name') {
-      id1 = direction === 'asc' ? 1 : 0
-      id2 = direction === 'asc' ? 0 : 1
+  it('should sort the rows by hits', done => {
+    let tr = $vm.$el.querySelectorAll('tbody tr')
+    $vm.$el.querySelectorAll('thead th')[2].click()
+    waitForUpdate(() => {
+      checkRowOrdering(tr)
+      $vm.$el.querySelectorAll('thead th')[1].click()
+    }).then(() => {
+      checkRowOrdering(tr)
+      $vm.$el.querySelectorAll('thead th')[0].click()
+    }).then(() => {
+      checkRowOrdering(tr)
+    }).then(done)
+  })
+
+  it('should work bulk select', done => {
+    expect($vm.selectedRows).toEqual([])
+    $vm.$el.querySelectorAll('thead tr th')[0].querySelector('input').click()
+    waitForUpdate(() => {
+      expect($vm.selectedRows).toEqual([1, 2, 3])
+      $vm.$el.querySelectorAll('thead tr th')[0].querySelector('input').click()
+    }).then(() => {
+      expect($vm.selectedRows).toEqual([])
+    }).then(done)
+  })
+
+  it('should select items in right order', done => {
+    expect($vm.selectedRows).toEqual([])
+    $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[2].click()
+    waitForUpdate(() => {
+      expect($vm.selectedRows).toEqual([3])
+      $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[0].click()
+    }).then(() => {
+      expect($vm.selectedRows).toEqual([3, 1])
+      $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[1].click()
+    }).then(() => {
+      expect($vm.selectedRows).toEqual([3, 1, 2])
+    }).then(done)
+  })
+
+  function checkRowOrdering (tr) {
+    let id1, id2, id3
+    let orderField = Object.keys($vm.sortOrder)[0]
+    let orderDirection = $vm.sortOrder[Object.keys($vm.sortOrder)[0]]
+    if (orderField === 'hits') {
+      id1 = 1
+      id2 = orderDirection === 'asc' ? 0 : 2
+      id3 = orderDirection === 'asc' ? 2 : 0
+    } else if (orderField === 'name') {
+      id1 = orderDirection === 'asc' ? 0 : 2
+      id2 = 1
+      id3 = orderDirection === 'asc' ? 2 : 0
     }
-    expect(tr[id1].children[0].innerHTML).toBe('1')
-    expect(tr[id1].children[1].innerHTML).toBe('Item B')
-    expect(tr[id1].children[2].innerHTML).toBe('Description 1')
-    expect(tr[id2].children[0].innerHTML).toBe('2')
-    expect(tr[id2].children[1].innerHTML).toBe('Item A')
-    expect(tr[id2].children[2].innerHTML).toBe('Description 2')
+    expect(tr[id1].children[0].innerHTML).toBe('<input type="checkbox">')
+    expect(tr[id1].children[1].innerHTML).toBe('Item A')
+    expect(tr[id1].children[2].innerHTML).toBe('100')
+    expect(tr[id1].children[3].innerHTML).toBe('Description 1')
+
+    expect(tr[id2].children[0].innerHTML).toBe('<input type="checkbox">')
+    expect(tr[id2].children[1].innerHTML).toBe('Item B')
+    expect(tr[id2].children[2].innerHTML).toBe('40')
+    expect(tr[id2].children[3].innerHTML).toBe('Description 2')
+
+    expect(tr[id3].children[0].innerHTML).toBe('<input type="checkbox">')
+    expect(tr[id3].children[1].innerHTML).toBe('Item C')
+    expect(tr[id3].children[2].innerHTML).toBe('700')
+    expect(tr[id3].children[3].innerHTML).toBe('Description 3')
   }
 })
