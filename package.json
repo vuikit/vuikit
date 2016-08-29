@@ -90,7 +90,6 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-spec-reporter": "0.0.23",
     "karma-webpack": "^1.7.0",
-    "phantomjs": "^1.9.19",
     "chromedriver": "^2.21.2",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
