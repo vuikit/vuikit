@@ -35,6 +35,10 @@ describe('VkTabs', () => {
     document.body.appendChild($vm.$el)
   })
 
+  afterEach(() => {
+    document.body.removeChild($vm.$el)
+  })
+
   it('should set active tab on index var change', done => {
     expect($vm.$el.querySelectorAll('.uk-tab li')[0].classList.contains('uk-active')).toBeTruthy()
     $vm.index = 2

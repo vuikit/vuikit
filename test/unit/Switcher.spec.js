@@ -27,6 +27,10 @@ describe('VkSwitcher', () => {
     document.body.appendChild($vm.$el)
   })
 
+  afterEach(() => {
+    document.body.removeChild($vm.$el)
+  })
+
   it('should change text on index change', done => {
     expect($vm.$el.querySelector('li').innerText.trim(), 'Item 1')
     $vm.index = 2
