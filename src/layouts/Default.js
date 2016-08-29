@@ -4,31 +4,27 @@ export default {
   name: 'VkDocsLayoutPage',
   functional: true,
   render (h, { children, props, parent, data }) {
-    // prepare menu items
-    const menuItems = createMenu(h, parent.$root.routes)
-    // const menuItemsOffcanvas = createMenu(h, parent.$root.routes)
-    // <div id="tm-offcanvas" class="uk-offcanvas">
-    //   <div class="uk-offcanvas-bar">
-    //     <ul class="uk-nav tm-nav">{
-    //       menuItemsOffcanvas
-    //     }</ul>
-    //   </div>
-    // </div>
     return (
       <div>
         <nav class="uk-navbar">
           <a class="uk-navbar-toggle uk-visible-small"
-            href="#tm-offcanvas"
-            data-uk-offcanvas>
+            on-click={e => { parent.$root.showOffcanvas = true }}>
           </a>
         </nav>
+        <vk-offcanvas
+          show={ parent.$root.showOffcanvas }
+          on-clickOut={e => { parent.$root.showOffcanvas = false }}>
+          <ul class="uk-nav tm-nav uk-nav-offcanvas">
+            { h(Menu) }
+          </ul>
+        </vk-offcanvas>
         <div class="uk-block">
           <div class="uk-container uk-container-center">
             <div class="uk-grid" data-uk-grid-margin>
               <div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
-                <ul class="uk-nav tm-nav">{
-                  menuItems
-                }</ul>
+                <ul class="uk-nav tm-nav">
+                  { h(Menu) }
+                </ul>
               </div>
               <div class="uk-width-medium-3-4">
                 <article class="uk-article">
@@ -43,31 +39,25 @@ export default {
   }
 }
 
-function createMenu (h, routes) {
-  const items = []
-  each(routes, (route, path) => items.push(
-    h(MenuItem, merge({
-      props: {
-        name: route.name,
-        path
-      }
-    }))
-  ))
-  return items
+const Menu = {
+  functional: true,
+  render (h, { props, parent }) {
+    const items = []
+    each(parent.$root.routes, (route, path) => items.push(
+      h(MenuItem, merge({
+        props: {
+          name: route.name,
+          path
+        }
+      }))
+    ))
+    return items
+  }
 }
 
 const MenuItem = {
   functional: true,
-  props: {
-    name: {
-      type: String,
-      required: true
-    },
-    path: {
-      type: String,
-      required: true
-    }
-  },
+  props: ['name', 'path'],
   render (h, { props, parent }) {
     return (
       <li class={{
@@ -80,6 +70,10 @@ const MenuItem = {
             parent.$root.routes[props.path],
             props.path
           )
+          // close offcanvas
+          parent.$nextTick(() => {
+            parent.$root.showOffcanvas = false
+          })
         }}>
           { props.name }
         </a>

@@ -16,6 +16,7 @@ Vue.use(TmComponents)
 const app = new App({
   el: '#app',
   data: {
+    showOffcanvas: false,
     routes,
     currentRoute: window.location.pathname !== '/'
       ? window.location.pathname
