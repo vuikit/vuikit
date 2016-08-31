@@ -30,10 +30,6 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     new LodashModuleReplacementPlugin({
       'collections': true
     }),
-    // http://vuejs.github.io/vue-loader/workflow/production.html
-    new webpack.DefinePlugin({
-      'process.env': env
-    }),
     // makes lodash even smaller
     new LodashModuleReplacementPlugin,
     // not sure why, but necessary
@@ -60,6 +56,10 @@ module.exports = [
     },
     devtool: config.build.productionSourceMap ? '#source-map' : false,
     plugins: [
+      // http://vuejs.github.io/vue-loader/workflow/production.html
+      new webpack.DefinePlugin({
+        'process.env': env
+      }),
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: false
