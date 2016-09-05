@@ -122,13 +122,10 @@ const props = {
       value: '2050-12-31'
     }
   },
-  fieldComponent: {
-    description: `The component definition that will be used during the date fields rendering.
+  dateRender: {
+    description: `The date field render that would override the default output.
       Each instance will recieve a date prop as <a href="http://momentjs.com/docs/#/parsing/">moment.js</a>
       object.`
-  },
-  fieldProps: {
-    description: 'Additional props to be passed to the field component instances.'
   },
   locale: {
     description: `By default, VkCalendar comes with the English locale strings.

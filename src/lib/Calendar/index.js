@@ -43,13 +43,9 @@ export default {
       type: Object,
       default: () => ({})
     },
-    fieldComponent: {
-      type: [Object, Boolean],
+    dateRender: {
+      type: [Function, Boolean],
       default: false
-    },
-    fieldProps: {
-      type: Object,
-      default: () => ({})
     }
   },
   computed: {
