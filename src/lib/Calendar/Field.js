@@ -12,7 +12,7 @@ export default {
     }
     return customComponent || (
       <a class={{
-        'uk-datepicker-table-muted': !parent.isInCurrentMonth(props.date)
+        'uk-datepicker-table-muted': props.date.month() !== parent.month
       }}>
         { props.date.format('D') }
       </a>

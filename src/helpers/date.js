@@ -1,20 +1,13 @@
-import $moment from 'moment'
-import 'moment-range'
+import Moment from 'moment'
 
 // Custom date prop validation
-export function validDate (moment) {
-  return moment && $moment(moment).isValid()
+export function validDate (date) {
+  return date && Moment(date).isValid()
 }
 
-// check if a moment is withing a range of dates
-export function isBetween (moment, min, max) {
-  const range = $moment.range($moment(min), $moment(max))
-  return range.contains(moment)
-}
-
-// check if a moment is today
-export function isToday (moment) {
-  return moment.isSame($moment(), 'day')
+// check if a date is today
+export function isToday (date) {
+  return date.isSame(Moment(), 'day')
 }
 
 // Creates a 6x7 matrix of dates
@@ -25,13 +18,13 @@ export function getCalendarMatrix (date) {
   const minute = date.minute()
   const second = date.second()
   const daysInMonth = date.daysInMonth()
-  const firstDay = $moment([year, month, 1])
-  const lastDay = $moment([year, month, daysInMonth])
-  const lastMonth = $moment(firstDay).subtract(1, 'month').month()
-  const lastYear = $moment(firstDay).subtract(1, 'month').year()
-  const daysInLastMonth = $moment([lastYear, lastMonth]).daysInMonth()
+  const firstDay = Moment([year, month, 1])
+  const lastDay = Moment([year, month, daysInMonth])
+  const lastMonth = Moment(firstDay).subtract(1, 'month').month()
+  const lastYear = Moment(firstDay).subtract(1, 'month').year()
+  const daysInLastMonth = Moment([lastYear, lastMonth]).daysInMonth()
   const dayOfWeek = firstDay.day()
-  const firstDayOfWeek = $moment.localeData().firstDayOfWeek()
+  const firstDayOfWeek = Moment.localeData().firstDayOfWeek()
   const matrix = []
   let i
   let col
@@ -49,7 +42,7 @@ export function getCalendarMatrix (date) {
   if (dayOfWeek === firstDayOfWeek) {
     startDay = daysInLastMonth - 6
   }
-  let curDate = $moment([lastYear, lastMonth, startDay, 12, minute, second])
+  let curDate = Moment([lastYear, lastMonth, startDay, 12, minute, second])
   for (i = 0, col = 0, row = 0; i < 42; i++, col++, curDate = curDate.clone().add(24, 'hour')) {
     if (i > 0 && col % 7 === 0) {
       col = 0

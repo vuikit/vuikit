@@ -96,8 +96,16 @@ function listMonths (currentYear, min, max) {
 
 // get a list of years withing a range
 function listYears (min, max) {
-  const range = Moment.range(Moment(min), Moment(max))
-  return range.toArray('years').map(moment => ({
-    text: moment.year(), value: moment.year()
+  const dates = []
+  const end = Moment(max)
+  const diff = max.diff(min, 'days')
+  if (!min.isValid() || !max.isValid() || diff <= 0) {
+    return
+  }
+  for (var i = 0; i < diff; i++) {
+    dates.push(end.subtract(1, 'd'))
+  }
+  return dates.map(date => ({
+    text: date.year(), value: date.year()
   }))
 }

@@ -3,8 +3,7 @@ import momentMixin from '../mixins/moment'
 import {
   validDate,
   getCalendarMatrix,
-  isToday,
-  isBetween
+  isToday
 } from '../../helpers/date'
 
 export default {
@@ -98,10 +97,7 @@ export default {
   methods: {
     isToday,
     isDisplayable (moment) {
-      return isBetween(moment, this.minMoment, this.maxMoment)
-    },
-    isInCurrentMonth (moment) {
-      return moment.isSame(this.date, 'month')
+      return moment.isBetween(this.minMoment, this.maxMoment)
     }
   }
 }

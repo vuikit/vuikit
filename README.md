@@ -15,8 +15,9 @@ There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io
 ## Dependencies
 
 - [Vue](http://vuejs.org/) (^2.0.0)
+- [Moment](http://momentjs.com/) (^2.14.1) - Only required by VkCalendar
 
-Yeah! Since Vuikit 0.6.0 the only dependency is Vue!
+Yeah! Since Vuikit 0.6.0 the only general dependency is Vue!
 
 ## Code Samples
 > Note that all code examples are using ES6 syntax
