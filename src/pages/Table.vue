@@ -6,17 +6,7 @@
       <!-- DEMO -->
       <vk-table class="uk-form" ref="table"
         trackBy="id"
-        :fields="[{
-          name: 'name',
-          sortBy: true
-        }, {
-          name: 'hits',
-          sortBy: true,
-          headerClass: 'vk-table-width-minimum'
-        }, {
-          name: 'desc',
-          header: 'Description'
-        }]"
+        :fields="fields"
         :rows="sortedRows"
         :selectedRows="selectedRows"
         :selectable="props.selectable.demo.value"
@@ -78,6 +68,20 @@ export default {
       name: 'asc'
     },
     selectedRows: [],
+    fields: [{
+      name: 'name',
+      sortBy: true
+    }, {
+      name: 'hits',
+      sortBy: true,
+      headerClass: 'vk-table-width-minimum'
+    }, {
+      name: 'desc',
+      header: 'Description',
+      render (h, { props }) {
+        return props.row[ props.field.name ]
+      }
+    }],
     rows: [
       { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
       { id: 2, name: 'Item B', hits: 40, desc: 'Description' },

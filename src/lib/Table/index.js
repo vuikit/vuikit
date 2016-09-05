@@ -40,14 +40,6 @@ export default {
     sortOrder: {
       type: Object,
       default: () => ({}) // field: asc|desc
-    },
-    fieldComponent: {
-      type: [Object, Boolean],
-      default: false
-    },
-    fieldProps: {
-      type: Object,
-      default: () => ({})
     }
   },
   computed: {

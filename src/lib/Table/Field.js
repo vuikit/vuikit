@@ -1,22 +1,21 @@
-import { merge } from '../../helpers/util'
-
 export default {
   functional: true,
-  props: {
-    row: {
-      required: true
-    },
-    field: {
-      required: true
-    }
-  },
-  render (h, { parent, props }) {
-    let customComponent = false
-    if (parent.fieldComponent) {
-      customComponent = h(parent.fieldComponent, {
-        props: merge({}, parent.fieldProps, props)
+  props: ['row', 'field'],
+  render (h, { parent, props, data }) {
+    // each field could provide its own render
+    if (props.field.render !== undefined) {
+      return h({
+        functional: true,
+        props: ['row', 'field'],
+        render: props.field.render
+      }, {
+        props: {
+          row: props.row,
+          field: props.field
+        }
       })
+    } else {
+      return props.row[ props.field.name ]
     }
-    return customComponent || props.row[ props.field.name ]
   }
 }
