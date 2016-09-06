@@ -1,3 +1,4 @@
+import Moment from 'moment'
 import render from './render'
 import momentMixin from '../mixins/moment'
 import {
@@ -88,6 +89,34 @@ export default {
       return Number.isInteger(this.max)
         ? this.$moment().add(this.max, 'days')
         : this.$moment(this.max || this.$options.props.max.default)
+    },
+    // get the years list
+    listYears () {
+      const dates = []
+      let currentDate = Moment(this.minMoment)
+      while (currentDate <= this.maxMoment) {
+        dates.push({
+          text: currentDate.year(),
+          value: currentDate.year()
+        })
+        currentDate = Moment(currentDate).add(1, 'year')
+      }
+      return dates
+    },
+    // get the months list
+    listMonths () {
+      const currentYear = this.year
+      const min = this.minMoment
+      const max = this.maxMoment
+      const inMinYear = currentYear === min.year()
+      const inMaxYear = currentYear === max.year()
+      const months = []
+      Moment.months().forEach((name, m) => {
+        if ((!inMinYear || m >= min.month()) && (!inMaxYear || m <= max.month())) {
+          months.push({ text: name, value: m })
+        }
+      })
+      return months
     }
   },
   methods: {

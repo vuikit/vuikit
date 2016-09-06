@@ -1,4 +1,3 @@
-import Moment from 'moment'
 
 export default {
   functional: true,
@@ -26,7 +25,7 @@ export default {
             props: {
               value: parent.selectedMonth,
               display: parent.date.format('MMMM'),
-              options: listMonths(parent.date.year(), parent.minMoment, parent.maxMoment),
+              options: parent.listMonths,
               onChange: e => {
                 parent.selectedMonth = e.target.selectedOptions[0].value
               }
@@ -37,7 +36,7 @@ export default {
             props: {
               value: parent.selectedYear,
               display: parent.date.format('YYYY'),
-              options: listYears(parent.minMoment, parent.maxMoment),
+              options: parent.listYears,
               onChange: e => {
                 parent.selectedYear = e.target.selectedOptions[0].value
               }
@@ -77,35 +76,4 @@ const Select = {
       ])
     ])
   }
-}
-
-// get a list of months withing a range
-function listMonths (currentYear, min, max) {
-  const minDate = Moment(min)
-  const maxDate = Moment(max)
-  const inMinYear = currentYear === minDate.year()
-  const inMaxYear = currentYear === maxDate.year()
-  const months = []
-  Moment.months().forEach((name, m) => {
-    if ((!inMinYear || m >= minDate.month()) && (!inMaxYear || m <= maxDate.month())) {
-      months.push({ text: name, value: m })
-    }
-  })
-  return months
-}
-
-// get a list of years withing a range
-function listYears (min, max) {
-  const dates = []
-  const end = Moment(max)
-  const diff = max.diff(min, 'days')
-  if (!min.isValid() || !max.isValid() || diff <= 0) {
-    return
-  }
-  for (var i = 0; i < diff; i++) {
-    dates.push(end.subtract(1, 'd'))
-  }
-  return dates.map(date => ({
-    text: date.year(), value: date.year()
-  }))
 }
