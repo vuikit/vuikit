@@ -103,13 +103,13 @@ describe('VkTabs', () => {
 
   it('should add .uk-tab-grid to the ul and .uk-width-* to the li', done => {
     expect($vm.$el.querySelector('.uk-tab').classList.contains('uk-tab-grid')).toBeFalsy()
-    $vm.$el.querySelectorAll('.uk-tab li').forEach(li => {
+    Array.from($vm.$el.querySelectorAll('.uk-tab li')).forEach(li => {
       expect(li.classList.contains('uk-width-' + $vm.width)).toBeFalsy()
     })
     $vm.width = '1-5'
     waitForUpdate(() => {
       expect($vm.$el.querySelector('.uk-tab').classList.contains('uk-tab-grid')).toBeTruthy()
-      $vm.$el.querySelectorAll('.uk-tab li').forEach(li => {
+      Array.from($vm.$el.querySelectorAll('.uk-tab li')).forEach(li => {
         expect(li.classList.contains('uk-width-' + $vm.width)).toBeTruthy()
       })
     }).then(done)

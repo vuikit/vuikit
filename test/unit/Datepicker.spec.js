@@ -50,8 +50,8 @@ describe('VkDatepicker', () => {
   })
 
   it('should disable dates disallowing them to be picked', done => {
-    $vm.year = 2016
-    $vm.month = 7
+    $vm.calendar.year = 2016
+    $vm.calendar.month = 7
     $vm.disabledDates = [
       '2016-08-11',
       '2016-08-12',
@@ -70,8 +70,8 @@ describe('VkDatepicker', () => {
   })
 
   it('should change date values on pick / unpick', done => {
-    $vm.year = 2016
-    $vm.month = 7
+    $vm.calendar.year = 2016
+    $vm.calendar.month = 7
     let week = $vm.$el.querySelectorAll('tr')[3]
 
     waitForUpdate(() => {
