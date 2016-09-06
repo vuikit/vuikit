@@ -62,8 +62,8 @@ describe('VkCalendar', () => {
   it('should respect max binding', done => {
     expect($vm.$el.querySelector('.uk-datepicker-next')).not.toBeNull()
     $vm.year = 2016
-    $vm.month = 7
-    $vm.max = 5
+    $vm.month = 9
+    $vm.max = '2016-11-06'
     waitForUpdate(() => {
       expect($vm.$el.querySelector('.uk-datepicker-next')).toBeNull()
     }).then(done)
@@ -72,8 +72,9 @@ describe('VkCalendar', () => {
   it('should change year value on click next', done => {
     $vm.year = 2016
     $vm.month = 7
-    $vm.$el.querySelector('.uk-datepicker-next').click()
     waitForUpdate(() => {
+      triggerEvent($vm.$el.querySelector('.uk-datepicker-next'), 'click')
+    }).then(() => {
       expect($vm.month).toBe(8)
     }).then(done)
   })
