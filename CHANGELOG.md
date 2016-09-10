@@ -4,6 +4,7 @@
 
  - Refactor Tabs
  - Refactor Datepicker
+ - Refactor Picker
 
 ### 0.4.1
 

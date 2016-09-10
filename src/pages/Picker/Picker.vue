@@ -4,31 +4,35 @@
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-picker
-      :pickables="[{ name: 'id' }, 'hits']"
+      :fields="[{
+        name: 'name',
+        pickable: 'id'
+      }, {
+        name: 'hits',
+        pickable: true
+      }, {
+        name: 'description'
+      }]"
+      :rows="[{
+        id: 1,
+        name: 'Item 1',
+        hits: 34,
+        description: 'The item description'
+      }, {
+        id: 2,
+        name: 'Item 2',
+        hits: 56,
+        description: 'The item description'
+      }]"
       @pick="
         events.pick.emited = true,
         picked(arguments[0], arguments[1])
       ">
-      <vk-table
-        track-by="id"
-        :fields="['name', 'hits', 'description']"
-        :rows="[{
-          id: 1,
-          name: 'Item 1',
-          hits: 34,
-          description: 'The item description'
-        }, {
-          id: 2,
-          name: 'Item 2',
-          hits: 56,
-          description: 'The item description'
-        }]">
-      </vk-table>
     </vk-picker>
     <span v-html="message"></span>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-picker</code> components renders a <code>vk-table</code> wich data
+      The <code>vkb-picker</code> components renders a <code>vk-table</code> wich data
       can be picked.
     </div>
     <!-- TABS -->
@@ -73,10 +77,12 @@ export default {
 }
 
 const props = {
-  pickables: {
-    description: `Array of fields names that should allow picking data. A picked field
-    can return a different field value by passing a field/data mapping <code>Object</code>
-    instead. Eg. <code>[{ name: 'id' }, 'hits']</code>.`
+  fields: {
+    description: `Extends the VkTable <code>fields</code> prop with a <code>pickable</code>
+      property. It determines if the field is pickable and what row data should it pick.`
+  },
+  rows: {
+    description: 'Extends the VkTable <code>rows</code> prop.'
   }
 }
 
@@ -89,21 +95,26 @@ const events = {
 
 const example =
 `<vk-picker {attrs}
-  :pickables="[{ name: 'id' }, 'hits']"
+  :fields="[{
+    name: 'name',
+    pickable: 'id'
+  }, {
+    name: 'hits',
+    pickable: true
+  }, {
+    name: 'description'
+  }]"
+  :rows="[{
+    id: 1,
+    name: 'Item 1',
+    hits: 34,
+    description: 'The item description'
+  }, {
+    id: 2,
+    name: 'Item 2',
+    hits: 56,
+    description: 'The item description'
+  }]"
   @pick="picked = arguments[0]">
-  <vk-table
-    :fields="['name', 'hits', 'description']"
-    :rows="[{
-      id: 1,
-      name: 'Item 1',
-      hits: 34,
-      description: 'The item description'
-    }, {
-      id: 2,
-      name: 'Item 2',
-      hits: 56,
-      description: 'The item description'
-    }]">
-  </vk-table>
 </vk-picker>`
 </script>
