@@ -73,20 +73,22 @@
       The <code>vk-modal</code> component renders a modal.
     </div>
     <!-- TABS -->
-    <tm-tabs>
-      <tm-tabs-item name="Props">
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Props">
         <vk-docs-props
           :props="props"
           @change="props[arguments[0]].demo.value = arguments[1]">
         </vk-docs-props>
-      </tm-tabs-item>
-      <tm-tabs-item name="Events">
+      </vk-tabs-item>
+      <vk-tabs-item name="Events">
         <vk-docs-events :events="events"></vk-docs-events>
-      </tm-tabs-item>
-      <tm-tabs-item name="Example">
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </tm-tabs-item>
-    </tm-tabs>
+      </vk-tabs-item>
+    </vk-tabs>
   </div>
 </template>
 
@@ -98,6 +100,7 @@ import { mergeProps } from '../../helpers/pages'
 export default {
   mixins: [mixin],
   data: () => ({
+    tabsIndex: 0,
     imageBlank: require('../assets/placeholder_600x400.svg'),
     props: mergeProps(Component.props, props),
     slots,

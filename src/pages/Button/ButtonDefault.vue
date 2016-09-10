@@ -20,20 +20,22 @@
       The <code>vk-button</code> component renders a standard button.
     </div>
     <!-- TABS -->
-    <tm-tabs>
-      <tm-tabs-item name="Props">
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Props">
         <vk-docs-props
           :props="props"
           @change="props[arguments[0]].demo.value = arguments[1]">
         </vk-docs-props>
-      </tm-tabs-item>
-      <tm-tabs-item name="Slots">
+      </vk-tabs-item>
+      <vk-tabs-item name="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </tm-tabs-item>
-      <tm-tabs-item name="Example">
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </tm-tabs-item>
-    </tm-tabs>
+      </vk-tabs-item>
+    </vk-tabs>
   </div>
 </template>
 
@@ -46,6 +48,7 @@ export default {
   name: 'PageButtonDefault',
   mixins: [mixin],
   data: () => ({
+    tabsIndex: 0,
     props: mergeProps(Component.props, props),
     slots,
     example

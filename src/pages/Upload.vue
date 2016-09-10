@@ -18,17 +18,19 @@
         The <code>vk-upload</code> component deals with the UI part of an upload placeholder.
       </div>
       <!-- TABS -->
-      <tm-tabs>
-        <tm-tabs-item name="Slots">
+      <vk-tabs
+        :index="tabsIndex"
+        @change="tabsIndex = arguments[0]">
+        <vk-tabs-item name="Slots">
           <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </tm-tabs-item>
-        <tm-tabs-item name="Events">
+        </vk-tabs-item>
+        <vk-tabs-item name="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </tm-tabs-item>
-        <tm-tabs-item name="Example">
+        </vk-tabs-item>
+        <vk-tabs-item name="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </tm-tabs-item>
-      </tm-tabs>
+        </vk-tabs-item>
+      </vk-tabs>
     </div>
   </layouts-default>
 </template>
@@ -40,6 +42,7 @@ export default {
   name: 'PageUpload',
   mixins: [mixin],
   data: () => ({
+    tabsIndex: 0,
     slots,
     events,
     example

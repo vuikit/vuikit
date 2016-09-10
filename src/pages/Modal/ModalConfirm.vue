@@ -45,11 +45,13 @@
       a custom component.</p>
     </div>
     <!-- TABS -->
-    <tm-tabs>
-      <tm-tabs-item name="Code">
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Code">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </tm-tabs-item>
-    </tm-tabs>
+      </vk-tabs-item>
+    </vk-tabs>
   </div>
 </template>
 
@@ -59,6 +61,7 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
+    tabsIndex: 0,
     show: false,
     confirmed: false,
     example
