@@ -4,6 +4,8 @@
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <vk-datepicker
+      :year="calendar.year"
+      :month="calendar.month"
       :dates="props.dates.demo.value"
       :disabled-dates="props.disabledDates.demo.value"
       :min="props.min.demo.value"
@@ -17,15 +19,11 @@
         props.dates.demo.value.splice(
           props.dates.demo.value.indexOf(arguments[0].format('YYYY-MM-DD')), 1
         )
+      "
+      @change="
+        calendar.year = arguments[0].year(),
+        calendar.month = arguments[0].month()
       ">
-      <vk-calendar
-        :year="calendar.year"
-        :month="calendar.month"
-        @change="
-          calendar.year = arguments[0].year(),
-          calendar.month = arguments[0].month()
-        ">
-      </vk-calendar>
     </vk-datepicker>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -102,11 +100,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: undefined },
+        { text: 'Default', value: '1980-01-01' },
         { text: '5', value: 5 },
         { text: '10', value: 10 }
       ],
-      value: undefined
+      value: '1980-01-01'
     }
   },
   max: {
@@ -116,11 +114,11 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: undefined },
+        { text: 'Default', value: '2050-12-31' },
         { text: '5', value: 5 },
         { text: '10', value: 10 }
       ],
-      value: undefined
+      value: '2050-12-31'
     }
   }
 }
@@ -141,14 +139,10 @@ const events = {
 const example =
 `<vk-datepicker {attrs}
   @pick="dates.push(arguments[0].format('YYYY-MM-DD'))"
-  @unpick="dates.splice(dates.indexOf(arguments[0].format('YYYY-MM-DD')), 1)">
-  <vk-calendar
-    :year="year"
-    :month="month"
-    @change="
-      year = arguments[0].year(),
-      month = arguments[0].month()
-    ">
-  </vk-calendar>
+  @unpick="dates.splice(dates.indexOf(arguments[0].format('YYYY-MM-DD')), 1)"
+  @change="
+    calendar.year = arguments[0].year(),
+    calendar.month = arguments[0].month()
+  ">
 </vk-datepicker>`
 </script>

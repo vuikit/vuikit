@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>Datepicker in a Dropdown</h2>
+    <h2>DatepickerDrop</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <div class="uk-form">
@@ -9,37 +9,30 @@
         placeholder="Pick a date"
         v-model="date"
         @focus="show = true">
-      <vk-dropdown
+      <vk-datepicker-drop
         :show="show"
         target="#target"
+        :year="year"
+        :month="month"
+        :dates="date
+          ? [date]
+          : []"
+        @pick="
+          date = arguments[0].format('YYYY-MM-DD'),
+          show = false
+        "
+        @change="
+          year = arguments[0].year(),
+          month = arguments[0].month()
+        "
         @clickOut="show = false">
-        <vk-datepicker
-          :dates="date
-            ? [date]
-            : []"
-          @pick="
-            date = arguments[0].format('YYYY-MM-DD'),
-            show = false
-          ">
-          <vk-calendar
-            :year="calendar.year"
-            :month="calendar.month"
-            @change="
-              calendar.year = arguments[0].year(),
-              calendar.month = arguments[0].month()
-            ">
-          </vk-calendar>
-        </vk-datepicker>
-      </vk-dropdown>
+      </vk-datepicker-drop>
     </div>
     <!-- DESC -->
     <div class="uk-margin-large">
-      <p>A very common usage of <code>vk-datepicker</code> is to pick and save the
-      date in an input form. That can be acomplished with the combination of
-      <code>vk-dropdown</code>.</p>
-      <p><span class="uk-badge uk-badge-notification">Note</span> If your project
-      requires this combination quite often it would be wise to wrap it all up into
-      a custom component.</p>
+      The component <code>vk-datepicker-drop</code> combines <code>vk-dropdown</code>
+      with <code>vk-datepicker</code> allowing easier implementations with inputs and
+      other elements.
     </div>
     <!-- TABS -->
     <vk-tabs
@@ -62,10 +55,8 @@ export default {
     tabsIndex: 0,
     show: false,
     date: '',
-    calendar: {
-      year: undefined,
-      month: undefined
-    },
+    year: undefined,
+    month: undefined,
     example
   })
 }
@@ -76,24 +67,22 @@ const example =
   placeholder="Pick a date"
   v-model="date"
   @focus="show = true">
-<vk-dropdown
-  target="#target"
+<vk-datepicker-drop
   :show="show"
+  target="#target"
+  :year="year"
+  :month="month"
+  :dates="date
+    ? [date]
+    : []"
+  @pick="
+    date = arguments[0].format('YYYY-MM-DD'),
+    show = false
+  "
+  @change="
+    year = arguments[0].year(),
+    month = arguments[0].month()
+  "
   @clickOut="show = false">
-  <vk-datepicker
-    :dates="[date]"
-    @pick="
-      date = arguments[0].format('YYYY-MM-DD'),
-      show = false
-    ">
-    <vk-calendar
-      :year="calendar.year"
-      :month="calendar.month"
-      @change="
-        calendar.year = arguments[0].year(),
-        calendar.month = arguments[0].month()
-      ">
-    </vk-calendar>
-  </vk-datepicker>
-</vk-dropdown>`
+</vk-datepicker-drop>`
 </script>

@@ -1,13 +1,12 @@
-import moment from '../mixins/moment'
-import { flatten } from 'lodash'
-import { getCalendarMatrix, isBetween } from '../../helpers/date'
+import Moment from 'moment'
 import render from './render'
 
 export default {
   name: 'VkDatepicker',
-  mixins: [moment],
   render,
   props: {
+    year: {},
+    month: {},
     dates: {
       type: Array,
       default: () => []
@@ -28,43 +27,37 @@ export default {
     }
   },
   computed: {
+    datesMoments () {
+      return this.dates.map(d => Moment(d))
+    },
+    disabledDatesMoments () {
+      return this.disabledDates.map(d => Moment(d))
+    },
     minMoment () {
       return Number.isInteger(this.min)
-        ? this.$moment().add(-this.min - 1, 'days')
-        : this.$moment(this.min || this.$options.props.min.default)
+        ? Moment().add(-this.min - 1, 'days')
+        : Moment(this.min || this.$options.props.min.default)
     },
     maxMoment () {
       return Number.isInteger(this.max)
-        ? this.$moment().add(this.max, 'days')
-        : this.$moment(this.max || this.$options.props.max.default)
-    },
-    disabledDatesRange () {
-      const min = this.minMoment
-      const max = this.maxMoment
-      const matrix = this.$refs.calendar
-        ? this.$refs.calendar.matrix
-        : getCalendarMatrix(this.$moment())
-      return flatten(matrix).filter(moment => {
-        return !isBetween(moment, min, max)
-      })
+        ? Moment().add(this.max, 'days')
+        : Moment(this.max || this.$options.props.max.default)
     }
   },
   methods: {
-    isPicked (moment) {
-      return this.dates
-        .map(date => this.$moment(date))
-        .filter(date => !this.isDisabled(date)) // exclude disabled dates
-        .some(date => moment.isSame(date, 'day'))
+    isPicked (date) {
+      return this.datesMoments.some(d => d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD'))
     },
-    isDisabled (moment) {
-      const dates = this.disabledDates.map(date => this.$moment(date))
-      const datesRange = this.disabledDatesRange
-      return dates.concat(datesRange).some(date => moment.isSame(date, 'day'))
+    isDisabled (date) {
+      return this.disabledDatesMoments.some(d =>
+        d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD') ||
+        !date.isBetween(this.minMoment, this.maxMoment)
+      )
     },
-    toggle (moment) {
-      this.isPicked(moment)
-        ? this.$emit('unpick', moment)
-        : this.$emit('pick', moment)
+    toggle (date) {
+      this.isPicked(date)
+        ? this.$emit('unpick', date)
+        : this.$emit('pick', date)
     }
   }
 }

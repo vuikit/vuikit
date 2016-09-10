@@ -3,6 +3,7 @@
 ### WIP
 
  - Refactor Tabs
+ - Refactor Datepicker
 
 ### 0.4.1
 
