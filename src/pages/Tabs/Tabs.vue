@@ -13,16 +13,10 @@
         events.change.emited = true,
         props.index.demo.value = arguments[0]
       ">
-      <vk-tabs-item>Tab 1</vk-tabs-item>
-      <vk-tabs-item>Tab 2</vk-tabs-item>
-      <vk-tabs-item>Tab 3</vk-tabs-item>
-      <vk-tabs-item disabled>Tab 4</vk-tabs-item>
-      <vk-switcher slot="switcher"
-        :index="props.index.demo.value">
-        <vk-switcher-item>Content Tab 1</vk-switcher-item>
-        <vk-switcher-item>Content Tab 2</vk-switcher-item>
-        <vk-switcher-item>Content Tab 3</vk-switcher-item>
-      </vk-switcher>
+      <vk-tabs-item name="Tab 1">Content Tab 1</vk-tabs-item>
+      <vk-tabs-item name="Tab 2">Content Tab 2</vk-tabs-item>
+      <vk-tabs-item name="Tab 3">Content Tab 3</vk-tabs-item>
+      <vk-tabs-item disabled name="Tab 4">Content Tab 4</vk-tabs-item>
     </vk-tabs>
     <!-- DESC -->
     <div class="uk-margin-large">
@@ -30,20 +24,27 @@
       tabbed navigation which would switch it content using <code>vk-switcher</code>.
     </div>
     <!-- TABS -->
-    <tm-tabs>
-      <tm-tabs-item name="Props">
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Props">
         <vk-docs-props
           :props="props"
           @change="props[arguments[0]].demo.value = arguments[1]">
         </vk-docs-props>
-      </tm-tabs-item>
-      <tm-tabs-item name="Slots">
+      </vk-tabs-item>
+      <vk-tabs-item name="Slots">
         <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </tm-tabs-item>
-      <tm-tabs-item name="Example">
+      </vk-tabs-item>
+      <vk-tabs-item name="Events">
+        <vk-docs-events
+          :events="events">
+        </vk-docs-events>
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </tm-tabs-item>
-    </tm-tabs>
+      </vk-tabs-item>
+    </vk-tabs>
   </div>
 </template>
 
@@ -55,6 +56,7 @@ import { mergeProps } from '../../helpers/pages'
 export default {
   mixins: [mixin],
   data: () => ({
+    tabsIndex: 0,
     props: mergeProps(Component.props, props),
     slots,
     events,
@@ -111,32 +113,23 @@ const props = {
 const slots = {
   default: {
     description: 'The list of <code>vk-tabs-item</code> components.'
-  },
-  switcher: {
-    description: `The place for the <code>vk-switcher</code> or any component that
-      will deal with the content`
   }
 }
 
 const events = {
   change: {
-    description: 'Emited when the selected tab has changed.',
+    description: 'Emited on the intention to change the tab passing as argument the new tab index.',
     emited: false
   }
 }
 
 const example =
 `<vk-tabs {attrs}
+  :index="index"
   @change="index = arguments[0]">
-  <tm-tabs-item>Tab 1</tm-tabs-item>
-  <tm-tabs-item>Tab 2</tm-tabs-item>
-  <tm-tabs-item>Tab 3</tm-tabs-item>
-  <tm-tabs-item disabled>Tab 4</tm-tabs-item>
-  <vk-switcher slot="switcher"
-    :index="index">
-    <vk-switcher-item>Content Tab 1</vk-switcher-item>
-    <vk-switcher-item>Content Tab 2</vk-switcher-item>
-    <vk-switcher-item>Content Tab 3</vk-switcher-item>
-  </vk-switcher>
+  <vk-tabs-item name="Tab 1">Content Tab 1</vk-tabs-item>
+  <vk-tabs-item name="Tab 2">Content Tab 2</vk-tabs-item>
+  <vk-tabs-item name="Tab 3">Content Tab 3</vk-tabs-item>
+  <vk-tabs-item disabled name="Tab 4">Content Tab 4</vk-tabs-item>
 </vk-tabs>`
 </script>

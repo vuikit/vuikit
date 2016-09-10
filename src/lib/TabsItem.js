@@ -5,6 +5,10 @@ export default {
       type: Number,
       default: 0
     },
+    name: {
+      type: String,
+      required: true
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -32,7 +36,7 @@ export default {
             this.$parent.$emit('change', this.index)
           }
         }}>
-          { this.$slots.default }
+          { this.name }
         </a>
       </li>
     )

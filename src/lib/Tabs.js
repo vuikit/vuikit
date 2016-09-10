@@ -1,5 +1,3 @@
-import { warn } from '../helpers/util.js'
-
 export default {
   name: 'VkTabs',
   props: {
@@ -29,16 +27,11 @@ export default {
     }
   },
   render (h) {
-    if (!this.$slots.default) {
-      warn('The VkTabs default slot is undefined.')
-      return
-    }
-    const tabs = this.$slots.default.filter(node =>
+    const Tabs = this.$slots.default.filter(node =>
       node.componentOptions && node.componentOptions.tag === 'vk-tabs-item'
     ).map((node, index) => {
       const data = node.componentOptions.propsData
       data.index = index
-      data.active = index === this.index
       data.width = this.width
       return node
     })
@@ -56,10 +49,16 @@ export default {
             'uk-tab-flip': this.flip,
             'uk-tab-bottom': this.bottom
           }}>
-            { tabs }
+            { Tabs }
           </ul>
         </div>
-        { this.$slots.switcher }
+        <vk-switcher index={ this.index }>{
+          Tabs.map(tab => (
+            <vk-switcher-item>
+              { tab.componentOptions.children }
+            </vk-switcher-item>
+          ))
+        }</vk-switcher>
       </div>
     )
   }
