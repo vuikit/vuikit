@@ -37,7 +37,7 @@
   "dependencies": {
     "babel-runtime": "^6.0.0",
     "moment": "^2.14.1",
-    "vue": "^2.0.0-rc.3"
+    "vue": "^2.0.0-rc.5"
   },
   "devDependencies": {
     "babel-core": "^6.10.4",
