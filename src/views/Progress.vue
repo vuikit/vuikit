@@ -83,7 +83,7 @@ const slots = {
 }
 
 const example =
-`<vk-pagination {attrs}>
+`<vk-progress {attrs}>
   40%
-</vk-pagination>`
+</vk-progress>`
 </script>
