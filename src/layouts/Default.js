@@ -43,11 +43,10 @@ const Menu = {
   functional: true,
   render (h, { props, parent }) {
     const items = []
-    each(parent.$root.routes, (route, path) => items.push(
+    each(parent.$root._router.options.routes, (route, path) => items.push(
       h(MenuItem, merge({
         props: {
-          name: route.name,
-          path
+          route
         }
       }))
     ))
@@ -57,27 +56,12 @@ const Menu = {
 
 const MenuItem = {
   functional: true,
-  props: ['name', 'path'],
+  props: ['route'],
   render (h, { props, parent }) {
     return (
-      <li class={{
-        'uk-active': parent.$root.currentRoute === props.path
-      }}>
-        <a on-click={() => {
-          parent.$root.currentRoute = props.path
-          window.history.pushState(
-            null,
-            parent.$root.routes[props.path],
-            props.path
-          )
-          // close offcanvas
-          parent.$nextTick(() => {
-            parent.$root.showOffcanvas = false
-          })
-        }}>
-          { props.name }
-        </a>
-      </li>
+      <router-link tag="li" to={ props.route.path } exact>
+        <a>{ props.route.name }</a>
+      </router-link>
     )
   }
 }

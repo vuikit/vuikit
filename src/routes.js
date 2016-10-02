@@ -1,58 +1,57 @@
-export default {
-  '/button': {
-    name: 'Button',
-    component: require('./pages/Button')
-  },
-  '/modal': {
-    name: 'Modal',
-    component: require('./pages/Modal')
-  },
-  '/offcanvas': {
-    name: 'Offcanvas',
-    component: require('./pages/Offcanvas')
-  },
-  '/tabs': {
-    name: 'Tabs',
-    component: require('./pages/Tabs')
-  },
-  '/dropdown': {
-    name: 'Dropdown',
-    component: require('./pages/Dropdown')
-  },
-  '/picker': {
-    name: 'Picker',
-    component: require('./pages/Picker')
-  },
-  '/datepicker': {
-    name: 'Datepicker',
-    component: require('./pages/Datepicker')
-  },
-  '/switcher': {
-    name: 'Switcher',
-    component: require('./pages/Switcher')
-  },
-  '/table': {
-    name: 'Table',
-    component: require('./pages/Table')
-  },
-  '/subnav': {
-    name: 'Subnav',
-    component: require('./pages/Subnav')
-  },
-  '/calendar': {
-    name: 'Calendar',
-    component: require('./pages/Calendar')
-  },
-  '/breadcrumb': {
-    name: 'Breadcrumb',
-    component: require('./pages/Breadcrumb')
-  },
-  '/pagination': {
-    name: 'Pagination',
-    component: require('./pages/Pagination')
-  },
-  '/upload': {
-    name: 'Upload',
-    component: require('./pages/Upload')
-  }
-}
+export default [{
+  name: 'Button',
+  path: '/',
+  component: require('./pages/Button')
+}, {
+  name: 'Modal',
+  path: '/modal',
+  component: require('./pages/Modal')
+}, {
+  name: 'Offcanvas',
+  path: '/offcanvas',
+  component: require('./pages/Offcanvas')
+}, {
+  name: 'Tabs',
+  path: '/tabs',
+  component: require('./pages/Tabs')
+}, {
+  name: 'Dropdown',
+  path: '/dropdown',
+  component: require('./pages/Dropdown')
+}, {
+  name: 'Picker',
+  path: '/picker',
+  component: require('./pages/Picker')
+}, {
+  name: 'Datepicker',
+  path: '/datepicker',
+  component: require('./pages/Datepicker')
+}, {
+  name: 'Switcher',
+  path: '/switcher',
+  component: require('./pages/Switcher')
+}, {
+  name: 'Table',
+  path: '/table',
+  component: require('./pages/Table')
+}, {
+  name: 'Subnav',
+  path: '/subnav',
+  component: require('./pages/Subnav')
+}, {
+  name: 'Calendar',
+  path: '/calendar',
+  component: require('./pages/Calendar')
+}, {
+  name: 'Breadcrumb',
+  path: '/breadcrumb',
+  component: require('./pages/Breadcrumb')
+}, {
+  name: 'Pagination',
+  path: '/pagination',
+  component: require('./pages/Pagination')
+}, {
+  name: 'Upload',
+  path: '/upload',
+  component: require('./pages/Upload')
+}]

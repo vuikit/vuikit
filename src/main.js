@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueRouter from 'vue-router'
 import Vuikit from './lib'
 import VuikitDocs from 'vuikit-docs'
 import Layouts from './layouts'
@@ -7,30 +8,19 @@ import routes from './routes'
 const App = Vue.extend(require('./App'))
 
 // install
+Vue.use(VueRouter)
 Vue.use(Vuikit)
 Vue.use(VuikitDocs)
 Vue.use(Layouts)
 
-const app = new App({
-  el: '#app',
-  data: {
-    showOffcanvas: false,
-    routes,
-    currentRoute: window.location.pathname !== '/'
-      ? window.location.pathname
-      : Object.keys(routes)[0] // first route
-  },
-  computed: {
-    ViewComponent () {
-      const matchingView = routes[this.currentRoute]
-      return matchingView
-        ? matchingView.component
-        : require('./pages/404.vue')
-    }
-  },
-  render (h) { return h(this.ViewComponent) }
+const router = new VueRouter({
+  routes,
+  linkActiveClass: 'uk-active'
 })
 
-window.addEventListener('popstate', () => {
-  app.currentRoute = window.location.pathname
-})
+new App({
+  router,
+  data: {
+    showOffcanvas: false
+  }
+}).$mount('#app')
