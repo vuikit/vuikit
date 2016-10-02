@@ -1,10 +1,13 @@
 # Changelog
 
-### WIP
+### 0.6.0
 
- - Refactor Tabs
- - Refactor Datepicker
- - Refactor Picker
+ - Vue 2 compatibility updates resulting in general refactoring
+
+### 0.5.0
+
+ - Add Filter
+ - Picker, Datepicker, Pagination and Table refactored
 
 ### 0.4.1
 
