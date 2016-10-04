@@ -10,12 +10,19 @@ const MIRROR_ATTACH = {
   center: 'center'
 }
 
-const sortAttach = function (str) {
+export function sortAttach (str) {
   let [first, second] = str.split(' ')
   if (['left', 'right'].indexOf(first) >= 0) {
     [first, second] = [second, first]
   }
   return [first, second].join(' ')
+}
+
+export function solveAttachment (position) {
+  let attachment = position.split(' ')
+  attachment[0] = MIRROR_ATTACH[attachment[0]]
+  attachment = attachment.join(' ')
+  return sortAttach(attachment)
 }
 
 export function init (
@@ -29,10 +36,6 @@ export function init (
   constrainToWindow,
   overrides
 ) {
-  let dropAttach = position.split(' ')
-  dropAttach[0] = MIRROR_ATTACH[dropAttach[0]]
-  dropAttach = dropAttach.join(' ')
-
   let constraints = []
   if (constrainToParent) {
     constraints.push({
@@ -62,7 +65,7 @@ export function init (
   return new Tether(merge({}, {
     element,
     target,
-    attachment: sortAttach(dropAttach),
+    attachment: solveAttachment(position),
     targetAttachment: sortAttach(position),
     classPrefix: 'vk-tether',
     offset,

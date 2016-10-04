@@ -20,6 +20,7 @@ import Table from './Table'
 import Tabs from './Tabs'
 import TabsItem from './TabsItem'
 import TabsVertical from './TabsVertical'
+import Tooltip from './Tooltip'
 import Upload from './Upload'
 
 const Vuikit = {
@@ -45,6 +46,7 @@ const Vuikit = {
   Tabs,
   TabsItem,
   TabsVertical,
+  Tooltip,
   Upload,
   install (Vue) {
     const keys = Object.keys(this)

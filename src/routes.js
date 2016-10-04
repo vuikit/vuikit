@@ -19,6 +19,10 @@ export default [{
   path: '/dropdown',
   component: require('./pages/Dropdown')
 }, {
+  name: 'Tooltip',
+  path: '/tooltip',
+  component: require('./pages/Tooltip')
+}, {
   name: 'Picker',
   path: '/picker',
   component: require('./pages/Picker')
