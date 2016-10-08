@@ -104,6 +104,66 @@ npm run dev
 npm run build
 ```
 
+## Custom UIkit Themes
+
+UIkit custom themes will work fine with Vuikit components except for `Dropdown` and `Modal`, which require resetting the transition styles. Apply the below examples in your theme extracted from the [Vuikit Theme](https://github.com/vuikit/vuikit-theme).
+
+### Modal
+
+```css
+.hook-modal() {
+  // as UIkit hardcore transitions
+  // styles, a reset is necessary
+  opacity: inherit;
+  display: inherit;
+  opacity: inherit;
+  -webkit-transform: inherit;
+  transform: inherit;
+
+  // add custom transitions
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+}
+
+.hook-modal-dialog() {
+  // reset transitions styles
+  opacity: inherit;
+  -webkit-transform: inherit;
+  transform: inherit;
+
+  // add custom transitions
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+// add custom transitions
+.hook-modal-misc() {
+  .vk-modal-transition-enter .uk-modal-dialog {
+    opacity: 0;
+  }
+  .vk-modal-transition-leave-active .uk-modal-dialog {
+    opacity: 0;
+  }
+  .vk-modal-transition-enter .uk-modal-dialog,
+  .vk-modal-transition-leave-active .uk-modal-dialog {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+```
+
+### Dropdown
+
+```css
+// reset hardcoded transition styles
+.hook-dropdown-misc() {
+  .uk-dropdown,
+  .uk-dropdown-blank {
+    display: inherit;
+  }
+}
+```
+
 ## License
 
 Vuikit is open source and released under the [MIT License](LICENSE.md).
