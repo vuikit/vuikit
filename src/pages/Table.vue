@@ -111,6 +111,9 @@ const props = {
       The row object doesn't require any specific structure, but the key
       <code>_selected</code> is reserved for the component workflow.`
   },
+  rowsClass: {
+    description: `Optional class definition rendered on each row.`
+  },
   trackBy: {
     description: `A unique key for the rows to be tracked by. Used among others
     to optimize the rendering of the rows.`

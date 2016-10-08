@@ -1,5 +1,9 @@
 # Changelog
 
+### WIP
+
+ - Added Table rowsClass prop
+
 ### 0.6.0
 
  - Vue 2 compatibility updates resulting in general refactoring
