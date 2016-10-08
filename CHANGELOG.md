@@ -10,7 +10,7 @@
 
 ### 0.5.0
 
- - Add Filter
+ - Added Filter
  - Picker, Datepicker, Pagination and Table refactored
 
 ### 0.4.1
@@ -20,9 +20,9 @@
 
 ### 0.4.0
 
- - Add Dropdown
- - Add Picker
- - Add Table
+ - Added Dropdown
+ - Added Picker
+ - Added Table
  - Refactor Calendar & Datepicker (braking changes)
 
 ### 0.3.0
