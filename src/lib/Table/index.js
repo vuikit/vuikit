@@ -13,6 +13,10 @@ export default {
       type: Array,
       required: true
     },
+    rowsClass: {
+      type: String,
+      default: ''
+    },
     trackBy: {
       type: String,
       required: true

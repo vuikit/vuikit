@@ -6,7 +6,7 @@ export default {
   props: ['row'],
   render (h, { parent, props }) {
     const rowId = props.row[parent.trackBy]
-    return <tr on-click={e => {
+    return <tr staticClass={ parent.rowsClass } on-click={e => {
       if (e.target.tagName === 'TD') {
         triggerChangeEvent(parent, props.row)
       }
