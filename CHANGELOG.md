@@ -3,6 +3,7 @@
 ### WIP
 
  - Added Table rowsClass prop
+ - Refactored Table fields definition and selectable feature
 
 ### 0.6.0
 

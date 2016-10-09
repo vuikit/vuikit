@@ -1,47 +1,40 @@
-import Checkbox from './Checkbox'
-import Field from './Field'
-
-export default {
+const Row = {
   functional: true,
   props: ['row'],
   render (h, { parent, props }) {
-    const rowId = props.row[parent.trackBy]
-    return <tr staticClass={ parent.rowsClass } on-click={e => {
-      if (e.target.tagName === 'TD') {
-        triggerChangeEvent(parent, props.row)
+    const { fieldsDef, rowsClass } = parent
+    const { row } = props
+    return h('tr', {
+      class: rowsClass,
+      on: {
+        click: e => {
+          if (e.target.tagName === 'TD') {
+            parent.$emit('clickRow', row)
+          }
+        }
       }
-    }}>
-      { parent.selectable && (
-        <td class="vk-table-width-minimum">{
-          h(Checkbox, {
-            props: {
-              checked: parent.selectedRows.find(id => id === rowId),
-              onClick: e => {
-                triggerChangeEvent(parent, props.row)
-              }
-            }
-          })
-        }</td>
-      )}
-      { parent.fieldsDef.map((field, index) =>
-        <td class={ field.cellClass }>
-          { h(Field, { props: { row: props.row, field } }) }
-        </td>
-      )}
-    </tr>
+    }, fieldsDef.map(field =>
+      h(Cell, { props: { field, row } })
+    ))
   }
 }
 
-function triggerChangeEvent (parent, row) {
-  const rowId = row[parent.trackBy]
-  const selectedRows = parent.selectedRows.slice() // clones the array
-  // if already selected
-  if (selectedRows.find(id => id === rowId)) {
-    const index = selectedRows.indexOf(rowId)
-    selectedRows.splice(index, 1)
-    parent.$emit('unselect', selectedRows, [ row ])
-  } else {
-    selectedRows.push(rowId)
-    parent.$emit('select', selectedRows, [ row ])
+const Cell = {
+  functional: true,
+  props: ['row', 'field'],
+  render (h, { parent, props }) {
+    const { row, field } = props
+    return h('td', { class: field.cellClass }, [
+      // default or custom render
+      (typeof field.cell === 'function')
+        ? h({
+          functional: true,
+          props: ['row', 'field'],
+          render: field.cell
+        }, { props: { row, field } })
+        : field.cell || row[ field.name ]
+    ])
   }
 }
+
+export default Row
