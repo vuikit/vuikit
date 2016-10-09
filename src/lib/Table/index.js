@@ -1,5 +1,5 @@
 import render from './render'
-import { isString, merge } from '../../helpers/util'
+import { isString } from '../../helpers/util'
 
 export default {
   name: 'VkTable',
@@ -48,22 +48,7 @@ export default {
   },
   computed: {
     fieldsDef () {
-      return this.fields.map(field => {
-        const obj = {
-          name: '',
-          header: '',
-          headerClass: '',
-          cellClass: '',
-          sortBy: ''
-        }
-        isString(field)
-          ? merge(obj, { name: field })
-          : merge(obj, field)
-        if (obj.header !== false && obj.header === '') {
-          obj.header = titleCase(obj.name)
-        }
-        return obj
-      })
+      return processFields(this.fields)
     }
   },
   methods: {
@@ -84,6 +69,28 @@ export default {
     }
   }
 }
+
+const processFields = fields => fields.map(f => {
+  let field = {
+    name: '',
+    header: '',
+    headerClass: '',
+    cellClass: '',
+    sortBy: ''
+  }
+  // set field data
+  if (isString(f)) {
+    field.name = f
+  } else {
+    // merge both
+    field = {...field, ...f}
+  }
+  // set default Header
+  if (field.header !== false) {
+    field.header = titleCase(field.name)
+  }
+  return field
+})
 
 function titleCase (str) {
   return str.replace(/\w+/g, txt =>
