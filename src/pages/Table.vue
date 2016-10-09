@@ -4,28 +4,27 @@
       <h2>Table</h2>
       <hr class="uk-article-divider">
       <!-- DEMO -->
-      <vk-table class="uk-form" ref="table"
-        trackBy="id"
+      <vk-table class="uk-form"
+        ref="table"
         :fields="fields"
         :rows="sortedRows"
-        :selectedRows="selectedRows"
         :selectable="props.selectable.demo.value"
         :condensed="props.condensed.demo.value"
         :striped="props.striped.demo.value"
         :hover="props.hover.demo.value"
         :sort-order="sortOrder"
+        @clickRow="
+          events.clickRow.emited = true,
+          $refs.table.toggleSelection(arguments[0])
+        "
         @sort="
           events.sort.emited = true,
           sortOrder = arguments[0]
         "
-        @select="
-          events.select.emited = true,
-          selectedRows = arguments[0]
-        "
-        @unselect="
-          events.unselect.emited = true,
-          selectedRows = arguments[0]
-        ">
+        @select="events.select.emited = true"
+        @unselect="events.unselect.emited = true"
+        @selectAll="events.selectAll.emited = true"
+        @unselectAll="events.unselectAll.emited = true">
       </vk-table>
       <!-- DESC -->
       <div class="uk-margin-large">
@@ -81,7 +80,7 @@ export default {
     }, {
       name: 'desc',
       header: 'Description',
-      render (h, { props }) {
+      cell (h, { props }) {
         return props.row[ props.field.name ]
       }
     }],
@@ -102,9 +101,15 @@ export default {
 
 const props = {
   fields: {
-    description: `A collection of <code>String</code>, <code>Objects</code> or mix of both
-      defining the fields. Simple field definition will be converted to
-      <code>Object</code>.`
+    description: `A collection of <code>Objects</code> defining the fields as:
+<pre>[{
+  name: String,
+  sortBy: [Boolean, String],
+  header: [Boolean, String, Function],
+  headerClass: String,
+  cell: [String, Function],
+  cellClass: String
+}]</pre>`
   },
   rows: {
     description: `A collection of <code>Objects</code> representing the rows data.
@@ -123,10 +128,6 @@ const props = {
     demo: {
       value: true
     }
-  },
-  selectedRows: {
-    description: `An <code>Array</code> of selected rows ids determined by
-      <code>trackBy</code>.`
   },
   condensed: {
     description: 'Whether to display the rows compacted.',
@@ -154,26 +155,36 @@ const props = {
 }
 
 const events = {
+  clickRow: {
+    description: 'Emited when a click was performed on a row passing as argument the affected row.',
+    emited: false
+  },
   sort: {
     description: `Emited on the intention to sort the rows passing as argument
       the sorting data.`,
     emited: false
   },
   select: {
-    description: `Emited on the intention to change the rows state to selected passing as
-      first argument the <code>selectedRows</code> new state and as second the involved rows.`,
+    description: `Emited when a row has been selected passing as argument its data.`,
     emited: false
   },
   unselect: {
-    description: `Emited on the intention to change the rows state to unselected passing as
-      first argument the <code>selectedRows</code> new state and as second the involved rows.`,
+    description: `Emited when a row has been unselected passing as argument its data.`,
+    emited: false
+  },
+  selectAll: {
+    description: 'Emited when all rows has been selected.',
+    emited: false
+  },
+  unselectAll: {
+    description: 'Emited when all rows has been unselected.',
     emited: false
   }
 }
 
 const example =
 `<vk-table {attrs}
-  trackBy="id"
+  ref="table"
   :fields="[{
     name: 'name',
     sortBy: true
@@ -190,7 +201,9 @@ const example =
     { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
     { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
   ]"
-  @sort="sortOrder = arguments[0]"
-  @change="rows = arguments[0]">
+  @clickRow="
+    $refs.table.toggleSelection(arguments[0])
+  "
+  @sort="sortOrder = arguments[0]">
 </vk-table>`
 </script>
