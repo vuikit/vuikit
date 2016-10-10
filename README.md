@@ -6,7 +6,7 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
+Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing Vue native components outputting UIkit layout.
 
 ## Documentation and examples
 
@@ -106,9 +106,11 @@ npm run build
 
 ## Custom UIkit Themes
 
-UIkit custom themes will work fine with Vuikit components except for `Dropdown` and `Modal`, which require resetting the transition styles. Apply the below examples in your theme extracted from the [Vuikit Theme](https://github.com/vuikit/vuikit-theme).
+UIkit custom themes will work fine by default with most of Vuikit components. There are few execptions, though, explained below.
 
 ### Modal
+
+UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. The solution is to reset those and apply new ones.
 
 ```css
 .hook-modal() {
@@ -154,6 +156,8 @@ UIkit custom themes will work fine with Vuikit components except for `Dropdown` 
 
 ### Dropdown
 
+Similar as with Modal, transition styles must be reseted.
+
 ```css
 // reset hardcoded transition styles
 .hook-dropdown-misc() {
@@ -163,6 +167,10 @@ UIkit custom themes will work fine with Vuikit components except for `Dropdown` 
   }
 }
 ```
+
+### Table
+
+The table component is not part of the UIkit library, as such relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
 
 ## License
 
