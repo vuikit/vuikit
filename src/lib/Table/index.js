@@ -44,7 +44,7 @@ export default {
     }
   },
   data: () => ({
-    selectedRows: []
+    selected: []
   }),
   created () {
     // check for rows id if selectable enabled
@@ -56,18 +56,23 @@ export default {
       })
     }
     // watch and trigger un/selectAll event
-    this.$watch('selectedRows', rows => {
-      if (this.allSelected) {
+    this.$watch('selected', rows => {
+      if (this.isAllSelected) {
         this.$emit('selectAll')
-      } else if (this.selectedRows.length === 0) {
+      } else if (this.selected.length === 0) {
         this.$emit('unselectAll')
       }
     })
   },
   computed: {
-    allSelected () {
+    isAllSelected () {
       return this.rows.every(row =>
-        this.selectedRows.find(id => id === this.getRowId(row))
+        this.selected.find(id => id === this.getRowId(row))
+      )
+    },
+    selectedRows () {
+      return this.selected.map(rowId =>
+        this.rows.find(row => this.getRowId(row) === rowId)
       )
     },
     fieldsDef () {
@@ -82,7 +87,7 @@ export default {
   },
   methods: {
     isSelected (row) {
-      return this.selectedRows.find(id => id === this.getRowId(row))
+      return this.selected.find(id => id === this.getRowId(row))
     },
     getRowId (row) {
       return `row_${row[this.trackBy]}`
@@ -90,11 +95,11 @@ export default {
     toggleSelection (row) {
       const rowId = this.getRowId(row)
       if (this.isSelected(row)) {
-        const index = this.selectedRows.indexOf(rowId)
-        this.selectedRows.splice(index, 1) // remove
+        const index = this.selected.indexOf(rowId)
+        this.selected.splice(index, 1) // remove
         this.$emit('unselect', row)
       } else {
-        this.selectedRows.push(rowId)
+        this.selected.push(rowId)
         this.$emit('select', row)
       }
     },
@@ -155,12 +160,12 @@ const selectFieldDef = {
   header (h, { parent, props }) {
     return h(Checkbox, {
       props: {
-        checked: parent.allSelected,
+        checked: parent.isAllSelected,
         onClick: e => {
-          if (parent.allSelected) {
-            parent.selectedRows = []
+          if (parent.isAllSelected) {
+            parent.selected = []
           } else {
-            parent.selectedRows = parent.rows.map(row => parent.getRowId(row))
+            parent.selected = parent.rows.map(row => parent.getRowId(row))
           }
         }
       }
