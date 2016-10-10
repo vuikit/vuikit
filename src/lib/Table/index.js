@@ -139,6 +139,7 @@ const processFields = fields => fields.map(f => {
 })
 
 const selectFieldDef = {
+  headerClass: 'vk-table-width-minimum',
   cellClass: 'vk-table-width-minimum',
   cell (h, { parent, props }) {
     const { row } = props
