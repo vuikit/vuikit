@@ -5,7 +5,10 @@ const Row = {
     const { fieldsDef, rowsClass } = parent
     const { row } = props
     return h('tr', {
-      class: rowsClass,
+      staticClass: rowsClass,
+      class: {
+        'uk-active': parent.isSelected(row)
+      },
       on: {
         click: e => {
           if (e.target.tagName === 'TD') {
