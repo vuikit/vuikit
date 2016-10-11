@@ -4,27 +4,38 @@
       <h2>Table</h2>
       <hr class="uk-article-divider">
       <!-- DEMO -->
-      <vk-table class="uk-form"
+      <vk-table
         ref="table"
         :fields="fields"
         :rows="sortedRows"
         :selectable="props.selectable.demo.value"
+        :selection="selection"
         :condensed="props.condensed.demo.value"
         :striped="props.striped.demo.value"
         :hover="props.hover.demo.value"
         :sort-order="sortOrder"
-        @clickRow="
-          events.clickRow.emited = true,
-          $refs.table.toggleSelection(arguments[0])
-        "
         @sort="
           events.sort.emited = true,
           sortOrder = arguments[0]
         "
-        @select="events.select.emited = true"
-        @unselect="events.unselect.emited = true"
-        @selectAll="events.selectAll.emited = true"
-        @unselectAll="events.unselectAll.emited = true">
+        @clickRow="
+          events.clickRow.emited = true,
+          selection[arguments[0]]
+            ? $delete(selection, arguments[0])
+            : $set(selection, arguments[0], true)
+        "
+        @select="
+          events.select.emited = true,
+          selection[arguments[0]]
+            ? $delete(selection, arguments[0])
+            : $set(selection, arguments[0], true)
+        "
+        @selectAll="
+          events.selectAll.emited = true,
+          Object.keys(selection).length !== rows.length
+            ? arguments[0].forEach(function(rowId) { $set(selection, rowId, true) })
+            : selection = {}
+        ">
       </vk-table>
       <!-- DESC -->
       <div class="uk-margin-large">
@@ -69,7 +80,7 @@ export default {
     sortOrder: {
       name: 'asc'
     },
-    selectedRows: [],
+    selection: {},
     fields: [{
       name: 'name',
       sortBy: true
@@ -105,29 +116,30 @@ const props = {
 <pre>[{
   name: String,
   sortBy: [Boolean, String],
-  header: [Boolean, String, Function],
   headerClass: String,
-  cell: [String, Function],
-  cellClass: String
+  header: [Boolean, String, Function],
+  cellClass: String,
+  cell: [String, Function]
 }]</pre>`
   },
   rows: {
-    description: `A collection of <code>Objects</code> representing the rows data.
-      The row object doesn't require any specific structure, but the key
-      <code>_selected</code> is reserved for the component workflow.`
+    description: 'A collection of <code>Objects</code> representing the rows data.'
   },
   rowsClass: {
-    description: `Optional class definition rendered on each row.`
+    description: 'Optional class definition rendered on each row.'
   },
   trackBy: {
-    description: `A unique key for the rows to be tracked by. Used among others
-    to optimize the rendering of the rows.`
+    description: `A unique key for the rows to be tracked by used among others
+      to optimize the rendering.`
   },
   selectable: {
     description: 'Whether to display the rows select checkboxes.',
     demo: {
       value: true
     }
+  },
+  selection: {
+    description: 'An <code>Object</code> of selected rows indexed by <code>trackBy</code> id.'
   },
   condensed: {
     description: 'Whether to display the rows compacted.',
@@ -149,42 +161,35 @@ const props = {
   },
   sortOrder: {
     description: `Object defining the current order being the <code>key</code> the
-    field being sorted by and the <code>value</code> the direction, <code>asc</code>
-    or <code>desc</code>.`
+      field being sorted by and the <code>value</code> the direction, <code>asc</code>
+      or <code>desc</code>.`
   }
 }
 
 const events = {
-  clickRow: {
-    description: 'Emited when a click was performed on a row passing as argument the affected row.',
-    emited: false
-  },
   sort: {
     description: `Emited on the intention to sort the rows passing as argument
-      the sorting data.`,
+    the sorting data.`,
+    emited: false
+  },
+  clickRow: {
+    description: 'Emited when a click was performed on a row passing as argument it id and data.',
     emited: false
   },
   select: {
-    description: `Emited when a row has been selected passing as argument its data.`,
-    emited: false
-  },
-  unselect: {
-    description: `Emited when a row has been unselected passing as argument its data.`,
+    description: `Emited on the intention to select or unselect a row passing as argument
+      it id and data.`,
     emited: false
   },
   selectAll: {
-    description: 'Emited when all rows has been selected.',
-    emited: false
-  },
-  unselectAll: {
-    description: 'Emited when all rows has been unselected.',
+    description: `Emited on the intention to select or unselect all rows passing as argument
+      its ids and data.`,
     emited: false
   }
 }
 
 const example =
 `<vk-table {attrs}
-  ref="table"
   :fields="[{
     name: 'name',
     sortBy: true
@@ -201,9 +206,21 @@ const example =
     { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
     { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
   ]"
+  @sort="sortOrder = arguments[0]"
   @clickRow="
-    $refs.table.toggleSelection(arguments[0])
+    selection[arguments[0]]
+      ? $delete(selection, arguments[0])
+      : $set(selection, arguments[0], true)
   "
-  @sort="sortOrder = arguments[0]">
+  @select="
+    selection[arguments[0]]
+      ? $delete(selection, arguments[0])
+      : $set(selection, arguments[0], true)
+  "
+  @selectAll="
+    Object.keys(selection).length !== rows.length
+      ? arguments[0].forEach(function(rowId) { $set(selection, rowId, true) })
+      : selection = {}
+  ">
 </vk-table>`
 </script>

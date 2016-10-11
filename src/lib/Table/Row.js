@@ -1,18 +1,18 @@
 const Row = {
   functional: true,
   props: ['row'],
-  render (h, { parent, props }) {
-    const { fieldsDef, rowsClass } = parent
+  render (h, { parent: vm, props }) {
+    const { fieldsDef, rowsClass } = vm
     const { row } = props
     return h('tr', {
       staticClass: rowsClass,
       class: {
-        'uk-active': parent.isSelected(row)
+        'uk-active': vm.isSelected(row)
       },
       on: {
         click: e => {
           if (e.target.tagName === 'TD') {
-            parent.$emit('clickRow', row)
+            vm.$emit('clickRow', vm.getRowId(row), row)
           }
         }
       }
@@ -25,7 +25,7 @@ const Row = {
 const Cell = {
   functional: true,
   props: ['row', 'field'],
-  render (h, { parent, props }) {
+  render (h, { props }) {
     const { row, field } = props
     return h('td', { class: field.cellClass }, [
       // default or custom render

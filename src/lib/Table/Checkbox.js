@@ -1,7 +1,7 @@
 export default {
   functional: true,
   props: ['checked', 'onClick'],
-  render (h, { parent, props }) {
+  render (h, { props }) {
     return h('input', {
       attrs: {
         type: 'checkbox'
