@@ -1,10 +1,10 @@
 const Cell = {
   functional: true,
   props: ['field'],
-  render (h, { parent, props }) {
+  render (h, { parent: vm, props }) {
     const { field } = props
     const { sortBy, headerClass } = field
-    const orderedBy = parent.sortOrder[field.name]
+    const orderedBy = vm.sortOrder[field.name]
     // Header, default or custom render
     const Header = (typeof field.header === 'function')
       ? h({
@@ -21,7 +21,7 @@ const Cell = {
         [headerClass]: headerClass
       },
       on: {
-        click: e => sortBy && parent.emitSort(props.field)
+        click: e => sortBy && vm.emitSort(props.field)
       }
     }, [
       sortBy
