@@ -6,7 +6,7 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing Vue native components outputting UIkit layout.
+Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by providing Vue native components outputting UIkit layout.
 
 ## Documentation and examples
 
