@@ -8,6 +8,7 @@
 ### 0.6.0
 
  - Vue 2 compatibility updates resulting in general refactoring
+ - Removed Filter
 
 ### 0.5.0
 
