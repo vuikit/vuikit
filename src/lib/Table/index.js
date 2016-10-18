@@ -71,7 +71,7 @@ export default {
     if (warn && this.selectable) {
       this.rows.forEach(row => {
         if (row[this.trackBy] === undefined) {
-          warn(`Some of the Table rows have no 'id' set.`)
+          warn("Some of the Table rows have no 'id' set.")
         }
       })
     }
