@@ -94,14 +94,15 @@ Make sure Vue is loaded upfront and then load `dist/vuikit.js`.
 ## Developers
 
 ``` bash
-# install dependencies
-npm install
+# install dependencies with Yarn (https://yarnpkg.com/)
+# it's much faster and consistent
+yarn install
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn run dev
 
 # build for distribution
-npm run build
+yarn run build
 ```
 
 ## Custom UIkit Themes
