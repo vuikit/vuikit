@@ -115,26 +115,24 @@ UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. Th
 
 ```css
 .hook-modal() {
-  // as UIkit hardcore transitions
-  // styles, a reset is necessary
-  opacity: inherit;
+  // reset hardcoded transitions
   display: inherit;
   opacity: inherit;
   -webkit-transform: inherit;
   transform: inherit;
 
-  // add custom transitions
+  // add custom ones
   -webkit-transition: opacity .3s ease;
   transition: opacity .3s ease;
 }
 
 .hook-modal-dialog() {
-  // reset transitions styles
+  // reset hardcoded transitions
   opacity: inherit;
   -webkit-transform: inherit;
   transform: inherit;
 
-  // add custom transitions
+  // add custom ones
   -webkit-transition: all .3s ease;
   transition: all .3s ease;
 }
@@ -160,7 +158,7 @@ UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. Th
 Similar as with Modal, transition styles must be reseted.
 
 ```css
-// reset hardcoded transition styles
+// reset hardcoded transitions
 .hook-dropdown-misc() {
   .uk-dropdown,
   .uk-dropdown-blank {
