@@ -22,25 +22,19 @@ describe('VkDatepicker', () => {
         pick: false
       },
       template: `<vk-datepicker
+        :year="calendar.year"
+        :month="calendar.month"
         :dates="dates"
         :disabled-dates="disabledDates"
         :min="min"
         :max="max"
-        @pick="
-          dates.push(arguments[0].format('YYYY-MM-DD'))"
-        @unpick="
-          unpick = true,
-          dates.splice(dates.indexOf(arguments[0].format('YYYY-MM-DD')), 1)
-          ">
-        <vk-calendar
-          :year="calendar.year"
-          :month="calendar.month"
-          @change="
-            calendar.year = arguments[0].year(),
-            calendar.month = arguments[0].month()
-          ">
-        </vk-calendar>
-      </vk-datepicker>`
+        @pick="dates.push(arguments[0].format('YYYY-MM-DD'))"
+        @unpick="dates.splice(dates.indexOf(arguments[0].format('YYYY-MM-DD')), 1)"
+        @change="
+          calendar.year = arguments[0].year(),
+          calendar.month = arguments[0].month()
+      ">
+    </vk-datepicker>`
     }).$mount()
     document.body.appendChild($vm.$el)
   })

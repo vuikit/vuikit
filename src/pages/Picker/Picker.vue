@@ -32,7 +32,7 @@
     <span v-html="message"></span>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vkb-picker</code> components renders a <code>vk-table</code> wich data
+      The <code>vk-picker</code> components renders a <code>vk-table</code> wich data
       can be picked.
     </div>
     <!-- TABS -->

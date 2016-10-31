@@ -22,18 +22,9 @@ describe('VkTable', () => {
           { id: 1, name: 'Item A', hits: 100, desc: 'Description 1' },
           { id: 2, name: 'Item B', hits: 40, desc: 'Description 2' },
           { id: 3, name: 'Item C', hits: 700, desc: 'Description 3' }
-        ]
-      },
-      computed: {
-        sortedRows () {
-          const by = Object.keys(this.sortOrder)[0]
-          const dir = this.sortOrder[by]
-          return orderBy(this.rows, [item => item[by]], dir)
-        }
-      },
-      template: `<vk-table class="uk-form" ref="table"
-        trackBy="id"
-        :fields="[{
+        ],
+        selection: {},
+        fields: [{
           name: 'name',
           sortBy: true
         }, {
@@ -43,19 +34,48 @@ describe('VkTable', () => {
         }, {
           name: 'desc',
           header: 'Description',
-          headerClass: 'uk-text-right',
-          cellClass: 'uk-text-right'
-        }]"
+          cell (h, { props }) {
+            return props.row[ props.field.name ]
+          }
+        }]
+      },
+      computed: {
+        sortedRows () {
+          const by = Object.keys(this.sortOrder)[0]
+          const dir = this.sortOrder[by]
+          return orderBy(this.rows, [item => item[by]], dir)
+        }
+      },
+      template: `<vk-table 
+        class="uk-form" 
+        ref="table"
+        trackBy="id"
+        :fields="fields"
         :rows="sortedRows"
-        :striped="striped"
-        :selectedRows="selectedRows"
         :selectable="selectable"
+        :selection="selection"
         :condensed="condensed"
+        :striped="striped"
         :hover="hover"
         :sort-order="sortOrder"
-        @sort="sortOrder = arguments[0]"
-        @select="selectedRows = arguments[0]"
-        @unselect="selectedRows = arguments[0]">
+        @sort="
+          sortOrder = arguments[0]
+        "
+        @clickRow="
+          selection[arguments[0]]
+            ? $delete(selection, arguments[0])
+            : $set(selection, arguments[0], true)
+        "
+        @select="
+          selection[arguments[0]]
+            ? $delete(selection, arguments[0])
+            : $set(selection, arguments[0], true)
+        "
+        @selectAll="
+          Object.keys(selection).length !== rows.length
+            ? arguments[0].forEach(function(rowId) { $set(selection, rowId, true) })
+            : selection = {}
+        ">
       </vk-table>`
     }).$mount()
     document.body.appendChild($vm.$el)
@@ -99,7 +119,7 @@ describe('VkTable', () => {
     expect(th[0].innerHTML).toBe('<input type="checkbox">')
     expect(th[1].innerHTML).toBe('<span class="uk-position-relative">Name<i class="uk-icon-justify uk-margin-small-left vk-icon-arrow-down"></i></span>')
     expect(th[2].innerHTML).toBe('<span class="uk-position-relative">Hits<i class="uk-icon-justify uk-margin-small-left uk-invisible vk-icon-arrow-down"></i></span>')
-    expect(th[3].innerHTML).toBe('<span class="uk-position-relative">Description</span>')
+    expect(th[3].innerHTML).toBe('Description')
   })
 
   it('should sort the rows by name', done => {
@@ -131,27 +151,27 @@ describe('VkTable', () => {
   })
 
   it('should work bulk select', done => {
-    expect($vm.selectedRows).toEqual([])
+    expect($vm.selection).toEqual({})
     $vm.$el.querySelectorAll('thead tr th')[0].querySelector('input').click()
     waitForUpdate(() => {
-      expect($vm.selectedRows).toEqual([1, 2, 3])
+      expect($vm.selection).toEqual({1: true, 2: true, 3: true})
       $vm.$el.querySelectorAll('thead tr th')[0].querySelector('input').click()
     }).then(() => {
-      expect($vm.selectedRows).toEqual([])
+      expect($vm.selection).toEqual({})
     }).then(done)
   })
 
   it('should select items in right order', done => {
-    expect($vm.selectedRows).toEqual([])
+    expect($vm.selection).toEqual({})
     $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[2].click()
     waitForUpdate(() => {
-      expect($vm.selectedRows).toEqual([3])
+      expect($vm.selection).toEqual({3: true})
       $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[0].click()
     }).then(() => {
-      expect($vm.selectedRows).toEqual([3, 1])
+      expect($vm.selection).toEqual({3: true, 1: true})
       $vm.$el.querySelectorAll('tbody tr td:nth-child(1) input')[1].click()
     }).then(() => {
-      expect($vm.selectedRows).toEqual([3, 1, 2])
+      expect($vm.selection).toEqual({3: true, 1: true, 2: true})
     }).then(done)
   })
 

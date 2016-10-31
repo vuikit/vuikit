@@ -19,13 +19,17 @@ describe('Picker', () => {
       methods: {
         spy
       },
-      template: `<vk-picker
-      :pickables="[{ name: 'id' }, 'hits']"
-      @pick="
-        spy(arguments[0], arguments[1])">
-      <vk-table
-        track-by="id"
-        :fields="['name', 'hits', 'description']"
+      template: `
+      <vk-picker
+        :fields="[{
+          name: 'name',
+          pickable: 'id'
+        }, {
+          name: 'hits',
+          pickable: true
+        }, {
+          name: 'description'
+        }]"
         :rows="[{
           id: 1,
           name: 'Item 1',
@@ -36,9 +40,9 @@ describe('Picker', () => {
           name: 'Item 2',
           hits: 56,
           description: 'The item description'
-        }]">
-      </vk-table>
-  </vk-picker>`
+        }]"
+        @pick="spy(arguments[0], arguments[1])">
+      </vk-picker>`
     }).$mount()
     document.body.appendChild($vm.$el)
   })
