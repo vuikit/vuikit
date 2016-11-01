@@ -23,10 +23,10 @@ export default {
   },
   computed: {
     tableFields () {
-      // override pickable fields render
+      // override pickable fields cell render
       return this.fields.map(field => {
         if (field.pickable) {
-          field.render = pickableRender
+          field.cell = pickableRender
         }
         return field
       })
