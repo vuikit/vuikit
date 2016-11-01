@@ -14,6 +14,10 @@ export function isString (val) {
   return typeof val === 'string'
 }
 
+export function isFunction (val) {
+  return typeof val === 'function'
+}
+
 export const isArray = Array.isArray
 
 export function inArray (array, value) {

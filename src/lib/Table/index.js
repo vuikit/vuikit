@@ -16,7 +16,7 @@ export default {
       required: true
     },
     rowsClass: {
-      type: String,
+      type: [String, Function],
       default: ''
     },
     trackBy: {

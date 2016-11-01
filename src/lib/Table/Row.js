@@ -1,3 +1,5 @@
+import { isFunction } from '../../helpers/util'
+
 const Row = {
   functional: true,
   props: ['row'],
@@ -5,7 +7,9 @@ const Row = {
     const { fieldsDef, rowsClass } = vm
     const { row } = props
     return h('tr', {
-      staticClass: rowsClass,
+      staticClass: isFunction(rowsClass)
+        ? rowsClass.call(vm, row)
+        : rowsClass,
       class: {
         'uk-active': vm.isSelected(row)
       },
@@ -29,7 +33,7 @@ const Cell = {
     const { row, field } = props
     return h('td', { class: field.cellClass }, [
       // default or custom render
-      (typeof field.cell === 'function')
+      isFunction(field.cell)
         ? h({
           functional: true,
           props: ['row', 'field'],
