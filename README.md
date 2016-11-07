@@ -107,7 +107,7 @@ yarn run build
 
 ## Custom UIkit Themes
 
-UIkit custom themes will work fine by default with most of Vuikit components. There are few execptions, though, explained below.
+You can use UIkit custom themes out of a box with few exceptions you should be aware of.
 
 ### Modal
 
