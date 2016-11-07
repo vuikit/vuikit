@@ -31,21 +31,19 @@ describe('VkCalendar', () => {
   })
 
   it('should respect year binding', done => {
-    let date = new Date()
-    let nextYear = date.getFullYear() + 1
-    $vm.year = nextYear
+    let year = 2017
+    $vm.year = year
     waitForUpdate(() => {
-      expect(+$vm.$el.querySelectorAll('.uk-datepicker-heading .uk-form-select a')[1].innerHTML.trim()).toBe(nextYear)
+      expect(+$vm.$el.querySelectorAll('.uk-datepicker-heading .uk-form-select a')[1].innerHTML.trim()).toBe(year)
     }).then(done)
   })
 
   it('should respect month binding', done => {
-    let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    let date = new Date()
-    let nextMonth = date.getMonth() + 2
-    $vm.month = nextMonth
+    let month = 4
+    let monthName = 'May'
+    $vm.month = month
     waitForUpdate(() => {
-      expect($vm.$el.querySelectorAll('.uk-datepicker-heading .uk-form-select a')[0].innerHTML.trim()).toBe(monthNames[nextMonth])
+      expect($vm.$el.querySelectorAll('.uk-datepicker-heading .uk-form-select a')[0].innerHTML.trim()).toBe(monthName)
     }).then(done)
   })
 
@@ -62,8 +60,8 @@ describe('VkCalendar', () => {
   it('should respect max binding', done => {
     expect($vm.$el.querySelector('.uk-datepicker-next')).not.toBeNull()
     $vm.year = 2016
-    $vm.month = 7
-    $vm.max = 5
+    $vm.month = 9
+    $vm.max = '2016-11-06'
     waitForUpdate(() => {
       expect($vm.$el.querySelector('.uk-datepicker-next')).toBeNull()
     }).then(done)
@@ -72,8 +70,9 @@ describe('VkCalendar', () => {
   it('should change year value on click next', done => {
     $vm.year = 2016
     $vm.month = 7
-    $vm.$el.querySelector('.uk-datepicker-next').click()
     waitForUpdate(() => {
+      triggerEvent($vm.$el.querySelector('.uk-datepicker-next'), 'click')
+    }).then(() => {
       expect($vm.month).toBe(8)
     }).then(done)
   })

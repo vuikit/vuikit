@@ -6,9 +6,9 @@ delete webpackConf.entry
 
 module.exports = function (config) {
   config.set({
-    browsers: ['Chrome'],
+    browsers: ['Chrome', 'Firefox', 'Safari'],
     frameworks: ['jasmine'],
-    reporters: ['spec'],
+    reporters: ['progress'],
     // this is the entry file for all our tests.
     files: ['../test/unit/index.js'],
     // we will pass the entry file to webpack for bundling.

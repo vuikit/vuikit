@@ -1,11 +1,13 @@
 import Vue from 'vue/dist/vue.js'
 import VkTabs from '../../src/lib/Tabs'
 import VkTabsItem from '../../src/lib/TabsItem'
-import VkTabsVertical from '../../src/lib/TabsVertical'
+import VkSwitcherItem from '../../src/lib/SwitcherItem'
+import VkSwitcher from '../../src/lib/Switcher'
 
 Vue.component('VkTabs', VkTabs)
 Vue.component('VkTabsItem', VkTabsItem)
-Vue.component('VkTabsVertical', VkTabsVertical)
+Vue.component('VkSwitcherItem', VkSwitcherItem)
+Vue.component('VkSwitcher', VkSwitcher)
 
 describe('VkTabs', () => {
   let $vm
@@ -26,10 +28,10 @@ describe('VkTabs', () => {
       :center="center"
       :width="width"
       @change="index = arguments[0]">
-      <vk-tabs-item>Tab 1</vk-tabs-item>
-      <vk-tabs-item>Tab 2</vk-tabs-item>
-      <vk-tabs-item>Tab 3</vk-tabs-item>
-      <vk-tabs-item disabled>Tab 4</vk-tabs-item>
+        <vk-tabs-item name="Tab 1">Content Tab 1</vk-tabs-item>
+        <vk-tabs-item name="Tab 2">Content Tab 2</vk-tabs-item>
+        <vk-tabs-item name="Tab 3">Content Tab 3</vk-tabs-item>
+        <vk-tabs-item disabled name="Tab 4">Content Tab 4</vk-tabs-item>
     </vk-tabs>`
     }).$mount()
     document.body.appendChild($vm.$el)
@@ -103,61 +105,15 @@ describe('VkTabs', () => {
 
   it('should add .uk-tab-grid to the ul and .uk-width-* to the li', done => {
     expect($vm.$el.querySelector('.uk-tab').classList.contains('uk-tab-grid')).toBeFalsy()
-    $vm.$el.querySelectorAll('.uk-tab li').forEach(li => {
+    Array.from($vm.$el.querySelectorAll('.uk-tab li')).forEach(li => {
       expect(li.classList.contains('uk-width-' + $vm.width)).toBeFalsy()
     })
     $vm.width = '1-5'
     waitForUpdate(() => {
       expect($vm.$el.querySelector('.uk-tab').classList.contains('uk-tab-grid')).toBeTruthy()
-      $vm.$el.querySelectorAll('.uk-tab li').forEach(li => {
+      Array.from($vm.$el.querySelectorAll('.uk-tab li')).forEach(li => {
         expect(li.classList.contains('uk-width-' + $vm.width)).toBeTruthy()
       })
-    }).then(done)
-  })
-})
-
-describe('VkTabs Vertical', () => {
-  let $vm
-
-  beforeEach(() => {
-    $vm = new Vue({
-      data: {
-        align: 'left',
-        width: '1-3',
-        bodyWidth: '2-3',
-        index: 0
-      },
-      template: `<vk-tabs-vertical
-        :align="align"
-        :width="width"
-        :body-width="bodyWidth"
-        @change="index = arguments[0]">
-        <tm-tabs-item>Tab 1</tm-tabs-item>
-        <tm-tabs-item>Tab 2</tm-tabs-item>
-        <tm-tabs-item>Tab 3</tm-tabs-item>
-        <tm-tabs-item disabled>Tab 4</tm-tabs-item>
-      </vk-tabs-vertical>`
-    }).$mount()
-    document.body.appendChild($vm.$el)
-  })
-
-  it('should set tabs align', done => {
-    expect($vm.$el.querySelector('ul').classList.contains('uk-tab-left')).toBeTruthy()
-    $vm.align = 'right'
-    waitForUpdate(() => {
-      expect($vm.$el.querySelector('ul').classList.contains('uk-tab-left')).toBeFalsy()
-      expect($vm.$el.querySelector('ul').classList.contains('uk-tab-right')).toBeTruthy()
-    }).then(done)
-  })
-
-  it('should set tabs and body width', done => {
-    expect($vm.$el.querySelectorAll('div')[0].classList.contains('uk-width-medium-1-3')).toBeTruthy()
-    expect($vm.$el.querySelectorAll('div')[1].classList.contains('uk-width-medium-2-3')).toBeTruthy()
-    $vm.width = '1-2'
-    $vm.bodyWidth = '1-2'
-    waitForUpdate(() => {
-      expect($vm.$el.querySelectorAll('div')[0].classList.contains('uk-width-medium-1-2')).toBeTruthy()
-      expect($vm.$el.querySelectorAll('div')[1].classList.contains('uk-width-medium-1-2')).toBeTruthy()
     }).then(done)
   })
 })
