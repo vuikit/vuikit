@@ -46,8 +46,8 @@ describe('VkTable', () => {
           return orderBy(this.rows, [item => item[by]], dir)
         }
       },
-      template: `<vk-table 
-        class="uk-form" 
+      template: `<vk-table
+        class="uk-form"
         ref="table"
         trackBy="id"
         :fields="fields"
