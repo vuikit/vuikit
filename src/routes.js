@@ -23,6 +23,10 @@ export default [{
   path: '/tooltip',
   component: require('./pages/Tooltip')
 }, {
+  name: 'Notify',
+  path: '/notify',
+  component: require('./pages/Notify')
+}, {
   name: 'Picker',
   path: '/picker',
   component: require('./pages/Picker')

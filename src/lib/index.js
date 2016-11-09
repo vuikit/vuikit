@@ -6,6 +6,8 @@ import ButtonRadio from './ButtonRadio'
 import Calendar from './Calendar'
 import Datepicker from './Datepicker'
 import DatepickerDrop from './DatepickerDrop'
+import Notify from './Notify'
+import NotifyMessage from './NotifyMessage'
 import Dropdown from './Dropdown'
 import Modal from './Modal'
 import Offcanvas from './Offcanvas'
@@ -32,6 +34,8 @@ const Vuikit = {
   Calendar,
   Datepicker,
   DatepickerDrop,
+  Notify,
+  NotifyMessage,
   Dropdown,
   Modal,
   Offcanvas,
