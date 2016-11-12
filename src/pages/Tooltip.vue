@@ -113,7 +113,7 @@ const props = {
         { text: '0', value: 0 },
         { text: '300', value: 300 },
         { text: '500', value: 500 },
-        { text: '100', value: 1000 }
+        { text: '1000', value: 1000 }
       ],
       value: 0
     }

@@ -1,5 +1,5 @@
 import Popper from 'popper.js'
-import { on, offAll, transitionEndEvent } from '../helpers/dom'
+import { on, offAll } from '../helpers/dom'
 
 let onMouseEnter
 let onMouseLeave
@@ -84,15 +84,12 @@ export default {
     }
 
     onMouseLeave = () => {
-      let onTransitionEnd = () => {
-        offAll(tooltipElement, this._uid)
-        if (tooltipElement.parentNode && !tooltipElement.classList.contains('uk-active')) {
-          document.body.removeChild(tooltipElement)
-          this.$emit('hide')
-        }
-      }
       this.active = false
-      on(tooltipElement, transitionEndEvent, onTransitionEnd)
+      offAll(tooltipElement, this._uid)
+      if (tooltipElement.parentNode) {
+        document.body.removeChild(tooltipElement)
+      }
+      this.$emit('hide')
     }
 
     on(targetElement, 'mouseenter', onMouseEnter, this._uid)
