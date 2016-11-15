@@ -55,7 +55,6 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
     show: false,
     picked: '',
     example

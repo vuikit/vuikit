@@ -35,14 +35,7 @@
       This example illustrate how to combine <code>vk-dropdown</code> with
       <code>vk-datepicker</code>.
     </div>
-    <!-- TABS -->
-    <vk-tabs
-      :index="tabsIndex"
-      @change="tabsIndex = arguments[0]">
-      <vk-tabs-item name="Code">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
-    </vk-tabs>
+    <vk-docs-code>{{ code }}</vk-docs-code>
   </div>
 </template>
 
@@ -53,7 +46,6 @@ export default {
   name: 'Block',
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
     show: false,
     date: '',
     year: undefined,
