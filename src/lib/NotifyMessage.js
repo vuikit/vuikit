@@ -26,7 +26,8 @@ export default {
     return (
       <transition name={ this.transition }>
         <div staticClass="uk-notify-message" class={{
-          [this.statusClass]: this.status
+          [this.statusClass]: this.status,
+          'vk-notify-message-sticky': this.timeout === 0
         }} on-click={() => this.$parent.$emit('click', this.id)}>
           { this.$slots.default }
         </div>
