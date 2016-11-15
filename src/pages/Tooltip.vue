@@ -10,6 +10,7 @@
           :placement="props.placement.demo.value"
           :offset="props.offset.demo.value"
           :delay="props.delay.demo.value"
+          :transition="props.transition.demo.value"
           @show="events.show.emited = true"
           @hide="events.hide.emited = true">
           Tooltip 1
@@ -22,6 +23,7 @@
           :placement="props.placement.demo.value"
           :offset="props.offset.demo.value"
           :delay="props.delay.demo.value"
+          :transition="props.transition.demo.value"
           @show="events.show.emited = true"
           @hide="events.hide.emited = true">
           Tooltip 2
@@ -122,6 +124,18 @@ const props = {
         { text: '1000', value: 1000 }
       ],
       value: 0
+    }
+  },
+  transition: {
+    description: `Specifies the transition name to be used by the transition
+      wrapper component.`,
+    demo: {
+      type: 'Select',
+      options: [
+        { text: 'Default', value: '' },
+        { text: 'Fade', value: 'vk-transition-fade' }
+      ],
+      value: ''
     }
   }
 }

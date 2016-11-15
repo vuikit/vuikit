@@ -28,6 +28,10 @@ export default {
     delay: {
       type: Number,
       default: 0
+    },
+    transition: {
+      type: String,
+      default: ''
     }
   },
   data: () => ({
@@ -63,14 +67,19 @@ export default {
     }
   },
   render (h) {
+    const directives = [{
+      name: 'show', value: this.active
+    }]
     return (
-      <div staticClass="uk-tooltip" class={ this.classes } style={{
-        'transition-delay': this.delay + 'ms'
-      }}>
-        <div class="uk-tooltip-inner">
-          { this.$slots.default }
+      <transition name={ this.transition }>
+        <div {...{ directives }} staticClass="uk-tooltip" class={ this.classes } style={{
+          'transition-delay': this.delay + 'ms'
+        }}>
+          <div class="uk-tooltip-inner">
+            { this.$slots.default }
+          </div>
         </div>
-      </div>
+      </transition>
     )
   },
   mounted () {
