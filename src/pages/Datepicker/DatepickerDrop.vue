@@ -1,6 +1,6 @@
 <template>
   <div class="uk-block">
-    <h2>DatepickerDrop</h2>
+    <h2>Datepicker in a Dropdown example</h2>
     <hr class="uk-article-divider">
     <!-- DEMO -->
     <div class="uk-form">
@@ -9,30 +9,31 @@
         placeholder="Pick a date"
         v-model="date"
         @focus="show = true">
-      <vk-datepicker-drop
-        :show="show"
+      <vk-dropdown
         target="#target"
-        :year="year"
-        :month="month"
-        :dates="date
-          ? [date]
-          : []"
-        @pick="
-          date = arguments[0].format('YYYY-MM-DD'),
-          show = false
-        "
-        @change="
-          year = arguments[0].year(),
-          month = arguments[0].month()
-        "
+        :show="show"
         @clickOut="show = false">
-      </vk-datepicker-drop>
+        <vk-datepicker class="uk-margin-remove"
+          :year="year"
+          :month="month"
+          :dates="date
+            ? [date]
+            : []"
+          @pick="
+            date = arguments[0].format('YYYY-MM-DD'),
+            show = false
+          "
+          @change="
+            year = arguments[0].year(),
+            month = arguments[0].month()
+          ">
+        </vk-datepicker>
+      </vk-dropdown>
     </div>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The component <code>vk-datepicker-drop</code> combines <code>vk-dropdown</code>
-      with <code>vk-datepicker</code> allowing easier implementations with inputs and
-      other elements.
+      This example illustrate how to combine <code>vk-dropdown</code> with
+      <code>vk-datepicker</code>.
     </div>
     <!-- TABS -->
     <vk-tabs
@@ -67,22 +68,24 @@ const example =
   placeholder="Pick a date"
   v-model="date"
   @focus="show = true">
-<vk-datepicker-drop
-  :show="show"
+<vk-dropdown
   target="#target"
-  :year="year"
-  :month="month"
-  :dates="date
-    ? [date]
-    : []"
-  @pick="
-    date = arguments[0].format('YYYY-MM-DD'),
-    show = false
-  "
-  @change="
-    year = arguments[0].year(),
-    month = arguments[0].month()
-  "
+  :show="show"
   @clickOut="show = false">
-</vk-datepicker-drop>`
+  <vk-datepicker class="uk-margin-remove"
+    :year="year"
+    :month="month"
+    :dates="date
+      ? [date]
+      : []"
+    @pick="
+      date = arguments[0].format('YYYY-MM-DD'),
+      show = false
+    "
+    @change="
+      year = arguments[0].year(),
+      month = arguments[0].month()
+    ">
+  </vk-datepicker>
+</vk-dropdown>`
 </script>
