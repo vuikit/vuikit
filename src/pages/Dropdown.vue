@@ -4,39 +4,35 @@
       <h2>Dropdown</h2>
       <hr class="uk-article-divider">
       <!-- DEMO -->
-      <vk-button id="target"
-        @click.native="props.show.demo.value = !props.show.demo.value">
+      <vk-button>
         Toggle
         <i class="uk-icon-caret-down"></i>
+        <vk-dropdown ref="dropdown"
+          :show="props.show.demo.value"
+          :placement="props.placement.demo.value"
+          :transition="props.transition.demo.value"
+          :offset="props.offset.demo.value"
+          :blank="props.blank.demo.value"
+          :fix-width="props.fixWidth.demo.value"
+          :scrollable="props.scrollable.demo.value"
+          @clickIn="events.clickIn.emited = true"
+          @clickOut="
+            props.show.demo.value = false,
+            events.clickOut.emited = true
+          "
+          @targetClick="
+            props.show.demo.value = !props.show.demo.value,
+            events.targetClick.emited = true
+          "
+          @targetHoverIn="events.targetHoverIn.emited = true"
+          @targetHoverOut="events.targetHoverOut.emited = true">
+          <ul class="uk-nav uk-nav-dropdown">
+            <li class="uk-nav-header">Header</li>
+            <li><a href="#" @click.prevent>Item</a></li>
+            <li><a href="#" @click.prevent>Another item</a></li>
+          </ul>
+        </vk-dropdown>
       </vk-button>
-      <vk-dropdown ref="dropdown"
-        target="#target"
-        :show="props.show.demo.value"
-        :position="props.position.demo.value"
-        :offset="props.offset.demo.value"
-        :offset-target="props.offsetTarget.demo.value"
-        :constrain-to-window="props.constrainToWindow.demo.value"
-        :constrain-to-parent="props.constrainToParent.demo.value"
-        :blank="props.blank.demo.value"
-        :fix-width="props.fixWidth.demo.value"
-        :scrollable="props.scrollable.demo.value"
-        @clickIn="events.clickIn.emited = true"
-        @clickOut="
-          props.show.demo.value = false,
-          events.clickOut.emited = true
-        "
-        @targetHoverIn="events.targetHoverIn.emited = true"
-        @targetHoverOut="events.targetHoverOut.emited = true">
-        <ul class="uk-nav uk-nav-dropdown">
-          <li><a href="#" @click.prevent>Item</a></li>
-          <li><a href="#" @click.prevent>Another item</a></li>
-          <li class="uk-nav-header">Header</li>
-          <li><a href="#" @click.prevent>Item</a></li>
-          <li><a href="#" @click.prevent>Another item</a></li>
-          <li class="uk-nav-divider"></li>
-          <li><a href="#" @click.prevent>Separated item</a></li>
-        </ul>
-      </vk-dropdown>
       <!-- DESC -->
       <div class="uk-margin-large">
         The <code>vk-dropdown</code> component renders a toggleable dropdown.
@@ -70,19 +66,6 @@ import Component from '../lib/Dropdown'
 import mixin from './_mixin'
 import { mergeProps } from '../helpers/pages'
 
-const resetTethler = function () {
-  return {
-    handler (val) {
-      const dropdown = this.$refs.dropdown
-      dropdown.$nextTick(() => {
-        dropdown.$tether.destroy()
-        dropdown.init()
-      })
-    },
-    immediate: false
-  }
-}
-
 export default {
   name: 'PageDropdown',
   mixins: [mixin],
@@ -92,51 +75,53 @@ export default {
     slots,
     events,
     example
-  }),
-  watch: {
-    'props.position.demo.value': resetTethler(),
-    'props.offset.demo.value': resetTethler(),
-    'props.offsetTarget.demo.value': resetTethler(),
-    'props.constrainToWindow.demo.value': resetTethler(),
-    'props.constrainToParent.demo.value': resetTethler()
-  }
+  })
 }
 
 const props = {
+  target: {
+    description: `The Vue reference or dom query for the element to which the
+      dropdown should be attached to. If omited the <code>$parent.$el</code>
+      will be used.`
+  },
   show: {
     description: 'Display state that when toggled will hide/show the dropdown.',
     demo: {
       value: false
     }
   },
-  target: {
-    description: `The element or string to query the element to which the
-      dropdown should stay adjacent.`
-  },
-  position: {
-    description: 'Specifies the attachment point on the target to attach the dropdown to.',
+  placement: {
+    description: 'Specifies the placement point of the dropdown.',
     demo: {
       type: 'Select',
       options: [
-        { text: 'top left', value: 'top left' },
-        { text: 'left top', value: 'left top' },
-        { text: 'left middle', value: 'left middle' },
-        { text: 'left bottom', value: 'left bottom' },
-        { text: 'bottom left', value: 'bottom left' },
-        { text: 'bottom center', value: 'bottom center' },
-        { text: 'bottom right', value: 'bottom right' },
-        { text: 'right bottom', value: 'right bottom' },
-        { text: 'right middle', value: 'right middle' },
-        { text: 'right top', value: 'right top' },
-        { text: 'top right', value: 'top right' },
-        { text: 'top center', value: 'top center' }
+        { text: 'top', value: 'top' },
+        { text: 'top-start', value: 'top-start' },
+        { text: 'top-end', value: 'top-end' },
+        { text: 'right', value: 'right' },
+        { text: 'right-start', value: 'right-start' },
+        { text: 'right-end', value: 'right-end' },
+        { text: 'bottom', value: 'bottom' },
+        { text: 'bottom-start', value: 'bottom-start' },
+        { text: 'bottom-end', value: 'bottom-end' },
+        { text: 'left', value: 'left' },
+        { text: 'left-start', value: 'left-start' },
+        { text: 'left-end', value: 'left-end' }
       ],
-      value: 'bottom left'
+      value: 'bottom-start'
     }
   },
   transition: {
-    description: `Specifies the transition name that will be used by the transition
-      wrapper component.`
+    description: `Specifies the transition name to be used by the transition
+      wrapper component.`,
+    demo: {
+      type: 'Select',
+      options: [
+        { text: 'Default', value: '' },
+        { text: 'Fade', value: 'vk-transition-fade' }
+      ],
+      value: ''
+    }
   },
   offset: {
     description: `The dropdown attachment point offset with <code>vertical horizontal</code> syntax.
@@ -148,36 +133,7 @@ const props = {
         { text: '10px 10px', value: '10px 10px' },
         { text: '-10px -10px', value: '-10px -10px' }
       ],
-      value: '0 0'
-    }
-  },
-  offsetTarget: {
-    description: `The target attachment point offset with <code>vertical horizontal</code> syntax.
-      Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '0 0' },
-        { text: '10px 10px', value: '10px 10px' },
-        { text: '-10px -10px', value: '-10px -10px' }
-      ],
-      value: '0 0'
-    }
-  },
-  constrainToWindow: {
-    description: `Whether to flip the dropdown when it would otherwise be outside the viewport.
-      This will cause dropdowns with bottom attachments to switch to top when colliding with the
-      bottom of the page and vice-versa.`,
-    demo: {
-      value: true
-    }
-  },
-  constrainToParent: {
-    description: `Similar to <code>constrainToWindow</code> but for the target element's first
-      scroll parent: the first parent that has <code>overflow: auto</code> or <code>overflow: scroll</code>
-      set, or the body, whichever comes first.`,
-    demo: {
-      value: true
+      value: '0 5'
     }
   },
   blank: {
@@ -197,11 +153,6 @@ const props = {
     demo: {
       value: false
     }
-  },
-  tetherOptions: {
-    description: `Additional options can be passed to the underlying Tether instance used
-      to position the dropdown. See the the <a href="http://tether.io/" target="_blank">Tether</a>
-      documentation for more information.`
   }
 }
 
@@ -218,6 +169,10 @@ const events = {
   },
   clickOut: {
     description: 'Emited when a click was performed outside of the dropdown while open.',
+    emited: false
+  },
+  targetClick: {
+    description: 'Emited when a click is made on the target.',
     emited: false
   },
   targetHoverIn: {
