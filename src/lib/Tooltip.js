@@ -26,10 +26,6 @@ export default {
       type: String,
       default: '0 5'
     },
-    delay: {
-      type: Number,
-      default: 0
-    },
     transition: {
       type: String,
       default: ''
@@ -73,9 +69,7 @@ export default {
     }]
     return (
       <transition name={ this.transition }>
-        <div {...{ directives }} staticClass="uk-tooltip" class={ this.classes } style={{
-          'transition-delay': this.delay + 'ms'
-        }}>
+        <div {...{ directives }} staticClass="uk-tooltip" class={ this.classes }>
           <div class="uk-tooltip-inner">
             { this.$slots.default }
           </div>
