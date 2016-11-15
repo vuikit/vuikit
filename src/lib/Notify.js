@@ -1,4 +1,5 @@
 export default {
+  name: 'VkNotify',
   props: {
     placement: {
       type: String,

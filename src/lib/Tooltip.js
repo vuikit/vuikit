@@ -12,6 +12,7 @@ const POSITION_MIRROR = {
 }
 
 export default {
+  name: 'VkTooltip',
   props: {
     target: {
       type: String,

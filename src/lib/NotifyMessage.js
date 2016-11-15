@@ -1,4 +1,5 @@
 export default {
+  name: 'VkNotifyMessage',
   props: {
     id: {
       type: [Number, String, Object],
