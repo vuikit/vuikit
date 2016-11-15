@@ -7,7 +7,7 @@
  - Added Table rowsClass prop
  - Refactored Table fields definition and selectable feature
  - Refactored Dropdown with Popper.js
- - Removed DatepickerDrop
+ - Removed PickerDrop and DatepickerDrop
 
 ### 0.6.0
 
