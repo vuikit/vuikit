@@ -11,13 +11,13 @@
 
 ### 0.6.0
 
- - Vue 2 compatibility updates resulting in general refactoring
+ - Refactored all components adding Vue 2 compatibility
  - Removed Filter
 
 ### 0.5.0
 
  - Added Filter
- - Picker, Datepicker, Pagination and Table refactored
+ - Refactored Picker, Datepicker, Pagination and Table
 
 ### 0.4.1
 
@@ -29,7 +29,7 @@
  - Added Dropdown
  - Added Picker
  - Added Table
- - Refactor Calendar & Datepicker (braking changes)
+ - Refactored Calendar & Datepicker
 
 ### 0.3.0
 
