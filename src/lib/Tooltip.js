@@ -13,6 +13,10 @@ const POSITION_MIRROR = {
 
 export default {
   props: {
+    target: {
+      type: String,
+      default: ''
+    },
     placement: {
       type: String,
       default: 'top'
@@ -70,43 +74,47 @@ export default {
     )
   },
   mounted () {
-    const tooltipElement = this.$el
-    const targetElement = tooltipElement.parentNode
-    this.targetElement = targetElement
+    // save the target reference
+    this.$targetElement = this.target
+      ? this.$vnode.context.$refs[this.target] || document.querySelector(this.target)
+      : this.$el.parentNode
 
     onMouseEnter = () => {
-      document.body.appendChild(tooltipElement)
+      document.body.appendChild(this.$el)
       this.active = true
       this.$emit('show')
-      new Popper(targetElement, tooltipElement, this.popperOptions)
+      new Popper(this.$targetElement, this.$el, this.popperOptions)
         .onCreate(data => { this.flipped = data.flipped })
         .onUpdate(data => { this.flipped = data.flipped })
     }
 
     onMouseLeave = () => {
       this.active = false
-      offAll(tooltipElement, this._uid)
-      if (tooltipElement.parentNode) {
-        document.body.removeChild(tooltipElement)
-      }
+      offAll(this.$el, this._uid)
+      this.remove()
       this.$emit('hide')
     }
 
-    on(targetElement, 'mouseenter', onMouseEnter, this._uid)
-    on(targetElement, 'focus', onMouseEnter, this._uid)
-    on(targetElement, 'mouseleave', onMouseLeave, this._uid)
-    on(targetElement, 'blur', onMouseLeave, this._uid)
+    on(this.$targetElement, 'mouseenter', onMouseEnter, this._uid)
+    on(this.$targetElement, 'focus', onMouseEnter, this._uid)
+    on(this.$targetElement, 'mouseleave', onMouseLeave, this._uid)
+    on(this.$targetElement, 'blur', onMouseLeave, this._uid)
 
     // remove tooltip from dom at start
-    targetElement.removeChild(tooltipElement)
+    this.remove()
   },
   beforeDestroy () {
-    this.active = false
-    if (this.$el.parentNode) {
-      document.body.removeChild(this.$el)
+    if (this.$targetElement) {
+      offAll(this.$targetElement, this._uid)
     }
-    if (this.targetElement) {
-      offAll(this.targetElement, this._uid)
+    this.active = false
+    this.remove()
+  },
+  methods: {
+    remove () {
+      if (this.$el.parentNode) {
+        this.$el.parentNode.removeChild(this.$el)
+      }
     }
   }
 }

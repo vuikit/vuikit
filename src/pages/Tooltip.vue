@@ -15,9 +15,10 @@
           Tooltip 1
         </vk-tooltip>
       </button>
-      <span>
+      <span ref="span">
         Hover me
         <vk-tooltip
+          target="span"
           :placement="props.placement.demo.value"
           :offset="props.offset.demo.value"
           :delay="props.delay.demo.value"
@@ -72,6 +73,11 @@ export default {
 }
 
 const props = {
+  target: {
+    description: `The Vue reference or dom query for the element to which the
+      tooltip should be attached to. If omited the <code>$parent.$el</code>
+      will be used.`
+  },
   placement: {
     description: 'Specifies the placement point of the tooltip.',
     demo: {
