@@ -62,4 +62,8 @@ export default [{
   name: 'Upload',
   path: '/upload',
   component: require('./pages/Upload')
+}, {
+  path: '*',
+  name: 'Not Found',
+  component: require('./pages/404')
 }]
