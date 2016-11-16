@@ -93,6 +93,7 @@
     "vue-router": "^2.0.0",
     "vue-style-loader": "^1.0.0",
     "vuikit-docs": "0.1.0",
+    "vuikit-theme": "git+https://github.com/vuikit/vuikit-theme.git",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",

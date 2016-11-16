@@ -5282,6 +5282,10 @@ vuikit-docs@0.1.0:
   dependencies:
     vue "^2.0.0"
 
+"vuikit-theme@git+https://github.com/vuikit/vuikit-theme.git":
+  version "0.0.2"
+  resolved "git+https://github.com/vuikit/vuikit-theme.git#5bceb44c4718752c810d9533915e48a4c1dbc4b8"
+
 watchpack@^0.2.1:
   version "0.2.9"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-0.2.9.tgz#62eaa4ab5e5ba35fdfc018275626e3c0f5e3fb0b"
