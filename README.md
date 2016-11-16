@@ -171,6 +171,10 @@ Similar as with Modal, transition styles must be reseted.
 
 The table component is not part of the UIkit library, as such relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
 
+## Semver
+
+Until Vuikit reaches a 1.0 release, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 have the same API, but 0.5.0 have breaking changes.
+
 ## License
 
 Vuikit is open source and released under the [MIT License](LICENSE.md).
