@@ -74,7 +74,7 @@ export default {
   },
   computed: {
     isAllSelected () {
-      return this.rows.every(row => this.isSelected(row))
+      return this.rows.length && this.rows.every(row => this.isSelected(row))
     },
     fieldsDef () {
       const fields = processFields(this.fields)
