@@ -15,10 +15,6 @@ export default {
       type: Array,
       required: true
     },
-    rowsClass: {
-      type: [String, Function],
-      default: ''
-    },
     trackBy: {
       type: String,
       default: 'id'

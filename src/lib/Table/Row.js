@@ -4,12 +4,9 @@ const Row = {
   functional: true,
   props: ['row'],
   render (h, { parent: vm, props }) {
-    const { fieldsDef, rowsClass } = vm
+    const { fieldsDef } = vm
     const { row } = props
     return h('tr', {
-      staticClass: isFunction(rowsClass)
-        ? rowsClass.call(vm, row)
-        : rowsClass,
       class: {
         'uk-active': vm.isSelected(row)
       },

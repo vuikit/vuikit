@@ -125,9 +125,6 @@ const props = {
   rows: {
     description: 'A collection of <code>Objects</code> representing the rows data.'
   },
-  rowsClass: {
-    description: 'Optional class definition rendered on each row.'
-  },
   trackBy: {
     description: `A unique key for the rows to be tracked by used among others
       to optimize the rendering.`

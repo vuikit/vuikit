@@ -4,7 +4,6 @@
 
  - Added Notify
  - Added Tooltip
- - Added Table rowsClass prop
  - Refactored Table fields definition and selectable feature
  - Refactored Dropdown with Popper.js
  - Removed PickerDrop and DatepickerDrop
