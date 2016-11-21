@@ -155,7 +155,7 @@ UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. Th
 
 ### Dropdown
 
-Similar as with Modal, transition styles must be reseted.
+Similar as with Modal, Dropdown transition styles must be reseted.
 
 ```css
 // reset hardcoded transitions
@@ -169,7 +169,7 @@ Similar as with Modal, transition styles must be reseted.
 
 ### Table
 
-The table component is not part of the UIkit library, as such relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
+The VkTable component is not part of the UIkit library, as such relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
 
 ## Semver
 
