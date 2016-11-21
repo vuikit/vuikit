@@ -43,13 +43,17 @@ const Menu = {
   functional: true,
   render (h, { props, parent }) {
     const items = []
-    each(parent.$root._router.options.routes, (route, path) => items.push(
-      h(MenuItem, merge({
-        props: {
-          route
-        }
-      }))
-    ))
+    each(parent.$root._router.options.routes, route => {
+      if (route.path !== '*') {
+        items.push(
+          h(MenuItem, merge({
+            props: {
+              route
+            }
+          }))
+        )
+      }
+    })
     return items
   }
 }
