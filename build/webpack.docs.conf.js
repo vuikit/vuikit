@@ -34,7 +34,8 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new LodashModuleReplacementPlugin({
-      'collections': true
+      'collections': true,
+      'paths': true
     }),
     // http://vuejs.github.io/vue-loader/workflow/production.html
     new webpack.DefinePlugin({

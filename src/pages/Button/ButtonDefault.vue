@@ -88,12 +88,14 @@ const props = {
   active: {
     description: 'The initial state of the <code>active</code> local state.',
     demo: {
+      type: 'Boolean',
       value: false
     }
   },
   disabled: {
     description: 'Whether to present the button as disabled.',
     demo: {
+      type: 'Boolean',
       value: false
     }
   },
