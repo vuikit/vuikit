@@ -99,7 +99,7 @@ const slots = {
 
 const events = {
   change: {
-    description: 'Emited when the selected item has changed.'
+    description: 'Emited when the selected item changes.'
   }
 }
 

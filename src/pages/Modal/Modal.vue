@@ -156,19 +156,19 @@ const slots = {
 
 const events = {
   clickIn: {
-    description: 'Emited when a click was performed inside the modal.',
+    description: 'Emited when a click is performed inside the modal.',
     emited: false
   },
   clickOut: {
-    description: 'Emited when a click was performed outside the modal while open.',
+    description: 'Emited when a click is performed outside the modal while open.',
     emited: false
   },
   keyEsc: {
-    description: 'Emited when the ESC key was pressed while the modal is opened.',
+    description: 'Emited when the ESC key is pressed while the modal is opened.',
     emited: false
   },
   inactive: {
-    description: 'Emited when a modal has beecome inactive due to another modal opening.',
+    description: 'Emited when a modal beecome inactive due to another modal opening.',
     emited: false
   }
 }

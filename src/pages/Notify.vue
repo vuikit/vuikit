@@ -173,11 +173,11 @@ const messageSlots = {
 
 const events = {
   click: {
-    description: 'Emited by <code>vk-notify</code> when the notification has been clicked.',
+    description: 'Emited by <code>vk-notify</code> when the notification is clicked.',
     emited: false
   },
   timeout: {
-    description: 'Emited by <code>vk-notify</code> when the notification visible time has run out.',
+    description: 'Emited by <code>vk-notify</code> when the notification visible time run out.',
     emited: false
   }
 }

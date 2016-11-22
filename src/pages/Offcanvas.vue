@@ -105,15 +105,15 @@ const slots = {
 
 const events = {
   clickIn: {
-    description: 'Emited when a click was performed inside the off-canvas bar.',
+    description: 'Emited when a click is performed inside the off-canvas bar.',
     emited: false
   },
   clickOut: {
-    description: 'Emited when a click was performed outside the off-canvas bar.',
+    description: 'Emited when a click is performed outside the off-canvas bar.',
     emited: false
   },
   keyEsc: {
-    description: 'Emited when the ESC key was pressed while the off-canvas is shown.',
+    description: 'Emited when the ESC key is pressed while the off-canvas is shown.',
     emited: false
   }
 }

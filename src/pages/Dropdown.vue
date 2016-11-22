@@ -164,11 +164,11 @@ const slots = {
 
 const events = {
   clickIn: {
-    description: 'Emited when a click was performed inside of the dropdown.',
+    description: 'Emited when a click is performed inside of the dropdown.',
     emited: false
   },
   clickOut: {
-    description: 'Emited when a click was performed outside of the dropdown while open.',
+    description: 'Emited when a click is performed outside of the dropdown while open.',
     emited: false
   },
   targetClick: {
