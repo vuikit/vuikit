@@ -105,9 +105,9 @@ yarn run dev
 yarn run build
 ```
 
-## Custom UIkit Themes
+## UIkit Themes
 
-You can use UIkit custom themes out of a box with few exceptions you should be aware of.
+You can use UIkit themes out of a box with few exceptions you should be aware of. For those a [custom theme](https://getuikit.com/docs/documentation_create-a-theme.html) is required adding the following workarounds.
 
 ### Modal
 
@@ -169,7 +169,7 @@ Similar as with Modal, Dropdown transition styles must be reseted.
 
 ### Table
 
-The VkTable component is not part of the UIkit library, as such relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
+The VkTable component relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
 
 ## Semver
 
