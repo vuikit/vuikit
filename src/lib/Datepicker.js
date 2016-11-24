@@ -1,9 +1,7 @@
 import Moment from 'moment'
-import render from './render'
 
 export default {
   name: 'VkDatepicker',
-  render,
   props: {
     year: {},
     month: {},
@@ -25,6 +23,16 @@ export default {
       type: [String, Number],
       default: '2050-12-31'
     }
+  },
+  render (h) {
+    return (
+      <vk-calendar
+        year={ this.year }
+        month={ this.month }
+        date-render={ DateRender }
+        on-change={date => this.$emit('change', date)}>
+      </vk-calendar>
+    )
   },
   computed: {
     datesMoments () {
@@ -60,4 +68,23 @@ export default {
         : this.$emit('pick', date)
     }
   }
+}
+
+const DateRender = function (h, { props, parent }) {
+  const $calendar = parent
+  const $datepicker = parent.$parent
+  return (
+    <a class={{
+      'uk-active': $datepicker.isPicked(props.date),
+      'uk-datepicker-table-disabled': $datepicker.isDisabled(props.date),
+      'uk-datepicker-table-muted': props.date.month() !== $calendar.month ||
+        $datepicker.isDisabled(props.date)
+    }} on-click={() => {
+      if (!$datepicker.isDisabled(props.date)) {
+        $datepicker.toggle(props.date)
+      }
+    }}>
+      { props.date.format('D') }
+    </a>
+  )
 }
