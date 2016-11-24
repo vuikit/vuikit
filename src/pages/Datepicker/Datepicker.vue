@@ -27,8 +27,8 @@
     </vk-datepicker>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-datepicker</code> component wraps a <code>vk-calendar</code>
-      adding to it custom rendering template for the purpose of picking a date.
+      The <code>vk-datepicker</code> component wraps <code>vk-calendar</code>
+      and renders a UIkit inspired Datepicker.
     </div>
     <!-- TABS -->
     <vk-tabs

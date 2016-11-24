@@ -24,7 +24,7 @@
       </vk-pagination>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-pagination</code> component renders a pagination navigation.
+        The <code>vk-pagination</code> component renders a UIkit Pagination navigation.
       </div>
       <vk-tabs
         :index="tabsIndex"

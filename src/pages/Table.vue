@@ -39,8 +39,8 @@
       </vk-table>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-table</code> component renders a table based on the provided fields
-        definition and data.
+        The <code>vk-table</code> component renders a UIkit table providing
+        additional features for displaying dynamic data.
       </div>
       <!-- TABS -->
       <vk-tabs

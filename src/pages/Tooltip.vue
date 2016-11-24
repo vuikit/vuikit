@@ -31,7 +31,8 @@
       </span>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-tooltip</code> component creates a nicely looking tooltip.
+        The <code>vk-tooltip</code> component renders UIkit Tooltip style tooltips
+        using Popper.js for the positioning.
       </div>
       <!-- TABS -->
       <vk-tabs

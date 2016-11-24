@@ -17,7 +17,7 @@
     </vk-button>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-button</code> component renders a standard button.
+      The <code>vk-button</code> component renders a UIkit Button.
     </div>
     <!-- TABS -->
     <vk-tabs

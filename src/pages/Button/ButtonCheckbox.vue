@@ -16,7 +16,8 @@
     </vk-button-checkbox>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-button-checkbox</code> component, acting like a checkbox form field, allows toggling a group of <code>vk-button</code> buttons.
+      The <code>vk-button-checkbox</code> component, acting like a checkbox form
+      field, allows toggling a group of <code>vk-button</code> buttons.
     </div>
     <!-- TABS -->
     <vk-tabs

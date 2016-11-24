@@ -20,8 +20,8 @@
     </vk-tabs>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-tabs</code> component together with a <code>vk-tabs-item</code> renders a
-      tabbed navigation which would switch it content using <code>vk-switcher</code>.
+      The <code>vk-tabs</code> component renders a UIkit Tabs navigation switching
+      it content using <code>vk-switcher</code>.
     </div>
     <!-- TABS -->
     <vk-tabs

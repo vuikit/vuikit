@@ -31,7 +31,8 @@
       </vk-offcanvas>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-offcanvas</code> component creates a smooth off-canvas sidebar that slides in and out of the page.
+        The <code>vk-offcanvas</code> component, based on UIkit Offcanvas, creates
+        a smooth off-canvas sidebar that slides in and out of the page.
       </div>
       <!-- TABS -->
       <vk-tabs

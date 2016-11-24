@@ -14,7 +14,8 @@
       </vk-switcher>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-switcher</code> component together with <code>vk-switch</code> allows transitioning through different content panes.
+        The <code>vk-switcher</code> component allows transitioning through different
+        content panes.
       </div>
       <!-- TABS -->
       <vk-tabs

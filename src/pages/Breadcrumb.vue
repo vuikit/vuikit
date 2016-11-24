@@ -17,7 +17,7 @@
       </vk-breadcrumb>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-breadcrumb</code> component renders a breadcrumb from an <code>Object</code> paths definition.
+        The <code>vk-breadcrumb</code> component renders a UIkit breadcrumb.
       </div>
       <!-- TABS -->
       <vk-tabs

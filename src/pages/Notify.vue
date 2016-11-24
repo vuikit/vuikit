@@ -35,8 +35,7 @@
       </vk-notify>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-notify</code> component creates toggleable notifications
-        that fade out automatically.
+        The <code>vk-notify</code> component renders UIkit Notify based notifications.
       </div>
       <!-- TABS -->
       <vk-tabs

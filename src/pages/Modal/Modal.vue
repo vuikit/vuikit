@@ -70,7 +70,10 @@
     </vk-modal>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-modal</code> component renders a modal.
+      The <code>vk-modal</code> component renders a UIkit Modal with slight
+      differences on how the transitions are applied. Reason why the default UIkit
+      themes will not work out of a box. Check the repo readme for more information
+      about it.
     </div>
     <!-- TABS -->
     <vk-tabs

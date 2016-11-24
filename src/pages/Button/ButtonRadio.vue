@@ -16,7 +16,8 @@
     </vk-button-radio>
     <!-- DESC -->
     <div class="uk-margin-large">
-      The <code>vk-button-radio</code> component, acting like a radio form field, allows toggling between a group of <code>vk-button</code> buttons.
+      The <code>vk-button-radio</code> component, acting like a radio form field,
+      allows toggling between a group of <code>vk-button</code> buttons.
     </div>
     <!-- TABS -->
     <vk-tabs

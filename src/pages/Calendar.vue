@@ -18,6 +18,8 @@
       <!-- DESC -->
       <div class="uk-margin-large">
         The <code>vk-calendar</code> component renders a table based calendar.
+        Could be used to display data for each date or as a
+        <router-link to="datepicker">datepicker</router-link>, among others.
       </div>
       <!-- TABS -->
       <vk-tabs

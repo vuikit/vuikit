@@ -19,7 +19,7 @@
       </vk-subnav>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-subnav</code> component together with a <code>vk-subnav-item</code> renders a simple navigation.
+        The <code>vk-subnav</code> component renders a UIkit Subnav navigation.
       </div>
       <!-- TABS -->
       <vk-tabs

@@ -35,7 +35,8 @@
       </vk-button>
       <!-- DESC -->
       <div class="uk-margin-large">
-        The <code>vk-dropdown</code> component renders a toggleable dropdown.
+        The <code>vk-dropdown</code> component renders a UIkit dropdown using Popper.js
+        for the positioning.
       </div>
       <!-- TABS -->
       <vk-tabs
