@@ -1,6 +1,8 @@
+require('./check-versions')()
 var path = require('path')
 var express = require('express')
 var webpack = require('webpack')
+var opn = require('opn')
 var config = require('../config')
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -49,5 +51,11 @@ module.exports = app.listen(port, function (err) {
     console.log(err)
     return
   }
-  console.log('Listening at http://localhost:' + port + '\n')
+  var uri = 'http://localhost:' + port
+  console.log('Listening at ' + uri + '\n')
+
+  // when env is testing, don't need open it
+  if (process.env.NODE_ENV !== 'testing') {
+    opn(uri)
+  }
 })
