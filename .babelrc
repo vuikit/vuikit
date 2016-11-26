@@ -5,5 +5,9 @@
     "transform-runtime",
     "transform-vue-jsx"
   ],
-  "comments": false
+  "comments": false,
+  "ignore": [
+    "dist/*.js",
+    "docs/**/*.js"
+  ]
 }

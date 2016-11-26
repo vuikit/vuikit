@@ -31,7 +31,9 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "deploy": "cd build && ./deploy.sh",
-    "test": "karma start build/karma.conf.js"
+    "unit": "karma start test/unit/karma.conf.js --single-run",
+    "test": "npm run unit",
+    "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
     "moment": "^2.17.0",

@@ -24,6 +24,28 @@ export function inArray (array, value) {
   return (array || []).indexOf(value) !== -1
 }
 
+/**
+* Convert an Array-like object or value to Array
+*/
+export function toArray (value) {
+  if (isArray(value)) {
+    return value
+  }
+  return isObject(value)
+    ? _toArray(value)
+    : [value]
+}
+
+function _toArray (list, start) {
+  start = start || 0
+  let i = list.length - start
+  const ret = new Array(i)
+  while (i--) {
+    ret[i] = list[i + start]
+  }
+  return ret
+}
+
 export function each (obj, iterator) {
   var i, key
   if (typeof obj.length === 'number') {
