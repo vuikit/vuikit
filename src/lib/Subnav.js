@@ -3,7 +3,7 @@ export default {
   props: {
     index: {
       type: Number,
-      default: ''
+      default: 0
     },
     line: {
       type: Boolean,
