@@ -65,7 +65,6 @@ export default {
         name={ this.transition }
         onBeforeEnter={ this.onBeforeEnter }
         onAfterEnter={ this.onAfterEnter }
-        onBeforeLeave={ this.onBeforeLeave }
         onAfterLeave={ this.onAfterLeave }>
         <div staticClass="uk-modal" {...{ directives }}
         style="display: block;"
@@ -126,8 +125,6 @@ export default {
       // change current active modal
       active = this
       activeCount++
-    },
-    onBeforeLeave () {
     },
     onAfterLeave () {
       activeCount--
