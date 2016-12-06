@@ -6,7 +6,7 @@
 
 > UIkit with all the power of Vue
 
-While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by providing native, un-opinionated components, outputting UIkit layout.
+While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by providing native, unopinionated, components outputting UIkit layout.
 
 ## Documentation and examples
 
