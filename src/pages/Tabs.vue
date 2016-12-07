@@ -1,57 +1,59 @@
 <template>
-  <div class="uk-block">
-    <h2>Tabs</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-tabs
-      :index="props.index.demo.value"
-      :flip="props.flip.demo.value"
-      :bottom="props.bottom.demo.value"
-      :center="props.center.demo.value"
-      :width="props.width.demo.value"
-      @change="
-        events.change.emited = true,
-        props.index.demo.value = arguments[0]
-      ">
-      <vk-tabs-item name="Tab 1">Content Tab 1</vk-tabs-item>
-      <vk-tabs-item name="Tab 2">Content Tab 2</vk-tabs-item>
-      <vk-tabs-item name="Tab 3">Content Tab 3</vk-tabs-item>
-      <vk-tabs-item disabled name="Tab 4">Content Tab 4</vk-tabs-item>
-    </vk-tabs>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-tabs</code> component renders a UIkit Tabs navigation switching
-      it content using <code>vk-switcher</code>.
+  <layouts-default>
+    <div class="uk-block">
+      <h2>Tabs</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-tabs
+        :index="props.index.demo.value"
+        :flip="props.flip.demo.value"
+        :bottom="props.bottom.demo.value"
+        :center="props.center.demo.value"
+        :width="props.width.demo.value"
+        @change="
+          events.change.emited = true,
+          props.index.demo.value = arguments[0]
+        ">
+        <vk-tabs-item name="Tab 1">Content Tab 1</vk-tabs-item>
+        <vk-tabs-item name="Tab 2">Content Tab 2</vk-tabs-item>
+        <vk-tabs-item name="Tab 3">Content Tab 3</vk-tabs-item>
+        <vk-tabs-item disabled name="Tab 4">Content Tab 4</vk-tabs-item>
+      </vk-tabs>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-tabs</code> component renders a UIkit Tabs navigation switching
+        it content using <code>vk-switcher</code>.
+      </div>
+      <!-- TABS -->
+      <vk-tabs
+        :index="tabsIndex"
+        @change="tabsIndex = arguments[0]">
+        <vk-tabs-item name="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tabs-item>
+        <vk-tabs-item name="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tabs-item>
+        <vk-tabs-item name="Events">
+          <vk-docs-events
+            :events="events">
+          </vk-docs-events>
+        </vk-tabs-item>
+        <vk-tabs-item name="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tabs-item>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs
-      :index="tabsIndex"
-      @change="tabsIndex = arguments[0]">
-      <vk-tabs-item name="Props">
-        <vk-docs-props
-          :props="props"
-          @change="props[arguments[0]].demo.value = arguments[1]">
-        </vk-docs-props>
-      </vk-tabs-item>
-      <vk-tabs-item name="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tabs-item>
-      <vk-tabs-item name="Events">
-        <vk-docs-events
-          :events="events">
-        </vk-docs-events>
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
-    </vk-tabs>
-  </div>
+  </layouts-default>
 </template>
 
 <script>
-import Component from '../../lib/Tabs'
-import mixin from '../_mixin'
-import { mergeProps } from '../../helpers/pages'
+import Component from '../lib/Tabs'
+import mixin from './_mixin'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   mixins: [mixin],

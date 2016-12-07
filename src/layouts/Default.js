@@ -1,4 +1,5 @@
 import { each, merge } from '../helpers/util'
+import { filter } from 'lodash'
 
 export default {
   name: 'VkDocsLayoutPage',
@@ -15,7 +16,54 @@ export default {
           show={ parent.$root.showOffcanvas }
           on-clickOut={e => { parent.$root.showOffcanvas = false }}>
           <ul class="uk-nav tm-nav uk-nav-offcanvas">
-            { h(Menu) }
+            <li class="uk-nav-header">Common</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Common'
+                }
+              })
+            }
+            <li class="uk-nav-header">Navigation</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Navigation'
+                }
+              })
+            }
+            <li class="uk-nav-header">Data</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Data'
+                }
+              })
+            }
+            <li class="uk-nav-header">Display</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Display'
+                }
+              })
+            }
+            <li class="uk-nav-header">Others</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Others'
+                }
+              })
+            }
+            <li class="uk-nav-header">Examples</li>
+            {
+              h(Menu, {
+                props: {
+                  section: 'Examples'
+                }
+              })
+            }
           </ul>
         </vk-offcanvas>
         <div class="uk-block">
@@ -23,7 +71,54 @@ export default {
             <div class="uk-grid" data-uk-grid-margin>
               <div class="tm-sidebar uk-width-medium-1-4 uk-hidden-small">
                 <ul class="uk-nav tm-nav">
-                  { h(Menu) }
+                  <li class="uk-nav-header">Common</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Common'
+                      }
+                    })
+                  }
+                  <li class="uk-nav-header">Navigation</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Navigation'
+                      }
+                    })
+                  }
+                  <li class="uk-nav-header">Data</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Data'
+                      }
+                    })
+                  }
+                  <li class="uk-nav-header">Display</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Display'
+                      }
+                    })
+                  }
+                  <li class="uk-nav-header">Others</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Others'
+                      }
+                    })
+                  }
+                  <li class="uk-nav-header">Examples</li>
+                  {
+                    h(Menu, {
+                      props: {
+                        section: 'Examples'
+                      }
+                    })
+                  }
                 </ul>
               </div>
               <div class="uk-width-medium-3-4">
@@ -41,9 +136,14 @@ export default {
 
 const Menu = {
   functional: true,
+  props: ['section'],
   render (h, { props, parent }) {
+    const { section } = props
     const items = []
-    each(parent.$root._router.options.routes, route => {
+    const routes = filter(parent.$root._router.options.routes, route =>
+      route.meta && route.meta.section === section
+    )
+    each(routes, route => {
       if (route.path !== '*') {
         items.push(
           h(MenuItem, merge({

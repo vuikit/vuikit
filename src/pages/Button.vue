@@ -1,47 +1,49 @@
 <template>
-  <div class="uk-block">
-    <h2>Button</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-button
-      :type="props.type.demo.value"
-      :value="props.value.demo.value"
-      :disabled="props.disabled.demo.value"
-      :active="props.active.demo.value"
-      :color="props.color.demo.value"
-      :size="props.size.demo.value"
-      :width="props.width.demo.value"
-      @click.native="props.active.demo.value = !props.active.demo.value">
-      Button
-    </vk-button>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-button</code> component renders a UIkit Button.
+  <layouts-default>
+    <div class="uk-block">
+      <h2>Button</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-button
+        :type="props.type.demo.value"
+        :value="props.value.demo.value"
+        :disabled="props.disabled.demo.value"
+        :active="props.active.demo.value"
+        :color="props.color.demo.value"
+        :size="props.size.demo.value"
+        :width="props.width.demo.value"
+        @click.native="props.active.demo.value = !props.active.demo.value">
+        Button
+      </vk-button>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-button</code> component renders a UIkit Button.
+      </div>
+      <!-- TABS -->
+      <vk-tabs
+        :index="tabsIndex"
+        @change="tabsIndex = arguments[0]">
+        <vk-tabs-item name="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tabs-item>
+        <vk-tabs-item name="Slots">
+          <vk-docs-slots :slots="slots"></vk-docs-slots>
+        </vk-tabs-item>
+        <vk-tabs-item name="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tabs-item>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs
-      :index="tabsIndex"
-      @change="tabsIndex = arguments[0]">
-      <vk-tabs-item name="Props">
-        <vk-docs-props
-          :props="props"
-          @change="props[arguments[0]].demo.value = arguments[1]">
-        </vk-docs-props>
-      </vk-tabs-item>
-      <vk-tabs-item name="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
-    </vk-tabs>
-  </div>
+  </layouts-default>
 </template>
 
 <script>
-import Component from '../../lib/Button'
-import mixin from '../_mixin'
-import { mergeProps } from '../../helpers/pages'
+import Component from '../lib/Button'
+import mixin from './_mixin'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'PageButtonDefault',

@@ -1,60 +1,62 @@
 <template>
-  <div class="uk-block">
-    <h2>Datepicker</h2>
-    <hr class="uk-article-divider">
-    <!-- DEMO -->
-    <vk-datepicker
-      :year="calendar.year"
-      :month="calendar.month"
-      :dates="props.dates.demo.value"
-      :disabled-dates="props.disabledDates.demo.value"
-      :min="props.min.demo.value"
-      :max="props.max.demo.value"
-      @pick="
-        events.pick.emited = true,
-        props.dates.demo.value.push(arguments[0].format('YYYY-MM-DD'))
-      "
-      @unpick="
-        events.unpick.emited = true,
-        props.dates.demo.value.splice(
-          props.dates.demo.value.indexOf(arguments[0].format('YYYY-MM-DD')), 1
-        )
-      "
-      @change="
-        calendar.year = arguments[0].year(),
-        calendar.month = arguments[0].month()
-      ">
-    </vk-datepicker>
-    <!-- DESC -->
-    <div class="uk-margin-large">
-      The <code>vk-datepicker</code> component wraps <code>vk-calendar</code>
-      and renders a UIkit inspired Datepicker.
+  <layouts-default>
+    <div class="uk-block">
+      <h2>Datepicker</h2>
+      <hr class="uk-article-divider">
+      <!-- DEMO -->
+      <vk-datepicker
+        :year="calendar.year"
+        :month="calendar.month"
+        :dates="props.dates.demo.value"
+        :disabled-dates="props.disabledDates.demo.value"
+        :min="props.min.demo.value"
+        :max="props.max.demo.value"
+        @pick="
+          events.pick.emited = true,
+          props.dates.demo.value.push(arguments[0].format('YYYY-MM-DD'))
+        "
+        @unpick="
+          events.unpick.emited = true,
+          props.dates.demo.value.splice(
+            props.dates.demo.value.indexOf(arguments[0].format('YYYY-MM-DD')), 1
+          )
+        "
+        @change="
+          calendar.year = arguments[0].year(),
+          calendar.month = arguments[0].month()
+        ">
+      </vk-datepicker>
+      <!-- DESC -->
+      <div class="uk-margin-large">
+        The <code>vk-datepicker</code> component wraps <code>vk-calendar</code>
+        and renders a UIkit inspired Datepicker.
+      </div>
+      <!-- TABS -->
+      <vk-tabs
+        :index="tabsIndex"
+        @change="tabsIndex = arguments[0]">
+        <vk-tabs-item name="Props">
+          <vk-docs-props
+            :props="props"
+            @change="props[arguments[0]].demo.value = arguments[1]">
+          </vk-docs-props>
+        </vk-tabs-item>
+        <vk-tabs-item name="Events">
+          <vk-docs-events :events="events"></vk-docs-events>
+        </vk-tabs-item>
+        <vk-tabs-item name="Example">
+          <vk-docs-code>{{ code }}</vk-docs-code>
+        </vk-tabs-item>
+      </vk-tabs>
     </div>
-    <!-- TABS -->
-    <vk-tabs
-      :index="tabsIndex"
-      @change="tabsIndex = arguments[0]">
-      <vk-tabs-item name="Props">
-        <vk-docs-props
-          :props="props"
-          @change="props[arguments[0]].demo.value = arguments[1]">
-        </vk-docs-props>
-      </vk-tabs-item>
-      <vk-tabs-item name="Events">
-        <vk-docs-events :events="events"></vk-docs-events>
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
-    </vk-tabs>
-  </div>
+  </layouts-default>
 </template>
 
 <script>
 import Moment from 'moment'
-import Component from '../../lib/Datepicker'
-import mixin from '../_mixin'
-import { mergeProps } from '../../helpers/pages'
+import Component from '../lib/Datepicker'
+import mixin from './_mixin'
+import { mergeProps } from '../helpers/pages'
 
 export default {
   name: 'Block',
