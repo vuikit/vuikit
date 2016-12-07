@@ -7,6 +7,7 @@
  - Refactored Table fields definition and selectable feature
  - Refactored Dropdown with Popper.js
  - Removed PickerDrop and DatepickerDrop
+ - Removed support for inbuilt HTML ARIA declarations
 
 ### 0.6.0
 

@@ -5,7 +5,6 @@
     <!-- DEMO -->
     <vk-button
       :type="props.type.demo.value"
-      :aria-type="props.ariaType.demo.value"
       :value="props.value.demo.value"
       :disabled="props.disabled.demo.value"
       :active="props.active.demo.value"
@@ -72,17 +71,6 @@ const props = {
         { text: 'reset', value: 'reset' }
       ],
       value: 'button'
-    }
-  },
-  ariaType: {
-    description: 'The HTML ARIA type.',
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'pressed', value: 'pressed' },
-        { text: 'checked', value: 'checked' }
-      ],
-      value: 'pressed'
     }
   },
   active: {

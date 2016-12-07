@@ -6,11 +6,7 @@
     @afterLeave="afterLeave">
     <div class="uk-modal"
       v-show="show"
-      style="display: block;"
-      :aria-hidden="show
-        ? 'false'
-        : 'true'
-      ">
+      style="display: block;">
       <div ref="dialog" class="uk-modal-dialog" :class="{
         'uk-modal-dialog-large': large,
         'uk-modal-dialog-lightbox': lightbox,

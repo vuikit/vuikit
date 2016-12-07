@@ -15,7 +15,6 @@ export default {
     each(this.$slots.default, node => {
       if (node.componentOptions) {
         const button = node.componentOptions.propsData
-        button.ariaType = 'checked'
         button.active = button.value === this.value
       }
     })

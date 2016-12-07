@@ -5,11 +5,7 @@
       'uk-dropdown-blank': blank,
       'uk-dropdown-small': !fixWidth,
       'uk-dropdown-scrollable': scrollable
-    }"
-    :aria-hidden="show
-      ? 'false'
-      : 'true'
-    ">
+    }">
       <slot></slot>
     </div>
   </transition>

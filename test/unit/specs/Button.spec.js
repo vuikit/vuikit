@@ -20,14 +20,6 @@ describe('Button', () => {
     let buttonElm = vm.$el
     expect(buttonElm.getAttribute('type')).to.be.equal('submit')
   })
-  it('ariaType', () => {
-    vm = createTest(Button, {
-      ariaType: 'checked',
-      active: true
-    }, true)
-    let buttonElm = vm.$el
-    expect(buttonElm.hasAttribute('aria-checked')).to.be.true
-  })
   it('disabled', () => {
     vm = createTest(Button, {
       disabled: true
@@ -40,7 +32,6 @@ describe('Button', () => {
       active: true
     }, true)
     let buttonElm = vm.$el
-    expect(buttonElm.getAttribute('aria-pressed')).to.be.ok
     expect(buttonElm.classList.contains('uk-active')).to.be.true
   })
   it('size', () => {

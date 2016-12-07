@@ -4,10 +4,6 @@
     @beforeEnter="beforeEnter"
     @beforeLeave="beforeLeave">
     <div v-show="show" class="uk-offcanvas"
-      :aria-hidden="show
-        ? 'false'
-        : 'true'
-      "
       @click="e => {
         if (e.target !== this.$el && this.$el.contains(e.target)) {
           this.$emit('clickIn', e)

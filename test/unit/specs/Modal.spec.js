@@ -53,24 +53,6 @@ describe('Modal', () => {
       }, 150)
     }, 150)
   })
-  it('ariaHidden', done => {
-    vm = createVue({
-      template: `
-        <div>
-          <vk-modal :show="show"></vk-modal>
-        </div>
-      `,
-      data: () => ({
-        show: false
-      })
-    }, true)
-    vm.show = true
-    const modal = vm.$children[0]
-    setTimeout(() => {
-      expect(modal.$el.getAttribute('aria-hidden')).to.equal('false')
-      done()
-    }, 10)
-  })
   it('lightbox', () => {
     vm = createTest(Modal, {
       lightbox: true
