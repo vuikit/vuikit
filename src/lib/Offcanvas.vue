@@ -1,3 +1,30 @@
+<template>
+  <transition
+    :name="transition"
+    @beforeEnter="beforeEnter"
+    @beforeLeave="beforeLeave">
+    <div v-show="show" class="uk-offcanvas"
+      :aria-hidden="show
+        ? 'false'
+        : 'true'
+      "
+      @click="e => {
+        if (e.target !== this.$el && this.$el.contains(e.target)) {
+          this.$emit('clickIn', e)
+        } else {
+          this.$emit('clickOut', e)
+        }
+      }">
+      <div ref="bar" class="uk-offcanvas-bar" :class="{
+        'uk-offcanvas-bar-flip': flip
+      }">
+        <slot></slot>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script>
 import { on, offAll, addClass, removeClass } from '../helpers/dom'
 
 const html = document.documentElement
@@ -20,39 +47,8 @@ export default {
       default: 'vk-offcanvas-transition'
     }
   },
-  render (h) {
-    const directives = [{
-      name: 'show', value: this.show
-    }]
-    return (
-      <transition
-        name={ this.transition }
-        onBeforeEnter={ this.onBeforeEnter }
-        onBeforeLeave={ this.onBeforeLeave }
-        afterLeave={ this.onAfterLeave }>
-        <div {...{ directives }} staticClass="uk-offcanvas"
-          aria-hidden={ this.show
-            ? 'false'
-            : 'true'
-          }
-          on-click={e => {
-            if (e.target !== this.$el && this.$el.contains(e.target)) {
-              this.$emit('clickIn', e)
-            } else {
-              this.$emit('clickOut', e)
-            }
-          }}>
-          <div ref="bar" staticClass="uk-offcanvas-bar" class={{
-            'uk-offcanvas-bar-flip': this.flip
-          }}>
-            { this.$slots.default }
-          </div>
-        </div>
-      </transition>
-    )
-  },
   methods: {
-    onBeforeEnter () {
+    beforeEnter () {
       // save scroll position before applying any transition
       scrollPos = { x: window.pageXOffset, y: window.pageYOffset }
       // apply transitions on nextTick as the bar offsetWidth
@@ -70,13 +66,13 @@ export default {
         html.style['margin-top'] = scrollPos.y * -1 + 'px'
       })
     },
-    onBeforeLeave () {
+    beforeLeave () {
       // trigger transitons
       removeClass(body, 'uk-offcanvas-page-open')
       body.style['margin-left'] = ''
       body.style['margin-right'] = ''
     },
-    onAfterLeave () {
+    afterLeave () {
       // reset all to previous state
       removeClass(body, 'uk-offcanvas-page')
       body.style.width = ''
@@ -108,3 +104,4 @@ function setBodyMargin (flip, barWidth) {
   const margin = (rtl ? -1 : 1) * (barWidth * dir)
   body.style[rtl ? 'margin-right' : 'margin-left'] = margin + 'px'
 }
+</script>

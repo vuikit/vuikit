@@ -1,3 +1,21 @@
+<template>
+  <transition name="transition">
+    <div v-show="show" :class="{
+      'uk-dropdown': !blank,
+      'uk-dropdown-blank': blank,
+      'uk-dropdown-small': !fixWidth,
+      'uk-dropdown-scrollable': scrollable
+    }"
+    :aria-hidden="show
+      ? 'false'
+      : 'true'
+    ">
+      <slot></slot>
+    </div>
+  </transition>
+</template>
+
+<script>
 import Popper from 'popper.js'
 import { on, offAll } from '../helpers/dom'
 
@@ -56,27 +74,6 @@ export default {
         }
       }
     }
-  },
-  render (h) {
-    const directives = [{
-      name: 'show', value: this.show
-    }]
-    return (
-      <transition name={ this.transition }>
-        <div {...{ directives }} class={{
-          'uk-dropdown': !this.blank,
-          'uk-dropdown-blank': this.blank,
-          'uk-dropdown-small': !this.fixWidth,
-          'uk-dropdown-scrollable': this.scrollable
-        }}
-        aria-hidden={ this.show
-          ? 'false'
-          : 'true'
-        }>
-          { this.$slots.default }
-        </div>
-      </transition>
-    )
   },
   watch: {
     show () {
@@ -148,3 +145,4 @@ export default {
     this.remove()
   }
 }
+</script>

@@ -1,3 +1,14 @@
+<template>
+  <transition :name="transition">
+    <div v-show="active" class="uk-tooltip" :class="classes">
+      <div class="uk-tooltip-inner">
+        <slot></slot>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script>
 import Popper from 'popper.js'
 import { on, offAll } from '../helpers/dom'
 
@@ -63,20 +74,6 @@ export default {
       }
     }
   },
-  render (h) {
-    const directives = [{
-      name: 'show', value: this.active
-    }]
-    return (
-      <transition name={ this.transition }>
-        <div {...{ directives }} staticClass="uk-tooltip" class={ this.classes }>
-          <div class="uk-tooltip-inner">
-            { this.$slots.default }
-          </div>
-        </div>
-      </transition>
-    )
-  },
   mounted () {
     // save the target reference
     this.$targetElement = this.target
@@ -122,3 +119,4 @@ export default {
     }
   }
 }
+</script>

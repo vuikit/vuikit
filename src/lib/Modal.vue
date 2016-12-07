@@ -1,3 +1,28 @@
+<template>
+  <transition
+    :name="transition"
+    @beforeEnter="beforeEnter"
+    @afterEnter="afterEnter"
+    @afterLeave="afterLeave">
+    <div class="uk-modal"
+      v-show="show"
+      style="display: block;"
+      :aria-hidden="show
+        ? 'false'
+        : 'true'
+      ">
+      <div ref="dialog" class="uk-modal-dialog" :class="{
+        'uk-modal-dialog-large': large,
+        'uk-modal-dialog-lightbox': lightbox,
+        'uk-modal-dialog-blank': blank
+      }">
+        <slot></slot>
+      </div>
+    </div>
+  </transition>
+</template>
+
+<script>
 import { on, offAll, addClass, removeClass, css } from '../helpers/dom'
 import { debounce } from 'lodash'
 
@@ -56,33 +81,6 @@ export default {
       default: 'vk-modal-transition'
     }
   },
-  render (h) {
-    const directives = [{
-      name: 'show', value: this.show
-    }]
-    return (
-      <transition
-        name={ this.transition }
-        onBeforeEnter={ this.onBeforeEnter }
-        onAfterEnter={ this.onAfterEnter }
-        onAfterLeave={ this.onAfterLeave }>
-        <div staticClass="uk-modal" {...{ directives }}
-        style="display: block;"
-        aria-hidden={ this.show
-          ? 'false'
-          : 'true'
-        }>
-          <div ref="dialog" staticClass="uk-modal-dialog" class={{
-            'uk-modal-dialog-large': this.large,
-            'uk-modal-dialog-lightbox': this.lightbox,
-            'uk-modal-dialog-blank': this.blank
-          }}>
-            { this.$slots.default }
-          </div>
-        </div>
-      </transition>
-    )
-  },
   mounted () {
     // init events
     const clickHandler = event => {
@@ -110,13 +108,13 @@ export default {
     }
   },
   methods: {
-    onBeforeEnter () {
+    beforeEnter () {
       this.$nextTick(() => {
         addClass(html, 'uk-modal-page')
         this.resize()
       })
     },
-    onAfterEnter () {
+    afterEnter () {
       // if any previous modal active
       // emit event for further actions
       if (active) {
@@ -126,7 +124,7 @@ export default {
       active = this
       activeCount++
     },
-    onAfterLeave () {
+    afterLeave () {
       activeCount--
       // if no active modals left
       if (!activeCount) {
@@ -162,3 +160,4 @@ export default {
     }
   }
 }
+</script>

@@ -19,7 +19,7 @@ describe('ButtonCheckbox', () => {
   })
   it('buttons', () => {
     vm = createVue(`
-      <vk-button-checkbox>
+      <vk-button-checkbox :value="[10, 20, 30]">
         <vk-button :value="10">Button 1</vk-button>
         <vk-button :value="20">Button 2</vk-button>
         <vk-button :value="30">Button 3</vk-button>

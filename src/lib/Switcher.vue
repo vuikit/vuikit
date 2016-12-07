@@ -1,3 +1,4 @@
+<script>
 export default {
   name: 'VkSwitcher',
   props: {
@@ -32,3 +33,4 @@ export default {
     )
   }
 }
+</script>

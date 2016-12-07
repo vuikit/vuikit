@@ -1,3 +1,17 @@
+<template>
+  <transition :name="transition">
+    <div class="uk-notify-message"
+      :class="{
+        [statusClass]: status,
+        'vk-notify-message-sticky': timeout === 0
+      }"
+      @click="$parent.$emit('click', id)">
+      <slot></slot>
+    </div>
+  </transition>
+</template>
+
+<script>
 export default {
   name: 'VkNotifyMessage',
   props: {
@@ -23,18 +37,6 @@ export default {
       return 'uk-notify-message-' + this.status.replace('info', 'primary')
     }
   },
-  render (h) {
-    return (
-      <transition name={ this.transition }>
-        <div staticClass="uk-notify-message" class={{
-          [this.statusClass]: this.status,
-          'vk-notify-message-sticky': this.timeout === 0
-        }} on-click={() => this.$parent.$emit('click', this.id)}>
-          { this.$slots.default }
-        </div>
-      </transition>
-    )
-  },
   mounted () {
     if (this.timeout > 0) {
       setTimeout(() => {
@@ -43,3 +45,4 @@ export default {
     }
   }
 }
+</script>

@@ -15,7 +15,7 @@ describe('Breadcrumb', () => {
         <vk-breadcrumb-item path="/blog/category/post" disabled>Post</vk-breadcrumb-item>
       </vk-breadcrumb>
     `)
-    expect(vm.$el.querySelector('.uk-active').innerText).to.equal('Blog')
+    expect(vm.$el.querySelector('.uk-active').innerText.trim()).to.equal('Blog')
   })
   it('click', () => {
     vm = createVue(`

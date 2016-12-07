@@ -1,3 +1,4 @@
+<script>
 export default {
   name: 'VkTabsVertical',
   props: {
@@ -52,3 +53,4 @@ export default {
     )
   }
 }
+</script>

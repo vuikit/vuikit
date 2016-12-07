@@ -1,3 +1,10 @@
+<template>
+  <div class="uk-notify" :class="[`uk-notify-${placement}`]">
+    <slot></slot>
+  </div>
+</template>
+
+<script>
 export default {
   name: 'VkNotify',
   props: {
@@ -5,13 +12,6 @@ export default {
       type: String,
       default: 'top-center' // (top|bottom)-(left|center|right)
     }
-  },
-  render (h) {
-    return (
-      <div class={ `uk-notify uk-notify-${this.placement}` }>
-        { this.$slots.default }
-      </div>
-    )
   },
   mounted () {
     document.body.appendChild(this.$el)
@@ -22,3 +22,4 @@ export default {
     }
   }
 }
+</script>

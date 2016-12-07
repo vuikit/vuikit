@@ -22,7 +22,8 @@ describe('Button', () => {
   })
   it('ariaType', () => {
     vm = createTest(Button, {
-      ariaType: 'checked'
+      ariaType: 'checked',
+      active: true
     }, true)
     let buttonElm = vm.$el
     expect(buttonElm.hasAttribute('aria-checked')).to.be.true

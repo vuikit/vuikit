@@ -1,3 +1,4 @@
+<script>
 import { each, inArray } from '../helpers/util'
 
 export default {
@@ -46,3 +47,4 @@ export default {
     }
   }
 }
+</script>

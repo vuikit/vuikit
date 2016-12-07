@@ -1,16 +1,16 @@
+<template>
+  <vk-table
+    track-by="id"
+    :fields="tableFields"
+    :rows="rows">
+  </vk-table>
+</template>
+
+<script>
 import { each, isString } from '../helpers/util'
 
 export default {
   name: 'VkPicker',
-  render: function (h) {
-    return (
-      <vk-table
-        track-by="id"
-        fields={ this.tableFields }
-        rows={ this.rows }>
-      </vk-table>
-    )
-  },
   props: {
     fields: {
       type: Array,
@@ -58,3 +58,4 @@ const pickableRender = function (h, { props, parent }) {
     </a>
   )
 }
+</script>

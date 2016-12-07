@@ -1,3 +1,4 @@
+<script>
 import { range } from 'lodash'
 import { merge } from '../helpers/util'
 
@@ -173,3 +174,4 @@ const Button = {
       : h('span', [ icon ])
   }
 }
+</script>

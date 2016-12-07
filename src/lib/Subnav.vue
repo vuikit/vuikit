@@ -1,3 +1,4 @@
+<script>
 export default {
   name: 'VkSubnav',
   props: {
@@ -33,3 +34,4 @@ export default {
     )
   }
 }
+</script>

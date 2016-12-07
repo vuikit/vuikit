@@ -1,3 +1,13 @@
+<template>
+  <vk-calendar
+    :year="year"
+    :month="month"
+    :date-render="DateRender"
+    @change="date => $emit('change', date)">
+  </vk-calendar>
+</template>
+
+<script>
 import Moment from 'moment'
 
 export default {
@@ -24,16 +34,9 @@ export default {
       default: '2050-12-31'
     }
   },
-  render (h) {
-    return (
-      <vk-calendar
-        year={ this.year }
-        month={ this.month }
-        date-render={ DateRender }
-        on-change={date => this.$emit('change', date)}>
-      </vk-calendar>
-    )
-  },
+  data: () => ({
+    DateRender
+  }),
   computed: {
     datesMoments () {
       return this.dates.map(d => Moment(d))
@@ -88,3 +91,4 @@ const DateRender = function (h, { props, parent }) {
     </a>
   )
 }
+</script>

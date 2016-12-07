@@ -1,3 +1,4 @@
+<script>
 import { each } from '../helpers/util'
 
 export default {
@@ -32,3 +33,4 @@ export default {
     })
   }
 }
+</script>
