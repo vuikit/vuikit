@@ -6,7 +6,7 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of Vue components built on top of the awesome UIkit framework. While it is possible to use UIkit by its own when building Vue components, you may find yourself building a wrapper around it to fill the missing logic gap or to make it behave more naturally with Vue. Vuikit solves all that by providing a precise, documented API.
+While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by providing native, unopinionated, components outputting UIkit layout.
 
 ## Documentation and examples
 
@@ -94,15 +94,86 @@ Make sure Vue is loaded upfront and then load `dist/vuikit.js`.
 ## Developers
 
 ``` bash
-# install dependencies
-npm install
+# install dependencies with Yarn (https://yarnpkg.com/)
+# it's much faster and consistent
+yarn install
 
 # serve with hot reload at localhost:8080
-npm run dev
+yarn run dev
 
 # build for distribution
-npm run build
+yarn run build
 ```
+
+## UIkit Themes
+
+You can use UIkit themes out of a box with few exceptions you should be aware of. For those a [custom theme](https://getuikit.com/docs/documentation_create-a-theme.html) is required adding the following workarounds.
+
+### Modal
+
+UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. The solution is to reset those and apply new ones.
+
+```css
+.hook-modal() {
+  // reset hardcoded transitions
+  display: inherit;
+  opacity: inherit;
+  -webkit-transform: inherit;
+  transform: inherit;
+
+  // add custom ones
+  -webkit-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+}
+
+.hook-modal-dialog() {
+  // reset hardcoded transitions
+  opacity: inherit;
+  -webkit-transform: inherit;
+  transform: inherit;
+
+  // add custom ones
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+}
+
+// add custom transitions
+.hook-modal-misc() {
+  .vk-modal-transition-enter .uk-modal-dialog {
+    opacity: 0;
+  }
+  .vk-modal-transition-leave-active .uk-modal-dialog {
+    opacity: 0;
+  }
+  .vk-modal-transition-enter .uk-modal-dialog,
+  .vk-modal-transition-leave-active .uk-modal-dialog {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+```
+
+### Dropdown
+
+Similar as with Modal, Dropdown transition styles must be reseted.
+
+```css
+// reset hardcoded transitions
+.hook-dropdown-misc() {
+  .uk-dropdown,
+  .uk-dropdown-blank {
+    display: inherit;
+  }
+}
+```
+
+### Table
+
+The VkTable component relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
+
+## Semver
+
+Until Vuikit reaches a 1.0 release, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 have the same API, but 0.5.0 have breaking changes.
 
 ## License
 
