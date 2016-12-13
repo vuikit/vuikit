@@ -4,7 +4,7 @@
 
  - Added Notify component
  - Added Tooltip component
- - Refactored Table component with braking changes
+ - Refactored Table with a new column declaration approach (braking changes)
  - Refactored Dropdown to use Popper.js instead of Tether
  - Removed PickerDrop component
  - Removed DatepickerDrop component

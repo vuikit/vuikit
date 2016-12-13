@@ -1,31 +1,41 @@
-import selectField from './selectField'
-import Header from './Header'
-import Row from './Row'
-import { warn } from '../../helpers/util'
-import { processFields, processSortOrder } from './helper'
+import { warn } from 'src/helpers/util'
+
+function render (h) {
+  return (
+    <table staticClass="uk-table" class={{
+      'uk-table-striped': this.striped,
+      'uk-table-condensed': this.condensed,
+      'uk-table-hover': this.hover
+    }}>
+      <thead>
+        <tr>{ this.$slots.default }</tr>
+      </thead>
+      <tbody>
+        { this._l(this.data, (row, rowIndex) =>
+          <tr class={{
+            'uk-active': this.isSelected(row)
+          }} on-click={ e =>
+            (e.target.tagName === 'TD') && this.$emit('clickRow', this.getRowId(row), row)
+          }>
+            { this._l(this.columns, col => col.cell(h, { row, rowIndex })) }
+          </tr>
+        )}
+      </tbody>
+    </table>
+  )
+}
 
 export default {
   name: 'VkTable',
+  render,
   props: {
-    fields: {
-      type: Array,
-      required: true
-    },
-    rows: {
+    data: {
       type: Array,
       required: true
     },
     trackBy: {
       type: String,
       default: 'id'
-    },
-    selectable: {
-      type: Boolean,
-      default: false
-    },
-    selection: {
-      type: Object,
-      default: () => ({})
     },
     condensed: {
       type: Boolean,
@@ -39,62 +49,48 @@ export default {
       type: Boolean,
       default: false
     },
-    sortOrder: {
+    sortedBy: {
       type: Object,
-      default: () => ({}) // field: asc|desc
+      default: () => ({}) // { field: [asc|desc] }
+    },
+    selection: {
+      type: Object,
+      default: () => ({})
     }
   },
-  render (h) {
-    return (
-      <table staticClass="uk-table" class={{
-        'uk-table-striped': this.striped,
-        'uk-table-condensed': this.condensed,
-        'uk-table-hover': this.hover
-      }}>
-        <thead>
-          <tr>
-            { this.fieldsDef.map(field => h(Header, { props: { field } })) }
-          </tr>
-        </thead>
-        <tbody>
-          { this.rows.map(row => h(Row, { props: { row } })) }
-        </tbody>
-      </table>
-    )
-  },
   created () {
-    // check for rows id if selectable enabled
-    if (warn && this.selectable) {
-      this.rows.forEach(row => {
-        if (row[this.trackBy] === undefined) {
-          warn("Some of the Table rows have no 'id' set.")
+    // check for data trackBy field
+    warn && this.data.forEach(row => {
+      if (row[this.trackBy] === undefined) {
+        warn('VkTable - some data rows are missing the trackBy field.')
+      }
+    })
+  },
+  computed: {
+    columns () {
+      return this.$slots.default.filter(node =>
+        node.componentOptions && node.componentOptions.tag.match(/vk-table-column/)
+      ).map(slot => {
+        const propsData = slot.componentOptions.propsData
+        const scopedSlots = slot.data.scopedSlots
+        const options = slot.componentOptions.Ctor.options
+        return {
+          cell (h, props) {
+            return h(options.cellRender, { scopedSlots, props: {...props, ...propsData} })
+          }
         }
       })
     }
   },
-  computed: {
-    isAllSelected () {
-      return this.rows.length && this.rows.every(row => this.isSelected(row))
-    },
-    fieldsDef () {
-      const fields = processFields(this.fields)
-      // add selectable field if
-      // required and no provided
-      if (this.selectable) {
-        fields.unshift(selectField)
-      }
-      return fields
-    }
-  },
   methods: {
-    isSelected (row) {
-      return this.selection[this.getRowId(row)]
-    },
     getRowId (row) {
       return row[this.trackBy]
     },
-    emitSort (field) {
-      this.$emit('sort', processSortOrder(field, this.sortOrder))
+    isAllSelected () {
+      return this.data.length && this.data.every(row => this.isSelected(row))
+    },
+    isSelected (row) {
+      return this.selection[this.getRowId(row)]
     }
   }
 }

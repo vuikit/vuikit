@@ -17,6 +17,9 @@ import SubnavItem from './SubnavItem'
 import Switcher from './Switcher'
 import SwitcherItem from './SwitcherItem'
 import Table from './Table'
+import TableColumn from './Table/columns/Default'
+import TableColumnSelect from './Table/columns/Select'
+import TableColumnSort from './Table/columns/Sort'
 import Tabs from './Tabs'
 import TabsItem from './TabsItem'
 import TabsVertical from './TabsVertical'
@@ -43,6 +46,9 @@ const Vuikit = {
   Switcher,
   SwitcherItem,
   Table,
+  TableColumn,
+  TableColumnSelect,
+  TableColumnSort,
   Tabs,
   TabsItem,
   TabsVertical,
