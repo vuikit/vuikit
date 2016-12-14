@@ -2,27 +2,28 @@
 
 ### WIP
 
- - Added Notify component
- - Added Tooltip component
- - Refactored Table with a new column declaration approach (braking changes)
- - Refactored Dropdown to use Popper.js instead of Tether
- - Removed PickerDrop component
- - Removed DatepickerDrop component
+ - Transition to Vue 2.1
+ - Added VkNotify
+ - Added VkTooltip
+ - Refactored VkTable with a new column declaration approach (braking changes)
+ - Refactored VkDropdown to use Popper.js instead of Tether
+ - Removed VkPickerDrop
+ - Removed VkDatepickerDrop
  - Removed support for inbuilt HTML ARIA declarations
 
 ### 0.6.0
 
  - Transition to Vue 2
- - Refactored all components with braking changes
- - Removed Filter component
+ - Refactored all components (braking changes)
+ - Removed VkFilter
 
 ### 0.5.0
 
- - Added Filter component
- - Refactored Picker component with braking changes
- - Refactored Datepicker component with braking changes
- - Refactored Pagination component with braking changes
- - Refactored Table component with braking changes
+ - Added VkFilter
+ - Refactored VkPicker (braking changes)
+ - Refactored VkDatepicker (braking changes)
+ - Refactored VkPagination (braking changes)
+ - Refactored VkTable (braking changes)
 
 ### 0.4.1
 
@@ -31,11 +32,11 @@
 
 ### 0.4.0
 
- - Added Dropdown component
- - Added Picker component
- - Added Table component
- - Refactored Calendar component with braking changes
- - Refactored Datepicker component with braking changes
+ - Added VkDropdown
+ - Added VkPicker
+ - Added VkTable
+ - Refactored VkCalendar (braking changes)
+ - Refactored VkDatepicker (braking changes)
 
 ### 0.3.0
 
