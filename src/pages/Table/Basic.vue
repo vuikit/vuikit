@@ -10,18 +10,9 @@
       :striped="tableProps.striped.demo.value"
       :hover="tableProps.hover.demo.value"
       @clickRow="events.clickRow.emited = true">
-      <vk-table-column
-        header="Name"
-        cell="name">
-      </vk-table-column>
-      <vk-table-column
-        header="Hits"
-        cell="hits">
-      </vk-table-column>
-      <vk-table-column
-        header="Description"
-        cell="desc">
-      </vk-table-column>
+      <vk-table-column header="Name" cell="name" />
+      <vk-table-column header="Hits" cell="hits" />
+      <vk-table-column header="Description" cell="desc" />
     </vk-table>
     <!-- TABS -->
     <vk-tabs
@@ -114,20 +105,10 @@ const events = {
 
 /* eslint-disable */
 const example = `<template>
-  <vk-table
-    :data="data">
-    <vk-table-column
-      header="Name"
-      cell="name">
-    </vk-table-column>
-    <vk-table-column
-      header="Hits"
-      cell="hits">
-    </vk-table-column>
-    <vk-table-column
-      header="Description"
-      cell="desc">
-    </vk-table-column>
+  <vk-table :data="data">
+    <vk-table-column header="Name" cell="name" />
+    <vk-table-column header="Hits" cell="hits" />
+    <vk-table-column header="Description" cell="desc" />
   </vk-table>
 <\/template>
 

@@ -11,14 +11,8 @@
       @change="index => tabsIndex = index">
       <vk-tabs-item name="Demo">
         <vk-table condensed :data="data">
-          <vk-table-column
-            header="Name"
-            cell="name">
-          </vk-table-column>
-          <vk-table-column
-            header="Hits"
-            cell="hits">
-          </vk-table-column>
+          <vk-table-column header="Name" cell="name" />
+          <vk-table-column header="Hits" cell="hits" />
           <vk-table-column>
             <template slot="header" scope="props">
               <vk-button
@@ -71,16 +65,9 @@ export default {
 
 /* eslint-disable */
 const example = `<template>
-  <vk-table
-    :data="data">
-    <vk-table-column
-      header="Name"
-      cell="name">
-    </vk-table-column>
-    <vk-table-column
-      header="Hits"
-      cell="hits">
-    </vk-table-column>
+  <vk-table :data="data">
+    <vk-table-column header="Name" cell="name" />
+    <vk-table-column header="Hits" cell="hits" />
     <vk-table-column>
       <template slot="header" scope="props">
         <vk-button

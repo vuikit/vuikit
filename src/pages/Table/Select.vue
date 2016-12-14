@@ -26,19 +26,10 @@
           ? rows.forEach(function(rowId) { $set(selection, rowId, true) })
           : selection = {}
       }">
-      <vk-table-column-select></vk-table-column-select>
-      <vk-table-column
-        header="Name"
-        cell="name">
-      </vk-table-column>
-      <vk-table-column
-        header="Hits"
-        cell="hits">
-      </vk-table-column>
-      <vk-table-column
-        header="Description"
-        cell="desc">
-      </vk-table-column>
+      <vk-table-column-select />
+      <vk-table-column header="Name" cell="name" />
+      <vk-table-column header="Hits" cell="hits" />
+      <vk-table-column header="Description" cell="desc" />
     </vk-table>
     <!-- TABS -->
     <vk-tabs
@@ -125,19 +116,10 @@ const example = `<template>
         ? rows.forEach(function(rowId) { $set(selection, rowId, true) })
         : selection = {}
     }">
-    <vk-table-column-select></vk-table-column-select>
-    <vk-table-column
-      header="Name"
-      cell="name">
-    </vk-table-column>
-    <vk-table-column
-      header="Hits"
-      cell="hits">
-    </vk-table-column>
-    <vk-table-column
-      header="Description"
-      cell="desc">
-    </vk-table-column>
+    <vk-table-column-select />
+    <vk-table-column header="Name" cell="name" />
+    <vk-table-column header="Hits" cell="hits" />
+    <vk-table-column header="Description" cell="desc" />
   </vk-table>
 <\/template>
 

@@ -12,18 +12,9 @@
         events.sort.emited = true
         sortedBy = order
       }">
-      <vk-table-column-sort
-        header="Name"
-        cell="name">
-      </vk-table-column-sort>
-      <vk-table-column-sort
-        header="Hits"
-        cell="hits">
-      </vk-table-column-sort>
-      <vk-table-column
-        header="Description"
-        cell="desc">
-      </vk-table-column>
+      <vk-table-column-sort header="Name" cell="name" />
+      <vk-table-column-sort header="Hits" cell="hits" />
+      <vk-table-column header="Description" cell="desc" />
     </vk-table>
     <!-- TABS -->
     <vk-tabs
@@ -118,18 +109,9 @@ const example = `<template>
     @sort="order => {
       sortedBy = order
     }">
-    <vk-table-column-sort
-      header="Name"
-      cell="name">
-    </vk-table-column-sort>
-    <vk-table-column-sort
-      header="Hits"
-      cell="hits">
-    </vk-table-column-sort>
-    <vk-table-column
-      header="Description"
-      cell="desc">
-    </vk-table-column>
+    <vk-table-column-sort header="Name" cell="name" />
+    <vk-table-column-sort header="Hits" cell="hits" />
+    <vk-table-column header="Description" cell="desc" />
   </vk-table>
 <\/template>
 
