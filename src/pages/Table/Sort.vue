@@ -58,9 +58,9 @@ export default {
     },
     example,
     rawData: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ]
   }),
   computed: {
@@ -122,9 +122,9 @@ export default {
       name: 'asc'
     },
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ]
   })
 }

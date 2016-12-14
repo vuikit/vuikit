@@ -1,3 +1,5 @@
+import { warn } from 'src/helpers/util'
+
 // Header is the default component render
 function headerRender (h) {
   const Table = this.$parent
@@ -72,5 +74,19 @@ const Checkbox = {
 export default {
   name: 'VkTableColumnSelect',
   render: headerRender,
-  cellRender
+  cellRender,
+  created () {
+    if (warn) {
+      // check for data trackBy field
+      if (!this.$parent.trackBy) {
+        warn('trackBy prop is required when using VkTable in combination with VkTableColumnSelect.')
+      } else {
+        this.$parent.data.forEach(row => {
+          if (row[this.$parent.trackBy] === undefined) {
+            warn('VkTable - some data rows are missing the trackBy field.')
+          }
+        })
+      }
+    }
+  }
 }

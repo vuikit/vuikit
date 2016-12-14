@@ -48,9 +48,9 @@ export default {
   data: () => ({
     tabsIndex: 0,
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ],
     example
   }),
@@ -93,9 +93,9 @@ const example = `<template>
 export default {
   data: () => ({
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ]
   }),
   methods: {

@@ -5,6 +5,7 @@
       column configuration and set the <code>selection</code> prop object.
     </div>
     <vk-table
+      trackBy="id"
       condensed
       :data="data"
       :selection="selection"
@@ -99,6 +100,7 @@ const events = {
 /* eslint-disable */
 const example = `<template>
   <vk-table
+    trackBy="id"
     :data="data"
     :selection="selection"
     @clickRow="rowId => {

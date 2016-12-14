@@ -1,5 +1,3 @@
-import { warn } from 'src/helpers/util'
-
 function render (h) {
   return (
     <table staticClass="uk-table" class={{
@@ -34,8 +32,7 @@ export default {
       required: true
     },
     trackBy: {
-      type: String,
-      default: 'id'
+      type: String
     },
     condensed: {
       type: Boolean,
@@ -57,14 +54,6 @@ export default {
       type: Object,
       default: () => ({})
     }
-  },
-  created () {
-    // check for data trackBy field
-    warn && this.data.forEach(row => {
-      if (row[this.trackBy] === undefined) {
-        warn('VkTable - some data rows are missing the trackBy field.')
-      }
-    })
   },
   computed: {
     columns () {

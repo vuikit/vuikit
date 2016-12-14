@@ -52,9 +52,9 @@ export default {
     events,
     example,
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ]
   })
 }
@@ -64,8 +64,8 @@ const tableProps = {
     description: 'A collection of <code>Objects</code> representing each row.'
   },
   trackBy: {
-    description: `A unique key for the rows to be tracked by. Used, among others,
-      to optimize the rendering.`
+    description: `A unique key for the rows to be tracked by. Required when using
+      <code>vk-table-column-select</code>.`
   },
   condensed: {
     description: 'Whether to display the rows compacted.',
@@ -116,9 +116,9 @@ const example = `<template>
 export default {
   data: () => ({
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { name: 'Item A', hits: 100, desc: 'Description' },
+      { name: 'Item B', hits: 40, desc: 'Description' },
+      { name: 'Item C', hits: 700, desc: 'Description' }
     ]
   })
 }
