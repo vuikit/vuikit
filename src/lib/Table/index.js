@@ -15,9 +15,11 @@ export default {
         </thead>
         <tbody>
           { this._l(this.data, (row, rowIndex) =>
-            <tr class={ this.getRowClass(row, rowIndex) } on-click={ e =>
-              (e.target.tagName === 'TD') && this.$emit('clickRow', row)
-            }>
+            <tr class={ this.getRowClass(row, rowIndex) } on-click={e => {
+              if (e.target.tagName === 'TR' || e.target.tagName === 'TD') {
+                this.$emit('clickRow', row)
+              }
+            }}>
               { this._l(this.columns, col =>
                 col._cellRender.call(col._renderProxy, h, { row, rowIndex })
               ) }
