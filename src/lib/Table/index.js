@@ -15,9 +15,7 @@ export default {
         </thead>
         <tbody>
           { this._l(this.data, (row, rowIndex) =>
-            <tr class={{
-              // 'uk-active': this.isSelected(row)
-            }} on-click={ e =>
+            <tr class={ this.getRowClass(row, rowIndex) } on-click={ e =>
               (e.target.tagName === 'TD') && this.$emit('clickRow', row)
             }>
               { this._l(this.columns, col =>
@@ -49,9 +47,17 @@ export default {
     sortedBy: {
       type: Object,
       default: () => ({}) // { field: [asc|desc] }
-    }
+    },
+    rowClass: [String, Function]
   },
   data: () => ({
     columns: []
-  })
+  }),
+  methods: {
+    getRowClass (row, index) {
+      return (typeof this.rowClass === 'function')
+        ? this.rowClass(row, index)
+        : this.rowClass
+    }
+  }
 }

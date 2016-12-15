@@ -4,7 +4,12 @@
       To make the rows selectable add the <code>vk-table-column-select</code> in the
       column configuration and set the <code>selection</code> prop object.
     </div>
-    <vk-table :data="data" condensed>
+    <vk-table condensed
+      :data="data"
+      :rowClass="row => selection[row.id]
+        ? 'uk-active'
+        : ''
+      ">
       <vk-table-column-select
         trackBy="id"
         :selection="selection"
@@ -98,7 +103,12 @@ const columnEvents = {
 
 /* eslint-disable */
 const example = `<template>
-  <vk-table :data="data">
+  <vk-table
+    :data="data"
+    :rowClass="row => selection[row.id]
+      ? 'uk-active'
+      : ''
+    ">
     <vk-table-column-select
       trackBy="id"
       :selection="selection"

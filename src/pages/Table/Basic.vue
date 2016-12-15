@@ -63,6 +63,10 @@ const tableProps = {
   data: {
     description: 'A collection of <code>Objects</code> representing each row.'
   },
+  rowClass: {
+    description: `A class to apply to each row. If a callback provided it will get the
+      current row and it index as arguments.`
+  },
   condensed: {
     description: 'Whether to display the rows compacted.',
     demo: {
