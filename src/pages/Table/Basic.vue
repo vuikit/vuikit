@@ -21,7 +21,7 @@
       <vk-tabs-item name="Table Props">
         <vk-docs-props
           :props="tableProps"
-          @change="value => tableProps[arguments[0]].demo.value = value">
+          @change="(prop, value) => tableProps[prop].demo.value = value">
         </vk-docs-props>
       </vk-tabs-item>
       <vk-tabs-item name="Column Props">
@@ -62,10 +62,6 @@ export default {
 const tableProps = {
   data: {
     description: 'A collection of <code>Objects</code> representing each row.'
-  },
-  trackBy: {
-    description: `A unique key for the rows to be tracked by. Required when using
-      <code>vk-table-column-select</code>.`
   },
   condensed: {
     description: 'Whether to display the rows compacted.',

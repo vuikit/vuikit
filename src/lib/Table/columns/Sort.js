@@ -1,46 +1,6 @@
-// Header is the default component render
-function headerRender (h) {
-  const Table = this.$parent
-  const orderedBy = Table.sortedBy[this.cell]
-  const sortBy = this.sortBy || this.cell
-  return (
-    <th class={[
-      'uk-visible-hover-inline vk-table-order',
-      { 'uk-active': orderedBy }
-    ]} on-click={e => {
-      Table.$emit('sort', processSortOrder(sortBy, Table.sortedBy))
-    }}>
-    {
-      this.$scopedSlots.header
-        ? this.$scopedSlots.header()
-        : (
-          <span class="uk-position-relative">
-            { this.header }
-            <i staticClass="uk-icon-justify uk-margin-small-left" class={{
-              'uk-invisible': !orderedBy,
-              'vk-icon-arrow-down': orderedBy === 'asc' || orderedBy === undefined,
-              'vk-icon-arrow-up': orderedBy === 'desc'
-            }}></i>
-          </span>
-        )
-    }
-    </th>
-  )
-}
+import Column from './Default'
 
-// Cell is a functional component render
-const cellRender = {
-  functional: true,
-  props: ['row', 'rowIndex', 'cell'],
-  render (h, { props, data }) {
-    const { scopedSlots } = data
-    const scopedSlot = scopedSlots && scopedSlots.cell
-    const { row, cell } = props
-    return (<td>{ scopedSlot ? scopedSlot(props) : row[cell] }</td>)
-  }
-}
-
-export function processSortOrder (sortBy, sortedBy) {
+function processSortOrder (sortBy, sortedBy) {
   const newOrder = {}
   // prepare the final order object state
   if (sortedBy[sortBy]) {
@@ -55,22 +15,45 @@ export function processSortOrder (sortBy, sortedBy) {
 
 export default {
   name: 'VkTableColumnSort',
-  render: headerRender,
-  cellRender,
+  extends: Column,
   props: {
-    // the header label
-    header: {
-      type: String
-    },
-    // the cell value key retrieved
-    // from the row
-    cell: {
-      type: String
-    },
-    // the row value to be sorted by
-    // defaults to cell prop
+    // the row value to be sorted by (defaults to cell prop)
     sortBy: {
       type: String
     }
+  },
+  headerRender (h) {
+    const scopedSlot = this.$scopedSlots && this.$scopedSlots.header
+    const Table = this.$parent
+    const orderedBy = Table.sortedBy[this.cell]
+    const sortBy = this.sortBy || this.cell
+    return (
+      <th class={[
+        'uk-visible-hover-inline vk-table-order',
+        { 'uk-active': orderedBy }
+      ]} on-click={e => {
+        Table.$emit('sort', processSortOrder(sortBy, Table.sortedBy))
+      }}>
+      { scopedSlot
+        ? scopedSlot()
+        : (
+          <span class="uk-position-relative">
+            { this.header }
+            <i staticClass="uk-icon-justify uk-margin-small-left" class={{
+              'uk-invisible': !orderedBy,
+              'vk-icon-arrow-down': orderedBy === 'asc' || orderedBy === undefined,
+              'vk-icon-arrow-up': orderedBy === 'desc'
+            }}></i>
+          </span>
+        )
+      }
+      </th>
+    )
   }
+
+  // cellRender (h, { row }) {
+  //   const cell = this.cell
+  //   const scopedSlot = this.$scopedSlots && this.$scopedSlots.cell
+  //   return (<td>{ scopedSlot ? scopedSlot({ row }) : row[cell] }</td>)
+  // }
 }

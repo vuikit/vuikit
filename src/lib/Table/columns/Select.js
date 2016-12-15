@@ -1,48 +1,5 @@
 import { warn } from 'src/helpers/util'
-
-// Header is the default component render
-function headerRender (h) {
-  const Table = this.$parent
-  return (<th class="uk-form vk-table-width-minimum">{
-    this.$scopedSlots.header
-      ? this.$scopedSlots.header()
-      : h(Checkbox, {
-        props: {
-          checked: Table.isAllSelected()
-        },
-        on: {
-          click: e => {
-            Table.$emit('selectAll', Table.data.map(row => Table.getRowId(row)), Table.data)
-          }
-        }
-      })
-  }</th>)
-}
-
-// Cell is a functional component render
-const cellRender = {
-  functional: true,
-  props: ['row', 'rowIndex', 'prop'],
-  render (h, { props, data, parent: vm }) {
-    const { scopedSlots } = data
-    const cell = scopedSlots && scopedSlots.cell
-    const { row } = props
-    return (<td class="uk-form vk-table-width-minimum">{
-      cell
-      ? cell(props)
-      : h(Checkbox, {
-        props: {
-          checked: vm.isSelected(row)
-        },
-        on: {
-          click: e => {
-            vm.$emit('select', vm.getRowId(row), row)
-          }
-        }
-      })
-    }</td>)
-  }
-}
+import Column from './Default'
 
 const Checkbox = {
   functional: true,
@@ -73,20 +30,77 @@ const Checkbox = {
 
 export default {
   name: 'VkTableColumnSelect',
-  render: headerRender,
-  cellRender,
+  extends: Column,
+  props: {
+    trackBy: {
+      type: String
+    },
+    selection: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   created () {
-    if (warn) {
-      // check for data trackBy field
-      if (!this.$parent.trackBy) {
-        warn('trackBy prop is required when using VkTable in combination with VkTableColumnSelect.')
+    this.$parent.$on('clickRow', row => {
+      this.$emit('selectRow', this.getRowId(row), row)
+    })
+  },
+  methods: {
+    getRowId (row) {
+      if (this.trackBy) {
+        if (row[this.trackBy] !== undefined) {
+          return row[this.trackBy]
+        } else {
+          warn && warn(`VkTable - The selection of the rows could fail as some
+            data rows are missing the trackBy field.`)
+          return this.$parent.data.indexOf(row)
+        }
       } else {
-        this.$parent.data.forEach(row => {
-          if (row[this.$parent.trackBy] === undefined) {
-            warn('VkTable - some data rows are missing the trackBy field.')
+        this.$parent.data.indexOf(row)
+      }
+    },
+    isAllSelected () {
+      return this.$parent.data.length && this.$parent.data.every(row => this.isSelected(row))
+    },
+    isSelected (row) {
+      return this.selection[this.getRowId(row)]
+    }
+  },
+  headerRender (h) {
+    const _parent = this.$parent
+    const scopedSlot = this.$scopedSlots && this.$scopedSlots.header
+    return (<th class="uk-form vk-table-width-minimum">{
+      scopedSlot
+        ? scopedSlot()
+        : h(Checkbox, {
+          props: {
+            checked: this.isAllSelected()
+          },
+          on: {
+            click: e => {
+              // console.log(_parent.data.map(row => this.getRowId(row)))
+              this.$emit('selectAll', _parent.data.map(row => this.getRowId(row)), _parent.data)
+            }
           }
         })
-      }
-    }
+    }</th>)
+  },
+  cellRender (h, { row }) {
+    const scopedSlot = this.$scopedSlots && this.$scopedSlots.cell
+    return (<td class="uk-form vk-table-width-minimum">{
+      scopedSlot
+      ? scopedSlot({ row })
+      : h(Checkbox, {
+        props: {
+          checked: this.isSelected(row)
+        },
+        on: {
+          click: e => {
+            // console.log(this)
+            this.$emit('select', this.getRowId(row), row)
+          }
+        }
+      })
+    }</td>)
   }
 }

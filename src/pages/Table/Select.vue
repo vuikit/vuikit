@@ -4,30 +4,29 @@
       To make the rows selectable add the <code>vk-table-column-select</code> in the
       column configuration and set the <code>selection</code> prop object.
     </div>
-    <vk-table
-      trackBy="id"
-      condensed
-      :data="data"
-      :selection="selection"
-      @clickRow="rowId => {
-        events.clickRow.emited = true
-        selection[rowId]
-          ? $delete(selection, rowId)
-          : $set(selection, rowId, true)
-      }"
-      @select="rowId => {
-        events.select.emited = true
-        selection[rowId]
-          ? $delete(selection, rowId)
-          : $set(selection, rowId, true)
-      }"
-      @selectAll="rows => {
-        events.selectAll.emited = true
-        Object.keys(selection).length !== rows.length
-          ? rows.forEach(function(rowId) { $set(selection, rowId, true) })
-          : selection = {}
-      }">
-      <vk-table-column-select />
+    <vk-table :data="data" condensed>
+      <vk-table-column-select
+        trackBy="id"
+        :selection="selection"
+        @select="rowId => {
+          columnEvents.select.emited = true
+          selection[rowId]
+            ? $delete(selection, rowId)
+            : $set(selection, rowId, true)
+        }"
+        @selectAll="rows => {
+          columnEvents.selectAll.emited = true
+          Object.keys(selection).length !== rows.length
+            ? rows.forEach(rowId => $set(selection, rowId, true))
+            : selection = {}
+        }"
+        @selectRow="rowId => {
+          columnEvents.selectRow.emited = true
+          selection[rowId]
+            ? $delete(selection, rowId)
+            : $set(selection, rowId, true)
+        }">
+      </vk-table-column-select>
       <vk-table-column header="Name" cell="name" />
       <vk-table-column header="Hits" cell="hits" />
       <vk-table-column header="Description" cell="desc" />
@@ -36,14 +35,11 @@
     <vk-tabs
       :index="tabsIndex"
       @change="index => tabsIndex = index">
-      <vk-tabs-item name="Props">
-        <vk-docs-props
-          :props="tableProps"
-          @change="value => tableProps[arguments[0]].demo.value = value">
-        </vk-docs-props>
+      <vk-tabs-item name="Column Props">
+        <vk-docs-props :props="columnProps" />
       </vk-tabs-item>
-      <vk-tabs-item name="Events">
-        <vk-docs-events :events="events"></vk-docs-events>
+      <vk-tabs-item name="Column Events">
+        <vk-docs-events :events="columnEvents" />
       </vk-tabs-item>
       <vk-tabs-item name="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
@@ -53,7 +49,7 @@
 </template>
 
 <script>
-import Table from 'src/lib/Table'
+import Column from 'src/lib/Table/columns/Select'
 import mixin from '../_mixin'
 import { mergeProps } from 'src/helpers/pages'
 
@@ -61,64 +57,67 @@ export default {
   mixins: [mixin],
   data: () => ({
     tabsIndex: 0,
-    tableProps: mergeProps(Table.props, tableProps),
-    events,
+    columnProps: mergeProps(Column.props, columnProps),
+    columnEvents,
     selection: {},
     example,
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+      { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+      { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
     ]
   })
 }
 
-const tableProps = {
+const columnProps = {
   selection: {
     description: `An <code>Object</code> representing the selected rows. It must
-      be indexed by the row id, the same one set on <code>trackBy</code>.`
+    be indexed by the row id, the same one set on <code>trackBy</code>.`
+  },
+  trackBy: {
+    description: `A unique key for the rows to be tracked by when selected.`
   }
 }
 
-const events = {
+const columnEvents = {
   select: {
     description: `Emited on the intention to select or unselect a row passing as argument
-      it id and data.`,
+      it select id and data.`,
     emited: false
   },
   selectAll: {
     description: `Emited on the intention to select or unselect all rows passing as argument
-      its ids and data.`,
+      its select ids and data.`,
     emited: false
   },
-  clickRow: {
-    description: 'Emited when a click was performed on a row passing as argument it data.',
+  selectRow: {
+    description: 'Emited when a click was performed on a row passing as argument it select id and data.',
     emited: false
   }
 }
 
 /* eslint-disable */
 const example = `<template>
-  <vk-table
-    trackBy="id"
-    :data="data"
-    :selection="selection"
-    @clickRow="rowId => {
-      selection[rowId]
-        ? $delete(selection, rowId)
-        : $set(selection, rowId, true)
-    }"
-    @select="rowId => {
-      selection[rowId]
-        ? $delete(selection, rowId)
-        : $set(selection, rowId, true)
-    }"
-    @selectAll="rows => {
-      Object.keys(selection).length !== rows.length
-        ? rows.forEach(function(rowId) { $set(selection, rowId, true) })
-        : selection = {}
-    }">
-    <vk-table-column-select />
+  <vk-table :data="data">
+    <vk-table-column-select
+      trackBy="id"
+      :selection="selection"
+      @select="rowId => {
+        selection[rowId]
+          ? $delete(selection, rowId)
+          : $set(selection, rowId, true)
+      }"
+      @selectAll="rows => {
+        Object.keys(selection).length !== rows.length
+          ? rows.forEach(rowId => $set(selection, rowId, true))
+          : selection = {}
+      }"
+      @selectRow="rowId => {
+        selection[rowId]
+          ? $delete(selection, rowId)
+          : $set(selection, rowId, true)
+      }">
+    </vk-table-column-select>
     <vk-table-column header="Name" cell="name" />
     <vk-table-column header="Hits" cell="hits" />
     <vk-table-column header="Description" cell="desc" />
@@ -130,9 +129,9 @@ export default {
   data: () => ({
     selection: {},
     data: [
-      { id: 0, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 1, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 2, name: 'Item C', hits: 700, desc: 'Description' }
+      { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+      { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+      { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
     ]
   })
 }

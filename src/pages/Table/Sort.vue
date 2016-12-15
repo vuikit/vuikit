@@ -21,10 +21,7 @@
       :index="tabsIndex"
       @change="index => tabsIndex = index">
       <vk-tabs-item name="Table Props">
-        <vk-docs-props
-          :props="tableProps"
-          @change="value => tableProps[arguments[0]].demo.value = value">
-        </vk-docs-props>
+        <vk-docs-props :props="tableProps" />
       </vk-tabs-item>
       <vk-tabs-item name="Column Props">
         <vk-docs-props :props="columnProps"></vk-docs-props>
