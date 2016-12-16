@@ -1,5 +1,5 @@
 /*!
- * Vuikit v0.6.0 (https://github.com/vuikit/vuikit)
+ * Vuikit v0.6.2 (https://github.com/vuikit/vuikit)
  * (c) 2016 ZOOlanders
  * Released under the MIT License.
  */
@@ -202,7 +202,7 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var store      = __webpack_require__(29)('wks')
-	  , uid        = __webpack_require__(20)
+	  , uid        = __webpack_require__(19)
 	  , Symbol     = __webpack_require__(3).Symbol
 	  , USE_SYMBOL = typeof Symbol == 'function';
 
@@ -379,7 +379,7 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var dP         = __webpack_require__(7)
-	  , createDesc = __webpack_require__(19);
+	  , createDesc = __webpack_require__(18);
 	module.exports = __webpack_require__(5) ? function(object, key, value){
 	  return dP.f(object, key, createDesc(1, value));
 	} : function(object, key, value){
@@ -395,11 +395,24 @@ module.exports =
 
 	module.exports = function mergeJSXProps (objs) {
 	  return objs.reduce(function (a, b) {
-	    var aa, bb, key, nestedKey
+	    var aa, bb, key, nestedKey, temp
 	    for (key in b) {
 	      aa = a[key]
 	      bb = b[key]
 	      if (aa && nestRE.test(key)) {
+	        // normalize class
+	        if (key === 'class') {
+	          if (typeof aa === 'string') {
+	            temp = aa
+	            a[key] = aa = {}
+	            aa[temp] = true
+	          }
+	          if (typeof bb === 'string') {
+	            temp = bb
+	            b[key] = bb = {}
+	            bb[temp] = true
+	          }
+	        }
 	        if (key === 'on' || key === 'nativeOn' || key === 'hook') {
 	          // merge functions
 	          for (nestedKey in bb) {
@@ -456,10 +469,10 @@ module.exports =
 
 	function offAll(namespace) {
 	  for (var i = 0; i < boundEvents[namespace].length; ++i) {
-	    var _boundEvents$namespac = boundEvents[namespace][i];
-	    var el = _boundEvents$namespac.el;
-	    var event = _boundEvents$namespac.event;
-	    var handler = _boundEvents$namespac.handler;
+	    var _boundEvents$namespac = boundEvents[namespace][i],
+	        el = _boundEvents$namespac.el,
+	        event = _boundEvents$namespac.event,
+	        handler = _boundEvents$namespac.handler;
 
 	    el.removeEventListener(event, handler);
 	  }
@@ -603,12 +616,6 @@ module.exports =
 /* 18 */
 /***/ function(module, exports) {
 
-	module.exports = require("moment");
-
-/***/ },
-/* 19 */
-/***/ function(module, exports) {
-
 	module.exports = function(bitmap, value){
 	  return {
 	    enumerable  : !(bitmap & 1),
@@ -619,7 +626,7 @@ module.exports =
 	};
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports) {
 
 	var id = 0
@@ -627,6 +634,12 @@ module.exports =
 	module.exports = function(key){
 	  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
 	};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+	module.exports = require("moment");
 
 /***/ },
 /* 21 */
@@ -715,7 +728,7 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var shared = __webpack_require__(29)('keys')
-	  , uid    = __webpack_require__(20);
+	  , uid    = __webpack_require__(19);
 	module.exports = function(key){
 	  return shared[key] || (shared[key] = uid(key));
 	};
@@ -843,7 +856,7 @@ module.exports =
 
 	var _isInteger2 = _interopRequireDefault(_isInteger);
 
-	var _moment = __webpack_require__(18);
+	var _moment = __webpack_require__(20);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -980,15 +993,15 @@ module.exports =
 
 
 	var pickableRender = function pickableRender(h, _ref) {
-	  var props = _ref.props;
-	  var parent = _ref.parent;
+	  var props = _ref.props,
+	      parent = _ref.parent;
 
 	  var vm = parent.$parent;
 	  return h(
 	    'a',
 	    {
 	      on: {
-	        click: function click(e) {
+	        'click': function click(e) {
 	          var field = props.field.name;
 	          var data = props.row[vm.pickables[field]];
 	          e.preventDefault();
@@ -1013,8 +1026,8 @@ module.exports =
 	  functional: true,
 	  props: ['checked', 'onClick'],
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var props = _ref.props;
+	    var parent = _ref.parent,
+	        props = _ref.props;
 
 	    return h('input', {
 	      attrs: {
@@ -1353,7 +1366,7 @@ module.exports =
 	exports.isToday = isToday;
 	exports.getCalendarMatrix = getCalendarMatrix;
 
-	var _moment = __webpack_require__(18);
+	var _moment = __webpack_require__(20);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -1444,12 +1457,10 @@ module.exports =
 	};
 
 	var sortAttach = function sortAttach(str) {
-	  var _str$split = str.split(' ');
-
-	  var _str$split2 = (0, _slicedToArray3.default)(_str$split, 2);
-
-	  var first = _str$split2[0];
-	  var second = _str$split2[1];
+	  var _str$split = str.split(' '),
+	      _str$split2 = (0, _slicedToArray3.default)(_str$split, 2),
+	      first = _str$split2[0],
+	      second = _str$split2[1];
 
 	  if (['left', 'right'].indexOf(first) >= 0) {
 	    var _ref = [second, first];
@@ -1567,7 +1578,7 @@ module.exports =
 	        'a',
 	        {
 	          on: {
-	            click: function click(event) {
+	            'click': function click(event) {
 	              event.preventDefault();
 	              _this.$parent.$emit('change', _this.path);
 	            }
@@ -1795,9 +1806,9 @@ module.exports =
 	  functional: true,
 	  props: ['date'],
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var props = _ref.props;
-	    var data = _ref.data;
+	    var parent = _ref.parent,
+	        props = _ref.props,
+	        data = _ref.data;
 
 	    if (parent.dateRender) {
 	      return h({
@@ -1842,7 +1853,7 @@ module.exports =
 	        "a",
 	        { "class": "uk-datepicker-previous",
 	          on: {
-	            click: function click(e) {
+	            "click": function click(e) {
 	              e.preventDefault();
 	              parent.$emit('change', parent.prevMonth);
 	            }
@@ -1853,7 +1864,7 @@ module.exports =
 	        "a",
 	        { "class": "uk-datepicker-next",
 	          on: {
-	            click: function click(e) {
+	            "click": function click(e) {
 	              e.preventDefault();
 	              parent.$emit('change', parent.nextMonth);
 	            }
@@ -1892,8 +1903,8 @@ module.exports =
 	  functional: true,
 	  props: ['value', 'display', 'options', 'onChange'],
 	  render: function render(h, _ref2) {
-	    var parent = _ref2.parent;
-	    var props = _ref2.props;
+	    var parent = _ref2.parent,
+	        props = _ref2.props;
 
 	    return h('span', {
 	      class: 'uk-form-select'
@@ -1932,7 +1943,11 @@ module.exports =
 
 	var _isInteger2 = _interopRequireDefault(_isInteger);
 
-	var _moment = __webpack_require__(18);
+	var _range2 = __webpack_require__(52);
+
+	var _range3 = _interopRequireDefault(_range2);
+
+	var _moment = __webpack_require__(20);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -2050,6 +2065,11 @@ module.exports =
 	        }
 	      });
 	      return months;
+	    },
+	    weekDays: function weekDays() {
+	      return (0, _range3.default)(0, 7).map(function (val, index) {
+	        return (0, _moment2.default)().weekday(index).format('ddd');
+	      });
 	    }
 	  },
 	  methods: {
@@ -2070,10 +2090,6 @@ module.exports =
 	  value: true
 	});
 
-	var _range2 = __webpack_require__(52);
-
-	var _range3 = _interopRequireDefault(_range2);
-
 	exports.default = function (h) {
 	  return h(
 	    'div',
@@ -2087,7 +2103,7 @@ module.exports =
 	        [h(
 	          'tr',
 	          null,
-	          [weekDays.map(function (day) {
+	          [this.weekDays.map(function (day) {
 	            return h('th', [day]);
 	          })]
 	        )]
@@ -2112,15 +2128,7 @@ module.exports =
 
 	var _Field2 = _interopRequireDefault(_Field);
 
-	var _moment = __webpack_require__(18);
-
-	var _moment2 = _interopRequireDefault(_moment);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var weekDays = (0, _range3.default)(0, 7).map(function (val, index) {
-	  return (0, _moment2.default)().weekday(index).format('ddd');
-	});
 
 /***/ },
 /* 64 */
@@ -2144,7 +2152,7 @@ module.exports =
 	        'date-render': dateRender
 	      },
 	      on: {
-	        change: function change(date) {
+	        'change': function change(date) {
 	          return _this.$emit('change', date);
 	        }
 	      }
@@ -2154,8 +2162,8 @@ module.exports =
 	};
 
 	var dateRender = function dateRender(h, _ref) {
-	  var props = _ref.props;
-	  var parent = _ref.parent;
+	  var props = _ref.props,
+	      parent = _ref.parent;
 
 	  var $calendar = parent;
 	  var $datepicker = parent.$parent;
@@ -2166,7 +2174,7 @@ module.exports =
 	        'uk-datepicker-table-disabled': $datepicker.isDisabled(props.date),
 	        'uk-datepicker-table-muted': props.date.month() !== $calendar.month || $datepicker.isDisabled(props.date)
 	      }, on: {
-	        click: function click() {
+	        'click': function click() {
 	          if (!$datepicker.isDisabled(props.date)) {
 	            $datepicker.toggle(props.date);
 	          }
@@ -2207,7 +2215,7 @@ module.exports =
 	          show: this.show
 	        },
 	        on: {
-	          clickOut: function clickOut(e) {
+	          'clickOut': function clickOut(e) {
 	            return _this.$emit('clickOut');
 	          }
 	        }
@@ -2487,9 +2495,9 @@ module.exports =
 	exports.default = {
 	  functional: true,
 	  render: function render(h, _ref) {
-	    var props = _ref.props;
-	    var parent = _ref.parent;
-	    var children = _ref.children;
+	    var props = _ref.props,
+	        parent = _ref.parent,
+	        children = _ref.children;
 
 	    return h('transition', {
 	      props: {
@@ -2680,8 +2688,8 @@ module.exports =
 	exports.default = {
 	  functional: true,
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var children = _ref.children;
+	    var parent = _ref.parent,
+	        children = _ref.children;
 
 	    return h('transition', {
 	      props: {
@@ -2804,7 +2812,7 @@ module.exports =
 	      attrs: { 'aria-hidden': this.show ? 'false' : 'true'
 	      },
 	      on: {
-	        click: function click(e) {
+	        'click': function click(e) {
 	          if (e.target !== _this.$el && _this.$el.contains(e.target)) {
 	            _this.$emit('clickIn', e);
 	          } else {
@@ -2843,8 +2851,8 @@ module.exports =
 	  functional: true,
 	  props: ['icon', 'page'],
 	  render: function render(h, _ref) {
-	    var props = _ref.props;
-	    var parent = _ref.parent;
+	    var props = _ref.props,
+	        parent = _ref.parent;
 
 	    var icon = h('i', { class: 'uk-icon-' + props.icon });
 	    return props.page ? h('a', { on: { click: function click(e) {
@@ -2867,8 +2875,8 @@ module.exports =
 	  functional: true,
 	  props: ['page'],
 	  render: function render(h, _ref) {
-	    var props = _ref.props;
-	    var parent = _ref.parent;
+	    var props = _ref.props,
+	        parent = _ref.parent;
 
 	    var isCurrent = props.page === parent.page;
 	    return h(
@@ -3085,7 +3093,7 @@ module.exports =
 	          show: this.show
 	        },
 	        on: {
-	          clickOut: function clickOut(e) {
+	          'clickOut': function clickOut(e) {
 	            return _this.$emit('clickOut');
 	          }
 	        }
@@ -3208,7 +3216,7 @@ module.exports =
 	        'a',
 	        {
 	          on: {
-	            click: function click(event) {
+	            'click': function click(event) {
 	              event.preventDefault();
 	              if (!_this.disabled && !_this.active) {
 	                _this.$parent.$emit('change', _this.index);
@@ -3305,9 +3313,9 @@ module.exports =
 	  functional: true,
 	  props: ['row', 'field'],
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var props = _ref.props;
-	    var data = _ref.data;
+	    var parent = _ref.parent,
+	        props = _ref.props,
+	        data = _ref.data;
 
 	    if (props.field.render !== undefined) {
 	      return h({
@@ -3346,8 +3354,8 @@ module.exports =
 	  functional: true,
 	  props: ['field'],
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var props = _ref.props;
+	    var parent = _ref.parent,
+	        props = _ref.props;
 
 	    var orderedBy = parent.sortOrder[props.field.name];
 	    var icon = h(
@@ -3366,7 +3374,7 @@ module.exports =
 	          'vk-table-order': props.field.sortBy,
 	          'uk-active': orderedBy
 	        }, props.field.headerClass, props.field.headerClass), on: {
-	          click: function click(e) {
+	          'click': function click(e) {
 	            return props.field.sortBy && parent.emitSort(props.field);
 	          }
 	        }
@@ -3404,15 +3412,15 @@ module.exports =
 	  functional: true,
 	  props: ['row'],
 	  render: function render(h, _ref) {
-	    var parent = _ref.parent;
-	    var props = _ref.props;
+	    var parent = _ref.parent,
+	        props = _ref.props;
 
 	    var rowId = props.row[parent.trackBy];
 	    return h(
 	      'tr',
 	      {
 	        on: {
-	          click: function click(e) {
+	          'click': function click(e) {
 	            if (e.target.tagName === 'TD') {
 	              triggerChangeEvent(parent, props.row);
 	            }
@@ -3778,7 +3786,7 @@ module.exports =
 	        'a',
 	        {
 	          on: {
-	            click: function click(event) {
+	            'click': function click(event) {
 	              event.preventDefault();
 	              if (!_this.disabled) {
 	                _this.$parent.$emit('change', _this.index);
@@ -3940,7 +3948,7 @@ module.exports =
 	  value: true
 	});
 
-	var _moment = __webpack_require__(18);
+	var _moment = __webpack_require__(20);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
@@ -4096,14 +4104,14 @@ module.exports =
 
 	var _symbol2 = _interopRequireDefault(_symbol);
 
-	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj; };
+	var _typeof = typeof _symbol2.default === "function" && typeof _iterator2.default === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj; };
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.default) === "symbol" ? function (obj) {
 	  return typeof obj === "undefined" ? "undefined" : _typeof(obj);
 	} : function (obj) {
-	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
+	  return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 	};
 
 /***/ },
@@ -4300,7 +4308,7 @@ module.exports =
 
 	'use strict';
 	var create         = __webpack_require__(45)
-	  , descriptor     = __webpack_require__(19)
+	  , descriptor     = __webpack_require__(18)
 	  , setToStringTag = __webpack_require__(27)
 	  , IteratorPrototype = {};
 
@@ -4339,7 +4347,7 @@ module.exports =
 /* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var META     = __webpack_require__(20)('meta')
+	var META     = __webpack_require__(19)('meta')
 	  , isObject = __webpack_require__(15)
 	  , has      = __webpack_require__(6)
 	  , setDesc  = __webpack_require__(7).f
@@ -4416,7 +4424,7 @@ module.exports =
 /***/ function(module, exports, __webpack_require__) {
 
 	var pIE            = __webpack_require__(26)
-	  , createDesc     = __webpack_require__(19)
+	  , createDesc     = __webpack_require__(18)
 	  , toIObject      = __webpack_require__(8)
 	  , toPrimitive    = __webpack_require__(32)
 	  , has            = __webpack_require__(6)
@@ -4646,7 +4654,7 @@ module.exports =
 	  , $fails         = __webpack_require__(14)
 	  , shared         = __webpack_require__(29)
 	  , setToStringTag = __webpack_require__(27)
-	  , uid            = __webpack_require__(20)
+	  , uid            = __webpack_require__(19)
 	  , wks            = __webpack_require__(2)
 	  , wksExt         = __webpack_require__(34)
 	  , wksDefine      = __webpack_require__(33)
@@ -4656,7 +4664,7 @@ module.exports =
 	  , anObject       = __webpack_require__(12)
 	  , toIObject      = __webpack_require__(8)
 	  , toPrimitive    = __webpack_require__(32)
-	  , createDesc     = __webpack_require__(19)
+	  , createDesc     = __webpack_require__(18)
 	  , _create        = __webpack_require__(45)
 	  , gOPNExt        = __webpack_require__(125)
 	  , $GOPD          = __webpack_require__(124)
@@ -5507,7 +5515,7 @@ module.exports =
 /* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.3.7 */
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.0 */
 
 	(function(root, factory) {
 	  if (true) {
@@ -5617,7 +5625,7 @@ module.exports =
 	  // are equivilant or not.  We place an element at the top left of the page that will
 	  // get the same jitter, so we can cancel the two out.
 	  var node = zeroElement;
-	  if (!node) {
+	  if (!node || !document.body.contains(node)) {
 	    node = document.createElement('div');
 	    node.setAttribute('data-tether-id', uniqueId());
 	    extend(node.style, {
@@ -6756,20 +6764,24 @@ module.exports =
 	      }
 
 	      if (!moved) {
-	        var offsetParentIsBody = true;
-	        var currentNode = this.element.parentNode;
-	        while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
-	          if (getComputedStyle(currentNode).position !== 'static') {
-	            offsetParentIsBody = false;
-	            break;
+	        if (this.options.bodyElement) {
+	          this.options.bodyElement.appendChild(this.element);
+	        } else {
+	          var offsetParentIsBody = true;
+	          var currentNode = this.element.parentNode;
+	          while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
+	            if (getComputedStyle(currentNode).position !== 'static') {
+	              offsetParentIsBody = false;
+	              break;
+	            }
+
+	            currentNode = currentNode.parentNode;
 	          }
 
-	          currentNode = currentNode.parentNode;
-	        }
-
-	        if (!offsetParentIsBody) {
-	          this.element.parentNode.removeChild(this.element);
-	          this.element.ownerDocument.body.appendChild(this.element);
+	          if (!offsetParentIsBody) {
+	            this.element.parentNode.removeChild(this.element);
+	            this.element.ownerDocument.body.appendChild(this.element);
+	          }
 	        }
 	      }
 
