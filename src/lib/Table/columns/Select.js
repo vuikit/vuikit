@@ -47,17 +47,13 @@ export default {
   },
   methods: {
     getRowId (row) {
-      if (this.trackBy) {
-        if (row[this.trackBy] !== undefined) {
-          return row[this.trackBy]
-        } else {
-          warn && warn(`VkTable - The selection of the rows could fail as some
-            data rows are missing the trackBy field.`)
-          return this.$parent.data.indexOf(row)
-        }
-      } else {
-        this.$parent.data.indexOf(row)
+      if (warn && this.trackBy && row[this.trackBy] === undefined) {
+        warn(`VkTable - The selection of the rows could fail as some
+          data rows are missing the trackBy field.`)
       }
+      return this.trackBy
+        ? row[this.trackBy]
+        : this.$parent.data.indexOf(row)
     },
     isAllSelected () {
       return this.$parent.data.length && this.$parent.data.every(row => this.isSelected(row))
