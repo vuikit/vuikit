@@ -1,6 +1,7 @@
 import Moment from 'moment'
 import render from './render'
 import momentMixin from '../mixins/moment'
+import { range } from 'lodash'
 import {
   validDate,
   getCalendarMatrix,
@@ -117,6 +118,11 @@ export default {
         }
       })
       return months
+    },
+    weekDays () {
+      return range(0, 7).map((val, index) =>
+        Moment().weekday(index).format('ddd')
+      )
     }
   },
   methods: {
