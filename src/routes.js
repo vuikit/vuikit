@@ -75,14 +75,6 @@ export default [
     }
   },
   {
-    name: 'Picker',
-    path: '/picker',
-    component: require('./pages/Picker'),
-    meta: {
-      section: 'Data'
-    }
-  },
-  {
     name: 'Calendar',
     path: '/calendar',
     component: require('./pages/Calendar'),
@@ -158,14 +150,6 @@ export default [
   },
   // EXAMPLES
   {
-    name: 'Picker in Dropdown',
-    path: '/example-picker-dropdown',
-    component: require('./pages/example/PickerDropdown'),
-    meta: {
-      section: 'Examples'
-    }
-  },
-  {
     name: 'Datepicker in Dropdown',
     path: '/example-datepicker-dropdown',
     component: require('./pages/example/DatepickerDropdown'),
@@ -177,6 +161,14 @@ export default [
     name: 'Modal as Confirm',
     path: '/example-modal-confirm',
     component: require('./pages/example/ModalConfirm'),
+    meta: {
+      section: 'Examples'
+    }
+  },
+  {
+    name: 'Pickable Data',
+    path: '/example-pickable-table',
+    component: require('./pages/example/PickableTable'),
     meta: {
       section: 'Examples'
     }

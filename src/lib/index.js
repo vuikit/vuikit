@@ -11,7 +11,6 @@ import Dropdown from './Dropdown'
 import Modal from './Modal'
 import Offcanvas from './Offcanvas'
 import Pagination from './Pagination'
-import Picker from './Picker'
 import Subnav from './Subnav'
 import SubnavItem from './SubnavItem'
 import Switcher from './Switcher'
@@ -40,7 +39,6 @@ const Vuikit = {
   Modal,
   Offcanvas,
   Pagination,
-  Picker,
   Subnav,
   SubnavItem,
   Switcher,

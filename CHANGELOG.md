@@ -7,6 +7,7 @@
  - Added VkTooltip
  - Refactored VkTable with a new column declaration approach (braking changes)
  - Refactored VkDropdown to use Popper.js instead of Tether
+ - Removed VKPicker
  - Removed VkPickerDrop
  - Removed VkDatepickerDrop
  - Removed support for inbuilt HTML ARIA declarations
