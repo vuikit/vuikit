@@ -1,6 +1,6 @@
 # Changelog
 
-### WIP
+### 0.6.1
 
  - Fix Calendar week firstDay
 
