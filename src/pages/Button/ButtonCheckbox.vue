@@ -79,6 +79,7 @@ const props = {
   group: {
     description: 'Whether to display the buttons grouped together.',
     demo: {
+      type: 'Boolean',
       value: true
     }
   }
