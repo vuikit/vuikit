@@ -2,19 +2,21 @@
 
 ### WIP
 
- - Transition to Vue 2.1
+ - Raised Vue minimum version to 2.1
  - Added VkNotify
  - Added VkTooltip
- - Refactored VkTable with a new column declaration approach (braking changes)
+ - Refactored VkTable (braking changes) with a new column declaration approach
  - Refactored VkDropdown to use Popper.js instead of Tether
  - Removed VKPicker
  - Removed VkPickerDrop
  - Removed VkDatepickerDrop
  - Removed support for inbuilt HTML ARIA declarations
 
+*Note*: check Docs new section Examples for alternatives on removed components
+
 ### 0.6.0
 
- - Transition to Vue 2
+ - Raised Vue minimum version to 2.0
  - Refactored all components (braking changes)
  - Removed VkFilter
 
