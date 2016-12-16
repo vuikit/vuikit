@@ -17,7 +17,8 @@ module.exports = merge(baseWebpackConfig, {
   devtool: '#eval-source-map',
   plugins: [
     new LodashModuleReplacementPlugin({
-      'collections': true
+      'collections': true,
+      'paths': true
     }),
     new webpack.DefinePlugin({
       'process.env': config.dev.env

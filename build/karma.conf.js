@@ -6,7 +6,7 @@ delete webpackConf.entry
 
 module.exports = function (config) {
   config.set({
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
     frameworks: ['jasmine'],
     reporters: ['spec'],
     // this is the entry file for all our tests.
