@@ -1,7 +1,7 @@
 <template>
   <vk-table
     track-by="id"
-    :fields="tableFields"
+    :data="tableFields"
     :rows="rows">
   </vk-table>
 </template>

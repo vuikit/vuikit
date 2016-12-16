@@ -159,24 +159,24 @@ export default [
   // EXAMPLES
   {
     name: 'Picker in Dropdown',
-    path: '/examples/picker-dropdown',
-    component: require('./pages/examples/PickerDropdown'),
+    path: '/example-picker-dropdown',
+    component: require('./pages/example/PickerDropdown'),
     meta: {
       section: 'Examples'
     }
   },
   {
     name: 'Datepicker in Dropdown',
-    path: '/examples/datepicker-dropdown',
-    component: require('./pages/examples/DatepickerDropdown'),
+    path: '/example-datepicker-dropdown',
+    component: require('./pages/example/DatepickerDropdown'),
     meta: {
       section: 'Examples'
     }
   },
   {
     name: 'Modal as Confirm',
-    path: '/examples/modal-confirm',
-    component: require('./pages/examples/ModalConfirm'),
+    path: '/example-modal-confirm',
+    component: require('./pages/example/ModalConfirm'),
     meta: {
       section: 'Examples'
     }
