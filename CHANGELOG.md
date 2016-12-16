@@ -1,5 +1,9 @@
 # Changelog
 
+### 0.6.2
+
+ - Update dist
+
 ### 0.6.1
 
  - Fix Calendar week firstDay
