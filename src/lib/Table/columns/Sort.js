@@ -50,10 +50,4 @@ export default {
       </th>
     )
   }
-
-  // cellRender (h, { row }) {
-  //   const cell = this.cell
-  //   const scopedSlot = this.$scopedSlots && this.$scopedSlots.cell
-  //   return (<td>{ scopedSlot ? scopedSlot({ row }) : row[cell] }</td>)
-  // }
 }
