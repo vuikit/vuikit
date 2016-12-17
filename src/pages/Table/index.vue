@@ -18,9 +18,9 @@
       <TableSort></TableSort>
     </div>
     <div class="uk-block">
-      <h2>Custom Layout</h2>
+      <h2>Scoped Slots</h2>
       <hr class="uk-article-divider">
-      <TableLayouts></TableLayouts>
+      <TableScopedSlots></TableScopedSlots>
     </div>
   </layouts-default>
 </template>
@@ -29,7 +29,7 @@
 import TableBasic from './Basic'
 import TableSelect from './Select'
 import TableSort from './Sort'
-import TableLayouts from './Layouts'
+import TableScopedSlots from './ScopedSlots'
 
 export default {
   name: 'PageTable',
@@ -37,7 +37,7 @@ export default {
     TableBasic,
     TableSelect,
     TableSort,
-    TableLayouts
+    TableScopedSlots
   }
 }
 </script>
