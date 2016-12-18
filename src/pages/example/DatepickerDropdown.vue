@@ -5,29 +5,26 @@
       <hr class="uk-article-divider">
       <!-- DEMO -->
       <div class="uk-form">
-        <input id="target"
+        <input ref="input"
           type="text"
           placeholder="Pick a date"
           v-model="date"
           @focus="show = true">
         <vk-dropdown
-          target="#target"
+          :target="$refs.input"
           :show="show"
           @clickOut="show = false">
           <vk-datepicker class="uk-margin-remove"
-            :year="year"
-            :month="month"
-            :dates="date
+            :date="date || new Date()"
+            :pickedDates="date
               ? [date]
-              : []"
-            @pick="
-              date = arguments[0].format('YYYY-MM-DD'),
-              show = false
+              : []
             "
-            @change="
-              year = arguments[0].year(),
-              month = arguments[0].month()
-            ">
+            @pick="(date, format) => {
+              $data.date = format(date, 'YYYY-MM-DD')
+              show = false
+            }"
+            @change="date => { $data.date = date }">
           </vk-datepicker>
         </vk-dropdown>
       </div>
@@ -50,36 +47,31 @@ export default {
   data: () => ({
     show: false,
     date: '',
-    year: undefined,
-    month: undefined,
     example
   })
 }
 
 const example =
-`<input id="target"
+`<input ref="input"
   type="text"
   placeholder="Pick a date"
   v-model="date"
   @focus="show = true">
 <vk-dropdown
-  target="#target"
+  :target="$refs.input"
   :show="show"
   @clickOut="show = false">
   <vk-datepicker class="uk-margin-remove"
-    :year="year"
-    :month="month"
-    :dates="date
+    :date="date || new Date()"
+    :pickedDates="date
       ? [date]
-      : []"
-    @pick="
-      date = arguments[0].format('YYYY-MM-DD'),
-      show = false
+      : []
     "
-    @change="
-      year = arguments[0].year(),
-      month = arguments[0].month()
-    ">
+    @pick="(date, format) => {
+      $data.date = format(date, 'YYYY-MM-DD')
+      show = false
+    }"
+    @change="date => { $data.date = date }">
   </vk-datepicker>
 </vk-dropdown>`
 </script>

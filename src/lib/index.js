@@ -3,7 +3,6 @@ import BreadcrumbItem from './BreadcrumbItem'
 import Button from './Button'
 import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'
-import Calendar from './Calendar'
 import Datepicker from './Datepicker'
 import Notify from './Notify'
 import NotifyMessage from './NotifyMessage'
@@ -31,7 +30,6 @@ const Vuikit = {
   Button,
   ButtonCheckbox,
   ButtonRadio,
-  Calendar,
   Datepicker,
   Notify,
   NotifyMessage,

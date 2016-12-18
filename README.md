@@ -17,7 +17,6 @@ There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io
 ## Dependencies
 
 - [Vue](http://vuejs.org/) (^2.1.0)
-- [Moment](http://momentjs.com/) (^2.14.1) - Only required by VkCalendar
 
 ## Code Samples
 > Note that all code examples are using ES6 syntax

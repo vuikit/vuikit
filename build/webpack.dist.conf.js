@@ -15,8 +15,7 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     'vuikit': './src/lib/'
   },
   externals: {
-    vue: 'vue',
-    moment: 'moment'
+    vue: 'vue'
   },
   module: {
     loaders: utils.styleLoaders({ sourceMap: config.build.productionSourceMap, extract: true })
@@ -41,9 +40,7 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     new webpack.BannerPlugin(config.build.banner, {
       raw: true,
       entryOnly: true
-    }),
-    // workaround to exclude moment.js locales
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+    })
   ]
 })
 

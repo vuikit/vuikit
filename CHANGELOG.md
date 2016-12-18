@@ -7,10 +7,13 @@
  - Added VkTooltip
  - Refactored VkTable (braking changes) with a new column declaration approach
  - Refactored VkDropdown to use Popper.js instead of Tether
+ - Refactored VkDatepicker with date-fns
  - Removed VKPicker
  - Removed VkPickerDrop
  - Removed VkDatepickerDrop
+ - Removed Calendar
  - Removed support for inbuilt HTML ARIA declarations
+ - Removed Moment.js dependency
 
 *Note*: check Docs new section Examples for alternatives on removed components
 

@@ -75,14 +75,6 @@ export default [
     }
   },
   {
-    name: 'Calendar',
-    path: '/calendar',
-    component: require('./pages/Calendar'),
-    meta: {
-      section: 'Data'
-    }
-  },
-  {
     name: 'Datepicker',
     path: '/datepicker',
     component: require('./pages/Datepicker'),

@@ -76,6 +76,13 @@ function _toArray (list, start) {
   return ret
 }
 
+/**
+ * Returns an array range from 0 to n
+ */
+export function range (length) {
+  return Array.apply(undefined, { length }).map(Number.call, Number)
+}
+
 export function each (obj, iterator) {
   var i, key
   if (typeof obj.length === 'number') {
