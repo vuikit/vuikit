@@ -2,24 +2,54 @@
  * Utility functions
  */
 
+/**
+ * Quick object check - this is primarily used to tell
+ * Objects from primitive values when we know the value
+ * is a JSON-compliant type.
+ */
 export function isObject (obj) {
   return obj !== null && typeof obj === 'object'
 }
 
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects.
+ */
+const toString = Object.prototype.toString
+const OBJECT_STRING = '[object Object]'
 export function isPlainObject (obj) {
-  return isObject(obj) && Object.getPrototypeOf(obj) === Object.prototype
+  return toString.call(obj) === OBJECT_STRING
 }
 
+/**
+ * Check if value is plain string
+ */
 export function isString (val) {
   return typeof val === 'string'
 }
 
+/**
+ * Check if value is plain integer
+ */
+export function isInteger (val) {
+  return Number.isInteger(val)
+}
+
+/**
+ * Check if value is plain function
+ */
 export function isFunction (val) {
   return typeof val === 'function'
 }
 
+/**
+ * Check if value is plain array
+ */
 export const isArray = Array.isArray
 
+/**
+ * Check if value is in array
+ */
 export function inArray (array, value) {
   return (array || []).indexOf(value) !== -1
 }
