@@ -1,16 +1,14 @@
 <template>
-  <transition :name="transition">
-    <div v-show="active" class="uk-tooltip" :class="classes">
-      <div class="uk-tooltip-inner">
-        <slot></slot>
-      </div>
+  <transition :name="transition" @afterLeave="remove">
+    <div v-show="active" class="uk-tooltip" :class="placementClass">
+      <div class="uk-tooltip-inner" v-text="content" />
     </div>
   </transition>
 </template>
 
 <script>
 import Popper from 'popper.js'
-import { on, offAll } from '../helpers/dom'
+import { on, offAll } from 'src/helpers/dom'
 
 let onMouseEnter
 let onMouseLeave
@@ -25,7 +23,8 @@ const POSITION_MIRROR = {
 export default {
   name: 'VkTooltip',
   props: {
-    target: {
+    target: true,
+    content: {
       type: String,
       default: ''
     },
@@ -39,7 +38,7 @@ export default {
     },
     transition: {
       type: String,
-      default: ''
+      default: 'vk-tooltip-transition'
     }
   },
   data: () => ({
@@ -57,34 +56,24 @@ export default {
         }
       }
     },
-    classes () {
-      const placement = this.placement.split('-')
-      let position = placement[0]
-      if (this.flipped) {
-        position = POSITION_MIRROR[placement[0]]
-      }
-      if (placement[1]) {
-        position += '-' + placement[1]
-          .replace('start', 'left')
-          .replace('end', 'right')
-      }
-      return {
-        'uk-active': this.active,
-        [`uk-tooltip-${position}`]: true
-      }
+    placementClass () {
+      return `uk-tooltip-${this.convertPlacement(this.placement, this.fixed)}`
+    },
+    targetElement () {
+      // defaults to originalParentEl which remains
+      // even when the dom changes it ubication
+      return this.target || this.$options._parentElm
     }
   },
   mounted () {
-    // save the target reference
-    this.$targetElement = this.target
-      ? this.$vnode.context.$refs[this.target] || document.querySelector(this.target)
-      : this.$el.parentNode
+    // initially the tooltip is off document
+    this.remove()
 
     onMouseEnter = () => {
       document.body.appendChild(this.$el)
       this.active = true
       this.$emit('show')
-      new Popper(this.$targetElement, this.$el, this.popperOptions)
+      new Popper(this.targetElement, this.$el, this.popperOptions)
         .onCreate(data => { this.flipped = data.flipped })
         .onUpdate(data => { this.flipped = data.flipped })
     }
@@ -92,21 +81,17 @@ export default {
     onMouseLeave = () => {
       this.active = false
       offAll(this.$el, this._uid)
-      this.remove()
       this.$emit('hide')
     }
 
-    on(this.$targetElement, 'mouseenter', onMouseEnter, this._uid)
-    on(this.$targetElement, 'focus', onMouseEnter, this._uid)
-    on(this.$targetElement, 'mouseleave', onMouseLeave, this._uid)
-    on(this.$targetElement, 'blur', onMouseLeave, this._uid)
-
-    // remove tooltip from dom at start
-    this.remove()
+    on(this.targetElement, 'mouseenter', onMouseEnter, this._uid)
+    on(this.targetElement, 'focus', onMouseEnter, this._uid)
+    on(this.targetElement, 'mouseleave', onMouseLeave, this._uid)
+    on(this.targetElement, 'blur', onMouseLeave, this._uid)
   },
   beforeDestroy () {
-    if (this.$targetElement) {
-      offAll(this.$targetElement, this._uid)
+    if (this.targetElement) {
+      offAll(this.targetElement, this._uid)
     }
     this.active = false
     this.remove()
@@ -116,6 +101,19 @@ export default {
       if (this.$el.parentNode) {
         this.$el.parentNode.removeChild(this.$el)
       }
+    },
+    convertPlacement (dirtyPlacement, flipped) {
+      dirtyPlacement = dirtyPlacement.split('-')
+      let placement = dirtyPlacement[0]
+      if (flipped) {
+        placement = POSITION_MIRROR[dirtyPlacement[0]]
+      }
+      if (dirtyPlacement[1]) {
+        placement += '-' + dirtyPlacement[1]
+          .replace('start', 'left')
+          .replace('end', 'right')
+      }
+      return placement
     }
   }
 }

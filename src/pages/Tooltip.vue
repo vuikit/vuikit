@@ -1,60 +1,48 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Tooltip</h2>
-      <hr class="uk-article-divider">
+    <h1>Tooltip</h1>
+    Display prompt information on mouse hover.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <!-- DEMO -->
-      <button class="uk-button">
+      <vk-button>
         Hover me
         <vk-tooltip
+          content="Tooltip 1"
           :placement="props.placement.demo.value"
           :offset="props.offset.demo.value"
-          :delay="props.delay.demo.value"
           :transition="props.transition.demo.value"
           @show="events.show.emited = true"
-          @hide="events.hide.emited = true">
-          Tooltip 1
-        </vk-tooltip>
-      </button>
-      <span ref="span">
+          @hide="events.hide.emited = true" />
+      </vk-button>
+      <span ref="spanref">
         Hover me
         <vk-tooltip
-          target="span"
+          content="Tooltip 2"
           :placement="props.placement.demo.value"
           :offset="props.offset.demo.value"
-          :delay="props.delay.demo.value"
           :transition="props.transition.demo.value"
           @show="events.show.emited = true"
-          @hide="events.hide.emited = true">
-          Tooltip 2
-        </vk-tooltip>
+          @hide="events.hide.emited = true" />
       </span>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-tooltip</code> component renders UIkit Tooltip style tooltips
-        using Popper.js for the positioning.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tabs-item>
-        <vk-tabs-item name="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
-      </vk-tabs>
     </div>
+    <!-- TABS -->
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Props">
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
+      </vk-tabs-item>
+      <vk-tabs-item name="Events">
+        <vk-docs-events :events="events"></vk-docs-events>
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tabs-item>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -69,7 +57,6 @@ export default {
   data: () => ({
     tabsIndex: 0,
     props: mergeProps(Component.props, props),
-    slots,
     events,
     example
   })
@@ -77,9 +64,8 @@ export default {
 
 const props = {
   target: {
-    description: `The Vue reference or dom query for the element to which the
-      tooltip should be attached to. If omited the <code>$parent.$el</code>
-      will be used.`
+    description: `The element reference to which the tooltip should be attached to.
+      Defaults to parent node element.`
   },
   placement: {
     description: 'Specifies the placement point of the tooltip.',
@@ -114,36 +100,17 @@ const props = {
       value: '0 5'
     }
   },
-  delay: {
-    description: 'Specifies the tooltip delay in ms.',
-    demo: {
-      type: 'Select',
-      options: [
-        { text: '0', value: 0 },
-        { text: '300', value: 300 },
-        { text: '500', value: 500 },
-        { text: '1000', value: 1000 }
-      ],
-      value: 0
-    }
-  },
   transition: {
-    description: `Specifies the transition name to be used by the transition
-      wrapper component.`,
+    description: `The name prefix to be applied to the <a href="https://vuejs.org/v2/guide/transitions.html#Transition-Classes">
+      transition classes</a>.`,
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: '' },
+        { text: 'Default', value: 'vk-tooltip-transition' },
         { text: 'Fade', value: 'vk-transition-fade' }
       ],
-      value: ''
+      value: 'vk-transition-fade'
     }
-  }
-}
-
-const slots = {
-  default: {
-    description: 'The container for the tooltip content.'
   }
 }
 
@@ -159,10 +126,8 @@ const events = {
 }
 
 const example =
-`<span>
+`<button>
   Hover me
-  <vk-tooltip {attrs}>
-    Content
-  </vk-tooltip>
-</span>`
+  <vk-tooltip content="Content" />
+</button>`
 </script>

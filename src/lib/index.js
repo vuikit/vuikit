@@ -55,7 +55,11 @@ const Vuikit = {
     keys.pop() // remove 'install' from keys
     let i = keys.length
     while (i--) {
-      Vue.component(`Vk${keys[i]}`, this[keys[i]])
+      if (this[keys[i]].bind) {
+        Vue.directive(`Vk${keys[i]}`, this[keys[i]])
+      } else {
+        Vue.component(`Vk${keys[i]}`, this[keys[i]])
+      }
     }
   }
 }
