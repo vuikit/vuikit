@@ -1,10 +1,9 @@
 <template>
-  <transition name="transition">
+  <transition :name="transition">
     <div v-show="show" :class="{
       'uk-dropdown': !blank,
       'uk-dropdown-blank': blank,
-      'uk-dropdown-small': !fixWidth,
-      'uk-dropdown-scrollable': scrollable
+      'uk-dropdown-small': expand
     }">
       <slot></slot>
     </div>
@@ -17,113 +16,111 @@ import { on, offAll } from '../helpers/dom'
 
 let onClick
 let onTargetClick
-let onMouseEnter
-let onMouseLeave
+let onTargetMouseenter
+let onTargetMouseleave
 
 export default {
   name: 'VkDropdown',
   props: {
+    target: true,
     show: {
       type: Boolean,
       default: false
     },
-    target: {
-      type: String,
-      default: ''
-    },
     placement: {
       type: String,
-      default: 'bottom-start'
+      default: 'bottom-start' // position[-start|-end]
+    },
+    offset: {
+      type: String,
+      default: '0 5'
+    },
+    transition: {
+      type: String,
+      default: 'vk-dropdown-transition'
     },
     blank: {
       type: Boolean,
       default: false
     },
-    fixWidth: {
+    expand: {
       type: Boolean,
       default: false
-    },
-    transition: {
-      type: String,
-      default: ''
-    },
-    scrollable: {
-      type: Boolean,
-      default: false
-    },
-    offset: {
-      type: String,
-      default: '0 5'
     }
   },
   data: () => ({
     flipped: false
   }),
   computed: {
-    popperOptions () {
-      return {
+    targetElement () {
+      // defaults to originalParentEl which remains
+      // even when the dom changes it ubication
+      return this.target || this.$options._parentElm
+    }
+  },
+  beforeUpdate () {
+    // update popper
+    this.$popper.options.placement = this.placement
+    this.$popper.options.modifiers.offset.offset = this.offset
+    this.$popper.update()
+  },
+  mounted () {
+    // move dom to body
+    document.body.appendChild(this.$el)
+
+    // init popper
+    this.$popper = new Popper(
+      this.targetElement,
+      this.$el,
+      {
         placement: this.placement,
         modifiers: {
           offset: {
             offset: this.offset
           }
         }
-      }
-    }
-  },
-  watch: {
-    show () {
-      new Popper(this.$targetElement, this.$el, this.popperOptions)
-        .onCreate(data => { this.flipped = data.flipped })
-        .onUpdate(data => { this.flipped = data.flipped })
-    }
-  },
-  mounted () {
-    // save the target reference
-    this.$targetElement = this.target
-      ? this.$vnode.context.$refs[this.target] || document.querySelector(this.target)
-      : this.$el.parentNode
-    // init popper
-    document.body.appendChild(this.$el)
+      })
+    .onCreate(data => { this.flipped = data.flipped })
+    .onUpdate(data => { this.flipped = data.flipped })
 
-    onTargetClick = event => {
-      this.$emit('targetClick', event)
+    onTargetClick = e => {
+      this.$emit('targetClick', e)
     }
 
-    onMouseEnter = event => {
+    onTargetMouseenter = e => {
       // ignore childs triggers
-      if (this.$targetElement.contains(event.fromElement)) {
+      if (this.targetElement.contains(e.fromElement)) {
         return
       }
-      this.$emit('targetHoverIn', event)
+      this.$emit('targetMouseenter', e)
     }
 
-    onMouseLeave = event => {
+    onTargetMouseleave = e => {
       // ignore childs triggers
-      if (event.relatedTarget === this.$targetElement || this.$targetElement.contains(event.relatedTarget)) {
+      if (e.relatedTarget === this.targetElement || this.targetElement.contains(e.relatedTarget)) {
         return
       }
-      this.$emit('targetHoverOut', event)
+      this.$emit('targetMouseleave', e)
     }
 
-    onClick = event => {
+    onClick = e => {
       if (this.show) {
         // clicking target
-        if (event.target === this.$targetElement || this.$targetElement.contains(event.target)) {
+        if (e.target === this.targetElement || this.targetElement.contains(e.target)) {
           return
         }
         // click in/out dropdown
-        if (event.target === this.$el || this.$el.contains(event.target)) {
-          this.$emit('clickIn', event)
+        if (e.target === this.$el || this.$el.contains(e.target)) {
+          this.$emit('clickIn', e)
         } else {
-          this.$emit('clickOut', event)
+          this.$emit('clickOut', e)
         }
       }
     }
 
-    on(this.$targetElement, 'mouseenter', onMouseEnter, this._uid)
-    on(this.$targetElement, 'mouseleave', onMouseLeave, this._uid)
-    on(this.$targetElement, 'click', onTargetClick, this._uid)
+    on(this.targetElement, 'mouseenter', onTargetMouseenter, this._uid)
+    on(this.targetElement, 'mouseleave', onTargetMouseleave, this._uid)
+    on(this.targetElement, 'click', onTargetClick, this._uid)
     on(document, 'click', onClick, this._uid)
     if ('ontouchstart' in document.documentElement) {
       on(document, 'touchstart', onClick, this._uid)

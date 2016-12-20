@@ -1,9 +1,9 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Dropdown</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Dropdown</h1>
+    Display a toggleable dropdown.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-button>
         Toggle
         <i class="uk-icon-caret-down"></i>
@@ -11,54 +11,42 @@
           :show="props.show.demo.value"
           :placement="props.placement.demo.value"
           :transition="props.transition.demo.value"
-          :offset="props.offset.demo.value"
           :blank="props.blank.demo.value"
-          :fix-width="props.fixWidth.demo.value"
-          :scrollable="props.scrollable.demo.value"
+          :expand="props.expand.demo.value"
           @clickIn="events.clickIn.emited = true"
           @clickOut="
-            props.show.demo.value = false,
             events.clickOut.emited = true
           "
           @targetClick="
             props.show.demo.value = !props.show.demo.value,
             events.targetClick.emited = true
           "
-          @targetHoverIn="events.targetHoverIn.emited = true"
-          @targetHoverOut="events.targetHoverOut.emited = true">
-          <ul class="uk-nav uk-nav-dropdown">
-            <li class="uk-nav-header">Header</li>
-            <li><a href="#" @click.prevent>Item</a></li>
-            <li><a href="#" @click.prevent>Another item</a></li>
-          </ul>
+          @targetMouseenter="events.targetMouseenter.emited = true"
+          @targetMouseleave="events.targetMouseleave.emited = true">
+          Any content can be placed here, even another component.
         </vk-dropdown>
       </vk-button>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-dropdown</code> component renders a UIkit dropdown using Popper.js
-        for the positioning.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tabs-item>
-        <vk-tabs-item name="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
-      </vk-tabs>
     </div>
+    <!-- TABS -->
+    <vk-tabs
+      :index="tabsIndex"
+      @change="tabsIndex = arguments[0]">
+      <vk-tabs-item name="Props">
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
+      </vk-tabs-item>
+      <vk-tabs-item name="Slots">
+        <vk-docs-slots :slots="slots"></vk-docs-slots>
+      </vk-tabs-item>
+      <vk-tabs-item name="Events">
+        <vk-docs-events :events="events"></vk-docs-events>
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tabs-item>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -81,13 +69,13 @@ export default {
 
 const props = {
   target: {
-    description: `The Vue reference or dom query for the element to which the
-      dropdown should be attached to. If omited the <code>$parent.$el</code>
-      will be used.`
+    description: `The element reference to which the tooltip should be attached to.
+      Defaults to parent node element.`
   },
   show: {
     description: 'Display state that when toggled will hide/show the dropdown.',
     demo: {
+      type: 'Boolean',
       value: false
     }
   },
@@ -118,40 +106,28 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'Default', value: '' },
+        { text: 'Default', value: 'vk-dropdown-transition' },
         { text: 'Fade', value: 'vk-transition-fade' }
       ],
-      value: ''
+      value: 'vk-transition-fade'
     }
   },
   offset: {
     description: `The dropdown attachment point offset with <code>vertical horizontal</code> syntax.
-      Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '0 0' },
-        { text: '10px 10px', value: '10px 10px' },
-        { text: '-10px -10px', value: '-10px -10px' }
-      ],
-      value: '0 5'
-    }
+      Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`
   },
   blank: {
     description: 'Wheter to render the dropdown without any styling.',
     demo: {
+      type: 'Boolean',
       value: false
     }
   },
-  fixWidth: {
-    description: 'Wether to set a dropdown fixed width and wrap its text content into the next line.',
+  expand: {
+    description: `By default the dropdown width is limited by the theme, set this options to
+      true in order to remove that limit.`,
     demo: {
-      value: false
-    }
-  },
-  scrollable: {
-    description: 'Whether to give the dropdown a fixed height and enable its content to scroll.',
-    demo: {
+      type: 'Boolean',
       value: false
     }
   }
@@ -176,24 +152,21 @@ const events = {
     description: 'Emited when a click is made on the target.',
     emited: false
   },
-  targetHoverIn: {
+  targetMouseenter: {
     description: 'Emited when a mouse enter the target hover area.',
     emited: false
   },
-  targetHoverOut: {
+  targetMouseleave: {
     description: 'Emited when a mouse left the target hover area.',
     emited: false
   }
 }
 
 const example =
-`<vk-button id="target"
-  @click.native="show = !show">
+`<button @click="show = !show">
   Toggle
-</vk-button>
-<vk-dropdown {attrs}
-  target="#target"
-  :show="show">
-  Dropdown
-</vk-dropdown>`
+  <vk-dropdown :show="show">
+    Dropdown
+  </vk-dropdown>
+</button>`
 </script>

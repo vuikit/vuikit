@@ -6,7 +6,7 @@
  - Added VkNotify
  - Added VkTooltip
  - Refactored VkTable (braking changes) with a new column declaration approach
- - Refactored VkDropdown to use Popper.js instead of Tether
+ - Refactored VkDropdown (braking changes)
  - Refactored VkDatepicker with date-fns
  - Removed VKPicker
  - Removed VkPickerDrop
