@@ -1,5 +1,14 @@
+<template>
+  <div :class="{
+    'uk-button-group': group
+  }">
+    <slot></slot>
+  </div>
+</template>
+
 <script>
-import { each, inArray } from '../helpers/util'
+import { each, inArray } from 'src/helpers/util'
+import { filterByTag, getProps } from 'src/helpers/component'
 
 export default {
   name: 'VkButtonCheckbox',
@@ -13,21 +22,11 @@ export default {
       default: true
     }
   },
-  render (h) {
-    // override button props
-    each(this.$slots.default, node => {
-      if (node.componentOptions) {
-        const button = node.componentOptions.propsData
-        button.active = inArray(this.value, button.value)
-      }
-    })
-    return (
-      <div class={{
-        'uk-button-group': this.group
-      }}>{
-        this.$slots.default
-      }</div>
-    )
+  beforeMount () {
+    this.updateButtonsState()
+  },
+  beforeUpdate () {
+    this.updateButtonsState()
   },
   mounted () {
     each(this.$children, button => {
@@ -35,6 +34,12 @@ export default {
     })
   },
   methods: {
+    updateButtonsState () {
+      each(filterByTag(this.$slots.default, 'vk-button'), component => {
+        const props = getProps(component)
+        props.active = inArray(this.value, props.value)
+      })
+    },
     toggle (selected) {
       // recreate new value respecting buttons order
       const value = this.$children

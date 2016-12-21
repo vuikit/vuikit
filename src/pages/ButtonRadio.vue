@@ -1,46 +1,40 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Button Radio</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Button Radio</h1>
+    Display a radio like buttons composition.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-button-radio
         :group="props.group.demo.value"
         :value="props.value.demo.value"
-        @change="
-          events.change.emited = true,
-          props.value.demo.value = arguments[0]
-        ">
+        @change="value => {
+          events.change.emited = true
+          props.value.demo.value = value
+        }">
         <vk-button :value="1">Button 1</vk-button>
         <vk-button :value="2">Button 2</vk-button>
         <vk-button :value="3">Button 3</vk-button>
       </vk-button-radio>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-button-radio</code> component, acting like a radio form field,
-        allows toggling between a group of <code>vk-button</code> buttons.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tabs-item>
-        <vk-tabs-item name="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :index="tabsIndex"
+      @change="index => { tabsIndex = index }">
+      <vk-tabs-item name="Props">
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tabs-item>
+      <vk-tabs-item name="Slots">
+        <vk-docs-slots :slots="slots" />
+      </vk-tabs-item>
+      <vk-tabs-item name="Events">
+        <vk-docs-events :events="events" />
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tabs-item>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -98,8 +92,7 @@ const events = {
 }
 
 const example =
-`<vk-button-radio {attrs}
-  @change="value = arguments[0]">
+`<vk-button-radio @change="newValue => { value = newValue }">
   <vk-button :value="1">Button 1</vk-button>
   <vk-button :value="2">Button 2</vk-button>
   <vk-button :value="3">Button 3</vk-button>

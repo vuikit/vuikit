@@ -1,5 +1,14 @@
+<template>
+  <div :class="{
+    'uk-button-group': group
+  }">
+    <slot></slot>
+  </div>
+</template>
+
 <script>
-import { each } from '../helpers/util'
+import { each } from 'src/helpers/util'
+import { filterByTag, getProps } from 'src/helpers/component'
 
 export default {
   name: 'VkButtonRadio',
@@ -10,26 +19,24 @@ export default {
       default: true
     }
   },
-  render (h) {
-    // override button props
-    each(this.$slots.default, node => {
-      if (node.componentOptions) {
-        const button = node.componentOptions.propsData
-        button.active = button.value === this.value
-      }
-    })
-    return (
-      <div class={{
-        'uk-button-group': this.group
-      }}>{
-        this.$slots.default
-      }</div>
-    )
+  beforeMount () {
+    this.updateButtonsState()
+  },
+  beforeUpdate () {
+    this.updateButtonsState()
   },
   mounted () {
     each(this.$children, button => {
       button.$on('click', () => this.$emit('change', button.value))
     })
+  },
+  methods: {
+    updateButtonsState () {
+      each(filterByTag(this.$slots.default, 'vk-button'), component => {
+        const props = getProps(component)
+        props.active = props.value === this.value
+      })
+    }
   }
 }
 </script>
