@@ -11,10 +11,8 @@ describe('Tooltip', () => {
 
   it('create', () => {
     vm = createVue(`
-      <button>
-        <vk-tooltip content="Content">
-      </button>`)
-
+      <button><vk-tooltip content="Content"></button>
+    `)
     const tooltip = queryByTag(vm, 'vk-tooltip')
     expect(tooltip.$el.classList.contains('uk-tooltip')).to.true
     expect(tooltip.$el.style.display).to.equal('none')
@@ -46,44 +44,37 @@ describe('Tooltip', () => {
   })
 
   it('placement', () => {
-    vm = createVue({
-      template: `
-        <button>
-          <vk-tooltip :placement="placement" />
-        </button>`,
-      data: () => ({
-        placement: 'top'
-      })
-    })
+    vm = createVue(`
+      <button><vk-tooltip placement="top" /></button>
+    `)
+    const tooltip = queryByTag(vm, 'vk-tooltip')
+    expect(tooltip.$el.getAttribute('x-placement')).to.equal('top')
+    expect(tooltip.$el.classList.contains('uk-tooltip-top')).to.true
 
+    // check placement conversion popper > uikit
     const placements = {
       'top': 'top',
       'top-start': 'top-left',
       'top-end': 'top-right',
       'right': 'right',
-      'right-start': 'right-left',
-      'right-end': 'right-right',
+      'right-start': 'right',
+      'right-end': 'right',
       'bottom': 'bottom',
       'bottom-start': 'bottom-left',
       'bottom-end': 'bottom-right',
       'left': 'left',
-      'left-start': 'left-left',
-      'left-end': 'left-right'
+      'left-start': 'left',
+      'left-end': 'left'
     }
-
-    const tooltip = queryByTag(vm, 'vk-tooltip')
-    expect(tooltip.$el.classList.contains('uk-tooltip-top')).to.true
-    each(placements, (uikitStyle, popperStyle) => {
-      expect(tooltip.convertPlacement(popperStyle)).to.equal(uikitStyle)
+    each(placements, (value, key) => {
+      expect(tooltip.convertPlacement(key)).to.equal(value)
     })
   })
 
   it('show', done => {
     vm = createVue(`
-      <button>
-        <vk-tooltip />
-      </button>`)
-
+      <button><vk-tooltip /></button>
+    `)
     const tooltip = queryByTag(vm, 'vk-tooltip')
     const cb = sinon.spy()
 
@@ -98,10 +89,8 @@ describe('Tooltip', () => {
 
   it('hide', done => {
     vm = createVue(`
-      <button>
-        <vk-tooltip />
-      </button>`)
-
+      <button><vk-tooltip /></button>
+    `)
     const tooltip = queryByTag(vm, 'vk-tooltip')
     const cb = sinon.spy()
 

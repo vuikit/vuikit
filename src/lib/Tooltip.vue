@@ -9,11 +9,12 @@
 <script>
 import Popper from 'popper.js'
 import { on, offAll } from 'src/helpers/dom'
+import { inArray } from 'src/helpers/util'
 
-let onMouseEnter
-let onMouseLeave
+let onMouseenter
+let onMouseleave
 
-const POSITION_MIRROR = {
+const PLACEMENT_MIRROR = {
   top: 'bottom',
   right: 'left',
   left: 'right',
@@ -46,16 +47,6 @@ export default {
     flipped: false
   }),
   computed: {
-    popperOptions () {
-      return {
-        placement: this.placement,
-        modifiers: {
-          offset: {
-            offset: this.offset
-          }
-        }
-      }
-    },
     placementClass () {
       return `uk-tooltip-${this.convertPlacement(this.placement, this.fixed)}`
     },
@@ -65,29 +56,47 @@ export default {
       return this.target || this.$options._parentElm
     }
   },
+  beforeUpdate () {
+    // update popper
+    this.$popper.options.placement = this.placement
+    this.$popper.options.modifiers.offset.offset = this.offset
+    this.$popper.update()
+  },
   mounted () {
+    // init popper
+    this.$popper = new Popper(
+      this.targetElement,
+      this.$el,
+      {
+        placement: this.placement,
+        modifiers: {
+          offset: {
+            offset: this.offset
+          }
+        }
+      })
+    .onCreate(data => { this.flipped = data.flipped })
+    .onUpdate(data => { this.flipped = data.flipped })
+
     // initially the tooltip is off document
     this.remove()
 
-    onMouseEnter = () => {
+    onMouseenter = () => {
       document.body.appendChild(this.$el)
       this.active = true
       this.$emit('show')
-      new Popper(this.targetElement, this.$el, this.popperOptions)
-        .onCreate(data => { this.flipped = data.flipped })
-        .onUpdate(data => { this.flipped = data.flipped })
     }
 
-    onMouseLeave = () => {
+    onMouseleave = () => {
       this.active = false
       offAll(this.$el, this._uid)
       this.$emit('hide')
     }
 
-    on(this.targetElement, 'mouseenter', onMouseEnter, this._uid)
-    on(this.targetElement, 'focus', onMouseEnter, this._uid)
-    on(this.targetElement, 'mouseleave', onMouseLeave, this._uid)
-    on(this.targetElement, 'blur', onMouseLeave, this._uid)
+    on(this.targetElement, 'mouseenter', onMouseenter, this._uid)
+    on(this.targetElement, 'focus', onMouseenter, this._uid)
+    on(this.targetElement, 'mouseleave', onMouseleave, this._uid)
+    on(this.targetElement, 'blur', onMouseleave, this._uid)
   },
   beforeDestroy () {
     if (this.targetElement) {
@@ -102,18 +111,17 @@ export default {
         this.$el.parentNode.removeChild(this.$el)
       }
     },
-    convertPlacement (dirtyPlacement, flipped) {
-      dirtyPlacement = dirtyPlacement.split('-')
-      let placement = dirtyPlacement[0]
+    convertPlacement (placement, flipped = false) {
+      placement = placement.split('-')
       if (flipped) {
-        placement = POSITION_MIRROR[dirtyPlacement[0]]
+        placement[0] = PLACEMENT_MIRROR[placement[0]]
       }
-      if (dirtyPlacement[1]) {
-        placement += '-' + dirtyPlacement[1]
-          .replace('start', 'left')
-          .replace('end', 'right')
+      if (placement[1]) {
+        placement[1] = placement[1].replace('start', 'left').replace('end', 'right')
       }
-      return placement
+      return placement[1] === undefined || inArray(['left', 'right'], placement[0])
+        ? placement[0]
+        : `${placement[0]}-${placement[1]}`
     }
   }
 }
