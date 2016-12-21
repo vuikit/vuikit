@@ -7,6 +7,7 @@
  - Added VkTooltip
  - Refactored VkTable (braking changes) with a new column declaration approach
  - Refactored VkDropdown (braking changes)
+ - Refactored VkButton (braking changes)
  - Refactored VkDatepicker with date-fns
  - Removed VKPicker
  - Removed VkPickerDrop

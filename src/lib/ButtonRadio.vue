@@ -28,7 +28,7 @@ export default {
   },
   mounted () {
     each(this.$children, button => {
-      button.$el.addEventListener('click', () => this.$emit('change', button.value))
+      button.$on('click', () => this.$emit('change', button.value))
     })
   }
 }

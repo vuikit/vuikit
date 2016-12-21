@@ -31,7 +31,7 @@ export default {
   },
   mounted () {
     each(this.$children, button => {
-      button.$el.addEventListener('click', () => this.toggle(button))
+      button.$on('click', () => this.toggle(button))
     })
   },
   methods: {

@@ -1,42 +1,38 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Button</h2>
-      <hr class="uk-article-divider">
+    <h1>Button</h1>
+    Display a simple button.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <!-- DEMO -->
       <vk-button
         :type="props.type.demo.value"
+        :nativeType="props.nativeType.demo.value"
         :value="props.value.demo.value"
         :disabled="props.disabled.demo.value"
         :active="props.active.demo.value"
-        :color="props.color.demo.value"
         :size="props.size.demo.value"
         :width="props.width.demo.value"
         @click.native="props.active.demo.value = !props.active.demo.value">
         Button
       </vk-button>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-button</code> component renders a UIkit Button.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :index="tabsIndex"
+      @change="index => { tabsIndex = index }">
+      <vk-tabs-item name="Props">
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tabs-item>
+      <vk-tabs-item name="Slots">
+        <vk-docs-slots :slots="slots" />
+      </vk-tabs-item>
+      <vk-tabs-item name="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tabs-item>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -64,7 +60,22 @@ const props = {
     }
   },
   type: {
-    description: 'The HTML button type.',
+    description: `The button style, <code>primary</code>, <code>success</code>,
+      <code>danger</code> or <code>link</code>.`,
+    demo: {
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: 'primary', value: 'primary' },
+        { text: 'success', value: 'success' },
+        { text: 'danger', value: 'danger' },
+        { text: 'link', value: 'link' }
+      ],
+      value: ''
+    }
+  },
+  nativeType: {
+    description: 'The button native type.',
     demo: {
       type: 'Select',
       options: [
@@ -87,21 +98,6 @@ const props = {
     demo: {
       type: 'Boolean',
       value: false
-    }
-  },
-  color: {
-    description: `The color modifier accepting as values <code>primary</code>, <code>success</code>,
-      <code>danger</code> or <code>link</code>.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '' },
-        { text: 'primary', value: 'primary' },
-        { text: 'success', value: 'success' },
-        { text: 'danger', value: 'danger' },
-        { text: 'link', value: 'link' }
-      ],
-      value: ''
     }
   },
   size: {
@@ -141,13 +137,10 @@ const props = {
 
 const slots = {
   default: {
-    description: 'The button inner text.'
+    description: 'The button inner content.'
   }
 }
 
 const example =
-`<vk-button :active="active" {attrs}
-  @click.native="active = !active">
-  Button
-</vk-button>`
+`<vk-button>Button</vk-button>`
 </script>
