@@ -17,7 +17,7 @@ const createElm = function () {
 /**
  * @param  {Object} vm
  */
-exports.destroyVM = function (vm) {
+export function destroyVM (vm) {
   vm.$el &&
   vm.$el.parentNode &&
   vm.$el.parentNode.removeChild(vm.$el)
@@ -28,7 +28,7 @@ exports.destroyVM = function (vm) {
  * @param  {Boolean=false} mounted
  * @return {Object} vm
  */
-exports.createVue = function (Compo, mounted = false) {
+export function createVue (Compo, mounted = false) {
   const elm = createElm()
 
   if (Object.prototype.toString.call(Compo) === '[object String]') {
@@ -44,7 +44,7 @@ exports.createVue = function (Compo, mounted = false) {
  * @param  {Boolean=false} mounted
  * @return {Object} vm
  */
-exports.createTest = function (Compo, propsData = {}, mounted = false) {
+export function createTest (Compo, propsData = {}, mounted = false) {
   if (propsData === true || propsData === false) {
     mounted = propsData
     propsData = {}
@@ -60,7 +60,7 @@ exports.createTest = function (Compo, propsData = {}, mounted = false) {
  * @param  {String} name
  * @param  {*} opts
  */
-exports.triggerEvent = function (elm, name, ...opts) {
+export function triggerEvent (elm, name, ...opts) {
   let eventName
 
   if (/^mouse|click/.test(name)) {
@@ -85,7 +85,7 @@ exports.triggerEvent = function (elm, name, ...opts) {
  * @param  {Element} elm
  * @param  {String} keyCode
  */
-exports.triggerKeyEvent = function (elm, keyCode) {
+export function triggerKeyEvent (elm, keyCode) {
   const evt = document.createEvent('Events')
 
   evt.initEvent('keyup', true, true)

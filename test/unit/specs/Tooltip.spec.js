@@ -11,7 +11,7 @@ describe('Tooltip', () => {
 
   it('create', () => {
     vm = createVue(`
-      <button ref="button">
+      <button>
         <vk-tooltip ref="tooltip" content="content">
       </button>`)
 
@@ -48,9 +48,7 @@ describe('Tooltip', () => {
     vm = createVue({
       template: `
         <button>
-          <vk-tooltip ref="tooltip" :placement="placement">
-            <button>click</button>
-          </vk-tooltip>
+          <vk-tooltip ref="tooltip" :placement="placement" />
         </button>`,
       data: () => ({
         placement: 'top'
