@@ -1,4 +1,4 @@
-import { merge, each, isArray } from '../helpers/util'
+import { merge, each, isArray } from 'src/helpers/util'
 import { pick } from 'lodash'
 
 export function mergeProps (compProps, pageProps) {

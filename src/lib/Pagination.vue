@@ -1,6 +1,6 @@
 <script>
 import { range } from 'lodash'
-import { merge } from '../helpers/util'
+import { merge } from 'src/helpers/util'
 
 export default {
   name: 'VkPagination',
