@@ -1,4 +1,4 @@
-import { createVue, createTest, destroyVM, triggerKeyEvent } from '../util'
+import { createVue, createTest, destroyVM, triggerKeyEvent, queryByTag } from '../util'
 import Modal from 'src/lib/Modal'
 
 describe('Modal', () => {
@@ -86,7 +86,7 @@ describe('Modal', () => {
 
     it('escKey', done => {
       const callback = sinon.spy()
-      const modal = vm.$children[0]
+      const modal = queryByTag(vm, 'vk-modal')
       modal.$on('keyEsc', callback)
       triggerKeyEvent(document.documentElement, 27)
       setTimeout(() => {
@@ -94,9 +94,10 @@ describe('Modal', () => {
         done()
       }, 150)
     })
+
     it('clickOut', done => {
       const callback = sinon.spy()
-      const modal = vm.$children[0]
+      const modal = queryByTag(vm, 'vk-modal')
       modal.$on('clickOut', callback)
       modal.$el.click()
       setTimeout(() => {
@@ -106,7 +107,7 @@ describe('Modal', () => {
     })
     it('clickIn', done => {
       const callback = sinon.spy()
-      const modal = vm.$children[0]
+      const modal = queryByTag(vm, 'vk-modal')
       modal.$on('clickIn', callback)
       modal.$refs.dialog.click()
       setTimeout(() => {
@@ -126,7 +127,7 @@ describe('Modal', () => {
         })
       }, true)
       const callback = sinon.spy()
-      const modal = vm.$children[0]
+      const modal = queryByTag(vm, 'vk-modal')
       modal.$on('inactive', callback)
       vm2.show = true
       setTimeout(() => {

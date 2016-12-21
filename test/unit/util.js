@@ -92,3 +92,38 @@ export function triggerKeyEvent (elm, keyCode) {
   evt.keyCode = keyCode
   elm.dispatchEvent(evt)
 }
+
+export function queryByTagAll (vm, name) {
+  let result = []
+  for (let i = 0; i < vm.$children.length; i++) {
+    const child = vm.$children[i]
+
+    if (getComponentTag(child) === name) {
+      result.push(child)
+    }
+
+    if (child.$children && child.$children.length) {
+      result = [...result, ...queryByTagAll(child, name)]
+    }
+  }
+  return result
+}
+
+export function queryByTag (vm, name) {
+  for (let i = 0; i < vm.$children.length; i++) {
+    const child = vm.$children[i]
+
+    if (getComponentTag(child) === name) {
+      return child
+    }
+
+    if (child.$children && child.$children.length) {
+      return queryByTag(child, name)
+    }
+  }
+  return false
+}
+
+function getComponentTag (vm) {
+  return vm.$options && vm.$options._componentTag
+}

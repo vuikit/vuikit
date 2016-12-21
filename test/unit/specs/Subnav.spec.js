@@ -1,4 +1,4 @@
-import { createVue, destroyVM } from '../util'
+import { createVue, destroyVM, queryByTag } from '../util'
 
 const DELAY = 10
 
@@ -37,7 +37,7 @@ describe('Subnav', () => {
         <vk-subnav-item disabled>Item</vk-subnav-item>
       </vk-subnav>
     `)
-    const subnav = vm.$children[0]
+    const subnav = queryByTag(vm, 'vk-subnav')
 
     setTimeout(_ => {
       expect(subnav.$children[0].$el.classList.contains('uk-disabled')).to.be.false
@@ -55,7 +55,7 @@ describe('Subnav', () => {
           <vk-subnav-item>Item 3</vk-subnav-item>
         </vk-subnav>
       `)
-      const subnav = vm.$children[0]
+      const subnav = queryByTag(vm, 'vk-subnav')
       const callback = sinon.spy()
       subnav.$on('change', callback)
       subnav.$on('change', () => {

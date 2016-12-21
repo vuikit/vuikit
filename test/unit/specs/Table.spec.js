@@ -1,4 +1,4 @@
-import { createVue, destroyVM } from '../util'
+import { createVue, destroyVM, queryByTag } from '../util'
 import { toArray } from 'src/helpers/util'
 
 const DELAY = 10
@@ -142,7 +142,7 @@ describe('Table Column Select', () => {
       return createVue({
         template: `
           <vk-table :data="testData">
-            <vk-table-column-select ref="select" trackBy="release" />
+            <vk-table-column-select trackBy="release" />
             <vk-table-column header="Name" cell="name" />
             <vk-table-column header="Release" cell="release" />
             <vk-table-column header="Director" cell="director" />
@@ -158,10 +158,10 @@ describe('Table Column Select', () => {
     it('select', done => {
       const vm = createTable()
       const testData = getTestData()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
       const cb = sinon.spy()
 
-      Select.$on('select', cb)
+      select.$on('select', cb)
       setTimeout(_ => {
         vm.$el.querySelectorAll('tbody tr input[type="checkbox"]')[1].click()
         setTimeout(_ => {
@@ -179,10 +179,10 @@ describe('Table Column Select', () => {
     it('selectRow', done => {
       const vm = createTable()
       const testData = getTestData()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
       const cb = sinon.spy()
 
-      Select.$on('selectRow', cb)
+      select.$on('selectRow', cb)
       setTimeout(_ => {
         vm.$el.querySelectorAll('tbody tr')[1].click()
         setTimeout(_ => {
@@ -200,10 +200,10 @@ describe('Table Column Select', () => {
     it('selectAll', done => {
       const vm = createTable()
       const testData = getTestData()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
       const cb = sinon.spy()
 
-      Select.$on('selectAll', cb)
+      select.$on('selectAll', cb)
       setTimeout(_ => {
         vm.$el.querySelector('thead th input[type="checkbox"]').click()
         setTimeout(_ => {
@@ -225,10 +225,7 @@ describe('Table Column Select', () => {
       return createVue({
         template: `
           <vk-table :data="testData">
-            <vk-table-column-select
-              ref="select"
-              :trackBy="trackBy"
-              :selection="selection" />
+            <vk-table-column-select :trackBy="trackBy" :selection="selection" />
           </vk-table>
         `,
         data: () => ({
@@ -246,15 +243,15 @@ describe('Table Column Select', () => {
 
     it('getRowId', done => {
       const vm = createTable()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
 
       // with trackBy should return the row trackBy value
-      expect(Select.getRowId(vm.testData[1])).to.equal(vm.testData[1].release)
+      expect(select.getRowId(vm.testData[1])).to.equal(vm.testData[1].release)
 
       vm.trackBy = ''
       setTimeout(_ => {
         // with no trackBy should return the row index
-        expect(Select.getRowId(vm.testData[1])).to.equal(1)
+        expect(select.getRowId(vm.testData[1])).to.equal(1)
         destroyVM(vm)
         done()
       }, DELAY)
@@ -262,10 +259,10 @@ describe('Table Column Select', () => {
 
     it('isSelected', done => {
       const vm = createTable()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
 
       setTimeout(_ => {
-        expect(Select.isSelected(vm.testData[0])).to.be.true
+        expect(select.isSelected(vm.testData[0])).to.be.true
         destroyVM(vm)
         done()
       }, DELAY)
@@ -273,10 +270,10 @@ describe('Table Column Select', () => {
 
     it('isAllSelected', done => {
       const vm = createTable()
-      const Select = vm.$refs.select
+      const select = queryByTag(vm, 'vk-table-column-select')
 
       setTimeout(_ => {
-        expect(Select.isAllSelected()).to.be.true
+        expect(select.isAllSelected()).to.be.true
         destroyVM(vm)
         done()
       }, DELAY)
@@ -297,10 +294,10 @@ describe('Table Column Sort', () => {
           testData: getTestData()
         })
       }, true)
-      const Table = vm.$children[0]
+      const table = queryByTag(vm, 'vk-table')
       const cb = sinon.spy()
 
-      Table.$on('sort', cb)
+      table.$on('sort', cb)
       setTimeout(_ => {
         vm.$el.querySelector('thead th').click()
         setTimeout(_ => {

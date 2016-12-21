@@ -1,4 +1,4 @@
-import { createVue, destroyVM } from '../util'
+import { createVue, destroyVM, queryByTag, queryByTagAll } from '../util'
 
 describe('ButtonCheckbox', () => {
   let vm
@@ -16,35 +16,21 @@ describe('ButtonCheckbox', () => {
     `)
     expect(vm.$el.classList.contains('uk-button-group')).to.be.true
   })
-  it('click', done => {
-    vm = createVue({
-      template: `
-        <vk-button-checkbox ref="checkbox"
-          :value="value"
-          @change="value = arguments[0]">
-          <vk-button :value="10">Button 1</vk-button>
-          <vk-button :value="20">Button 2</vk-button>
-          <vk-button :value="30">Button 3</vk-button>
-        </vk-button-checkbox>
-      `,
-      data: () => ({
-        value: []
-      })
-    })
-    const checkbox = vm.$refs.checkbox
-    const callback = sinon.spy()
 
-    checkbox.$on('change', callback)
+  it('click', () => {
+    vm = createVue(`
+      <vk-button-checkbox>
+        <vk-button :value="10">Button 1</vk-button>
+        <vk-button :value="20">Button 2</vk-button>
+        <vk-button :value="30">Button 3</vk-button>
+      </vk-button-checkbox>`
+    )
+    const checkbox = queryByTag(vm, 'vk-button-checkbox')
+    const buttons = queryByTagAll(vm, 'vk-button')
+    const cb = sinon.spy()
 
-    vm.$el.children[0].click()
-    setTimeout(_ => {
-      vm.$el.children[1].click()
-      setTimeout(_ => {
-        expect(checkbox.$children[0].active).to.be.true
-        expect(checkbox.$children[1].active).to.be.true
-        expect(checkbox.$children[2].active).to.be.false
-        done()
-      }, 300)
-    }, 300)
+    checkbox.$on('change', cb)
+    buttons[0].$el.click()
+    expect(cb).to.have.been.called
   })
 })

@@ -1,4 +1,4 @@
-import { createVue, destroyVM, triggerEvent } from '../util'
+import { createVue, destroyVM, triggerEvent, queryByTag } from '../util'
 import { each } from 'src/helpers/util'
 
 const DELAY = 10
@@ -12,34 +12,35 @@ describe('Tooltip', () => {
   it('create', () => {
     vm = createVue(`
       <button>
-        <vk-tooltip ref="tooltip" content="content">
+        <vk-tooltip content="Content">
       </button>`)
 
-    const tooltip = vm.$refs.tooltip
+    const tooltip = queryByTag(vm, 'vk-tooltip')
     expect(tooltip.$el.classList.contains('uk-tooltip')).to.true
     expect(tooltip.$el.style.display).to.equal('none')
     expect(tooltip.$el.querySelector('.uk-tooltip-inner')).to.exist
     expect(tooltip.$el.querySelector('.uk-tooltip-inner').innerText)
-      .to.equal('content')
+      .to.equal('Content')
   })
 
   it('target', done => {
     vm = createVue({
       template: `
         <div>
-          <button ref="button" />
-          <vk-tooltip ref="tooltip" :target="target" />
+          <vk-button />
+          <vk-tooltip :target="target" />
         </div>`,
       data: () => ({
         target: false
       })
     })
 
-    const tooltip = vm.$refs.tooltip
+    const tooltip = queryByTag(vm, 'vk-tooltip')
+    const button = queryByTag(vm, 'vk-tooltip')
     expect(tooltip.targetElement).to.equal(vm.$el)
-    vm.target = vm.$refs.button
+    vm.target = button
     setTimeout(_ => {
-      expect(tooltip.targetElement).to.equal(vm.$refs.button)
+      expect(tooltip.targetElement).to.equal(button)
       done()
     }, DELAY)
   })
@@ -48,7 +49,7 @@ describe('Tooltip', () => {
     vm = createVue({
       template: `
         <button>
-          <vk-tooltip ref="tooltip" :placement="placement" />
+          <vk-tooltip :placement="placement" />
         </button>`,
       data: () => ({
         placement: 'top'
@@ -70,7 +71,7 @@ describe('Tooltip', () => {
       'left-end': 'left-right'
     }
 
-    const tooltip = vm.$refs.tooltip
+    const tooltip = queryByTag(vm, 'vk-tooltip')
     expect(tooltip.$el.classList.contains('uk-tooltip-top')).to.true
     each(placements, (uikitStyle, popperStyle) => {
       expect(tooltip.convertPlacement(popperStyle)).to.equal(uikitStyle)
@@ -80,10 +81,10 @@ describe('Tooltip', () => {
   it('show', done => {
     vm = createVue(`
       <button>
-        <vk-tooltip ref="tooltip" />
+        <vk-tooltip />
       </button>`)
 
-    const tooltip = vm.$refs.tooltip
+    const tooltip = queryByTag(vm, 'vk-tooltip')
     const cb = sinon.spy()
 
     tooltip.$on('show', cb)
@@ -98,10 +99,10 @@ describe('Tooltip', () => {
   it('hide', done => {
     vm = createVue(`
       <button>
-        <vk-tooltip ref="tooltip" />
+        <vk-tooltip />
       </button>`)
 
-    const tooltip = vm.$refs.tooltip
+    const tooltip = queryByTag(vm, 'vk-tooltip')
     const cb = sinon.spy()
 
     tooltip.$on('hide', cb)
