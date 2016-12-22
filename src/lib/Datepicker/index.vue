@@ -3,11 +3,11 @@
     <div class="uk-datepicker-nav">
       <a class="uk-datepicker-previous"
         v-show="isMonthDisplayable(prevMonth)"
-        @click.prevent="$emit('change', prevMonth)">
+        @click.prevent="triggerChangeEvent(prevMonth)">
       </a>
       <a class="uk-datepicker-next"
         v-show="isMonthDisplayable(nextMonth)"
-        @click.prevent="$emit('change', nextMonth)">
+        @click.prevent="triggerChangeEvent(nextMonth)">
       </a>
       <PickerHeader></PickerHeader>
     </div>
@@ -26,9 +26,10 @@
               'uk-active': isPicked(date),
               'uk-datepicker-table-disabled': isDisabled(date),
               'uk-datepicker-table-muted': !isCurrentMonth(date) || isDisabled(date)
-            }" @click.prevent="
-              !isDisabled(date) && $emit(isPicked(date) ? 'unpick' : 'pick', date, format)
-            ">
+            }" @click.prevent="!isDisabled(date) && (isPicked(date)
+              ? triggerUnpickEvent(date)
+              : triggerPickEvent (date)
+            )">
               {{ format(date, 'D') }}
             </a>
           </td>
@@ -42,6 +43,7 @@
 import getMatrix from 'src/helpers/date-matrix'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
+import getDate from 'date-fns/get_date'
 import isSameMonth from 'date-fns/is_same_month'
 import isSameDay from 'date-fns/is_same_day'
 import isWithinRange from 'date-fns/is_within_range'
@@ -67,9 +69,9 @@ export default {
   },
   props: {
     date: {
-      type: [Date, String],
-      default: () => new Date(),
-      validator: (date) => isValid(parse(date))
+      type: [Date, String, Number],
+      default: () => Date.now(),
+      validator: date => isValid(parse(date))
     },
     // index first day week (0 - Sunday)
     weekStartsOn: {
@@ -93,7 +95,7 @@ export default {
     minDate: {
       type: [Date, String, Number],
       default: '1980-01-01',
-      validator: (date) => {
+      validator: date => {
         return isInteger(date)
           ? true
           : isValid(parse(date))
@@ -102,7 +104,7 @@ export default {
     maxDate: {
       type: [Date, String, Number],
       default: '2050-12-31',
-      validator: (date) => {
+      validator: date => {
         return isInteger(date)
           ? true
           : isValid(parse(date))
@@ -118,19 +120,19 @@ export default {
       })
     },
     prevMonth () {
-      return subMonths(this.date, 1)
+      return (subMonths(this.date, 1), 'YYYY-MM')
     },
     nextMonth () {
-      return addMonths(this.date, 1)
+      return this.format(addMonths(this.date, 1), 'YYYY-MM')
     },
     minPickableDate () {
       return isInteger(this.minDate)
-        ? subDays(new Date(), this.minDate + 1)
+        ? subDays(Date.now(), this.minDate + 1)
         : this.minDate
     },
     maxPickableDate () {
       return isInteger(this.maxDate)
-        ? addDays(new Date(), this.maxDate)
+        ? addDays(Date.now(), this.maxDate)
         : this.maxDate
     },
     weekDays () {
@@ -139,6 +141,30 @@ export default {
     }
   },
   methods: {
+    triggerChangeEvent (newDate) {
+      this.$emit('change', {
+        date: newDate,
+        format: this.format
+      })
+    },
+    triggerPickEvent (pickedDate) {
+      const dirtyPickedDays = [...this.pickedDates, ...[pickedDate]]
+      this.$emit('pick', {
+        date: pickedDate,
+        dates: dirtyPickedDays,
+        format: this.format
+      })
+    },
+    triggerUnpickEvent (unpickedDate) {
+      const dirtyPickedDays = [...this.pickedDates]
+      const index = dirtyPickedDays.findIndex(d => getDate(d) === getDate(unpickedDate))
+      dirtyPickedDays.splice(index, 1)
+      this.$emit('unpick', {
+        date: parse(unpickedDate),
+        dates: dirtyPickedDays,
+        format: this.format
+      })
+    },
     isCurrentMonth (date) {
       return isSameMonth(this.date, date)
     },

@@ -10,21 +10,21 @@
           placeholder="Pick a date"
           v-model="date"
           @focus="show = true">
-        <vk-dropdown
+        <vk-dropdown expand
           :target="$refs.input"
           :show="show"
           @clickOut="show = false">
           <vk-datepicker class="uk-margin-remove"
-            :date="date || new Date()"
+            :date="date || Date.now()"
             :pickedDates="date
               ? [date]
               : []
             "
-            @pick="(date, format) => {
+            @pick="({ date, format }) => {
               $data.date = format(date, 'YYYY-MM-DD')
               show = false
             }"
-            @change="date => { $data.date = date }">
+            @change="({ date }) => { $data.date = date }">
           </vk-datepicker>
         </vk-dropdown>
       </div>
@@ -57,21 +57,21 @@ const example =
   placeholder="Pick a date"
   v-model="date"
   @focus="show = true">
-<vk-dropdown
+<vk-dropdown expand
   :target="$refs.input"
   :show="show"
   @clickOut="show = false">
   <vk-datepicker class="uk-margin-remove"
-    :date="date || new Date()"
+    :date="date || Date.now()"
     :pickedDates="date
       ? [date]
       : []
     "
-    @pick="(date, format) => {
+    @pick="({ date, format }) => {
       $data.date = format(date, 'YYYY-MM-DD')
       show = false
     }"
-    @change="date => { $data.date = date }">
+    @change="({ date }) => { $data.date = date }">
   </vk-datepicker>
 </vk-dropdown>`
 </script>

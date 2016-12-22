@@ -16,8 +16,8 @@ const cols = range(7)
  * @plain Boolean - Whetever the dates should be set as raw numbers
  */
 export default function ({ year, month, weekStartsOn } = {
-  year: getYear(Date()),
-  month: getMonth(Date()),
+  year: getYear(Date.now()),
+  month: getMonth(Date.now()),
   weekStartsOn: 0
 }, plain = false) {
   const matrix = []

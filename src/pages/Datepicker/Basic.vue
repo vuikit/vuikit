@@ -6,16 +6,15 @@
       :weekStartsOn="props.weekStartsOn.demo.value"
       :minDate="props.minDate.demo.value"
       :maxDate="props.maxDate.demo.value"
-      @pick="date => {
+      @pick="({ dates }) => {
         events.pick.emited = true
-        pickedDates.push(date)
+        pickedDates = dates
       }"
-      @unpick="date => {
+      @unpick="({ dates }) => {
         events.unpick.emited = true
-        const index = pickedDates.findIndex(d => date.getDate() === d.getDate())
-        pickedDates.splice(index, 1)
+        pickedDates = dates
       }"
-      @change="date => {
+      @change="({ date }) => {
         events.change.emited = true
         $data.date = date
       }">
@@ -46,7 +45,7 @@ import Component from 'src/lib/Datepicker'
 import mixin from '../_mixin'
 import { mergeProps } from 'src/helpers/pages'
 
-const now = new Date()
+const now = Date.now()
 
 export default {
   name: 'Basic',
@@ -129,18 +128,21 @@ const props = {
 const events = {
   pick: {
     description: `Emited on the intention to pick a date passing as first argument the
-      related <code>Date</code> object, and the format function as second (in case
-      further formating is required).`,
+      related <code>Date</code> object. The second argument is an altered clone of the
+      pickedDates reflecting the new picked state. Finally the 3rd argument is the
+      format function.`,
     emited: false
   },
   unpick: {
     description: `Emited on the intention to unpick a date passing as argument the
-      related <code>Date</code> object.`,
+      related <code>Date</code> object. The second argument is an altered clone of the
+      pickedDates reflecting the new unpicked state. Finally the 3rd argument is the
+      format function.`,
     emited: false
   },
   change: {
     description: `Emited on the intention to change the calendar date passing as
-      argument the new Date object.`,
+      argument the new Date object and as the second argument the format function.`,
     emited: false
   }
 }

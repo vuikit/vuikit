@@ -180,10 +180,13 @@ describe('Datepicker', () => {
         vm.$el.querySelector('td a').click()
         setTimeout(_ => {
           const args = cb.args[0]
+          const { date, dates, format } = args[0]
           expect(cb).to.have.been.called
-          expect(args).to.length(2)
-          expect(isValidDate(args[0])).to.be.true
-          expect(args[1]).to.be.function
+          expect(args).to.length(1)
+          expect(args[0]).to.be.object
+          expect(isValidDate(date)).to.be.true
+          expect(dates).to.be.array
+          expect(format).to.be.function
           destroyVM(vm)
           done()
         }, DELAY)
@@ -199,10 +202,13 @@ describe('Datepicker', () => {
         vm.$el.querySelector('td a').click()
         setTimeout(_ => {
           const args = cb.args[0]
+          const { date, dates, format } = args[0]
           expect(cb).to.have.been.called
-          expect(args).to.length(2)
-          expect(isValidDate(args[0])).to.be.true
-          expect(args[1]).to.be.function
+          expect(args).to.length(1)
+          expect(args[0]).to.be.object
+          expect(isValidDate(date)).to.be.true
+          expect(dates).to.be.array
+          expect(format).to.be.function
           destroyVM(vm)
           done()
         }, DELAY)
@@ -218,9 +224,12 @@ describe('Datepicker', () => {
         vm.$el.querySelector('.uk-datepicker-next').click()
         setTimeout(_ => {
           const args = cb.args[0]
+          const { date, format } = args[0]
           expect(cb).to.have.been.called
           expect(args).to.length(1)
-          expect(isValidDate(args[0])).to.be.true
+          expect(args[0]).to.be.object
+          expect(isValidDate(date)).to.be.true
+          expect(format).to.be.function
           destroyVM(vm)
           done()
         }, DELAY)
