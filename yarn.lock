@@ -3620,9 +3620,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-popper.js@1.0.0-alpha.3:
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.0-alpha.3.tgz#91ea6153db66e53023d448fba66b480fb17fbaa1"
+popper.js@1.0.0-alpha.7:
+  version "1.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.0-alpha.7.tgz#5b143f9cbbd15d2533e02c4a751fee0b7d8874ad"
 
 postcss-calc@^5.2.0:
   version "5.3.1"
@@ -4847,19 +4847,19 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.3.0.tgz#4a0f2a0bbef8b5731f78add8263cd86fe4f643ca"
 
-vue@^2.0.0, vue@^2.1.6:
+vue@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.6.tgz#2fc0024c07479ac6bc7d34a2cd5ef9ca5e90b143"
 
-vuikit-docs@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vuikit-docs/-/vuikit-docs-0.1.0.tgz#fcdfb5802b354bec5c7cf7c35e7a9c6a0b5ad4a5"
+vuikit-docs@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vuikit-docs/-/vuikit-docs-0.1.1.tgz#d058373efbc54abce45e5dd4fb9fb3d64e5f2bef"
   dependencies:
-    vue "^2.0.0"
+    vue "^2.1.6"
 
-"vuikit-theme@git+https://github.com/vuikit/vuikit-theme.git":
-  version "0.0.2"
-  resolved "git+https://github.com/vuikit/vuikit-theme.git#5bceb44c4718752c810d9533915e48a4c1dbc4b8"
+"vuikit-theme@git+https://github.com/vuikit/vuikit-theme.git#master":
+  version "0.0.3"
+  resolved "git+https://github.com/vuikit/vuikit-theme.git#d9db5733b8603391eed1aefcdb38f0188d4667da"
 
 watchpack@^0.2.1:
   version "0.2.9"
