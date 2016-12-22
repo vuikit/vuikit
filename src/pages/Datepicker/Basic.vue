@@ -149,14 +149,13 @@ const events = {
 
 const example =
 `<vk-datepicker {attrs}
-  @pick="date => {
-    pickedDates.push(date)
+  @pick="({ dates }) => {
+    pickedDates = dates
   }"
-  @unpick="date => {
-    const index = pickedDates.findIndex(d => date.getDate() === d.getDate())
-    pickedDates.splice(index, 1)
+  @unpick="({ dates }) => {
+    pickedDates = dates
   }"
-  @change="date => {
+  @change="({ date }) => {
     $data.date = date
   }">
 </vk-datepicker>`
