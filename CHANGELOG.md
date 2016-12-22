@@ -1,5 +1,9 @@
 # Changelog
 
+### WIP
+
+ - Fixed Datepicker disabled dates evaluation
+
 ### 0.6.2
 
  - Update dist
