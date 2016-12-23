@@ -33,7 +33,7 @@ var baseWebpackConfig = merge(require('./webpack.base.conf'), {
     // makes lodash even smaller
     new LodashModuleReplacementPlugin,
     // not sure why, but necessary
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     // extract css into its own file
     new ExtractTextPlugin(utils.assetsPath('[name].css')),
     // add banner on top of each file
