@@ -11,12 +11,11 @@ export default {
     }
   },
   render (h) {
-    return (<col>{ this._t('default') }</col>)
+    return (<col />)
   },
   created () {
     this._headerRender = this.$options._parentVnode.componentOptions.Ctor.options.headerRender
     this._cellRender = this.$options._parentVnode.componentOptions.Ctor.options.cellRender
-    this.$parent.columns.push(this)
   },
   headerRender (h) {
     const scopedSlot = this.$scopedSlots && this.$scopedSlots.header

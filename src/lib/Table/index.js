@@ -10,7 +10,9 @@ export default {
         { this.$slots.default }
         <thead>
           <tr>
-            { this._l(this.columns, col => col._headerRender.call(col._renderProxy, h)) }
+            { this._l(this.columns, col =>
+              col._headerRender && col._headerRender.call(col._renderProxy, h)
+            )}
           </tr>
         </thead>
         <tbody>
@@ -21,8 +23,8 @@ export default {
               }
             }}>
               { this._l(this.columns, col =>
-                col._cellRender.call(col._renderProxy, h, { row, rowIndex })
-              ) }
+                col._cellRender && col._cellRender.call(col._renderProxy, h, { row, rowIndex })
+              )}
             </tr>
           )}
         </tbody>
@@ -55,6 +57,9 @@ export default {
   data: () => ({
     columns: []
   }),
+  created () {
+    this.columns = this.$children
+  },
   methods: {
     getRowClass (row, index) {
       return (typeof this.rowClass === 'function')
