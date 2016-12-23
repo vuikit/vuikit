@@ -224,19 +224,19 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.16.0, babel-code-frame@^6.20.0:
     esutils "^2.0.2"
     js-tokens "^2.0.0"
 
-babel-core@^6.1.4, babel-core@^6.18.0, babel-core@^6.20.0:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.20.0.tgz#ab0d7176d9dea434e66badadaf92237865eab1ec"
+babel-core@^6.1.4, babel-core@^6.18.0, babel-core@^6.21.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.21.0.tgz#75525480c21c803f826ef3867d22c19f080a3724"
   dependencies:
     babel-code-frame "^6.20.0"
-    babel-generator "^6.20.0"
+    babel-generator "^6.21.0"
     babel-helpers "^6.16.0"
     babel-messages "^6.8.0"
     babel-register "^6.18.0"
     babel-runtime "^6.20.0"
     babel-template "^6.16.0"
-    babel-traverse "^6.20.0"
-    babel-types "^6.20.0"
+    babel-traverse "^6.21.0"
+    babel-types "^6.21.0"
     babylon "^6.11.0"
     convert-source-map "^1.1.0"
     debug "^2.1.1"
@@ -258,13 +258,13 @@ babel-eslint@^7.0.0:
     babylon "^6.13.0"
     lodash.pickby "^4.6.0"
 
-babel-generator@^6.20.0:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-generator/-/babel-generator-6.20.0.tgz#fee63614e0449390103b3097f3f6a118016c6766"
+babel-generator@^6.21.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/babel-generator/-/babel-generator-6.21.0.tgz#605f1269c489a1c75deeca7ea16d43d4656c8494"
   dependencies:
     babel-messages "^6.8.0"
     babel-runtime "^6.20.0"
-    babel-types "^6.20.0"
+    babel-types "^6.21.0"
     detect-indent "^4.0.0"
     jsesc "^1.3.0"
     lodash "^4.2.0"
@@ -413,9 +413,9 @@ babel-plugin-check-es2015-constants@^6.3.13:
   dependencies:
     babel-runtime "^6.0.0"
 
-babel-plugin-lodash@^3.1.4:
-  version "3.2.10"
-  resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.2.10.tgz#7498f5f8e969e546e70f3f2e9cffba0ad1f34c0d"
+babel-plugin-lodash@^3.2.11:
+  version "3.2.11"
+  resolved "https://registry.yarnpkg.com/babel-plugin-lodash/-/babel-plugin-lodash-3.2.11.tgz#21c8fdec9fe1835efaa737873e3902bdd66d5701"
   dependencies:
     glob "^7.1.1"
     lodash "^4.17.2"
@@ -697,9 +697,9 @@ babel-plugin-transform-strict-mode@^6.18.0:
     babel-runtime "^6.0.0"
     babel-types "^6.18.0"
 
-babel-plugin-transform-vue-jsx@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-vue-jsx/-/babel-plugin-transform-vue-jsx-3.2.0.tgz#27d550d5fca27ef6f694cf294133179754d184dc"
+babel-plugin-transform-vue-jsx@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-vue-jsx/-/babel-plugin-transform-vue-jsx-3.3.0.tgz#d6163f93f129e9fac3768813470f5eed9fd26f7e"
   dependencies:
     esutils "^2.0.2"
 
@@ -780,23 +780,23 @@ babel-template@^6.14.0, babel-template@^6.15.0, babel-template@^6.16.0, babel-te
     babylon "^6.11.0"
     lodash "^4.2.0"
 
-babel-traverse@^6.15.0, babel-traverse@^6.16.0, babel-traverse@^6.18.0, babel-traverse@^6.20.0, babel-traverse@^6.8.0:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.20.0.tgz#5378d1a743e3d856e6a52289994100bbdfd9872a"
+babel-traverse@^6.15.0, babel-traverse@^6.16.0, babel-traverse@^6.18.0, babel-traverse@^6.20.0, babel-traverse@^6.21.0, babel-traverse@^6.8.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.21.0.tgz#69c6365804f1a4f69eb1213f85b00a818b8c21ad"
   dependencies:
     babel-code-frame "^6.20.0"
     babel-messages "^6.8.0"
     babel-runtime "^6.20.0"
-    babel-types "^6.20.0"
+    babel-types "^6.21.0"
     babylon "^6.11.0"
     debug "^2.2.0"
     globals "^9.0.0"
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-types@^6.13.0, babel-types@^6.15.0, babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.20.0, babel-types@^6.8.0, babel-types@^6.9.0:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.20.0.tgz#3869ecb98459533b37df809886b3f7f3b08d2baa"
+babel-types@^6.13.0, babel-types@^6.15.0, babel-types@^6.16.0, babel-types@^6.18.0, babel-types@^6.20.0, babel-types@^6.21.0, babel-types@^6.8.0, babel-types@^6.9.0:
+  version "6.21.0"
+  resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.21.0.tgz#314b92168891ef6d3806b7f7a917fdf87c11a4b2"
   dependencies:
     babel-runtime "^6.20.0"
     esutils "^2.0.2"
@@ -1082,9 +1082,9 @@ cli-cursor@^1.0.1, cli-cursor@^1.0.2:
   dependencies:
     restore-cursor "^1.0.1"
 
-cli-spinners@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-0.2.0.tgz#85078737913b880f6ec9ffe7b65e83ec7776284f"
+cli-spinners@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-1.0.0.tgz#ef987ed3d48391ac3dab9180b406a742180d6e6a"
 
 cli-width@^2.0.0:
   version "2.1.0"
@@ -1415,9 +1415,9 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^1.21.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.21.0.tgz#7183c75dd0762e101f5db7fdbe3598b5a47c09e4"
+date-fns@^1.21.1:
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.21.1.tgz#5f5de347a88d575c8a09958a884f91502b48d157"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -2873,9 +2873,9 @@ karma-spec-reporter@0.0.26:
   dependencies:
     colors "~0.6.0"
 
-karma-webpack@^1.7.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-1.8.0.tgz#340c7999eb3745b47becab47d0d304dac2c55257"
+karma-webpack@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/karma-webpack/-/karma-webpack-1.8.1.tgz#39d5fd2edeea3cc3ef5b405989b37d5b0e6a3b4e"
   dependencies:
     async "~0.9.0"
     loader-utils "^0.2.5"
@@ -3476,13 +3476,13 @@ options@>=0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/options/-/options-0.0.6.tgz#ec22d312806bb53e731773e7cdaefcf1c643128f"
 
-ora@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/ora/-/ora-0.3.0.tgz#367a078ad25cfb096da501115eb5b401e07d7495"
+ora@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ora/-/ora-0.4.0.tgz#fccb5a82e169ccd27c491bd00cc1924ff7a390bd"
   dependencies:
     chalk "^1.1.1"
     cli-cursor "^1.0.2"
-    cli-spinners "^0.2.0"
+    cli-spinners "^1.0.0"
     log-symbols "^1.0.2"
 
 os-browserify@^0.2.0:
@@ -4857,7 +4857,7 @@ vuikit-docs@^0.1.1:
   dependencies:
     vue "^2.1.6"
 
-"vuikit-theme@git+https://github.com/vuikit/vuikit-theme.git#master":
+"vuikit-theme@git+https://github.com/vuikit/vuikit-theme.git":
   version "0.0.3"
   resolved "git+https://github.com/vuikit/vuikit-theme.git#d9db5733b8603391eed1aefcdb38f0188d4667da"
 
@@ -4894,9 +4894,9 @@ webpack-hot-middleware@^2.13.2:
     querystring "^0.2.0"
     strip-ansi "^3.0.0"
 
-webpack-merge@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-1.1.1.tgz#2816dce279f38fe05d62b6411144b7638553e61c"
+webpack-merge@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-merge/-/webpack-merge-2.0.0.tgz#fd328707d26f6f9852be2767557cef51d942c1dc"
   dependencies:
     lodash.clonedeep "^4.5.0"
     lodash.differencewith "^4.5.0"
