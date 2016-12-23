@@ -18,9 +18,9 @@ import Table from './Table'
 import TableColumn from './Table/columns/Default'
 import TableColumnSelect from './Table/columns/Select'
 import TableColumnSort from './Table/columns/Sort'
-import Tabs from './Tabs'
-import TabsItem from './TabsItem'
-import TabsVertical from './TabsVertical'
+import Tab from './Tabs/Tab'
+import Tabs from './Tabs/Tabs'
+import TabsVertical from './Tabs/TabsVertical'
 import Tooltip from './Tooltip'
 import Upload from './Upload'
 
@@ -45,8 +45,8 @@ const Vuikit = {
   TableColumn,
   TableColumnSelect,
   TableColumnSort,
+  Tab,
   Tabs,
-  TabsItem,
   TabsVertical,
   Tooltip,
   Upload,

@@ -6,6 +6,7 @@
  - Added VkNotify
  - Added VkTooltip
  - Refactored VkTable (braking changes) with a new column declaration approach
+ - Refactored VkTabs(braking changes)
  - Refactored VkDropdown (braking changes)
  - Refactored VkButton (braking changes)
  - Refactored VkDatepicker with date-fns

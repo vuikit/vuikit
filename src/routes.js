@@ -34,14 +34,6 @@ export default [
     }
   },
   {
-    name: 'TabsVertical',
-    path: '/tabs-vertical',
-    component: require('./pages/TabsVertical'),
-    meta: {
-      section: 'Navigation'
-    }
-  },
-  {
     name: 'Subnav',
     path: '/subnav',
     component: require('./pages/Subnav'),

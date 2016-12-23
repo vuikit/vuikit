@@ -13,3 +13,12 @@ export function filterByTag (nodes, tag) {
 export function getProps (vm) {
   return vm.componentOptions.propsData
 }
+
+export function getFinalProps (component) {
+  let props = {}
+  while (component) {
+    props = {...props, ...component.props}
+    component = component.extends
+  }
+  return props
+}
