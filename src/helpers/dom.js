@@ -25,6 +25,10 @@ export function addClass (el, className) {
   }
 }
 
+export function hasClass (el, className) {
+  return el.classList.contains(className)
+}
+
 export function removeClass (el, className) {
   if (el.classList) {
     el.classList.remove(className)
