@@ -1,15 +1,13 @@
 <template>
   <button class="uk-button"
-    :type="nativeType"
+    :type="type"
     :disabled="disabled"
-    :class="[
-      type ? 'uk-button-' + type : '',
-      size ? 'uk-button-' + size : '',
-      width ? 'uk-width-' + width : '',
-      {
-        'uk-active': active
-      }
-    ]"
+    :class="{
+      'uk-active': active,
+      [`uk-button-${color}`]: color,
+      [`uk-button-${size}`]: size,
+      [`uk-width-${width}`]: width
+    }"
     @click="e => $emit('click', e)">
     <slot></slot>
   </button>
@@ -20,7 +18,7 @@ export default {
   name: 'VkButton',
   props: {
     value: {},
-    nativeType: {
+    type: {
       type: String,
       default: 'button'
     },
@@ -32,7 +30,7 @@ export default {
       type: Boolean,
       default: false
     },
-    type: {
+    color: {
       type: String,
       default: ''
     },

@@ -8,15 +8,7 @@ describe('Button', () => {
 
   it('type', () => {
     vm = createVue(`
-      <vk-button type="primary" />
-    `)
-
-    expect(vm.$el.classList.contains('uk-button-primary')).to.be.true
-  })
-
-  it('nativeType', () => {
-    vm = createVue(`
-      <vk-button nativeType="submit" />
+      <vk-button type="submit" />
     `)
 
     expect(vm.$el.getAttribute('type')).to.be.equal('submit')
@@ -36,6 +28,14 @@ describe('Button', () => {
     `)
 
     expect(vm.$el.hasAttribute('disabled')).to.be.true
+  })
+
+  it('color', () => {
+    vm = createVue(`
+      <vk-button color="primary" />
+    `)
+
+    expect(vm.$el.classList.contains('uk-button-primary')).to.be.true
   })
 
   it('size', () => {

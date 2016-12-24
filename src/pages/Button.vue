@@ -6,9 +6,8 @@
     <div class="uk-margin">
       <!-- DEMO -->
       <vk-button
-        :type="props.type.demo.value"
-        :nativeType="props.nativeType.demo.value"
         :value="props.value.demo.value"
+        :color="props.color.demo.value"
         :disabled="props.disabled.demo.value"
         :active="props.active.demo.value"
         :size="props.size.demo.value"
@@ -60,31 +59,7 @@ const props = {
     }
   },
   type: {
-    description: `The button style, <code>primary</code>, <code>success</code>,
-      <code>danger</code> or <code>link</code>.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '' },
-        { text: 'primary', value: 'primary' },
-        { text: 'success', value: 'success' },
-        { text: 'danger', value: 'danger' },
-        { text: 'link', value: 'link' }
-      ],
-      value: ''
-    }
-  },
-  nativeType: {
-    description: 'The button native type.',
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'button', value: 'button' },
-        { text: 'submit', value: 'submit' },
-        { text: 'reset', value: 'reset' }
-      ],
-      value: 'button'
-    }
+    description: 'The button native type.'
   },
   active: {
     description: 'The initial state of the <code>active</code> local state.',
@@ -98,6 +73,21 @@ const props = {
     demo: {
       type: 'Boolean',
       value: false
+    }
+  },
+  color: {
+    description: `The button style modifier, <code>primary</code>, <code>success</code>,
+      <code>danger</code> or <code>link</code>.`,
+    demo: {
+      type: 'Select',
+      options: [
+        { text: 'default', value: '' },
+        { text: 'primary', value: 'primary' },
+        { text: 'success', value: 'success' },
+        { text: 'danger', value: 'danger' },
+        { text: 'link', value: 'link' }
+      ],
+      value: ''
     }
   },
   size: {

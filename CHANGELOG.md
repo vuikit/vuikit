@@ -12,7 +12,6 @@
    - VkTable
    - VkTabs
    - VkDropdown
-   - VkButton
    - VkDatepicker
  - Removed components (check Examples section for alternatives)
    - VkCalendar
