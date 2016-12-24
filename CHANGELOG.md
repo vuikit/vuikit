@@ -3,21 +3,22 @@
 ### WIP
 
  - Raised Vue minimum version to 2.1
- - Added VkNotify
- - Added VkTooltip
- - Refactored VkTable (braking changes) with a new column declaration approach
- - Refactored VkTabs(braking changes)
- - Refactored VkDropdown (braking changes)
- - Refactored VkButton (braking changes)
- - Refactored VkDatepicker with date-fns
- - Removed VKPicker
- - Removed VkPickerDrop
- - Removed VkDatepickerDrop
- - Removed Calendar
- - Removed support for inbuilt HTML ARIA declarations
- - Removed Moment.js dependency
-
-*Note*: check Docs new section Examples for alternatives on removed components
+ - Removed ARIA declarations
+ - Removed Moment.js dependency in favor of date-fns
+ - New components
+   - VkNotify
+   - VkTooltip
+ - Refactored components with braking changes
+   - VkTable
+   - VkTabs
+   - VkDropdown
+   - VkButton
+   - VkDatepicker
+ - Removed components (check Examples section for alternatives)
+   - VkCalendar
+   - VKPicker
+   - VkPickerDrop
+   - VkDatepickerDrop
 
 ### 0.6.0
 
