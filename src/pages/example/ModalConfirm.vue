@@ -47,11 +47,11 @@
       </div>
       <!-- TABS -->
       <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Code">
+        :activeTab="activeTab"
+        @change="tab => { activeTab = tab }">
+        <vk-tab label="Code">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
+        </vk-tab>
       </vk-tabs>
     </div>
   </layouts-default>
@@ -63,7 +63,7 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     show: false,
     confirmed: false,
     example

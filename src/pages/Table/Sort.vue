@@ -18,20 +18,20 @@
     </vk-table>
     <!-- TABS -->
     <vk-tabs
-      :index="tabsIndex"
-      @change="index => tabsIndex = index">
-      <vk-tabs-item name="Table Props">
+      :activeTab="activeTab"
+      @change="index => activeTab = index">
+      <vk-tab label="Table Props">
         <vk-docs-props :props="tableProps" />
-      </vk-tabs-item>
-      <vk-tabs-item name="Column Props">
+      </vk-tab>
+      <vk-tab label="Column Props">
         <vk-docs-props :props="columnProps"></vk-docs-props>
-      </vk-tabs-item>
-      <vk-tabs-item name="Events">
+      </vk-tab>
+      <vk-tab label="Events">
         <vk-docs-events :events="events"></vk-docs-events>
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
+      </vk-tab>
+      <vk-tab label="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
+      </vk-tab>
     </vk-tabs>
   </div>
 </template>
@@ -46,7 +46,7 @@ import { orderBy } from 'lodash'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     tableProps: mergeProps(Table.props, tableProps),
     columnProps: mergeProps(Column.props, columnProps),
     events,

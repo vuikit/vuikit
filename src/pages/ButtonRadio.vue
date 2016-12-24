@@ -17,23 +17,23 @@
       </vk-button-radio>
     </div>
     <vk-tabs
-      :index="tabsIndex"
-      @change="index => { tabsIndex = index }">
-      <vk-tabs-item name="Props">
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
         <vk-docs-props
           :props="props"
           @change="(prop, value) => props[prop].demo.value = value">
         </vk-docs-props>
-      </vk-tabs-item>
-      <vk-tabs-item name="Slots">
+      </vk-tab>
+      <vk-tab label="Slots">
         <vk-docs-slots :slots="slots" />
-      </vk-tabs-item>
-      <vk-tabs-item name="Events">
+      </vk-tab>
+      <vk-tab label="Events">
         <vk-docs-events :events="events" />
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
+      </vk-tab>
+      <vk-tab label="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
+      </vk-tab>
     </vk-tabs>
   </layouts-default>
 </template>
@@ -47,7 +47,7 @@ export default {
   name: 'PageButtonRadio',
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     props: mergeProps(Component.props, props),
     slots,
     events,

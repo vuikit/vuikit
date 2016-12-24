@@ -38,17 +38,17 @@
     </vk-table>
     <!-- TABS -->
     <vk-tabs
-      :index="tabsIndex"
-      @change="index => tabsIndex = index">
-      <vk-tabs-item name="Column Props">
+      :activeTab="activeTab"
+      @change="index => activeTab = index">
+      <vk-tab label="Column Props">
         <vk-docs-props :props="columnProps" />
-      </vk-tabs-item>
-      <vk-tabs-item name="Column Events">
+      </vk-tab>
+      <vk-tab label="Column Events">
         <vk-docs-events :events="columnEvents" />
-      </vk-tabs-item>
-      <vk-tabs-item name="Example">
+      </vk-tab>
+      <vk-tab label="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
+      </vk-tab>
     </vk-tabs>
   </div>
 </template>
@@ -61,7 +61,7 @@ import { mergeProps } from 'src/helpers/pages'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     columnProps: mergeProps(Column.props, columnProps),
     columnEvents,
     selection: {},

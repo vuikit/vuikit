@@ -7,9 +7,9 @@
     </div>
     <!-- TABS -->
     <vk-tabs
-      :index="tabsIndex"
-      @change="index => tabsIndex = index">
-      <vk-tabs-item name="Demo">
+      :activeTab="activeTab"
+      @change="index => activeTab = index">
+      <vk-tab label="Demo">
         <vk-table condensed :data="data">
           <vk-table-column header="Name" cell="name" />
           <vk-table-column header="Hits" cell="hits" />
@@ -32,10 +32,10 @@
             </template>
           </vk-table-column>
         </vk-table>
-      </vk-tabs-item>
-      <vk-tabs-item name="Code">
+      </vk-tab>
+      <vk-tab label="Code">
         <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tabs-item>
+      </vk-tab>
     </vk-tabs>
   </div>
 </template>
@@ -46,7 +46,7 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     data: [
       { name: 'Item A', hits: 100, desc: 'Description' },
       { name: 'Item B', hits: 40, desc: 'Description' },

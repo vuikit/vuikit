@@ -78,20 +78,20 @@
       </div>
       <!-- TABS -->
       <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
+        :activeTab="activeTab"
+        @change="tab => { activeTab = tab }">
+        <vk-tab label="Props">
           <vk-docs-props
             :props="props"
             @change="props[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Events">
+        </vk-tab>
+        <vk-tab label="Events">
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
+        </vk-tab>
+        <vk-tab label="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
+        </vk-tab>
       </vk-tabs>
     </div>
   </layouts-default>
@@ -105,7 +105,7 @@ import { mergeProps } from '../helpers/pages'
 export default {
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     imageBlank: require('./assets/placeholder_600x400.svg'),
     props: mergeProps(Component.props, props),
     slots,

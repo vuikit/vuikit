@@ -39,9 +39,9 @@
       </div>
       <!-- TABS -->
       <vk-tabs
-        :index="tabsIndex"
-        @change="tabsIndex = arguments[0]">
-        <vk-tabs-item name="Props">
+        :activeTab="activeTab"
+        @change="tab => { activeTab = tab }">
+        <vk-tab label="Props">
           <h4>vk-notify</h4>
           <vk-docs-props
             :props="props"
@@ -52,20 +52,20 @@
             :props="messageProps"
             @change="messageProps[arguments[0]].demo.value = arguments[1]">
           </vk-docs-props>
-        </vk-tabs-item>
-        <vk-tabs-item name="Slots">
+        </vk-tab>
+        <vk-tab label="Slots">
           <h4>vk-notify</h4>
           <vk-docs-slots :slots="slots"></vk-docs-slots>
           <h4>vk-notify-message</h4>
           <vk-docs-slots :slots="messageSlots"></vk-docs-slots>
-        </vk-tabs-item>
-        <vk-tabs-item name="Events">
+        </vk-tab>
+        <vk-tab label="Events">
           <h4>vk-notify</h4>
           <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tabs-item>
-        <vk-tabs-item name="Example">
+        </vk-tab>
+        <vk-tab label="Example">
           <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tabs-item>
+        </vk-tab>
       </vk-tabs>
     </div>
   </layouts-default>
@@ -81,7 +81,7 @@ export default {
   name: 'PageNotify',
   mixins: [mixin],
   data: () => ({
-    tabsIndex: 0,
+    activeTab: 1,
     props: mergeProps(Component.props, props),
     messageProps: mergeProps(NotifyMessage.props, messageProps),
     slots,
