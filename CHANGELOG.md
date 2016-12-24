@@ -4,7 +4,7 @@
 
  - Raised Vue minimum version to 2.1
  - Removed ARIA declarations
- - Removed Moment.js dependency in favor of date-fns
+ - Removed Moment.js dependency
  - New components
    - VkNotify
    - VkTooltip
