@@ -3,6 +3,7 @@ import { createTest, destroyVM } from '../util'
 import { toArray } from 'src/helpers/util'
 import matrix from 'src/helpers/date-matrix'
 import isValidDate from 'date-fns/is_valid'
+import parse from 'date-fns/parse'
 import format from 'date-fns/format'
 import localeEs from 'date-fns/locale/es'
 
@@ -184,7 +185,7 @@ describe('Datepicker', () => {
           expect(cb).to.have.been.called
           expect(args).to.length(1)
           expect(args[0]).to.be.object
-          expect(isValidDate(date)).to.be.true
+          expect(isValidDate(parse(date))).to.be.true
           expect(dates).to.be.array
           expect(format).to.be.function
           destroyVM(vm)
@@ -206,7 +207,7 @@ describe('Datepicker', () => {
           expect(cb).to.have.been.called
           expect(args).to.length(1)
           expect(args[0]).to.be.object
-          expect(isValidDate(date)).to.be.true
+          expect(isValidDate(parse(date))).to.be.true
           expect(dates).to.be.array
           expect(format).to.be.function
           destroyVM(vm)
@@ -228,7 +229,7 @@ describe('Datepicker', () => {
           expect(cb).to.have.been.called
           expect(args).to.length(1)
           expect(args[0]).to.be.object
-          expect(isValidDate(date)).to.be.true
+          expect(isValidDate(parse(date))).to.be.true
           expect(format).to.be.function
           destroyVM(vm)
           done()
