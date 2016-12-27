@@ -3,7 +3,7 @@
     'uk-active': active,
     'uk-disabled': disabled
   }">
-    <a @click.prevent="!disabled && $parent.$emit('change', alias)">
+    <a @click.prevent="(!disabled && !active) && $parent.$emit('change', alias)">
       <slot name="header">
         {{ label }}
       </slot>
