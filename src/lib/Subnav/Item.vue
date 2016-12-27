@@ -3,8 +3,8 @@
     'uk-active': active,
     'uk-disabled': disabled
   }">
-    <a @click.prevent="(!disabled && !active) && $parent.$emit('change', index)">
-      <slot></slot>
+    <a @click.prevent="(!disabled && !active) && $parent.$emit('change', alias)">
+      <slot>{{ label }}</slot>
     </a>
   </li>
 </template>
@@ -13,18 +13,18 @@
 export default {
   name: 'VkSubnavItem',
   props: {
-    index: {
-      type: Number,
-      default: 0
+    label: String,
+    alias: {
+      type: [String, Number],
+      default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    active () {
-      return this.index === this.$parent.index
     }
   }
 }

@@ -1,52 +1,51 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Subnav</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Subnav</h1>
+    A simple navigation.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-subnav
-        :index="props.index.demo.value"
+        :activeItem="props.activeItem.demo.value"
         :line="props.line.demo.value"
         :pill="props.pill.demo.value"
-        @change="
-          events.change.emited = true,
-          props.index.demo.value = arguments[0]
-        ">
-        <vk-subnav-item>Item</vk-subnav-item>
-        <vk-subnav-item>Item</vk-subnav-item>
-        <vk-subnav-item>Item</vk-subnav-item>
-        <vk-subnav-item disabled>Item</vk-subnav-item>
+        @change="item => {
+          events.change.emited = true
+          props.activeItem.demo.value = item
+        }">
+        <vk-subnav-item label="Item" />
+        <vk-subnav-item label="Item" />
+        <vk-subnav-item label="Item" />
+        <vk-subnav-item label="Item" disabled />
       </vk-subnav>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-subnav</code> component renders a UIkit Subnav navigation.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Item Props">
+        <vk-docs-props :props="itemProps" />
+      </vk-tab>
+      <vk-tab label="Slots">
+        <vk-docs-slots :slots="slots" />
+      </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events :events="events" />
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 
 <script>
-import Component from '../lib/Subnav'
+import Subnav from '../lib/Subnav/Subnav'
+import SubnavItem from '../lib/Subnav/Item'
 import mixin from './_mixin'
 import { mergeProps } from '../helpers/pages'
 
@@ -55,7 +54,8 @@ export default {
   mixins: [mixin],
   data: () => ({
     activeTab: 1,
-    props: mergeProps(Component.props, props),
+    props: mergeProps(Subnav.props, props),
+    itemProps: mergeProps(SubnavItem.props, itemProps),
     slots,
     events,
     example
@@ -63,29 +63,44 @@ export default {
 }
 
 const props = {
-  index: {
-    description: 'The currently active item referenced by its order index.',
+  activeItem: {
+    description: 'The currently active item referenced by its alias.',
     demo: {
       type: 'Select',
       options: [
-        { text: '0', value: 0 },
         { text: '1', value: 1 },
-        { text: '2', value: 2 }
+        { text: '2', value: 2 },
+        { text: '3', value: 3 }
       ],
-      value: 0
+      value: 1
     }
   },
   line: {
     description: 'Style modifier that will add a line bitween the items.',
     demo: {
+      type: 'Boolean',
       value: false
     }
   },
   pill: {
     description: 'Style modifier that will wrap the selected and active items.',
     demo: {
-      value: false
+      type: 'Boolean',
+      value: true
     }
+  }
+}
+
+const itemProps = {
+  alias: {
+    description: `Unique identifier for the item. If omited defaults to the ordinal
+      number of the item (e.g. the first item alias would be <code>1</code>).`
+  },
+  label: {
+    description: 'Title of the item. If ignoroed fallsback to default slot.'
+  },
+  disabled: {
+    description: 'Whether the item should be disabled.'
   }
 }
 
@@ -103,19 +118,10 @@ const events = {
 }
 
 const example =
-`<vk-subnav {attrs}
-  :items="{
-    'item-0': {
-      name: 'Item'
-    },
-    'item-1': {
-      name: 'Item'
-    },
-    'item-2': {
-      name: 'Item',
-      disabled: true
-    }
-  }"
-  @change="active = arguments[0]">
+`<vk-subnav @change="item => { activeItem = item }">
+  <vk-subnav-item label="Item" />
+  <vk-subnav-item label="Item" />
+  <vk-subnav-item label="Item" />
+  <vk-subnav-item label="Item" disabled />
 </vk-subnav>`
 </script>
