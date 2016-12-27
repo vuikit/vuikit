@@ -77,10 +77,14 @@ function _toArray (list, start) {
 }
 
 /**
- * Returns an array range from 0 to n
+ * Returns an array range
  */
-export function range (length) {
-  return Array.apply(undefined, { length }).map(Number.call, Number)
+export function range (start, stop, step = 1) {
+  if (typeof stop === 'undefined') {
+    stop = start
+    start = 0
+  }
+  return Array.from(new Array(Math.floor((stop - start) / step)), (x, i) => start + i * step)
 }
 
 export function each (obj, iterator) {
