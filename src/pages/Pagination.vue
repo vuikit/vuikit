@@ -1,48 +1,44 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Pagination</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
-      <div class="uk-text-center">
-        Displaying <code>{{ pagination.offset }}</code> to <code>{{ pagination.to }}</code>
-        of <code>{{ props.total.demo.value }}</code> items
-      </div>
+    <h1>Pagination</h1>
+    Display a pagination to navigate through pages.
+    <hr class="uk-article-divider">
+    <div class="uk-text-center">
+      Displaying <code>{{ pagination.offset }}</code> to <code>{{ pagination.to }}</code>
+      of <code>{{ props.total.demo.value }}</code> items
+    </div>
+    <div class="uk-margin">
       <vk-pagination
+        :activePage="props.activePage.demo.value"
         :total="props.total.demo.value"
         :limit="props.limit.demo.value"
-        :page="props.page.demo.value"
         :page-range="props.pageRange.demo.value"
         :align="props.align.demo.value"
         :compact="props.compact.demo.value"
-        @change="
+        @change="({ page, offset, to }) => {
           events.change.emited = true,
-          props.page.demo.value = arguments[0].page
-          pagination.offset = arguments[0].offset,
-          pagination.to = arguments[0].to
-        ">
+          pagination.to = to
+          pagination.offset = offset
+          props.activePage.demo.value = page
+        }">
       </vk-pagination>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-pagination</code> component renders a UIkit Pagination navigation.
-      </div>
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
+        <vk-docs-props
+          :props="props"
+          @change="props[arguments[0]].demo.value = arguments[1]">
+        </vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events :events="events"></vk-docs-events>
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -66,16 +62,16 @@ export default {
   }),
   watch: {
     'props.total.demo.value' () {
-      props.page.demo.value = 1
+      props.activePage.demo.value = 1
     },
     'props.limit.demo.value' () {
-      props.page.demo.value = 1
+      props.activePage.demo.value = 1
     }
   }
 }
 
 const props = {
-  page: {
+  activePage: {
     description: 'The page being displayed.',
     demo: {
       type: 'Overview',
@@ -149,7 +145,5 @@ const events = {
 }
 
 const example =
-`<vk-pagination {attrs}
-  @change="page = arguments[0].page">
-</vk-pagination>`
+`<vk-pagination :activePage="1" @change="({ page }) => activePage = page" />`
 </script>

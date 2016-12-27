@@ -1,26 +1,87 @@
+<template>
+  <ul class="uk-pagination" :class="{
+    'uk-pagination-left': align === 'left',
+    'uk-pagination-right': align === 'right'
+  }">
+    <!-- prev buttons -->
+    <li :class="{
+      'uk-disabled': !prevPage,
+      'uk-pagination-previous': !compact
+    }">
+      <a v-if="prevPage" @click.prevent="emitChange({ page: 1 })">
+        <i class="uk-icon-angle-double-left" />
+      </a>
+      <span v-else><i class="uk-icon" /></span>
+      <a v-if="prevPage" @click.prevent="emitChange({ page: prevPage })">
+        <i class="uk-icon-angle-left" />
+      </a>
+      <span v-else><i class="uk-icon" /></span>
+    </li>
+    <!-- pre pages -->
+    <li v-for="page in prePages" :class="{ 'uk-active': page === activePage }">
+      <span v-if="page === activePage" v-text="page" />
+      <a v-else
+        @click.prevent="emitChange({ page })"
+        v-text="page" />
+    </li>
+    <li v-if="mainPages[0] > (prePages.length + 1)">
+      <span>...</span>
+    </li>
+    <!-- main pages -->
+    <li v-for="page in mainPages" :class="{ 'uk-active': page === activePage }">
+      <span v-if="page === activePage" v-text="page" />
+      <a v-else
+        @click.prevent="emitChange({ page })"
+        v-text="page" />
+    </li>
+    <li v-if="(mainPages[mainPages.length - 1] + 1) < postPages[0]">
+      <span>...</span>
+    </li>
+    <!-- post pages -->
+    <li v-for="page in postPages" :class="{ 'uk-active': page === activePage }">
+      <span v-if="page === activePage" v-text="page" />
+      <a v-else
+        @click.prevent="emitChange({ page })"
+        v-text="page" />
+    </li>
+    <!-- next buttons -->
+    <li :class="{
+      'uk-disabled': !nextPage,
+      'uk-pagination-next': !compact
+    }">
+      <a v-if="nextPage" @click.prevent="emitChange({ page: nextPage })">
+        <i class="uk-icon-angle-right" />
+      </a>
+      <span v-else><i class="uk-icon" /></span>
+      <a v-if="nextPage" @click.prevent="emitChange({ page: totalPages })">
+        <i class="uk-icon-angle-double-right" />
+      </a>
+      <span v-else><i class="uk-icon" /></span>
+    </li>
+  </ul>
+</template>
+
 <script>
-import { range } from 'lodash'
-import { merge } from 'src/helpers/util'
+import { range } from 'src/helpers/util'
 
 export default {
   name: 'VkPagination',
   props: {
-    // displayed page
-    page: {
+    activePage: {
       type: Number,
       default: 1
     },
-    // total items
+    // total amount of items
     total: {
       type: Number,
       required: true
     },
-    // items on each page
+    // items displayed on each page
     limit: {
       type: Number,
       default: 10
     },
-    // amount of pages around current one
+    // amount of visible pages around active one
     pageRange: {
       type: Number,
       default: 2
@@ -30,72 +91,29 @@ export default {
       type: String,
       default: ''
     },
-    // toggle next/prev buttons float
+    // wheter next/prev should compact or expand
     compact: {
       type: Boolean,
       default: false
     }
   },
-  render (h) {
-    return (
-      <ul class={{
-        'uk-pagination': true,
-        'uk-pagination-left': this.align === 'left',
-        'uk-pagination-right': this.align === 'right'
-      }}>
-        <li class={{
-          'uk-disabled': !this.prevPage,
-          'uk-pagination-previous': !this.compact
-        }}>
-          { this.prevPage
-            ? h(Button, {props: { icon: 'angle-double-left', page: 1 }})
-            : h(Button, {props: { icon: 'angle-double-left' }})
-          }
-          { this.prevPage
-            ? h(Button, {props: { icon: 'angle-left', page: this.prevPage }})
-            : h(Button, {props: { icon: 'angle-left' }})
-          }
-        </li>
-        { this.prePages.map(page => h(Page, { props: {page} })) }
-        { (this.mainPages[0] > (this.prePages.length + 1)) &&
-          (<li><span>...</span></li>) }
-        { this.mainPages.map(page => h(Page, { props: {page} })) }
-        { ((this.mainPages[this.mainPages.length - 1] + 1) < this.postPages[0]) &&
-          (<li><span>...</span></li>) }
-        { this.postPages.map(page => h(Page, { props: {page} })) }
-        <li class={{
-          'uk-disabled': !this.nextPage,
-          'uk-pagination-next': !this.compact
-        }}>
-          { this.nextPage
-            ? h(Button, {props: { icon: 'angle-right', page: this.nextPage }})
-            : h(Button, {props: { icon: 'angle-right' }})
-          }
-          { this.nextPage
-            ? h(Button, {props: { icon: 'angle-double-right', page: this.totalPages }})
-            : h(Button, {props: { icon: 'angle-double-right' }})
-          }
-        </li>
-      </ul>
-    )
-  },
   computed: {
     prevPage () {
-      return (this.page - 1) !== 0
-        ? this.page - 1
+      return (this.activePage - 1) !== 0
+        ? this.activePage - 1
         : null
     },
     nextPage () {
-      return (this.page + 1) <= this.totalPages
-        ? this.page + 1
+      return (this.activePage + 1) <= this.totalPages
+        ? this.activePage + 1
         : null
     },
     totalPages () {
       return Math.ceil(this.total / this.limit)
     },
     mainPages () {
-      let start = this.page - this.pageRange
-      let end = this.page + this.pageRange
+      let start = this.activePage - this.pageRange
+      let end = this.activePage + this.pageRange
       if (end > this.totalPages) {
         end = this.totalPages
         start = this.totalPages - this.pageRange * 2
@@ -125,53 +143,21 @@ export default {
     }
   },
   methods: {
-    change (changes) {
-      const state = merge({
-        page: this.page,
-        total: this.total,
-        limit: this.limit
-      }, changes)
+    emitChange (changes) {
+      const state = {
+        ...{
+          page: this.activePage,
+          total: this.total,
+          limit: this.limit
+        },
+        ...changes
+      }
       // calculate since new state
       state.offset = (state.page - 1) * state.limit + 1
       state.to = Math.min(state.total, state.page * state.limit)
       // event
       this.$emit('change', state)
     }
-  }
-}
-
-const Page = {
-  functional: true,
-  props: ['page'],
-  render (h, { props, parent }) {
-    const isCurrent = props.page === parent.page
-    return (
-      <li class={{ 'uk-active': isCurrent }}>
-        { isCurrent
-          ? h('span', [ props.page ])
-          : h('a', { on: {
-            click: e => {
-              e.preventDefault()
-              parent.change({ page: props.page })
-            }
-          }}, [ props.page ])
-        }
-      </li>
-    )
-  }
-}
-
-const Button = {
-  functional: true,
-  props: ['icon', 'page'],
-  render (h, { props, parent }) {
-    const icon = h('i', { class: `uk-icon-${props.icon}` })
-    return props.page
-      ? h('a', { on: { click: e => {
-        e.preventDefault()
-        parent.change({ page: props.page })
-      }}}, [ icon ])
-      : h('span', [ icon ])
   }
 }
 </script>

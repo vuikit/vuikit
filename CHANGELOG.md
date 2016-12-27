@@ -13,6 +13,7 @@
    - VkTabs
    - VkDropdown
    - VkDatepicker
+   - VkPagination
  - Removed components (check Examples section for alternatives)
    - VkCalendar
    - VKPicker
