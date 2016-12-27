@@ -51,12 +51,6 @@ export default {
     }
   },
   beforeMount () {
-    // set initally selected tab
-    const active = this.tabs.find(tab => this.getTabAlias(tab) === this.activeTab)
-    if (active) {
-      active.componentOptions.propsData.selected = true
-    }
-
     this._updateTabs()
   },
   beforeUpdate () {

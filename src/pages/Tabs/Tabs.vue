@@ -64,7 +64,7 @@ export default {
 
 const props = {
   activeTab: {
-    description: 'The currently active tab referenced by its name.',
+    description: 'The currently active tab referenced by its alias.',
     demo: {
       type: 'Select',
       options: [
@@ -130,8 +130,6 @@ const tabProps = {
     description: 'Whether the tab should be disabled.'
   }
 }
-
-// description: 'The list of <code>vk-tab</code> components.'
 
 const slots = {
   default: {
