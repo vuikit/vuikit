@@ -1,5 +1,5 @@
-import Breadcrumb from './Breadcrumb'
-import BreadcrumbItem from './BreadcrumbItem'
+import Breadcrumb from './Breadcrumb/Breadcrumb'
+import BreadcrumbItem from './Breadcrumb/Item'
 import Button from './Button'
 import ButtonCheckbox from './ButtonCheckbox'
 import ButtonRadio from './ButtonRadio'

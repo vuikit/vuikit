@@ -3,10 +3,14 @@
     'uk-active': active
   }">
     <a v-if="!disabled && !active" @click.prevent="$parent.$emit('change', path)">
-      <slot></slot>
+      <slot>
+        {{ label }}
+      </slot>
     </a>
     <span v-else>
-      <slot></slot>
+      <slot>
+        {{ label }}
+      </slot>
     </span>
   </li>
 </template>
@@ -15,18 +19,18 @@
 export default {
   name: 'VkBreadcrumbItem',
   props: {
+    label: String,
     path: {
       type: String,
-      default: '/'
+      required: true
+    },
+    active: {
+      type: Boolean,
+      default: false
     },
     disabled: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    active () {
-      return this.path === this.$parent.location
     }
   }
 }
