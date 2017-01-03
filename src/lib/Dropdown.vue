@@ -78,10 +78,11 @@ export default {
           offset: {
             offset: this.offset
           }
-        }
-      })
-    .onCreate(data => { this.flipped = data.flipped })
-    .onUpdate(data => { this.flipped = data.flipped })
+        },
+        onCreate: data => { this.flipped = data.flipped },
+        onUpdate: data => { this.flipped = data.flipped }
+      }
+    )
 
     onTargetClick = e => {
       this.$emit('targetClick', e)

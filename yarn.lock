@@ -3612,9 +3612,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-popper.js@1.0.0-alpha.7:
-  version "1.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.0-alpha.7.tgz#5b143f9cbbd15d2533e02c4a751fee0b7d8874ad"
+popper.js@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.0.tgz#28194715191108e171bdca3cb45428e370321d2f"
 
 postcss-calc@^5.2.0:
   version "5.3.1"
