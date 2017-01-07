@@ -7,16 +7,15 @@ var path = require('path')
 var config = require('../config')
 var utils = require('./utils')
 var each = require('lodash/each')
-var webpackConfig = require('./webpack.prod.conf')
 
 // docs
 var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 utils.cleanPath(config.build.assetsRoot)
 cp('-R', 'static/', assetsPath)
-utils.webpackBuild(webpackConfig)
+utils.webpackBuild(require('./webpack.dist.conf'))
 
 // dist
 utils.cleanPath(config.build.distRoot)
-each(require('./webpack.dist.conf'), function (config) {
-  utils.webpackBuild(config)
+each(require('./webpack.dist.conf'), function (wpconfig) {
+  utils.webpackBuild(wpconfig)
 })
