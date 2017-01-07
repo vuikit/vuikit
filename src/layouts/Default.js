@@ -1,4 +1,4 @@
-import { each, merge } from 'src/helpers/util'
+import { each, merge } from 'helpers/util'
 import { filter } from 'lodash'
 
 export default {

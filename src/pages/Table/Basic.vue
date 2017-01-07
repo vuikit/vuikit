@@ -41,7 +41,7 @@
 import Table from 'src/lib/Table'
 import Column from 'src/lib/Table/columns/Default'
 import mixin from '../_mixin'
-import { mergeProps } from 'src/helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   mixins: [mixin],

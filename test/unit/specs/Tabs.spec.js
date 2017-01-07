@@ -1,5 +1,5 @@
 import { createVue, destroyVM, queryByTag, queryByTagAll } from '../util'
-import { hasClass } from 'src/helpers/dom'
+import { hasClass } from 'helpers/dom'
 
 const DELAY = 30
 

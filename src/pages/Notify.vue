@@ -75,7 +75,7 @@
 import Component from '../lib/Notify'
 import NotifyMessage from '../lib/NotifyMessage'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageNotify',

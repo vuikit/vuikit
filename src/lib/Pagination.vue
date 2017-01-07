@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { range } from 'src/helpers/util'
+import { range } from 'helpers/util'
 
 export default {
   name: 'VkPagination',

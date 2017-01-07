@@ -41,7 +41,7 @@
 <script>
 import Component from '../lib/ButtonRadio'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageButtonRadio',

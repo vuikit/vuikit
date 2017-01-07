@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import getMatrix from 'src/helpers/date-matrix'
+import getMatrix from 'helpers/date-matrix'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
@@ -60,7 +60,7 @@ import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
 
 import PickerHeader from './Header'
-import { range, isInteger } from 'src/helpers/util'
+import { range, isInteger } from 'helpers/util'
 
 export default {
   name: 'VkDatepicker',

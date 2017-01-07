@@ -100,7 +100,7 @@
 <script>
 import Component from '../lib/Modal'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   mixins: [mixin],

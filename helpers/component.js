@@ -1,4 +1,4 @@
-import { each } from 'src/helpers/util'
+import { each } from 'helpers/util'
 
 export function filterByTag (nodes, tag) {
   const result = []

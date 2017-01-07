@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import { each, inArray } from 'src/helpers/util'
-import { filterByTag, getProps } from 'src/helpers/component'
+import { each, inArray } from 'helpers/util'
+import { filterByTag, getProps } from 'helpers/component'
 
 export default {
   name: 'VkButtonCheckbox',

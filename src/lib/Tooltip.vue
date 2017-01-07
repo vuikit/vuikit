@@ -8,8 +8,8 @@
 
 <script>
 import Popper from 'popper.js'
-import { on, offAll } from 'src/helpers/dom'
-import { inArray } from 'src/helpers/util'
+import { on, offAll } from 'helpers/dom'
+import { inArray } from 'helpers/util'
 
 let onMouseenter
 let onMouseleave

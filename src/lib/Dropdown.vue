@@ -12,7 +12,7 @@
 
 <script>
 import Popper from 'popper.js'
-import { on, offAll } from '../helpers/dom'
+import { on, offAll } from 'helpers/dom'
 
 let onClick
 let onTargetClick

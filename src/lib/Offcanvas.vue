@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { on, offAll, addClass, removeClass } from '../helpers/dom'
+import { on, offAll, addClass, removeClass } from 'helpers/dom'
 
 const html = document.documentElement
 const body = document.body

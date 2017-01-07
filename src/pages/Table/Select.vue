@@ -56,7 +56,7 @@
 <script>
 import Column from 'src/lib/Table/columns/Select'
 import mixin from '../_mixin'
-import { mergeProps } from 'src/helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   mixins: [mixin],

@@ -42,7 +42,7 @@
 import Breadcrumb from '../lib/Breadcrumb/Breadcrumb'
 import BreadcrumbItem from '../lib/Breadcrumb/Item'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageBreadcrumb',

@@ -53,7 +53,7 @@
 <script>
 import Component from '../lib/Dropdown'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageDropdown',

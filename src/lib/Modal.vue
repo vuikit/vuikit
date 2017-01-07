@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { on, offAll, addClass, removeClass, css } from '../helpers/dom'
+import { on, offAll, addClass, removeClass, css } from 'helpers/dom'
 import { debounce } from 'lodash'
 
 const html = document.documentElement

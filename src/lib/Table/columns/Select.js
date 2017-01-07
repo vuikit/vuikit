@@ -1,4 +1,4 @@
-import { warn } from 'src/helpers/util'
+import { warn } from 'helpers/util'
 import Column from './Default'
 
 const Checkbox = {

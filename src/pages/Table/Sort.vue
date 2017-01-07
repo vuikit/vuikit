@@ -40,7 +40,7 @@
 import Table from 'src/lib/Table'
 import Column from 'src/lib/Table/columns/Sort'
 import mixin from '../_mixin'
-import { mergeProps } from 'src/helpers/pages'
+import { mergeProps } from 'helpers/pages'
 import { orderBy } from 'lodash'
 
 export default {

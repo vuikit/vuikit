@@ -1,4 +1,4 @@
-import matrix from 'src/helpers/date-matrix'
+import matrix from 'helpers/date-matrix'
 import {
   isObject,
   isPlainObject,
@@ -8,7 +8,7 @@ import {
   isArray,
   inArray,
   range
-} from 'src/helpers/util'
+} from 'helpers/util'
 
 describe('Helpers', () => {
   describe('util', () => {

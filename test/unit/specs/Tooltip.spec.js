@@ -1,5 +1,5 @@
 import { createVue, destroyVM, triggerEvent, queryByTag } from '../util'
-import { each } from 'src/helpers/util'
+import { each } from 'helpers/util'
 
 const DELAY = 10
 

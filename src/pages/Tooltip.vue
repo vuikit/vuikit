@@ -49,7 +49,7 @@
 <script>
 import Component from '../lib/Tooltip'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageTooltip',

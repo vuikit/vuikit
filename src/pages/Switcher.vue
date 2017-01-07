@@ -44,7 +44,7 @@
 <script>
 import Component from '../lib/Switcher'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageSwitcher',

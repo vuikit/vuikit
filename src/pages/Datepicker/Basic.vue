@@ -43,7 +43,7 @@
 <script>
 import Component from 'src/lib/Datepicker'
 import mixin from '../_mixin'
-import { mergeProps } from 'src/helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 const now = Date.now()
 

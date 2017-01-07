@@ -1,5 +1,5 @@
 import { createVue, destroyVM, queryByTag } from '../util'
-import { toArray } from 'src/helpers/util'
+import { toArray } from 'helpers/util'
 
 const DELAY = 10
 const testDataArr = []

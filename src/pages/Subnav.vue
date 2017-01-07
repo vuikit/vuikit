@@ -47,7 +47,7 @@
 import Subnav from '../lib/Subnav/Subnav'
 import SubnavItem from '../lib/Subnav/Item'
 import mixin from './_mixin'
-import { mergeProps } from '../helpers/pages'
+import { mergeProps } from 'helpers/pages'
 
 export default {
   name: 'PageSubnav',
