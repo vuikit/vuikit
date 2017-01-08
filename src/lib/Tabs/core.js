@@ -37,9 +37,6 @@ export default {
       default: 'vk-tabs-transition'
     }
   },
-  data: () => ({
-    tabs: []
-  }),
   computed: {
     tabs: {
       get () {
