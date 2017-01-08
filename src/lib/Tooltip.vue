@@ -33,9 +33,13 @@ export default {
       type: String,
       default: 'top'
     },
-    offset: {
-      type: String,
-      default: '0 5'
+    modifiers: {
+      type: Object,
+      default: () => ({
+        offset: {
+          offset: '0 5'
+        }
+      })
     },
     transition: {
       type: String,
@@ -59,7 +63,6 @@ export default {
   beforeUpdate () {
     // update popper
     this.$popper.options.placement = this.placement
-    this.$popper.options.modifiers.offset.offset = this.offset
     this.$popper.update()
   },
   mounted () {
@@ -69,11 +72,7 @@ export default {
       this.$el,
       {
         placement: this.placement,
-        modifiers: {
-          offset: {
-            offset: this.offset
-          }
-        },
+        modifiers: this.modifiers,
         onCreate: data => { this.flipped = data.flipped },
         onUpdate: data => { this.flipped = data.flipped }
       }

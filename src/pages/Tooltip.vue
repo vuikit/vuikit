@@ -10,7 +10,6 @@
         <vk-tooltip
           content="Tooltip 1"
           :placement="props.placement.demo.value"
-          :offset="props.offset.demo.value"
           :transition="props.transition.demo.value"
           @show="events.show.emited = true"
           @hide="events.hide.emited = true" />
@@ -20,7 +19,6 @@
         <vk-tooltip
           content="Tooltip 2"
           :placement="props.placement.demo.value"
-          :offset="props.offset.demo.value"
           :transition="props.transition.demo.value"
           @show="events.show.emited = true"
           @hide="events.hide.emited = true" />
@@ -88,17 +86,10 @@ const props = {
       value: 'top'
     }
   },
-  offset: {
-    description: 'Specifies the tooltip horizontal and vertical offset.',
-    demo: {
-      type: 'Select',
-      options: [
-        { text: '0 0', value: '0 0' },
-        { text: '0 5', value: '0 5' },
-        { text: '10 10', value: '10 10' }
-      ],
-      value: '0 5'
-    }
+  modifiers: {
+    description: `Modifiers are setting that alter the behavior of the popper, such as the offset.
+      Checkout the <a href="https://popper.js.org/popper-documentation.html">Popper.js Documentation</a>
+      for all possibilities.`
   },
   transition: {
     description: `The name prefix to be applied to the <a href="https://vuejs.org/v2/guide/transitions.html#Transition-Classes">

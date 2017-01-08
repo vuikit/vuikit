@@ -46,10 +46,15 @@ describe('Dropdown', () => {
     vm = createVue({
       template: `
         <button>
-          <vk-dropdown :placement="placement">Dropdown</vk-dropdown>
+          <vk-dropdown :placement="placement" :modifiers="modifiers">Dropdown</vk-dropdown>
         </button>`,
       data: () => ({
-        placement: 'right'
+        placement: 'right',
+        modifiers: {
+          flip: {
+            enabled: false
+          }
+        }
       })
     })
 

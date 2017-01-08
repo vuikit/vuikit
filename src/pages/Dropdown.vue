@@ -100,6 +100,11 @@ const props = {
       value: 'bottom-start'
     }
   },
+  modifiers: {
+    description: `Modifiers are setting that alter the behavior of the popper, such as the offset.
+      Checkout the <a href="https://popper.js.org/popper-documentation.html">Popper.js Documentation</a>
+      for all possibilities.`
+  },
   transition: {
     description: `Specifies the transition name to be used by the transition
       wrapper component.`,
@@ -111,10 +116,6 @@ const props = {
       ],
       value: 'vk-transition-fade'
     }
-  },
-  offset: {
-    description: `The dropdown attachment point offset with <code>vertical horizontal</code> syntax.
-      Accepts <code>px</code> or <code>%</code> values being percentages the height and width of the target.`
   },
   blank: {
     description: 'Wheter to render the dropdown without any styling.',
