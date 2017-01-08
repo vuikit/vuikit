@@ -8,20 +8,23 @@
         <input ref="input"
           type="text"
           placeholder="Pick a date"
-          v-model="date"
+          v-model="pickedDate"
           @focus="show = true">
         <vk-dropdown expand
           :target="$refs.input"
           :show="show"
-          @clickOut="show = false">
+          @clickOut="
+            show = false,
+            date = pickedDate
+          ">
           <vk-datepicker class="uk-margin-remove"
             :date="date || Date.now()"
-            :pickedDates="date
-              ? [date]
+            :pickedDates="pickedDate
+              ? [pickedDate]
               : []
             "
             @pick="({ date, format }) => {
-              $data.date = format(date, 'YYYY-MM-DD')
+              pickedDate = format(date, 'YYYY-MM-DD')
               show = false
             }"
             @change="({ date }) => { $data.date = date }">
@@ -47,6 +50,7 @@ export default {
   data: () => ({
     show: false,
     date: '',
+    pickedDate: '',
     example
   })
 }
