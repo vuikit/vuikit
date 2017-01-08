@@ -57,12 +57,13 @@
 import Column from 'src/lib/Table/columns/Select'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
+import { getFinalProps } from 'helpers/component'
 
 export default {
   mixins: [mixin],
   data: () => ({
     activeTab: 1,
-    columnProps: mergeProps(Column.props, columnProps),
+    columnProps: mergeProps(getFinalProps(Column), columnProps),
     columnEvents,
     selection: {},
     example,
@@ -81,6 +82,12 @@ const columnProps = {
   },
   trackBy: {
     description: `A unique key for the rows to be tracked by when selected.`
+  },
+  headerClass: {
+    description: 'The class to be applied to the <code>thead th</code> tag.'
+  },
+  cellClass: {
+    description: 'The class to be applied to each <code>tbody td</code> tag.'
   }
 }
 

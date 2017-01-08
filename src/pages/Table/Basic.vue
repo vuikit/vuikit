@@ -91,8 +91,14 @@ const columnProps = {
   header: {
     description: 'The label for the column header.'
   },
+  headerClass: {
+    description: 'The class to be applied to the <code>thead th</code> tag.'
+  },
   cell: {
     description: 'The row property name to display as the column cell value.'
+  },
+  cellClass: {
+    description: 'The class to be applied to each <code>tbody td</code> tag.'
   }
 }
 

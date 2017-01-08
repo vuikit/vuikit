@@ -5,8 +5,14 @@ export default {
     header: {
       type: String
     },
+    headerClass: {
+      type: String
+    },
     // the cell key
     cell: {
+      type: String
+    },
+    cellClass: {
       type: String
     }
   },
@@ -19,11 +25,11 @@ export default {
   },
   headerRender (h) {
     const scopedSlot = this.$scopedSlots && this.$scopedSlots.header
-    return (<th>{ scopedSlot ? scopedSlot() : this.header }</th>)
+    return (<th staticClass={ this.headerClass }>{ scopedSlot ? scopedSlot() : this.header }</th>)
   },
   cellRender (h, { row, rowIndex }) {
     const cell = this.cell
     const scopedSlot = this.$scopedSlots && this.$scopedSlots.cell
-    return (<td>{ scopedSlot ? scopedSlot({ row, rowIndex }) : row[cell] }</td>)
+    return (<td staticClass={ this.cellClass }>{ scopedSlot ? scopedSlot({ row, rowIndex }) : row[cell] }</td>)
   }
 }

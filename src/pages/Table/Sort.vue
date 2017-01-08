@@ -41,6 +41,7 @@ import Table from 'src/lib/Table'
 import Column from 'src/lib/Table/columns/Sort'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
+import { getFinalProps } from 'helpers/component'
 import { orderBy } from 'lodash'
 
 export default {
@@ -48,7 +49,7 @@ export default {
   data: () => ({
     activeTab: 1,
     tableProps: mergeProps(Table.props, tableProps),
-    columnProps: mergeProps(Column.props, columnProps),
+    columnProps: mergeProps(getFinalProps(Column), columnProps),
     events,
     sortedBy: {
       name: 'asc'
@@ -81,8 +82,14 @@ const columnProps = {
   header: {
     description: 'The label for the column header.'
   },
+  headerClass: {
+    description: 'The class to be applied to the <code>thead th</code> tag.'
+  },
   cell: {
     description: 'The row property name to display as the column cell value.'
+  },
+  cellClass: {
+    description: 'The class to be applied to the <code>tbody td</code> tag.'
   },
   sortBy: {
     description: `The row property which to use for the ordering. Defaults to

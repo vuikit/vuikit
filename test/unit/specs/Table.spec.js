@@ -133,6 +133,25 @@ describe('Table Column', () => {
         done()
       }, DELAY)
     })
+
+    it('custom class', done => {
+      const vm = createVue({
+        template: `
+          <vk-table :data="testData">
+            <vk-table-column headerClass="myHeaderClass" cellClass="myCellClass">
+          </vk-table>
+        `,
+        data: () => ({
+          testData: getTestData()
+        })
+      })
+
+      setTimeout(_ => {
+        expect(vm.$el.querySelector('thead th').classList.contains('myHeaderClass')).to.be.true
+        expect(vm.$el.querySelector('tbody td').classList.contains('myCellClass')).to.be.true
+        done()
+      }, DELAY)
+    })
   })
 })
 
@@ -216,6 +235,25 @@ describe('Table Column Select', () => {
           destroyVM(vm)
           done()
         }, DELAY)
+      }, DELAY)
+    })
+
+    it('custom class', done => {
+      const vm = createVue({
+        template: `
+          <vk-table :data="testData">
+            <vk-table-column-select headerClass="myHeaderClass" cellClass="myCellClass">
+          </vk-table>
+        `,
+        data: () => ({
+          testData: getTestData()
+        })
+      })
+
+      setTimeout(_ => {
+        expect(vm.$el.querySelector('thead th').classList.contains('myHeaderClass')).to.be.true
+        expect(vm.$el.querySelector('tbody td').classList.contains('myCellClass')).to.be.true
+        done()
       }, DELAY)
     })
   })
@@ -307,6 +345,25 @@ describe('Table Column Sort', () => {
           destroyVM(vm)
           done()
         }, DELAY)
+      }, DELAY)
+    })
+
+    it('custom class', done => {
+      const vm = createVue({
+        template: `
+          <vk-table :data="testData">
+            <vk-table-column-sort headerClass="myHeaderClass" cellClass="myCellClass">
+          </vk-table>
+        `,
+        data: () => ({
+          testData: getTestData()
+        })
+      })
+
+      setTimeout(_ => {
+        expect(vm.$el.querySelector('thead th').classList.contains('myHeaderClass')).to.be.true
+        expect(vm.$el.querySelector('tbody td').classList.contains('myCellClass')).to.be.true
+        done()
       }, DELAY)
     })
   })

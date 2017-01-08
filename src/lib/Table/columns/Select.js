@@ -65,7 +65,7 @@ export default {
   headerRender (h) {
     const _parent = this.$parent
     const scopedSlot = this.$scopedSlots && this.$scopedSlots.header
-    return (<th class="uk-form vk-table-width-minimum">{
+    return (<th staticClass={ this.headerClass } class="uk-form vk-table-width-minimum">{
       scopedSlot
         ? scopedSlot()
         : h(Checkbox, {
@@ -83,7 +83,7 @@ export default {
   },
   cellRender (h, { row }) {
     const scopedSlot = this.$scopedSlots && this.$scopedSlots.cell
-    return (<td class="uk-form vk-table-width-minimum">{
+    return (<td staticClass={ this.cellClass } class="uk-form vk-table-width-minimum">{
       scopedSlot
       ? scopedSlot({ row })
       : h(Checkbox, {

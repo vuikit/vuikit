@@ -28,7 +28,7 @@ export default {
     const orderedBy = Table.sortedBy[this.cell]
     const sortBy = this.sortBy || this.cell
     return (
-      <th class={[
+      <th staticClass={ this.headerClass } class={[
         'uk-visible-hover-inline vk-table-order',
         { 'uk-active': orderedBy }
       ]} on-click={e => {
