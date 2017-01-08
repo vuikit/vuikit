@@ -2,7 +2,8 @@
   <transition
     :name="transition"
     @beforeEnter="beforeEnter"
-    @beforeLeave="beforeLeave">
+    @beforeLeave="beforeLeave"
+    @afterLeave="afterLeave">
     <div v-show="show" class="uk-offcanvas"
       @click="e => {
         if (e.target !== $el && $el.contains(e.target)) {
