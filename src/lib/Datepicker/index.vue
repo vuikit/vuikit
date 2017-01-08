@@ -120,7 +120,7 @@ export default {
       })
     },
     prevMonth () {
-      return (subMonths(this.date, 1), 'YYYY-MM')
+      return this.format(subMonths(this.date, 1), 'YYYY-MM')
     },
     nextMonth () {
       return this.format(addMonths(this.date, 1), 'YYYY-MM')
