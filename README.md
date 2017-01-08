@@ -113,7 +113,7 @@ You can use UIkit themes out of a box with few exceptions you should be aware of
 
 UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. The solution is to reset those and apply new ones.
 
-```css
+```less
 .hook-modal() {
   // reset hardcoded transitions
   display: inherit;
@@ -157,12 +157,46 @@ UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. Th
 
 Similar as with Modal, Dropdown transition styles must be reseted.
 
-```css
+```less
 // reset hardcoded transitions
 .hook-dropdown-misc() {
   .uk-dropdown,
   .uk-dropdown-blank {
     display: inherit;
+  }
+}
+```
+
+### Offcanvas
+
+```less
+@offcanvas-transition-speed: .3s;
+@offcanvas-transition-timing: ease;
+
+.hook-offcanvas() {
+  // null hardcoded transitions
+  display: inherit;
+  // necessary for Vue transition hooks
+  transition-duration: @offcanvas-transition-speed;
+}
+
+.hook-offcanvas-bar() {
+  // apply new transitions
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  transition: transform @offcanvas-transition-speed @offcanvas-transition-timing;
+}
+
+.hook-offcanvas-misc() {
+  .uk-offcanvas-page {
+    transition: margin-left @offcanvas-transition-speed @offcanvas-transition-timing;
+  }
+  .uk-offcanvas-page-open .uk-offcanvas-bar,
+  .uk-offcanvas-page-open .uk-offcanvas-bar {
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%); // IE9
+    transform: translateX(0%);
   }
 }
 ```
