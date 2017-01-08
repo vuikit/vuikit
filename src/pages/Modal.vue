@@ -1,11 +1,12 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Modal</h2>
-      <hr class="uk-article-divider">
+    <h1>Modal</h1>
+    Display modal dialogs.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <!-- DEMO -->
       <vk-button
-        @click.native="props.show.demo.value = true">
+        @click="props.show.demo.value = true">
         Open
       </vk-button>
       <vk-modal
@@ -69,31 +70,23 @@
           </div>
         </template>
       </vk-modal>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-modal</code> component renders a UIkit Modal with slight
-        differences on how the transitions are applied. Reason why the default UIkit
-        themes will not work out of a box. Check the repo readme for more information
-        about it.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events :events="events" />
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -180,7 +173,7 @@ const events = {
 
 const example =
 `<vk-button
-  @click.native="show = true">
+  @click"show = true">
   Open
 </vk-button>
 <vk-modal {attrs}

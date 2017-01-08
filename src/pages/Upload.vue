@@ -1,9 +1,9 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Upload</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Upload</h1>
+    Displays a placehoder for uploading files.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-upload
         @dropped="events.dropped.emited = true"
         @selected="events.selected.emited = true">
@@ -13,25 +13,20 @@
           selecting one<input type="file">
         </a>.
       </vk-upload>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-upload</code> component deals with the UI part of an upload placeholder.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Slots">
+        <vk-docs-slots :slots="slots" />
+      </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events :events="events" />
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 

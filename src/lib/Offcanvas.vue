@@ -5,10 +5,10 @@
     @beforeLeave="beforeLeave">
     <div v-show="show" class="uk-offcanvas"
       @click="e => {
-        if (e.target !== this.$el && this.$el.contains(e.target)) {
-          this.$emit('clickIn', e)
+        if (e.target !== $el && $el.contains(e.target)) {
+          $emit('clickIn', e)
         } else {
-          this.$emit('clickOut', e)
+          $emit('clickOut', e)
         }
       }">
       <div ref="bar" class="uk-offcanvas-bar" :class="{

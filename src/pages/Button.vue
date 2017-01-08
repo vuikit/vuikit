@@ -12,7 +12,7 @@
         :active="props.active.demo.value"
         :size="props.size.demo.value"
         :width="props.width.demo.value"
-        @click.native="props.active.demo.value = !props.active.demo.value">
+        @click="props.active.demo.value = !props.active.demo.value">
         Button
       </vk-button>
     </div>

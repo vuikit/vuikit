@@ -1,9 +1,9 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Pickable Table</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Pickable Table</h1>
+    This example illustrate how to make <code>vk-table</code> data pickable.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <div class="uk-form">
         <vk-table :data="data" condensed>
           <vk-table-column header="Name">
@@ -26,12 +26,8 @@
       <div class="uk-margin" v-show="picked">
         {{ 'Picked ' + picked }}
       </div>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        This example illustrate how to make <code>vk-table</code> data pickable.
-      </div>
-      <vk-docs-code>{{ code }}</vk-docs-code>
     </div>
+    <vk-docs-code>{{ code }}</vk-docs-code>
   </layouts-default>
 </template>
 

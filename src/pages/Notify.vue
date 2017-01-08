@@ -1,9 +1,9 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Notify</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Notify</h1>
+    Creates toggleable notifications that fade out automatically.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <button class="uk-button" @click="messages.push({
         message: 'Message...',
         timeout: messageProps.timeout.demo.value,
@@ -14,60 +14,55 @@
       </button>
       <vk-notify
         :placement="props.placement.demo.value"
-        @timeout="
-          messages.splice(messages.indexOf(arguments[0]), 1)
+        @timeout="message => {
+          messages.splice(messages.indexOf(message), 1)
           events.timeout.emited = true
-        "
-        @click="
-          messages.splice(messages.indexOf(arguments[0]), 1)
+        }"
+        @click="message => {
+          messages.splice(messages.indexOf(message), 1)
           events.click.emited = true
-        ">
+        }">
         <vk-notify-message v-for="message in messages"
           :id="message"
           :status="message.status"
           :timeout="message.timeout"
           :transition="message.transition">
-          <a href="#" class="uk-close" @click.prevent="
-            messages.splice(messages.indexOf(arguments[0]), 1)
-          "></a>
+          <a href="#" class="uk-close" @click.prevent="id => {
+            messages.splice(messages.indexOf(index), 1)
+          }"></a>
           {{ message.message }}
         </vk-notify-message>
       </vk-notify>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-notify</code> component renders UIkit Notify based notifications.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Props">
-          <h4>vk-notify</h4>
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-          <h4>vk-notify-message</h4>
-          <vk-docs-props
-            :props="messageProps"
-            @change="messageProps[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Slots">
-          <h4>vk-notify</h4>
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-          <h4>vk-notify-message</h4>
-          <vk-docs-slots :slots="messageSlots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
-          <h4>vk-notify</h4>
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
+        <h4>vk-notify</h4>
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+        <h4>vk-notify-message</h4>
+        <vk-docs-props
+          :props="messageProps"
+          @change="(prop, value) => messageProps[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Slots">
+        <h4>vk-notify</h4>
+        <vk-docs-slots :slots="slots"></vk-docs-slots>
+        <h4>vk-notify-message</h4>
+        <vk-docs-slots :slots="messageSlots"></vk-docs-slots>
+      </vk-tab>
+      <vk-tab label="Events">
+        <h4>vk-notify</h4>
+        <vk-docs-events :events="events"></vk-docs-events>
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -182,23 +177,23 @@ const events = {
 }
 
 const example =
-`<button class="uk-button" @click="messages.push({
+`<vk-button @click="messages.push({
   message: 'Message...',
   timeout: 5000,
   status: 'info'
 })">
   Notify
-</button>
+</vk-button>
 <vk-notify {attrs}
-  @timeout="messages.splice(messages.indexOf(arguments[0]), 1)"
-  @click="messages.splice(messages.indexOf(arguments[0]), 1)">
+  @timeout="message => { messages.splice(messages.indexOf(message), 1) }"
+  @click="message => { messages.splice(messages.indexOf(message), 1) }">
   <vk-notify-message v-for="message in messages"
     :id="message"
     :status="message.status"
     :timeout="message.timeout">
-    <a href="#" class="uk-close" @click.prevent="
-      messages.splice(messages.indexOf(arguments[0]), 1)
-    "></a>
+    <a href="#" class="uk-close" @click.prevent="id => {
+      messages.splice(messages.indexOf(id), 1)
+    }"></a>
     {{ message.message }}
   </vk-notify-message>
 </vk-notify>`

@@ -1,11 +1,12 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Modal as Confirm</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Modal as Confirm</h1>
+    A very common usage of <code>vk-modal</code> is to display a confirm dialog.
+      That can be acomplished with just a specific slot layout.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-button
-        @click.native="show = true">
+        @click="show = true">
         {{ confirmed ? 'Confirmed' : 'Open' }}
       </vk-button>
       <vk-modal
@@ -21,7 +22,7 @@
         Please confirm.
         <div class="uk-modal-footer uk-text-right">
           <vk-button
-            @click.native="
+            @click="
               confirmed = false,
               show = false
             ">
@@ -29,7 +30,7 @@
           </vk-button>
           <vk-button
             color="primary"
-            @click.native="
+            @click="
               confirmed = true,
               show = false
             ">
@@ -37,23 +38,8 @@
           </vk-button>
         </div>
       </vk-modal>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        <p>A very common usage of <code>vk-modal</code> is to display a confirm dialog.
-          That can be acomplished with just a specific slot layout.</p>
-        <p><span class="uk-badge uk-badge-notification">Note</span> If your project
-        requires this combination quite often it would be wise to wrap it all up into
-        a custom component.</p>
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Code">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-docs-code>{{ code }}</vk-docs-code>
   </layouts-default>
 </template>
 
@@ -63,7 +49,6 @@ import mixin from '../_mixin'
 export default {
   mixins: [mixin],
   data: () => ({
-    activeTab: 1,
     show: false,
     confirmed: false,
     example
@@ -72,7 +57,7 @@ export default {
 
 const example =
 `<vk-button
-  @click.native="show = true">
+  @click="show = true">
   {{ confirmed ? 'Confirmed' : 'Open' }}
 </vk-button>
 <vk-modal
@@ -88,7 +73,7 @@ const example =
   Please confirm.
   <div class="uk-modal-footer uk-text-right">
     <vk-button
-      @click.native="
+      @click="
         confirmed = false,
         show = false
       ">
@@ -96,7 +81,7 @@ const example =
     </vk-button>
     <vk-button
       color="primary"
-      @click.native="
+      @click="
         confirmed = true,
         show = false
       ">

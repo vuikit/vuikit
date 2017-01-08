@@ -18,7 +18,7 @@
               <vk-button
                 size="mini"
                 color="danger"
-                @click.native="resetHits">
+                @click="resetHits">
                 Reset All
               </vk-button>
             </template>
@@ -26,7 +26,7 @@
               <vk-button
                 size="mini"
                 color="danger"
-                @click.native="data[props.rowIndex].hits = 0">
+                @click="data[props.rowIndex].hits = 0">
                 Reset Hits
               </vk-button>
             </template>
@@ -73,7 +73,7 @@ const example = `<template>
         <vk-button
           size="mini"
           color="danger"
-          @click.native="resetHits">
+          @click="resetHits">
           Reset All
         </vk-button>
       </template>
@@ -81,7 +81,7 @@ const example = `<template>
         <vk-button
           size="mini"
           color="danger"
-          @click.native="data[props.rowIndex].hits = 0">
+          @click="data[props.rowIndex].hits = 0">
           Reset Hits
         </vk-button>
       </template>

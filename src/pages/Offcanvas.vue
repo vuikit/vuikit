@@ -1,11 +1,11 @@
 <template>
   <layouts-default>
-    <div class="uk-block">
-      <h2>Offcanvas</h2>
-      <hr class="uk-article-divider">
-      <!-- DEMO -->
+    <h1>Offcanvas</h1>
+    Creates a smooth off-canvas sidebar that slides in and out of the page.
+    <hr class="uk-article-divider">
+    <div class="uk-margin">
       <vk-button
-        @click.native="props.show.demo.value = true">
+        @click="props.show.demo.value = true">
         Show
       </vk-button>
       <vk-offcanvas
@@ -29,32 +29,26 @@
           Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </div>
       </vk-offcanvas>
-      <!-- DESC -->
-      <div class="uk-margin-large">
-        The <code>vk-offcanvas</code> component, based on UIkit Offcanvas, creates
-        a smooth off-canvas sidebar that slides in and out of the page.
-      </div>
-      <!-- TABS -->
-      <vk-tabs
-        :activeTab="activeTab"
-        @change="tab => { activeTab = tab }">
-        <vk-tab label="Props">
-          <vk-docs-props
-            :props="props"
-            @change="props[arguments[0]].demo.value = arguments[1]">
-          </vk-docs-props>
-        </vk-tab>
-        <vk-tab label="Slots">
-          <vk-docs-slots :slots="slots"></vk-docs-slots>
-        </vk-tab>
-        <vk-tab label="Events">
-          <vk-docs-events :events="events"></vk-docs-events>
-        </vk-tab>
-        <vk-tab label="Example">
-          <vk-docs-code>{{ code }}</vk-docs-code>
-        </vk-tab>
-      </vk-tabs>
     </div>
+    <vk-tabs
+      :activeTab="activeTab"
+      @change="tab => { activeTab = tab }">
+      <vk-tab label="Props">
+        <vk-docs-props
+          :props="props"
+          @change="(prop, value) => props[prop].demo.value = value">
+        </vk-docs-props>
+      </vk-tab>
+      <vk-tab label="Slots">
+        <vk-docs-slots :slots="slots" />
+      </vk-tab>
+      <vk-tab label="Events">
+        <vk-docs-events :events="events" />
+      </vk-tab>
+      <vk-tab label="Example">
+        <vk-docs-code>{{ code }}</vk-docs-code>
+      </vk-tab>
+    </vk-tabs>
   </layouts-default>
 </template>
 
@@ -121,7 +115,7 @@ const events = {
 
 const example =
 `<vk-button
-  @click.native="show = true">
+  @click="show = true">
   Show
 </vk-button>
 <vk-offcanvas :show="show" {attrs}
