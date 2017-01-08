@@ -36,7 +36,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
-    "vue": "^2.1.6"
+    "vue": "^2.1.8"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",
@@ -78,8 +78,8 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.26",
     "karma-webpack": "^1.8.1",
-    "lodash": "^4.17.2",
-    "lodash-webpack-plugin": "^0.10.6",
+    "lodash": "^4.17.4",
+    "lodash-webpack-plugin": "^0.10.7",
     "lolex": "^1.4.0",
     "mocha": "^3.1.0",
     "ora": "^0.4.0",
@@ -87,19 +87,19 @@
     "popper.js": "^1.0.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.5",
-    "sinon": "^1.17.3",
+    "sinon": "^1.17.7",
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.2",
     "vue-router": "^2.1.1",
     "vue-style-loader": "^1.0.0",
-    "vue-template-compiler": "^2.1.6",
+    "vue-template-compiler": "^2.1.8",
     "vuikit-docs": "^0.1.1",
     "vuikit-theme": "git+https://github.com/vuikit/vuikit-theme.git",
     "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.9.0",
-    "webpack-hot-middleware": "^2.13.2",
-    "webpack-merge": "^2.0.0"
+    "webpack-hot-middleware": "^2.15.0",
+    "webpack-merge": "^2.3.1"
   },
   "engines": {
     "node": ">= 4.0.0",
