@@ -212,6 +212,6 @@ Until Vuikit reaches a 1.0 release, breaking changes will be released with a new
 
 ## License
 
-Vuikit is open source and released under the [MIT License](LICENSE.md).
+Vuikit is open source and released under the [MIT License](LICENSE).
 
 Copyright (c) 2016 ZOOlanders.com
