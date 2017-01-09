@@ -12,8 +12,6 @@ import Offcanvas from './Offcanvas'
 import Pagination from './Pagination'
 import Subnav from './Subnav/Subnav'
 import SubnavItem from './Subnav/Item'
-import Switcher from './Switcher'
-import SwitcherItem from './SwitcherItem'
 import Table from './Table'
 import TableColumn from './Table/columns/Default'
 import TableColumnSelect from './Table/columns/Select'
@@ -39,8 +37,6 @@ const Vuikit = {
   Pagination,
   Subnav,
   SubnavItem,
-  Switcher,
-  SwitcherItem,
   Table,
   TableColumn,
   TableColumnSelect,

@@ -117,14 +117,6 @@ export default [
   },
   // OTHERS
   {
-    name: 'Switcher',
-    path: '/switcher',
-    component: require('./pages/Switcher'),
-    meta: {
-      section: 'Others'
-    }
-  },
-  {
     name: 'Upload',
     path: '/upload',
     component: require('./pages/Upload'),

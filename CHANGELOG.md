@@ -19,6 +19,7 @@
    - VKPicker
    - VkPickerDrop
    - VkDatepickerDrop
+   - VkSwitcher
 
 ### 0.6.0
 
