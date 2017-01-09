@@ -1,4 +1,4 @@
-import Column from './Default'
+import Core from './core.js'
 
 function processSortOrder (sortBy, sortedBy) {
   const newOrder = {}
@@ -15,10 +15,24 @@ function processSortOrder (sortBy, sortedBy) {
 
 export default {
   name: 'VkTableColumnSort',
-  extends: Column,
+  extends: Core,
   props: {
     // the row value to be sorted by (defaults to cell prop)
     sortBy: {
+      type: String
+    },
+    // the header label
+    header: {
+      type: String
+    },
+    headerClass: {
+      type: String
+    },
+    // the cell key
+    cell: {
+      type: String
+    },
+    cellClass: {
       type: String
     }
   },

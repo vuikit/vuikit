@@ -1,36 +1,10 @@
 import { warn } from 'helpers/util'
-import Column from './Default'
-
-const Checkbox = {
-  functional: true,
-  props: ['checked'],
-  render (h, { data, props }) {
-    return h('input', {
-      ...data,
-      attrs: {
-        type: 'checkbox'
-      },
-      domProps: {
-        checked: props.checked
-      },
-      on: {
-        click: e => {
-          // ensure the browser doesn't apply
-          // the checked state on click
-          e.target.checked = props.checked
-          // trigger any click event
-          if (data.on && data.on.click) {
-            data.on.click.call(this, e)
-          }
-        }
-      }
-    })
-  }
-}
+import Core from './core.js'
+import Checkbox from './checkbox'
 
 export default {
   name: 'VkTableColumnSelect',
-  extends: Column,
+  extends: Core,
   props: {
     trackBy: {
       type: String
@@ -38,6 +12,12 @@ export default {
     selection: {
       type: Object,
       default: () => ({})
+    },
+    headerClass: {
+      type: String
+    },
+    cellClass: {
+      type: String
     }
   },
   created () {
