@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { createVue, destroyVM, queryByTag } from '../util'
-import checkbox from 'src/lib/Table/columns/checkbox'
+import checkbox from 'src/Table/columns/checkbox'
 
 const DELAY = 10
 const testDataArr = []

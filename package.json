@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "dev": "node build/dev-server.js",
+    "dev": "node dev/server/bs.js",
     "build": "node build/build.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "karma start test/unit/karma.conf.js --single-run",
@@ -102,7 +102,7 @@
     "webpack-merge": "^2.3.1"
   },
   "engines": {
-    "node": ">= 4.0.0",
+    "node": ">= 6.9.0",
     "npm": ">= 3.0.0"
   }
 }

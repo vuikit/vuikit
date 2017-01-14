@@ -1,4 +1,4 @@
-import Datepicker from 'src/lib/Datepicker'
+import Datepicker from 'src/Datepicker'
 import { createTest, destroyVM } from '../util'
 import { toArray } from 'helpers/util'
 import matrix from 'helpers/date-matrix'

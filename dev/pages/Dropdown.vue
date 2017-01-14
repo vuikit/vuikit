@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import Component from '../lib/Dropdown'
+import Component from 'src/Dropdown'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

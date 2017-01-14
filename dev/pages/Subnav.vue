@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Subnav from '../lib/Subnav/Subnav'
-import SubnavItem from '../lib/Subnav/Item'
+import Subnav from 'src/Subnav/Subnav'
+import SubnavItem from 'src/Subnav/Item'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

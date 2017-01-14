@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import Column from 'src/lib/Table/columns/Select'
+import Column from 'src/Table/columns/Select'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
 import { getFinalProps } from 'helpers/component'

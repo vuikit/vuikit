@@ -14,7 +14,7 @@ var env = process.env.NODE_ENV === 'testing'
 
 module.exports = merge(baseWebpackConfig, {
   entry: {
-    app: './src/main.js'
+    app: './dev/main.js'
   },
   output: {
     path: config.build.assetsRoot,

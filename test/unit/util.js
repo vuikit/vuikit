@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Vuikit from 'src/lib'
+import Vuikit from 'src'
 
 Vue.use(Vuikit)
 

@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import Component from '../lib/Modal'
+import Component from 'src/Modal'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

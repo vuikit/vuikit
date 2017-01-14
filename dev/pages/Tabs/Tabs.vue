@@ -44,8 +44,8 @@
 </template>
 
 <script>
-import Tab from 'src/lib/Tabs/Tab'
-import Tabs from 'src/lib/Tabs/Tabs'
+import Tab from 'src/Tabs/Tab'
+import Tabs from 'src/Tabs/Tabs'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
 import { getFinalProps } from 'helpers/component'

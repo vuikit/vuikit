@@ -1,5 +1,5 @@
 import { createVue, createTest, destroyVM, triggerKeyEvent, queryByTag } from '../util'
-import Modal from 'src/lib/Modal'
+import Modal from 'src/Modal'
 
 describe('Modal', () => {
   let vm

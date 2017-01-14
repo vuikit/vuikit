@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import Tabs from 'src/lib/Tabs/TabsVertical'
+import Tabs from 'src/Tabs/TabsVertical'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
 import { getFinalProps } from 'helpers/component'

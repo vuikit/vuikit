@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import Component from 'src/lib/Datepicker'
+import Component from 'src/Datepicker'
 import mixin from '../_mixin'
 import { mergeProps } from 'helpers/pages'
 

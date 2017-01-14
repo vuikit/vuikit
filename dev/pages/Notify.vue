@@ -67,8 +67,8 @@
 </template>
 
 <script>
-import Component from '../lib/Notify'
-import NotifyMessage from '../lib/NotifyMessage'
+import Component from 'src/Notify'
+import NotifyMessage from 'src/NotifyMessage'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

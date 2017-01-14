@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import Component from '../lib/Tooltip'
+import Component from 'src/Tooltip'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

@@ -3,13 +3,13 @@ require('./check-versions')()
 require('shelljs/global')
 env.NODE_ENV = 'production'
 
-var path = require('path')
-var config = require('../config')
-var utils = require('./utils')
-var each = require('lodash/each')
+const path = require('path')
+const config = require('../config')
+const utils = require('./utils')
+const each = require('lodash/each')
 
 // docs
-var assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
+const assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory)
 utils.cleanPath(config.build.assetsRoot)
 cp('-R', 'static/', assetsPath)
 utils.webpackBuild(require('./webpack.dist.conf'))

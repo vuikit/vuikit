@@ -1,10 +1,11 @@
 <template>
   <layouts-default>
-    <h1>Button Radio</h1>
-    Display a radio like buttons composition.
+    <h1>Button Checkbox</h1>
+    Display a checkbox like buttons composition.
     <hr class="uk-article-divider">
     <div class="uk-margin">
-      <vk-button-radio
+      <!-- DEMO -->
+      <vk-button-checkbox
         :group="props.group.demo.value"
         :value="props.value.demo.value"
         @change="value => {
@@ -14,7 +15,7 @@
         <vk-button :value="1">Button 1</vk-button>
         <vk-button :value="2">Button 2</vk-button>
         <vk-button :value="3">Button 3</vk-button>
-      </vk-button-radio>
+      </vk-button-checkbox>
     </div>
     <vk-tabs
       :activeTab="activeTab"
@@ -39,12 +40,12 @@
 </template>
 
 <script>
-import Component from '../lib/ButtonRadio'
+import Component from 'src/ButtonCheckbox'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 
 export default {
-  name: 'PageButtonRadio',
+  name: 'PageButtonCheckbox',
   mixins: [mixin],
   data: () => ({
     activeTab: 1,
@@ -61,12 +62,16 @@ const props = {
     demo: {
       type: 'Select',
       options: [
-        { text: 'default', value: null },
-        { text: '1', value: 1 },
-        { text: '2', value: 2 },
-        { text: '3', value: 3 }
+        { text: 'default', value: [] },
+        { text: '[1]', value: [1] },
+        { text: '[2]', value: [2] },
+        { text: '[3]', value: [3] },
+        { text: '[1, 2]', value: [1, 2] },
+        { text: '[1, 3]', value: [1, 3] },
+        { text: '[2, 3]', value: [2, 3] },
+        { text: '[1, 2, 3]', value: [1, 2, 3] }
       ],
-      value: ''
+      value: []
     }
   },
   group: {
@@ -92,9 +97,9 @@ const events = {
 }
 
 const example =
-`<vk-button-radio @change="newValue => { value = newValue }">
+`<vk-button-checkbox @change="newValue => { value = newValue }">
   <vk-button :value="1">Button 1</vk-button>
   <vk-button :value="2">Button 2</vk-button>
   <vk-button :value="3">Button 3</vk-button>
-</vk-button-radio>`
+</vk-button-checkbox>`
 </script>

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import Component from '../lib/Offcanvas'
+import Component from 'src/Offcanvas'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV === 'testing'
 
 var baseWebpackConfig = merge(require('./webpack.base.conf'), {
   entry: {
-    'vuikit': './src/lib/'
+    'vuikit': './src'
   },
   externals: {
     vue: 'vue'

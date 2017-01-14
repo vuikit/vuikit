@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import Breadcrumb from '../lib/Breadcrumb/Breadcrumb'
-import BreadcrumbItem from '../lib/Breadcrumb/Item'
+import Breadcrumb from 'src/Breadcrumb/Breadcrumb'
+import BreadcrumbItem from 'src/Breadcrumb/Item'
 import mixin from './_mixin'
 import { mergeProps } from 'helpers/pages'
 

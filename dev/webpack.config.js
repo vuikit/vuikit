@@ -1,18 +1,13 @@
-var config = require('../config')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var utils = require('./utils')
-var baseWebpackConfig = require('./webpack.base.conf')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const path = require('path')
+const config = require('../config')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('../build/webpack.base.conf')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
-  entry: {
-    app: './src/main.js'
-  },
-  module: {
-    loaders: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
-  },
+  entry: path.resolve(__dirname, './main.js'),
   // eval-source-map is faster for development
   devtool: '#eval-source-map',
   plugins: [
@@ -30,7 +25,7 @@ module.exports = merge(baseWebpackConfig, {
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',
-      template: 'index.ejs',
+      template: path.resolve(__dirname, './server/index.tmpl.ejs'),
       env: config.dev.env.NODE_ENV,
       inject: true
     })
@@ -39,5 +34,5 @@ module.exports = merge(baseWebpackConfig, {
 
 // add hot-reload related code to entry chunks
 Object.keys(module.exports.entry).forEach(function (name) {
-  module.exports.entry[name] = ['./build/dev-client'].concat(module.exports.entry[name])
+  module.exports.entry[name] = ['./server/client'].concat(module.exports.entry[name])
 })

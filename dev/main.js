@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Vuikit from './lib'
+import Vuikit from 'src'
 import VuikitDocs from 'vuikit-docs'
 import Layouts from './layouts'
 import routes from './routes'
