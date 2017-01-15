@@ -1,5 +1,9 @@
-import Vue from 'vue'
-import Vuikit from 'src'
+import Vue from 'vue/dist/vue.common.js'
+import Vuikit from 'dist/vuikit.common.js'
+import Himalaya from 'himalaya'
+
+// set to production to avoid Vue dev env warning
+process.env.NODE_ENV = 'production'
 
 Vue.use(Vuikit)
 
@@ -14,10 +18,15 @@ const createElm = function () {
   return elm
 }
 
+const getComponentTag = function (vm) {
+  return vm.$options && vm.$options._componentTag
+}
+
 /**
  * @param  {Object} vm
  */
 export function destroyVM (vm) {
+  vm &&
   vm.$el &&
   vm.$el.parentNode &&
   vm.$el.parentNode.removeChild(vm.$el)
@@ -60,7 +69,7 @@ export function createTest (Compo, propsData = {}, mounted = false) {
  * @param  {String} name
  * @param  {*} opts
  */
-export function triggerEvent (elm, name, ...opts) {
+export function triggerEvent (elm, name, bubbles = true, cancelable = true) {
   let eventName
 
   if (/^mouse|click/.test(name)) {
@@ -72,7 +81,7 @@ export function triggerEvent (elm, name, ...opts) {
   }
   const evt = document.createEvent(eventName)
 
-  evt.initEvent(name, ...opts)
+  evt.initEvent(name, bubbles, cancelable)
   elm.dispatchEvent
     ? elm.dispatchEvent(evt)
     : elm.fireEvent('on' + name, evt)
@@ -93,6 +102,9 @@ export function triggerKeyEvent (elm, keyCode) {
   elm.dispatchEvent(evt)
 }
 
+/**
+ Returns all child components filtered by their dom tag
+ */
 export function queryByTagAll (vm, name) {
   let result = []
   for (let i = 0; i < vm.$children.length; i++) {
@@ -109,6 +121,9 @@ export function queryByTagAll (vm, name) {
   return result
 }
 
+/**
+ Returns child component filtered by it dom tag
+ */
 export function queryByTag (vm, name) {
   for (let i = 0; i < vm.$children.length; i++) {
     const child = vm.$children[i]
@@ -124,6 +139,9 @@ export function queryByTag (vm, name) {
   return false
 }
 
-function getComponentTag (vm) {
-  return vm.$options && vm.$options._componentTag
+/**
+ Compiles the component rendered dom to JSON
+ */
+export function toJSON (vm) {
+  return Himalaya.parse(vm.$el.outerHTML)
 }

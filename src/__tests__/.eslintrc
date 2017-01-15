@@ -1,0 +1,11 @@
+{
+  "globals": {
+    "jest": true,
+    "expect": true,
+    "describe": true,
+    "it": true,
+    "fit": true,
+    "afterEach": true,
+    "beforeEach": true
+  }
+}
