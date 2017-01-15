@@ -94,6 +94,12 @@ export default {
       on(this.$el, 'touchstart', clickHandler, this._uid)
     }
 
+    // execute transition hooks if visible on load
+    if (this.show) {
+      this.beforeEnter()
+      this.afterEnter()
+    }
+
     // move dom to body
     document.body.appendChild(this.$el)
   },
