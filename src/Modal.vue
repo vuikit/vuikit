@@ -1,6 +1,7 @@
 <template>
   <transition
-    :name="transition"
+    :css="transition ? true : false"
+    :name="transition ? transition : ''"
     @beforeEnter="beforeEnter"
     @afterEnter="afterEnter"
     @afterLeave="afterLeave">
@@ -73,7 +74,7 @@ export default {
       default: false
     },
     transition: {
-      type: String,
+      type: [String, Boolean],
       default: 'vk-modal-transition'
     }
   },
