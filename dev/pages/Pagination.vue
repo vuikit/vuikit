@@ -8,7 +8,20 @@
       of <code>{{ props.total.demo.value }}</code> items
     </div>
     <div class="uk-margin">
-      <vk-pagination :total="100" :limit="1" />
+      <vk-pagination
+        :activePage="props.activePage.demo.value"
+        :total="props.total.demo.value"
+        :limit="props.limit.demo.value"
+        :page-range="props.pageRange.demo.value"
+        :align="props.align.demo.value"
+        :compact="props.compact.demo.value"
+        @change="({ page, offset, to }) => {
+          events.change.emited = true,
+          pagination.to = to
+          pagination.offset = offset
+          props.activePage.demo.value = page
+        }">
+      </vk-pagination>
     </div>
     <vk-tabs
       :activeTab="activeTab"
