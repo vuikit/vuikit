@@ -1,14 +1,14 @@
-var path = require('path')
-var config = require('../config')
-var utils = require('./utils')
-var webpack = require('webpack')
-var merge = require('webpack-merge')
-var baseWebpackConfig = require('./webpack.base.conf')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
-var pkg = require('../package.json')
-var env = process.env.NODE_ENV === 'testing'
+const path = require('path')
+const config = require('../config')
+const utils = require('./utils')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const baseWebpackConfig = require('./webpack.base.conf')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const pkg = require('../package.json')
+const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : config.build.env
 
@@ -41,18 +41,10 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    // extract css into its own file
-    new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
     // add banner on top of each file
     new webpack.BannerPlugin(config.build.banner, {
       raw: true,
       entryOnly: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
