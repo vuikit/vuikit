@@ -120,21 +120,28 @@ var parseTokenTimezoneHHMM = /^([+-])(\d{2}):?(\d{2})$/
 
 /**
  * @category Common Helpers
- * @summary Parse the ISO-8601-formatted date.
+ * @summary Convert the given argument to an instance of Date.
  *
  * @description
- * Parse the date string representation.
- * It accepts complete ISO 8601 formats as well as partial implementations.
+ * Convert the given argument to an instance of Date.
  *
+ * If the argument is an instance of Date, the function returns its clone.
+ *
+ * If the argument is a number, it is treated as a timestamp.
+ *
+ * If an argument is a string, the function tries to parse it.
+ * Function accepts complete ISO 8601 formats as well as partial implementations.
  * ISO 8601: http://en.wikipedia.org/wiki/ISO_8601
  *
- * @param {String} dateString - the ISO 8601 formatted string to parse
+ * If all above fails, the function passes the given argument to Date constructor.
+ *
+ * @param {Date|String|Number} argument - the value to convert
  * @param {Object} [options] - the object with options
- * @param {Number} [options.additionalDigits=2] - the additional number of digits in the extended year format. Options: 0, 1 or 2
+ * @param {0 | 1 | 2} [options.additionalDigits=2] - the additional number of digits in the extended year format
  * @returns {Date} the parsed date in the local time zone
  *
  * @example
- * // Parse string '2014-02-11T11:30:30':
+ * // Convert string '2014-02-11T11:30:30' to date:
  * var result = parse('2014-02-11T11:30:30')
  * //=> Tue Feb 11 2014 11:30:30
  *
@@ -144,12 +151,12 @@ var parseTokenTimezoneHHMM = /^([+-])(\d{2}):?(\d{2})$/
  * var result = parse('+02014101', {additionalDigits: 1})
  * //=> Fri Apr 11 2014 00:00:00
  */
-function parse (dateString, options) {
-  if (isDate(dateString)) {
+function parse (argument, options) {
+  if (isDate(argument)) {
     // Prevent the date to lose the milliseconds when passed to new Date() in IE10
-    return new Date(dateString.getTime())
-  } else if (typeof dateString !== 'string') {
-    return new Date(dateString)
+    return new Date(argument.getTime())
+  } else if (typeof argument !== 'string') {
+    return new Date(argument)
   }
 
   options = options || {}
@@ -158,7 +165,7 @@ function parse (dateString, options) {
     additionalDigits = DEFAULT_ADDITIONAL_DIGITS
   }
 
-  var dateStrings = splitDateString(dateString)
+  var dateStrings = splitDateString(argument)
 
   var parseYearResult = parseYear(dateStrings.date, additionalDigits)
   var year = parseYearResult.year
@@ -185,7 +192,7 @@ function parse (dateString, options) {
 
     return new Date(timestamp + time + offset * MILLISECONDS_IN_MINUTE)
   } else {
-    return new Date(dateString)
+    return new Date(argument)
   }
 }
 
@@ -1971,7 +1978,7 @@ module.exports = startOfDay
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.0.0
+ * @version 1.0.4
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -2268,14 +2275,18 @@ function getOffsetRectRelativeToCustomParent(element, parent) {
         rect.bottom -= scrollTop;
         rect.left -= scrollLeft;
         rect.right -= scrollLeft;
-    } else if (getOffsetParent(element).contains(scrollParent)) {
-        var _scrollTop = getScroll(parent, 'top');
-        var _scrollLeft = getScroll(parent, 'left');
-        rect.top += _scrollTop;
-        rect.bottom += _scrollTop;
-        rect.left += _scrollLeft;
-        rect.right += _scrollLeft;
     }
+    // When a popper doesn't have any positioned or scrollable parents, `offsetParent.contains(scrollParent)`
+    // will return a "false positive". This is happening because `getOffsetParent` returns `html` node,
+    // and `scrollParent` is the `body` node. Hence the additional check.
+    else if (getOffsetParent(element).contains(scrollParent) && scrollParent.nodeName !== 'BODY') {
+            var _scrollTop = getScroll(parent, 'top');
+            var _scrollLeft = getScroll(parent, 'left');
+            rect.top += _scrollTop;
+            rect.bottom += _scrollTop;
+            rect.left += _scrollLeft;
+            rect.right += _scrollLeft;
+        }
 
     // subtract borderTopWidth and borderTopWidth from final result
     var styles = getStyleComputedProperty(parent);
@@ -2346,7 +2357,7 @@ function getBoundaries(popper, padding, boundariesElement) {
     else {
             var boundariesNode = void 0;
             if (boundariesElement === 'scrollParent') {
-                boundariesNode = getScrollParent(popper);
+                boundariesNode = getScrollParent(getParentNode(popper));
             } else if (boundariesElement === 'window') {
                 boundariesNode = window.document.body;
             } else {
@@ -2980,8 +2991,8 @@ function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
 }
 
 /**
- * Modifier used to move the arrowEls on the edge of the popper to make sure them are always between the popper and the reference element
- * It will use the CSS outer size of the arrowEl element to know how many pixels of conjuction are needed
+ * Modifier used to move the arrowElements on the edge of the popper to make sure them are always between the popper and the reference element
+ * It will use the CSS outer size of the arrowElement element to know how many pixels of conjuction are needed
  * @method
  * @memberof Modifiers
  * @argument {Object} data - The data object generated by update method
@@ -2989,31 +3000,31 @@ function applyStyleOnLoad(reference, popper, options, modifierOptions, state) {
  * @returns {Object} The data object, properly modified
  */
 function arrow(data, options) {
-    var arrowEl = options.element;
-
-    // if the arrowElElement is a string, suppose it's a CSS selector
-    if (typeof arrowEl === 'string') {
-        arrowEl = data.instance.popper.querySelector(arrowEl);
-    }
-
-    // if arrowEl element is not found, don't run the modifier
-    if (!arrowEl) {
-        return data;
-    }
-
-    // the arrowEl element must be child of its popper
-    if (!data.instance.popper.contains(arrowEl)) {
-        console.warn('WARNING: `arrowElElement` must be child of its popper element!');
-        return data;
-    }
-
-    // arrowEl depends on keepTogether in order to work
+    // arrow depends on keepTogether in order to work
     if (!isModifierRequired(data.instance.modifiers, 'arrow', 'keepTogether')) {
-        console.warn('WARNING: keepTogether modifier is required by arrow modifier in order to work, be sure to include it before arrow!');
+        console.warn('WARNING: `keepTogether` modifier is required by arrow modifier in order to work, be sure to include it before `arrow`!');
         return data;
     }
 
-    var arrowElStyle = {};
+    var arrowElement = options.element;
+
+    // if arrowElement is a string, suppose it's a CSS selector
+    if (typeof arrowElement === 'string') {
+        arrowElement = data.instance.popper.querySelector(arrowElement);
+
+        // if arrowElement is not found, don't run the modifier
+        if (!arrowElement) {
+            return data;
+        }
+    } else {
+        // if the arrowElement isn't a query selector we must check that the
+        // provided DOM node is child of its popper node
+        if (!data.instance.popper.contains(arrowElement)) {
+            console.warn('WARNING: `arrow.element` must be child of its popper element!');
+            return data;
+        }
+    }
+
     var placement = data.placement.split('-')[0];
     var popper = getClientRect(data.offsets.popper);
     var reference = data.offsets.reference;
@@ -3023,34 +3034,34 @@ function arrow(data, options) {
     var side = isVertical ? 'top' : 'left';
     var altSide = isVertical ? 'left' : 'top';
     var opSide = isVertical ? 'bottom' : 'right';
-    var arrowElSize = getOuterSizes(arrowEl)[len];
+    var arrowElementSize = getOuterSizes(arrowElement)[len];
 
     //
     // extends keepTogether behavior making sure the popper and its reference have enough pixels in conjuction
     //
 
     // top/left side
-    if (reference[opSide] - arrowElSize < popper[side]) {
-        data.offsets.popper[side] -= popper[side] - (reference[opSide] - arrowElSize);
+    if (reference[opSide] - arrowElementSize < popper[side]) {
+        data.offsets.popper[side] -= popper[side] - (reference[opSide] - arrowElementSize);
     }
     // bottom/right side
-    if (reference[side] + arrowElSize > popper[opSide]) {
-        data.offsets.popper[side] += reference[side] + arrowElSize - popper[opSide];
+    if (reference[side] + arrowElementSize > popper[opSide]) {
+        data.offsets.popper[side] += reference[side] + arrowElementSize - popper[opSide];
     }
 
     // compute center of the popper
-    var center = reference[side] + reference[len] / 2 - arrowElSize / 2;
+    var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
 
     // Compute the sideValue using the updated popper offsets
     var sideValue = center - getClientRect(data.offsets.popper)[side];
 
-    // prevent arrowEl from being placed not contiguously to its popper
-    sideValue = Math.max(Math.min(popper[len] - arrowElSize, sideValue), 0);
-    arrowElStyle[side] = sideValue;
-    arrowElStyle[altSide] = ''; // make sure to remove any old style from the arrowEl
+    // prevent arrowElement from being placed not contiguously to its popper
+    sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
 
-    data.offsets.arrow = arrowElStyle;
-    data.arrowElement = arrowEl;
+    data.arrowElement = arrowElement;
+    data.offsets.arrow = {};
+    data.offsets.arrow[side] = sideValue;
+    data.offsets.arrow[altSide] = ''; // make sure to unset any eventual altSide value from the DOM node
 
     return data;
 }
@@ -3647,7 +3658,7 @@ var DEFAULTS = {
  * @param {HTMLElement} popper - The HTML element used as popper.
  * @param {Object} options
  * @param {String} options.placement=bottom
- *      Placement of the popper accepted values: `top(-start, -end), right(-start, -end), bottom(-start, -right),
+ *      Placement of the popper accepted values: `top(-start, -end), right(-start, -end), bottom(-start, -end),
  *      left(-start, -end)`
  *
  * @param {Boolean} options.eventsEnabled=true
@@ -3664,7 +3675,7 @@ var DEFAULTS = {
  *      List of functions used to modify the data before they are applied to the popper (see source code for default values)
  *
  * @param {Object} options.modifiers.arrow - Arrow modifier configuration
- * @param {HTMLElement|String} options.modifiers.arrow.element='[x-arrow]'
+ * @param {String|HTMLElement} options.modifiers.arrow.element='[x-arrow]'
  *      The DOM Node used as arrow for the popper, or a CSS selector used to get the DOM node. It must be child of
  *      its parent Popper. Popper.js will apply to the given element the style required to align the arrow with its
  *      reference element.
@@ -3678,7 +3689,7 @@ var DEFAULTS = {
  * @param {Array} [options.modifiers.preventOverflow.priority=['left', 'right', 'top', 'bottom']]
  *      Priority used when Popper.js tries to avoid overflows from the boundaries, they will be checked in order,
  *      this means that the last one will never overflow
- * @param {Number} options.modifiers.preventOverflow.boundariesElement='scrollParent'
+ * @param {String|HTMLElement} options.modifiers.preventOverflow.boundariesElement='scrollParent'
  *      Boundaries used by the modifier, can be `scrollParent`, `window`, `viewport` or any DOM element.
  * @param {Number} options.modifiers.preventOverflow.padding=5
  *      Amount of pixel used to define a minimum distance between the boundaries and the popper
@@ -3692,7 +3703,7 @@ var DEFAULTS = {
  *      You can even pass an array of placements (eg: `['right', 'left', 'top']` ) to manually specify
  *      how alter the placement when a flip is needed. (eg. in the above example, it would first flip from right to left,
  *      then, if even in its new placement, the popper is overlapping its reference element, it will be moved to top)
- * @param {String|Element} options.modifiers.flip.boundariesElement='viewport'
+ * @param {String|HTMLElement} options.modifiers.flip.boundariesElement='viewport'
  *      The element which will define the boundaries of the popper position, the popper will never be placed outside
  *      of the defined boundaries (except if `keepTogether` is enabled)
  *
@@ -3921,7 +3932,7 @@ var Popper = function () {
         key: 'disableEventListeners',
         value: function disableEventListeners() {
             if (this.state.eventsEnabled) {
-                cancelAnimationFrame(this.scheduledUpdate);
+                window.cancelAnimationFrame(this.scheduleUpdate);
                 this.state = removeEventListeners(this.reference, this.state);
             }
         }
@@ -7807,23 +7818,23 @@ var parse = __webpack_require__(0)
  * @description
  * Is the given date range overlapping with another date range?
  *
- * @param {Date|String|Number} dirtyInitialRangeStartDate - the start of the initial range
- * @param {Date|String|Number} dirtyInitialRangeEndDate - the end of the initial range
- * @param {Date|String|Number} dirtyComparedRangeStartDate - the start of the range to compare it with
- * @param {Date|String|Number} dirtyComparedRangeEndDate - the end of the range to compare it with
+ * @param {Date|String|Number} initialRangeStartDate - the start of the initial range
+ * @param {Date|String|Number} initialRangeEndDate - the end of the initial range
+ * @param {Date|String|Number} comparedRangeStartDate - the start of the range to compare it with
+ * @param {Date|String|Number} comparedRangeEndDate - the end of the range to compare it with
  * @returns {Boolean} whether the date ranges are overlapping
  * @throws {Error} startDate of a date range cannot be after its endDate
  *
  * @example
  * // For overlapping date ranges:
- * isOverlappingRange(
+ * areRangesOverlapping(
  *   new Date(2014, 0, 10), new Date(2014, 0, 20), new Date(2014, 0, 17), new Date(2014, 0, 21)
  * )
  * //=> true
  *
  * @example
  * // For non-overlapping date ranges:
- * isOverlappingRange(
+ * areRangesOverlapping(
  *   new Date(2014, 0, 10), new Date(2014, 0, 20), new Date(2014, 0, 21), new Date(2014, 0, 22)
  * )
  * //=> false
