@@ -7,7 +7,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 
 module.exports = merge(baseWebpackConfig, {
-  entry: path.resolve(__dirname, './main.js'),
+  entry: {
+    main: path.resolve(__dirname, './main.js')
+  },
   // eval-source-map is faster for development
   devtool: '#eval-source-map',
   plugins: [
@@ -34,5 +36,5 @@ module.exports = merge(baseWebpackConfig, {
 
 // add hot-reload related code to entry chunks
 Object.keys(module.exports.entry).forEach(function (name) {
-  module.exports.entry[name] = ['./server/client'].concat(module.exports.entry[name])
+  module.exports.entry[name] = ['./dev/server/client'].concat(module.exports.entry[name])
 })
