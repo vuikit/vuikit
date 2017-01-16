@@ -16,6 +16,7 @@
           @clickIn="events.clickIn.emited = true"
           @clickOut="
             events.clickOut.emited = true
+            props.show.demo.value = false
           "
           @targetClick="
             props.show.demo.value = !props.show.demo.value,
@@ -34,14 +35,14 @@
       <vk-tab label="Props">
         <vk-docs-props
           :props="props"
-          @change="props[arguments[0]].demo.value = arguments[1]">
+          @change="(prop, value) => props[prop].demo.value = value">
         </vk-docs-props>
       </vk-tab>
       <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots"></vk-docs-slots>
+        <vk-docs-slots :slots="slots" />
       </vk-tab>
       <vk-tab label="Events">
-        <vk-docs-events :events="events"></vk-docs-events>
+        <vk-docs-events :events="events" />
       </vk-tab>
       <vk-tab label="Example">
         <vk-docs-code>{{ code }}</vk-docs-code>
@@ -69,8 +70,8 @@ export default {
 
 const props = {
   target: {
-    description: `The element reference to which the tooltip should be attached to.
-      Defaults to parent node element.`
+    description: `The dom element to which the Dropdown should be attached to.
+      Defaults to parent node.`
   },
   show: {
     description: 'Display state that when toggled will hide/show the dropdown.',

@@ -22,7 +22,7 @@ let onTargetMouseleave
 export default {
   name: 'VkDropdown',
   props: {
-    target: true,
+    target: null, // any dom element
     show: {
       type: Boolean,
       default: false
