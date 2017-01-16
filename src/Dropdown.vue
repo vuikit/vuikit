@@ -1,5 +1,7 @@
 <template>
-  <transition :name="transition">
+  <transition
+    :css="transition ? true : false"
+    :name="transition ? transition : ''">
     <div v-show="show" :class="{
       'uk-dropdown': !blank,
       'uk-dropdown-blank': blank,
@@ -36,7 +38,7 @@ export default {
       default: () => ({})
     },
     transition: {
-      type: String,
+      type: [String, Boolean],
       default: 'vk-dropdown-transition'
     },
     blank: {

@@ -113,7 +113,8 @@ const props = {
       type: 'Select',
       options: [
         { text: 'Default', value: 'vk-dropdown-transition' },
-        { text: 'Fade', value: 'vk-transition-fade' }
+        { text: 'Fade', value: 'vk-transition-fade' },
+        { text: 'Disabled', value: false }
       ],
       value: 'vk-transition-fade'
     }
