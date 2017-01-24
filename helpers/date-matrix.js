@@ -4,7 +4,7 @@ import getMonth from 'date-fns/get_month'
 import getDate from 'date-fns/get_date'
 import addDays from 'date-fns/add_days'
 import startOfWeek from 'date-fns/start_of_week'
-import { range } from 'helpers/util'
+import { range } from './util'
 
 const rows = range(6)
 const cols = range(7)

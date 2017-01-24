@@ -1,0 +1,6 @@
+exports[`Tooltip renders correctly 1`] = `
+"html
+  body
+    button
+"
+`;

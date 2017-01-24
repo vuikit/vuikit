@@ -1,136 +1,114 @@
 <template>
-  <layouts-default>
-    <h1>Button</h1>
-    Display a simple button.
-    <hr class="uk-article-divider">
-    <div class="uk-margin">
-      <!-- DEMO -->
-      <vk-button
-        :value="props.value.demo.value"
-        :color="props.color.demo.value"
-        :disabled="props.disabled.demo.value"
-        :active="props.active.demo.value"
-        :size="props.size.demo.value"
-        :width="props.width.demo.value"
-        @click="props.active.demo.value = !props.active.demo.value">
-        Button
-      </vk-button>
+  <div>
+    <div class="uk-child-width-1-4@m" uk-grid>
+      <div class="uk-width-1-2@m">
+        <p>
+          <a class="uk-button uk-button-default" href="#">Link</a>
+          <vk-button>Button</vk-button>
+          <vk-button active>Active</vk-button>
+          <vk-button disabled>Disabled</vk-button>
+        </p>
+        <p>
+          <a class="uk-button uk-button-primary" href="#">Link</a>
+          <vk-button class="uk-button-primary">Button</vk-button>
+          <vk-button class="uk-button-primary" active>Active</vk-button>
+          <vk-button class="uk-button-primary" disabled>Disabled</vk-button>
+        </p>
+        <p>
+          <a class="uk-button uk-button-secondary" href="#">Link</a>
+          <vk-button class="uk-button-secondary">Button</vk-button>
+          <vk-button class="uk-button-secondary" active>Active</vk-button>
+          <vk-button class="uk-button-secondary" disabled>Disabled</vk-button>
+        </p>
+        <p>
+          <a class="uk-button uk-button-danger" href="#">Link</a>
+          <vk-button class="uk-button-danger">Button</vk-button>
+          <vk-button class="uk-button-danger" active>Active</vk-button>
+          <vk-button class="uk-button-danger" disabled>Disabled</vk-button>
+        </p>
+      </div>
+      <div>
+        <p>
+          <a class="uk-button uk-button-text" href="#">Link</a>
+          <vk-button class="uk-button-text">Button</vk-button>
+          <vk-button class="uk-button-text" disabled>Disabled</vk-button>
+        </p>
+      </div>
+      <div>
+        <p>
+          <vk-button>Button</vk-button>
+          <vk-button class="uk-button-link">Button</vk-button>
+        </p>
+        <p>
+          <vk-button disabled>Button</vk-button>
+          <vk-button class="uk-button-link" disabled>Button</vk-button>
+        </p>
+        <p>
+          <a href="#">Link</a>
+          <vk-button class="uk-button-link uk-text-baseline">Button</vk-button>
+        </p>
+      </div>
     </div>
-    <vk-tabs
-      :activeTab="activeTab"
-      @change="tab => { activeTab = tab }">
-      <vk-tab label="Props">
-        <vk-docs-props
-          :props="props"
-          @change="(prop, value) => props[prop].demo.value = value">
-        </vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots" />
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </layouts-default>
+    <h2>Button Checkbox</h2>
+    <div class="uk-child-width-1-4@m" uk-grid>
+      <div class="uk-width-1-2@m">
+        <vk-button-checkbox
+          :value="demo.checkbox"
+          @change="value => {
+            demo.checkbox = value
+          }">
+          <vk-button :value="1">Button 1</vk-button>
+          <vk-button :value="2">Button 2</vk-button>
+          <vk-button :value="3">Button 3</vk-button>
+        </vk-button-checkbox>
+      </div>
+      <div class="uk-width-1-2@m">
+        <vk-button-checkbox group
+          :value="demo.checkbox"
+          @change="value => {
+            demo.checkbox = value
+          }">
+          <vk-button :value="1">Button 1</vk-button>
+          <vk-button :value="2">Button 2</vk-button>
+          <vk-button :value="3">Button 3</vk-button>
+        </vk-button-checkbox>
+      </div>
+    </div>
+    <h2>Button Radio</h2>
+    <div class="uk-child-width-1-4@m" uk-grid>
+      <div class="uk-width-1-2@m">
+        <vk-button-radio
+          :value="demo.radio"
+          @change="value => {
+            demo.radio = value
+          }">
+          <vk-button :value="1">Button 1</vk-button>
+          <vk-button :value="2">Button 2</vk-button>
+          <vk-button :value="3">Button 3</vk-button>
+        </vk-button-radio>
+      </div>
+      <div class="uk-width-1-2@m">
+        <vk-button-radio group
+          :value="demo.radio"
+          @change="value => {
+            demo.radio = value
+          }">
+          <vk-button :value="1">Button 1</vk-button>
+          <vk-button :value="2">Button 2</vk-button>
+          <vk-button :value="3">Button 3</vk-button>
+        </vk-button-radio>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Component from 'src/Button'
-import mixin from './_mixin'
-import { mergeProps } from 'helpers/pages'
-
 export default {
-  name: 'PageButtonDefault',
-  mixins: [mixin],
   data: () => ({
-    activeTab: 1,
-    props: mergeProps(Component.props, props),
-    slots,
-    example
+    demo: {
+      checkbox: [1],
+      radio: 1
+    }
   })
 }
-
-const props = {
-  value: {
-    description: 'The value of the button usually used in combination with others components.',
-    demo: {
-      type: 'Overview'
-    }
-  },
-  type: {
-    description: 'The button native type.'
-  },
-  active: {
-    description: 'The initial state of the <code>active</code> local state.',
-    demo: {
-      type: 'Boolean',
-      value: false
-    }
-  },
-  disabled: {
-    description: 'Whether to present the button as disabled.',
-    demo: {
-      type: 'Boolean',
-      value: false
-    }
-  },
-  color: {
-    description: `The button style modifier, <code>primary</code>, <code>success</code>,
-      <code>danger</code> or <code>link</code>.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '' },
-        { text: 'primary', value: 'primary' },
-        { text: 'success', value: 'success' },
-        { text: 'danger', value: 'danger' },
-        { text: 'link', value: 'link' }
-      ],
-      value: ''
-    }
-  },
-  size: {
-    description: `The size modifier accepting as values <code>mini</code>, <code>small</code>,
-      or <code>large</code>.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '' },
-        { text: 'mini', value: 'mini' },
-        { text: 'small', value: 'small' },
-        { text: 'large', value: 'large' }
-      ],
-      value: ''
-    }
-  },
-  width: {
-    description: `The width of the button. Can be any class from the
-      <a href="http://getuikit.com/docs/grid.html">UIkit Grid</a>
-      without the <code>uk-width-</code> prefix.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'default', value: '' },
-        { text: '1-1', value: '1-1' },
-        { text: '1-2', value: '1-2' },
-        { text: '1-3', value: '1-3' },
-        { text: '1-4', value: '1-4' },
-        { text: '1-5', value: '1-5' },
-        { text: '1-6', value: '1-6' },
-        { text: '1-10', value: '1-10' }
-      ],
-      value: ''
-    }
-  }
-}
-
-const slots = {
-  default: {
-    description: 'The button inner content.'
-  }
-}
-
-const example =
-`<vk-button>Button</vk-button>`
 </script>

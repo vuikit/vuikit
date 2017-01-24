@@ -1,0 +1,7 @@
+exports[`Dropdown renders correctly 1`] = `
+"html
+  body
+    button
+    .uk-dropdown(style=\'display: none;\') Dropdown
+"
+`;

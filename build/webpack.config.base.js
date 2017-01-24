@@ -13,9 +13,12 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
+    modules: [
+      path.resolve(__dirname, '../node_modules')
+    ],
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'src': path.resolve(__dirname, '../src'),
+      'lib': path.resolve(__dirname, '../lib'),
       'helpers': path.resolve(__dirname, '../helpers')
     }
   },
@@ -23,15 +26,15 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
+        use: 'eslint-loader',
         enforce: 'pre',
-        loader: 'eslint-loader',
         include: projectRoot,
         exclude: /node_modules/
       },
       {
-        test: /\.js$/,
+        test: /\.(js|jsx)$/,
+        use: 'eslint-loader',
         enforce: 'pre',
-        loader: 'eslint-loader',
         include: projectRoot,
         exclude: /node_modules/
       },
@@ -40,8 +43,8 @@ module.exports = {
         use: 'vue-loader'
       },
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
         include: projectRoot,
         exclude: /node_modules/
       },

@@ -2,7 +2,6 @@ var path = require('path')
 var config = require('../config')
 var webpack = require('webpack')
 var ora = require('ora')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 exports.assetsPath = function (_path) {
   var assetsSubDirectory = process.env.NODE_ENV === 'production'

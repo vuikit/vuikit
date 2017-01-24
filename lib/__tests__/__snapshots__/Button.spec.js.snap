@@ -1,0 +1,7 @@
+exports[`Button renders correctly 1`] = `
+"html
+  body
+    button.uk-button.uk-active.uk-button-default(type=\'submit\', disabled=\'disabled\', color=\'primary\', width=\'1-1\', size=\'mini\')
+      | Button
+"
+`;

@@ -1,10 +1,6 @@
 {
   "presets": ["es2015", "stage-2"],
-  "plugins": [
-    "lodash",
-    "transform-runtime",
-    "transform-vue-jsx"
-  ],
+  "plugins": ["transform-runtime"],
   "comments": false,
   "ignore": [
     "dist/*.js",

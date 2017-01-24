@@ -1,175 +1,310 @@
 <template>
-  <layouts-default>
-    <h1>Dropdown</h1>
-    Display a toggleable dropdown.
-    <hr class="uk-article-divider">
-    <div class="uk-margin">
-      <vk-button>
-        Toggle
-        <i class="uk-icon-caret-down"></i>
-        <vk-dropdown ref="dropdown"
-          :show="props.show.demo.value"
-          :placement="props.placement.demo.value"
-          :transition="props.transition.demo.value"
-          :blank="props.blank.demo.value"
-          :expand="props.expand.demo.value"
-          @clickIn="events.clickIn.emited = true"
-          @clickOut="
-            events.clickOut.emited = true
-            props.show.demo.value = false
-          "
-          @targetClick="
-            props.show.demo.value = !props.show.demo.value,
-            events.targetClick.emited = true
-          "
-          @targetMouseenter="events.targetMouseenter.emited = true"
-          @targetMouseleave="events.targetMouseleave.emited = true">
-          Any content can be placed here, even another component.
-        </vk-dropdown>
-      </vk-button>
+  <div>
+    <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
+      <div>
+        <h2>Basic</h2>
+
+        <vk-button>
+          Hover
+          <vk-dropdown
+            :show="show.hover"
+            @mouseenter="show.hover = true"
+            @mouseleave="({ delay }) => {
+              delay(800, () => {
+                show.hover = false
+              })
+            }">
+            <div v-html="content" />
+          </vk-dropdown>
+        </vk-button>
+
+        <vk-button>
+          Click
+          <vk-dropdown
+            :show="show.click"
+            @clickOut="show.click = false"
+            @targetClick="show.click = !show.click">
+            <div v-html="content" />
+          </vk-dropdown>
+        </vk-button>
+
+      </div>
+
+      <div>
+        <h2>Animations</h2>
+
+        <vk-button>
+          Fade
+          <vk-dropdown
+            animation="uk-animation-fade, uk-animation-fade uk-animation-reverse"
+            :show="show.fade"
+            @mouseenter="show.fade = true"
+            @mouseleave="show.fade = false">
+            <div v-html="content" />
+          </vk-dropdown>
+        </vk-button>
+
+        <vk-button>
+          Slide
+          <vk-dropdown
+            animation="uk-animation-slide-top-small, uk-animation-slide-top-small uk-animation-reverse"
+            :show="show.slide"
+            @mouseenter="show.slide = true"
+            @mouseleave="show.slide = false">
+            <div v-html="content" />
+          </vk-dropdown>
+        </vk-button>
+
+        <vk-button>
+          Scale
+          <vk-dropdown
+            animation="uk-animation-scale-down, uk-animation-scale-down uk-animation-reverse"
+            :show="show.scale"
+            @mouseenter="show.scale = true"
+            @mouseleave="show.scale = false">
+            <div v-html="content" />
+          </vk-dropdown>
+        </vk-button>
+
+      </div>
     </div>
-    <!-- TABS -->
-    <vk-tabs
-      :activeTab="activeTab"
-      @change="tab => { activeTab = tab }">
-      <vk-tab label="Props">
-        <vk-docs-props
-          :props="props"
-          @change="(prop, value) => props[prop].demo.value = value">
-        </vk-docs-props>
-      </vk-tab>
-      <vk-tab label="Slots">
-        <vk-docs-slots :slots="slots" />
-      </vk-tab>
-      <vk-tab label="Events">
-        <vk-docs-events :events="events" />
-      </vk-tab>
-      <vk-tab label="Example">
-        <vk-docs-code>{{ code }}</vk-docs-code>
-      </vk-tab>
-    </vk-tabs>
-  </layouts-default>
+
+    <div class="uk-margin-large-top">
+      <h2>Positions</h2>
+      <div class="uk-text-center uk-margin-large-top uk-child-width-1-3@s" uk-grid>
+        <div>
+          <vk-button>
+            TOP LEFT
+            <vk-dropdown
+              :flip="false"
+              position="top-left"
+              :show="show.top.left"
+              @clickOut="show.top.left = false"
+              @mouseenter="show.top.left = true"
+              @mouseleave="show.top.left = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+          <vk-button>
+            TOP CENTER
+            <vk-dropdown
+              :flip="false"
+              position="top-center"
+              :show="show.top.center"
+              @clickOut="show.top.center = false"
+              @mouseenter="show.top.center = true"
+              @mouseleave="show.top.center = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+          <vk-button>
+            TOP RIGHT
+            <vk-dropdown
+              :flip="false"
+              position="top-right"
+              :show="show.top.right"
+              @clickOut="show.top.right = false"
+              @mouseenter="show.top.right = true"
+              @mouseleave="show.top.right = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+      </div>
+
+      <div class="uk-text-center uk-margin-large-top uk-child-width-1-3@s" uk-grid>
+        <div>
+          <vk-button>
+            LEFT TOP
+            <vk-dropdown
+              :flip="false"
+              position="left-top"
+              :show="show.left.top"
+              @clickOut="show.left.top = false"
+              @mouseenter="show.left.top = true"
+              @mouseleave="show.left.top = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+
+        </div>
+        <div>
+          <vk-button>
+            RIGHT TOP
+            <vk-dropdown
+              :flip="false"
+              position="right-top"
+              :show="show.right.top"
+              @clickOut="show.right.top = false"
+              @mouseenter="show.right.top = true"
+              @mouseleave="show.right.top = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+      </div>
+
+      <div class="uk-text-center uk-margin-large-top uk-child-width-1-3@s" uk-grid>
+        <div>
+          <vk-button>
+            LEFT CENTER
+            <vk-dropdown
+              :flip="false"
+              position="left"
+              :show="show.left.center"
+              @clickOut="show.left.center = false"
+              @mouseenter="show.left.center = true"
+              @mouseleave="show.left.center = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+
+        </div>
+        <div>
+
+          <vk-button>
+            RIGHT CENTER
+            <vk-dropdown
+              :flip="false"
+              position="right-center"
+              :show="show.right.center"
+              @clickOut="show.right.center = false"
+              @mouseenter="show.right.center = true"
+              @mouseleave="show.right.center = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+      </div>
+
+      <div class="uk-text-center uk-margin-large-top uk-child-width-1-3@s" uk-grid>
+        <div>
+          <vk-button>
+            LEFT BOTTOM
+            <vk-dropdown
+              :flip="false"
+              position="left-bottom"
+              :show="show.left.bottom"
+              @clickOut="show.left.bottom = false"
+              @mouseenter="show.left.bottom = true"
+              @mouseleave="show.left.bottom = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+        </div>
+        <div>
+          <vk-button>
+            RIGHT BOTTOM
+            <vk-dropdown
+              :flip="false"
+              position="right-bottom"
+              :show="show.right.bottom"
+              @clickOut="show.right.bottom = false"
+              @mouseenter="show.right.bottom = true"
+              @mouseleave="show.right.bottom = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+      </div>
+      <div class="uk-text-center uk-margin-large-top uk-child-width-1-3@s" uk-grid>
+
+        <div>
+          <vk-button>
+            BOTTOM LEFT
+            <vk-dropdown
+              :flip="false"
+              position="bottom-left"
+              :show="show.bottom.left"
+              @clickOut="show.bottom.left = false"
+              @mouseenter="show.bottom.left = true"
+              @mouseleave="show.bottom.left = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+           <vk-button>
+            BOTTOM CENTER
+            <vk-dropdown
+              :flip="false"
+              position="bottom-center"
+              :show="show.bottom.center"
+              @clickOut="show.bottom.center = false"
+              @mouseenter="show.bottom.center = true"
+              @mouseleave="show.bottom.center = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+        <div>
+          <vk-button>
+            BOTTOM RIGHT
+            <vk-dropdown
+              :flip="false"
+              position="bottom-right"
+              :show="show.bottom.right"
+              @clickOut="show.bottom.right = false"
+              @mouseenter="show.bottom.right = true"
+              @mouseleave="show.bottom.right = false">
+              <div v-html="content" />
+            </vk-dropdown>
+          </vk-button>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import Component from 'src/Dropdown'
-import mixin from './_mixin'
-import { mergeProps } from 'helpers/pages'
-
 export default {
   name: 'PageDropdown',
-  mixins: [mixin],
   data: () => ({
-    activeTab: 1,
-    props: mergeProps(Component.props, props),
-    slots,
-    events,
-    example
+    show: {
+      hover: false,
+      click: false,
+      fade: false,
+      slide: false,
+      scale: false,
+      top: {
+        left: false,
+        center: false,
+        right: false
+      },
+      right: {
+        top: false,
+        center: false,
+        bottom: false
+      },
+      bottom: {
+        left: false,
+        center: false,
+        right: false
+      },
+      left: {
+        top: false,
+        center: false,
+        bottom: false
+      }
+    },
+    content: `
+      <ul class="uk-nav uk-dropdown-nav">
+        <li class="uk-active"><a href="#">Active</a></li>
+        <li><a href="#">Item</a></li>
+        <li><a href="#">Item</a></li>
+      </ul>
+    `
   })
 }
-
-const props = {
-  target: {
-    description: `The dom element to which the Dropdown should be attached to.
-      Defaults to parent node.`
-  },
-  show: {
-    description: 'Display state that when toggled will hide/show the dropdown.',
-    demo: {
-      type: 'Boolean',
-      value: false
-    }
-  },
-  placement: {
-    description: 'Specifies the placement point of the dropdown.',
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'top', value: 'top' },
-        { text: 'top-start', value: 'top-start' },
-        { text: 'top-end', value: 'top-end' },
-        { text: 'right', value: 'right' },
-        { text: 'right-start', value: 'right-start' },
-        { text: 'right-end', value: 'right-end' },
-        { text: 'bottom', value: 'bottom' },
-        { text: 'bottom-start', value: 'bottom-start' },
-        { text: 'bottom-end', value: 'bottom-end' },
-        { text: 'left', value: 'left' },
-        { text: 'left-start', value: 'left-start' },
-        { text: 'left-end', value: 'left-end' }
-      ],
-      value: 'bottom-start'
-    }
-  },
-  modifiers: {
-    description: `Modifiers are setting that alter the behavior of the popper, such as the offset.
-      Checkout the <a href="https://popper.js.org/popper-documentation.html">Popper.js Documentation</a>
-      for all possibilities.`
-  },
-  transition: {
-    description: `Specifies the transition name to be used by the transition
-      wrapper component.`,
-    demo: {
-      type: 'Select',
-      options: [
-        { text: 'Default', value: 'vk-dropdown-transition' },
-        { text: 'Fade', value: 'vk-transition-fade' },
-        { text: 'Disabled', value: false }
-      ],
-      value: 'vk-transition-fade'
-    }
-  },
-  blank: {
-    description: 'Wheter to render the dropdown without any styling.',
-    demo: {
-      type: 'Boolean',
-      value: false
-    }
-  },
-  expand: {
-    description: `By default the dropdown width is limited by the theme, set this options to
-      true in order to remove that limit.`,
-    demo: {
-      type: 'Boolean',
-      value: false
-    }
-  }
-}
-
-const slots = {
-  default: {
-    description: 'The container for the dropdown content.'
-  }
-}
-
-const events = {
-  clickIn: {
-    description: 'Emited when a click is performed inside of the dropdown.',
-    emited: false
-  },
-  clickOut: {
-    description: 'Emited when a click is performed outside of the dropdown while open.',
-    emited: false
-  },
-  targetClick: {
-    description: 'Emited when a click is made on the target.',
-    emited: false
-  },
-  targetMouseenter: {
-    description: 'Emited when a mouse enter the target hover area.',
-    emited: false
-  },
-  targetMouseleave: {
-    description: 'Emited when a mouse left the target hover area.',
-    emited: false
-  }
-}
-
-const example =
-`<button @click="show = !show">
-  Toggle
-  <vk-dropdown :show="show">
-    Dropdown
-  </vk-dropdown>
-</button>`
 </script>

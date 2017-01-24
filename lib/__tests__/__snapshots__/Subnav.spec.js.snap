@@ -1,0 +1,14 @@
+exports[`Subnav renders correctly 1`] = `
+"html
+  body
+    ul.uk-subnav.uk-subnav-pill(line=\'\')
+      li.uk-active
+        a Item 1
+      |  
+      li.uk-disabled
+        a Item 2
+      |  
+      li
+        a Item 3
+"
+`;

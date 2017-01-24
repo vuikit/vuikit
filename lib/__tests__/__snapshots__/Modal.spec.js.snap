@@ -1,0 +1,16 @@
+exports[`Modal renders correctly 1`] = `
+"html
+  body
+    .uk-modal.uk-open(style=\'display: block;\')
+      .uk-modal-dialog
+        button.uk-close.uk-icon.uk-modal-close-default(type=\'button\', uk-close=\'true\')
+        |  
+        .uk-modal-header
+          h2.uk-modal-title Headline
+        |  
+        .uk-modal-body Content
+        |  
+        .uk-modal-footer.uk-text-right
+          | Footer
+"
+`;

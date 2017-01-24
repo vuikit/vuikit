@@ -204,7 +204,7 @@ Similar as with Modal, Dropdown transition styles must be reseted.
 
 ### Table
 
-The VkTable component relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/src/vuikit/table.less) styling.
+The VkTable component relies on Vuikit [specific](https://github.com/vuikit/vuikit-theme/blob/master/lib/vuikit/table.less) styling.
 
 ## Semver
 

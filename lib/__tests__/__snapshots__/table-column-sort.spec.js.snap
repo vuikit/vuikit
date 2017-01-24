@@ -1,0 +1,15 @@
+exports[`Table Column Sort renders correctly 1`] = `
+"html
+  body
+    table.uk-table
+      col
+      thead
+        tr
+      tbody
+        tr
+        tr
+        tr
+        tr
+        tr
+"
+`;

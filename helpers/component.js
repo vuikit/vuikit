@@ -1,4 +1,4 @@
-import { each } from 'helpers/util'
+import { each, merge } from './util'
 
 export function filterByTag (nodes, tag) {
   const result = []
@@ -17,7 +17,7 @@ export function getProps (vm) {
 export function getFinalProps (component) {
   let props = {}
   while (component) {
-    props = {...props, ...component.props}
+    props = merge(props, component.props)
     component = component.extends
   }
   return props

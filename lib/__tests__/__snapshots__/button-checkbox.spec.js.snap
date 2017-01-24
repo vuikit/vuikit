@@ -1,0 +1,11 @@
+exports[`ButtonCheckbox renders correctly 1`] = `
+"html
+  body
+    div
+      button.uk-button.uk-active.uk-button-default(type=\'button\') Button 1
+      |  
+      button.uk-button.uk-button-default(type=\'button\') Button 2
+      |  
+      button.uk-button.uk-active.uk-button-default(type=\'button\') Button 3
+"
+`;

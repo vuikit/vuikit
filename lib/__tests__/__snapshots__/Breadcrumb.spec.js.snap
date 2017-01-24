@@ -1,0 +1,17 @@
+exports[`Breadcrumb renders correctly 1`] = `
+"html
+  body
+    ul.uk-breadcrumb
+      li
+        a Home
+      |  
+      li.uk-active
+        span Blog
+      |  
+      li
+        a Category
+      |  
+      li
+        span Post
+"
+`;

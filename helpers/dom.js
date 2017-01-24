@@ -16,7 +16,15 @@ export function offAll (namespace = 'def') {
   }
 }
 
-export function addClass (el, className) {
+export function hasClass (el, className) {
+  return el.classList.contains(className)
+}
+
+export function addClass (el, classes) {
+  return classes.split(' ').filter(c => c).forEach(className => _addClass(el, className))
+}
+
+const _addClass = function (el, className) {
   if (el.classList) {
     el.classList.add(className)
   } else {
@@ -25,11 +33,11 @@ export function addClass (el, className) {
   }
 }
 
-export function hasClass (el, className) {
-  return el.classList.contains(className)
+export function removeClass (el, classes) {
+  return classes.split(' ').filter(c => c).forEach(className => _removeClass(el, className))
 }
 
-export function removeClass (el, className) {
+const _removeClass = function (el, className) {
   if (el.classList) {
     el.classList.remove(className)
   } else {
@@ -63,4 +71,37 @@ if (!isIE9) {
     animationProp = 'WebkitAnimation'
     animationEndEvent = 'webkitAnimationEnd'
   }
+}
+
+/**
+ * Get the closest matching element up the DOM tree.
+ * @private
+ * @param  {Element} elem     Starting element
+ * @param  {String}  selector Selector to match against
+ * @return {Boolean|Element}  Returns null if not match found
+ */
+export function getClosest (elem, selector) {
+  // Element.matches() polyfill
+  const Element = window.Element
+  if (!Element.prototype.matches) {
+    Element.prototype.matches =
+      Element.prototype.matchesSelector ||
+      Element.prototype.mozMatchesSelector ||
+      Element.prototype.msMatchesSelector ||
+      Element.prototype.oMatchesSelector ||
+      Element.prototype.webkitMatchesSelector ||
+      function (s) {
+        const matches = (this.document || this.ownerDocument).querySelectorAll(s)
+        let i = matches.length
+        while (--i >= 0 && matches.item(i) !== this) {}
+        return i > -1
+      }
+  }
+
+  // Get closest match
+  for (; elem && elem !== document; elem = elem.parentNode) {
+    if (elem.matches(selector)) return elem
+  }
+
+  return null
 }
