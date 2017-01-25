@@ -831,12 +831,6 @@ babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.22.0:
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babelrc-rollup@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/babelrc-rollup/-/babelrc-rollup-3.0.0.tgz#fcecdbe3eb6400cf4e769233c1786a2fafe8b56c"
-  dependencies:
-    resolve "^1.1.7"
-
 babylon@^6.11.0:
   version "6.14.1"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.14.1.tgz#956275fab72753ad9b3435d7afe58f8bf0a29815"
@@ -2335,12 +2329,6 @@ he@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/he/-/he-0.4.1.tgz#c86667614d2dd71bc737a197c760fb2eec8a1921"
 
-himalaya@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/himalaya/-/himalaya-0.2.2.tgz#fcf7637a215d194011a72397be8e1018752bd081"
-  dependencies:
-    paul "0.0.3"
-
 hoek@2.x.x:
   version "2.16.3"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-2.16.3.tgz#20bb7403d3cea398e91dc4710a8ff1b8274a25ed"
@@ -3714,10 +3702,6 @@ path-type@^1.0.0:
     graceful-fs "^4.1.2"
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
-
-paul@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/paul/-/paul-0.0.3.tgz#7fbef33df6936c050cb7e9c00c22cbd110b7bb4f"
 
 pbkdf2@^3.0.3:
   version "3.0.9"
