@@ -100,8 +100,7 @@
   "jest": {
     "resetModules": true,
     "moduleFileExtensions": [
-      "js",
-      "vue"
+      "js"
     ],
     "modulePaths": [
       "<rootDir>"
