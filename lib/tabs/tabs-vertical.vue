@@ -7,14 +7,21 @@
         ? 'uk-tab-right'
         : 'uk-tab-left'
       ]">
-        <slot></slot>
+        <li v-for="{ id, label, disabled } in tabs" :class="{
+          'uk-active': activeTab === id,
+          'uk-disabled': disabled
+        }">
+          <a @click.prevent="!disabled && $emit('change', id)">
+            {{ label }}
+          </a>
+        </li>
       </ul>
     </div>
     <div class="uk-width-expand">
       <transition :name="transition" mode="out-in">
-        <div :key="activeTab">
-          <tabcontent></tabcontent>
-        </div>
+        <keep-alive>
+          <tab-content></tab-content>
+        </keep-alive>
       </transition>
     </div>
   </div>

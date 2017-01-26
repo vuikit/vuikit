@@ -144,13 +144,49 @@
         </vk-tabs-vertical>
       </div>
     </div>
+    <h2>Dynamic Tabs</h2>
+    <div class="uk-child-width-1-4@m" uk-grid>
+      <div class="uk-width-1-2@m">
+        <vk-tabs
+          :activeTab="dynamic.activeTab"
+          @change="tab => {
+            dynamic.activeTab = tab
+          }">
+          <vk-tab v-for="{ label, content, disabled } in dynamic.tabs" :label="label" :disabled="disabled">
+            {{ content }}
+          </vk-tab>
+        </vk-tabs>
+      </div>
+      <div class="uk-width-1-2@m">
+        <vk-tabs-vertical
+          :activeTab="dynamic.activeTab"
+          @change="tab => {
+            dynamic.activeTab = tab
+          }">
+          <vk-tab v-for="{ label, content, disabled } in dynamic.tabs" :label="label" :disabled="disabled">
+            {{ content }}
+          </vk-tab>
+        </vk-tabs-vertical>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    activeTab: 1
+    activeTab: 1,
+    dynamic: {
+      activeTab: 1,
+      tabs: [
+        { label: 'Item', content: 'content 1' },
+        { label: 'Item', content: 'content 2' },
+        { label: 'Item', content: 'content 3' },
+        { label: 'Item', content: 'content 4' },
+        { label: 'Item', content: 'content 5' },
+        { label: 'Disabled', disabled: true }
+      ]
+    }
   })
 }
 </script>

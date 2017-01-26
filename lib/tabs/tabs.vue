@@ -6,15 +6,24 @@
       [`uk-child-width-1-${tabs.length}`]: alignment === 'justify',
       'uk-flex-right': alignment === 'right',
       'uk-flex-center': alignment === 'center',
-      'uk-tab-bottom': bottom
+      'uk-tab-bottom uk-margin-remove-bottom': bottom
     }">
-      <slot></slot>
+      <li v-for="{ id, label, disabled } in tabs" :class="{
+        'uk-active': activeTab === id,
+        'uk-disabled': disabled
+      }">
+        <a @click.prevent="!disabled && $emit('change', id)">
+          {{ label }}
+        </a>
+      </li>
     </ul>
-    <transition :name="transition" mode="out-in">
-      <div class="uk-margin" :key="activeTab">
-        <tabcontent></tabcontent>
-      </div>
-    </transition>
+    <div :class="{ 'uk-margin': bottom }">
+      <transition :name="transition" mode="out-in">
+        <keep-alive>
+          <tab-content></tab-content>
+        </keep-alive>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -29,7 +38,7 @@ export default {
       type: String,
       default: 'left' // left|right|center|justify
     },
-    // flips the tabs vertically
+    // flips tabs vertically
     bottom: {
       type: Boolean,
       default: false
