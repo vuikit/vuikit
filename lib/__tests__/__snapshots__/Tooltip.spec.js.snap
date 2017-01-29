@@ -1,6 +1,7 @@
 exports[`Tooltip renders correctly 1`] = `
-"html
-  body
-    button
-"
+<button>
+  <div class="uk-tooltip" style="display:none">
+    <div class="uk-tooltip-inner">Content</div>
+  </div>
+</button>
 `;

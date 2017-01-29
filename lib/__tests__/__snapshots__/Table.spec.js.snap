@@ -1,14 +1,92 @@
+exports[`Table Column Select renders correctly 1`] = `
+<table class="uk-table">
+  <col>
+  <thead>
+    <tr></tr>
+  </thead>
+  <tbody>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+    <tr></tr>
+  </tbody>
+</table>
+`;
+
+exports[`Table Column Sort renders correctly 1`] = `
+<table class="uk-table">
+  <col>
+  <thead>
+    <tr>
+      <th class="myHeaderClass uk-visible-hover-inline">
+        <a class="uk-position-relative uk-display-block uk-link-reset uk-text-nowrap"><span uk-icon="icon: arrow-down" class="uk-icon uk-position-absolute uk-invisible"></span><span uk-icon="icon: arrow-up" class="uk-icon uk-position-absolute uk-invisible" style="display: none;"></span></a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="myCellClass">Toy Story</td>
+    </tr>
+    <tr>
+      <td class="myCellClass">A Bug's Life</td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Toy Story 2</td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Monsters, Inc.</td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Finding Nemo</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
 exports[`Table renders correctly 1`] = `
-"html
-  body
-    table.uk-table(condensed=\'\', striped=\'\', hover=\'\')
-      thead
-        tr
-      tbody
-        tr
-        tr
-        tr
-        tr
-        tr
-"
+<table class="uk-table">
+  <col>
+  <col>
+  <thead>
+    <tr>
+      <th class="myHeaderClass">Name</th>
+      <th>
+        Custom Header
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="myCellClass">Toy Story</td>
+      <td>
+        Custom Cell
+      </td>
+    </tr>
+    <tr>
+      <td class="myCellClass">A Bug's Life</td>
+      <td>
+        Custom Cell
+      </td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Toy Story 2</td>
+      <td>
+        Custom Cell
+      </td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Monsters, Inc.</td>
+      <td>
+        Custom Cell
+      </td>
+    </tr>
+    <tr>
+      <td class="myCellClass">Finding Nemo</td>
+      <td>
+        Custom Cell
+      </td>
+    </tr>
+  </tbody>
+</table>
 `;

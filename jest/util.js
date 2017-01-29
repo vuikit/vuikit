@@ -1,11 +1,5 @@
-import Vue from 'vue/dist/vue.common.js'
-import Vuikit from 'dist/vuikit.common.js'
-const html2jade = require('html2jade')
-
-// set to production to avoid Vue dev env warning
-process.env.NODE_ENV = 'production'
-
-Vue.use(Vuikit)
+import Vue from 'vue'
+const VueRenderer = require('vue-server-renderer').createRenderer()
 
 let id = 0
 
@@ -103,7 +97,7 @@ export function triggerKeyEvent (elm, keyCode) {
 }
 
 /**
- Returns all child components filtered by their dom tag
+ * Returns all child components filtered by their dom tag
  */
 export function queryByTagAll (vm, name) {
   let result = []
@@ -122,7 +116,7 @@ export function queryByTagAll (vm, name) {
 }
 
 /**
- Returns child component filtered by it dom tag
+ * Returns child component filtered by it dom tag
  */
 export function queryByTag (vm, name) {
   for (let i = 0; i < vm.$children.length; i++) {
@@ -140,14 +134,13 @@ export function queryByTag (vm, name) {
 }
 
 /**
- Compiles the component rendered dom to JSON
+ * Returns the rendered component as a snapshot
  */
-export function getSnapshot (template) {
-  createVue(template, true)
-  let content
-  html2jade.convertHtml(document.body.outerHTML, {}, function (err, jade) {
+export function renderSnapshot (vm) {
+  let snapshot
+  VueRenderer.renderToString(vm, (err, str) => {
     err && console.log(err)
-    content = jade
+    snapshot = str
   })
-  return content
+  return snapshot
 }

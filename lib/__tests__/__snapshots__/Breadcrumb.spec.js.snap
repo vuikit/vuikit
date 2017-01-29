@@ -1,17 +1,8 @@
 exports[`Breadcrumb renders correctly 1`] = `
-"html
-  body
-    ul.uk-breadcrumb
-      li
-        a Home
-      |  
-      li.uk-active
-        span Blog
-      |  
-      li
-        a Category
-      |  
-      li
-        span Post
-"
+<ul class="uk-breadcrumb">
+  <li><a>Home</a></li>
+  <li><a>Blog</a></li>
+  <li><a>Category</a></li>
+  <li><span>Post</span></li>
+</ul>
 `;

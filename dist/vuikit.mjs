@@ -76,7 +76,7 @@ var Button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   },
   computed: {
     hasCustomStyle: function hasCustomStyle () {
-      var classes = this.$options._parentVnode.data.staticClass;
+      var classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass;
       return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
     }
   }
@@ -5742,35 +5742,52 @@ var TableColumnSort = {
     return h('th', {
       staticClass: this.headerClass,
       class: [
-        'uk-visible-hover-inline uk-link uk-link-reset',
+        'uk-visible-hover-inline',
         { 'uk-active': orderedBy }
-      ],
-      on: {
-        click: function (e) {
-          Table.$emit('sort', processSortOrder(sortBy, Table.sortedBy));
-        }
-      }
+      ]
     }, [ scopedSlot
       ? scopedSlot()
-      : h('span', {
-        class: 'uk-position-relative'
+      : h('a', {
+        staticClass: 'uk-position-relative uk-display-block uk-link-reset uk-text-nowrap',
+        on: {
+          click: function (e) {
+            Table.$emit('sort', processSortOrder(sortBy, Table.sortedBy));
+          }
+        }
       }, [
         this.header,
         h('span', {
-          staticClass: 'uk-margin-small-left',
+          staticClass: 'uk-icon uk-position-absolute',
           attrs: {
-            'uk-icon': ("icon: arrow-" + (orderedBy === 'asc' || orderedBy === undefined ? 'down' : 'up'))
+            'uk-icon': 'icon: arrow-down'
           },
           class: {
             'uk-invisible': !orderedBy
-          }
+          },
+          directives: [{
+            name: 'show',
+            value: (orderedBy === 'asc' || orderedBy === undefined)
+          }]
+        }),
+        h('span', {
+          staticClass: 'uk-icon uk-position-absolute',
+          attrs: {
+            'uk-icon': 'icon: arrow-up'
+          },
+          class: {
+            'uk-invisible': !orderedBy
+          },
+          directives: [{
+            name: 'show',
+            value: orderedBy === 'desc'
+          }]
         })
       ])
     ])
   }
 };
 
-var Tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("header",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+var Tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkTab',
   props: {
     label: String,
@@ -5786,30 +5803,30 @@ var Tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
       type: Boolean,
       default: false
     }
-  }
-};
-
-var tabcontent = {
-  functional: true,
-  render: function render (h, ref) {
-    var vm = ref.parent;
-
-    var activeTabSlot = vm.tabs.find(function (tab) { return vm.getTabAlias(tab) === vm.activeTab; });
-    var content = activeTabSlot && activeTabSlot.componentOptions.children;
-    if (activeTabSlot && content) {
-      return h('div', [ content ])
-    } else if (warn) {
-      warn(("VkTabs: No tab found with with identifier '" + (vm.activeTab) + "'"));
+  },
+  created: function created () {
+    if (!this.disabled && !this.$slots.default) {
+      warn(("[VkTabs]: content is missing in tab " + (this.label)));
     }
   }
 };
 
 var core = {
   components: {
-    tabcontent: tabcontent
+    TabContent: {
+      functional: true,
+      render: function render (h, ref) {
+        var parent = ref.parent;
+
+        return parent.$tabsNodes.filter(function (vn) { return parent.activeTab === parent.getTabId(vn); })
+      }
+    }
   },
   props: {
-    activeTab: [String, Number],
+    activeTab: {
+      type: [String, Number],
+      required: true
+    },
     transition: {
       type: String,
       default: 'vk-tabs-transition'
@@ -5818,37 +5835,41 @@ var core = {
   computed: {
     tabs: {
       get: function get () {
-        return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-tab'; }
-        )
+        var this$1 = this;
+
+        return this.$tabsNodes.map(function (vn) { return ({
+          id: this$1.getTabId(vn),
+          label: vn.componentOptions.propsData.label,
+          disabled: vn.componentOptions.propsData.disabled !== undefined
+        }); })
       },
       cache: false
     }
   },
-  beforeMount: function beforeMount () {
-    this._updateTabs();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this._updateTabs();
+  created: function created () {
+    var this$1 = this;
+
+    // save tabs nodes
+    this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
+    );
+    if (warn && !this.$tabsNodes) {
+      warn("[VkTabs]: there are no tabs defined");
+    }
+    // set tabs key for keep-alive
+    this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
   },
   methods: {
-    getTabAlias: function getTabAlias (tab) {
-      return tab.componentOptions.propsData.alias || this.tabs.indexOf(tab) + 1
-    },
-    _updateTabs: function _updateTabs () {
-      var this$1 = this;
-
-      this.tabs.forEach(function (tab, index) {
-        var alias = this$1.getTabAlias(tab);
-        var active = this$1.activeTab === alias;
-        var props = tab.componentOptions.propsData;
-        props.active = active;
-        props.alias = alias;
-      });
+    getTabId: function getTabId (vn) {
+      return vn.componentOptions.propsData.alias || this.$tabsNodes.indexOf(vn) + 1
     }
   }
 };
 
-var Tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},[_vm._t("default")],2),_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('div',{key:_vm.activeTab,staticClass:"uk-margin"},[_c('tabcontent')],1)])],1)
+var Tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
+var id = ref.id;
+var label = ref.label;
+var disabled = ref.disabled;
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])})),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])
 var obj;},staticRenderFns: [],
   name: 'VkTabs',
   extends: core,
@@ -5857,7 +5878,7 @@ var obj;},staticRenderFns: [],
       type: String,
       default: 'left' // left|right|center|justify
     },
-    // flips the tabs vertically
+    // flips tabs vertically
     bottom: {
       type: Boolean,
       default: false
@@ -5865,7 +5886,11 @@ var obj;},staticRenderFns: [],
   }
 };
 
-var TabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},[_vm._t("default")],2)]),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('div',{key:_vm.activeTab},[_c('tabcontent')],1)])],1)])},staticRenderFns: [],
+var TabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
+var id = ref.id;
+var label = ref.label;
+var disabled = ref.disabled;
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])}))]),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
   name: 'VkTabsVertical',
   extends: core,
   props: {

@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     hasCustomStyle () {
-      const classes = this.$options._parentVnode.data.staticClass
+      const classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass
       return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
     }
   }

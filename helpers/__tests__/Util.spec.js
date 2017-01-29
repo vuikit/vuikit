@@ -7,7 +7,7 @@ import {
   isArray,
   inArray,
   range
-} from '../util'
+} from 'helpers/util'
 
 describe('Helpers', () => {
   it('isObject', () => {

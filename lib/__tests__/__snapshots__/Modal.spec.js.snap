@@ -1,16 +1,14 @@
 exports[`Modal renders correctly 1`] = `
-"html
-  body
-    .uk-modal.uk-open(style=\'display: block;\')
-      .uk-modal-dialog
-        button.uk-close.uk-icon.uk-modal-close-default(type=\'button\', uk-close=\'true\')
-        |  
-        .uk-modal-header
-          h2.uk-modal-title Headline
-        |  
-        .uk-modal-body Content
-        |  
-        .uk-modal-footer.uk-text-right
-          | Footer
-"
+<div class="uk-modal" style="display:block">
+  <div class="uk-modal-dialog">
+    <button type="button" uk-close="true" class="uk-close uk-icon uk-modal-close-default"></button>
+    <div class="uk-modal-header">
+      <h2 class="uk-modal-title">Headline</h2>
+    </div>
+    <div class="uk-modal-body">Content</div>
+    <div class="uk-modal-footer uk-text-right">
+      Footer
+    </div>
+  </div>
+</div>
 `;

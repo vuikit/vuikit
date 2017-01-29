@@ -20,7 +20,7 @@
 
 <script>
 import { on, addClass, removeClass } from 'helpers/dom'
-import ModalMixin from 'lib/_mixins/modal'
+import ModalMixin from 'lib/_mixins/modal.js'
 const doc = document.documentElement
 
 export default {

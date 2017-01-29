@@ -1,366 +1,64 @@
 exports[`Pagination renders correctly 1`] = `
-"html
-  body
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li.uk-active
-        span 1
-      li
-        a 2
-      li
-        a 3
-      li
-        a 4
-      li
-        a 5
-      li
-        a 6
-      li
-        a 7
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-"
+<ul class="uk-pagination">
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li class="uk-active"><span>1</span></li>
+  <li><a>2</a></li>
+  <li><a>3</a></li>
+  <li><a>4</a></li>
+  <li><a>5</a></li>
+  <li><a>6</a></li>
+  <li><a>7</a></li>
+  <li><span>...</span></li>
+  <li><a>20</a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+</ul>
 `;
 
 exports[`Pagination renders correctly 2`] = `
-"html
-  body
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li.uk-active
-        span 1
-      li
-        a 2
-      li
-        a 3
-      li
-        a 4
-      li
-        a 5
-      li
-        a 6
-      li
-        a 7
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a 1
-      li
-        span ...
-      li
-        a 7
-      li
-        a 8
-      li
-        a 9
-      li.uk-active
-        span 10
-      li
-        a 11
-      li
-        a 12
-      li
-        a 13
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-"
+<ul class="uk-pagination">
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a>1</a></li>
+  <li><span>...</span></li>
+  <li><a>7</a></li>
+  <li><a>8</a></li>
+  <li><a>9</a></li>
+  <li class="uk-active"><span>10</span></li>
+  <li><a>11</a></li>
+  <li><a>12</a></li>
+  <li><a>13</a></li>
+  <li><span>...</span></li>
+  <li><a>20</a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+</ul>
 `;
 
 exports[`Pagination renders correctly 3`] = `
-"html
-  body
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li.uk-active
-        span 1
-      li
-        a 2
-      li
-        a 3
-      li
-        a 4
-      li
-        a 5
-      li
-        a 6
-      li
-        a 7
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a 1
-      li
-        span ...
-      li
-        a 7
-      li
-        a 8
-      li
-        a 9
-      li.uk-active
-        span 10
-      li
-        a 11
-      li
-        a 12
-      li
-        a 13
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a 1
-      li
-        span ...
-      li
-        a 14
-      li
-        a 15
-      li
-        a 16
-      li
-        a 17
-      li
-        a 18
-      li
-        a 19
-      li.uk-active
-        span 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-"
+<ul class="uk-pagination">
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a>1</a></li>
+  <li><span>...</span></li>
+  <li><a>14</a></li>
+  <li><a>15</a></li>
+  <li><a>16</a></li>
+  <li><a>17</a></li>
+  <li><a>18</a></li>
+  <li><a>19</a></li>
+  <li class="uk-active"><span>20</span></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+</ul>
 `;
 
 exports[`Pagination renders correctly 4`] = `
-"html
-  body
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li.uk-active
-        span 1
-      li
-        a 2
-      li
-        a 3
-      li
-        a 4
-      li
-        a 5
-      li
-        a 6
-      li
-        a 7
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a 1
-      li
-        span ...
-      li
-        a 7
-      li
-        a 8
-      li
-        a 9
-      li.uk-active
-        span 10
-      li
-        a 11
-      li
-        a 12
-      li
-        a 13
-      li
-        span ...
-      li
-        a 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a 1
-      li
-        span ...
-      li
-        a 14
-      li
-        a 15
-      li
-        a 16
-      li
-        a 17
-      li
-        a 18
-      li
-        a 19
-      li.uk-active
-        span 20
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-    ul.uk-pagination
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-prev.uk-icon(uk-pagination-previous=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-      |  
-      li
-        a
-          span.uk-pagination-next.uk-icon(uk-pagination-next=\'true\')
-"
+<ul class="uk-pagination">
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+</ul>
 `;

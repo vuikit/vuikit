@@ -13,7 +13,7 @@
 
 <script>
 import { on, offAll, addClass } from 'helpers/dom'
-import PopperMixin from '../_mixins/popper'
+import PopperMixin from 'lib/_mixins/popper.js'
 
 let onClickOut
 let onMouseenter

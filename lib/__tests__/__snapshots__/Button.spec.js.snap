@@ -1,7 +1,17 @@
-exports[`Button renders correctly 1`] = `
-"html
-  body
-    button.uk-button.uk-active.uk-button-default(type=\'submit\', disabled=\'disabled\', color=\'primary\', width=\'1-1\', size=\'mini\')
-      | Button
-"
+exports[`Button renders correctly 1`] = `<button type="submit" disabled="disabled" class="uk-button uk-active uk-button-default">Button</button>`;
+
+exports[`ButtonCheckbox renders correctly 1`] = `
+<div class="uk-button-group">
+  <button type="button" class="uk-button uk-button-default">Button 1</button>
+  <button type="button" class="uk-button uk-button-default">Button 2</button>
+  <button type="button" class="uk-button uk-button-default">Button 3</button>
+</div>
+`;
+
+exports[`ButtonRadio renders correctly 1`] = `
+<div class="uk-button-group">
+  <button type="button" class="uk-button uk-button-default">Button 1</button>
+  <button type="button" class="uk-button uk-button-default">Button 2</button>
+  <button type="button" class="uk-button uk-button-default">Button 3</button>
+</div>
 `;

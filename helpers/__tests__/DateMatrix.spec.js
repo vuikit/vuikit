@@ -1,4 +1,4 @@
-import matrix from '../date-matrix'
+import matrix from 'helpers/date-matrix'
 import MockDate from 'mockdate'
 
 describe('data-matrix', () => {
