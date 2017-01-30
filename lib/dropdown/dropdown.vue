@@ -17,7 +17,8 @@ import PopperMixin from 'lib/_mixins/popper.js'
 
 let onClickOut
 let onMouseenter
-let onMouseleave
+let onTargetMouseenter
+let onTargetMouseleave
 let onTargetClick
 
 export default {
@@ -35,6 +36,7 @@ export default {
     }
   },
   mounted () {
+    let leaveTimeout
     // prepare delay helper function
     const delayFn = (time, cb) => {
       setTimeout(_ => cb(), time)
@@ -49,16 +51,27 @@ export default {
       if (this.targetElement.contains(e.fromElement)) {
         return
       }
+      clearTimeout(leaveTimeout)
       this.$emit('mouseenter', { delay: delayFn }, e)
     }
 
-    onMouseleave = e => {
+    onTargetMouseenter = e => {
+      // ignore childs triggers
+      if (this.targetElement.contains(e.fromElement)) {
+        return
+      }
+      clearTimeout(leaveTimeout)
+      this.$emit('mouseenter', { delay: delayFn }, e)
+    }
+
+    onTargetMouseleave = e => {
       // ignore childs triggers
       if (e.relatedTarget === this.targetElement || e.relatedTarget === this.$el ||
         this.targetElement.contains(e.relatedTarget) || this.$el.contains(e.relatedTarget)
       ) {
         return
       }
+      const delayFn = (time, cb) => { leaveTimeout = setTimeout(_ => cb(), time) }
       this.$emit('mouseleave', { delay: delayFn }, e)
     }
 
@@ -77,9 +90,10 @@ export default {
       }
     }
 
-    on(this.$el, 'mouseleave', onMouseleave, this._uid)
-    on(this.targetElement, 'mouseenter', onMouseenter, this._uid)
-    on(this.targetElement, 'mouseleave', onMouseleave, this._uid)
+    on(this.$el, 'mouseleave', onTargetMouseleave, this._uid)
+    on(this.$el, 'mouseenter', onMouseenter, this._uid)
+    on(this.targetElement, 'mouseenter', onTargetMouseenter, this._uid)
+    on(this.targetElement, 'mouseleave', onTargetMouseleave, this._uid)
     on(this.targetElement, 'click', onTargetClick, this._uid)
     on(document, 'click', onClickOut, this._uid)
     if ('ontouchstart' in document.documentElement) {
