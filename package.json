@@ -33,7 +33,7 @@
     "dev": "node dev/server.js",
     "build": "node build/build.js",
     "deploy": "cd build && ./deploy.sh",
-    "test": "NODE_ENV=production ./node_modules/.bin/jest --no-cache",
+    "test": "./node_modules/.bin/jest --no-cache",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {

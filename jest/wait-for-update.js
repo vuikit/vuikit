@@ -1,4 +1,4 @@
-import Vue from 'vue/dist/vue.common.js'
+import Vue from 'vue'
 
 // helper for async assertions.
 // Use like this:

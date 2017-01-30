@@ -110,7 +110,7 @@ export default {
     }
 
     on(this.$el, 'click', clickHandler, this._uid)
-    if ('ontouchstart' in document.documentElement) {
+    if ('ontouchstart' in doc) {
       on(this.$el, 'touchstart', clickHandler, this._uid)
     }
   },

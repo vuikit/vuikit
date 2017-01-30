@@ -4831,7 +4831,7 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     };
 
     on(this.$el, 'click', clickHandler, this._uid);
-    if ('ontouchstart' in document.documentElement) {
+    if ('ontouchstart' in doc) {
       on(this.$el, 'touchstart', clickHandler, this._uid);
     }
   },
@@ -5403,7 +5403,12 @@ var PaginationPages = {
             ? h('span', page)
             : h('a', {
               on: { click: function (e) {
-                var pagVM = getClosest(e.target, 'ul.uk-pagination').__vue__;
+                var pagination = getClosest(e.target, 'ul.uk-pagination');
+                // VkPagination could be the root of the context,
+                // in such case the real vm is the first chidlren
+                var pagVM = pagination.__vue__.$children.length
+                  ? pagination.__vue__.$children[0]
+                  : pagination.__vue__;
                 pagVM.$emit('change', page);
               }}
             }, page)
