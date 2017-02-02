@@ -5071,15 +5071,15 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.4.0.tgz#7b88853ca4bf8d84ae54ab9e56771de271e60198"
 
-vue@^2.0.0:
+vue@^2.0.0, vue@^2.1.6:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.6.tgz#2fc0024c07479ac6bc7d34a2cd5ef9ca5e90b143"
 
-vuikit-docs@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/vuikit-docs/-/vuikit-docs-0.1.0.tgz#fcdfb5802b354bec5c7cf7c35e7a9c6a0b5ad4a5"
+vuikit-docs@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/vuikit-docs/-/vuikit-docs-0.1.1.tgz#d058373efbc54abce45e5dd4fb9fb3d64e5f2bef"
   dependencies:
-    vue "^2.0.0"
+    vue "^2.1.6"
 
 watchpack@^0.2.1:
   version "0.2.9"
