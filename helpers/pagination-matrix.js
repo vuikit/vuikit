@@ -6,6 +6,10 @@ import { range as _range } from './util'
 export default function ({ active = 1, total = 200, limit = 10, range = 3 }) {
   const matrix = []
   const totalPages = Math.ceil(total / limit)
+  // return early if no more than 1 page
+  if (totalPages < 2) {
+    return [1]
+  }
   // get main pages
   const mainPages = getMainPages({ active, range, totalPages })
   const first = mainPages[0]

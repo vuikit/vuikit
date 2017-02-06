@@ -1,75 +1,74 @@
 <template>
   <div>
-    <vk-pagination
+    <vk-pagination :active="active" :total="total" :limit="limit" align="left"
       @change="page => {
         active = page
       }">
       <vk-pagination-first />
       <vk-pagination-prev />
-      <vk-pagination-pages :active="active" :total="total" :limit="limit" />
+      <vk-pagination-pages />
       <vk-pagination-next />
       <vk-pagination-last />
     </vk-pagination>
-    <vk-pagination
-      alignment="center"
+    <vk-pagination :active="active" :total="total" :limit="limit"
       @change="page => {
         active = page
       }">
       <vk-pagination-first />
       <vk-pagination-prev />
-      <vk-pagination-pages :active="active" :total="total" :limit="limit" />
+      <vk-pagination-pages />
       <vk-pagination-next />
       <vk-pagination-last />
     </vk-pagination>
-    <vk-pagination
-      alignment="right"
+    <vk-pagination :active="active" :total="total" :limit="limit" align="right"
       @change="page => {
         active = page
       }">
       <vk-pagination-first />
       <vk-pagination-prev />
-      <vk-pagination-pages :active="active" :total="total" :limit="limit" />
+      <vk-pagination-pages />
       <vk-pagination-next />
       <vk-pagination-last />
     </vk-pagination>
+
     <h2>Layout</h2>
-    <vk-pagination
-      alignment="center"
+    <vk-pagination :active="active" :total="0" :limit="limit"
       @change="page => {
         active = page
       }">
-      <vk-pagination-pages :active="active" :total="total" :limit="limit" />
+      <vk-pagination-first />
+      <vk-pagination-prev />
+      <vk-pagination-pages />
+      <vk-pagination-next />
+      <vk-pagination-last />
     </vk-pagination>
-    <vk-pagination
-      alignment="center"
+    <vk-pagination :active="active" :total="total" :limit="limit"
+      @change="page => {
+        active = page
+      }">
+      <vk-pagination-pages />
+    </vk-pagination>
+    <vk-pagination :active="active" :total="total" :limit="limit"
       @change="page => {
         active = page
       }">
       <vk-pagination-prev />
-      <vk-pagination-pages :active="active" :total="total" :limit="limit" />
+      <vk-pagination-pages />
       <vk-pagination-next />
     </vk-pagination>
-    <vk-pagination
-      alignment="expand"
-      :active="active"
-      :total="total"
-      :limit="limit"
+    <vk-pagination :active="active" :total="total" :limit="limit"
       @change="page => {
         active = page
       }">
-      <vk-pagination-prev label="Previous" />
-      <vk-pagination-next label="Next" />
+      <vk-pagination-prev label="Previous" expand />
+      <vk-pagination-next label="Next" expand />
     </vk-pagination>
-    <vk-pagination
-      alignment="expand"
-      :active="active"
-      :total="total"
-      :limit="limit"
+    <vk-pagination :active="active" :total="total" :limit="limit"
       @change="page => {
         active = page
       }">
-      <vk-pagination-first label="First" />
-      <vk-pagination-last label="Last" />
+      <vk-pagination-first label="First" expand />
+      <vk-pagination-last label="Last" expand />
     </vk-pagination>
   </div>
 </template>

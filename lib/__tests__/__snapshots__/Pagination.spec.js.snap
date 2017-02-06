@@ -1,25 +1,9 @@
 exports[`Pagination renders correctly 1`] = `
-<ul class="uk-pagination">
+<ul class="uk-pagination uk-flex-center">
   <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li class="uk-active"><span>1</span></li>
-  <li><a>2</a></li>
-  <li><a>3</a></li>
-  <li><a>4</a></li>
-  <li><a>5</a></li>
-  <li><a>6</a></li>
-  <li><a>7</a></li>
-  <li><span>...</span></li>
-  <li><a>20</a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
-</ul>
-`;
-
-exports[`Pagination renders correctly 2`] = `
-<ul class="uk-pagination">
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li class="uk-margin-auto-right">
+    <a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a>
+  </li>
   <li><a>1</a></li>
   <li><span>...</span></li>
   <li><a>7</a></li>
@@ -31,34 +15,29 @@ exports[`Pagination renders correctly 2`] = `
   <li><a>13</a></li>
   <li><span>...</span></li>
   <li><a>20</a></li>
+  <li class="uk-margin-auto-left">
+    <a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a>
+  </li>
   <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+</ul>
+`;
+
+exports[`Pagination renders correctly 2`] = `
+<ul class="uk-pagination">
+  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
   <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
 </ul>
 `;
 
 exports[`Pagination renders correctly 3`] = `
-<ul class="uk-pagination">
+<ul class="uk-pagination uk-flex-right">
   <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a>1</a></li>
-  <li><span>...</span></li>
-  <li><a>14</a></li>
-  <li><a>15</a></li>
-  <li><a>16</a></li>
-  <li><a>17</a></li>
-  <li><a>18</a></li>
-  <li><a>19</a></li>
-  <li class="uk-active"><span>20</span></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
   <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
 </ul>
 `;
 
 exports[`Pagination renders correctly 4`] = `
-<ul class="uk-pagination">
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+<ul class="uk-pagination uk-flex-center">
+  <li class="uk-active"><span>1</span></li>
 </ul>
 `;
