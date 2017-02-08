@@ -3,15 +3,15 @@ import { range as _range } from './util'
 /**
  * Returns an array with represented ranges pages
  */
-export default function ({ active = 1, total = 200, limit = 10, range = 3 }) {
+export default function ({ total = 200, page = 1, perPage = 10, range = 3 }) {
   const matrix = []
-  const totalPages = Math.ceil(total / limit)
+  const totalPages = Math.ceil(total / perPage)
   // return early if no more than 1 page
   if (totalPages < 2) {
     return [1]
   }
   // get main pages
-  const mainPages = getMainPages({ active, range, totalPages })
+  const mainPages = getMainPages({ page, range, totalPages })
   const first = mainPages[0]
   const last = mainPages[mainPages.length - 1]
   // get pre/post pages
@@ -22,23 +22,23 @@ export default function ({ active = 1, total = 200, limit = 10, range = 3 }) {
   )
 
   let nextPage = 1
-  ;[].concat(prePages, mainPages, postPages).forEach(page => {
-    if (page === nextPage) {
-      matrix.push(page)
+  ;[].concat(prePages, mainPages, postPages).forEach(p => {
+    if (p === nextPage) {
+      matrix.push(p)
       nextPage++
     } else {
       matrix.push('...')
-      matrix.push(page)
-      nextPage = page + 1
+      matrix.push(p)
+      nextPage = p + 1
     }
   })
 
   return matrix
 }
 
-const getMainPages = ({ active, range, totalPages }) => {
-  let start = active - range
-  let end = active + range
+const getMainPages = ({ page, range, totalPages }) => {
+  let start = page - range
+  let end = page + range
   if (end > totalPages) {
     end = totalPages
     start = totalPages - range * 2

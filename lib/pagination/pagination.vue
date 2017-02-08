@@ -26,6 +26,43 @@ const partsMap = {
 
 export default {
   name: 'VkPagination',
+  props: {
+    align: {
+      type: String,
+      default: 'center' // left|center|right
+    },
+    // the active page
+    page: {
+      type: Number
+    },
+    // items displayed on each page
+    perPage: {
+      type: Number
+    },
+    // amount of visible pages around the active one
+    range: {
+      type: Number,
+      default: 3
+    },
+    // total amount of items
+    total: {
+      type: Number
+    }
+  },
+  computed: {
+    prevPage () {
+      return this.page - 1
+    },
+    nextPage () {
+      return this.page + 1
+    },
+    pages () {
+      return paginationMatrix({ total: this.total, page: this.page, perPage: this.perPage })
+    },
+    lastPage () {
+      return this.pages[this.pages.length - 1]
+    }
+  },
   components: {
     'pag-parts': {
       functional: true,
@@ -39,43 +76,6 @@ export default {
         })
         return lis
       }
-    }
-  },
-  props: {
-    // currently active page
-    active: {
-      type: Number
-    },
-    // total amount of items
-    total: {
-      type: Number
-    },
-    // items displayed on each page
-    limit: {
-      type: Number
-    },
-    // amount of visible pages around the active one
-    range: {
-      type: Number,
-      default: 3
-    },
-    align: {
-      type: String,
-      default: 'center' // left|center|right
-    }
-  },
-  computed: {
-    prevPage () {
-      return this.active - 1
-    },
-    nextPage () {
-      return this.active + 1
-    },
-    pages () {
-      return paginationMatrix({ active: this.active, total: this.total, limit: this.limit })
-    },
-    lastPage () {
-      return this.pages[this.pages.length - 1]
     }
   },
   created () {
