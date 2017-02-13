@@ -17,7 +17,7 @@ const banner =
 const builds = {
   // ES
   'es': {
-    entry: path.resolve(__dirname, '../lib/index.js'),
+    entry: path.resolve(__dirname, '../lib/es.js'),
     dest: path.resolve(__dirname, '../dist/vuikit.mjs'),
     format: 'es'
   },
