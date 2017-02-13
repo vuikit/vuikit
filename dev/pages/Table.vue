@@ -32,28 +32,16 @@
     <div class="uk-overflow-auto">
       <vk-table class="uk-table-small"
         :data="data"
-        :rowClass="row => selection[row.id]
+        :rowClass="row => selection.has(row)
           ? 'uk-active'
           : ''
-        ">
+        "
+        @click-row="toggleSelection">
         <vk-table-column-select
-          trackBy="id"
-          :selection="selection"
-          @select="rowId => {
-            selection[rowId]
-              ? $delete(selection, rowId)
-              : $set(selection, rowId, true)
-          }"
-          @selectAll="rows => {
-            Object.keys(selection).length !== rows.length
-              ? rows.forEach(rowId => $set(selection, rowId, true))
-              : selection = {}
-          }"
-          @selectRow="rowId => {
-            selection[rowId]
-              ? $delete(selection, rowId)
-              : $set(selection, rowId, true)
-          }">
+          :is-selected="isSelected"
+          @select="toggleSelection"
+          @select-all="toggleSelectionAll"
+        >
         </vk-table-column-select>
         <vk-table-column header="Name" cell="name" />
         <vk-table-column header="Hits" cell="hits" />
@@ -81,23 +69,41 @@
 import orderBy from 'lodash/orderBy'
 
 export default {
+  name: 'VkTableDemo',
   data: () => ({
-    selection: {},
+    selection: new Set(),
     sortedBy: {
       name: 'asc'
-    },
-    rawData: [
-      { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
-      { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
-      { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
-    ]
+    }
   }),
   computed: {
     data () {
       const by = Object.keys(this.sortedBy)[0]
       const dir = this.sortedBy[by]
-      return orderBy(this.rawData, [item => item[by]], dir)
+      return orderBy(data, [item => item[by]], dir)
+    }
+  },
+  methods: {
+    isSelected (row) {
+      return this.selection.has(row)
+    },
+    toggleSelection (row) {
+      this.selection.has(row)
+        ? this.selection.delete(row)
+        : this.selection.add(row)
+    },
+    toggleSelectionAll () {
+      const isAllSelected = this.data.filter(this.isSelected).length === this.data.length
+      isAllSelected
+        ? this.selection.clear()
+        : this.selection = new Set(this.data)
     }
   }
 }
+
+const data = [
+  { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
+  { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
+  { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
+]
 </script>
