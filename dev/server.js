@@ -6,9 +6,10 @@ const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const config = require('../config')
 const webpackConfig = require('./webpack.config')
+const portfinder = require('portfinder')
 
-// default port where dev server listens for incoming traffic
-const port = process.env.PORT || config.dev.port
+// default base port from which to start searching
+portfinder.basePort = config.dev.basePort
 
 const app = express()
 const compiler = webpack(webpackConfig)
@@ -47,11 +48,14 @@ app.use('/static', express.static(path.resolve(__dirname, './static')))
 app.use('/assets', express.static(path.resolve(__dirname, '../node_modules/uikit/dist')))
 app.use('/assets/js', express.static(path.resolve(__dirname, '../node_modules/jquery/dist')))
 
-module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  const uri = 'http://localhost:' + port
-  console.log('Listening at ' + uri + '\n')
-})
+module.exports = portfinder.getPortPromise()
+  .then(port => {
+    app.listen(port, function (err) {
+      if (err) {
+        console.log(err)
+        return
+      }
+      const uri = 'http://localhost:' + port
+      console.log('Listening at ' + uri + '\n')
+    })
+  }).catch(err => console.log(err))
