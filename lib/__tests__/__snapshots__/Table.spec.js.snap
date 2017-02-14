@@ -19,7 +19,7 @@ exports[`Table Column Sort renders correctly 1`] = `
   <col>
   <thead>
     <tr>
-      <th class="myHeaderClass uk-visible-hover-inline">
+      <th class="uk-visible-hover-inline myHeaderClass">
         <a class="uk-position-relative uk-display-block uk-link-reset uk-text-nowrap"><span uk-icon="icon: arrow-down" class="uk-icon uk-position-absolute uk-invisible"></span><span uk-icon="icon: arrow-up" class="uk-icon uk-position-absolute uk-invisible" style="display: none;"></span></a>
       </th>
     </tr>
