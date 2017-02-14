@@ -1,8 +1,6 @@
-import { each, merge } from './util'
-
 export function filterByTag (nodes, tag) {
   const result = []
-  each(nodes, node => {
+  nodes.forEach(node => {
     if (node.componentOptions && node.componentOptions.tag === tag) {
       result.push(node)
     }
@@ -17,7 +15,7 @@ export function getProps (vm) {
 export function getFinalProps (component) {
   let props = {}
   while (component) {
-    props = merge(props, component.props)
+    props = {...props, ...component.props}
     component = component.extends
   }
   return props

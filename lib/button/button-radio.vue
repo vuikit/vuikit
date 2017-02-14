@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { each } from 'helpers/util'
 import { filterByTag, getProps } from 'helpers/component'
 
 export default {
@@ -26,13 +25,13 @@ export default {
     this.updateButtonsState()
   },
   mounted () {
-    each(this.$children, button => {
+    this.$children.forEach(button => {
       button.$on('click', () => this.$emit('change', button.value))
     })
   },
   methods: {
     updateButtonsState () {
-      each(filterByTag(this.$slots.default, 'vk-button'), component => {
+      filterByTag(this.$slots.default, 'vk-button').forEach(component => {
         const props = getProps(component)
         props.active = props.value === this.value
       })

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { each, inArray } from 'helpers/util'
+import { inArray } from 'helpers/util'
 import { filterByTag, getProps } from 'helpers/component'
 
 export default {
@@ -29,13 +29,13 @@ export default {
     this.updateButtonsState()
   },
   mounted () {
-    each(this.$children, button => {
+    this.$children.forEach(button => {
       button.$on('click', () => this.toggle(button))
     })
   },
   methods: {
     updateButtonsState () {
-      each(filterByTag(this.$slots.default, 'vk-button'), component => {
+      filterByTag(this.$slots.default, 'vk-button').forEach(component => {
         const props = getProps(component)
         props.active = inArray(this.value, props.value)
       })
