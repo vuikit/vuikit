@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { inArray } from 'helpers/util'
+import { inArray } from 'vuikit-utils'
 import { filterByTag, getProps } from 'helpers/component'
 
 export default {

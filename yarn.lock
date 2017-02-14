@@ -704,9 +704,9 @@ babel-plugin-transform-regenerator@^6.22.0:
   dependencies:
     regenerator-transform "0.9.8"
 
-babel-plugin-transform-runtime@^6.22.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.22.0.tgz#10968d760bbf6517243081eec778e10fa828551c"
+babel-plugin-transform-runtime@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-runtime/-/babel-plugin-transform-runtime-6.23.0.tgz#88490d446502ea9b8e7efb0fe09ec4d99479b1ee"
   dependencies:
     babel-runtime "^6.22.0"
 
@@ -717,9 +717,9 @@ babel-plugin-transform-strict-mode@^6.22.0:
     babel-runtime "^6.22.0"
     babel-types "^6.22.0"
 
-babel-polyfill@^6.22.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.22.0.tgz#1ac99ebdcc6ba4db1e2618c387b2084a82154a3b"
+babel-polyfill@^6.23.0:
+  version "6.23.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
   dependencies:
     babel-runtime "^6.22.0"
     core-js "^2.4.0"
@@ -3722,9 +3722,9 @@ pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"
 
-popper.js@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.4.tgz#8b4b567abdd7ac7747b9799bb7553c62e47f30dd"
+popper.js@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.0.6.tgz#6ad5093733aedcc832612c1bb71a27446c89f79c"
 
 portfinder@^1.0.13:
   version "1.0.13"
@@ -4976,12 +4976,6 @@ vue-server-renderer@^2.1.10:
     de-indent "^1.0.2"
     he "^1.1.0"
 
-vue-style-loader@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-1.0.0.tgz#abeb7bd0f46313083741244d3079d4f14449e049"
-  dependencies:
-    loader-utils "^0.2.7"
-
 vue-style-loader@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-2.0.0.tgz#1a3bb55239ac541ee3af0301d66f16fc86786543"
@@ -5015,6 +5009,10 @@ vuikit-docs@^0.1.1:
   resolved "https://registry.yarnpkg.com/vuikit-docs/-/vuikit-docs-0.1.1.tgz#d058373efbc54abce45e5dd4fb9fb3d64e5f2bef"
   dependencies:
     vue "^2.1.6"
+
+"vuikit-utils@git+https://github.com/vuikit/vuikit-utils.git":
+  version "0.0.1"
+  resolved "git+https://github.com/vuikit/vuikit-utils.git#d57bb48b6a15ada8e1b52a95fe6ac6d48812d911"
 
 walker@~1.0.5:
   version "1.0.7"

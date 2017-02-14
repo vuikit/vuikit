@@ -1,4 +1,4 @@
-import { range as _range } from './util'
+import { range as _range } from 'vuikit-utils'
 
 /**
  * Returns an array with represented ranges pages
