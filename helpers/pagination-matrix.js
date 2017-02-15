@@ -1,4 +1,4 @@
-const getRange = require('utils/range')
+const getRange = require('../utils/range')
 const def = { total: 200, page: 1, perPage: 10, range: 3 }
 
 /**

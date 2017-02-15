@@ -4,7 +4,7 @@ const getMonth = require('date-fns/get_month')
 const getDate = require('date-fns/get_date')
 const addDays = require('date-fns/add_days')
 const startOfWeek = require('date-fns/start_of_week')
-const range = require('utils/range')
+const range = require('../utils/range')
 
 const rows = range(6)
 const cols = range(7)
