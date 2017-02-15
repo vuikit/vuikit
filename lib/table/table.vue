@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { isFunction } from 'vuikit-utils'
+import isFunction from 'utils/is-function'
 
 export default {
   name: 'VkTable',
