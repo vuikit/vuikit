@@ -1,5 +1,5 @@
-const isFunction = require('../utils/is-function')
-const isString = require('../utils/is-string')
+var isFunction = require('../utils/is-function.js')
+var isString = require('../utils/is-string.js')
 
 module.exports = function (columns) {
   return {

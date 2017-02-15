@@ -1,6 +1,6 @@
-const each = require('../utils/each')
-const isArray = require('../utils/is-array')
-const pick = require('lodash-es/pick')
+var each = require('../utils/each')
+var isArray = require('../utils/is-array')
+var pick = require('lodash-es/pick')
 
 module.exports = function (compProps, pageProps) {
   // we only want to pick declared props

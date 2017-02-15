@@ -1,5 +1,5 @@
-const isObject = require('../utils/is-object')
-const isInteger = require('../utils/is-integer')
+var isObject = require('../utils/is-object')
+var isInteger = require('../utils/is-integer')
 
 module.exports = function (obj, iterator) {
   var i, key

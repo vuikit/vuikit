@@ -2,7 +2,7 @@
  * Warn about errors only in no production
  */
 
-let warn
+var warn
 
 if (process.env.NODE_ENV !== 'production') {
   const hasConsole = typeof console !== 'undefined'

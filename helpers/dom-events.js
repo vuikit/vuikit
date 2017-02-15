@@ -1,4 +1,4 @@
-const boundEvents = []
+var boundEvents = []
 
 // add event listener shorthand
 exports.on = function (el, event, handler, namespace = 'def') {

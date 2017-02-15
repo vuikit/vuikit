@@ -1,5 +1,5 @@
-const getRange = require('../utils/range')
-const def = { total: 200, page: 1, perPage: 10, range: 3 }
+var getRange = require('../utils/range')
+var def = { total: 200, page: 1, perPage: 10, range: 3 }
 
 /**
  * Returns an array with represented ranges pages

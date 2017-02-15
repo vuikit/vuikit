@@ -1,13 +1,13 @@
-const isSameMonth = require('date-fns/is_same_month')
-const getYear = require('date-fns/get_year')
-const getMonth = require('date-fns/get_month')
-const getDate = require('date-fns/get_date')
-const addDays = require('date-fns/add_days')
-const startOfWeek = require('date-fns/start_of_week')
-const range = require('../utils/range')
+var isSameMonth = require('date-fns/is_same_month')
+var getYear = require('date-fns/get_year')
+var getMonth = require('date-fns/get_month')
+var getDate = require('date-fns/get_date')
+var addDays = require('date-fns/add_days')
+var startOfWeek = require('date-fns/start_of_week')
+var range = require('../utils/range')
 
-const rows = range(6)
-const cols = range(7)
+var rows = range(6)
+var cols = range(7)
 
 /**
  * Returns a two-dimensional array with calendar represented dates
