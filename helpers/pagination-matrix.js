@@ -1,9 +1,15 @@
-import { range as _range } from 'vuikit-utils'
+const getRange = require('utils/range')
+const def = { total: 200, page: 1, perPage: 10, range: 3 }
 
 /**
  * Returns an array with represented ranges pages
  */
-export default function ({ total = 200, page = 1, perPage = 10, range = 3 }) {
+module.exports = function ({
+  total = def.total,
+  page = def.page,
+  perPage = def.perPage,
+  range = def.range
+} = def) {
   const matrix = []
   const totalPages = Math.ceil(total / perPage)
   // return early if no more than 1 page
@@ -15,8 +21,8 @@ export default function ({ total = 200, page = 1, perPage = 10, range = 3 }) {
   const first = mainPages[0]
   const last = mainPages[mainPages.length - 1]
   // get pre/post pages
-  const prePages = _range(1, (first <= 3) ? first : 2)
-  const postPages = _range(
+  const prePages = getRange(1, (first <= 3) ? first : 2)
+  const postPages = getRange(
     last >= (totalPages - 2) ? last + 1 : totalPages,
     totalPages + 1
   )
@@ -48,5 +54,5 @@ const getMainPages = ({ page, range, totalPages }) => {
     start = 1
     end = Math.min(range * 2 + 1, totalPages)
   }
-  return _range(start, end + 1)
+  return getRange(start, end + 1)
 }

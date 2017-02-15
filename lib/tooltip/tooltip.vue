@@ -11,7 +11,7 @@
 
 <script>
 import PopperMixin from '../_mixins/popper'
-import { on, offAll } from 'helpers/dom'
+import { on, offAll } from 'helpers/dom-events'
 
 let onMouseenter
 let onMouseleave

@@ -1,10 +1,10 @@
-import isSameMonth from 'date-fns/is_same_month'
-import getYear from 'date-fns/get_year'
-import getMonth from 'date-fns/get_month'
-import getDate from 'date-fns/get_date'
-import addDays from 'date-fns/add_days'
-import startOfWeek from 'date-fns/start_of_week'
-import { range } from 'vuikit-utils'
+const isSameMonth = require('date-fns/is_same_month')
+const getYear = require('date-fns/get_year')
+const getMonth = require('date-fns/get_month')
+const getDate = require('date-fns/get_date')
+const addDays = require('date-fns/add_days')
+const startOfWeek = require('date-fns/start_of_week')
+const range = require('utils/range')
 
 const rows = range(6)
 const cols = range(7)
@@ -15,7 +15,7 @@ const cols = range(7)
  * @date  Date or Object
  * @plain Boolean - Whetever the dates should be set as raw numbers
  */
-export default function ({ year, month, weekStartsOn } = {
+module.exports = function ({ year, month, weekStartsOn } = {
   year: getYear(Date.now()),
   month: getMonth(Date.now()),
   weekStartsOn: 0

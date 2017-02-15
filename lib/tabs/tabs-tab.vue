@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { warn } from 'lib/utils'
+import warn from 'utils/warn'
 
 export default {
   name: 'VkTab',

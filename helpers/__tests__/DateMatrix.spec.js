@@ -1,5 +1,6 @@
-import matrix from 'helpers/date-matrix'
-import MockDate from 'mockdate'
+/* eslint-env jest */
+const matrix = require('../date-matrix')
+const MockDate = require('mockdate')
 
 describe('data-matrix', () => {
   const dec14 = [
@@ -27,13 +28,13 @@ describe('data-matrix', () => {
     [-1, -2, -3, -4, -5, -6, -7]
   ]
 
-  it('accepts an Object as argument', () => {
+  it('accepts Object as argument', () => {
     expect(
       matrix({ year: 2014, month: 11, weekStartsOn: 1 }, true).toString()
     ).toEqual(dec14w1.toString())
   })
 
-  it('accepts an Date() as argument', () => {
+  it('accepts Date Object as argument', () => {
     expect(
       matrix(new Date(2014, 11), true).toString()
     ).toEqual(dec14.toString())

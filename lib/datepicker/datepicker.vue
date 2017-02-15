@@ -57,10 +57,10 @@ import subMonths from 'date-fns/sub_months'
 import subDays from 'date-fns/sub_days'
 import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
-
 import PickerHeader from './Header'
-import { range, isInteger } from 'vuikit-utils'
-import getMatrix from 'helpers/date-matrix'
+import dateMatrix from 'helpers/date-matrix'
+import range from 'utils/range'
+import isInteger from 'utils/is-integer'
 
 export default {
   name: 'VkDatepicker',
@@ -113,7 +113,7 @@ export default {
   },
   computed: {
     matrix () {
-      return getMatrix({
+      return dateMatrix({
         year: getYear(this.date),
         month: getMonth(this.date),
         weekStartsOn: this.weekStartsOn

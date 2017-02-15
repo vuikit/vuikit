@@ -12,7 +12,8 @@
 </template>
 
 <script>
-import { on, offAll, addClass } from 'helpers/dom'
+import { on, offAll } from 'helpers/dom-events'
+import addClass from 'utils/add-class'
 import PopperMixin from 'lib/_mixins/popper.js'
 
 let onClickOut
