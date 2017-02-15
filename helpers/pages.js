@@ -1,11 +1,12 @@
-import { merge, each, isArray } from 'helpers/util'
-import { pick } from 'lodash'
+const each = require('../utils/each')
+const isArray = require('../utils/is-array')
+const pick = require('lodash-es/pick')
 
-export function mergeProps (compProps, pageProps) {
+module.exports = function (compProps, pageProps) {
   // we only want to pick declared props
   let pickedProps = pick(compProps, Object.keys(pageProps))
   // merge the new properties
-  const props = merge({}, pickedProps, pageProps)
+  const props = {...pickedProps, ...pageProps}
   each(props, prop => {
     prop.type = stringifyPropType(prop.type)
     prop.default = stringifyPropDefault(prop.default)
