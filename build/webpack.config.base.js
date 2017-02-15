@@ -3,6 +3,7 @@ const utils = require('./utils')
 const config = require('../config')
 const projectRoot = path.resolve(__dirname, '../')
 const env = process.env.NODE_ENV
+const alias = require('./alias')
 
 module.exports = {
   output: {
@@ -13,14 +14,11 @@ module.exports = {
     filename: '[name].js'
   },
   resolve: {
+    alias,
     modules: [
       path.resolve(__dirname, '../node_modules')
     ],
-    extensions: ['.js', '.vue', '.json'],
-    alias: {
-      'lib': path.resolve(__dirname, '../lib'),
-      'helpers': path.resolve(__dirname, '../helpers')
-    }
+    extensions: ['.js', '.vue', '.json']
   },
   module: {
     rules: [
