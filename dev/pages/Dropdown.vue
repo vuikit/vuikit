@@ -22,8 +22,8 @@
           Click
           <vk-dropdown
             :show="show.click"
-            @clickOut="show.click = false"
-            @targetClick="show.click = !show.click">
+            @click-out="show.click = false"
+            @click-target="show.click = !show.click">
             <div v-html="content" />
           </vk-dropdown>
         </vk-button>
@@ -79,7 +79,7 @@
               :flip="false"
               position="top-left"
               :show="show.top.left"
-              @clickOut="show.top.left = false"
+              @click-out="show.top.left = false"
               @mouseenter="show.top.left = true"
               @mouseleave="show.top.left = false">
               <div v-html="content" />
@@ -93,7 +93,7 @@
               :flip="false"
               position="top-center"
               :show="show.top.center"
-              @clickOut="show.top.center = false"
+              @click-out="show.top.center = false"
               @mouseenter="show.top.center = true"
               @mouseleave="show.top.center = false">
               <div v-html="content" />
@@ -107,7 +107,7 @@
               :flip="false"
               position="top-right"
               :show="show.top.right"
-              @clickOut="show.top.right = false"
+              @click-out="show.top.right = false"
               @mouseenter="show.top.right = true"
               @mouseleave="show.top.right = false">
               <div v-html="content" />
@@ -124,7 +124,7 @@
               :flip="false"
               position="left-top"
               :show="show.left.top"
-              @clickOut="show.left.top = false"
+              @click-out="show.left.top = false"
               @mouseenter="show.left.top = true"
               @mouseleave="show.left.top = false">
               <div v-html="content" />
@@ -141,7 +141,7 @@
               :flip="false"
               position="right-top"
               :show="show.right.top"
-              @clickOut="show.right.top = false"
+              @click-out="show.right.top = false"
               @mouseenter="show.right.top = true"
               @mouseleave="show.right.top = false">
               <div v-html="content" />
@@ -158,7 +158,7 @@
               :flip="false"
               position="left"
               :show="show.left.center"
-              @clickOut="show.left.center = false"
+              @click-out="show.left.center = false"
               @mouseenter="show.left.center = true"
               @mouseleave="show.left.center = false">
               <div v-html="content" />
@@ -176,7 +176,7 @@
               :flip="false"
               position="right-center"
               :show="show.right.center"
-              @clickOut="show.right.center = false"
+              @click-out="show.right.center = false"
               @mouseenter="show.right.center = true"
               @mouseleave="show.right.center = false">
               <div v-html="content" />
@@ -193,7 +193,7 @@
               :flip="false"
               position="left-bottom"
               :show="show.left.bottom"
-              @clickOut="show.left.bottom = false"
+              @click-out="show.left.bottom = false"
               @mouseenter="show.left.bottom = true"
               @mouseleave="show.left.bottom = false">
               <div v-html="content" />
@@ -209,7 +209,7 @@
               :flip="false"
               position="right-bottom"
               :show="show.right.bottom"
-              @clickOut="show.right.bottom = false"
+              @click-out="show.right.bottom = false"
               @mouseenter="show.right.bottom = true"
               @mouseleave="show.right.bottom = false">
               <div v-html="content" />
@@ -226,7 +226,7 @@
               :flip="false"
               position="bottom-left"
               :show="show.bottom.left"
-              @clickOut="show.bottom.left = false"
+              @click-out="show.bottom.left = false"
               @mouseenter="show.bottom.left = true"
               @mouseleave="show.bottom.left = false">
               <div v-html="content" />
@@ -240,7 +240,7 @@
               :flip="false"
               position="bottom-center"
               :show="show.bottom.center"
-              @clickOut="show.bottom.center = false"
+              @click-out="show.bottom.center = false"
               @mouseenter="show.bottom.center = true"
               @mouseleave="show.bottom.center = false">
               <div v-html="content" />
@@ -254,7 +254,7 @@
               :flip="false"
               position="bottom-right"
               :show="show.bottom.right"
-              @clickOut="show.bottom.right = false"
+              @click-out="show.bottom.right = false"
               @mouseenter="show.bottom.right = true"
               @mouseleave="show.bottom.right = false">
               <div v-html="content" />

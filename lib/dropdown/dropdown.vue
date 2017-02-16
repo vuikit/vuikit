@@ -20,7 +20,7 @@ let onClickOut
 let onMouseenter
 let onTargetMouseenter
 let onTargetMouseleave
-let onTargetClick
+let onClickTarget
 
 export default {
   name: 'VkDropdown',
@@ -43,8 +43,8 @@ export default {
       setTimeout(_ => cb(), time)
     }
 
-    onTargetClick = e => {
-      this.$emit('targetClick', e)
+    onClickTarget = e => {
+      this.$emit('click-target', e)
     }
 
     onMouseenter = e => {
@@ -84,9 +84,9 @@ export default {
         }
         // click in/out dropdown
         if (e.target === this.$el || this.$el.contains(e.target)) {
-          this.$emit('clickIn', e)
+          this.$emit('click-in', e)
         } else {
-          this.$emit('clickOut', e)
+          this.$emit('click-out', e)
         }
       }
     }
@@ -95,7 +95,7 @@ export default {
     on(this.$el, 'mouseenter', onMouseenter, this._uid)
     on(this.targetElement, 'mouseenter', onTargetMouseenter, this._uid)
     on(this.targetElement, 'mouseleave', onTargetMouseleave, this._uid)
-    on(this.targetElement, 'click', onTargetClick, this._uid)
+    on(this.targetElement, 'click', onClickTarget, this._uid)
     on(document, 'click', onClickOut, this._uid)
     if ('ontouchstart' in document.documentElement) {
       on(document, 'touchstart', onClickOut, this._uid)

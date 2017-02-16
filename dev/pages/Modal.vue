@@ -46,17 +46,17 @@
 
     <vk-modal
       :show="show.def"
-      @clickOut="show.def = false"
+      @click-out="show.def = false"
       @inactive="show.def = false"
-      @keyEsc="show.def = false">
+      @key-esc="show.def = false">
       <vk-modal-body>{{ lorem }}</vk-modal-body>
     </vk-modal>
 
     <vk-modal
       :show="show.sections"
-      @clickOut="show.sections = false"
+      @click-out="show.sections = false"
       @inactive="show.sections = false"
-      @keyEsc="show.sections = false">
+      @key-esc="show.sections = false">
       <vk-modal-close @click="show.sections = false" />
       <vk-modal-header>
         <h2 class="uk-modal-title">Headline</h2>
@@ -70,18 +70,18 @@
 
     <vk-modal
       :show="show.nobody"
-      @clickOut="show.nobody = false"
+      @click-out="show.nobody = false"
       @inactive="show.nobody = false"
-      @keyEsc="show.nobody = false">
+      @key-esc="show.nobody = false">
       <vk-modal-close outside @click="show.nobody = false" />
       <img src="static/photo.jpg" alt="">
     </vk-modal>
 
     <vk-modal
       :show="show.caption"
-      @clickOut="show.caption = false"
+      @click-out="show.caption = false"
       @inactive="show.caption = false"
-      @keyEsc="show.caption = false">
+      @key-esc="show.caption = false">
       <vk-modal-close @click="show.caption = false" />
       <vk-modal-body>{{ lorem }}</vk-modal-body>
       <vk-modal-caption>Caption</vk-modal-caption>
@@ -89,18 +89,18 @@
 
     <vk-modal
       :show="show.closeoutside"
-      @clickOut="show.closeoutside = false"
+      @click-out="show.closeoutside = false"
       @inactive="show.closeoutside = false"
-      @keyEsc="show.closeoutside = false">
+      @key-esc="show.closeoutside = false">
       <vk-modal-close outside @click="show.closeoutside = false" />
       <vk-modal-body>{{ lorem }}</vk-modal-body>
     </vk-modal>
 
     <vk-modal lightbox
       :show="show.lightbox"
-      @clickOut="show.lightbox = false"
+      @click-out="show.lightbox = false"
       @inactive="show.lightbox = false"
-      @keyEsc="show.lightbox = false">
+      @key-esc="show.lightbox = false">
       <vk-modal-close top @click="show.lightbox = false" />
       <img src="static/photo.jpg" alt="">
       <vk-modal-caption bottom>Caption</vk-modal-caption>
@@ -108,9 +108,9 @@
 
     <vk-modal
       :show="show.scrollbar"
-      @clickOut="show.scrollbar = false"
+      @click-out="show.scrollbar = false"
       @inactive="show.scrollbar = false"
-      @keyEsc="show.scrollbar = false">
+      @key-esc="show.scrollbar = false">
       <vk-modal-close @click="show.scrollbar = false" />
       <vk-modal-body>
         <p v-for="n in 10">{{ lorem }}</p>
@@ -119,9 +119,9 @@
 
     <vk-modal container
       :show="show.overflow"
-      @clickOut="show.overflow = false"
+      @click-out="show.overflow = false"
       @inactive="show.overflow = false"
-      @keyEsc="show.overflow = false">
+      @key-esc="show.overflow = false">
       <vk-modal-close @click="show.overflow = false" />
       <vk-modal-header>
         <h2 class="uk-modal-title">Headline</h2>
@@ -137,9 +137,9 @@
 
     <vk-modal container
       :show="show.container"
-      @clickOut="show.container = false"
+      @click-out="show.container = false"
       @inactive="show.container = false"
-      @keyEsc="show.container = false">
+      @key-esc="show.container = false">
       <vk-modal-close @click="container.full = false" />
       <vk-modal-body>
         <p>{{ lorem }}</p>
@@ -148,9 +148,9 @@
 
     <vk-modal widths="3-4@m 2-3@l 1-2@xl"
       :show="show.widths"
-      @clickOut="show.widths = false"
+      @click-out="show.widths = false"
       @inactive="show.widths = false"
-      @keyEsc="show.widths = false">
+      @key-esc="show.widths = false">
       <vk-modal-dialog class="uk-width-3-4@m uk-width-2-3@l uk-width-1-2@xl">
         <vk-modal-close @click="widths.full = false"/>
         <vk-modal-body>
@@ -161,9 +161,9 @@
 
     <vk-modal full
       :show="show.full"
-      @clickOut="show.full = false"
+      @click-out="show.full = false"
       @inactive="show.full = false"
-      @keyEsc="show.full = false">
+      @key-esc="show.full = false">
       <vk-modal-dialog class="uk-flex uk-flex-center uk-flex-middle" uk-height-viewport>
         <vk-modal-close @click="show.full = false" />
         <div class="uk-width-xxlarge uk-padding-large">
@@ -175,9 +175,9 @@
 
     <vk-modal full
       :show="show.fullsplit"
-      @clickOut="show.fullsplit = false"
+      @click-out="show.fullsplit = false"
       @inactive="show.fullsplit = false"
-      @keyEsc="show.fullsplit = false">
+      @key-esc="show.fullsplit = false">
         <vk-modal-close @click="show.fullsplit = false" />
         <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
           <div class="uk-background-cover" style="background-image: url('static/photo.jpg');" uk-height-viewport></div>
@@ -191,9 +191,9 @@
 
     <vk-modal center
       :show="show.center"
-      @clickOut="show.center = false"
+      @click-out="show.center = false"
       @inactive="show.center = false"
-      @keyEsc="show.center = false">
+      @key-esc="show.center = false">
         <vk-modal-close outside @click="show.center = false" />
         <img src="static/photo.jpg" alt="">
       </vk-modal-dialog>
@@ -201,9 +201,9 @@
 
     <vk-modal center
       :show="show.centerwsb"
-      @clickOut="show.centerwsb = false"
+      @click-out="show.centerwsb = false"
       @inactive="show.centerwsb = false"
-      @keyEsc="show.centerwsb = false">
+      @key-esc="show.centerwsb = false">
       <vk-modal-close @click="show.centerwsb = false" />
       <vk-modal-body>
         <p v-for="n in 10">{{ lorem }}</p>
@@ -212,9 +212,9 @@
 
     <vk-modal
       :show="show.group1"
-      @clickOut="show.group1 = false"
+      @click-out="show.group1 = false"
       @inactive="show.group1 = false"
-      @keyEsc="show.group1 = false">
+      @key-esc="show.group1 = false">
       <vk-modal-close @click="show.group1 = false" />
       <vk-modal-header>
         <h2 class="uk-modal-title">Headline 1</h2>
@@ -228,9 +228,9 @@
 
     <vk-modal
       :show="show.group2"
-      @clickOut="show.group2 = false"
+      @click-out="show.group2 = false"
       @inactive="show.group2 = false"
-      @keyEsc="show.group2 = false">
+      @key-esc="show.group2 = false">
       <vk-modal-close @click="show.group2 = false" />
       <vk-modal-header>
         <h2 class="uk-modal-title">Headline 2</h2>

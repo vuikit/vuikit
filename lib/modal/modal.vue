@@ -109,7 +109,7 @@ export default {
     // init events
     const clickHandler = e => {
       if (e.target === this.$refs.panel || this.$refs.panel.contains(e.target)) {
-        this.$emit('clickIn', e)
+        this.$emit('click-in', e)
       }
     }
 
