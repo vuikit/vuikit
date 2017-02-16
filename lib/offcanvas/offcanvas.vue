@@ -82,10 +82,6 @@ export default {
       removeClass(doc, this.clsPageAnimation)
       doc.style['margin-left'] = ''
       removeClass(this.$el, 'uk-open')
-
-      // if (this.mode === 'none' || this.getActive() && this.getActive() !== this) {
-      //     this.panel.trigger(transitionend);
-      // }
     },
     afterLeave () {
       this._afterLeave()
