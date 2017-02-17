@@ -62,6 +62,18 @@
         <vk-table-column header="Description" cell="desc" />
       </vk-table>
     </div>
+
+    <h2>Data Defined Columns</h2>
+    <div class="uk-overflow-auto">
+      <vk-table class="uk-table-small"
+        :data="data"
+        :sortedBy="sortedBy"
+        @sort="order => {
+          sortedBy = order
+        }">
+        <vk-table-columns :definition="definition" />
+      </vk-table>
+    </div>
   </div>
 </template>
 
@@ -74,7 +86,24 @@ export default {
     selection: new Set(),
     sortedBy: {
       name: 'asc'
-    }
+    },
+    definition: [
+      {
+        header: 'Name',
+        headerClass: 'header-class',
+        cell: 'name',
+        cellClass: 'cellClass'
+      },
+      {
+        type: 'sort',
+        header: 'Hits',
+        cell: 'hits'
+      },
+      {
+        headerRender: ({ row }) => 'Custom Header Render',
+        cellRender: ({ row }) => 'Custom Cell Render'
+      }
+    ]
   }),
   computed: {
     data () {
