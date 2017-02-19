@@ -1,5 +1,5 @@
-var isObject = require('../utils/is-object')
-var isInteger = require('../utils/is-integer')
+var isObject = require('./is-object')
+var isInteger = require('./is-integer')
 
 module.exports = function (obj, iterator) {
   var i, key
