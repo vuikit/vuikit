@@ -4,7 +4,7 @@
       <vk-table class="uk-table-small" :data="data">
         <vk-table-column header="Name" cell="name" />
         <vk-table-column header="Hits" cell="hits" />
-        <vk-table-column header="Description" cell="desc" />
+        <vk-table-column header="Author" cell="author.name" />
       </vk-table>
     </div>
 
@@ -131,8 +131,8 @@ export default {
 }
 
 const data = [
-  { id: 1, name: 'Item A', hits: 100, desc: 'Description' },
-  { id: 2, name: 'Item B', hits: 40, desc: 'Description' },
-  { id: 3, name: 'Item C', hits: 700, desc: 'Description' }
+  { id: 1, name: 'Item A', hits: 100, desc: 'Description', author: { name: 'John Public' } },
+  { id: 2, name: 'Item B', hits: 40, desc: 'Description', author: { name: 'Jane Public' } },
+  { id: 3, name: 'Item C', hits: 700, desc: 'Description', author: { name: 'John Public' } }
 ]
 </script>
