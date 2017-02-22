@@ -210,8 +210,13 @@ The VkTable component relies on Vuikit [specific](https://github.com/vuikit/vuik
 
 Until Vuikit reaches a 1.0 release, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 have the same API, but 0.5.0 have breaking changes.
 
+## Contributors
+
+* [Miljan Aleksic](https://twitter.com/AleksicMiljan) - Author and main developer
+* [ZOOlanders](http://www.zoolanders.com) - Initial Sponsor
+
 ## License
 
 Vuikit is open source and released under the [MIT License](LICENSE).
 
-Copyright (c) 2016 ZOOlanders.com
+Copyright (c) 2016-present, Miljan Aleksic

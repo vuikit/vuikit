@@ -20,7 +20,7 @@ module.exports = {
     banner:
       '/*!\n' +
       ' * Vuikit v' + version + ' (https://github.com/vuikit/vuikit)\n' +
-      ' * (c) ' + new Date().getFullYear() + ' ZOOlanders\n' +
+      ' * (c) ' + new Date().getFullYear() + ' Miljan Aleksic\n' +
       ' * Released under the MIT License.\n' +
       ' */'
   },

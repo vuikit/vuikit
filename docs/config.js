@@ -16,7 +16,7 @@ module.exports = {
   // banner:
   //   '/*!\n' +
   //   ' * VuikitDocs v' + version + ' (https://github.com/vuikit/vuikit-docs)\n' +
-  //   ' * (c) ' + new Date().getFullYear() + ' ZOOlanders\n' +
+  //   ' * (c) ' + new Date().getFullYear() + ' Miljan Aleksic\n' +
   //   ' * Released under the MIT License.\n' +
   //   ' */'
   // },
