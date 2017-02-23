@@ -9,7 +9,7 @@
 	(global.Vuikit = factory());
 }(this, (function () { 'use strict';
 
-var Breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
+var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkBreadcrumb',
   props: {
     location: {
@@ -44,7 +44,7 @@ var Breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var BreadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2):_c('span',[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2):_c('span',[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
   name: 'VkBreadcrumbItem',
   props: {
     label: String,
@@ -63,7 +63,7 @@ var BreadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var Button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
+var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButton',
   props: {
     value: {},
@@ -88,121 +88,13 @@ var Button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-/**
- * Utility functions
- */
-
-/**
- * Quick object check - this is primarily used to tell
- * Objects from primitive values when we know the value
- * is a JSON-compliant type.
- */
-function isObject (obj) {
-  return obj !== null && typeof obj === 'object'
-}
-
-
-
-/**
- * Check if value is plain string
- */
-
-
-/**
- * Check if value is plain integer
- */
-function isInteger (val) {
-  return Number.isInteger(val)
-}
-
-/**
- * Check if value is plain function
- */
-
-
-/**
- * Check if value is plain array
- */
-var isArray = Array.isArray;
-
-/**
- * Check if value is in array
- */
-function inArray (array, value) {
+var inArray = function (array, value) {
   return (array || []).indexOf(value) !== -1
-}
-
-/**
-* Convert an Array-like object or value to Array
-*/
-function toArray (value) {
-  if (isArray(value)) {
-    return value
-  }
-  return isObject(value)
-    ? _toArray(value)
-    : [value]
-}
-
-function _toArray (list, start) {
-  start = start || 0;
-  var i = list.length - start;
-  var ret = new Array(i);
-  while (i--) {
-    ret[i] = list[i + start];
-  }
-  return ret
-}
-
-/**
- * Returns an array range
- */
-function range (start, stop, step) {
-  if ( step === void 0 ) step = 1;
-
-  if (typeof stop === 'undefined') {
-    stop = start;
-    start = 0;
-  }
-  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + i * step; })
-}
-
-function each (obj, iterator) {
-  var i, key;
-  if (typeof obj.length === 'number') {
-    for (i = 0; i < obj.length; i++) {
-      iterator.call(obj[i], obj[i], i);
-    }
-  } else if (isObject(obj)) {
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        iterator.call(obj[key], obj[key], key);
-      }
-    }
-  }
-  return obj
-}
-
-
-
-/**
- * Warn about errors only in no production
- */
-
-var warn;
-
-{
-  var hasConsole = typeof console !== 'undefined';
-  warn = function (msg) {
-    if (hasConsole) {
-      console.error(msg);
-    }
-  };
-}
+};
 
 function filterByTag (nodes, tag) {
   var result = [];
-  each(nodes, function (node) {
+  nodes.forEach(function (node) {
     if (node.componentOptions && node.componentOptions.tag === tag) {
       result.push(node);
     }
@@ -214,7 +106,7 @@ function getProps (vm) {
   return vm.componentOptions.propsData
 }
 
-var ButtonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
+var buttonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButtonCheckbox',
   props: {
     value: {
@@ -235,7 +127,7 @@ var ButtonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;
   mounted: function mounted () {
     var this$1 = this;
 
-    each(this.$children, function (button) {
+    this.$children.forEach(function (button) {
       button.$on('click', function () { return this$1.toggle(button); });
     });
   },
@@ -243,7 +135,7 @@ var ButtonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;
     updateButtonsState: function updateButtonsState () {
       var this$1 = this;
 
-      each(filterByTag(this.$slots.default, 'vk-button'), function (component) {
+      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
         var props = getProps(component);
         props.active = inArray(this$1.value, props.value);
       });
@@ -260,7 +152,7 @@ var ButtonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var ButtonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
+var buttonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButtonRadio',
   props: {
     value: {},
@@ -278,7 +170,7 @@ var ButtonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var
   mounted: function mounted () {
     var this$1 = this;
 
-    each(this.$children, function (button) {
+    this.$children.forEach(function (button) {
       button.$on('click', function () { return this$1.$emit('change', button.value); });
     });
   },
@@ -286,7 +178,7 @@ var ButtonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var
     updateButtonsState: function updateButtonsState () {
       var this$1 = this;
 
-      each(filterByTag(this.$slots.default, 'vk-button'), function (component) {
+      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
         var props = getProps(component);
         props.active = props.value === this$1.value;
       });
@@ -2092,6 +1984,16 @@ function setMonth (dirtyDate, month) {
 
 var index$49 = setMonth;
 
+var range = function (start, stop, step) {
+  if ( step === void 0 ) step = 1;
+
+  if (typeof stop === 'undefined') {
+    stop = start;
+    start = 0;
+  }
+  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + i * step; })
+};
+
 var PickerHeader = {
   functional: true,
   render: function render (h, ref) {
@@ -2203,8 +2105,16 @@ function getMonthsRange (startDate, endDate) {
   return months
 }
 
-var rows = range(6);
-var cols = range(7);
+var isSameMonth$2 = index$6;
+var getYear$2 = index;
+var getMonth$2 = index$4;
+var getDate$2 = index$5;
+var addDays$3 = index$19;
+var startOfWeek$3 = index$14;
+var range$2 = range;
+
+var rows = range$2(6);
+var cols = range$2(7);
 
 /**
  * Returns a two-dimensional array with calendar represented dates
@@ -2212,10 +2122,10 @@ var cols = range(7);
  * @date  Date or Object
  * @plain Boolean - Whetever the dates should be set as raw numbers
  */
-var getMatrix = function (ref, plain) {
+var dateMatrix = function (ref, plain) {
   if ( ref === void 0 ) ref = {
-  year: index(Date.now()),
-  month: index$4(Date.now()),
+  year: getYear$2(Date.now()),
+  month: getMonth$2(Date.now()),
   weekStartsOn: 0
 };
   var year = ref.year;
@@ -2227,21 +2137,21 @@ var getMatrix = function (ref, plain) {
   var date = arguments[0] instanceof Date
     ? arguments[0]
     : new Date(year, month);
-  var curDate = index$14(date, { weekStartsOn: weekStartsOn });
+  var curDate = startOfWeek$3(date, { weekStartsOn: weekStartsOn });
 
   rows.forEach(function (row) {
     var week = [];
     cols.forEach(function (col) {
       // when plain return a raw date re
       if (plain) {
-        week.push(index$6(curDate, date)
-          ? index$5(curDate)
-          : -index$5(curDate)
+        week.push(isSameMonth$2(curDate, date)
+          ? getDate$2(curDate)
+          : -getDate$2(curDate)
         );
       } else {
         week.push(curDate);
       }
-      curDate = index$19(curDate, 1);
+      curDate = addDays$3(curDate, 1);
     });
 
     matrix.push(week);
@@ -2250,7 +2160,9 @@ var getMatrix = function (ref, plain) {
   return matrix
 };
 
-var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index$$1){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
+var isInteger = Number.isInteger;
+
+var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index$$1){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
             ? _vm.triggerUnpickEvent(date)
             : _vm.triggerPickEvent (date)
           );}}},[_vm._v(_vm._s(_vm.format(date, 'D')))])])}))}))])])},staticRenderFns: [],
@@ -2304,7 +2216,7 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   },
   computed: {
     matrix: function matrix () {
-      return getMatrix({
+      return dateMatrix({
         year: index(this.date),
         month: index$4(this.date),
         weekStartsOn: this.weekStartsOn
@@ -2383,15 +2295,15 @@ var Datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
 var boundEvents = [];
 
 // add event listener shorthand
-function on (el, event, handler, namespace) {
+var on = function (el, event, handler, namespace) {
   if ( namespace === void 0 ) namespace = 'def';
 
   boundEvents[namespace] = boundEvents[namespace] || [];
   boundEvents[namespace].push({ el: el, event: event, handler: handler });
   el.addEventListener(event, handler);
-}
+};
 
-function offAll (namespace) {
+var offAll = function (namespace) {
   if ( namespace === void 0 ) namespace = 'def';
 
   if (boundEvents[namespace] !== undefined) {
@@ -2403,82 +2315,23 @@ function offAll (namespace) {
       el.removeEventListener(event, handler);
     }
   }
-}
+};
 
-function hasClass (el, className) {
-  return el.classList.contains(className)
-}
+var addClass_1 = function (el, classes) {
+  return sanitizeClasses(classes).forEach(function (className) { return addClass(el, className); })
+};
 
-function addClass (el, classes) {
-  return classes.split(' ').filter(function (c) { return c; }).forEach(function (className) { return _addClass(el, className); })
-}
-
-var _addClass = function (el, className) {
+function addClass (el, className) {
   if (el.classList) {
     el.classList.add(className);
   } else {
     // IE9
     el.className += ' ' + className;
   }
-};
-
-function removeClass (el, classes) {
-  return classes.split(' ').filter(function (c) { return c; }).forEach(function (className) { return _removeClass(el, className); })
 }
 
-var _removeClass = function (el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
-  } else {
-    // IE9
-    el.className = el.className.replace(new RegExp(("^" + className + "$")), '');
-  }
-};
-
-function css (el, style) {
-  return window.getComputedStyle(el)[style]
-}
-
-var UA = window.navigator.userAgent.toLowerCase();
-var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
-
-// Transition property/event sniffing
-
-
-
-
-
-/**
- * Get the closest matching element up the DOM tree.
- * @private
- * @param  {Element} elem     Starting element
- * @param  {String}  selector Selector to match against
- * @return {Boolean|Element}  Returns null if not match found
- */
-function getClosest (elem, selector) {
-  // Element.matches() polyfill
-  var Element = window.Element;
-  if (!Element.prototype.matches) {
-    Element.prototype.matches =
-      Element.prototype.matchesSelector ||
-      Element.prototype.mozMatchesSelector ||
-      Element.prototype.msMatchesSelector ||
-      Element.prototype.oMatchesSelector ||
-      Element.prototype.webkitMatchesSelector ||
-      function (s) {
-        var matches = (this.document || this.ownerDocument).querySelectorAll(s);
-        var i = matches.length;
-        while (--i >= 0 && matches.item(i) !== this) {}
-        return i > -1
-      };
-  }
-
-  // Get closest match
-  for (; elem && elem !== document; elem = elem.parentNode) {
-    if (elem.matches(selector)) { return elem }
-  }
-
-  return null
+function sanitizeClasses (classes) {
+  return classes.split(' ').filter(function (c) { return c; })
 }
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
@@ -2494,7 +2347,7 @@ function createCommonjsModule(fn, module) {
 var popper_es5 = createCommonjsModule(function (module, exports) {
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.0.4
+ * @version 1.0.6
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -2517,7 +2370,7 @@ var popper_es5 = createCommonjsModule(function (module, exports) {
  * SOFTWARE.
  */    
 (function (global, factory) {
-  module.exports = factory();
+	module.exports = factory();
 }(commonjsGlobal, (function () { 'use strict';
 
 /**
@@ -2574,7 +2427,7 @@ function getParentNode(element) {
  * @method
  * @memberof Popper.Utils
  * @argument {Element} element
- * @returns {Element} offset parent
+ * @returns {Element} scroll parent
  */
 function getScrollParent(element) {
     // Return body, `getScroll` will take care to get the correct `scrollTop` from it
@@ -2664,8 +2517,8 @@ function isFixed(element) {
  * Helper used to get the position which will be applied to the popper
  * @method
  * @memberof Popper.Utils
- * @param config {HTMLElement} popper element
- * @returns {HTMLElement} reference element
+ * @param {HTMLElement} element - popper element
+ * @returns {String} position
  */
 function getPosition(element) {
   var container = getOffsetParent(element);
@@ -2674,6 +2527,22 @@ function getPosition(element) {
   // If the reference element is inside a fixed context, the popper will be fixed as well to allow them to scroll together
   var isParentFixed = isFixed(container);
   return isParentFixed ? 'fixed' : 'absolute';
+}
+
+/*
+ * Helper to detect borders of a given element
+ * @method
+ * @memberof Popper.Utils
+ * @param {CSSStyleDeclaration} styles - result of `getStyleComputedProperty` on the given element
+ * @param {String} axis - `x` or `y`
+ * @return {Number} borders - the borders size of the given axis
+ */
+
+function getBordersSize(styles, axis) {
+  var sideA = axis === 'x' ? 'Left' : 'Top';
+  var sideB = sideA === 'Left' ? 'Right' : 'Bottom';
+
+  return Number(styles['border' + sideA + 'Width'].split('px')[0]) + Number(styles['border' + sideB + 'Width'].split('px')[0]);
 }
 
 /**
@@ -2730,8 +2599,8 @@ function getBoundingClientRect(element) {
     // we make this check conditional for performance reasons
     if (horizScrollbar || vertScrollbar) {
         var styles = getStyleComputedProperty(element);
-        horizScrollbar -= Number(styles.borderLeftWidth.split('px')[0]) + Number(styles.borderRightWidth.split('px')[0]);
-        vertScrollbar -= Number(styles.borderTopWidth.split('px')[0]) + Number(styles.borderBottomWidth.split('px')[0]);
+        horizScrollbar -= getBordersSize(styles, 'x');
+        vertScrollbar -= getBordersSize(styles, 'y');
     }
 
     result.right -= horizScrollbar;
@@ -2755,6 +2624,28 @@ function getScroll(element) {
     }
 
     return element[upperSide];
+}
+
+/*
+ * Sum or subtract the element scroll values (left and top) from a given rect object
+ * @method
+ * @memberof Popper.Utils
+ * @param {Object} rect - Rect object you want to change
+ * @param {HTMLElement} element - The element from the function reads the scroll values
+ * @param {Boolean} subtract - set to true if you want to subtract the scroll values
+ * @return {Object} rect - The modifier rect object
+ */
+function includeScroll(rect, element) {
+  var subtract = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+  var scrollTop = getScroll(element, 'top');
+  var scrollLeft = getScroll(element, 'left');
+  var modifier = subtract ? -1 : 1;
+  rect.top += scrollTop * modifier;
+  rect.bottom += scrollTop * modifier;
+  rect.left += scrollLeft * modifier;
+  rect.right += scrollLeft * modifier;
+  return rect;
 }
 
 /**
@@ -2783,23 +2674,13 @@ function getOffsetRectRelativeToCustomParent(element, parent) {
     };
 
     if (fixed && !transformed) {
-        var scrollTop = getScroll(scrollParent, 'top');
-        var scrollLeft = getScroll(scrollParent, 'left');
-        rect.top -= scrollTop;
-        rect.bottom -= scrollTop;
-        rect.left -= scrollLeft;
-        rect.right -= scrollLeft;
+        rect = includeScroll(rect, scrollParent, true);
     }
     // When a popper doesn't have any positioned or scrollable parents, `offsetParent.contains(scrollParent)`
     // will return a "false positive". This is happening because `getOffsetParent` returns `html` node,
     // and `scrollParent` is the `body` node. Hence the additional check.
     else if (getOffsetParent(element).contains(scrollParent) && scrollParent.nodeName !== 'BODY') {
-            var _scrollTop = getScroll(parent, 'top');
-            var _scrollLeft = getScroll(parent, 'left');
-            rect.top += _scrollTop;
-            rect.bottom += _scrollTop;
-            rect.left += _scrollLeft;
-            rect.right += _scrollLeft;
+            rect = includeScroll(rect, parent);
         }
 
     // subtract borderTopWidth and borderTopWidth from final result
@@ -2947,10 +2828,11 @@ var isNative = (function (fn) {
   });
 });
 
+var isBrowser = typeof window !== 'undefined';
 var longerTimeoutBrowsers = ['Edge', 'Trident', 'Firefox'];
 var timeoutDuration = 0;
 for (var i = 0; i < longerTimeoutBrowsers.length; i += 1) {
-    if (navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
+    if (isBrowser && navigator.userAgent.indexOf(longerTimeoutBrowsers[i]) >= 0) {
         timeoutDuration = 1;
         break;
     }
@@ -2997,7 +2879,7 @@ function taskDebounce(fn) {
 // these rely on Mutation Events which only occur when an element is connected
 // to the DOM. The algorithm used in this module does not use a connected element,
 // and so we must ensure that a *native* MutationObserver is available.
-var supportsNativeMutationObserver = isNative(window.MutationObserver);
+var supportsNativeMutationObserver = isBrowser && isNative(window.MutationObserver);
 
 /**
 * Create a debounced version of a method, that's asynchronously deferred
@@ -3019,7 +2901,7 @@ var debounce = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce
  * @argument value
  * @returns index or -1
  */
-function findIndex$1(arr, check) {
+function find(arr, check) {
     // use native find if supported
     if (Array.prototype.find) {
         return arr.find(check);
@@ -3047,7 +2929,7 @@ function findIndex(arr, prop, value) {
     }
 
     // use `find` + `indexOf` if `findIndex` isn't supported
-    var match = findIndex$1(arr, function (obj) {
+    var match = find(arr, function (obj) {
         return obj[prop] === value;
     });
     return arr.indexOf(match);
@@ -3081,7 +2963,20 @@ var createClass = function () {
 
 
 
+var defineProperty = function (obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
 
+  return obj;
+};
 
 var _extends = Object.assign || function (target) {
   var arguments$1 = arguments;
@@ -3149,11 +3044,13 @@ function getOppositePlacement(placement) {
  * Get offsets to the popper
  * @method
  * @memberof Popper.Utils
- * @param {Element} popper - the popper element
- * @param {Element} reference - the reference element (the popper will be relative to this)
- * @returns {Object} An object containing the offsets which will be applied to the popper
+ * @param {Object} position - CSS position the Popper will get applied
+ * @param {HTMLElement} popper - the popper element
+ * @param {Object} referenceOffsets - the reference offsets (the popper will be relative to this)
+ * @param {String} placement - one of the valid placement options
+ * @returns {Object} popperOffsets - An object containing the offsets which will be applied to the popper
  */
-function getPopperOffsets(state, popper, referenceOffsets, placement) {
+function getPopperOffsets(position, popper, referenceOffsets, placement) {
     placement = placement.split('-')[0];
 
     // Get popper node sizes
@@ -3161,7 +3058,7 @@ function getPopperOffsets(state, popper, referenceOffsets, placement) {
 
     // Add position, width and height to our offsets object
     var popperOffsets = {
-        position: state.position,
+        position: position,
         width: popperRect.width,
         height: popperRect.height
     };
@@ -3225,7 +3122,7 @@ function getSupportedPropertyName(property) {
  * Check if the given variable is a function
  * @method
  * @memberof Popper.Utils
- * @argument {Element} element - Element to check
+ * @argument {*} functionToCheck - variable to check
  * @returns {Boolean} answer to: is a function?
  */
 function isFunction(functionToCheck) {
@@ -3240,11 +3137,11 @@ function isFunction(functionToCheck) {
  * @returns {Boolean}
  */
 function isModifierEnabled(modifiers, modifierName) {
-  return modifiers.some(function (_ref) {
-    var name = _ref.name,
-        enabled = _ref.enabled;
-    return enabled && name === modifierName;
-  });
+    return modifiers.some(function (_ref) {
+        var name = _ref.name,
+            enabled = _ref.enabled;
+        return enabled && name === modifierName;
+    });
 }
 
 /**
@@ -3252,17 +3149,20 @@ function isModifierEnabled(modifiers, modifierName) {
  * It checks if the needed modifier is listed and enabled.
  * @method
  * @memberof Popper.Utils
+ * @param {Array} modifiers - list of modifiers
+ * @param {String} requestingName - name of requesting modifier
+ * @param {String} requestedName - name of requested modifier
  * @returns {Boolean}
  */
 function isModifierRequired(modifiers, requestingName, requestedName) {
-  var requesting = findIndex$1(modifiers, function (_ref) {
-    var name = _ref.name;
-    return name === requestingName;
-  });
+    var requesting = find(modifiers, function (_ref) {
+        var name = _ref.name;
+        return name === requestingName;
+    });
 
-  return !!requesting && modifiers.some(function (modifier) {
-    return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
-  });
+    return !!requesting && modifiers.some(function (modifier) {
+        return modifier.name === requestedName && modifier.enabled && modifier.order < requesting.order;
+    });
 }
 
 /**
@@ -3393,6 +3293,7 @@ var Utils = {
     computeAutoPlacement: computeAutoPlacement,
     debounce: debounce,
     findIndex: findIndex,
+    getBordersSize: getBordersSize,
     getBoundaries: getBoundaries,
     getBoundingClientRect: getBoundingClientRect,
     getClientRect: getClientRect,
@@ -3410,6 +3311,7 @@ var Utils = {
     getSupportedPropertyName: getSupportedPropertyName,
     getTotalScroll: getTotalScroll,
     getWindowSizes: getWindowSizes,
+    includeScroll: includeScroll,
     isFixed: isFixed,
     isFunction: isFunction,
     isModifierEnabled: isModifierEnabled,
@@ -3644,14 +3546,20 @@ function flip(data, options) {
         var popperOffsets = getClientRect(data.offsets.popper);
         var refOffsets = data.offsets.reference;
 
-        // using Math.floor because the reference offsets may contain decimals we are not going to consider here
-        var overlapsRef = placement === 'left' && Math.floor(popperOffsets.right) > Math.floor(refOffsets.left) || placement === 'right' && Math.floor(popperOffsets.left) < Math.floor(refOffsets.right) || placement === 'top' && Math.floor(popperOffsets.bottom) > Math.floor(refOffsets.top) || placement === 'bottom' && Math.floor(popperOffsets.top) < Math.floor(refOffsets.bottom);
+        // using floor because the reference offsets may contain decimals we are not going to consider here
+        var floor = Math.floor;
+        var overlapsRef = placement === 'left' && floor(popperOffsets.right) > floor(refOffsets.left) || placement === 'right' && floor(popperOffsets.left) < floor(refOffsets.right) || placement === 'top' && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === 'bottom' && floor(popperOffsets.top) < floor(refOffsets.bottom);
 
-        var overflowsBoundaries = placement === 'left' && Math.floor(popperOffsets.left) < Math.floor(boundaries.left) || placement === 'right' && Math.floor(popperOffsets.right) > Math.floor(boundaries.right) || placement === 'top' && Math.floor(popperOffsets.top) < Math.floor(boundaries.top) || placement === 'bottom' && Math.floor(popperOffsets.bottom) > Math.floor(boundaries.bottom);
+        var overflowsLeft = floor(popperOffsets.left) < floor(boundaries.left);
+        var overflowsRight = floor(popperOffsets.right) > floor(boundaries.right);
+        var overflowsTop = floor(popperOffsets.top) < floor(boundaries.top);
+        var overflowsBottom = floor(popperOffsets.bottom) > floor(boundaries.bottom);
+
+        var overflowsBoundaries = placement === 'left' && overflowsLeft || placement === 'right' && overflowsRight || placement === 'top' && overflowsTop || placement === 'bottom' && overflowsBottom;
 
         // flip the variation if required
         var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
-        var flippedVariation = !!options.flipVariations && (isVertical && variation === 'start' && Math.floor(popperOffsets.left) < Math.floor(boundaries.left) || isVertical && variation === 'end' && Math.floor(popperOffsets.right) > Math.floor(boundaries.right) || !isVertical && variation === 'start' && Math.floor(popperOffsets.top) < Math.floor(boundaries.top) || !isVertical && variation === 'end' && Math.floor(popperOffsets.bottom) > Math.floor(boundaries.bottom));
+        var flippedVariation = !!options.flipVariations && (isVertical && variation === 'start' && overflowsLeft || isVertical && variation === 'end' && overflowsRight || !isVertical && variation === 'start' && overflowsTop || !isVertical && variation === 'end' && overflowsBottom);
 
         if (overlapsRef || overflowsBoundaries || flippedVariation) {
             // this boolean to detect any flip loop
@@ -3666,7 +3574,7 @@ function flip(data, options) {
             }
 
             data.placement = placement + (variation ? '-' + variation : '');
-            data.offsets.popper = getPopperOffsets(data.instance.state, data.instance.popper, data.offsets.reference, data.placement);
+            data.offsets.popper = getPopperOffsets(data.instance.state.position, data.instance.popper, data.offsets.reference, data.placement);
 
             data = runModifiers(data.instance.modifiers, data, 'flip');
         }
@@ -3689,21 +3597,16 @@ function keepTogether(data) {
     var reference = data.offsets.reference;
     var placement = data.placement.split('-')[0];
     var floor = Math.floor;
+    var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
+    var side = isVertical ? 'right' : 'bottom';
+    var opSide = isVertical ? 'left' : 'top';
+    var measurement = isVertical ? 'width' : 'height';
 
-    if (['top', 'bottom'].indexOf(placement) !== -1) {
-        if (popper.right < floor(reference.left)) {
-            data.offsets.popper.left = floor(reference.left) - popper.width;
-        }
-        if (popper.left > floor(reference.right)) {
-            data.offsets.popper.left = floor(reference.right);
-        }
-    } else {
-        if (popper.bottom < floor(reference.top)) {
-            data.offsets.popper.top = floor(reference.top) - popper.height;
-        }
-        if (popper.top > floor(reference.bottom)) {
-            data.offsets.popper.top = floor(reference.bottom);
-        }
+    if (popper[side] < floor(reference[opSide])) {
+        data.offsets.popper[opSide] = floor(reference[opSide]) - popper[measurement];
+    }
+    if (popper[opSide] > floor(reference[side])) {
+        data.offsets.popper[opSide] = floor(reference[side]);
     }
 
     return data;
@@ -3757,38 +3660,44 @@ function offset(data, options) {
 
             var measurement = useHeight ? 'height' : 'width';
 
-            // if is a percentage, we calculate the value of it using as base the
+            // if is a percentage relative to the popper (%p), we calculate the value of it using
+            // as base the sizes of the popper
+            // if is a percentage (% or %r), we calculate the value of it using as base the
             // sizes of the reference element
-            if (unit === '%' || unit === '%r') {
-                var referenceRect = getClientRect(data.offsets.reference);
-                var len = referenceRect[measurement];
+            if (unit.indexOf('%') === 0) {
+                var element = void 0;
+                switch (unit) {
+                    case '%p':
+                        element = data.offsets.popper;
+                        break;
+                    case '%':
+                    case '$r':
+                    default:
+                        element = data.offsets.reference;
+                }
+
+                var rect = getClientRect(element);
+                var len = rect[measurement];
                 return len / 100 * value;
             }
-            // if is a percentage relative to the popper, we calculate the value of it using
-            // as base the sizes of the popper
-            else if (unit === '%p') {
-                    var popperRect = getClientRect(data.offsets.popper);
-                    var _len = popperRect[measurement];
-                    return _len / 100 * value;
-                }
-                // if is a vh or vw, we calculate the size based on the viewport
-                else if (unit === 'vh' || unit === 'vw') {
-                        var size = void 0;
-                        if (unit === 'vh') {
-                            size = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-                        } else {
-                            size = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-                        }
-                        return size / 100 * value;
+            // if is a vh or vw, we calculate the size based on the viewport
+            else if (unit === 'vh' || unit === 'vw') {
+                    var size = void 0;
+                    if (unit === 'vh') {
+                        size = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+                    } else {
+                        size = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
                     }
-                    // if is an explicit pixel unit, we get rid of the unit and keep the value
-                    else if (unit === 'px') {
-                            return +value;
+                    return size / 100 * value;
+                }
+                // if is an explicit pixel unit, we get rid of the unit and keep the value
+                else if (unit === 'px') {
+                        return +value;
+                    }
+                    // if is an implicit unit, it's px, and we return just the value
+                    else {
+                            return +offset;
                         }
-                        // if is an implicit unit, it's px, and we return just the value
-                        else {
-                                return +offset;
-                            }
         });
     }
 
@@ -3837,77 +3746,31 @@ function preventOverflow(data, options) {
     var popper = getClientRect(data.offsets.popper);
 
     var check = {
-        left: function left() {
-            var left = popper.left;
-            if (popper.left < boundaries.left && !shouldOverflowBoundary(data, options, 'left')) {
-                left = Math.max(popper.left, boundaries.left);
+        primary: function primary(placement) {
+            var value = popper[placement];
+            if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
+                value = Math.max(popper[placement], boundaries[placement]);
             }
-            return { left: left };
+            return defineProperty({}, placement, value);
         },
-        right: function right() {
-            var left = popper.left;
-            if (popper.right > boundaries.right && !shouldOverflowBoundary(data, options, 'right')) {
-                left = Math.min(popper.left, boundaries.right - popper.width);
+        secondary: function secondary(placement) {
+            var mainSide = placement === 'right' ? 'left' : 'top';
+            var value = popper[mainSide];
+            if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
+                value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
             }
-            return { left: left };
-        },
-        top: function top() {
-            var top = popper.top;
-            if (popper.top < boundaries.top && !shouldOverflowBoundary(data, options, 'top')) {
-                top = Math.max(popper.top, boundaries.top);
-            }
-            return { top: top };
-        },
-        bottom: function bottom() {
-            var top = popper.top;
-            if (popper.bottom > boundaries.bottom && !shouldOverflowBoundary(data, options, 'bottom')) {
-                top = Math.min(popper.top, boundaries.bottom - popper.height);
-            }
-            return { top: top };
+            return defineProperty({}, mainSide, value);
         }
     };
 
-    order.forEach(function (direction) {
-        popper = _extends({}, popper, check[direction]());
+    order.forEach(function (placement) {
+        var side = ['left', 'top'].indexOf(placement) !== -1 ? 'primary' : 'secondary';
+        popper = _extends({}, popper, check[side](placement));
     });
 
     data.offsets.popper = popper;
 
     return data;
-}
-
-/**
- * Determine if the popper should overflow a boundary edge to stay together with the reference.
- */
-function shouldOverflowBoundary(data, options, overflowDirection) {
-    if (!options.escapeWithReference) {
-        return false;
-    }
-
-    if (data.flipped && isSameAxis(data.originalPlacement, overflowDirection)) {
-        return true;
-    }
-
-    if (!isSameAxis(data.originalPlacement, overflowDirection)) {
-        return true;
-    }
-
-    return true;
-}
-
-/**
- * Determine if two placement values are on the same axis.
- */
-function isSameAxis(a, b) {
-    // placement syntax:
-    //
-    //     ( "top" | "right" | "bottom" | "left" ) ( "-start" | "" | "-end" )
-    //     |------------- Direction -------------|
-    //
-    var aDirection = a.split('-')[0];
-    var bDirection = b.split('-')[0];
-
-    return aDirection === bDirection || aDirection === getOppositePlacement(b);
 }
 
 /**
@@ -3927,21 +3790,16 @@ function shift(data) {
     if (shiftvariation) {
         var reference = data.offsets.reference;
         var popper = getClientRect(data.offsets.popper);
+        var isVertical = ['bottom', 'top'].indexOf(basePlacement) !== -1;
+        var side = isVertical ? 'left' : 'top';
+        var measurement = isVertical ? 'width' : 'height';
 
         var shiftOffsets = {
-            y: {
-                start: { top: reference.top },
-                end: { top: reference.top + reference.height - popper.height }
-            },
-            x: {
-                start: { left: reference.left },
-                end: { left: reference.left + reference.width - popper.width }
-            }
+            start: defineProperty({}, side, reference[side]),
+            end: defineProperty({}, side, reference[side] + reference[measurement] - popper[measurement])
         };
 
-        var axis = ['bottom', 'top'].indexOf(basePlacement) !== -1 ? 'x' : 'y';
-
-        data.offsets.popper = _extends({}, popper, shiftOffsets[axis][shiftvariation]);
+        data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
     }
 
     return data;
@@ -3964,7 +3822,7 @@ function hide(data) {
     }
 
     var refRect = data.offsets.reference;
-    var bound = findIndex$1(data.instance.modifiers, function (modifier) {
+    var bound = find(data.instance.modifiers, function (modifier) {
         return modifier.name === 'preventOverflow';
     }).boundaries;
 
@@ -4036,70 +3894,70 @@ function inner(data) {
  * @return {Object} data - Each modifier must return the modified `data` object.
  */
 var modifiers = {
-    shift: {
-        order: 100,
-        enabled: true,
-        function: shift
-    },
-    offset: {
-        order: 200,
-        enabled: true,
-        function: offset,
-        // nudges popper from its origin by the given amount of pixels (can be negative)
-        offset: 0
-    },
-    preventOverflow: {
-        order: 300,
-        enabled: true,
-        function: preventOverflow,
-        // popper will try to prevent overflow following these priorities
-        //  by default, then, it could overflow on the left and on top of the boundariesElement
-        priority: ['left', 'right', 'top', 'bottom'],
-        // amount of pixel used to define a minimum distance between the boundaries and the popper
-        // this makes sure the popper has always a little padding between the edges of its container
-        padding: 5,
-        boundariesElement: 'scrollParent'
-    },
-    keepTogether: {
-        order: 400,
-        enabled: true,
-        function: keepTogether
-    },
-    arrow: {
-        order: 500,
-        enabled: true,
-        function: arrow,
-        // selector or node used as arrow
-        element: '[x-arrow]'
-    },
-    flip: {
-        order: 600,
-        enabled: true,
-        function: flip,
-        // the behavior used to change the popper's placement
-        behavior: 'flip',
-        // the popper will flip if it hits the edges of the boundariesElement - padding
-        padding: 5,
-        boundariesElement: 'viewport'
-    },
-    inner: {
-        order: 700,
-        enabled: false,
-        function: inner
-    },
-    hide: {
-        order: 800,
-        enabled: true,
-        function: hide
-    },
-    applyStyle: {
-        order: 900,
-        enabled: true,
-        // if true, it uses the CSS 3d transformation to position the popper
-        gpuAcceleration: true,
-        function: applyStyle,
-        onLoad: applyStyleOnLoad
-    }
+  shift: {
+    order: 100,
+    enabled: true,
+    function: shift
+  },
+  offset: {
+    order: 200,
+    enabled: true,
+    function: offset,
+    // nudges popper from its origin by the given amount of pixels (can be negative)
+    offset: 0
+  },
+  preventOverflow: {
+    order: 300,
+    enabled: true,
+    function: preventOverflow,
+    // popper will try to prevent overflow following these priorities
+    //  by default, then, it could overflow on the left and on top of the boundariesElement
+    priority: ['left', 'right', 'top', 'bottom'],
+    // amount of pixel used to define a minimum distance between the boundaries and the popper
+    // this makes sure the popper has always a little padding between the edges of its container
+    padding: 5,
+    boundariesElement: 'scrollParent'
+  },
+  keepTogether: {
+    order: 400,
+    enabled: true,
+    function: keepTogether
+  },
+  arrow: {
+    order: 500,
+    enabled: true,
+    function: arrow,
+    // selector or node used as arrow
+    element: '[x-arrow]'
+  },
+  flip: {
+    order: 600,
+    enabled: true,
+    function: flip,
+    // the behavior used to change the popper's placement
+    behavior: 'flip',
+    // the popper will flip if it hits the edges of the boundariesElement - padding
+    padding: 5,
+    boundariesElement: 'viewport'
+  },
+  inner: {
+    order: 700,
+    enabled: false,
+    function: inner
+  },
+  hide: {
+    order: 800,
+    enabled: true,
+    function: hide
+  },
+  applyStyle: {
+    order: 900,
+    enabled: true,
+    // if true, it uses the CSS 3d transformation to position the popper
+    gpuAcceleration: true,
+    function: applyStyle,
+    onLoad: applyStyleOnLoad
+  }
 };
 
 /**
@@ -4224,7 +4082,7 @@ var DEFAULTS = {
  *      of the defined boundaries (except if `keepTogether` is enabled)
  *
  * @param {Object} options.modifiers.inner - Inner modifier configuration
- * @param {Number} options.modifiers.innner.enabled=false
+ * @param {Number} options.modifiers.inner.enabled=false
  *      Set to `true` to make the popper flow toward the inner of the reference element.
  *
  * @param {Number} options.modifiers.flip.padding=5
@@ -4386,7 +4244,7 @@ var Popper = function () {
 
         /**
          * Schedule an update, it will run on the next UI update available
-         * @method
+         * @method scheduleUpdate
          * @memberof Popper
          */
 
@@ -4503,6 +4361,10 @@ var PopperMixin = {
       type: Boolean,
       default: true
     },
+    offset: {
+      type: String,
+      default: '0 5px'
+    },
     modifiers: {
       type: Object,
       default: function () { return ({}); }
@@ -4511,7 +4373,7 @@ var PopperMixin = {
   computed: {
     targetElement: function targetElement () {
       // defaults to originalParentEl which remains
-      // even when the dom changes it ubication
+      // even when the dropdown dom is removed
       return this.target || this.$options._parentElm
     },
     placement: function placement () {
@@ -4533,7 +4395,6 @@ var PopperMixin = {
   beforeUpdate: function beforeUpdate () {
     // update popper
     this.$popper.options.placement = this.placement;
-    // console.log(this.$popper)
     this.$popper.update();
   },
   mounted: function mounted () {
@@ -4551,6 +4412,9 @@ var PopperMixin = {
         modifiers: Object.assign({}, this.modifiers,
           {flip: { enabled: this.flip },
           applyStyle: { enabled: false },
+          offset: {
+            offset: this.offset
+          },
           applyCustomStyles: {
             enabled: true,
             function: function (data) {
@@ -4566,10 +4430,11 @@ var PopperMixin = {
 
 var onClickOut;
 var onMouseenter;
-var onMouseleave;
-var onTargetClick;
+var onTargetMouseenter;
+var onTargetMouseleave;
+var onClickTarget;
 
-var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass,"leave-class":"uk-open"},on:{"after-enter":_vm.afterEnter}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",staticStyle:{"display":"block"}},[_vm._t("default")],2)])},staticRenderFns: [],
+var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass,"leave-class":"uk-open"},on:{"after-enter":_vm.afterEnter}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",staticStyle:{"display":"block"}},[_vm._t("default")],2)])},staticRenderFns: [],
   name: 'VkDropdown',
   mixins: [PopperMixin],
   props: {
@@ -4586,13 +4451,14 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   mounted: function mounted () {
     var this$1 = this;
 
+    var leaveTimeout;
     // prepare delay helper function
     var delayFn = function (time, cb) {
       setTimeout(function (_) { return cb(); }, time);
     };
 
-    onTargetClick = function (e) {
-      this$1.$emit('targetClick', e);
+    onClickTarget = function (e) {
+      this$1.$emit('click-target', e);
     };
 
     onMouseenter = function (e) {
@@ -4600,16 +4466,27 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       if (this$1.targetElement.contains(e.fromElement)) {
         return
       }
+      clearTimeout(leaveTimeout);
       this$1.$emit('mouseenter', { delay: delayFn }, e);
     };
 
-    onMouseleave = function (e) {
+    onTargetMouseenter = function (e) {
+      // ignore childs triggers
+      if (this$1.targetElement.contains(e.fromElement)) {
+        return
+      }
+      clearTimeout(leaveTimeout);
+      this$1.$emit('mouseenter', { delay: delayFn }, e);
+    };
+
+    onTargetMouseleave = function (e) {
       // ignore childs triggers
       if (e.relatedTarget === this$1.targetElement || e.relatedTarget === this$1.$el ||
         this$1.targetElement.contains(e.relatedTarget) || this$1.$el.contains(e.relatedTarget)
       ) {
         return
       }
+      var delayFn = function (time, cb) { leaveTimeout = setTimeout(function (_) { return cb(); }, time); };
       this$1.$emit('mouseleave', { delay: delayFn }, e);
     };
 
@@ -4621,17 +4498,18 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
         }
         // click in/out dropdown
         if (e.target === this$1.$el || this$1.$el.contains(e.target)) {
-          this$1.$emit('clickIn', e);
+          this$1.$emit('click-in', e);
         } else {
-          this$1.$emit('clickOut', e);
+          this$1.$emit('click-out', e);
         }
       }
     };
 
-    on(this.$el, 'mouseleave', onMouseleave, this._uid);
-    on(this.targetElement, 'mouseenter', onMouseenter, this._uid);
-    on(this.targetElement, 'mouseleave', onMouseleave, this._uid);
-    on(this.targetElement, 'click', onTargetClick, this._uid);
+    on(this.$el, 'mouseleave', onTargetMouseleave, this._uid);
+    on(this.$el, 'mouseenter', onMouseenter, this._uid);
+    on(this.targetElement, 'mouseenter', onTargetMouseenter, this._uid);
+    on(this.targetElement, 'mouseleave', onTargetMouseleave, this._uid);
+    on(this.targetElement, 'click', onClickTarget, this._uid);
     on(document, 'click', onClickOut, this._uid);
     if ('ontouchstart' in document.documentElement) {
       on(document, 'touchstart', onClickOut, this._uid);
@@ -4639,7 +4517,7 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   },
   methods: {
     afterEnter: function afterEnter () {
-      addClass(this.$el, 'uk-open');
+      addClass_1(this.$el, 'uk-open');
     },
     remove: function remove () {
       if (this.$el.parentNode) {
@@ -4653,6 +4531,31 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
+var css = function (el, style) {
+  return window.getComputedStyle(el)[style]
+};
+
+var hasClass = function (el, className) {
+  return el.classList.contains(className)
+};
+
+var removeClass_1 = function (el, classes) {
+  sanitizeClasses$1(classes).forEach(function (className) { return removeClass(el, className); });
+};
+
+function removeClass (el, className) {
+  if (el.classList) {
+    el.classList.remove(className);
+  } else {
+    // IE9
+    el.className = el.className.replace(new RegExp(("^" + className + "$")), '');
+  }
+}
+
+function sanitizeClasses$1 (classes) {
+  return classes.split(' ').filter(function (c) { return c; })
+}
+
 var doc$1 = document.documentElement;
 var body = document.body;
 
@@ -4661,14 +4564,14 @@ var activeCount;
 
 on(doc$1, 'click', function (e) {
   if (active && !active.$refs.panel.contains(e.target)) {
-    active.$emit('clickOut', e);
+    active.$emit('click-out', e);
   }
 });
 
 on(doc$1, 'keyup', function (e) {
   if (e.keyCode === 27 && active) {
     e.preventDefault();
-    active.$emit('keyEsc', e);
+    active.$emit('key-esc', e);
   }
 });
 
@@ -4740,7 +4643,7 @@ var getScrollbarWidth = function () {
 
 var doc = document.documentElement;
 
-var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
+var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
   name: 'VkModal',
   mixins: [ModalMixin],
   components: {
@@ -4800,10 +4703,10 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
     // place close-top outside the dialog
     if (this.$refs.close && hasClass(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass(this.$refs.close, 'vk-modal-close-top');
+      removeClass_1(this.$refs.close, 'vk-modal-close-top');
       var bar = document.createElement('div');
-      addClass(bar, 'uk-modal-bar');
-      addClass(bar, 'uk-position-top');
+      addClass_1(bar, 'uk-modal-bar');
+      addClass_1(bar, 'uk-position-top');
       bar.appendChild(this.$refs.close);
       this.$el.appendChild(bar);
     }
@@ -4811,22 +4714,22 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     // place caption bottom outside the dialog
     var caption = this.$el.querySelector('.vk-modal-caption-bottom');
     if (caption) {
-      addClass(caption, 'uk-modal-bar');
-      addClass(caption, 'uk-position-bottom');
-      removeClass(caption, 'vk-modal-caption-bottom');
+      addClass_1(caption, 'uk-modal-bar');
+      addClass_1(caption, 'uk-position-bottom');
+      removeClass_1(caption, 'vk-modal-caption-bottom');
       this.$el.appendChild(caption);
     }
 
     // update close style if full
     if (this.full) {
-      removeClass(this.$refs.close, 'uk-modal-close-default');
-      addClass(this.$refs.close, 'uk-modal-close-full');
+      removeClass_1(this.$refs.close, 'uk-modal-close-default');
+      addClass_1(this.$refs.close, 'uk-modal-close-full');
     }
 
     // init events
     var clickHandler = function (e) {
       if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('clickIn', e);
+        this$1.$emit('click-in', e);
       }
     };
 
@@ -4841,24 +4744,24 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
       this._beforeEnter();
       this.$nextTick(function () {
-        addClass(doc, 'uk-modal-page');
+        addClass_1(doc, 'uk-modal-page');
         this$1.resize();
       });
     },
     afterEnter: function afterEnter () {
       this._afterEnter();
-      addClass(this.$el, 'uk-open');
+      addClass_1(this.$el, 'uk-open');
     },
     afterLeave: function afterLeave () {
       this._afterLeave();
       // if no active modals left
       if (!this.activeCount) {
-        removeClass(doc, 'uk-modal-page');
+        removeClass_1(doc, 'uk-modal-page');
       }
     },
     resize: function resize () {
       if (css(this.$el, 'display') === 'block' && this.center) {
-        removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+        removeClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
 
         var dialog = this.$refs.panel;
         var dh = dialog.offsetHeight;
@@ -4867,9 +4770,9 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
         var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
 
         if (window.innerHeight > (dh + pad)) {
-          addClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          addClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         } else {
-          removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          removeClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         }
         this.$el.style.display = hasClass(this.$el, 'uk-flex') ? '' : 'block';
       }
@@ -4877,7 +4780,7 @@ var Modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   }
 };
 
-var ModalDialog = {
+var modalDialog = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -4889,7 +4792,7 @@ var ModalDialog = {
   }
 };
 
-var ModalHeader = {
+var modalHeader = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -4901,7 +4804,7 @@ var ModalHeader = {
   }
 };
 
-var ModalBody = {
+var modalBody = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -4913,7 +4816,7 @@ var ModalBody = {
   }
 };
 
-var ModalFooter = {
+var modalFooter = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -4925,7 +4828,7 @@ var ModalFooter = {
   }
 };
 
-var ModalCaption = {
+var modalCaption = {
   functional: true,
   props: ['bottom'],
   render: function render (h, ref) {
@@ -4945,7 +4848,7 @@ var ModalCaption = {
   }
 };
 
-var ModalClose = {
+var modalClose = {
   functional: true,
   props: ['outside', 'full', 'top'],
   render: function render (h, ref) {
@@ -4974,7 +4877,7 @@ var ModalClose = {
   }
 };
 
-var Notification = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
+var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkNotification',
   props: {
     position: {
@@ -4993,7 +4896,7 @@ var Notification = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   }
 };
 
-var NotificationMessage = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
+var notificationMessage = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
 var obj;},staticRenderFns: [],
   name: 'VkNotificationMessage',
   props: {
@@ -5028,7 +4931,7 @@ var obj;},staticRenderFns: [],
 
 var doc$2 = document.documentElement;
 
-var Offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-active-class":"uk-offcanvas-bar-animation"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeLeave,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
+var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-active-class":"uk-offcanvas-bar-animation"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeLeave,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
   name: 'VkOffcanvas',
   mixins: [ModalMixin],
   props: {
@@ -5070,31 +4973,27 @@ var Offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   methods: {
     beforeEnter: function beforeEnter () {
       this._beforeEnter();
-      addClass(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageAnimation) + " " + (this.clsPageOverlay)));
-      addClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      addClass(this.$el, this.clsOverlay);
+      addClass_1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageAnimation) + " " + (this.clsPageOverlay)));
+      addClass_1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
+      addClass_1(this.$el, this.clsOverlay);
       this.$el.style.display = 'block';
       this.$el.offsetHeight; // force redraw
     },
     afterEnter: function afterEnter () {
       this._afterEnter();
-      addClass(this.$el, 'uk-open');
+      addClass_1(this.$el, 'uk-open');
       this._afterEnter();
     },
     beforeLeave: function beforeLeave () {
-      removeClass(doc$2, this.clsPageAnimation);
+      removeClass_1(doc$2, this.clsPageAnimation);
       doc$2.style['margin-left'] = '';
-      removeClass(this.$el, 'uk-open');
-
-      // if (this.mode === 'none' || this.getActive() && this.getActive() !== this) {
-      //     this.panel.trigger(transitionend);
-      // }
+      removeClass_1(this.$el, 'uk-open');
     },
     afterLeave: function afterLeave () {
       this._afterLeave();
-      removeClass(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-      removeClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass(this.$el, ("" + (this.clsOverlay)));
+      removeClass_1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+      removeClass_1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
+      removeClass_1(this.$el, ("" + (this.clsOverlay)));
       this.$el.style.display = '';
       this.$el.offsetHeight; // force redraw
     }
@@ -5104,7 +5003,7 @@ var Offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
 
     var clickHandler = function (e) {
       if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('clickIn', e);
+        this$1.$emit('click-in', e);
       }
     };
 
@@ -5115,36 +5014,46 @@ var Offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   }
 };
 
+var isArray = Array.isArray;
+
+var getRange = range;
+var def = { total: 200, page: 1, perPage: 10, range: 3 };
+
 /**
  * Returns an array with represented ranges pages
  */
 var paginationMatrix = function (ref) {
-  var active = ref.active; if ( active === void 0 ) active = 1;
-  var total = ref.total; if ( total === void 0 ) total = 200;
-  var limit = ref.limit; if ( limit === void 0 ) limit = 10;
-  var range$$1 = ref.range; if ( range$$1 === void 0 ) range$$1 = 3;
+  if ( ref === void 0 ) ref = def;
+  var total = ref.total; if ( total === void 0 ) total = def.total;
+  var page = ref.page; if ( page === void 0 ) page = def.page;
+  var perPage = ref.perPage; if ( perPage === void 0 ) perPage = def.perPage;
+  var range$$1 = ref.range; if ( range$$1 === void 0 ) range$$1 = def.range;
 
   var matrix = [];
-  var totalPages = Math.ceil(total / limit);
+  var totalPages = Math.ceil(total / perPage);
+  // return early if no more than 1 page
+  if (totalPages < 2) {
+    return [1]
+  }
   // get main pages
-  var mainPages = getMainPages({ active: active, range: range$$1, totalPages: totalPages });
+  var mainPages = getMainPages({ page: page, range: range$$1, totalPages: totalPages });
   var first = mainPages[0];
   var last = mainPages[mainPages.length - 1];
   // get pre/post pages
-  var prePages = range(1, (first <= 3) ? first : 2);
-  var postPages = range(
+  var prePages = getRange(1, (first <= 3) ? first : 2);
+  var postPages = getRange(
     last >= (totalPages - 2) ? last + 1 : totalPages,
     totalPages + 1
   );
 
-  var nextPage = 1;[].concat(prePages, mainPages, postPages).forEach(function (page) {
-    if (page === nextPage) {
-      matrix.push(page);
+  var nextPage = 1;[].concat(prePages, mainPages, postPages).forEach(function (p) {
+    if (p === nextPage) {
+      matrix.push(p);
       nextPage++;
     } else {
       matrix.push('...');
-      matrix.push(page);
-      nextPage = page + 1;
+      matrix.push(p);
+      nextPage = p + 1;
     }
   });
 
@@ -5152,12 +5061,12 @@ var paginationMatrix = function (ref) {
 };
 
 var getMainPages = function (ref) {
-  var active = ref.active;
+  var page = ref.page;
   var range$$1 = ref.range;
   var totalPages = ref.totalPages;
 
-  var start = active - range$$1;
-  var end = active + range$$1;
+  var start = page - range$$1;
+  var end = page + range$$1;
   if (end > totalPages) {
     end = totalPages;
     start = totalPages - range$$1 * 2;
@@ -5167,114 +5076,32 @@ var getMainPages = function (ref) {
     start = 1;
     end = Math.min(range$$1 * 2 + 1, totalPages);
   }
-  return range(start, end + 1)
-};
-
-var Pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.alignment === 'center', 'uk-flex-right': _vm.alignment === 'right' }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkPagination',
-  props: {
-    // currently active page
-    active: {
-      type: Number
-    },
-    // total amount of items
-    total: {
-      type: Number
-    },
-    // items displayed on each page
-    limit: {
-      type: Number
-    },
-    alignment: {
-      type: String,
-      default: 'left' // left|center|right|expand
-    }
-  },
-  computed: {
-    activePage: {
-      get: function get () {
-        var activeEl = this.$el.querySelector('li.uk-active');
-        return this.active || (activeEl && activeEl.innerText) && parseInt(activeEl.innerText.trim())
-      },
-      cache: false
-    },
-    prevPage: {
-      get: function get () {
-        return this.activePage - 1
-      },
-      cache: false
-    },
-    nextPage: {
-      get: function get () {
-        return this.activePage + 1
-      },
-      cache: false
-    },
-    pages: function pages () {
-      var activeEl = this.$el.querySelector('li.uk-active');
-      if (activeEl) {
-        return toArray(this.$el.querySelectorAll('a'))
-          .filter(function (el) { return !el.querySelector('span') && el.innerText; })
-          .map(function (el) { return parseInt(el.innerText.trim()); })
-      } else {
-        return paginationMatrix({ active: this.active, total: this.total, limit: this.limit })
-      }
-    },
-    lastPage: function lastPage () {
-      return this.pages[this.pages.length - 1]
-    }
-  },
-  updated: function updated () {
-    this.updatePrevNextState();
-  },
-  mounted: function mounted () {
-    this.updatePrevNextState();
-    // warn about missing props if 'vk-pagination-pages' is missing
-    var activeEl = this.$el.querySelector('li.uk-active');
-    if (warn && !activeEl && (!this.limit || !this.active || !this.total)) {
-      warn("[VkPagination warn]: the 'limit', 'active' and 'total' props must be set if 'vk-pagination-pages' is omited");
-    }
-  },
-  methods: {
-    /**
-     * As the parent of functional components stated through a slot
-     * is the context and not the usual parent, we don't have the expected
-     * parent/child relation. Thus, forced to do this kind of workarounds
-     */
-    updatePrevNextState: function updatePrevNextState () {
-      var prev = toArray(this.$el.querySelectorAll('span[uk-pagination-previous]'));
-      var next = toArray(this.$el.querySelectorAll('span[uk-pagination-next]'));
-
-      // add/remove disabled classes
-      this.prevPage < 1
-        ? prev.forEach(function (el) { return addClass(el.parentNode.parentNode, 'uk-disabled'); })
-        : prev.forEach(function (el) { return removeClass(el.parentNode.parentNode, 'uk-disabled'); });
-      this.nextPage > this.lastPage
-        ? next.forEach(function (el) { return addClass(el.parentNode.parentNode, 'uk-disabled'); })
-        : next.forEach(function (el) { return removeClass(el.parentNode.parentNode, 'uk-disabled'); });
-
-      // add expand classes
-      if (this.alignment === 'expand') {
-        var el = getClosest(next[0], 'li');
-        addClass(el, 'uk-margin-auto-left');
-      }
-    }
-  }
+  return getRange(start, end + 1)
 };
 
 var PaginationFirst = {
   functional: true,
-  props: ['label'],
+  props: ['label', 'expand'],
   render: function render (h, ref) {
     var props = ref.props;
+    var parent = ref.parent;
 
     var label = props.label;
-    return h('li', [
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'first')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.prevPage < 1,
+        'uk-margin-auto-right': expand !== undefined
+      }
+    }, [
       h('a', {
-        on: { click: function (e) {
-          var pagVM = getClosest(e.target, 'ul.uk-pagination').__vue__;
-          pagVM.$emit('change', 1);
-        }}
+        on: { click: function (e) { return parent.$emit('change', 1); } }
       }, [
         h('span', {
           staticClass: 'uk-pagination-prev uk-icon',
@@ -5289,17 +5116,27 @@ var PaginationFirst = {
 
 var PaginationLast = {
   functional: true,
-  props: ['label'],
+  props: ['label', 'expand'],
   render: function render (h, ref) {
     var props = ref.props;
+    var parent = ref.parent;
 
     var label = props.label;
-    return h('li', [
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'last')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.nextPage > parent.lastPage,
+        'uk-margin-auto-left': expand !== undefined
+      }
+    }, [
       h('a', {
-        on: { click: function (e) {
-          var pagVM = getClosest(e.target, 'ul.uk-pagination').__vue__;
-          pagVM.$emit('change', pagVM.lastPage);
-        }}
+        on: { click: function (e) { return parent.$emit('change', parent.lastPage); } }
       }, [
         label && label,
         h('span', {
@@ -5314,17 +5151,27 @@ var PaginationLast = {
 
 var PaginationPrev = {
   functional: true,
-  props: ['label'],
+  props: ['label', 'expand'],
   render: function render (h, ref) {
     var props = ref.props;
+    var parent = ref.parent;
 
     var label = props.label;
-    return h('li', [
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'prev')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.prevPage < 1,
+        'uk-margin-auto-right': expand !== undefined
+      }
+    }, [
       h('a', {
-        on: { click: function (e) {
-          var pagVM = getClosest(e.target, 'ul.uk-pagination').__vue__;
-          pagVM.$emit('change', pagVM.prevPage);
-        }}
+        on: { click: function (e) { return parent.$emit('change', parent.prevPage); } }
       }, [
         h('span', {
           staticClass: 'uk-pagination-prev uk-icon',
@@ -5339,17 +5186,27 @@ var PaginationPrev = {
 
 var PaginationNext = {
   functional: true,
-  props: ['label'],
+  props: ['label', 'expand'],
   render: function render (h, ref) {
     var props = ref.props;
+    var parent = ref.parent;
 
     var label = props.label;
-    return h('li', [
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'next')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.nextPage > parent.lastPage,
+        'uk-margin-auto-left': expand !== undefined
+      }
+    }, [
       h('a', {
-        on: { click: function (e) {
-          var pagVM = getClosest(e.target, 'ul.uk-pagination').__vue__;
-          pagVM.$emit('change', pagVM.nextPage);
-        }}
+        on: { click: function (e) { return parent.$emit('change', parent.nextPage); } }
       }, [
         label && label,
         h('span', {
@@ -5364,61 +5221,108 @@ var PaginationNext = {
 
 var PaginationPages = {
   functional: true,
-  props: {
-    // currently active page
-    active: {
-      type: Number,
-      required: true
-    },
-    // total amount of items
-    total: {
-      type: Number,
-      required: true
-    },
-    // items displayed on each page
-    limit: {
-      type: Number,
-      required: true
-    },
-    // amount of visible pages around the active one
-    range: {
-      type: Number,
-      default: 3
-    }
-  },
   render: function render (h, ref) {
-    var props = ref.props;
+    var parent = ref.parent;
 
-    var active = props.active;
-    var total = props.total;
-    var limit = props.limit;
-    var range$$1 = props.range;
-    var pages = paginationMatrix({ active: active, total: total, limit: limit, range: range$$1 });
-    return pages.map(function (page) {
-      var isPage = isInteger(page);
-      var isActive = isPage && active === page;
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', 'pages')
+    }
+
+    var page = parent.page;
+    return parent.pages.map(function (p) {
+      var isPage = isInteger(p);
+      var isActive = isPage && page === p;
       return h('li', { class: { 'uk-active': isActive } }, [
         isPage
           ? isActive
-            ? h('span', page)
+            ? h('span', p)
             : h('a', {
               on: { click: function (e) {
-                var pagination = getClosest(e.target, 'ul.uk-pagination');
-                // VkPagination could be the root of the context,
-                // in such case the real vm is the first chidlren
-                var pagVM = pagination.__vue__.$children.length
-                  ? pagination.__vue__.$children[0]
-                  : pagination.__vue__;
-                pagVM.$emit('change', page);
+                parent.$emit('change', p);
               }}
-            }, page)
+            }, p)
           : h('span', '...')
       ])
     })
   }
 };
 
-var Subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
+var partsMap = {
+  first: PaginationFirst,
+  last: PaginationLast,
+  prev: PaginationPrev,
+  next: PaginationNext,
+  pages: PaginationPages
+};
+
+var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' }},[_c('pag-parts')],1)},staticRenderFns: [],
+  name: 'VkPagination',
+  props: {
+    align: {
+      type: String,
+      default: 'center' // left|center|right
+    },
+    // the active page
+    page: {
+      type: Number
+    },
+    // items displayed on each page
+    perPage: {
+      type: Number
+    },
+    // amount of visible pages around the active one
+    range: {
+      type: Number,
+      default: 3
+    },
+    // total amount of items
+    total: {
+      type: Number
+    }
+  },
+  computed: {
+    prevPage: function prevPage () {
+      return this.page - 1
+    },
+    nextPage: function nextPage () {
+      return this.page + 1
+    },
+    pages: function pages () {
+      return paginationMatrix({ total: this.total, page: this.page, perPage: this.perPage })
+    },
+    lastPage: function lastPage () {
+      return this.pages[this.pages.length - 1]
+    }
+  },
+  components: {
+    'pag-parts': {
+      functional: true,
+      render: function render (h, ref) {
+        var parent = ref.parent;
+
+        var lis = [];
+        parent.$parts.forEach(function (part) {
+          part = parent.$createElement(part.comp, { props: part.props });
+          lis = isArray(part)
+            ? lis.concat( part)
+            : lis.concat( [part]);
+        });
+        return lis
+      }
+    }
+  },
+  created: function created () {
+    this.$parts = this.$slots.default
+      .filter(function (slot) { return slot.children; })
+      .map(function (slot) { return ({
+        comp: partsMap[slot.children[0].text],
+        props: (slot.data && slot.data.attrs) || {}
+      }); });
+  }
+};
+
+var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkSubnav',
   props: {
     activeItem: [String, Number],
@@ -5464,7 +5368,7 @@ var Subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var SubnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
   name: 'VkSubnavItem',
   props: {
     label: String,
@@ -5483,37 +5387,15 @@ var SubnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var Table = {
-  name: 'VkTable',
-  render: function render (h) {
-    var this$1 = this;
+/* https://github.com/sindresorhus/is-fn */
+var toString$1 = Object.prototype.toString;
 
-    return h('table', { staticClass: 'uk-table' }, [
-      this.$slots.default,
-      h('thead', [
-        h('tr', [
-          this._l(this.columns, function (col) { return col._headerRender && col._headerRender.call(col._renderProxy, h); }
-          )
-        ])
-      ]),
-      h('tbody', [
-        this._l(this.data, function (row, rowIndex) { return h('tr', {
-            class: this$1.getRowClass(row, rowIndex),
-            on: {
-              click: function (e) {
-                if (e.target.tagName === 'TR' || e.target.tagName === 'TD') {
-                  this$1.$emit('clickRow', row);
-                }
-              }
-            }
-          }, [
-            this$1._l(this$1.columns, function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, h, { row: row, rowIndex: rowIndex }); }
-            )
-          ]); }
-        )
-      ])
-    ])
-  },
+var isFunction = function (x) {
+  return toString$1.call(x) === '[object Function]'
+};
+
+var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table"},[_vm._t("default"),_c('thead',[_c('tr',[_c('column-headers')],1)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},[_c('row-cells',{attrs:{"row":row}})],1)}))],2)},staticRenderFns: [],
+  name: 'VkTable',
   props: {
     data: {
       type: Array,
@@ -5528,53 +5410,115 @@ var Table = {
   data: function () { return ({
     columns: []
   }); },
-  created: function created () {
-    this.columns = this.$children;
+  components: {
+    ColumnHeaders: {
+      functional: true,
+      render: function render (h, ref) {
+        var parent = ref.parent;
+
+        return parent.columns.map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy, h); }
+        )
+      }
+    },
+    RowCells: {
+      functional: true,
+      props: ['row'],
+      render: function render (h, ref) {
+        var parent = ref.parent;
+        var props = ref.props;
+
+        var row = props.row;
+        return parent.columns.map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, h, { row: row }); }
+        )
+      }
+    }
   },
   methods: {
     getRowClass: function getRowClass (row, index) {
-      return (typeof this.rowClass === 'function')
+      return (isFunction(this.rowClass))
         ? this.rowClass(row, index)
         : this.rowClass
+    },
+    emitClickRow: function emitClickRow (e, row) {
+      var noChildWasClicked = e.target.tagName === 'TR' || e.target.tagName === 'TD';
+      if (noChildWasClicked) {
+        this.$emit('click-row', row);
+      }
     }
   }
 };
 
-var Column = {
+/* https://github.com/sindresorhus/is-obj */
+var isObject$1 = function (x) {
+  var type = typeof x;
+  return x !== null && (type === 'object' || type === 'function')
+};
+
+var isString$1 = function (val) {
+  return typeof val === 'string'
+};
+
+var isObject = isObject$1;
+var isString = isString$1;
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ */
+var get = function (object, path, defaultValue) {
+  var result = isObject(object) && isString(path)
+    ? baseGet(object, path)
+    : undefined;
+  return result === undefined
+    ? defaultValue
+    : result
+};
+
+function baseGet (object, path) {
+  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, object)
+}
+
+var Column$1 = {
   render: function render (h) {
     return h('col')
   },
   created: function created () {
     this._headerRender = this.$options._parentVnode.componentOptions.Ctor.options.headerRender;
     this._cellRender = this.$options._parentVnode.componentOptions.Ctor.options.cellRender;
+    this.$parent.columns.push(this);
   },
   headerRender: function headerRender (h) {
-    var scopedSlot = this.$scopedSlots && this.$scopedSlots.header;
-    return h('th', {
-      staticClass: this.headerClass
-    }, [ scopedSlot
-      ? scopedSlot()
-      : this.header
-    ])
+    var defaultContent = this.header;
+    var slot = this.processSlot('header', {}, defaultContent);
+    return h('th', { staticClass: this.headerClass }, [ slot ])
   },
   cellRender: function cellRender (h, ref) {
     var row = ref.row;
-    var rowIndex = ref.rowIndex;
 
-    var cell = this.cell;
-    var scopedSlot = this.$scopedSlots && this.$scopedSlots.cell;
-    return h('td', {
-      staticClass: this.cellClass
-    }, [ scopedSlot
-      ? scopedSlot({ row: row, rowIndex: rowIndex })
-      : row[cell]
-    ])
+    var defaultContent = get(row, this.cell, '');
+    var slot = this.processSlot('cell', { row: row }, defaultContent);
+    return h('td', { staticClass: this.cellClass }, [ slot ])
+  },
+  methods: {
+    processSlot: function processSlot (name, props, fallback) {
+      var slot = this._t(name, fallback, props);
+      return isFunction(slot)
+        ? this.$createElement({ functional: true, render: slot })
+        : slot
+    },
+    joinClasses: function joinClasses () {
+      var classes = [], len = arguments.length;
+      while ( len-- ) classes[ len ] = arguments[ len ];
+
+      var isNotEmpty = function (className) { return className; };
+      return classes.filter(isNotEmpty).join(' ')
+    }
   }
 };
 
-var TableColumn = {
+var Column = {
   name: 'VkTableColumn',
-  extends: Column,
+  extends: Column$1,
   props: {
     // the header label
     header: {
@@ -5620,124 +5564,73 @@ var Checkbox = {
   }
 };
 
-var TableColumnSelect = {
+var ColumnSelect = {
   name: 'VkTableColumnSelect',
-  extends: Column,
+  extends: Column$1,
   props: {
-    trackBy: {
-      type: String
-    },
-    selection: {
-      type: Object,
-      default: function () { return ({}); }
-    },
     headerClass: {
       type: String
     },
     cellClass: {
       type: String
-    }
-  },
-  created: function created () {
-    var this$1 = this;
-
-    this.$parent.$on('clickRow', function (row) {
-      this$1.$emit('selectRow', this$1.getRowId(row), row);
-    });
-  },
-  methods: {
-    getRowId: function getRowId (row) {
-      if (warn && this.trackBy && row[this.trackBy] === undefined) {
-        warn("[VkTable warn]: The selection of the rows could fail as some\n          data rows are missing the trackBy field.");
-      }
-      return this.trackBy
-        ? row[this.trackBy]
-        : this.$parent.data.indexOf(row)
     },
-    isAllSelected: function isAllSelected () {
-      var this$1 = this;
-
-      return this.$parent.data.length && this.$parent.data.every(function (row) { return this$1.isSelected(row); })
-    },
-    isSelected: function isSelected (row) {
-      return this.selection[this.getRowId(row)]
+    isSelected: {
+      type: Function,
+      default: function () { return false; }
     }
   },
   headerRender: function headerRender (h) {
     var this$1 = this;
 
-    var _parent = this.$parent;
-    var scopedSlot = this.$scopedSlots && this.$scopedSlots.header;
-    return h('th', {
-      staticClass: this.headerClass,
-      class: 'uk-form uk-text-center uk-table-shrink'
-    }, [ scopedSlot
-      ? scopedSlot()
-      : h(Checkbox, {
-        props: {
-          checked: this.isAllSelected()
-        },
-        on: {
-          click: function (e) {
-            this$1.$emit('selectAll', _parent.data.map(function (row) { return this$1.getRowId(row); }), _parent.data);
-          }
-        }
-      })
-    ])
+    var rows = this.$parent.data;
+    var selected = rows.filter(this.isSelected);
+    var isAllSelected = selected.length && selected.length === rows.length;
+    var defaultContent = h(Checkbox, {
+      props: { checked: isAllSelected },
+      on: { click: function (e) { return this$1.$emit('select-all'); } }
+    });
+    var slot = this.processSlot('header', {}, defaultContent);
+    var staticClass = this.joinClasses(
+      'uk-form uk-text-center uk-table-shrink', this.headerClass
+    );
+    return h('th', { staticClass: staticClass }, [ slot ])
   },
   cellRender: function cellRender (h, ref) {
     var this$1 = this;
     var row = ref.row;
 
-    var scopedSlot = this.$scopedSlots && this.$scopedSlots.cell;
-    return h('td', {
-      staticClass: this.cellClass,
-      class: 'uk-form uk-text-center vk-table-width-minimum'
-    }, [ scopedSlot
-      ? scopedSlot({ rowId: this.getRowId(row), row: row })
-      : h(Checkbox, {
-        props: {
-          checked: this.isSelected(row)
-        },
-        on: {
-          click: function (e) {
-            this$1.$emit('select', this$1.getRowId(row), row);
-          }
-        }
-      })
-    ])
+    var defaultContent = h(Checkbox, {
+      props: { checked: this.isSelected(row) },
+      on: { click: function (e) { return this$1.$emit('select', row); } }
+    });
+    var slot = this.processSlot('cell', { row: row }, defaultContent);
+    var staticClass = this.joinClasses(
+      'uk-form uk-text-center vk-table-width-minimum', this.cellClass
+    );
+    return h('td', { staticClass: staticClass }, [ slot ])
+  },
+  created: function created () {
+    var this$1 = this;
+
+    // as there is no select state to react on, the update must be forced
+    this.$parent.$on('click-row', function () { return this$1.$parent.$forceUpdate(); });
+    this.$on('select', function () { return this$1.$parent.$forceUpdate(); });
+    this.$on('select-all', function () { return this$1.$parent.$forceUpdate(); });
   }
 };
 
-function processSortOrder (sortBy, sortedBy) {
-  var newOrder = {};
-  // prepare the final order object state
-  if (sortedBy[sortBy]) {
-    newOrder[sortBy] = sortedBy[sortBy] === 'asc'
-      ? 'desc'
-      : 'asc';
-  } else {
-    newOrder[sortBy] = 'asc';
-  }
-  return newOrder
-}
-
-var TableColumnSort = {
+var ColumnSort = {
   name: 'VkTableColumnSort',
-  extends: Column,
+  extends: Column$1,
   props: {
-    // the row value to be sorted by (defaults to cell prop)
-    sortBy: {
-      type: String
-    },
-    // the header label
     header: {
       type: String
     },
     headerClass: {
       type: String
     },
-    // the cell key
+    // sort by and display data
+    // use scopedSlots for altering the display
     cell: {
       type: String
     },
@@ -5746,59 +5639,148 @@ var TableColumnSort = {
     }
   },
   headerRender: function headerRender (h) {
-    var scopedSlot = this.$scopedSlots && this.$scopedSlots.header;
     var Table = this.$parent;
-    var orderedBy = Table.sortedBy[this.cell];
-    var sortBy = this.sortBy || this.cell;
-    return h('th', {
-      staticClass: this.headerClass,
-      class: [
-        'uk-visible-hover-inline',
-        { 'uk-active': orderedBy }
-      ]
-    }, [ scopedSlot
-      ? scopedSlot()
-      : h('a', {
-        staticClass: 'uk-position-relative uk-display-block uk-link-reset uk-text-nowrap',
-        on: {
-          click: function (e) {
-            Table.$emit('sort', processSortOrder(sortBy, Table.sortedBy));
-          }
+    var sortBy = this.cell;
+    var orderedBy = Table.sortedBy[sortBy];
+    var defaultContent = h(Header, {
+      props: {
+        sortBy: sortBy,
+        orderedBy: orderedBy,
+        name: this.header,
+        Table: Table
+      }
+    });
+    var slot = this.processSlot('header', {}, defaultContent);
+    var staticClass = this.joinClasses('uk-visible-hover-inline', this.headerClass);
+    return h('th', { staticClass: staticClass, class: { 'uk-active': orderedBy } }, [ slot ])
+  }
+};
+
+var Header = {
+  functional: true,
+  props: ['name', 'sortBy', 'orderedBy', 'Table'],
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var name = props.name;
+    var sortBy = props.sortBy;
+    var orderedBy = props.orderedBy;
+    var Table = props.Table;
+    return h('a', {
+      staticClass: 'uk-position-relative uk-display-block uk-link-reset uk-text-nowrap',
+      on: {
+        click: function (e) {
+          Table.$emit('sort', processSortOrder(Table.sortedBy, sortBy, e.shiftKey));
         }
-      }, [
-        this.header,
-        h('span', {
-          staticClass: 'uk-icon uk-position-absolute',
-          attrs: {
-            'uk-icon': 'icon: arrow-down'
-          },
-          class: {
-            'uk-invisible': !orderedBy
-          },
-          directives: [{
-            name: 'show',
-            value: (orderedBy === 'asc' || orderedBy === undefined)
-          }]
-        }),
-        h('span', {
-          staticClass: 'uk-icon uk-position-absolute',
-          attrs: {
-            'uk-icon': 'icon: arrow-up'
-          },
-          class: {
-            'uk-invisible': !orderedBy
-          },
-          directives: [{
-            name: 'show',
-            value: orderedBy === 'desc'
-          }]
-        })
-      ])
+      }
+    }, [
+      name,
+      h('span', {
+        staticClass: 'uk-icon uk-position-absolute',
+        attrs: {
+          'uk-icon': 'icon: arrow-down'
+        },
+        class: {
+          'uk-invisible': !orderedBy
+        },
+        directives: [{
+          name: 'show',
+          value: (orderedBy === 'asc' || orderedBy === undefined)
+        }]
+      }),
+      h('span', {
+        staticClass: 'uk-icon uk-position-absolute',
+        attrs: {
+          'uk-icon': 'icon: arrow-up'
+        },
+        class: {
+          'uk-invisible': !orderedBy
+        },
+        directives: [{
+          name: 'show',
+          value: orderedBy === 'desc'
+        }]
+      })
     ])
   }
 };
 
-var Tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
+function processSortOrder (currentSort, by, multi) {
+  var order = currentSort[by] === 'asc'
+    ? 'desc'
+    : 'asc';
+  var sort = {};
+  sort[by] = order;
+  return multi
+    ? Object.assign({}, currentSort, sort)
+    : sort
+}
+
+var columns = {
+  default: Column,
+  select: ColumnSelect,
+  sort: ColumnSort
+};
+
+var tableColumns = {
+  functional: true,
+  props: {
+    definition: {
+      type: Array,
+      required: true
+    }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    return props.definition.map(function (col) { return h(parseType(col), parseData(col)); })
+  }
+};
+
+function parseType (col) {
+  var type = col.type || 'default';
+  return columns[type]
+}
+
+function parseData (col) {
+  var props = {};
+  var scopedSlots = {};
+
+  // header
+  props.header = col.header;
+  props.headerClass = col.headerClass;
+  if (col.headerRender && isFunction(col.headerRender)) {
+    scopedSlots.header = col.headerRender;
+  }
+
+  // cell
+  props.cell = col.cell;
+  props.cellClass = col.cellClass;
+  if (col.cellRender && isFunction(col.cellRender)) {
+    scopedSlots.cell = col.cellRender;
+  }
+
+  return { props: props, scopedSlots: scopedSlots }
+}
+
+/**
+ * Warn about errors only in no production
+ */
+
+var warn;
+
+{
+  var hasConsole = typeof console !== 'undefined';
+  warn = function (msg) {
+    if (hasConsole) {
+      console.error(msg);
+    }
+  };
+}
+
+var warn_1 = warn;
+
+var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkTab',
   props: {
     label: String,
@@ -5817,7 +5799,7 @@ var Tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
   },
   created: function created () {
     if (!this.disabled && !this.$slots.default) {
-      warn(("[VkTabs]: content is missing in tab " + (this.label)));
+      warn_1(("[VkTabs]: content is missing in tab " + (this.label)));
     }
   }
 };
@@ -5863,8 +5845,8 @@ var core = {
     // save tabs nodes
     this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
     );
-    if (warn && !this.$tabsNodes) {
-      warn("[VkTabs]: there are no tabs defined");
+    if (warn_1 && !this.$tabsNodes) {
+      warn_1("[VkTabs]: there are no tabs defined");
     }
     // set tabs key for keep-alive
     this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
@@ -5876,7 +5858,7 @@ var core = {
   }
 };
 
-var Tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
+var tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
@@ -5897,7 +5879,7 @@ var obj;},staticRenderFns: [],
   }
 };
 
-var TabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
+var tabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
@@ -5913,9 +5895,9 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
 };
 
 var onMouseenter$1;
-var onMouseleave$1;
+var onMouseleave;
 
-var Tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
+var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
   name: 'VkTooltip',
   mixins: [PopperMixin],
   props: {
@@ -5963,7 +5945,7 @@ var Tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       }, parseInt(this$1.delay));
     };
 
-    onMouseleave$1 = function (e) {
+    onMouseleave = function (e) {
       // ignore childs and tooltip hover triggers
       if (e.relatedTarget === this$1.targetElement || e.relatedTarget === this$1.$el ||
         this$1.targetElement.contains(e.relatedTarget) || this$1.$el.contains(e.relatedTarget)
@@ -5976,11 +5958,11 @@ var Tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       this$1.$emit('hide');
     };
 
-    on(this.$el, 'mouseleave', onMouseleave$1, this._uid);
-    on(this.targetElement, 'mouseleave', onMouseleave$1, this._uid);
+    on(this.$el, 'mouseleave', onMouseleave, this._uid);
+    on(this.targetElement, 'mouseleave', onMouseleave, this._uid);
     on(this.targetElement, 'mouseenter', onMouseenter$1, this._uid);
     on(this.targetElement, 'focus', onMouseenter$1, this._uid);
-    on(this.targetElement, 'blur', onMouseleave$1, this._uid);
+    on(this.targetElement, 'blur', onMouseleave, this._uid);
   },
   methods: {
     remove: function remove () {
@@ -5998,7 +5980,7 @@ var Tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var Upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
+var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkUpload',
   data: function () { return ({
     dragged: false
@@ -6015,56 +5997,57 @@ var Upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var Vuikit = {
-  Breadcrumb: Breadcrumb,
-  BreadcrumbItem: BreadcrumbItem,
-  Button: Button,
-  ButtonCheckbox: ButtonCheckbox,
-  ButtonRadio: ButtonRadio,
-  Datepicker: Datepicker,
-  Dropdown: Dropdown,
-  Modal: Modal,
-  ModalDialog: ModalDialog,
-  ModalHeader: ModalHeader,
-  ModalBody: ModalBody,
-  ModalFooter: ModalFooter,
-  ModalCaption: ModalCaption,
-  ModalClose: ModalClose,
-  Notification: Notification,
-  NotificationMessage: NotificationMessage,
-  Offcanvas: Offcanvas,
-  Pagination: Pagination,
-  PaginationFirst: PaginationFirst,
-  PaginationLast: PaginationLast,
-  PaginationPrev: PaginationPrev,
-  PaginationNext: PaginationNext,
-  PaginationPages: PaginationPages,
-  Subnav: Subnav,
-  SubnavItem: SubnavItem,
-  Table: Table,
-  TableColumn: TableColumn,
-  TableColumnSelect: TableColumnSelect,
-  TableColumnSort: TableColumnSort,
-  Tab: Tab,
-  Tabs: Tabs,
-  TabsVertical: TabsVertical,
-  Tooltip: Tooltip,
-  Upload: Upload,
-  install: function install (Vue) {
+
+
+var lib = Object.freeze({
+	Breadcrumb: breadcrumb,
+	BreadcrumbItem: breadcrumbItem,
+	Button: button,
+	ButtonCheckbox: buttonCheckbox,
+	ButtonRadio: buttonRadio,
+	Datepicker: datepicker,
+	Dropdown: dropdown,
+	Modal: modal,
+	ModalDialog: modalDialog,
+	ModalHeader: modalHeader,
+	ModalBody: modalBody,
+	ModalFooter: modalFooter,
+	ModalCaption: modalCaption,
+	ModalClose: modalClose,
+	Notification: notification,
+	NotificationMessage: notificationMessage,
+	Offcanvas: offcanvas,
+	Pagination: pagination,
+	PaginationFirst: PaginationFirst,
+	PaginationLast: PaginationLast,
+	PaginationPrev: PaginationPrev,
+	PaginationNext: PaginationNext,
+	PaginationPages: PaginationPages,
+	Subnav: subnav,
+	SubnavItem: subnavItem,
+	Table: table,
+	TableColumn: Column,
+	TableColumnSelect: ColumnSelect,
+	TableColumnSort: ColumnSort,
+	TableColumns: tableColumns,
+	Tab: tabsTab,
+	Tabs: tabs,
+	TabsVertical: tabsVertical,
+	Tooltip: tooltip,
+	Upload: upload
+});
+
+var Vuikit = Object.assign({}, lib,
+  {install: function install (Vue) {
     var this$1 = this;
 
     var keys = Object.keys(this);
     keys.pop(); // remove 'install' from keys
     var i = keys.length;
     while (i--) {
-      if (this$1[keys[i]].bind) {
-        Vue.directive(("Vk" + (keys[i])), this$1[keys[i]]);
-      } else {
-        Vue.component(("Vk" + (keys[i])), this$1[keys[i]]);
-      }
+      Vue.component(("Vk" + (keys[i])), this$1[keys[i]]);
     }
-  }
-};
+  }});
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vuikit);
