@@ -4,7 +4,7 @@
     :disabled="disabled"
     :class="{
       'uk-active': active,
-      'uk-button-default': !hasCustomStyle
+      'uk-button-default': !hasCustomStyle()
     }"
     @click="e => $emit('click', e)">
     <slot></slot>
@@ -29,7 +29,7 @@ export default {
       default: false
     }
   },
-  computed: {
+  methods: {
     hasCustomStyle () {
       const classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass
       return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
