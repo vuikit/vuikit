@@ -1,0 +1,25 @@
+/*
+* Subnav
+*/
+
+// Variables
+// ========================================================================
+
+@inverse-subnav-item-color:                     @inverse-global-color;
+@inverse-subnav-item-hover-color:               @inverse-global-emphasis-color;
+
+// Hooks
+// ========================================================================
+
+.hook-subnav() {
+  margin-left: -50px;
+}
+
+.hook-subnav-item() {
+  text-transform: capitalize;
+}
+
+.hook-subnav-misc() {
+  // divider
+  .tm-subnav > * { padding-left: 50px; }
+}

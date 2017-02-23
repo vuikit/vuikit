@@ -13,9 +13,9 @@
     "uikit",
     "vuikit"
   ],
-  "main": "dist/vuikit.js",
-  "module": "dist/vuikit.mjs",
-  "jsnext:main": "dist/vuikit.mjs",
+  "main": "dist/js/vuikit.js",
+  "module": "dist/js/vuikit.mjs",
+  "jsnext:main": "dist/js/vuikit.mjs",
   "files": [
     "dist",
     "src",
@@ -32,8 +32,14 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
+    "build": "npm run clean-dist && npm run compile && npm run copy-theme-assets",
+    "compile": "npm run compile-lib && npm run compile-theme && npm run compile-theme-min",
+    "compile-lib": "node build/build.js",
+    "compile-theme": "./node_modules/.bin/lessc --relative-urls src/less/theme.less dist/css/vuikit.css",
+    "compile-theme-min": "./node_modules/.bin/lessc --clean-css --source-map --relative-urls src/less/theme.less dist/css/vuikit.min.css",
+    "copy-theme-assets": "cp -R node_modules/uikit/dist/images dist",
+    "clean-dist": "rm -rf dist && mkdir -p dist/js && mkdir -p dist/css && mkdir -p dist/images",
     "dev": "node dev/server.js",
-    "build": "node build/build.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "./node_modules/.bin/jest",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
@@ -71,6 +77,8 @@
     "jest": "^18.1.0",
     "jquery": "^3.1.1",
     "js-beautify": "^1.6.9",
+    "less": "^2.7.2",
+    "less-plugin-clean-css": "^1.5.1",
     "lodash-es": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.0",
     "mockdate": "^2.0.1",

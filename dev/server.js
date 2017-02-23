@@ -45,6 +45,7 @@ app.use(hotMiddleware)
 app.use('/static', express.static(path.resolve(__dirname, './static')))
 
 // serve pure static assets
+app.use('/assets', express.static(path.resolve(__dirname, '../dist')))
 app.use('/assets', express.static(path.resolve(__dirname, '../node_modules/uikit/dist')))
 app.use('/assets/js', express.static(path.resolve(__dirname, '../node_modules/jquery/dist')))
 

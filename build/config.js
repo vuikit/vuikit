@@ -17,27 +17,27 @@ const banner =
 const builds = {
   // ES
   'es': {
-    entry: path.resolve(__dirname, '../lib/es.js'),
-    dest: path.resolve(__dirname, '../dist/vuikit.mjs'),
+    entry: path.resolve(__dirname, '../src/js/es.js'),
+    dest: path.resolve(__dirname, '../dist/js/vuikit.mjs'),
     format: 'es'
   },
   // CommonJS
   'cjs': {
-    entry: path.resolve(__dirname, '../lib/index.js'),
-    dest: path.resolve(__dirname, '../dist/vuikit.common.js'),
+    entry: path.resolve(__dirname, '../src/js/index.js'),
+    dest: path.resolve(__dirname, '../dist/js/vuikit.common.js'),
     format: 'cjs'
   },
   // Browser
   'umd': {
-    entry: path.resolve(__dirname, '../lib/index.js'),
-    dest: path.resolve(__dirname, '../dist/vuikit.js'),
+    entry: path.resolve(__dirname, '../src/js/index.js'),
+    dest: path.resolve(__dirname, '../dist/js/vuikit.js'),
     format: 'umd',
     env: 'development'
   },
   // production build (Browser)
   'umd-production': {
-    entry: path.resolve(__dirname, '../lib/index.js'),
-    dest: path.resolve(__dirname, '../dist/vuikit.min.js'),
+    entry: path.resolve(__dirname, '../src/js/index.js'),
+    dest: path.resolve(__dirname, '../dist/js/vuikit.min.js'),
     format: 'umd',
     env: 'production',
     sourceMap: true

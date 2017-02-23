@@ -1,0 +1,55 @@
+/*
+* Navbar
+*/
+
+// Variables
+// ========================================================================
+
+@navbar-background:                            linear-gradient(to left, #28a5f5, @global-primary-background);
+
+// Line Mode
+@navbar-nav-item-line-margin-vertical:          20px;
+@navbar-nav-item-line-margin-horizontal:        @navbar-nav-item-padding-horizontal;
+@navbar-nav-item-line-height:                   1px;
+@navbar-nav-item-line-background:               currentColor;
+@navbar-nav-item-line-transition-duration:      0.3s;
+
+// Inverse
+@inverse-navbar-nav-item-color:                @inverse-global-color;
+@inverse-navbar-nav-item-hover-color:          @inverse-global-emphasis-color;
+
+// Hooks
+// ========================================================================
+
+.hook-navbar-misc() {
+  .uk-navbar-container .uk-navbar-nav > li > a,
+  .uk-navbar-container .uk-navbar-item:not(.uk-logo),
+  .uk-navbar-container .uk-navbar-toggle {
+    height: 70px;
+    font-size: 12px;
+  }
+
+  // Color Mode
+  .uk-navbar-container:not(.uk-navbar-transparent):extend(.uk-light all) {}
+}
+
+.hook-navbar-nav-item () {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: @navbar-nav-item-line-margin-horizontal;
+    right: ~'calc(102% - @{navbar-nav-item-line-margin-horizontal})';
+    bottom: @navbar-nav-item-line-margin-vertical;
+    height: @navbar-nav-item-line-height;
+    background-color: @navbar-nav-item-line-background;
+    -webkit-transition: @navbar-nav-item-line-transition-duration ease-in-out;
+    transition: @navbar-nav-item-line-transition-duration ease-in-out;
+    -webkit-transition-property: right;
+    transition-property: right;
+  }
+
+  &:hover::before { right: @navbar-nav-item-line-margin-horizontal; }
+}
