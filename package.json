@@ -78,6 +78,7 @@
     "jquery": "^3.1.1",
     "js-beautify": "^1.6.9",
     "less": "^2.7.2",
+    "less-loader": "^2.2.3",
     "less-plugin-clean-css": "^1.5.1",
     "lodash-es": "^4.17.4",
     "lodash-webpack-plugin": "^0.11.0",
