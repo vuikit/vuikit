@@ -24,6 +24,11 @@ export default [
     component: require('./pages/Dropdown')
   },
   {
+    name: 'Loading',
+    path: '/loading',
+    component: require('./pages/Loading')
+  },
+  {
     name: 'Modal',
     path: '/modal',
     component: require('./pages/Modal')
