@@ -17,26 +17,26 @@ const banner =
 const builds = {
   // ES
   'es': {
-    entry: path.resolve(__dirname, '../src/js/es.js'),
-    dest: path.resolve(__dirname, '../dist/js/vuikit.mjs'),
+    entry: path.resolve(__dirname, './dist-esm.js'),
+    dest: path.resolve(__dirname, '../dist/js/vuikit.esm.js'),
     format: 'es'
   },
   // CommonJS
   'cjs': {
-    entry: path.resolve(__dirname, '../src/js/index.js'),
+    entry: path.resolve(__dirname, './dist.js'),
     dest: path.resolve(__dirname, '../dist/js/vuikit.common.js'),
     format: 'cjs'
   },
   // Browser
   'umd': {
-    entry: path.resolve(__dirname, '../src/js/index.js'),
+    entry: path.resolve(__dirname, './dist.js'),
     dest: path.resolve(__dirname, '../dist/js/vuikit.js'),
     format: 'umd',
     env: 'development'
   },
   // production build (Browser)
   'umd-production': {
-    entry: path.resolve(__dirname, '../src/js/index.js'),
+    entry: path.resolve(__dirname, './dist.js'),
     dest: path.resolve(__dirname, '../dist/js/vuikit.min.js'),
     format: 'umd',
     env: 'production',

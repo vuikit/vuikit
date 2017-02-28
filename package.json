@@ -13,9 +13,8 @@
     "uikit",
     "vuikit"
   ],
-  "main": "dist/js/vuikit.js",
-  "module": "dist/js/vuikit.mjs",
-  "jsnext:main": "dist/js/vuikit.mjs",
+  "main": "dist/js/vuikit.common.js",
+  "module": "dist/js/vuikit.esm.js",
   "files": [
     "dist",
     "src",
