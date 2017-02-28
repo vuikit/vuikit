@@ -63,7 +63,7 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
+var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle() },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButton',
   props: {
     value: {},
@@ -80,7 +80,7 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       default: false
     }
   },
-  computed: {
+  methods: {
     hasCustomStyle: function hasCustomStyle () {
       var classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass;
       return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)

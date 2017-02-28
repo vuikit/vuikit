@@ -57,7 +57,7 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
+var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle() },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButton',
   props: {
     value: {},
@@ -74,7 +74,7 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       default: false
     }
   },
-  computed: {
+  methods: {
     hasCustomStyle: function hasCustomStyle () {
       var classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass;
       return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
@@ -5991,4 +5991,60 @@ var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, dropdown as Dropdown, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableColumns as TableColumns, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };
+
+
+var lib = Object.freeze({
+	Breadcrumb: breadcrumb,
+	BreadcrumbItem: breadcrumbItem,
+	Button: button,
+	ButtonCheckbox: buttonCheckbox,
+	ButtonRadio: buttonRadio,
+	Datepicker: datepicker,
+	Dropdown: dropdown,
+	Modal: modal,
+	ModalDialog: modalDialog,
+	ModalHeader: modalHeader,
+	ModalBody: modalBody,
+	ModalFooter: modalFooter,
+	ModalCaption: modalCaption,
+	ModalClose: modalClose,
+	Notification: notification,
+	NotificationMessage: notificationMessage,
+	Offcanvas: offcanvas,
+	Pagination: pagination,
+	PaginationFirst: PaginationFirst,
+	PaginationLast: PaginationLast,
+	PaginationPrev: PaginationPrev,
+	PaginationNext: PaginationNext,
+	PaginationPages: PaginationPages,
+	Subnav: subnav,
+	SubnavItem: subnavItem,
+	Table: table,
+	TableColumn: Column,
+	TableColumnSelect: ColumnSelect,
+	TableColumnSort: ColumnSort,
+	TableColumns: tableColumns,
+	Tab: tabsTab,
+	Tabs: tabs,
+	TabsVertical: tabsVertical,
+	Tooltip: tooltip,
+	Upload: upload
+});
+
+var Vuikit$1 = Object.assign({}, lib,
+  {install: function install (Vue) {
+    var this$1 = this;
+
+    var keys = Object.keys(this);
+    keys.pop(); // remove 'install' from keys
+    var i = keys.length;
+    while (i--) {
+      Vue.component(("Vk" + (keys[i])), this$1[keys[i]]);
+    }
+  }});
+
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(Vuikit$1);
+}
+
+export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, dropdown as Dropdown, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableColumns as TableColumns, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;

@@ -1654,7 +1654,6 @@ select.uk-form-width-xsmall {
   background-color: #1e87f0;
   color: #fff;
   border: 1px solid transparent;
-  border-radius: 500px;
 }
 /* Hover + Focus */
 .uk-button-primary:hover,
@@ -9309,7 +9308,6 @@ td.uk-text-break {
   background-color: transparent;
   color: rgba(255, 255, 255, 0.8);
   border-color: rgba(255, 255, 255, 0.8);
-  border-color: rgba(255, 255, 255, 0.6);
 }
 .uk-light .uk-button-default:hover,
 .uk-light .uk-button-default:focus,
@@ -10755,8 +10753,8 @@ td.uk-text-break {
 // Hooks
 // ========================================================================
 
-.hook-button-default() {
-  border-radius: 500px;
+.hook-inverse-button-default() {
+  border-color: rgba(255, 255, 255, 0.6);
 }
 /*
 * Container
