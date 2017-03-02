@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Vuikit from 'lib'
+import Vuikit from '../build/dist'
 import routes from './routes'
 
 const App = Vue.extend(require('./App'))
