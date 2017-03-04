@@ -33,7 +33,7 @@
               {{ format(date, 'D') }}
             </a>
           </td>
-        </td>
+        </tr>
       </tbody>
     </table>
   </div>
