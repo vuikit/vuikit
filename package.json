@@ -31,12 +31,11 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "build": "npm run clean-dist && npm run compile && npm run copy-theme-assets",
+    "build": "npm run clean-dist && npm run compile",
     "compile": "npm run compile-lib && npm run compile-theme && npm run compile-theme-min",
     "compile-lib": "node build/build.js",
     "compile-theme": "./node_modules/.bin/lessc --relative-urls src/less/theme.less dist/css/vuikit.css",
     "compile-theme-min": "./node_modules/.bin/lessc --clean-css --source-map --relative-urls src/less/theme.less dist/css/vuikit.min.css",
-    "copy-theme-assets": "cp -R node_modules/uikit/dist/images dist",
     "clean-dist": "rm -rf dist && mkdir -p dist/js && mkdir -p dist/css && mkdir -p dist/images",
     "dev": "node dev/server.js",
     "deploy": "cd build && ./deploy.sh",
