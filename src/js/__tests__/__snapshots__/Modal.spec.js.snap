@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Modal renders correctly 1`] = `
-<div class="uk-modal" style="display:block">
+<div class="uk-modal" style="display:block;">
   <div class="uk-modal-dialog">
     <button type="button" uk-close="true" class="uk-close uk-icon uk-modal-close-default"></button>
     <div class="uk-modal-header">

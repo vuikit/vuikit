@@ -78,7 +78,7 @@
       @click="message => {
         messages.top.left.splice(messages.top.left.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.top.left"
+      <vk-notification-message v-for="(msg, index) in messages.top.left" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"
@@ -97,7 +97,7 @@
       @click="message => {
         messages.top.center.splice(messages.top.center.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.top.center"
+      <vk-notification-message v-for="(msg, index) in messages.top.center" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"
@@ -116,7 +116,7 @@
       @click="message => {
         messages.top.right.splice(messages.top.right.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.top.right"
+      <vk-notification-message v-for="(msg, index) in messages.top.right" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"
@@ -135,7 +135,7 @@
       @click="message => {
         messages.bottom.left.splice(messages.bottom.left.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.bottom.left"
+      <vk-notification-message v-for="(msg, index) in messages.bottom.left" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"
@@ -154,7 +154,7 @@
       @click="message => {
         messages.bottom.center.splice(messages.bottom.center.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.bottom.center"
+      <vk-notification-message v-for="(msg, index) in messages.bottom.center" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"
@@ -173,7 +173,7 @@
       @click="message => {
         messages.bottom.right.splice(messages.bottom.right.indexOf(message), 1)
       }">
-      <vk-notification-message v-for="msg in messages.bottom.right"
+      <vk-notification-message v-for="(msg, index) in messages.bottom.right" :key="index"
         :id="msg"
         :status="msg.status"
         :timeout="msg.timeout"

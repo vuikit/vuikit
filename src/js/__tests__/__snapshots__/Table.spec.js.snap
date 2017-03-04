@@ -19,28 +19,47 @@ exports[`Table Column Select renders correctly 1`] = `
 exports[`Table Column Sort renders correctly 1`] = `
 <table class="uk-table">
   <col>
+  <col>
   <thead>
     <tr>
       <th class="uk-visible-hover-inline myHeaderClass">
         <a class="uk-position-relative uk-display-block uk-link-reset uk-text-nowrap"><span uk-icon="icon: arrow-down" class="uk-icon uk-position-absolute uk-invisible"></span><span uk-icon="icon: arrow-up" class="uk-icon uk-position-absolute uk-invisible" style="display: none;"></span></a>
+      </th>
+      <th class="uk-visible-hover-inline">
+        Custom Header
       </th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td class="myCellClass">Toy Story</td>
+      <td>
+        Custom Cell
+      </td>
     </tr>
     <tr>
       <td class="myCellClass">A Bug's Life</td>
+      <td>
+        Custom Cell
+      </td>
     </tr>
     <tr>
       <td class="myCellClass">Toy Story 2</td>
+      <td>
+        Custom Cell
+      </td>
     </tr>
     <tr>
       <td class="myCellClass">Monsters, Inc.</td>
+      <td>
+        Custom Cell
+      </td>
     </tr>
     <tr>
       <td class="myCellClass">Finding Nemo</td>
+      <td>
+        Custom Cell
+      </td>
     </tr>
   </tbody>
 </table>

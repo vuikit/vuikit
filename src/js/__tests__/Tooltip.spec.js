@@ -19,7 +19,7 @@ describe('Tooltip', () => {
 
   it('renders correctly', () => {
     vm = createVue(`
-      <button><vk-tooltip content="Content"></button>
+      <button><vk-tooltip content="Content" /></button>
     `)
     expect(renderSnapshot(vm)).toMatchSnapshot()
   })

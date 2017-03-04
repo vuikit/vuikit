@@ -87,7 +87,7 @@ describe('Table Column Sort', () => {
     vm = createVue({
       template: `
         <vk-table :data="testData">
-          <vk-table-column-sort cell="name" headerClass="myHeaderClass" cellClass="myCellClass">
+          <vk-table-column-sort cell="name" headerClass="myHeaderClass" cellClass="myCellClass" />
           <vk-table-column-sort>
             <template slot="header" scope="props">
               Custom Header
@@ -111,7 +111,7 @@ describe('Table Column Sort', () => {
     vm = createVue({
       template: `
         <vk-table :data="testData">
-          <vk-table-column-sort cell="name"></vk-table-column-sort>
+          <vk-table-column-sort cell="name"></vk-table-column-sort />
         </vk-table>
       `,
       data: () => ({
@@ -142,7 +142,7 @@ describe('Table Column Select', () => {
     vm = createVue({
       template: `
         <vk-table :data="testData">
-          <vk-table-column-select headerClass="myHeaderClass" cellClass="myCellClass">
+          <vk-table-column-select headerClass="myHeaderClass" cellClass="myCellClass" />
         </vk-table>
       `,
       data: () => ({

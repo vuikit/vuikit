@@ -152,7 +152,10 @@
           @change="tab => {
             dynamic.activeTab = tab
           }">
-          <vk-tab v-for="{ label, content, disabled } in dynamic.tabs" :label="label" :disabled="disabled">
+          <vk-tab v-for="({ label, content, disabled }, index) in dynamic.tabs"
+            :key="index"
+            :label="label"
+            :disabled="disabled">
             {{ content }}
           </vk-tab>
         </vk-tabs>
@@ -163,7 +166,10 @@
           @change="tab => {
             dynamic.activeTab = tab
           }">
-          <vk-tab v-for="{ label, content, disabled } in dynamic.tabs" :label="label" :disabled="disabled">
+          <vk-tab v-for="({ label, content, disabled }, index) in dynamic.tabs"
+            :key="index"
+            :label="label"
+            :disabled="disabled">
             {{ content }}
           </vk-tab>
         </vk-tabs-vertical>

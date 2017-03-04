@@ -43,7 +43,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
-    "vue": "^2.1.10"
+    "vue": "^2.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
@@ -98,11 +98,11 @@
     "tween.js": "^16.6.0",
     "uikit": "^3.0.0-beta.16",
     "url-loader": "^0.5.8",
-    "vue-loader": "^11.0.0",
-    "vue-router": "^2.2.1",
-    "vue-server-renderer": "^2.1.10",
-    "vue-style-loader": "^2.0.0",
-    "vue-template-compiler": "^2.1.10",
+    "vue-loader": "^11.1.4",
+    "vue-router": "^2.3.0",
+    "vue-server-renderer": "^2.2.1",
+    "vue-style-loader": "^2.0.3",
+    "vue-template-compiler": "^2.2.1",
     "vuikit-docs": "^0.1.1",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.1",

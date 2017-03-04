@@ -2,6 +2,6 @@
 
 exports[`Dropdown renders correctly 1`] = `
 <button>
-  <div class="uk-dropdown" style="display:none">Dropdown</div>
+  <div class="uk-dropdown" style="display:none;">Dropdown</div>
 </button>
 `;
