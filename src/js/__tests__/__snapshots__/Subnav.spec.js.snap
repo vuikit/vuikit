@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Subnav renders correctly 1`] = `
 <ul line="" class="uk-subnav uk-subnav-pill">
   <li><a>Item 1</a></li>

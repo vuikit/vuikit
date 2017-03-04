@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Modal renders correctly 1`] = `
 <div class="uk-modal" style="display:block">
   <div class="uk-modal-dialog">

@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Button renders correctly 1`] = `<button type="submit" disabled="disabled" class="uk-button uk-active uk-button-default">Button</button>`;
 
 exports[`ButtonCheckbox renders correctly 1`] = `

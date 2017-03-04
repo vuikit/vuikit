@@ -1,3 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
 exports[`Table Column Select renders correctly 1`] = `
 <table class="uk-table">
   <col>
