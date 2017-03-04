@@ -71,7 +71,6 @@ export default {
       addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
       addClass(this.$el, this.clsOverlay)
       this.$el.style.display = 'block'
-      this.$el.offsetHeight // force redraw
     },
     afterEnter () {
       this._afterEnter()
@@ -89,7 +88,6 @@ export default {
       removeClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
       removeClass(this.$el, `${this.clsOverlay}`)
       this.$el.style.display = ''
-      this.$el.offsetHeight // force redraw
     }
   },
   mounted () {

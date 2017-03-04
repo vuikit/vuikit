@@ -47,12 +47,12 @@ const getMainPages = ({ page, range, totalPages }) => {
   let end = page + range
   if (end > totalPages) {
     end = totalPages
-    start = totalPages - range * 2
+    start = totalPages - (range * 2)
     start = start < 1 ? 1 : start
   }
   if (start <= 1) {
     start = 1
-    end = Math.min(range * 2 + 1, totalPages)
+    end = Math.min((range * 2) + 1, totalPages)
   }
   return getRange(start, end + 1)
 }
