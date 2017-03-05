@@ -10,6 +10,17 @@ Vuikit is a collection of unopinionated, modular Vue.js components outputting UI
 
 While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by removing UIkit js and jQuery dependencies and rebuilding the logic with Vue natively.
 
+## Supporting Vuikit
+
+Special thanks to the supporters who help pushing this project forward.
+
+<p align="center">
+  <br />
+  <a href="http://www.zoolanders.com"><img width="150px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/zoolanders.png"></a>
+  <br /><br />
+  <a href="https://vuejobs.com?ref=vuikit"><img width="120px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/vuejobs.png"></a>
+</p>
+
 ## Documentation and examples
 
 There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information about each component. As well as a [codepen](http://codepen.io/miljan/pen/YWXVKj) playground.
@@ -110,13 +121,8 @@ yarn run build
 
 Until Vuikit reaches a 1.0 release, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 have the same API, but 0.5.0 have breaking changes.
 
-## Contributors
-
-* [Miljan Aleksic](https://twitter.com/AleksicMiljan) - Author and main developer
-* [ZOOlanders](http://www.zoolanders.com) - Sponsor
-
 ## License
 
 Vuikit is open source and released under the [MIT License](LICENSE).
 
-Copyright (c) 2016-present, Miljan Aleksic
+Copyright (c) 2016-present, [Miljan Aleksic](https://twitter.com/AleksicMiljan)
