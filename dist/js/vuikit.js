@@ -63,7 +63,7 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !_vm.hasCustomStyle() },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
+var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !(_vm.primary || _vm.secondary || _vm.danger || _vm.text || _vm.link), 'uk-button-primary': _vm.primary, 'uk-button-secondary': _vm.secondary, 'uk-button-danger': _vm.danger, 'uk-button-text': _vm.text, 'uk-button-link': _vm.link, 'uk-button-large': _vm.large, 'uk-button-small': _vm.small, },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkButton',
   props: {
     value: {},
@@ -78,12 +78,34 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     disabled: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    hasCustomStyle: function hasCustomStyle () {
-      var classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass;
-      return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
+    },
+    primary: {
+      type: Boolean,
+      default: false
+    },
+    secondary: {
+      type: Boolean,
+      default: false
+    },
+    danger: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: Boolean,
+      default: false
+    },
+    link: {
+      type: Boolean,
+      default: false
+    },
+    large: {
+      type: Boolean,
+      default: false
+    },
+    small: {
+      type: Boolean,
+      default: false
     }
   }
 };

@@ -19,7 +19,19 @@ describe('Button', () => {
 
   it('renders correctly', () => {
     vm = createVue(`
-      <vk-button type="submit" active disabled>Button</vk-button>
+      <div>
+        <vk-button>Default</vk-button>
+        <vk-button primary>Primary</vk-button>
+        <vk-button secondary>Secondary</vk-button>
+        <vk-button danger>Danger</vk-button>
+        <vk-button text>Text</vk-button>
+        <vk-button link>Link</vk-button>
+        <vk-button large>Large</vk-button>
+        <vk-button small>small</vk-button>
+        <vk-button type="submit">Submit Type</vk-button>
+        <vk-button active>Active</vk-button>
+        <vk-button disabled>disabled</vk-button>
+      </div>
     `)
     expect(renderSnapshot(vm)).toMatchSnapshot()
   })

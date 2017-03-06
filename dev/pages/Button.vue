@@ -10,43 +10,51 @@
         </p>
         <p>
           <a class="uk-button uk-button-primary" href="#">Link</a>
-          <vk-button class="uk-button-primary">Button</vk-button>
-          <vk-button class="uk-button-primary" active>Active</vk-button>
-          <vk-button class="uk-button-primary" disabled>Disabled</vk-button>
+          <vk-button primary>Button</vk-button>
+          <vk-button primary active>Active</vk-button>
+          <vk-button primary disabled>Disabled</vk-button>
         </p>
         <p>
           <a class="uk-button uk-button-secondary" href="#">Link</a>
-          <vk-button class="uk-button-secondary">Button</vk-button>
-          <vk-button class="uk-button-secondary" active>Active</vk-button>
-          <vk-button class="uk-button-secondary" disabled>Disabled</vk-button>
+          <vk-button secondary>Button</vk-button>
+          <vk-button secondary active>Active</vk-button>
+          <vk-button secondary disabled>Disabled</vk-button>
         </p>
         <p>
           <a class="uk-button uk-button-danger" href="#">Link</a>
-          <vk-button class="uk-button-danger">Button</vk-button>
-          <vk-button class="uk-button-danger" active>Active</vk-button>
-          <vk-button class="uk-button-danger" disabled>Disabled</vk-button>
+          <vk-button danger>Button</vk-button>
+          <vk-button danger active>Active</vk-button>
+          <vk-button danger disabled>Disabled</vk-button>
         </p>
       </div>
       <div>
         <p>
           <a class="uk-button uk-button-text" href="#">Link</a>
-          <vk-button class="uk-button-text">Button</vk-button>
-          <vk-button class="uk-button-text" disabled>Disabled</vk-button>
+          <vk-button text>Button</vk-button>
+          <vk-button text disabled>Disabled</vk-button>
         </p>
       </div>
       <div>
         <p>
           <vk-button>Button</vk-button>
-          <vk-button class="uk-button-link">Button</vk-button>
+          <vk-button link>Button</vk-button>
         </p>
         <p>
           <vk-button disabled>Button</vk-button>
-          <vk-button class="uk-button-link" disabled>Button</vk-button>
+          <vk-button link disabled>Button</vk-button>
         </p>
         <p>
           <a href="#">Link</a>
-          <vk-button class="uk-button-link uk-text-baseline">Button</vk-button>
+          <vk-button link class="uk-text-baseline">Button</vk-button>
         </p>
+      </div>
+    </div>
+    <h2>Size</h2>
+    <div class="uk-child-width-1-4@m" uk-grid>
+      <div class="uk-width-1-2@m">
+        <vk-button large>Large</vk-button>
+        <vk-button>Default</vk-button>
+        <vk-button small>Small</vk-button>
       </div>
     </div>
     <h2>Button Checkbox</h2>

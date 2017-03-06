@@ -4,7 +4,14 @@
     :disabled="disabled"
     :class="{
       'uk-active': active,
-      'uk-button-default': !hasCustomStyle()
+      'uk-button-default': !(primary || secondary || danger || text || link),
+      'uk-button-primary': primary,
+      'uk-button-secondary': secondary,
+      'uk-button-danger': danger,
+      'uk-button-text': text,
+      'uk-button-link': link,
+      'uk-button-large': large,
+      'uk-button-small': small,
     }"
     @click="e => $emit('click', e)">
     <slot></slot>
@@ -27,12 +34,34 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    }
-  },
-  methods: {
-    hasCustomStyle () {
-      const classes = this.$options._parentVnode && this.$options._parentVnode.data.staticClass
-      return classes && classes.match(/uk-button-(primary|secondary|danger|text|link)/)
+    },
+    primary: {
+      type: Boolean,
+      default: false
+    },
+    secondary: {
+      type: Boolean,
+      default: false
+    },
+    danger: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: Boolean,
+      default: false
+    },
+    link: {
+      type: Boolean,
+      default: false
+    },
+    large: {
+      type: Boolean,
+      default: false
+    },
+    small: {
+      type: Boolean,
+      default: false
     }
   }
 }
