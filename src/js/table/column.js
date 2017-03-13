@@ -6,8 +6,10 @@ export default {
     return h('col')
   },
   created () {
+    // make available the below render functions on component instance
     this._headerRender = this.$options._parentVnode.componentOptions.Ctor.options.headerRender
     this._cellRender = this.$options._parentVnode.componentOptions.Ctor.options.cellRender
+    // add column
     this.$parent.columns.push(this)
   },
   headerRender (h) {
