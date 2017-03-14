@@ -15,12 +15,14 @@
         <vk-table-column header="Hits" cell="hits" />
         <vk-table-column>
           <template slot="header" scope="props">
-            <vk-button class="uk-button-small">
+            <vk-button class="uk-button-small"
+              @click="resetHits">
               Reset All
             </vk-button>
           </template>
-          <template slot="cell" scope="props">
-            <vk-button class="uk-button-small uk-button-danger">
+          <template slot="cell" scope="{ row }">
+            <vk-button class="uk-button-small uk-button-danger"
+              @click="resetHit(row)">
               Reset Hits
             </vk-button>
           </template>
@@ -71,7 +73,7 @@
         @sort="order => {
           sortedBy = order
         }">
-        <vk-table-columns :definition="definition" />
+        <vk-table-columns :definition="columns" />
       </vk-table>
     </div>
   </div>
@@ -87,7 +89,12 @@ export default {
     sortedBy: {
       name: 'asc'
     },
-    definition: [
+    rows: [
+      { id: 1, name: 'Item A', hits: 100, desc: 'Description', author: { name: 'John Public' } },
+      { id: 2, name: 'Item B', hits: 40, desc: 'Description', author: { name: 'Jane Public' } },
+      { id: 3, name: 'Item C', hits: 700, desc: 'Description', author: { name: 'John Public' } }
+    ],
+    columns: [
       {
         header: 'Name',
         headerClass: 'header-class',
@@ -100,8 +107,8 @@ export default {
         cell: 'hits'
       },
       {
-        headerRender: ({ row }) => 'Custom Header Render',
-        cellRender: ({ row }) => 'Custom Cell Render'
+        headerRender: () => 'Custom Header Render',
+        cellRender: ({ row }) => `Custom Cell Render: ${row.author.name}`
       }
     ]
   }),
@@ -109,10 +116,20 @@ export default {
     data () {
       const by = Object.keys(this.sortedBy)[0]
       const dir = this.sortedBy[by]
-      return orderBy(data, [item => item[by]], dir)
+      return orderBy(this.rows, [item => item[by]], dir)
     }
   },
   methods: {
+    resetHit (row) {
+      const index = this.rows.indexOf(row)
+      this.rows[index].hits = 0
+    },
+    resetHits () {
+      this.rows = this.rows.map(row => {
+        row.hits = 0
+        return row
+      })
+    },
     isSelected (row) {
       return this.selection.has(row)
     },
@@ -129,10 +146,4 @@ export default {
     }
   }
 }
-
-const data = [
-  { id: 1, name: 'Item A', hits: 100, desc: 'Description', author: { name: 'John Public' } },
-  { id: 2, name: 'Item B', hits: 40, desc: 'Description', author: { name: 'Jane Public' } },
-  { id: 3, name: 'Item C', hits: 700, desc: 'Description', author: { name: 'John Public' } }
-]
 </script>
