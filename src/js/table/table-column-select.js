@@ -16,7 +16,8 @@ export default {
       default: () => false
     }
   },
-  headerRender (h) {
+  headerRender () {
+    const h = this.$createElement
     const rows = this.$parent.data
     const selected = rows.filter(this.isSelected)
     const isAllSelected = selected.length && selected.length === rows.length
@@ -30,7 +31,8 @@ export default {
     )
     return h('th', { staticClass }, [ slot ])
   },
-  cellRender (h, { row }) {
+  cellRender ({ row }) {
+    const h = this.$createElement
     const defaultContent = h(Checkbox, {
       props: { checked: this.isSelected(row) },
       on: { click: e => this.$emit('select', row) }

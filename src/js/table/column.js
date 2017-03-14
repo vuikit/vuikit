@@ -12,21 +12,24 @@ export default {
     // add column
     this.$parent.columns.push(this)
   },
-  headerRender (h) {
+  headerRender () {
+    const h = this.$createElement
     const defaultContent = this.header
     const slot = this.processSlot('header', {}, defaultContent)
     return h('th', { staticClass: this.headerClass }, [ slot ])
   },
-  cellRender (h, { row }) {
+  cellRender ({ row }) {
+    const h = this.$createElement
     const defaultContent = get(row, this.cell, '')
     const slot = this.processSlot('cell', { row }, defaultContent)
     return h('td', { staticClass: this.cellClass }, [ slot ])
   },
   methods: {
     processSlot (name, props, fallback) {
+      const h = this.$createElement
       const slot = this._t(name, fallback, props)
       return isFunction(slot)
-        ? this.$createElement({ functional: true, render: slot })
+        ? h({ functional: true, render: slot })
         : slot
     },
     joinClasses (...classes) {

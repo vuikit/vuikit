@@ -19,7 +19,8 @@ export default {
       type: String
     }
   },
-  headerRender (h) {
+  headerRender () {
+    const h = this.$createElement
     const Table = this.$parent
     const sortBy = this.cell
     const orderedBy = Table.sortedBy[sortBy]

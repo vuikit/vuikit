@@ -40,7 +40,7 @@ export default {
       functional: true,
       render (h, { parent }) {
         return parent.columns.map(col =>
-          col._headerRender && col._headerRender.call(col._renderProxy, h)
+          col._headerRender && col._headerRender.call(col._renderProxy)
         )
       }
     },
@@ -50,7 +50,7 @@ export default {
       render (h, { parent, props }) {
         const { row } = props
         return parent.columns.map(col =>
-          col._cellRender && col._cellRender.call(col._renderProxy, h, { row })
+          col._cellRender && col._cellRender.call(col._renderProxy, { row })
         )
       }
     }
