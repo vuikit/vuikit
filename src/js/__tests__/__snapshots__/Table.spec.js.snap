@@ -83,7 +83,9 @@ exports[`Table renders correctly 1`] = `
       <th class="uk-visible-hover-inline header-class">
         <a class="uk-position-relative uk-display-block uk-link-reset uk-text-nowrap">Name<span uk-icon="icon: arrow-down" class="uk-icon uk-position-absolute uk-invisible"></span><span uk-icon="icon: arrow-up" class="uk-icon uk-position-absolute uk-invisible" style="display: none;"></span></a>
       </th>
-      <th>Custom Header Render</th>
+      <th>
+        <b>Custom Header Render</b>
+      </th>
       <th>Nested</th>
     </tr>
   </thead>
@@ -95,7 +97,9 @@ exports[`Table renders correctly 1`] = `
       </td>
       <td>toy-story</td>
       <td class="cellClass">Toy Story</td>
-      <td>Custom Cell Render</td>
+      <td>
+        <b>Custom Cell Render: Toy Story</b>
+      </td>
       <td>8.3</td>
     </tr>
     <tr>
@@ -105,7 +109,9 @@ exports[`Table renders correctly 1`] = `
       </td>
       <td>a-bugs-life</td>
       <td class="cellClass">A Bug's Life</td>
-      <td>Custom Cell Render</td>
+      <td>
+        <b>Custom Cell Render: A Bug's Life</b>
+      </td>
       <td>7.2</td>
     </tr>
     <tr>
@@ -115,7 +121,9 @@ exports[`Table renders correctly 1`] = `
       </td>
       <td>toy-story-2</td>
       <td class="cellClass">Toy Story 2</td>
-      <td>Custom Cell Render</td>
+      <td>
+        <b>Custom Cell Render: Toy Story 2</b>
+      </td>
       <td>7.9</td>
     </tr>
     <tr>
@@ -125,7 +133,9 @@ exports[`Table renders correctly 1`] = `
       </td>
       <td>monsters-inc.</td>
       <td class="cellClass">Monsters, Inc.</td>
-      <td>Custom Cell Render</td>
+      <td>
+        <b>Custom Cell Render: Monsters, Inc.</b>
+      </td>
       <td>8.1</td>
     </tr>
     <tr>
@@ -135,7 +145,9 @@ exports[`Table renders correctly 1`] = `
       </td>
       <td>finding-nemo</td>
       <td class="cellClass">Finding Nemo</td>
-      <td>Custom Cell Render</td>
+      <td>
+        <b>Custom Cell Render: Finding Nemo</b>
+      </td>
       <td>8.1</td>
     </tr>
   </tbody>

@@ -1,4 +1,3 @@
-import isFunction from 'utils/is-function'
 import get from 'utils/get'
 
 export default {
@@ -26,11 +25,10 @@ export default {
   },
   methods: {
     processSlot (name, props, fallback) {
-      const h = this.$createElement
-      const slot = this._t(name, fallback, props)
-      return isFunction(slot)
-        ? h({ functional: true, render: slot })
-        : slot
+      const slot = this.$scopedSlots[name]
+      return slot
+        ? slot.call(this._renderProxy, props)
+        : fallback
     },
     joinClasses (...classes) {
       const isNotEmpty = className => className

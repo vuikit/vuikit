@@ -107,8 +107,14 @@ export default {
         cell: 'hits'
       },
       {
-        headerRender: () => 'Custom Header Render',
-        cellRender: ({ row }) => `Custom Cell Render: ${row.author.name}`
+        headerRender () {
+          const h = this.$createElement
+          return h('b', 'Custom Header Render')
+        },
+        cellRender ({ row }) {
+          const h = this.$createElement
+          return h('b', `Custom Cell Render: ${row.author.name}`)
+        }
       }
     ]
   }),
