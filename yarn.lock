@@ -4932,9 +4932,9 @@ uid-number@~0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-uikit@^3.0.0-beta.16:
-  version "3.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.0.0-beta.16.tgz#770290dfb8b6518cf93d5ca0b41fee97ad6e0b24"
+uikit@^3.0.0-beta.18:
+  version "3.0.0-beta.18"
+  resolved "https://registry.yarnpkg.com/uikit/-/uikit-3.0.0-beta.18.tgz#cfbe0749cbfd4dfe7103f59159fd9ec565d55a2a"
 
 uniq@^1.0.1:
   version "1.0.1"
@@ -5083,14 +5083,7 @@ vue-style-loader@^2.0.0, vue-style-loader@^2.0.3:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.1.10:
-  version "2.1.10"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.1.10.tgz#cb89643adc395e97435585522e43d0a9b1913257"
-  dependencies:
-    de-indent "^1.0.2"
-    he "^1.1.0"
-
-vue-template-compiler@^2.2.1:
+vue-template-compiler@^2.1.10, vue-template-compiler@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.2.1.tgz#ca5e43db50dc6e761e3c1296313de33091783511"
   dependencies:
@@ -5107,11 +5100,7 @@ vue-template-validator@^1.1.5:
   dependencies:
     chalk "^1.1.1"
 
-vue@^2.1.6:
-  version "2.1.10"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.1.10.tgz#c9235ca48c7925137be5807832ac4e3ac180427b"
-
-vue@^2.2.1:
+vue@^2.1.6, vue@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.1.tgz#ddbfd2f0caf38f374f5a36eea2e1edf25225b68e"
 
