@@ -41,7 +41,7 @@ export default {
   methods: {
     _beforeEnter () {
       if (!active) {
-        body.style['overflow-y'] = getScrollbarWidth() && this.overlay ? 'scroll' : ''
+        body.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : ''
       }
     },
     _afterEnter () {
@@ -63,6 +63,17 @@ export default {
       if (active === this) {
         active = null
       }
+    },
+    getScrollbarWidth () {
+      const width = doc.style.width
+      doc.style.width = ''
+      const scrollbarWidth = window.innerWidth - doc.offsetWidth
+
+      if (width) {
+        doc.style.width = width
+      }
+
+      return scrollbarWidth
     }
   },
   beforeDestroy () {
@@ -71,16 +82,4 @@ export default {
       this.$el.parentNode.removeChild(this.$el)
     }
   }
-}
-
-const getScrollbarWidth = function () {
-  const width = doc.style.width
-  doc.style.width = ''
-  const scrollbarWidth = window.innerWidth - doc.offsetWidth
-
-  if (width) {
-    doc.style.width = width
-  }
-
-  return scrollbarWidth
 }

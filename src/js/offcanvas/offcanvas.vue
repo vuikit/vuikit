@@ -67,15 +67,20 @@ export default {
   methods: {
     beforeEnter () {
       this._beforeEnter()
-      addClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageAnimation} ${this.clsPageOverlay}`)
-      addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
+      // set fixed with so the page can slide-out without shinking
+      doc.style.width = window.innerWidth - this.getScrollbarWidth() + 'px'
+      // add page classes
+      addClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
+      // add offcanvas style
       addClass(this.$el, this.clsOverlay)
       this.$el.style.display = 'block'
+      // add offcanvas-bar classes
+      addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
     },
     afterEnter () {
       this._afterEnter()
+      addClass(doc, this.clsPageAnimation)
       addClass(this.$el, 'uk-open')
-      this._afterEnter()
     },
     beforeLeave () {
       removeClass(doc, this.clsPageAnimation)
@@ -84,6 +89,7 @@ export default {
     },
     afterLeave () {
       this._afterLeave()
+      doc.style.width = ''
       removeClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
       removeClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
       removeClass(this.$el, `${this.clsOverlay}`)
@@ -101,6 +107,12 @@ export default {
     if ('ontouchstart' in document.documentElement) {
       on(this.$el, 'touchstart', clickHandler, this._uid)
     }
+  },
+  beforeDestroy () {
+    removeClass(doc, this.clsPageAnimation)
+    removeClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
+    doc.style['margin-left'] = ''
+    this._afterLeave()
   }
 }
 </script>
