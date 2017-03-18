@@ -32,7 +32,5 @@ export default {
 </script>
 
 <style lang="less">
-@import "../node_modules/uikit/src/less/uikit.theme.less";
-@import "../src/less/uikit/_import.less";
-@import "../src/less/vuikit/_import.less";
+@import "theme.less";
 </style>
