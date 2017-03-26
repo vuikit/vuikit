@@ -83,5 +83,9 @@ export default {
         }
       }
     )
+
+    // schedule an update to make sure everything gets positioned correct
+    // after being instantiated
+    this.$popper.scheduleUpdate()
   }
 }
