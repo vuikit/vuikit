@@ -1,9 +1,9 @@
 <template>
   <transition
     enter-to-class="uk-open"
+    leave-class="uk-open"
     :enter-active-class="enterActiveClass"
     :leave-active-class="leaveActiveClass"
-    leave-class="uk-open"
     @after-enter="afterEnter">
     <div v-show="show" class="uk-dropdown" style="display: block;">
       <slot></slot>
