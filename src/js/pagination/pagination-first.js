@@ -21,7 +21,7 @@ export default {
         h('span', {
           staticClass: 'uk-pagination-prev uk-icon',
           class: { 'uk-margin-small-right': label },
-          attrs: { 'uk-pagination-previous': true }
+          attrs: { 'uk-icon': 'icon: chevron-left' }
         }),
         label && label
       ])

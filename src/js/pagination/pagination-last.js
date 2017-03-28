@@ -22,7 +22,7 @@ export default {
         h('span', {
           staticClass: 'uk-pagination-next uk-icon',
           class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-pagination-next': true }
+          attrs: { 'uk-icon': 'icon: chevron-right' }
         })
       ])
     ])
