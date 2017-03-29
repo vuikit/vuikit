@@ -24,7 +24,7 @@ import css from 'utils/css'
 import hasClass from 'utils/has-class'
 import addClass from 'utils/add-class'
 import removeClass from 'utils/remove-class'
-import ModalMixin from 'lib/_mixins/modal.js'
+import ModalMixin from 'lib/mixins/modal'
 const doc = document.documentElement
 
 export default {

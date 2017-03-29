@@ -1,4 +1,4 @@
 import Vuikit from './dist'
-export * from '../src/js'
+export * from '../src/js/vuikit'
 
 export default Vuikit

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PopperMixin from '../_mixins/popper'
+import PopperMixin from 'lib/mixins/popper'
 import { on, offAll } from 'helpers/dom-events'
 
 let onMouseenter

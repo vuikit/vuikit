@@ -14,7 +14,7 @@
 <script>
 import { on, offAll } from 'helpers/dom-events'
 import addClass from 'utils/add-class'
-import PopperMixin from 'lib/_mixins/popper.js'
+import PopperMixin from 'lib/mixins/popper'
 
 let onClickOut
 let onMouseenter
