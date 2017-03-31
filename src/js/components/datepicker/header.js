@@ -7,7 +7,7 @@ import addYears from 'date-fns/add_years'
 import addMonths from 'date-fns/add_months'
 import setYear from 'date-fns/set_year'
 import setMonth from 'date-fns/set_month'
-import range from 'utils/range'
+import { range } from 'src/js/util/index'
 
 export default {
   functional: true,

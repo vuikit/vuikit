@@ -59,8 +59,7 @@ import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
 import PickerHeader from './Header'
 import dateMatrix from 'helpers/date-matrix'
-import range from 'utils/range'
-import isInteger from 'utils/is-integer'
+import { range, isInteger } from 'src/js/util/index'
 
 export default {
   name: 'VkDatepicker',

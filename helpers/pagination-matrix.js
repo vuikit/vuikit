@@ -1,10 +1,11 @@
-var getRange = require('../utils/range')
-var def = { total: 200, page: 1, perPage: 10, range: 3 }
+import { range as getRange } from 'src/js/util/index'
+
+const def = { total: 200, page: 1, perPage: 10, range: 3 }
 
 /**
  * Returns an array with represented ranges pages
  */
-module.exports = function ({
+export default function ({
   total = def.total,
   page = def.page,
   perPage = def.perPage,

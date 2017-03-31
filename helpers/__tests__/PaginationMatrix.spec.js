@@ -1,5 +1,5 @@
 /* eslint-env jest */
-const matrix = require('../pagination-matrix')
+import matrix from '../pagination-matrix'
 
 describe('pagination-matrix', () => {
   it('accept arguments', () => {

@@ -1,4 +1,4 @@
-import warn from 'utils/warn'
+import { warn } from 'src/js/util/index'
 
 export default {
   components: {

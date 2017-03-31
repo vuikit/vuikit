@@ -1,4 +1,4 @@
-import * as lib from '../src/js/vuikit'
+import * as lib from 'src/js/vuikit'
 
 const Vuikit = {
   ...lib,

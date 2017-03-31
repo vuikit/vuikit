@@ -19,10 +19,9 @@
 </template>
 
 <script>
-import { on } from 'helpers/dom-events'
-import addClass from 'utils/add-class'
-import removeClass from 'utils/remove-class'
 import ModalMixin from 'lib/mixins/modal'
+import { on, addClass, removeClass } from 'src/js/util/index'
+
 const doc = document.documentElement
 
 export default {

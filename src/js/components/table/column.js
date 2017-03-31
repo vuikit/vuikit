@@ -1,4 +1,4 @@
-import get from 'utils/get'
+import { get } from 'src/js/util/index'
 
 export default {
   render (h) {

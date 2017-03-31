@@ -1,4 +1,4 @@
-import { on, offAll } from 'helpers/dom-events'
+import { on, offAll } from 'src/js/util/index'
 
 const doc = document.documentElement
 const body = document.body

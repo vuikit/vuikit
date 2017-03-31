@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import int from 'utils/to-integer'
 import TWEEN from 'tween.js'
+import { toInteger } from 'src/js/util/index'
 
 export default {
   name: 'VkLoadingBar',
@@ -41,7 +41,7 @@ export default {
   methods: {
     // within 0-100 range
     normalize (value) {
-      return Math.max(Math.min(int(value), 100), 0)
+      return Math.max(Math.min(toInteger(value), 100), 0)
     },
     animate (progress) {
       let animationFrame

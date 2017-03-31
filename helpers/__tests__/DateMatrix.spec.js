@@ -1,6 +1,6 @@
 /* eslint-env jest */
-const matrix = require('../date-matrix')
-const MockDate = require('mockdate')
+import matrix from '../date-matrix'
+import MockDate from 'mockdate'
 
 describe('data-matrix', () => {
   const dec14 = [

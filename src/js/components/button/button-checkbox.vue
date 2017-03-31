@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import inArray from 'utils/in-array'
+import { inArray } from 'src/js/util/index'
 import { filterByTag, getProps } from 'helpers/component'
 
 export default {

@@ -1,4 +1,4 @@
-import isInteger from 'utils/is-integer'
+import { isInteger } from 'src/js/util/index'
 
 export default {
   functional: true,

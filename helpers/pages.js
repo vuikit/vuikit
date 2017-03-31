@@ -1,8 +1,7 @@
-var each = require('../utils/each')
-var isArray = require('../utils/is-array')
-var pick = require('lodash-es/pick')
+import { each, isArray } from 'src/js/util/index'
+import pick from 'lodash-es/pick'
 
-module.exports = function (compProps, pageProps) {
+export default function (compProps, pageProps) {
   // we only want to pick declared props
   let pickedProps = pick(compProps, Object.keys(pageProps))
   // merge the new properties

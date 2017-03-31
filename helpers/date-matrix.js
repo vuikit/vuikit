@@ -1,13 +1,13 @@
-var isSameMonth = require('date-fns/is_same_month')
-var getYear = require('date-fns/get_year')
-var getMonth = require('date-fns/get_month')
-var getDate = require('date-fns/get_date')
-var addDays = require('date-fns/add_days')
-var startOfWeek = require('date-fns/start_of_week')
-var range = require('../utils/range')
+import { range } from 'src/js/util/index'
+import isSameMonth from 'date-fns/is_same_month'
+import getYear from 'date-fns/get_year'
+import getMonth from 'date-fns/get_month'
+import getDate from 'date-fns/get_date'
+import addDays from 'date-fns/add_days'
+import startOfWeek from 'date-fns/start_of_week'
 
-var rows = range(6)
-var cols = range(7)
+const rows = range(6)
+const cols = range(7)
 
 /**
  * Returns a two-dimensional array with calendar represented dates
@@ -15,7 +15,7 @@ var cols = range(7)
  * @date  Date or Object
  * @plain Boolean - Whetever the dates should be set as raw numbers
  */
-module.exports = function ({ year, month, weekStartsOn } = {
+export default function ({ year, month, weekStartsOn } = {
   year: getYear(Date.now()),
   month: getMonth(Date.now()),
   weekStartsOn: 0

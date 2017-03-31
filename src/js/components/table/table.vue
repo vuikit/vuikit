@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import isFunction from 'utils/is-function'
+import { isFunction } from 'src/js/util/index'
 
 export default {
   name: 'VkTable',

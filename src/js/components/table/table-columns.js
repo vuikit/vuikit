@@ -1,4 +1,4 @@
-import isFunction from 'utils/is-function'
+import { isFunction } from 'src/js/util/index'
 import Column from './table-column'
 import ColumnSelect from './table-column-select'
 import ColumnSort from './table-column-sort'
