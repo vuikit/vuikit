@@ -1,6 +1,10 @@
-// export function classify(str) {
-//     return str.replace(/(?:^|[-_\/])(\w)/g, (_, c) => c ? c.toUpperCase() : '');
-// }
+export function promise (executor) {
+  return new window.Promise(executor)
+}
+
+export function classify (str) {
+  return str.replace(/(?:^|[-_/])(\w)/g, (_, c) => c ? c.toUpperCase() : '')
+}
 //
 // export function hyphenate(str) {
 //     return str
@@ -25,20 +29,20 @@ export function capitalize (value) {
 //     return typeof value === 'number';
 // }
 //
-// export function isUndefined(value) {
-//     return value === undefined;
-// }
+export function isUndefined (value) {
+  return value === undefined
+}
 
 export function isString (val) {
   return typeof val === 'string'
 }
 
-export function isInteger () {
-  return Number.isInteger
+export function isInteger (val) {
+  return Number.isInteger(val)
 }
 
-export function isArray () {
-  return Array.isArray
+export function isArray (val) {
+  return Array.isArray(val)
 }
 
 /* https://github.com/sindresorhus/is-obj */
@@ -79,10 +83,12 @@ export function isFunction (x) {
 //                 : value;
 // }
 //
-// export function toNumber(value) {
-//     var number = Number(value);
-//     return !isNaN(number) ? number : false;
-// }
+export function toNumber (value) {
+  const number = Number(value)
+  return !isNaN(number)
+    ? number
+    : false
+}
 //
 // export function toList(value) {
 //     return isArray(value)
@@ -96,8 +102,8 @@ export function toInteger (n) {
   return parseInt(n, 10)
 }
 
-export function toString () {
-  return Object.prototype.toString
+export function toString (string) {
+  return Object.prototype.toString(string)
 }
 
 /* https://github.com/sindresorhus/arrify */
