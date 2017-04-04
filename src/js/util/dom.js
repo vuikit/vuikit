@@ -1,7 +1,6 @@
-import $ from 'jquery'
 import { animationend, promise, requestAnimationFrame, isUndefined } from './index'
 
-export const isRtl = $('html').attr('dir') === 'rtl'
+export const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 
 export const Animation = {
   in (element, animation, duration, origin) {
@@ -71,22 +70,22 @@ function _addClass (el, className) {
   el.classList.add(className)
 }
 
-// export function removeClass (el, classes) {
-//   return sanitizeClasses(classes).forEach(className => _removeClass(el, className))
+export function removeClass (el, classes) {
+  return sanitizeClasses(classes).forEach(className => _removeClass(el, className))
+}
+
+export function _removeClass (el, className) {
+  el.classList.remove(className)
+}
+
+// export function attrFilter (element, attr, pattern, replacement) {
+//   element = $(element)
+//   return element.attr(attr, (i, value) => value ? value.replace(pattern, replacement) : value)
 // }
 //
-// export function _removeClass (el, className) {
-//   el.classList.remove(className)
+// export function removeClass (element, cls) {
+//   return attrFilter(element, 'class', new RegExp(`(^|\\s)${cls}(?!\\S)`, 'g'), '')
 // }
-
-export function attrFilter (element, attr, pattern, replacement) {
-  element = $(element)
-  return element.attr(attr, (i, value) => value ? value.replace(pattern, replacement) : value)
-}
-
-export function removeClass (element, cls) {
-  return attrFilter(element, 'class', new RegExp(`(^|\\s)${cls}(?!\\S)`, 'g'), '')
-}
 
 function sanitizeClasses (classes) {
   return classes.split(' ').filter(c => c)
