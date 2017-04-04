@@ -19,6 +19,11 @@ export default [
     component: require('./pages/Datepicker')
   },
   {
+    name: 'Drop',
+    path: '/drop',
+    component: require('./pages/Drop')
+  },
+  {
     name: 'Dropdown',
     path: '/dropdown',
     component: require('./pages/Dropdown')
