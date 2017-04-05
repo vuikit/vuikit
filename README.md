@@ -17,8 +17,6 @@ Special thanks to the supporters who help pushing this project forward.
 <p align="center">
   <br />
   <a href="http://www.zoolanders.com"><img width="150px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/zoolanders.png"></a>
-  <br /><br />
-  <a href="https://vuejobs.com?ref=vuikit"><img width="120px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/vuejobs.png"></a>
 </p>
 
 ## Documentation and examples
