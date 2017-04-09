@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="uk-container uk-margin-bottom">
+    <app-header></app-header>
+    <h1>{{ $route.name }}</h1>
     <div class="uk-grid-small uk-child-width-expand@s" uk-grid>
       <div>
         <h2>Basic</h2>

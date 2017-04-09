@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="uk-container uk-margin-bottom">
+    <app-header></app-header>
+    <h1>{{ $route.name }}</h1>
     <h2>Bar</h2>
     <div class="uk-margin">
       <vk-loading-bar :progress="progress" :state="state" @animation-complete="update"></vk-loading-bar>

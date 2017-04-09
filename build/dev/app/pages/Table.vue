@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="uk-container uk-margin-bottom">
+    <app-header></app-header>
+    <h1>{{ $route.name }}</h1>
     <div class="uk-overflow-auto">
       <vk-table class="uk-table-small" :data="data">
         <vk-table-column header="Name" cell="name" />

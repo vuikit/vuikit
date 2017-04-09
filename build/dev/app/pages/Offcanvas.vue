@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div class="uk-container uk-margin-bottom">
+    <app-header></app-header>
+    <h1>{{ $route.name }}</h1>
     <div class="uk-navbar">
       <div class="uk-navbar-left">
         <vk-button @click="left.slide = true">Slide</vk-button>
