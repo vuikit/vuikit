@@ -1,8 +1,10 @@
-/*!
- * Vuikit v0.7.0
- * (c) 2016-present Miljan Aleksic
- * Released under the MIT License.
- */
+
+    /*!
+    * vuikit 0.7.0 (undefined)
+    * (c) 2017 Miljan Aleksic
+    * Released under the MIT License.
+    */
+  
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
 	typeof define === 'function' && define.amd ? define(factory) :
@@ -110,9 +112,520 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var inArray = function (array, value) {
+var isRtl$$1 = document.documentElement.getAttribute('dir') === 'rtl';
+
+
+
+
+
+/* Add/Remove class */
+
+function hasClass$$1 (el, className) {
+  return el.classList.contains(className)
+}
+
+function addClass$$1 (el, classes) {
+  return sanitizeClasses(classes).forEach(function (className) { return _addClass(el, className); })
+}
+
+function _addClass (el, className) {
+  el.classList.add(className);
+}
+
+function removeClass$$1 (el, classes) {
+  return sanitizeClasses(classes).forEach(function (className) { return _removeClass$$1(el, className); })
+}
+
+function _removeClass$$1 (el, className) {
+  el.classList.remove(className);
+}
+
+// export function attrFilter (element, attr, pattern, replacement) {
+//   element = $(element)
+//   return element.attr(attr, (i, value) => value ? value.replace(pattern, replacement) : value)
+// }
+//
+// export function removeClass (element, cls) {
+//   return attrFilter(element, 'class', new RegExp(`(^|\\s)${cls}(?!\\S)`, 'g'), '')
+// }
+
+function sanitizeClasses (classes) {
+  return classes.split(' ').filter(function (c) { return c; })
+}
+
+/* Retrieve style */
+
+function css$$1 (el, style, value) {
+  // retrieve
+  if (isUndefined(value)) {
+    return window.getComputedStyle(el)[style]
+  }
+  // or add style
+  el.style[style] = value;
+}
+
+/* Events */
+
+var boundEvents = [];
+
+// add event listener shorthand
+function on$$1 (el, type, listener, namespace) {
+  if ( namespace === void 0 ) namespace = 'default';
+
+  boundEvents[namespace] = boundEvents[namespace] || [];
+  boundEvents[namespace].push({ el: el, type: type, listener: listener });
+  el.addEventListener(type, listener);
+}
+
+
+
+
+
+function offAll$$1 (namespace) {
+  if ( namespace === void 0 ) namespace = 'default';
+
+  if (boundEvents[namespace] !== undefined) {
+    for (var i = 0; i < boundEvents[namespace].length; ++i) {
+      var ref = boundEvents[namespace][i];
+      var el = ref.el;
+      var event = ref.event;
+      var handler = ref.handler;
+      el.removeEventListener(event, handler);
+    }
+  }
+}
+
+function classify (str) {
+  return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
+}
+
+
+
+
+// export function isNumber(value) {
+//     return typeof value === 'number';
+// }
+//
+function isUndefined (value) {
+  return value === undefined
+}
+
+function isString (val) {
+  return typeof val === 'string'
+}
+
+function isInteger (val) {
+  return Number.isInteger(val)
+}
+
+function isArray (val) {
+  return Array.isArray(val)
+}
+
+/* https://github.com/sindresorhus/is-obj */
+function isObject (x) {
+  var type = typeof x;
+  return x !== null && (type === 'object' || type === 'function')
+}
+
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects
+ */
+
+
+/* https://github.com/sindresorhus/is-fn */
+function isFunction (x) {
+  return toString$1.call(x) === '[object Function]'
+}
+
+//
+// export function isContextSelector(selector) {
+//     return isString(selector) && selector.match(/^(!|>|\+|-)/);
+// }
+//
+// export function getContextSelectors(selector) {
+//     return isContextSelector(selector) && selector.split(/(?=\s(?:!|>|\+|-))/g).map(value => value.trim());
+// }
+//
+// export function toBoolean(value) {
+//     return typeof value === 'boolean'
+//         ? value
+//         : value === 'true' || value == '1' || value === ''
+//             ? true
+//             : value === 'false' || value == '0'
+//                 ? false
+//                 : value;
+// }
+//
+function toNumber (value) {
+  var number = Number(value);
+  return !isNaN(number)
+    ? number
+    : false
+}
+//
+// export function toList(value) {
+//     return isArray(value)
+//         ? value
+//         : isString(value)
+//             ? value.split(',').map(value => value.trim())
+//             : [value];
+// }
+
+function toInteger (n) {
+  return parseInt(n, 10)
+}
+
+function toString$1 (string) {
+  return Object.prototype.toString(string)
+}
+
+/* https://github.com/sindresorhus/arrify */
+
+
+function inArray (array, value) {
   return (array || []).indexOf(value) !== -1
+}
+
+function each (obj, iterator) {
+  var i, key;
+  if (isInteger(obj.length)) {
+    for (i = 0; i < obj.length; i++) {
+      iterator.call(obj[i], obj[i], i);
+    }
+  } else if (isObject(obj)) {
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        iterator.call(obj[key], obj[key], key);
+      }
+    }
+  }
+  return obj
+}
+
+
+
+function range (start, stop, step) {
+  if ( step === void 0 ) step = 1;
+
+  if (typeof stop === 'undefined') {
+    stop = start;
+    start = 0;
+  }
+  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + (i * step); })
+}
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ */
+function get (object, path, defaultValue) {
+  var result = isObject(object) && isString(path)
+    ? baseGet(object, path)
+    : undefined;
+  return result === undefined
+    ? defaultValue
+    : result
+}
+
+function baseGet (object, path) {
+  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, object)
+}
+
+// export const Observer = window.MutationObserver || window.WebKitMutationObserver
+
+
+//
+// export const hasTouch = 'ontouchstart' in window
+//     || window.DocumentTouch && document instanceof DocumentTouch
+//     || navigator.msPointerEnabled && navigator.msMaxTouchPoints > 0 // IE 10
+//     || navigator.pointerEnabled && navigator.maxTouchPoints > 0; // IE >=11
+//
+// export const pointerDown = !hasTouch ? 'mousedown' : window.PointerEvent ? 'pointerdown' : 'touchstart';
+// export const pointerMove = !hasTouch ? 'mousemove' : window.PointerEvent ? 'pointermove' : 'touchmove';
+// export const pointerUp = !hasTouch ? 'mouseup' : window.PointerEvent ? 'pointerup' : 'touchend';
+// export const pointerEnter = hasTouch && window.PointerEvent ? 'pointerenter' : 'mouseenter';
+// export const pointerLeave = hasTouch && window.PointerEvent ? 'pointerleave' : 'mouseleave';
+//
+var transitionstart = prefix('transition', 'transition-start');
+var transitionend = prefix('transition', 'transition-end');
+var animationstart = prefix('animation', 'animation-start');
+var animationend = prefix('animation', 'animation-end');
+//
+// export function getStyle(element, property, pseudoElt) {
+//     return (window.getComputedStyle(element, pseudoElt) || {})[property];
+// }
+//
+// export function getCssVar(name) {
+//
+//     /* usage in css:  .var-name:before { content:"xyz" } */
+//
+//     var val, doc = document.documentElement,
+//         element = doc.appendChild(document.createElement('div'));
+//
+//     element.classList.add(`var-${name}`);
+//
+//     try {
+//
+//         val = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1');
+//         val = JSON.parse(val);
+//
+//     } catch (e) {}
+//
+//     doc.removeChild(element);
+//
+//     return val || undefined;
+// }
+//
+function prefix (name, event) {
+  var ucase = classify(name);
+  var lowered = classify(event).toLowerCase();
+  var classified = classify(event);
+  var element = document.body || document.documentElement;
+  var names = {};
+  names[("Webkit" + ucase)] = ("webkit" + classified);
+  names[("Moz" + ucase)] = lowered;
+  names[("o" + ucase)] = ("o" + classified + " o" + lowered);
+  names[name] = lowered;
+
+  for (name in names) {
+    if (element.style[name] !== undefined) {
+      return names[name]
+    }
+  }
+}
+
+var dirs = {
+  x: ['width', 'left', 'right'],
+  y: ['height', 'top', 'bottom']
 };
+
+function getPosition$$1 (element, target, attach, targetAttach, offset$$1, targetOffset, flip, boundary) {
+  var dim = getDimensions$$1(element);
+  var targetDim = getDimensions$$1(target);
+  var position = targetDim;
+
+  attach = getPos(attach);
+  targetAttach = getPos(targetAttach);
+
+  moveTo(position, attach, dim, -1);
+  moveTo(position, targetAttach, targetDim, 1);
+
+  offset$$1 = getOffsets(offset$$1, dim.width, dim.height);
+  targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height);
+
+  offset$$1['x'] += targetOffset['x'];
+  offset$$1['y'] += targetOffset['y'];
+
+  position.left += offset$$1['x'];
+  position.top += offset$$1['y'];
+
+  boundary = getDimensions$$1(boundary || window);
+
+  var flipped = {element: attach, target: targetAttach};
+
+  if (flip) {
+    each(dirs, function (ref, dir) {
+      var prop = ref[0];
+      var align = ref[1];
+      var alignFlip = ref[2];
+
+      if (!(flip === true || ~flip.indexOf(dir))) {
+        return
+      }
+
+      var elemOffset = attach[dir] === align
+        ? -dim[prop]
+        : attach[dir] === alignFlip
+          ? dim[prop]
+          : 0;
+      var targetOffset = targetAttach[dir] === align
+        ? targetDim[prop]
+        : targetAttach[dir] === alignFlip
+          ? -targetDim[prop]
+          : 0;
+
+      if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
+        var newVal = position[align] + elemOffset + targetOffset - offset$$1[dir] * 2;
+
+        if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
+          position[align] = newVal
+
+          ;['element', 'target'].forEach(function (el) {
+            flipped[el][dir] = !elemOffset
+              ? flipped[el][dir]
+              : flipped[el][dir] === dirs[dir][1]
+                ? dirs[dir][2]
+                : dirs[dir][1];
+          });
+        }
+      }
+    });
+  }
+
+  return Object.assign({}, flipped,
+    windowToPageOffset$$1(element, { left: position.left, top: position.top }))
+}
+
+/*
+ * Translate top and left window relative coordinates to
+ * document relative ones.
+ */
+function windowToPageOffset$$1 (element, coords) {
+  var parentOffset = offset$$1(offsetParent(element));
+  var props = {
+    top: coords.top - parentOffset.top,
+    left: coords.left - parentOffset.left
+  };
+  return props
+}
+
+/*
+ * Get position of the element in the document.
+ * Returns an object with properties: top, left, width and height.
+ */
+function offset$$1 (element) {
+  var obj = element.getBoundingClientRect();
+  return {
+    left: obj.left + window.pageXOffset,
+    top: obj.top + window.pageYOffset,
+    width: Math.round(obj.width),
+    height: Math.round(obj.height)
+  }
+}
+
+/**
+ * Find the first ancestor element that is positioned,
+ * meaning its CSS position value is “relative”, “absolute” or “fixed”.
+ */
+var rootNodeRE = /^(?:body|html)$/i;
+function offsetParent (element) {
+  var parent = element.offsetParent || document.body;
+  while (parent && !rootNodeRE.test(parent.nodeName) && css$$1(parent, 'position') === 'static') {
+    parent = parent.offsetParent;
+  }
+  return parent
+}
+
+function getDimensions$$1 (element) {
+  var window = getWindow(element);
+  var top = window.pageYOffset;
+  var left = window.pageXOffset;
+
+  if (!element.ownerDocument) {
+    return {
+      top: top,
+      left: left,
+      height: window.innerHeight,
+      width: window.innerWidth,
+      bottom: top + window.innerHeight,
+      right: left + window.innerWidth
+    }
+  }
+
+  var display;
+  if (!element.offsetHeight) {
+    display = window.getComputedStyle(element).display;
+    element.style.display = 'block';
+  }
+
+  var rect = element.getBoundingClientRect();
+
+  if (display) {
+    element.style.display = display;
+  }
+
+  return {
+    height: rect.height,
+    width: rect.width,
+    top: rect.top + top,
+    left: rect.left + left,
+    bottom: rect.bottom + top,
+    right: rect.right + left
+  }
+}
+
+
+
+function getWindow (element) {
+  return element.ownerDocument
+    ? element.ownerDocument.defaultView
+    : window
+}
+
+function moveTo (position, attach, dim, factor) {
+  each(dirs, function (ref, dir) {
+    var prop = ref[0];
+    var align = ref[1];
+    var alignFlip = ref[2];
+
+    if (attach[dir] === alignFlip) {
+      position[align] += dim[prop] * factor;
+    } else if (attach[dir] === 'center') {
+      position[align] += dim[prop] * factor / 2;
+    }
+  });
+}
+
+function getPos (pos) {
+  var x = /left|center|right/;
+  var y = /top|center|bottom/;
+
+  pos = (pos || '').split(' ');
+
+  if (pos.length === 1) {
+    pos = x.test(pos[0])
+      ? pos.concat(['center'])
+      : y.test(pos[0])
+        ? ['center'].concat(pos)
+        : ['center', 'center'];
+  }
+
+  return {
+    x: x.test(pos[0]) ? pos[0] : 'center',
+    y: y.test(pos[1]) ? pos[1] : 'center'
+  }
+}
+
+function getOffsets (offsets, width, height) {
+  offsets = (offsets || '').split(' ');
+
+  return {
+    x: offsets[0] ? parseFloat(offsets[0]) * (offsets[0][offsets[0].length - 1] === '%' ? width / 100 : 1) : 0,
+    y: offsets[1] ? parseFloat(offsets[1]) * (offsets[1][offsets[1].length - 1] === '%' ? height / 100 : 1) : 0
+  }
+}
+
+function flipPosition$$1 (pos) {
+  switch (pos) {
+    case 'left':
+      return 'right'
+    case 'right':
+      return 'left'
+    case 'top':
+      return 'bottom'
+    case 'bottom':
+      return 'top'
+    default:
+      return pos
+  }
+}
+
+/**
+ * Warn about errors only in no production
+ */
+
+var warn;
+
+{
+  var hasConsole = typeof console !== 'undefined';
+  warn = function (msg) {
+    if (hasConsole) {
+      console.error(msg);
+    }
+  };
+}
 
 function filterByTag (nodes, tag) {
   var result = [];
@@ -223,13 +736,11 @@ var buttonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var
  * var result = isDate('mayonnaise')
  * //=> false
  */
-function isDate$1 (argument) {
+function isDate (argument) {
   return argument instanceof Date
 }
 
-var index$2 = isDate$1;
-
-var isDate = index$2;
+var index$2 = isDate;
 
 var MILLISECONDS_IN_HOUR = 3600000;
 var MILLISECONDS_IN_MINUTE = 60000;
@@ -304,8 +815,8 @@ var parseTokenTimezoneHHMM = /^([+-])(\d{2}):?(\d{2})$/;
  * var result = parse('+02014101', {additionalDigits: 1})
  * //=> Fri Apr 11 2014 00:00:00
  */
-function parse$1 (argument, dirtyOptions) {
-  if (isDate(argument)) {
+function parse (argument, dirtyOptions) {
+  if (index$2(argument)) {
     // Prevent the date to lose the milliseconds when passed to new Date() in IE10
     return new Date(argument.getTime())
   } else if (typeof argument !== 'string') {
@@ -548,9 +1059,7 @@ function dayOfISOYear (isoYear, week, day) {
   return date
 }
 
-var index$1 = parse$1;
-
-var parse = index$1;
+var index$1 = parse;
 
 /**
  * @category Year Helpers
@@ -568,14 +1077,12 @@ var parse = index$1;
  * //=> 2014
  */
 function getYear (dirtyDate) {
-  var date = parse(dirtyDate);
+  var date = index$1(dirtyDate);
   var year = date.getFullYear();
   return year
 }
 
 var index = getYear;
-
-var parse$3 = index$1;
 
 /**
  * @category Month Helpers
@@ -593,14 +1100,12 @@ var parse$3 = index$1;
  * //=> 1
  */
 function getMonth (dirtyDate) {
-  var date = parse$3(dirtyDate);
+  var date = index$1(dirtyDate);
   var month = date.getMonth();
   return month
 }
 
 var index$4 = getMonth;
-
-var parse$4 = index$1;
 
 /**
  * @category Day Helpers
@@ -618,14 +1123,12 @@ var parse$4 = index$1;
  * //=> 29
  */
 function getDate (dirtyDate) {
-  var date = parse$4(dirtyDate);
+  var date = index$1(dirtyDate);
   var dayOfMonth = date.getDate();
   return dayOfMonth
 }
 
 var index$5 = getDate;
-
-var parse$5 = index$1;
 
 /**
  * @category Month Helpers
@@ -647,15 +1150,13 @@ var parse$5 = index$1;
  * //=> true
  */
 function isSameMonth (dirtyDateLeft, dirtyDateRight) {
-  var dateLeft = parse$5(dirtyDateLeft);
-  var dateRight = parse$5(dirtyDateRight);
+  var dateLeft = index$1(dirtyDateLeft);
+  var dateRight = index$1(dirtyDateRight);
   return dateLeft.getFullYear() === dateRight.getFullYear() &&
     dateLeft.getMonth() === dateRight.getMonth()
 }
 
 var index$6 = isSameMonth;
-
-var parse$6 = index$1;
 
 /**
  * @category Day Helpers
@@ -673,15 +1174,13 @@ var parse$6 = index$1;
  * var result = startOfDay(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Tue Sep 02 2014 00:00:00
  */
-function startOfDay$1 (dirtyDate) {
-  var date = parse$6(dirtyDate);
+function startOfDay (dirtyDate) {
+  var date = index$1(dirtyDate);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
-var index$8 = startOfDay$1;
-
-var startOfDay = index$8;
+var index$8 = startOfDay;
 
 /**
  * @category Day Helpers
@@ -703,15 +1202,13 @@ var startOfDay = index$8;
  * //=> true
  */
 function isSameDay (dirtyDateLeft, dirtyDateRight) {
-  var dateLeftStartOfDay = startOfDay(dirtyDateLeft);
-  var dateRightStartOfDay = startOfDay(dirtyDateRight);
+  var dateLeftStartOfDay = index$8(dirtyDateLeft);
+  var dateRightStartOfDay = index$8(dirtyDateRight);
 
   return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime()
 }
 
 var index$7 = isSameDay;
-
-var parse$7 = index$1;
 
 /**
  * @category Range Helpers
@@ -741,9 +1238,9 @@ var parse$7 = index$1;
  * //=> false
  */
 function isWithinRange (dirtyDate, dirtyStartDate, dirtyEndDate) {
-  var time = parse$7(dirtyDate).getTime();
-  var startTime = parse$7(dirtyStartDate).getTime();
-  var endTime = parse$7(dirtyEndDate).getTime();
+  var time = index$1(dirtyDate).getTime();
+  var startTime = index$1(dirtyStartDate).getTime();
+  var endTime = index$1(dirtyEndDate).getTime();
 
   if (startTime > endTime) {
     throw new Error('The start of the range cannot be after the end of the range')
@@ -753,8 +1250,6 @@ function isWithinRange (dirtyDate, dirtyStartDate, dirtyEndDate) {
 }
 
 var index$10 = isWithinRange;
-
-var isDate$2 = index$2;
 
 /**
  * @category Common Helpers
@@ -781,7 +1276,7 @@ var isDate$2 = index$2;
  * //=> false
  */
 function isValid (dirtyDate) {
-  if (isDate$2(dirtyDate)) {
+  if (index$2(dirtyDate)) {
     return !isNaN(dirtyDate)
   } else {
     throw new TypeError(toString.call(dirtyDate) + ' is not an instance of Date')
@@ -789,8 +1284,6 @@ function isValid (dirtyDate) {
 }
 
 var index$11 = isValid;
-
-var parse$8 = index$1;
 
 /**
  * @category Range Helpers
@@ -821,10 +1314,10 @@ var parse$8 = index$1;
  * //=> false
  */
 function areRangesOverlapping (dirtyInitialRangeStartDate, dirtyInitialRangeEndDate, dirtyComparedRangeStartDate, dirtyComparedRangeEndDate) {
-  var initialStartTime = parse$8(dirtyInitialRangeStartDate).getTime();
-  var initialEndTime = parse$8(dirtyInitialRangeEndDate).getTime();
-  var comparedStartTime = parse$8(dirtyComparedRangeStartDate).getTime();
-  var comparedEndTime = parse$8(dirtyComparedRangeEndDate).getTime();
+  var initialStartTime = index$1(dirtyInitialRangeStartDate).getTime();
+  var initialEndTime = index$1(dirtyInitialRangeEndDate).getTime();
+  var comparedStartTime = index$1(dirtyComparedRangeStartDate).getTime();
+  var comparedEndTime = index$1(dirtyComparedRangeEndDate).getTime();
 
   if (initialStartTime > initialEndTime || comparedStartTime > comparedEndTime) {
     throw new Error('The start of the range cannot be after the end of the range')
@@ -834,8 +1327,6 @@ function areRangesOverlapping (dirtyInitialRangeStartDate, dirtyInitialRangeEndD
 }
 
 var index$12 = areRangesOverlapping;
-
-var parse$9 = index$1;
 
 /**
  * @category Month Helpers
@@ -854,15 +1345,13 @@ var parse$9 = index$1;
  * //=> Mon Sep 01 2014 00:00:00
  */
 function startOfMonth (dirtyDate) {
-  var date = parse$9(dirtyDate);
+  var date = index$1(dirtyDate);
   date.setDate(1);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
 var index$13 = startOfMonth;
-
-var parse$10 = index$1;
 
 /**
  * @category Week Helpers
@@ -890,7 +1379,7 @@ var parse$10 = index$1;
 function startOfWeek (dirtyDate, dirtyOptions) {
   var weekStartsOn = dirtyOptions ? (Number(dirtyOptions.weekStartsOn) || 0) : 0;
 
-  var date = parse$10(dirtyDate);
+  var date = index$1(dirtyDate);
   var day = date.getDay();
   var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
 
@@ -900,8 +1389,6 @@ function startOfWeek (dirtyDate, dirtyOptions) {
 }
 
 var index$14 = startOfWeek;
-
-var parse$11 = index$1;
 
 /**
  * @category Month Helpers
@@ -920,7 +1407,7 @@ var parse$11 = index$1;
  * //=> Tue Sep 30 2014 23:59:59.999
  */
 function endOfMonth (dirtyDate) {
-  var date = parse$11(dirtyDate);
+  var date = index$1(dirtyDate);
   var month = date.getMonth();
   date.setFullYear(date.getFullYear(), month + 1, 0);
   date.setHours(23, 59, 59, 999);
@@ -928,8 +1415,6 @@ function endOfMonth (dirtyDate) {
 }
 
 var index$15 = endOfMonth;
-
-var parse$13 = index$1;
 
 /**
  * @category Month Helpers
@@ -946,8 +1431,8 @@ var parse$13 = index$1;
  * var result = getDaysInMonth(new Date(2000, 1))
  * //=> 29
  */
-function getDaysInMonth$1 (dirtyDate) {
-  var date = parse$13(dirtyDate);
+function getDaysInMonth (dirtyDate) {
+  var date = index$1(dirtyDate);
   var year = date.getFullYear();
   var monthIndex = date.getMonth();
   var lastDayOfMonth = new Date(0);
@@ -956,10 +1441,7 @@ function getDaysInMonth$1 (dirtyDate) {
   return lastDayOfMonth.getDate()
 }
 
-var index$17 = getDaysInMonth$1;
-
-var parse$12 = index$1;
-var getDaysInMonth = index$17;
+var index$17 = getDaysInMonth;
 
 /**
  * @category Month Helpers
@@ -978,13 +1460,13 @@ var getDaysInMonth = index$17;
  * //=> Sun Feb 01 2015 00:00:00
  */
 function addMonths (dirtyDate, dirtyAmount) {
-  var date = parse$12(dirtyDate);
+  var date = index$1(dirtyDate);
   var amount = Number(dirtyAmount);
   var desiredMonth = date.getMonth() + amount;
   var dateWithDesiredMonth = new Date(0);
   dateWithDesiredMonth.setFullYear(date.getFullYear(), desiredMonth, 1);
   dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  var daysInMonth = getDaysInMonth(dateWithDesiredMonth);
+  var daysInMonth = index$17(dateWithDesiredMonth);
   // Set the last day of the new month
   // if the original date was the last day of the longer month
   date.setMonth(desiredMonth, Math.min(daysInMonth, date.getDate()));
@@ -992,8 +1474,6 @@ function addMonths (dirtyDate, dirtyAmount) {
 }
 
 var index$16 = addMonths;
-
-var parse$14 = index$1;
 
 /**
  * @category Day Helpers
@@ -1012,15 +1492,13 @@ var parse$14 = index$1;
  * //=> Thu Sep 11 2014 00:00:00
  */
 function addDays (dirtyDate, dirtyAmount) {
-  var date = parse$14(dirtyDate);
+  var date = index$1(dirtyDate);
   var amount = Number(dirtyAmount);
   date.setDate(date.getDate() + amount);
   return date
 }
 
 var index$19 = addDays;
-
-var addMonths$2 = index$16;
 
 /**
  * @category Month Helpers
@@ -1040,12 +1518,10 @@ var addMonths$2 = index$16;
  */
 function subMonths (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return addMonths$2(dirtyDate, -amount)
+  return index$16(dirtyDate, -amount)
 }
 
 var index$20 = subMonths;
-
-var addDays$2 = index$19;
 
 /**
  * @category Day Helpers
@@ -1065,12 +1541,10 @@ var addDays$2 = index$19;
  */
 function subDays (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return addDays$2(dirtyDate, -amount)
+  return index$19(dirtyDate, -amount)
 }
 
 var index$21 = subDays;
-
-var parse$17 = index$1;
 
 /**
  * @category Year Helpers
@@ -1088,17 +1562,15 @@ var parse$17 = index$1;
  * var result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
  * //=> Wed Jan 01 2014 00:00:00
  */
-function startOfYear$1 (dirtyDate) {
-  var cleanDate = parse$17(dirtyDate);
+function startOfYear (dirtyDate) {
+  var cleanDate = index$1(dirtyDate);
   var date = new Date(0);
   date.setFullYear(cleanDate.getFullYear(), 0, 1);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
-var index$25 = startOfYear$1;
-
-var startOfDay$2 = index$8;
+var index$25 = startOfYear;
 
 var MILLISECONDS_IN_MINUTE$1 = 60000;
 var MILLISECONDS_IN_DAY = 86400000;
@@ -1123,9 +1595,9 @@ var MILLISECONDS_IN_DAY = 86400000;
  * )
  * //=> 366
  */
-function differenceInCalendarDays$1 (dirtyDateLeft, dirtyDateRight) {
-  var startOfDayLeft = startOfDay$2(dirtyDateLeft);
-  var startOfDayRight = startOfDay$2(dirtyDateRight);
+function differenceInCalendarDays (dirtyDateLeft, dirtyDateRight) {
+  var startOfDayLeft = index$8(dirtyDateLeft);
+  var startOfDayRight = index$8(dirtyDateRight);
 
   var timestampLeft = startOfDayLeft.getTime() -
     startOfDayLeft.getTimezoneOffset() * MILLISECONDS_IN_MINUTE$1;
@@ -1138,11 +1610,7 @@ function differenceInCalendarDays$1 (dirtyDateLeft, dirtyDateRight) {
   return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY)
 }
 
-var index$27 = differenceInCalendarDays$1;
-
-var parse$16 = index$1;
-var startOfYear = index$25;
-var differenceInCalendarDays = index$27;
+var index$27 = differenceInCalendarDays;
 
 /**
  * @category Day Helpers
@@ -1159,16 +1627,14 @@ var differenceInCalendarDays = index$27;
  * var result = getDayOfYear(new Date(2014, 6, 2))
  * //=> 183
  */
-function getDayOfYear$1 (dirtyDate) {
-  var date = parse$16(dirtyDate);
-  var diff = differenceInCalendarDays(date, startOfYear(date));
+function getDayOfYear (dirtyDate) {
+  var date = index$1(dirtyDate);
+  var diff = index$27(date, index$25(date));
   var dayOfYear = diff + 1;
   return dayOfYear
 }
 
-var index$23 = getDayOfYear$1;
-
-var startOfWeek$2 = index$14;
+var index$23 = getDayOfYear;
 
 /**
  * @category ISO Week Helpers
@@ -1188,14 +1654,11 @@ var startOfWeek$2 = index$14;
  * var result = startOfISOWeek(new Date(2014, 8, 2, 11, 55, 0))
  * //=> Mon Sep 01 2014 00:00:00
  */
-function startOfISOWeek$1 (dirtyDate) {
-  return startOfWeek$2(dirtyDate, {weekStartsOn: 1})
+function startOfISOWeek (dirtyDate) {
+  return index$14(dirtyDate, {weekStartsOn: 1})
 }
 
-var index$31 = startOfISOWeek$1;
-
-var parse$19 = index$1;
-var startOfISOWeek$3 = index$31;
+var index$31 = startOfISOWeek;
 
 /**
  * @category ISO Week-Numbering Year Helpers
@@ -1215,19 +1678,19 @@ var startOfISOWeek$3 = index$31;
  * var result = getISOYear(new Date(2005, 0, 2))
  * //=> 2004
  */
-function getISOYear$2 (dirtyDate) {
-  var date = parse$19(dirtyDate);
+function getISOYear (dirtyDate) {
+  var date = index$1(dirtyDate);
   var year = date.getFullYear();
 
   var fourthOfJanuaryOfNextYear = new Date(0);
   fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
   fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-  var startOfNextYear = startOfISOWeek$3(fourthOfJanuaryOfNextYear);
+  var startOfNextYear = index$31(fourthOfJanuaryOfNextYear);
 
   var fourthOfJanuaryOfThisYear = new Date(0);
   fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
   fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
-  var startOfThisYear = startOfISOWeek$3(fourthOfJanuaryOfThisYear);
+  var startOfThisYear = index$31(fourthOfJanuaryOfThisYear);
 
   if (date.getTime() >= startOfNextYear.getTime()) {
     return year + 1
@@ -1238,10 +1701,7 @@ function getISOYear$2 (dirtyDate) {
   }
 }
 
-var index$35 = getISOYear$2;
-
-var getISOYear$1 = index$35;
-var startOfISOWeek$2 = index$31;
+var index$35 = getISOYear;
 
 /**
  * @category ISO Week-Numbering Year Helpers
@@ -1262,20 +1722,16 @@ var startOfISOWeek$2 = index$31;
  * var result = startOfISOYear(new Date(2005, 6, 2))
  * //=> Mon Jan 03 2005 00:00:00
  */
-function startOfISOYear$1 (dirtyDate) {
-  var year = getISOYear$1(dirtyDate);
+function startOfISOYear (dirtyDate) {
+  var year = index$35(dirtyDate);
   var fourthOfJanuary = new Date(0);
   fourthOfJanuary.setFullYear(year, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
-  var date = startOfISOWeek$2(fourthOfJanuary);
+  var date = index$31(fourthOfJanuary);
   return date
 }
 
-var index$33 = startOfISOYear$1;
-
-var parse$18 = index$1;
-var startOfISOWeek = index$31;
-var startOfISOYear = index$33;
+var index$33 = startOfISOYear;
 
 var MILLISECONDS_IN_WEEK = 604800000;
 
@@ -1296,9 +1752,9 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * var result = getISOWeek(new Date(2005, 0, 2))
  * //=> 53
  */
-function getISOWeek$1 (dirtyDate) {
-  var date = parse$18(dirtyDate);
-  var diff = startOfISOWeek(date).getTime() - startOfISOYear(date).getTime();
+function getISOWeek (dirtyDate) {
+  var date = index$1(dirtyDate);
+  var diff = index$31(date).getTime() - index$33(date).getTime();
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
@@ -1306,9 +1762,9 @@ function getISOWeek$1 (dirtyDate) {
   return Math.round(diff / MILLISECONDS_IN_WEEK) + 1
 }
 
-var index$29 = getISOWeek$1;
+var index$29 = getISOWeek;
 
-function buildDistanceInWordsLocale$1 () {
+function buildDistanceInWordsLocale () {
   var distanceInWordsLocale = {
     lessThanXSeconds: {
       one: 'less than a second',
@@ -1406,7 +1862,7 @@ function buildDistanceInWordsLocale$1 () {
   }
 }
 
-var index$39 = buildDistanceInWordsLocale$1;
+var index$39 = buildDistanceInWordsLocale;
 
 var commonFormatterKeys = [
   'M', 'MM', 'Q', 'D', 'DD', 'DDD', 'DDDD', 'd',
@@ -1416,7 +1872,7 @@ var commonFormatterKeys = [
   'Z', 'ZZ', 'X', 'x'
 ];
 
-function buildFormattingTokensRegExp$1 (formatters) {
+function buildFormattingTokensRegExp (formatters) {
   var formatterKeys = [];
   for (var key in formatters) {
     if (formatters.hasOwnProperty(key)) {
@@ -1435,11 +1891,9 @@ function buildFormattingTokensRegExp$1 (formatters) {
   return formattingTokensRegExp
 }
 
-var index$43 = buildFormattingTokensRegExp$1;
+var index$43 = buildFormattingTokensRegExp;
 
-var buildFormattingTokensRegExp = index$43;
-
-function buildFormatLocale$1 () {
+function buildFormatLocale () {
   // Note: in English, the names of days of the week and months are capitalized.
   // If you are making a new locale based on this one, check if the same is true for the language you're working on.
   // Generally, formatted dates should look like they are in the middle of a sentence,
@@ -1505,7 +1959,7 @@ function buildFormatLocale$1 () {
 
   return {
     formatters: formatters,
-    formattingTokensRegExp: buildFormattingTokensRegExp(formatters)
+    formattingTokensRegExp: index$43(formatters)
   }
 }
 
@@ -1524,26 +1978,16 @@ function ordinal (number) {
   return number + 'th'
 }
 
-var index$41 = buildFormatLocale$1;
-
-var buildDistanceInWordsLocale = index$39;
-var buildFormatLocale = index$41;
+var index$41 = buildFormatLocale;
 
 /**
  * @category Locales
  * @summary English locale.
  */
 var index$37 = {
-  distanceInWords: buildDistanceInWordsLocale(),
-  format: buildFormatLocale()
+  distanceInWords: index$39(),
+  format: index$41()
 };
-
-var getDayOfYear = index$23;
-var getISOWeek = index$29;
-var getISOYear = index$35;
-var parse$15 = index$1;
-var isValid$2 = index$11;
-var enLocale = index$37;
 
 /**
  * @category Common Helpers
@@ -1633,8 +2077,8 @@ function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
   var options = dirtyOptions || {};
 
   var locale = options.locale;
-  var localeFormatters = enLocale.format.formatters;
-  var formattingTokensRegExp = enLocale.format.formattingTokensRegExp;
+  var localeFormatters = index$37.format.formatters;
+  var formattingTokensRegExp = index$37.format.formattingTokensRegExp;
   if (locale && locale.format && locale.format.formatters) {
     localeFormatters = locale.format.formatters;
 
@@ -1643,9 +2087,9 @@ function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
     }
   }
 
-  var date = parse$15(dirtyDate);
+  var date = index$1(dirtyDate);
 
-  if (!isValid$2(date)) {
+  if (!index$11(date)) {
     return 'Invalid Date'
   }
 
@@ -1682,12 +2126,12 @@ var formatters = {
 
   // Day of year: 1, 2, ..., 366
   'DDD': function (date) {
-    return getDayOfYear(date)
+    return index$23(date)
   },
 
   // Day of year: 001, 002, ..., 366
   'DDDD': function (date) {
-    return addLeadingZeros(getDayOfYear(date), 3)
+    return addLeadingZeros(index$23(date), 3)
   },
 
   // Day of week: 0, 1, ..., 6
@@ -1702,12 +2146,12 @@ var formatters = {
 
   // ISO week: 1, 2, ..., 53
   'W': function (date) {
-    return getISOWeek(date)
+    return index$29(date)
   },
 
   // ISO week: 01, 02, ..., 53
   'WW': function (date) {
-    return addLeadingZeros(getISOWeek(date), 2)
+    return addLeadingZeros(index$29(date), 2)
   },
 
   // Year: 00, 01, ..., 99
@@ -1722,12 +2166,12 @@ var formatters = {
 
   // ISO week-numbering year: 00, 01, ..., 99
   'GG': function (date) {
-    return String(getISOYear(date)).substr(2)
+    return String(index$35(date)).substr(2)
   },
 
   // ISO week-numbering year: 1900, 1901, ..., 2099
   'GGGG': function (date) {
-    return getISOYear(date)
+    return index$35(date)
   },
 
   // Hour: 0, 1, ... 23
@@ -1867,8 +2311,6 @@ function addLeadingZeros (number, targetLength) {
 
 var index$22 = format;
 
-var parse$20 = index$1;
-
 /**
  * @category Month Helpers
  * @summary Get the number of calendar months between the given dates.
@@ -1889,8 +2331,8 @@ var parse$20 = index$1;
  * //=> 8
  */
 function differenceInCalendarMonths (dirtyDateLeft, dirtyDateRight) {
-  var dateLeft = parse$20(dirtyDateLeft);
-  var dateRight = parse$20(dirtyDateRight);
+  var dateLeft = index$1(dirtyDateLeft);
+  var dateRight = index$1(dirtyDateRight);
 
   var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
   var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
@@ -1899,8 +2341,6 @@ function differenceInCalendarMonths (dirtyDateLeft, dirtyDateRight) {
 }
 
 var index$45 = differenceInCalendarMonths;
-
-var parse$21 = index$1;
 
 /**
  * @category Common Helpers
@@ -1919,14 +2359,12 @@ var parse$21 = index$1;
  * //=> false
  */
 function isBefore (dirtyDate, dirtyDateToCompare) {
-  var date = parse$21(dirtyDate);
-  var dateToCompare = parse$21(dirtyDateToCompare);
+  var date = index$1(dirtyDate);
+  var dateToCompare = index$1(dirtyDateToCompare);
   return date.getTime() < dateToCompare.getTime()
 }
 
 var index$46 = isBefore;
-
-var addMonths$3 = index$16;
 
 /**
  * @category Year Helpers
@@ -1946,12 +2384,10 @@ var addMonths$3 = index$16;
  */
 function addYears (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return addMonths$3(dirtyDate, amount * 12)
+  return index$16(dirtyDate, amount * 12)
 }
 
 var index$47 = addYears;
-
-var parse$22 = index$1;
 
 /**
  * @category Year Helpers
@@ -1970,16 +2406,13 @@ var parse$22 = index$1;
  * //=> Sun Sep 01 2013 00:00:00
  */
 function setYear (dirtyDate, dirtyYear) {
-  var date = parse$22(dirtyDate);
+  var date = index$1(dirtyDate);
   var year = Number(dirtyYear);
   date.setFullYear(year);
   return date
 }
 
 var index$48 = setYear;
-
-var parse$23 = index$1;
-var getDaysInMonth$2 = index$17;
 
 /**
  * @category Month Helpers
@@ -1998,7 +2431,7 @@ var getDaysInMonth$2 = index$17;
  * //=> Sat Feb 01 2014 00:00:00
  */
 function setMonth (dirtyDate, dirtyMonth) {
-  var date = parse$23(dirtyDate);
+  var date = index$1(dirtyDate);
   var month = Number(dirtyMonth);
   var year = date.getFullYear();
   var day = date.getDate();
@@ -2006,7 +2439,7 @@ function setMonth (dirtyDate, dirtyMonth) {
   var dateWithDesiredMonth = new Date(0);
   dateWithDesiredMonth.setFullYear(year, month, 15);
   dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  var daysInMonth = getDaysInMonth$2(dateWithDesiredMonth);
+  var daysInMonth = index$17(dateWithDesiredMonth);
   // Set the last day of the new month
   // if the original date was the last day of the longer month
   date.setMonth(month, Math.min(day, daysInMonth));
@@ -2014,16 +2447,6 @@ function setMonth (dirtyDate, dirtyMonth) {
 }
 
 var index$49 = setMonth;
-
-var range = function (start, stop, step) {
-  if ( step === void 0 ) step = 1;
-
-  if (typeof stop === 'undefined') {
-    stop = start;
-    start = 0;
-  }
-  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + (i * step); })
-};
 
 var PickerHeader = {
   functional: true,
@@ -2136,16 +2559,8 @@ function getMonthsRange (startDate, endDate) {
   return months
 }
 
-var isSameMonth$2 = index$6;
-var getYear$2 = index;
-var getMonth$2 = index$4;
-var getDate$2 = index$5;
-var addDays$3 = index$19;
-var startOfWeek$3 = index$14;
-var range$2 = range;
-
-var rows = range$2(6);
-var cols = range$2(7);
+var rows = range(6);
+var cols = range(7);
 
 /**
  * Returns a two-dimensional array with calendar represented dates
@@ -2155,8 +2570,8 @@ var cols = range$2(7);
  */
 var dateMatrix = function (ref, plain) {
   if ( ref === void 0 ) ref = {
-  year: getYear$2(Date.now()),
-  month: getMonth$2(Date.now()),
+  year: index(Date.now()),
+  month: index$4(Date.now()),
   weekStartsOn: 0
 };
   var year = ref.year;
@@ -2168,21 +2583,21 @@ var dateMatrix = function (ref, plain) {
   var date = arguments[0] instanceof Date
     ? arguments[0]
     : new Date(year, month);
-  var curDate = startOfWeek$3(date, { weekStartsOn: weekStartsOn });
+  var curDate = index$14(date, { weekStartsOn: weekStartsOn });
 
   rows.forEach(function (row) {
     var week = [];
     cols.forEach(function (col) {
       // when plain return a raw date re
       if (plain) {
-        week.push(isSameMonth$2(curDate, date)
-          ? getDate$2(curDate)
-          : -getDate$2(curDate)
+        week.push(index$6(curDate, date)
+          ? index$5(curDate)
+          : -index$5(curDate)
         );
       } else {
         week.push(curDate);
       }
-      curDate = addDays$3(curDate, 1);
+      curDate = index$19(curDate, 1);
     });
 
     matrix.push(week);
@@ -2190,8 +2605,6 @@ var dateMatrix = function (ref, plain) {
 
   return matrix
 };
-
-var isInteger = Number.isInteger;
 
 var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index$$1){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
             ? _vm.triggerUnpickEvent(date)
@@ -2323,47 +2736,260 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var boundEvents = [];
+var PositionMixin = {
+  props: {
+    animation: {
+      type: String,
+      default: ''
+    },
+    flip: {
+      type: Boolean,
+      default: true
+    },
+    offset: {
+      type: [String, Boolean],
+      default: false
+    },
+    boundaryAlign: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () { return ({
+    top: '',
+    left: ''
+  }); },
+  computed: {
+    pos: function pos () {
+      return (this.position + (!~this.position.indexOf('-') ? '-center' : '')).split('-')
+    },
+    dir: function dir () {
+      return this.pos[0]
+    },
+    align: function align () {
+      return this.pos[1]
+    }
+  },
+  methods: {
+    positionAt: function positionAt (element, target, boundary) {
+      var offset$$1 = toNumber(this.offset) || 0;
+      var axis = this.getAxis();
+      var flipped = getPosition$$1(
+        element,
+        target,
+        axis === 'x'
+          ? ((flipPosition$$1(this.dir)) + " " + (this.align))
+          : ((this.align) + " " + (flipPosition$$1(this.dir))),
+        axis === 'x'
+          ? ((this.dir) + " " + (this.align))
+          : ((this.align) + " " + (this.dir)),
+        axis === 'x'
+          ? ("" + (this.dir === 'left'
+            ? -1 * offset$$1 : offset$$1))
+            : (" " + (this.dir === 'top' ? -1 * offset$$1 : offset$$1)),
+        null,
+        this.flip,
+        boundary
+      );
 
-// add event listener shorthand
-var on = function (el, event, handler, namespace) {
-  if ( namespace === void 0 ) namespace = 'def';
+      this.top = flipped.top;
+      this.left = flipped.left;
 
-  boundEvents[namespace] = boundEvents[namespace] || [];
-  boundEvents[namespace].push({ el: el, event: event, handler: handler });
-  el.addEventListener(event, handler);
+      this.dir = axis === 'x'
+        ? flipped.target.x
+        : flipped.target.y;
+      this.align = axis === 'x'
+        ? flipped.target.y
+        : flipped.target.x;
+    },
+    getAxis: function getAxis () {
+      return this.pos[0] === 'top' || this.pos[0] === 'bottom'
+        ? 'y'
+        : 'x'
+    }
+  },
+  created: function created () {
+    this.dir = this.pos[0];
+    this.align = this.pos[1];
+  }
 };
 
-var offAll = function (namespace) {
-  if ( namespace === void 0 ) namespace = 'def';
+var onClickOut;
+var onMouseenter;
+var onTargetMouseenter;
+var onTargetMouseleave;
+var onClickTarget;
 
-  if (boundEvents[namespace] !== undefined) {
-    for (var i = 0; i < boundEvents[namespace].length; ++i) {
-      var ref = boundEvents[namespace][i];
-      var el = ref.el;
-      var event = ref.event;
-      var handler = ref.handler;
-      el.removeEventListener(event, handler);
+var drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-drop",class:( obj = { 'uk-open': _vm.show, 'uk-drop-boundary': _vm.boundaryAlign }, obj[("uk-drop-" + (_vm.position))] = _vm.show, obj[("uk-drop-" + (_vm.dir) + "-" + (_vm.align))] = _vm.offset === false, obj ),style:({
+    'top': ((_vm.top) + "px"),
+    'left': ((_vm.left) + "px")
+  })},[_vm._t("default")],2)
+var obj;},staticRenderFns: [],
+  name: 'VkDrop',
+  mixins: [PositionMixin],
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    targetRef: {
+      type: String
+      // defaults to previousElementSibling
+    },
+    boundaryRef: {
+      default: function () { return window; }
+    },
+    boundaryAlign: {
+      type: Boolean,
+      default: false
+    },
+    /* [top|right|bottom|left]-[left|center|right] */
+    position: {
+      type: String,
+      default: !isRtl$$1
+        ? 'bottom-left'
+        : 'bottom-right'
+    }
+  },
+  data: function () { return ({
+    clsPos: 'uk-drop'
+  }); },
+  computed: {
+    $target: function $target () {
+      return this.getRefElement(this.targetRef) || this.$el.previousElementSibling
+    },
+    $boundary: function $boundary () {
+      return this.getRefElement(this.boundaryRef) || window
+    }
+  },
+  methods: {
+    getRefElement: function getRefElement (ref) {
+      var context = this.$vnode.context;
+      var target = context.$refs[ref];
+      if (target) {
+        return target._isVue
+          ? target.$el
+          : target
+      }
+      return false
+    },
+    doPosition: function doPosition () {
+      var this$1 = this;
+
+      this.top = '';
+      this.left = '';
+
+      var boundary = getDimensions$$1(this.$boundary);
+      var alignTo = this.boundaryAlign
+        ? boundary
+        : getDimensions$$1(this.$target);
+
+      if (this.align === 'justify') {
+        var prop = this.getAxis() === 'y'
+          ? 'width'
+          : 'height';
+        this.$el.style[prop] = alignTo[prop] + 'px';
+      } else if (this.$el.offsetWidth > Math.max(boundary.right - alignTo.left, alignTo.right - boundary.left)) {
+        // el.addClass(`uk-drop-stack`)
+        // el.trigger('stack', [this])
+      }
+
+      this.$nextTick(function () { return this$1.positionAt(
+          this$1.$el,
+          this$1.boundaryAlign
+            ? this$1.$boundary
+            : this$1.$target,
+          this$1.$boundary
+        ); }
+      );
+    }
+  },
+  watch: {
+    show: function show () {
+      this.doPosition();
+    }
+  },
+  init: function init () {
+    // this.tracker = new MouseTracker();
+  },
+  mounted: function mounted () {
+    var this$1 = this;
+
+    var leaveTimeout;
+    // prepare delay helper function
+    var delayFn = function (time, cb) {
+      setTimeout(function (_) { return cb(); }, time);
+    };
+
+    onClickTarget = function (e) {
+      this$1.$emit('click-target', e);
+    };
+
+    onMouseenter = function (e) {
+      // ignore childs triggers
+      if (this$1.$target.contains(e.fromElement)) {
+        return
+      }
+      clearTimeout(leaveTimeout);
+      this$1.$emit('mouseenter', { delay: delayFn }, e);
+    };
+
+    onTargetMouseenter = function (e) {
+      if (this$1.$target.contains(e.fromElement)) {
+        return
+      }
+      clearTimeout(leaveTimeout);
+      if (this$1.show) {
+        return
+      }
+      this$1.$emit('mouseenter', { delay: delayFn }, e);
+      // return Animation.in(this.$el, this.animation[0], this.duration, this.origin);
+      // Animation.in(this.$el, 'uk-animation-fade', 200, false)
+    };
+
+    onTargetMouseleave = function (e) {
+      // ignore childs triggers
+      if (e.relatedTarget === this$1.$target || e.relatedTarget === this$1.$el ||
+        this$1.$target.contains(e.relatedTarget) || this$1.$el.contains(e.relatedTarget)
+      ) {
+        return
+      }
+      var delayFn = function (time, cb) { leaveTimeout = setTimeout(function (_) { return cb(); }, time); };
+      this$1.$emit('mouseleave', { delay: delayFn }, e);
+    };
+
+    onClickOut = function (e) {
+      if (this$1.show) {
+        // clicking target
+        if (e.target === this$1.$target || this$1.$target.contains(e.target)) {
+          return
+        }
+        // click in/out dropdown
+        if (e.target === this$1.$el || this$1.$el.contains(e.target)) {
+          this$1.$emit('click-in', e);
+        } else {
+          this$1.$emit('click-out', e);
+        }
+      }
+    };
+
+    on$$1(this.$el, 'mouseleave', onTargetMouseleave, this._uid);
+    on$$1(this.$el, 'mouseenter', onMouseenter, this._uid);
+    on$$1(this.$target, 'mouseenter', onTargetMouseenter, this._uid);
+    on$$1(this.$target, 'mouseleave', onTargetMouseleave, this._uid);
+    on$$1(this.$target, 'click', onClickTarget, this._uid);
+    on$$1(document, 'click', onClickOut, this._uid);
+    if ('ontouchstart' in document.documentElement) {
+      on$$1(document, 'touchstart', onClickOut, this._uid);
+    }
+  },
+  beforeDestroy: function beforeDestroy () {
+    offAll$$1(this._uid);
+    if (this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el);
     }
   }
 };
-
-var addClass_1 = function (el, classes) {
-  return sanitizeClasses(classes).forEach(function (className) { return addClass(el, className); })
-};
-
-function addClass (el, className) {
-  if (el.classList) {
-    el.classList.add(className);
-  } else {
-    // IE9
-    el.className += ' ' + className;
-  }
-}
-
-function sanitizeClasses (classes) {
-  return classes.split(' ').filter(function (c) { return c; })
-}
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -2378,7 +3004,7 @@ function createCommonjsModule(fn, module) {
 var popper_es5 = createCommonjsModule(function (module, exports) {
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.0.7
+ * @version 1.0.8
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -3252,12 +3878,17 @@ function isTransformed(element) {
  * @private
  */
 function removeEventListeners(reference, state) {
-    // NOTE: 1 DOM access here
+    // Remove resize event listener on window
     window.removeEventListener('resize', state.updateBound);
-    if (state.scrollElement) {
-        state.scrollElement.removeEventListener('scroll', state.updateBound);
-    }
+
+    // Remove scroll event listener on scroll parents
+    state.scrollParents.forEach(function (target) {
+        target.removeEventListener('scroll', state.updateBound);
+    });
+
+    // Reset state
     state.updateBound = null;
+    state.scrollParents = [];
     state.scrollElement = null;
     state.eventsEnabled = false;
     return state;
@@ -3319,6 +3950,17 @@ function setStyles(element, styles) {
     });
 }
 
+function attachToScrollParents(scrollParent, event, callback, scrollParents) {
+    var isBody = scrollParent.nodeName === 'BODY';
+    var target = isBody ? window : scrollParent;
+    target.addEventListener(event, callback, { passive: true });
+
+    if (!isBody) {
+        attachToScrollParents(getScrollParent(target.parentNode), event, callback, scrollParents);
+    }
+    scrollParents.push(target);
+}
+
 /**
  * Setup needed event listeners used to update the popper position
  * @method
@@ -3326,15 +3968,14 @@ function setStyles(element, styles) {
  * @private
  */
 function setupEventListeners(reference, options, state, updateBound) {
-    // NOTE: 1 DOM access here
+    // Resize event listener on window
     state.updateBound = updateBound;
     window.addEventListener('resize', state.updateBound, { passive: true });
-    var target = getScrollParent(reference);
-    if (target.nodeName === 'BODY') {
-        target = window;
-    }
-    target.addEventListener('scroll', state.updateBound, { passive: true });
-    state.scrollElement = target;
+
+    // Scroll event listener on scroll parents
+    var scrollElement = getScrollParent(reference);
+    attachToScrollParents(scrollElement, 'scroll', state.updateBound, state.scrollParents);
+    state.scrollElement = scrollElement;
     state.eventsEnabled = true;
 
     return state;
@@ -4170,7 +4811,8 @@ var Popper = function () {
         // init state
         this.state = {
             isDestroyed: false,
-            isCreated: false
+            isCreated: false,
+            scrollParents: []
         };
 
         // get reference and popper elements (allow jQuery wrappers)
@@ -4477,16 +5119,20 @@ var PopperMixin = {
           }})
       }
     );
+
+    // schedule an update to make sure everything gets positioned correct
+    // after being instantiated
+    this.$popper.scheduleUpdate();
   }
 };
 
-var onClickOut;
-var onMouseenter;
-var onTargetMouseenter;
-var onTargetMouseleave;
-var onClickTarget;
+var onClickOut$1;
+var onMouseenter$1;
+var onTargetMouseenter$1;
+var onTargetMouseleave$1;
+var onClickTarget$1;
 
-var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass,"leave-class":"uk-open"},on:{"after-enter":_vm.afterEnter}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",staticStyle:{"display":"block"}},[_vm._t("default")],2)])},staticRenderFns: [],
+var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open","enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-enter":_vm.afterEnter}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",staticStyle:{"display":"block"}},[_vm._t("default")],2)])},staticRenderFns: [],
   name: 'VkDropdown',
   mixins: [PopperMixin],
   props: {
@@ -4509,11 +5155,11 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       setTimeout(function (_) { return cb(); }, time);
     };
 
-    onClickTarget = function (e) {
+    onClickTarget$1 = function (e) {
       this$1.$emit('click-target', e);
     };
 
-    onMouseenter = function (e) {
+    onMouseenter$1 = function (e) {
       // ignore childs triggers
       if (this$1.targetElement.contains(e.fromElement)) {
         return
@@ -4522,7 +5168,7 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       this$1.$emit('mouseenter', { delay: delayFn }, e);
     };
 
-    onTargetMouseenter = function (e) {
+    onTargetMouseenter$1 = function (e) {
       // ignore childs triggers
       if (this$1.targetElement.contains(e.fromElement)) {
         return
@@ -4531,7 +5177,7 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       this$1.$emit('mouseenter', { delay: delayFn }, e);
     };
 
-    onTargetMouseleave = function (e) {
+    onTargetMouseleave$1 = function (e) {
       // ignore childs triggers
       if (e.relatedTarget === this$1.targetElement || e.relatedTarget === this$1.$el ||
         this$1.targetElement.contains(e.relatedTarget) || this$1.$el.contains(e.relatedTarget)
@@ -4542,7 +5188,7 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       this$1.$emit('mouseleave', { delay: delayFn }, e);
     };
 
-    onClickOut = function (e) {
+    onClickOut$1 = function (e) {
       if (this$1.show) {
         // clicking target
         if (e.target === this$1.targetElement || this$1.targetElement.contains(e.target)) {
@@ -4557,19 +5203,19 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       }
     };
 
-    on(this.$el, 'mouseleave', onTargetMouseleave, this._uid);
-    on(this.$el, 'mouseenter', onMouseenter, this._uid);
-    on(this.targetElement, 'mouseenter', onTargetMouseenter, this._uid);
-    on(this.targetElement, 'mouseleave', onTargetMouseleave, this._uid);
-    on(this.targetElement, 'click', onClickTarget, this._uid);
-    on(document, 'click', onClickOut, this._uid);
+    on$$1(this.$el, 'mouseleave', onTargetMouseleave$1, this._uid);
+    on$$1(this.$el, 'mouseenter', onMouseenter$1, this._uid);
+    on$$1(this.targetElement, 'mouseenter', onTargetMouseenter$1, this._uid);
+    on$$1(this.targetElement, 'mouseleave', onTargetMouseleave$1, this._uid);
+    on$$1(this.targetElement, 'click', onClickTarget$1, this._uid);
+    on$$1(document, 'click', onClickOut$1, this._uid);
     if ('ontouchstart' in document.documentElement) {
-      on(document, 'touchstart', onClickOut, this._uid);
+      on$$1(document, 'touchstart', onClickOut$1, this._uid);
     }
   },
   methods: {
     afterEnter: function afterEnter () {
-      addClass_1(this.$el, 'uk-open');
+      addClass$$1(this.$el, 'uk-open');
     },
     remove: function remove () {
       if (this.$el.parentNode) {
@@ -4578,13 +5224,9 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
     }
   },
   beforeDestroy: function beforeDestroy () {
-    offAll(this._uid);
+    offAll$$1(this._uid);
     this.remove();
   }
-};
-
-var toInteger = function (n) {
-  return parseInt(n, 10)
 };
 
 var Tween = createCommonjsModule(function (module, exports) {
@@ -5500,11 +6142,11 @@ var loadingBar = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     normalize: function normalize (value) {
       return Math.max(Math.min(toInteger(value), 100), 0)
     },
-    animate: function animate (progress) {
+    animate: function animate$$1 (progress) {
       var animationFrame;
-      function animate (time) {
+      function animate$$1 (time) {
         Tween.update(time);
-        animationFrame = window.requestAnimationFrame(animate);
+        animationFrame = window.requestAnimationFrame(animate$$1);
       }
       new Tween.Tween(this)
         .easing(Tween.Easing.Quadratic.Out)
@@ -5514,35 +6156,10 @@ var loadingBar = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
           this.$emit('animation-complete', this.width);
         })
         .start();
-      animationFrame = window.requestAnimationFrame(animate);
+      animationFrame = window.requestAnimationFrame(animate$$1);
     }
   }
 };
-
-var css = function (el, style) {
-  return window.getComputedStyle(el)[style]
-};
-
-var hasClass = function (el, className) {
-  return el.classList.contains(className)
-};
-
-var removeClass_1 = function (el, classes) {
-  sanitizeClasses$1(classes).forEach(function (className) { return removeClass(el, className); });
-};
-
-function removeClass (el, className) {
-  if (el.classList) {
-    el.classList.remove(className);
-  } else {
-    // IE9
-    el.className = el.className.replace(new RegExp(("^" + className + "$")), '');
-  }
-}
-
-function sanitizeClasses$1 (classes) {
-  return classes.split(' ').filter(function (c) { return c; })
-}
 
 var doc$1 = document.documentElement;
 var body = document.body;
@@ -5550,13 +6167,13 @@ var body = document.body;
 var active;
 var activeCount;
 
-on(doc$1, 'click', function (e) {
+on$$1(doc$1, 'click', function (e) {
   if (active && !active.$refs.panel.contains(e.target)) {
     active.$emit('click-out', e);
   }
 });
 
-on(doc$1, 'keyup', function (e) {
+on$$1(doc$1, 'keyup', function (e) {
   if (e.keyCode === 27 && active) {
     e.preventDefault();
     active.$emit('key-esc', e);
@@ -5585,7 +6202,7 @@ var ModalMixin = {
   methods: {
     _beforeEnter: function _beforeEnter () {
       if (!active) {
-        body.style['overflow-y'] = getScrollbarWidth() && this.overlay ? 'scroll' : '';
+        body.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
       }
     },
     _afterEnter: function _afterEnter () {
@@ -5607,26 +6224,25 @@ var ModalMixin = {
       if (active === this) {
         active = null;
       }
+    },
+    getScrollbarWidth: function getScrollbarWidth () {
+      var width = doc$1.style.width;
+      doc$1.style.width = '';
+      var scrollbarWidth = window.innerWidth - doc$1.offsetWidth;
+
+      if (width) {
+        doc$1.style.width = width;
+      }
+
+      return scrollbarWidth
     }
   },
   beforeDestroy: function beforeDestroy () {
-    offAll(this._uid);
+    offAll$$1(this._uid);
     if (this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }
   }
-};
-
-var getScrollbarWidth = function () {
-  var width = doc$1.style.width;
-  doc$1.style.width = '';
-  var scrollbarWidth = window.innerWidth - doc$1.offsetWidth;
-
-  if (width) {
-    doc$1.style.width = width;
-  }
-
-  return scrollbarWidth
 };
 
 var doc = document.documentElement;
@@ -5690,11 +6306,11 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     this.$refs.close = this.$el.querySelector('button.uk-close');
 
     // place close-top outside the dialog
-    if (this.$refs.close && hasClass(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass_1(this.$refs.close, 'vk-modal-close-top');
+    if (this.$refs.close && hasClass$$1(this.$refs.close, 'vk-modal-close-top')) {
+      removeClass$$1(this.$refs.close, 'vk-modal-close-top');
       var bar = document.createElement('div');
-      addClass_1(bar, 'uk-modal-bar');
-      addClass_1(bar, 'uk-position-top');
+      addClass$$1(bar, 'uk-modal-bar');
+      addClass$$1(bar, 'uk-position-top');
       bar.appendChild(this.$refs.close);
       this.$el.appendChild(bar);
     }
@@ -5702,16 +6318,16 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     // place caption bottom outside the dialog
     var caption = this.$el.querySelector('.vk-modal-caption-bottom');
     if (caption) {
-      addClass_1(caption, 'uk-modal-bar');
-      addClass_1(caption, 'uk-position-bottom');
-      removeClass_1(caption, 'vk-modal-caption-bottom');
+      addClass$$1(caption, 'uk-modal-bar');
+      addClass$$1(caption, 'uk-position-bottom');
+      removeClass$$1(caption, 'vk-modal-caption-bottom');
       this.$el.appendChild(caption);
     }
 
     // update close style if full
     if (this.full) {
-      removeClass_1(this.$refs.close, 'uk-modal-close-default');
-      addClass_1(this.$refs.close, 'uk-modal-close-full');
+      removeClass$$1(this.$refs.close, 'uk-modal-close-default');
+      addClass$$1(this.$refs.close, 'uk-modal-close-full');
     }
 
     // init events
@@ -5721,9 +6337,9 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       }
     };
 
-    on(this.$el, 'click', clickHandler, this._uid);
+    on$$1(this.$el, 'click', clickHandler, this._uid);
     if ('ontouchstart' in doc) {
-      on(this.$el, 'touchstart', clickHandler, this._uid);
+      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
     }
   },
   methods: {
@@ -5732,37 +6348,37 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
       this._beforeEnter();
       this.$nextTick(function () {
-        addClass_1(doc, 'uk-modal-page');
+        addClass$$1(doc, 'uk-modal-page');
         this$1.resize();
       });
     },
     afterEnter: function afterEnter () {
       this._afterEnter();
-      addClass_1(this.$el, 'uk-open');
+      addClass$$1(this.$el, 'uk-open');
     },
     afterLeave: function afterLeave () {
       this._afterLeave();
       // if no active modals left
       if (!this.activeCount) {
-        removeClass_1(doc, 'uk-modal-page');
+        removeClass$$1(doc, 'uk-modal-page');
       }
     },
     resize: function resize () {
-      if (css(this.$el, 'display') === 'block' && this.center) {
-        removeClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+      if (css$$1(this.$el, 'display') === 'block' && this.center) {
+        removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
 
         var dialog = this.$refs.panel;
         var dh = dialog.offsetHeight;
-        var marginTop = css(dialog, 'margin-top');
-        var marginBottom = css(dialog, 'margin-bottom');
+        var marginTop = css$$1(dialog, 'margin-top');
+        var marginBottom = css$$1(dialog, 'margin-bottom');
         var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
 
         if (window.innerHeight > (dh + pad)) {
-          addClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          addClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         } else {
-          removeClass_1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         }
-        this.$el.style.display = hasClass(this.$el, 'uk-flex') ? '' : 'block';
+        this.$el.style.display = hasClass$$1(this.$el, 'uk-flex') ? '' : 'block';
       }
     }
   }
@@ -5961,26 +6577,32 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   methods: {
     beforeEnter: function beforeEnter () {
       this._beforeEnter();
-      addClass_1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageAnimation) + " " + (this.clsPageOverlay)));
-      addClass_1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      addClass_1(this.$el, this.clsOverlay);
+      // set fixed with so the page can slide-out without shinking
+      doc$2.style.width = window.innerWidth - this.getScrollbarWidth() + 'px';
+      // add page classes
+      addClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+      // add offcanvas style
+      addClass$$1(this.$el, this.clsOverlay);
       this.$el.style.display = 'block';
+      // add offcanvas-bar classes
+      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
     },
     afterEnter: function afterEnter () {
       this._afterEnter();
-      addClass_1(this.$el, 'uk-open');
-      this._afterEnter();
+      addClass$$1(doc$2, this.clsPageAnimation);
+      addClass$$1(this.$el, 'uk-open');
     },
     beforeLeave: function beforeLeave () {
-      removeClass_1(doc$2, this.clsPageAnimation);
+      removeClass$$1(doc$2, this.clsPageAnimation);
       doc$2.style['margin-left'] = '';
-      removeClass_1(this.$el, 'uk-open');
+      removeClass$$1(this.$el, 'uk-open');
     },
     afterLeave: function afterLeave () {
       this._afterLeave();
-      removeClass_1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-      removeClass_1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass_1(this.$el, ("" + (this.clsOverlay)));
+      doc$2.style.width = '';
+      removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+      removeClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
+      removeClass$$1(this.$el, ("" + (this.clsOverlay)));
       this.$el.style.display = '';
     }
   },
@@ -5993,16 +6615,19 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       }
     };
 
-    on(this.$el, 'click', clickHandler, this._uid);
+    on$$1(this.$el, 'click', clickHandler, this._uid);
     if ('ontouchstart' in document.documentElement) {
-      on(this.$el, 'touchstart', clickHandler, this._uid);
+      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
     }
+  },
+  beforeDestroy: function beforeDestroy () {
+    removeClass$$1(doc$2, this.clsPageAnimation);
+    removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+    doc$2.style['margin-left'] = '';
+    this._afterLeave();
   }
 };
 
-var isArray = Array.isArray;
-
-var getRange = range;
 var def = { total: 200, page: 1, perPage: 10, range: 3 };
 
 /**
@@ -6026,8 +6651,8 @@ var paginationMatrix = function (ref) {
   var first = mainPages[0];
   var last = mainPages[mainPages.length - 1];
   // get pre/post pages
-  var prePages = getRange(1, (first <= 3) ? first : 2);
-  var postPages = getRange(
+  var prePages = range(1, (first <= 3) ? first : 2);
+  var postPages = range(
     last >= (totalPages - 2) ? last + 1 : totalPages,
     totalPages + 1
   );
@@ -6062,7 +6687,7 @@ var getMainPages = function (ref) {
     start = 1;
     end = Math.min((range$$1 * 2) + 1, totalPages);
   }
-  return getRange(start, end + 1)
+  return range(start, end + 1)
 };
 
 var PaginationFirst = {
@@ -6092,7 +6717,7 @@ var PaginationFirst = {
         h('span', {
           staticClass: 'uk-pagination-prev uk-icon',
           class: { 'uk-margin-small-right': label },
-          attrs: { 'uk-pagination-previous': true }
+          attrs: { 'uk-icon': 'icon: chevron-left' }
         }),
         label && label
       ])
@@ -6128,7 +6753,7 @@ var PaginationLast = {
         h('span', {
           staticClass: 'uk-pagination-next uk-icon',
           class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-pagination-next': true }
+          attrs: { 'uk-icon': 'icon: chevron-right' }
         })
       ])
     ])
@@ -6162,7 +6787,7 @@ var PaginationPrev = {
         h('span', {
           staticClass: 'uk-pagination-prev uk-icon',
           class: { 'uk-margin-small-right': label },
-          attrs: { 'uk-pagination-previous': true }
+          attrs: { 'uk-icon': 'icon: chevron-left' }
         }),
         label && label
       ])
@@ -6198,7 +6823,7 @@ var PaginationNext = {
         h('span', {
           staticClass: 'uk-pagination-next uk-icon',
           class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-pagination-next': true }
+          attrs: { 'uk-icon': 'icon: chevron-right' }
         })
       ])
     ])
@@ -6373,13 +6998,6 @@ var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-/* https://github.com/sindresorhus/is-fn */
-var toString$1 = Object.prototype.toString;
-
-var isFunction = function (x) {
-  return toString$1.call(x) === '[object Function]'
-};
-
 var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table"},[_vm._t("default"),_c('thead',[_c('tr',[_c('column-headers')],1)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},[_c('row-cells',{attrs:{"row":row}})],1)}))],2)},staticRenderFns: [],
   name: 'VkTable',
   props: {
@@ -6402,7 +7020,7 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       render: function render (h, ref) {
         var parent = ref.parent;
 
-        return parent.columns.map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy, h); }
+        return parent.columns.map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy); }
         )
       }
     },
@@ -6414,7 +7032,7 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
         var props = ref.props;
 
         var row = props.row;
-        return parent.columns.map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, h, { row: row }); }
+        return parent.columns.map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, { row: row }); }
         )
       }
     }
@@ -6434,63 +7052,37 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   }
 };
 
-/* https://github.com/sindresorhus/is-obj */
-var isObject$1 = function (x) {
-  var type = typeof x;
-  return x !== null && (type === 'object' || type === 'function')
-};
-
-var isString$1 = function (val) {
-  return typeof val === 'string'
-};
-
-var isObject = isObject$1;
-var isString = isString$1;
-
-/**
- * Gets the value at `path` of `object`. If the resolved value is
- * `undefined`, the `defaultValue` is returned in its place.
- */
-var get = function (object, path, defaultValue) {
-  var result = isObject(object) && isString(path)
-    ? baseGet(object, path)
-    : undefined;
-  return result === undefined
-    ? defaultValue
-    : result
-};
-
-function baseGet (object, path) {
-  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, object)
-}
-
 var Column$1 = {
   render: function render (h) {
     return h('col')
   },
   created: function created () {
+    // make available the below render functions on component instance
     this._headerRender = this.$options._parentVnode.componentOptions.Ctor.options.headerRender;
     this._cellRender = this.$options._parentVnode.componentOptions.Ctor.options.cellRender;
+    // add column
     this.$parent.columns.push(this);
   },
-  headerRender: function headerRender (h) {
+  headerRender: function headerRender () {
+    var h = this.$createElement;
     var defaultContent = this.header;
     var slot = this.processSlot('header', {}, defaultContent);
     return h('th', { staticClass: this.headerClass }, [ slot ])
   },
-  cellRender: function cellRender (h, ref) {
+  cellRender: function cellRender (ref) {
     var row = ref.row;
 
+    var h = this.$createElement;
     var defaultContent = get(row, this.cell, '');
     var slot = this.processSlot('cell', { row: row }, defaultContent);
     return h('td', { staticClass: this.cellClass }, [ slot ])
   },
   methods: {
     processSlot: function processSlot (name, props, fallback) {
-      var slot = this._t(name, fallback, props);
-      return isFunction(slot)
-        ? this.$createElement({ functional: true, render: slot })
-        : slot
+      var slot = this.$scopedSlots[name];
+      return slot
+        ? slot.call(this._renderProxy, props)
+        : fallback
     },
     joinClasses: function joinClasses () {
       var classes = [], len = arguments.length;
@@ -6565,9 +7157,10 @@ var ColumnSelect = {
       default: function () { return false; }
     }
   },
-  headerRender: function headerRender (h) {
+  headerRender: function headerRender () {
     var this$1 = this;
 
+    var h = this.$createElement;
     var rows = this.$parent.data;
     var selected = rows.filter(this.isSelected);
     var isAllSelected = selected.length && selected.length === rows.length;
@@ -6581,10 +7174,11 @@ var ColumnSelect = {
     );
     return h('th', { staticClass: staticClass }, [ slot ])
   },
-  cellRender: function cellRender (h, ref) {
+  cellRender: function cellRender (ref) {
     var this$1 = this;
     var row = ref.row;
 
+    var h = this.$createElement;
     var defaultContent = h(Checkbox, {
       props: { checked: this.isSelected(row) },
       on: { click: function (e) { return this$1.$emit('select', row); } }
@@ -6624,7 +7218,8 @@ var ColumnSort = {
       type: String
     }
   },
-  headerRender: function headerRender (h) {
+  headerRender: function headerRender () {
+    var h = this.$createElement;
     var Table = this.$parent;
     var sortBy = this.cell;
     var orderedBy = Table.sortedBy[sortBy];
@@ -6749,23 +7344,6 @@ function parseData (col) {
   return { props: props, scopedSlots: scopedSlots }
 }
 
-/**
- * Warn about errors only in no production
- */
-
-var warn;
-
-{
-  var hasConsole = typeof console !== 'undefined';
-  warn = function (msg) {
-    if (hasConsole) {
-      console.error(msg);
-    }
-  };
-}
-
-var warn_1 = warn;
-
 var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkTab',
   props: {
@@ -6785,7 +7363,7 @@ var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   },
   created: function created () {
     if (!this.disabled && !this.$slots.default) {
-      warn_1(("[VkTabs]: content is missing in tab " + (this.label)));
+      warn(("[VkTabs]: content is missing in tab " + (this.label)));
     }
   }
 };
@@ -6813,7 +7391,7 @@ var core = {
   },
   computed: {
     tabs: {
-      get: function get () {
+      get: function get$$1 () {
         var this$1 = this;
 
         return this.$tabsNodes.map(function (vn) { return ({
@@ -6831,8 +7409,8 @@ var core = {
     // save tabs nodes
     this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
     );
-    if (warn_1 && !this.$tabsNodes) {
-      warn_1("[VkTabs]: there are no tabs defined");
+    if (warn && !this.$tabsNodes) {
+      warn("[VkTabs]: there are no tabs defined");
     }
     // set tabs key for keep-alive
     this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
@@ -6880,7 +7458,7 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
   }
 };
 
-var onMouseenter$1;
+var onMouseenter$2;
 var onMouseleave;
 
 var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
@@ -6923,7 +7501,7 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     // initially the tooltip is off document
     this.remove();
 
-    onMouseenter$1 = function () {
+    onMouseenter$2 = function () {
       setTimeout(function (_) {
         document.body.appendChild(this$1.$el);
         this$1.active = true;
@@ -6940,15 +7518,15 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       }
 
       this$1.active = false;
-      offAll(this$1.$el, this$1._uid);
+      offAll$$1(this$1.$el, this$1._uid);
       this$1.$emit('hide');
     };
 
-    on(this.$el, 'mouseleave', onMouseleave, this._uid);
-    on(this.targetElement, 'mouseleave', onMouseleave, this._uid);
-    on(this.targetElement, 'mouseenter', onMouseenter$1, this._uid);
-    on(this.targetElement, 'focus', onMouseenter$1, this._uid);
-    on(this.targetElement, 'blur', onMouseleave, this._uid);
+    on$$1(this.$el, 'mouseleave', onMouseleave, this._uid);
+    on$$1(this.targetElement, 'mouseleave', onMouseleave, this._uid);
+    on$$1(this.targetElement, 'mouseenter', onMouseenter$2, this._uid);
+    on$$1(this.targetElement, 'focus', onMouseenter$2, this._uid);
+    on$$1(this.targetElement, 'blur', onMouseleave, this._uid);
   },
   methods: {
     remove: function remove () {
@@ -6959,7 +7537,7 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   },
   beforeDestroy: function beforeDestroy () {
     if (this.targetElement) {
-      offAll(this.targetElement, this._uid);
+      offAll$$1(this.targetElement, this._uid);
     }
     this.active = false;
     this.remove();
@@ -6992,6 +7570,7 @@ var lib = Object.freeze({
 	ButtonCheckbox: buttonCheckbox,
 	ButtonRadio: buttonRadio,
 	Datepicker: datepicker,
+	Drop: drop,
 	Dropdown: dropdown,
 	LoadingBar: loadingBar,
 	Modal: modal,
