@@ -1,15 +1,15 @@
-require('../build/check-versions')()
+require('../check-versions')()
 const path = require('path')
 const express = require('express')
 const webpack = require('webpack')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-const config = require('../config')
+const config = require('./config')
 const webpackConfig = require('./webpack.config')
 const portfinder = require('portfinder')
 
 // default base port from which to start searching
-portfinder.basePort = config.dev.basePort
+portfinder.basePort = config.basePort
 
 const app = express()
 const compiler = webpack(webpackConfig)
@@ -42,11 +42,11 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve static content
-app.use('/static', express.static(path.resolve(__dirname, './static')))
+app.use('/static', express.static(path.resolve(__dirname, '../static')))
 
 // serve pure static assets
-app.use('/assets', express.static(path.resolve(__dirname, '../node_modules/uikit/dist')))
-app.use('/assets/js', express.static(path.resolve(__dirname, '../node_modules/jquery/dist')))
+app.use('/assets', express.static(path.resolve(__dirname, '../../node_modules/uikit/dist')))
+app.use('/assets/js', express.static(path.resolve(__dirname, '../../node_modules/jquery/dist')))
 
 module.exports = portfinder.getPortPromise()
   .then(port => {

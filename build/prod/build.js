@@ -1,14 +1,17 @@
+/* eslint-env shelljs */
+require('shelljs/global')
 const fs = require('fs')
 const path = require('path')
 const zlib = require('zlib')
 const rollup = require('rollup')
 const uglify = require('uglify-js')
+const util = require('../util')
 
 if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist')
 }
 
-let builds = require('./config').getAllBuilds()
+let builds = require('./builds').getAllBuilds()
 
 // filter builds via command line arg
 if (process.argv[2]) {
@@ -75,7 +78,7 @@ function writeSourceMap (dest, map) {
 function write (dest, code, map, zip) {
   return new Promise((resolve, reject) => {
     function report (extra) {
-      console.log(blue(path.relative(process.cwd(), dest)) + ' ' + getSize(code) + (extra || ''))
+      console.log(util.blue(path.relative(process.cwd(), dest)) + ' ' + util.getSize(code) + (extra || ''))
       resolve()
     }
 
@@ -89,7 +92,7 @@ function write (dest, code, map, zip) {
       if (zip) {
         zlib.gzip(code, (err, zipped) => {
           if (err) return reject(err)
-          report(' (gzipped: ' + getSize(zipped) + ')')
+          report(' (gzipped: ' + util.getSize(zipped) + ')')
         })
       } else {
         report()
@@ -98,14 +101,32 @@ function write (dest, code, map, zip) {
   })
 }
 
-function getSize (code) {
-  return (code.length / 1024).toFixed(2) + 'kb'
-}
-
 function logError (e) {
   console.log(e)
 }
 
-function blue (str) {
-  return '\x1b[1m\x1b[34m' + str + '\x1b[39m\x1b[22m'
+/*
+ * Compile Theme
+ */
+
+const compile = async (file, dist) => {
+  try {
+    let data = await util.read(file)
+
+    // render less
+    data = await util.renderLess(data, {
+      relativeUrls: true,
+      rootpath: '../../',
+      paths: ['src/less/']
+    })
+
+    // write to file
+    util.minify(await util.write(dist, data))
+  } catch (err) {
+    console.log(err)
+  }
 }
+
+rm('-rf', 'dist/css')
+mkdir('-p', 'dist/css')
+compile('src/less/theme.less', 'dist/css/vuikit.css')

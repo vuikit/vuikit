@@ -1,18 +1,8 @@
 const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const projectRoot = path.resolve(__dirname, '../')
-const env = process.env.NODE_ENV
 const alias = require('./alias')
+const projectRoot = path.resolve(__dirname, '../')
 
 module.exports = {
-  output: {
-    path: config.build.assetsRoot,
-    publicPath: env === 'production'
-      ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath,
-    filename: '[name].js'
-  },
   resolve: {
     alias,
     modules: [
@@ -51,7 +41,7 @@ module.exports = {
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
+          name: 'img/[name].[hash:7].[ext]'
         }
       }
     ]

@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
-const baseWebpackConfig = require('../build/webpack.config.base')
+const baseWebpackConfig = require('../build/webpack.base')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 

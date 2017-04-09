@@ -1,13 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Vuikit from '../build/dist'
 import routes from './routes'
+import * as vuikit from 'src/js/vuikit'
 
 const App = Vue.extend(require('./App'))
 
 // install
 Vue.use(VueRouter)
-Vue.use(Vuikit)
+
+// register Vuikit components
+const keys = Object.keys(vuikit)
+let i = keys.length
+while (i--) {
+  Vue.component(`Vk${keys[i]}`, vuikit[keys[i]])
+}
 
 new App({
   data: {

@@ -1,13 +1,20 @@
 const path = require('path')
 const webpack = require('webpack')
 const webpackMerge = require('webpack-merge')
-const baseWebpackConfig = require('../build/webpack.config.base')
+const baseWebpackConfig = require('../webpack.base')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const config = require('./config')
 
 module.exports = webpackMerge(baseWebpackConfig, {
   entry: {
-    main: path.resolve(__dirname, './main.js')
+    vuikit: path.resolve(__dirname, './app/main.js')
+  },
+  output: {
+    path: config.assetsRoot,
+    publicPath: config.assetsPublicPath,
+    filename: '[name].min.js',
+    chunkFilename: '[name].min.js'
   },
   devtool: 'eval',
   plugins: [
@@ -33,5 +40,5 @@ module.exports = webpackMerge(baseWebpackConfig, {
 
 // add hot-reload related code to entry chunks
 Object.keys(module.exports.entry).forEach(function (name) {
-  module.exports.entry[name] = ['./dev/client'].concat(module.exports.entry[name])
+  module.exports.entry[name] = ['./build/dev/client'].concat(module.exports.entry[name])
 })
