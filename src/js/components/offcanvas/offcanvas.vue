@@ -1,15 +1,25 @@
 <template>
   <transition
-    enter-to-class="uk-open"
-    leave-active-class="uk-offcanvas-bar-animation"
-    @before-enter="beforeEnter"
+    :css="false"
+    @enter="transitionEnd"
+    @leave="transitionEnd"
+    @before-enter="beforeShow"
     @after-enter="afterEnter"
-    @before-leave="beforeLeave"
-    @after-leave="afterLeave">
-    <div v-show="show"
+    @before-leave="beforeHide"
+    @after-leave="hidden">
+    <div
+      v-show="show"
       class="uk-offcanvas"
       style="display: block;">
-      <div ref="panel" class="uk-offcanvas-bar" :class="{
+      <div v-if="mode === 'reveal'"
+        :class="[clsMode]">
+        <div ref="panel" class="uk-offcanvas-bar" :class="{
+          'uk-offcanvas-bar-flip': flip
+        }">
+          <slot></slot>
+        </div>
+      </div>
+      <div v-else ref="panel" class="uk-offcanvas-bar" :class="{
         'uk-offcanvas-bar-flip': flip
       }">
         <slot></slot>
@@ -20,14 +30,20 @@
 
 <script>
 import ModalMixin from 'lib/mixins/modal'
-import { on, addClass, removeClass } from 'src/js/util/index'
+import { on, addClass, removeClass, forceRedraw, css, toMs, isString } from 'src/js/util/index'
 
 const doc = document.documentElement
+const body = document.body
+let scroll
 
 export default {
   name: 'VkOffcanvas',
   mixins: [ModalMixin],
   props: {
+    contentEl: {
+      // Ref or Dom
+      required: true
+    },
     flip: {
       type: Boolean,
       default: false
@@ -38,61 +54,111 @@ export default {
     },
     mode: {
       type: String,
-      default: 'slide'
+      default: 'slide' // none|slide|push|reveal
     }
   },
   data: () => ({
+    defaults: {
+      clsMode: 'uk-offcanvas',
+      clsFlip: 'uk-offcanvas-flip',
+      clsOverlay: 'uk-offcanvas-overlay',
+      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
+      clsContentAnimation: 'uk-offcanvas-content-animation'
+    },
     clsPage: 'uk-offcanvas-page',
-    clsFlip: 'uk-offcanvas-flip',
     clsPageAnimation: 'uk-offcanvas-page-animation',
-    clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-    clsMode: 'uk-offcanvas',
-    clsOverlay: 'uk-offcanvas-overlay',
-    clsPageOverlay: 'uk-offcanvas-page-overlay'
+    clsContainer: 'uk-offcanvas-container',
+    clsContent: 'uk-offcanvas-content'
   }),
-  created () {
-    this.clsFlip = this.flip ? this.clsFlip : ''
-    this.clsOverlay = this.overlay ? this.clsOverlay : ''
-    this.clsPageOverlay = this.overlay ? this.clsPageOverlay : ''
-    this.clsMode = `${this.clsMode}-${this.mode}`
-
-    if (this.mode === 'none' || this.mode === 'reveal') {
-      this.clsSidebarAnimation = ''
-    }
-    if (this.mode !== 'push' && this.mode !== 'reveal') {
-      this.clsPageAnimation = ''
+  computed: {
+    content () {
+      return isString(this.contentEl)
+        ? this.getRefElement(this.contentEl)
+        : this.contentEl
+    },
+    clsFlip () {
+      return this.flip
+        ? this.defaults.clsFlip
+        : ''
+    },
+    clsOverlay () {
+      return this.overlay
+        ? this.defaults.clsOverlay
+        : ''
+    },
+    clsMode () {
+      return `${this.defaults.clsMode}-${this.mode}`
+    },
+    clsSidebarAnimation () {
+      return this.mode === 'none' || this.mode === 'reveal'
+        ? ''
+        : this.defaults.clsSidebarAnimation
+    },
+    clsContentAnimation () {
+      return this.mode !== 'push' && this.mode !== 'reveal'
+        ? ''
+        : this.defaults.clsContentAnimation
+    },
+    transitionElement () {
+      return this.mode === 'reveal'
+        ? this.$refs.panel.parentNode
+        : this.$refs.panel
+    },
+    transitionDuration () {
+      return toMs(css(this.transitionElement, 'transition-duration'))
     }
   },
   methods: {
-    beforeEnter () {
-      this._beforeEnter()
-      // set fixed with so the page can slide-out without shinking
-      doc.style.width = window.innerWidth - this.getScrollbarWidth() + 'px'
-      // add page classes
-      addClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
-      // add offcanvas style
-      addClass(this.$el, this.clsOverlay)
-      this.$el.style.display = 'block'
-      // add offcanvas-bar classes
-      addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
-    },
-    afterEnter () {
+    afterEnter (el) {
       this._afterEnter()
-      addClass(doc, this.clsPageAnimation)
+    },
+    getRefElement (ref) {
+      const context = this.$vnode.context
+      const target = context.$refs[ref]
+      if (target) {
+        return target._isVue
+          ? target.$el
+          : target
+      }
+      return false
+    },
+    beforeShow () {
+      scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset }
+
+      // doc.css('overflow-y', (!this.clsContentAnimation || this.flip) && this.scrollbarWidth && this.overlay ? 'scroll' : '')
+
+      // set fixed with so the page can slide-out without shinking
+      css(doc, 'width', window.innerWidth - this.getScrollbarWidth() + 'px')
+
+      addClass(doc, `${this.clsPage}`)
+      addClass(body, `${this.clsContainer} ${this.clsFlip} ${this.clsOverlay}`)
+      forceRedraw(body)
+
+      addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.mode !== 'reveal' ? this.clsMode : ''}`)
+      addClass(this.$el, this.clsOverlay)
+      addClass(this.content, this.clsContentAnimation)
+
+      // toggle element
+      addClass(this.$el, this.clsOverlay)
+      css(this.$el, 'display', 'block')
+      forceRedraw(this.$el)
       addClass(this.$el, 'uk-open')
     },
-    beforeLeave () {
-      removeClass(doc, this.clsPageAnimation)
-      doc.style['margin-left'] = ''
+    beforeHide () {
+      removeClass(this.content, this.clsContentAnimation)
       removeClass(this.$el, 'uk-open')
     },
-    afterLeave () {
+    transitionEnd: function (el, done) {
+      setTimeout(done, this.transitionDuration)
+    },
+    hidden () {
+      css(doc, 'width', '')
+      css(this.$el, 'display', 'none')
+      removeClass(this.$el, this.clsOverlay)
+      removeClass(doc, `${this.clsPage}`)
+      removeClass(body, `${this.clsContainer} ${this.clsFlip} ${this.clsOverlay}`)
+      forceRedraw(this.$el)
       this._afterLeave()
-      doc.style.width = ''
-      removeClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
-      removeClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
-      removeClass(this.$el, `${this.clsOverlay}`)
-      this.$el.style.display = ''
     }
   },
   mounted () {
@@ -102,13 +168,14 @@ export default {
       }
     }
 
+    addClass(this.content, 'uk-offcanvas-content')
+
     on(this.$el, 'click', clickHandler, this._uid)
     if ('ontouchstart' in document.documentElement) {
       on(this.$el, 'touchstart', clickHandler, this._uid)
     }
   },
   beforeDestroy () {
-    removeClass(doc, this.clsPageAnimation)
     removeClass(doc, `${this.clsPage} ${this.clsFlip} ${this.clsPageOverlay}`)
     doc.style['margin-left'] = ''
     this._afterLeave()

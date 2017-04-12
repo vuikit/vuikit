@@ -138,3 +138,8 @@ export function offAll (namespace = 'default') {
     }
   }
 }
+
+// force redraw/repaint for WebKit
+export function forceRedraw (el) {
+  el.offsetHeight // eslint-disable-line
+}

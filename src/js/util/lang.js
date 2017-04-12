@@ -183,3 +183,11 @@ export function get (object, path, defaultValue) {
 function baseGet (object, path) {
   return path.split('.').reduce((acc, val) => acc && acc[val], object)
 }
+
+export function toMs (time) {
+  return !time
+    ? 0
+    : time.substr(-2) === 'ms'
+      ? parseFloat(time)
+      : parseFloat(time) * 1000
+}
