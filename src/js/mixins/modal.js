@@ -34,10 +34,6 @@ export default {
     active,
     activeCount
   }),
-  mounted () {
-    // move dom to body
-    body.appendChild(this.$el)
-  },
   methods: {
     _beforeEnter () {
       if (!active) {
