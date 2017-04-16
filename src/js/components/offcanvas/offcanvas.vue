@@ -125,7 +125,7 @@ export default {
     beforeShow () {
       scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset }
 
-      // doc.css('overflow-y', (!this.clsContentAnimation || this.flip) && this.scrollbarWidth && this.overlay ? 'scroll' : '')
+      css(doc, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '')
 
       // set fixed with so the page can slide-out without shinking
       css(doc, 'width', window.innerWidth - this.getScrollbarWidth() + 'px')
@@ -152,12 +152,29 @@ export default {
       setTimeout(done, this.transitionDuration)
     },
     hidden () {
+      if (!this.overlay) {
+        scroll = { x: window.pageXOffset, y: window.pageYOffset }
+      }
+
       css(doc, 'width', '')
-      css(this.$el, 'display', 'none')
-      removeClass(this.$el, this.clsOverlay)
       removeClass(doc, `${this.clsPage}`)
-      removeClass(body, `${this.clsContainer} ${this.clsFlip} ${this.clsOverlay}`)
+
+      removeClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.clsMode}`)
+      removeClass(this.$el, this.clsOverlay)
+      css(this.$el, 'display', 'none')
       forceRedraw(this.$el)
+      removeClass(body, `${this.clsContainer} ${this.clsFlip} ${this.clsOverlay}`)
+
+      body.scrollTop = scroll.y
+
+      css(doc, 'overflow-y', '')
+      css(this.content, 'width', '')
+      css(this.content, 'height', '')
+      forceRedraw(this.content)
+
+      window.scrollTo(scroll.x, scroll.y)
+      scroll = null
+
       this._afterLeave()
     }
   },
