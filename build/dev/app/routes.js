@@ -6,76 +6,76 @@ export default [
   {
     name: 'Breadcrumb',
     path: '/breadcrumb',
-    component: require('./pages/Breadcrumb')
+    component: require('src/dev/Breadcrumb')
   },
   {
     name: 'Button',
     path: '/button',
-    component: require('./pages/Button')
+    component: require('src/dev/Button')
   },
   {
     name: 'Datepicker',
     path: '/datepicker',
-    component: require('./pages/Datepicker')
+    component: require('src/dev/Datepicker')
   },
   {
     name: 'Drop',
     path: '/drop',
-    component: require('./pages/Drop')
+    component: require('src/dev/Drop')
   },
   {
     name: 'Dropdown',
     path: '/dropdown',
-    component: require('./pages/Dropdown')
+    component: require('src/dev/Dropdown')
   },
   {
     name: 'Loading',
     path: '/loading',
-    component: require('./pages/Loading')
+    component: require('src/dev/Loading')
   },
   {
     name: 'Modal',
     path: '/modal',
-    component: require('./pages/Modal')
+    component: require('src/dev/Modal')
   },
   {
     name: 'Notification',
     path: '/notification',
-    component: require('./pages/Notification')
+    component: require('src/dev/Notification')
   },
   {
     name: 'Offcanvas',
     path: '/offcanvas',
-    component: require('./pages/Offcanvas')
+    component: require('src/dev/Offcanvas')
   },
   {
     name: 'Pagination',
     path: '/pagination',
-    component: require('./pages/Pagination')
+    component: require('src/dev/Pagination')
   },
   {
     name: 'Subnav',
     path: '/subnav',
-    component: require('./pages/Subnav')
+    component: require('src/dev/Subnav')
   },
   {
     name: 'Table',
     path: '/table',
-    component: require('./pages/Table')
+    component: require('src/dev/Table')
   },
   {
     name: 'Tabs',
     path: '/tabs',
-    component: require('./pages/Tabs')
+    component: require('src/dev/Tabs')
   },
   {
     name: 'Tooltip',
     path: '/tooltip',
-    component: require('./pages/Tooltip')
+    component: require('src/dev/Tooltip')
   },
   {
     name: 'Upload',
     path: '/upload',
-    component: require('./pages/Upload')
+    component: require('src/dev/Upload')
   }
 ]
