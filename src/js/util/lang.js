@@ -56,12 +56,12 @@ export function isObject (x) {
  * for plain JavaScript objects
  */
 export function isPlainObject (obj) {
-  return toString.call(obj) === '[object Object]'
+  return toString(obj) === '[object Object]'
 }
 
 /* https://github.com/sindresorhus/is-fn */
-export function isFunction (x) {
-  return toString.call(x) === '[object Function]'
+export function isFunction (obj) {
+  return toString(obj) === '[object Function]'
 }
 
 //
@@ -103,7 +103,7 @@ export function toInteger (n) {
 }
 
 export function toString (string) {
-  return Object.prototype.toString(string)
+  return Object.prototype.toString.call(string)
 }
 
 /* https://github.com/sindresorhus/arrify */
