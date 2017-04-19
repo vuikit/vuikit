@@ -1,11 +1,14 @@
-/* eslint-env shelljs */
 const fs = require('fs')
-const webpack = require('webpack')
 const path = require('path')
 const ora = require('ora')
 const less = require('less')
+const webpack = require('webpack')
+const rollup = require('rollup')
+const replace = require('rollup-plugin-replace')
 const CleanCSS = require('clean-css')
+const uglify = require('uglify-js')
 const mkdirp = require('mkdirp')
+const rmrf = require('rmrf')
 
 exports.read = function (file, callback) {
   return new Promise((resolve, reject) => {
@@ -20,11 +23,16 @@ exports.read = function (file, callback) {
   })
 }
 
-exports.write = function (dest, data) {
+exports.write = function (dest, data, map) {
   return new Promise((resolve, reject) =>
     mkdirp(path.dirname(dest), err => {
       if (err) {
         reject(err)
+      }
+
+      if (map) {
+        writeSourceMap(dest, map)
+        data += `\n//# sourceMappingURL=${path.basename(dest)}.map`
       }
 
       fs.writeFile(dest, data, err => {
@@ -38,6 +46,15 @@ exports.write = function (dest, data) {
   )
 }
 
+function writeSourceMap (dest, map) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(dest + '.map', map, err => {
+      if (err) return reject(err)
+      resolve()
+    })
+  })
+}
+
 exports.renderLess = function (data, options) {
   return less.render(data, options).then(output => output.css)
 }
@@ -48,11 +65,32 @@ exports.minify = function (file) {
     keepSpecialComments: 0,
     rebase: false,
     returnPromise: true
-  }).minify([file]).then(minified => exports.write(`${path.join(path.dirname(file), path.basename(file, '.css'))}.min.css`, minified.styles))
+  }).minify([file]).then(minified => exports.write(
+    `${path.join(path.dirname(file),
+    path.basename(file, '.css'))}.min.css`,
+    minified.styles
+  ))
+}
+
+exports.minifyJS = function (code) {
+  return uglify.minify(code, {
+    fromString: true,
+    output: {
+      screw_ie8: true,
+      ascii_only: true
+    },
+    compress: {
+      pure_funcs: ['makeMap']
+    }
+  }).code
 }
 
 exports.logFile = function (file) {
   exports.read(file).then(data => console.log(`${exports.cyan(file)} ${exports.getSize(data)}`))
+}
+
+function logError (e) {
+  console.log(e)
 }
 
 exports.getSize = function (data) {
@@ -63,14 +101,10 @@ exports.cyan = function (str) {
   return `\x1b[1m\x1b[36m${str}\x1b[39m\x1b[22m`
 }
 
-exports.blue = function (str) {
-  return `\x1b[1m\x1b[34m${str}\x1b[39m\x1b[22m`
-}
-
 // delete all content from a folder
 exports.cleanPath = function (path) {
-  rm('-rf', path)
-  mkdir('-p', path)
+  rmrf(path)
+  mkdirp(path)
 }
 
 // runs a webpack build
@@ -87,5 +121,48 @@ exports.webpackBuild = function (config, msg) {
       chunks: false,
       chunkModules: false
     }) + '\n')
+  })
+}
+
+// runs a rollup build
+exports.rollupBuild = function (config, builds) {
+  let built = 0
+  const total = builds.length
+
+  const next = () => {
+    buildEntry(config, builds[built]).then(() => {
+      built++
+      if (built < total) {
+        next()
+      }
+    }).catch(logError)
+  }
+
+  next()
+}
+
+function buildEntry (config, build) {
+  const isProd = /min\.js$/.test(build.dest)
+  config = Object.assign({}, config, build)
+
+  if (config.env) {
+    config.plugins.push(replace({
+      'process.env.NODE_ENV': JSON.stringify(config.env)
+    }))
+    delete config.env
+  }
+
+  return rollup.rollup(config).then(bundle => {
+    const { code, map } = bundle.generate(config)
+
+    if (isProd) {
+      const banner = config.banner
+        ? config.banner + '\n'
+        : ''
+      const minified = banner + exports.minifyJS(code)
+      return exports.write(config.dest, minified, map)
+    }
+
+    return exports.write(config.dest, code)
   })
 }

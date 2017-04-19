@@ -6,11 +6,10 @@ module.exports = {
   assetsPublicPath: '/',
   assetsSubDirectory: 'static',
   // productionSourceMap: false,
-  banner: `
-    /*!
-    * ${pkg.name} ${pkg.version} (${pkg.git})
-    * (c) ${new Date().getFullYear()} ${pkg.author.name}
-    * Released under the ${pkg.license} License.
-    */
-  `
+  banner:
+`/*!
+ * ${pkg.name} ${pkg.version} (${pkg.git})
+ * (c) ${new Date().getFullYear()} ${pkg.author.name}
+ * Released under the ${pkg.license} License.
+ */`
 }
