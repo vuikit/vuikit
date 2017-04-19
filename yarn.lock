@@ -4875,6 +4875,10 @@ ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
 
+rmrf@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/rmrf/-/rmrf-1.0.2.tgz#97d974a64767b7f91bb9fcd19d905fc40b2b2112"
+
 rollup-plugin-alias@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/rollup-plugin-alias/-/rollup-plugin-alias-1.2.1.tgz#1e895581cc18fdbf1acd7ada219571bfca9d6593"

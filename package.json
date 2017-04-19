@@ -84,6 +84,7 @@
     "ora": "^1.2.0",
     "popper.js": "^1.0.8",
     "portfinder": "^1.0.13",
+    "rmrf": "^1.0.2",
     "rollup": "^0.41.6",
     "rollup-plugin-alias": "^1.2.1",
     "rollup-plugin-babel": "^2.7.1",
