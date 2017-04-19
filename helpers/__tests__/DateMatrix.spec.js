@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import matrix from '../date-matrix'
+import matrix from 'dist/helpers/date-matrix'
 import MockDate from 'mockdate'
 
 describe('data-matrix', () => {

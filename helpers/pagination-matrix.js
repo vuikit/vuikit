@@ -1,4 +1,4 @@
-import { range as getRange } from 'src/js/util/index'
+import { range as getRange } from 'src/js/util/lang'
 
 const def = { total: 200, page: 1, perPage: 10, range: 3 }
 

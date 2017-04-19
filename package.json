@@ -34,7 +34,8 @@
     "build": "node build/prod/build.js",
     "dev": "node build/dev/server.js",
     "deploy": "cd build && ./deploy.sh",
-    "test": "./node_modules/.bin/jest",
+    "test": "yarn precompile && ./node_modules/.bin/jest",
+    "precompile": "node build/precompile-helpers.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
@@ -119,7 +120,8 @@
       "^vuikit$": "<rootDir>/dist/js/vuikit.esm.js",
       "jest/(.*)$": "<rootDir>/jest/$1.js",
       "helpers/(.*)$": "<rootDir>/helpers/$1.js",
-      "utils/(.*)$": "<rootDir>/utils/$1.js"
+      "utils/(.*)$": "<rootDir>/utils/$1.js",
+      "src/(.*)$": "<rootDir>/src/$1.js"
     },
     "snapshotSerializers": [
       "<rootDir>/jest/snapshotBeautifier.js"

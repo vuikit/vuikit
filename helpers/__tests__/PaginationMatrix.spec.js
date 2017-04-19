@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import matrix from '../pagination-matrix'
+import matrix from 'dist/helpers/pagination-matrix'
 
 describe('pagination-matrix', () => {
   it('accept arguments', () => {
