@@ -1,10 +1,8 @@
-
-    /*!
-    * vuikit 0.7.0 (undefined)
-    * (c) 2017 Miljan Aleksic
-    * Released under the MIT License.
-    */
-  
+/*!
+ * vuikit 0.7.0 (undefined)
+ * (c) 2017 Miljan Aleksic
+ * Released under the MIT License.
+ */
 'use strict';
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
@@ -191,6 +189,11 @@ function offAll$$1 (namespace) {
   }
 }
 
+// force redraw/repaint for WebKit
+function forceRedraw$$1 (el) {
+  el.offsetHeight; // eslint-disable-line
+}
+
 function classify (str) {
   return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
 }
@@ -231,8 +234,8 @@ function isObject (x) {
 
 
 /* https://github.com/sindresorhus/is-fn */
-function isFunction (x) {
-  return toString$1.call(x) === '[object Function]'
+function isFunction (obj) {
+  return toString$1(obj) === '[object Function]'
 }
 
 //
@@ -274,7 +277,7 @@ function toInteger (n) {
 }
 
 function toString$1 (string) {
-  return Object.prototype.toString(string)
+  return Object.prototype.toString.call(string)
 }
 
 /* https://github.com/sindresorhus/arrify */
@@ -327,6 +330,14 @@ function get (object, path, defaultValue) {
 
 function baseGet (object, path) {
   return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, object)
+}
+
+function toMs (time) {
+  return !time
+    ? 0
+    : time.substr(-2) === 'ms'
+      ? parseFloat(time)
+      : parseFloat(time) * 1000
 }
 
 // export const Observer = window.MutationObserver || window.WebKitMutationObserver
@@ -613,15 +624,6 @@ function flipPosition$$1 (pos) {
  */
 
 var warn;
-
-if (process.env.NODE_ENV !== 'production') {
-  var hasConsole = typeof console !== 'undefined';
-  warn = function (msg) {
-    if (hasConsole) {
-      console.error(msg);
-    }
-  };
-}
 
 function filterByTag (nodes, tag) {
   var result = [];
@@ -6191,10 +6193,6 @@ var ModalMixin = {
     active: active,
     activeCount: activeCount
   }); },
-  mounted: function mounted () {
-    // move dom to body
-    body.appendChild(this.$el);
-  },
   methods: {
     _beforeEnter: function _beforeEnter () {
       if (!active) {
@@ -6530,11 +6528,17 @@ var obj;},staticRenderFns: [],
 };
 
 var doc$2 = document.documentElement;
+var body$1 = document.body;
+var scroll;
 
-var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-active-class":"uk-offcanvas-bar-animation"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeLeave,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
+var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
   name: 'VkOffcanvas',
   mixins: [ModalMixin],
   props: {
+    contentEl: {
+      // Ref or Dom
+      required: true
+    },
     flip: {
       type: Boolean,
       default: false
@@ -6545,61 +6549,128 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     },
     mode: {
       type: String,
-      default: 'slide'
+      default: 'slide' // none|slide|push|reveal
     }
   },
   data: function () { return ({
+    defaults: {
+      clsMode: 'uk-offcanvas',
+      clsFlip: 'uk-offcanvas-flip',
+      clsOverlay: 'uk-offcanvas-overlay',
+      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
+      clsContentAnimation: 'uk-offcanvas-content-animation'
+    },
     clsPage: 'uk-offcanvas-page',
-    clsFlip: 'uk-offcanvas-flip',
     clsPageAnimation: 'uk-offcanvas-page-animation',
-    clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-    clsMode: 'uk-offcanvas',
-    clsOverlay: 'uk-offcanvas-overlay',
-    clsPageOverlay: 'uk-offcanvas-page-overlay'
+    clsContainer: 'uk-offcanvas-container',
+    clsContent: 'uk-offcanvas-content'
   }); },
-  created: function created () {
-    this.clsFlip = this.flip ? this.clsFlip : '';
-    this.clsOverlay = this.overlay ? this.clsOverlay : '';
-    this.clsPageOverlay = this.overlay ? this.clsPageOverlay : '';
-    this.clsMode = (this.clsMode) + "-" + (this.mode);
-
-    if (this.mode === 'none' || this.mode === 'reveal') {
-      this.clsSidebarAnimation = '';
-    }
-    if (this.mode !== 'push' && this.mode !== 'reveal') {
-      this.clsPageAnimation = '';
+  computed: {
+    content: function content () {
+      return isString(this.contentEl)
+        ? this.getRefElement(this.contentEl)
+        : this.contentEl
+    },
+    clsFlip: function clsFlip () {
+      return this.flip
+        ? this.defaults.clsFlip
+        : ''
+    },
+    clsOverlay: function clsOverlay () {
+      return this.overlay
+        ? this.defaults.clsOverlay
+        : ''
+    },
+    clsMode: function clsMode () {
+      return ((this.defaults.clsMode) + "-" + (this.mode))
+    },
+    clsSidebarAnimation: function clsSidebarAnimation () {
+      return this.mode === 'none' || this.mode === 'reveal'
+        ? ''
+        : this.defaults.clsSidebarAnimation
+    },
+    clsContentAnimation: function clsContentAnimation () {
+      return this.mode !== 'push' && this.mode !== 'reveal'
+        ? ''
+        : this.defaults.clsContentAnimation
+    },
+    transitionElement: function transitionElement () {
+      return this.mode === 'reveal'
+        ? this.$refs.panel.parentNode
+        : this.$refs.panel
+    },
+    transitionDuration: function transitionDuration () {
+      return toMs(css$$1(this.transitionElement, 'transition-duration'))
     }
   },
   methods: {
-    beforeEnter: function beforeEnter () {
-      this._beforeEnter();
-      // set fixed with so the page can slide-out without shinking
-      doc$2.style.width = window.innerWidth - this.getScrollbarWidth() + 'px';
-      // add page classes
-      addClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-      // add offcanvas style
-      addClass$$1(this.$el, this.clsOverlay);
-      this.$el.style.display = 'block';
-      // add offcanvas-bar classes
-      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-    },
-    afterEnter: function afterEnter () {
+    afterEnter: function afterEnter (el) {
       this._afterEnter();
-      addClass$$1(doc$2, this.clsPageAnimation);
+    },
+    getRefElement: function getRefElement (ref) {
+      var context = this.$vnode.context;
+      var target = context.$refs[ref];
+      if (target) {
+        return target._isVue
+          ? target.$el
+          : target
+      }
+      return false
+    },
+    beforeShow: function beforeShow () {
+      scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
+
+      css$$1(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
+
+      // set fixed with so the page can slide-out without shinking
+      css$$1(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
+
+      addClass$$1(doc$2, ("" + (this.clsPage)));
+      addClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      forceRedraw$$1(body$1);
+
+      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
+      addClass$$1(this.$el, this.clsOverlay);
+      addClass$$1(this.content, this.clsContentAnimation);
+
+      // toggle element
+      addClass$$1(this.$el, this.clsOverlay);
+      css$$1(this.$el, 'display', 'block');
+      forceRedraw$$1(this.$el);
       addClass$$1(this.$el, 'uk-open');
     },
-    beforeLeave: function beforeLeave () {
-      removeClass$$1(doc$2, this.clsPageAnimation);
-      doc$2.style['margin-left'] = '';
+    beforeHide: function beforeHide () {
+      removeClass$$1(this.content, this.clsContentAnimation);
       removeClass$$1(this.$el, 'uk-open');
     },
-    afterLeave: function afterLeave () {
-      this._afterLeave();
-      doc$2.style.width = '';
-      removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+    transitionEnd: function (el, done) {
+      setTimeout(done, this.transitionDuration);
+    },
+    hidden: function hidden () {
+      if (!this.overlay) {
+        scroll = { x: window.pageXOffset, y: window.pageYOffset };
+      }
+
+      css$$1(doc$2, 'width', '');
+      removeClass$$1(doc$2, ("" + (this.clsPage)));
+
       removeClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass$$1(this.$el, ("" + (this.clsOverlay)));
-      this.$el.style.display = '';
+      removeClass$$1(this.$el, this.clsOverlay);
+      css$$1(this.$el, 'display', 'none');
+      forceRedraw$$1(this.$el);
+      removeClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+
+      body$1.scrollTop = scroll.y;
+
+      css$$1(doc$2, 'overflow-y', '');
+      css$$1(this.content, 'width', '');
+      css$$1(this.content, 'height', '');
+      forceRedraw$$1(this.content);
+
+      window.scrollTo(scroll.x, scroll.y);
+      scroll = null;
+
+      this._afterLeave();
     }
   },
   mounted: function mounted () {
@@ -6611,16 +6682,33 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       }
     };
 
+    addClass$$1(this.content, 'uk-offcanvas-content');
+
     on$$1(this.$el, 'click', clickHandler, this._uid);
     if ('ontouchstart' in document.documentElement) {
       on$$1(this.$el, 'touchstart', clickHandler, this._uid);
     }
   },
   beforeDestroy: function beforeDestroy () {
-    removeClass$$1(doc$2, this.clsPageAnimation);
     removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
     doc$2.style['margin-left'] = '';
     this._afterLeave();
+  }
+};
+
+var offcanvasClose = {
+  functional: true,
+  render: function render (h, ref) {
+    var data = ref.data;
+
+    return h('button', {
+      staticClass: 'uk-offcanvas-close uk-close-large',
+      attrs: {
+        type: 'button',
+        'uk-close': true
+      },
+      on: data.on
+    })
   }
 };
 
@@ -7579,6 +7667,7 @@ var lib = Object.freeze({
 	Notification: notification,
 	NotificationMessage: notificationMessage,
 	Offcanvas: offcanvas,
+	OffcanvasClose: offcanvasClose,
 	Pagination: pagination,
 	PaginationFirst: PaginationFirst,
 	PaginationLast: PaginationLast,
