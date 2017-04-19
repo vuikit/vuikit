@@ -86,7 +86,10 @@ exports.minifyJS = function (code) {
 }
 
 exports.logFile = function (file) {
-  exports.read(file).then(data => console.log(`${exports.cyan(file)} ${exports.getSize(data)}`))
+  const filePath = path.relative(process.cwd(), file)
+  exports.read(file).then(data =>
+    console.log(`${exports.cyan(filePath)} ${exports.getSize(data)}`)
+  )
 }
 
 function logError (e) {
