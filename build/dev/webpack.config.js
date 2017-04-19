@@ -13,8 +13,8 @@ module.exports = webpackMerge(baseWebpackConfig, {
   output: {
     path: config.assetsRoot,
     publicPath: config.assetsPublicPath,
-    filename: '[name].min.js',
-    chunkFilename: '[name].min.js'
+    filename: '[name].js',
+    chunkFilename: '[name].js'
   },
   devtool: 'eval',
   plugins: [
