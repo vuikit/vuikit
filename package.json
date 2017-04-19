@@ -34,7 +34,7 @@
     "build": "node build/prod/build.js",
     "dev": "node build/dev/server.js",
     "deploy": "cd build && ./deploy.sh",
-    "test": "yarn precompile && ./node_modules/.bin/jest",
+    "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",
     "precompile": "node build/precompile-helpers.js",
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
@@ -111,7 +111,7 @@
     "webpack-merge": "^4.1.0"
   },
   "jest": {
-    "testRegex": "/__tests__/.*(test|spec)\\.jsx?$",
+    "testRegex": "/__tests__/[^_].*(test|spec)\\.jsx?$",
     "moduleFileExtensions": [
       "js",
       "vue"

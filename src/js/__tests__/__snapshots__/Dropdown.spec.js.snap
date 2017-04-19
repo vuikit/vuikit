@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Dropdown renders correctly 1`] = `
-<button>
-  <div class="uk-dropdown" style="display:none;">Dropdown</div>
-</button>
-`;

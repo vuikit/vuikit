@@ -2,9 +2,9 @@
 
 exports[`Pagination renders correctly 1`] = `
 <ul class="uk-pagination uk-flex-center">
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-left" class="uk-pagination-prev uk-icon"></span></a></li>
   <li class="uk-margin-auto-right">
-    <a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a>
+    <a><span uk-icon="icon: chevron-left" class="uk-pagination-prev uk-icon"></span></a>
   </li>
   <li><a>1</a></li>
   <li><span>...</span></li>
@@ -18,23 +18,23 @@ exports[`Pagination renders correctly 1`] = `
   <li><span>...</span></li>
   <li><a>20</a></li>
   <li class="uk-margin-auto-left">
-    <a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a>
+    <a><span uk-icon="icon: chevron-right" class="uk-pagination-next uk-icon"></span></a>
   </li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-right" class="uk-pagination-next uk-icon"></span></a></li>
 </ul>
 `;
 
 exports[`Pagination renders correctly 2`] = `
 <ul class="uk-pagination">
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-left" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-right" class="uk-pagination-next uk-icon"></span></a></li>
 </ul>
 `;
 
 exports[`Pagination renders correctly 3`] = `
 <ul class="uk-pagination uk-flex-right">
-  <li><a><span uk-pagination-previous="true" class="uk-pagination-prev uk-icon"></span></a></li>
-  <li><a><span uk-pagination-next="true" class="uk-pagination-next uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-left" class="uk-pagination-prev uk-icon"></span></a></li>
+  <li><a><span uk-icon="icon: chevron-right" class="uk-pagination-next uk-icon"></span></a></li>
 </ul>
 `;
 
