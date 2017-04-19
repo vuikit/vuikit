@@ -7,7 +7,7 @@ import {
   renderSnapshot,
   queryByTag,
   queryByTagAll
-} from 'jest/util'
+} from 'tests/util'
 
 Vue.use(Vuikit)
 

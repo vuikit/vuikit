@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuikit from 'vuikit'
-import waitForUpdate from 'jest/wait-for-update'
+import waitForUpdate from 'tests/wait-for-update'
 import {
   createVue,
   destroyVM,
   queryByTag,
   queryByTagAll,
   renderSnapshot
-} from 'jest/util'
+} from 'tests/util'
 
 Vue.use(Vuikit)
 

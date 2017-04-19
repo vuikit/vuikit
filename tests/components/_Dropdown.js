@@ -6,7 +6,7 @@ import {
   triggerEvent,
   queryByTag,
   renderSnapshot
-} from 'jest/util'
+} from 'tests/util'
 
 Vue.use(Vuikit)
 

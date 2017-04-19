@@ -5,7 +5,7 @@ import {
   createVue,
   destroyVM,
   renderSnapshot
-} from 'jest/util'
+} from 'tests/util'
 import { arrify } from 'vuikit-utils'
 import matrix from 'helpers/date-matrix'
 import isValidDate from 'date-fns/is_valid'

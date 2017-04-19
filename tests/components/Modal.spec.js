@@ -7,8 +7,8 @@ import {
   triggerEvent,
   queryByTag,
   renderSnapshot
-} from 'jest/util'
-import waitForUpdate from 'jest/wait-for-update'
+} from 'tests/util'
+import waitForUpdate from 'tests/wait-for-update'
 
 Vue.use(Vuikit)
 
