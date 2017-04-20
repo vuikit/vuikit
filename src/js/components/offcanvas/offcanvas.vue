@@ -111,6 +111,7 @@ export default {
   methods: {
     afterEnter (el) {
       this._afterEnter()
+      this.$emit('displayed')
     },
     getRefElement (ref) {
       const context = this.$vnode.context
@@ -176,6 +177,7 @@ export default {
       scroll = null
 
       this._afterLeave()
+      this.$emit('hidden')
     }
   },
   mounted () {
