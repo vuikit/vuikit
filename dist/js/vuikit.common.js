@@ -6606,6 +6606,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   methods: {
     afterEnter: function afterEnter (el) {
       this._afterEnter();
+      this.$emit('displayed');
     },
     getRefElement: function getRefElement (ref) {
       var context = this.$vnode.context;
@@ -6671,6 +6672,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       scroll = null;
 
       this._afterLeave();
+      this.$emit('hidden');
     }
   },
   mounted: function mounted () {
