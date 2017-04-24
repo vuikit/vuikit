@@ -18,8 +18,7 @@
   "files": [
     "dist",
     "src",
-    "helpers",
-    "utils"
+    "helpers"
   ],
   "license": "MIT",
   "repository": {
@@ -35,8 +34,7 @@
     "dev": "node build/dev/server.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",
-    "precompile": "node build/precompile-helpers.js",
-    "lint": "eslint --ext .js,.vue src test/unit/specs"
+    "precompile": "node build/precompile-helpers.js"
   },
   "dependencies": {
     "vue": "^2.2.6"
@@ -121,7 +119,6 @@
       "^vuikit$": "<rootDir>/dist/js/vuikit.esm.js",
       "tests/(.*)$": "<rootDir>/tests/$1.js",
       "helpers/(.*)$": "<rootDir>/helpers/$1.js",
-      "utils/(.*)$": "<rootDir>/utils/$1.js",
       "src/(.*)$": "<rootDir>/src/$1.js"
     },
     "snapshotSerializers": [
