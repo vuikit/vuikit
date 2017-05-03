@@ -104,10 +104,14 @@ export function css (el, style, value) {
 
 /* Events */
 
-var boundEvents = []
+const boundEvents = []
 
 // add event listener shorthand
 export function on (el, type, listener, namespace = 'default') {
+  type.split(' ').forEach(type => _on(el, type, listener, namespace))
+}
+
+function _on (el, type, listener, namespace) {
   boundEvents[namespace] = boundEvents[namespace] || []
   boundEvents[namespace].push({ el, type, listener })
   el.addEventListener(type, listener)
@@ -122,21 +126,22 @@ export function off (el, type, namespace = 'default') {
   }
 }
 
+export function offAll (namespace = 'default') {
+  if (boundEvents[namespace] !== undefined) {
+    for (let i = 0; i < boundEvents[namespace].length; ++i) {
+      const { el, type, listener } = boundEvents[namespace][i]
+      el.removeEventListener(type, listener)
+    }
+    delete boundEvents[namespace]
+  }
+}
+
 export function one (el, type, listener) {
   const finalCallback = e => {
     listener(e)
     el.removeEventListener(type, finalCallback)
   }
   el.addEventListener(type, finalCallback)
-}
-
-export function offAll (namespace = 'default') {
-  if (boundEvents[namespace] !== undefined) {
-    for (let i = 0; i < boundEvents[namespace].length; ++i) {
-      const { el, event, handler } = boundEvents[namespace][i]
-      el.removeEventListener(event, handler)
-    }
-  }
 }
 
 // force redraw/repaint for WebKit
