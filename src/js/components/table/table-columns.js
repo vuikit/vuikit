@@ -24,7 +24,9 @@ export default {
 
 function parseType (col) {
   const type = col.type || 'default'
-  return columns[type]
+  return columns[type] !== undefined
+    ? columns[type]
+    : col.type
 }
 
 function parseData (col) {
