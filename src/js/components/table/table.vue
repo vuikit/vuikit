@@ -39,7 +39,7 @@ export default {
     ColumnHeaders: {
       functional: true,
       render (h, { parent }) {
-        return parent.columns.map(col =>
+        return parent.getColumns().map(col =>
           col._headerRender && col._headerRender.call(col._renderProxy)
         )
       }
@@ -49,7 +49,7 @@ export default {
       props: ['row'],
       render (h, { parent, props }) {
         const { row } = props
-        return parent.columns.map(col =>
+        return parent.getColumns().map(col =>
           col._cellRender && col._cellRender.call(col._renderProxy, { row })
         )
       }
@@ -66,6 +66,19 @@ export default {
       if (noChildWasClicked) {
         this.$emit('click-row', row)
       }
+    },
+    getColumns () {
+      // always try getting the columns from slots
+      // as it keeps the order up to date
+      let cols = this.$slots.default.map(node =>
+        this.columns.find(col => col.cell === node.key)
+      ).filter(c => c)
+
+      // fallback to default
+      // if slots not ready
+      return cols.length
+        ? cols
+        : this.columns
     }
   }
 }
