@@ -166,12 +166,14 @@ var boundEvents = [];
 function on$$1 (el, type, listener, namespace) {
   if ( namespace === void 0 ) namespace = 'default';
 
+  type.split(' ').forEach(function (type) { return _on(el, type, listener, namespace); });
+}
+
+function _on (el, type, listener, namespace) {
   boundEvents[namespace] = boundEvents[namespace] || [];
   boundEvents[namespace].push({ el: el, type: type, listener: listener });
   el.addEventListener(type, listener);
 }
-
-
 
 
 
@@ -182,12 +184,15 @@ function offAll$$1 (namespace) {
     for (var i = 0; i < boundEvents[namespace].length; ++i) {
       var ref = boundEvents[namespace][i];
       var el = ref.el;
-      var event = ref.event;
-      var handler = ref.handler;
-      el.removeEventListener(event, handler);
+      var type = ref.type;
+      var listener = ref.listener;
+      el.removeEventListener(type, listener);
     }
+    delete boundEvents[namespace];
   }
 }
+
+
 
 // force redraw/repaint for WebKit
 function forceRedraw$$1 (el) {
@@ -7106,7 +7111,7 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       render: function render (h, ref) {
         var parent = ref.parent;
 
-        return parent.columns.map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy); }
+        return parent.getColumns().map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy); }
         )
       }
     },
@@ -7118,7 +7123,7 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
         var props = ref.props;
 
         var row = props.row;
-        return parent.columns.map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, { row: row }); }
+        return parent.getColumns().map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, { row: row }); }
         )
       }
     }
@@ -7134,6 +7139,20 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       if (noChildWasClicked) {
         this.$emit('click-row', row);
       }
+    },
+    getColumns: function getColumns () {
+      var this$1 = this;
+
+      // always try getting the columns from slots
+      // as it keeps the order up to date
+      var cols = this.$slots.default.map(function (node) { return this$1.columns.find(function (col) { return col.cell === node.key; }); }
+      ).filter(function (c) { return c; });
+
+      // fallback to default
+      // if slots not ready
+      return cols.length
+        ? cols
+        : this.columns
     }
   }
 };
@@ -7406,7 +7425,9 @@ var tableColumns = {
 
 function parseType (col) {
   var type = col.type || 'default';
-  return columns[type]
+  return columns[type] !== undefined
+    ? columns[type]
+    : col.type
 }
 
 function parseData (col) {

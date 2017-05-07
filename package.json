@@ -34,7 +34,8 @@
     "dev": "node build/dev/server.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",
-    "precompile": "node build/precompile-helpers.js"
+    "precompile": "node build/precompile-helpers.js",
+    "explorer": "poi --config explorer/poi.config.js"
   },
   "dependencies": {
     "vue": "^2.3.2"
@@ -80,7 +81,7 @@
     "mkdirp": "^0.5.1",
     "mockdate": "^2.0.1",
     "ora": "^1.2.0",
-    "poi": "^8.0.0-rc.4",
+    "poi": "^8.0.0-rc.7",
     "popper.js": "^1.0.8",
     "portfinder": "^1.0.13",
     "rmrf": "^1.0.2",
@@ -104,7 +105,7 @@
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.3.2",
     "vuikit-docs": "^0.1.1",
-    "vuikit-explorer": "^0.0.2",
+    "vuikit-explorer": "^0.0.3",
     "webpack": "^2.5.1",
     "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",

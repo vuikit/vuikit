@@ -14,11 +14,3 @@
     </vk-upload>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'PageUpload',
-  data: () => ({
-  })
-}
-</script>

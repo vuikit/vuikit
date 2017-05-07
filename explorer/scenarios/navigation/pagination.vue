@@ -1,7 +1,5 @@
 <template>
-  <div class="uk-container uk-margin-bottom">
-    <app-header></app-header>
-    <h1>{{ $route.name }}</h1>
+  <div>
     <vk-pagination :page="page" :total="total" :perPage="perPage" align="left"
       @change="p => { page = p }">
       <vk-pagination-first />
