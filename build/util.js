@@ -9,6 +9,20 @@ const CleanCSS = require('clean-css')
 const uglify = require('uglify-js')
 const mkdirp = require('mkdirp')
 const rmrf = require('rmrf')
+const glob = require('glob')
+const SVGO = require('svgo')
+
+const svgo = new SVGO({
+  plugins: [
+    { removeTitle: true },
+    { removeStyleElement: true },
+    { removeComments: true },
+    { removeDesc: true },
+    { removeUselessDefs: true },
+    { cleanupIDs: { remove: true } },
+    { convertShapeToPath: true }
+  ]
+})
 
 exports.read = function (file, callback) {
   return new Promise((resolve, reject) => {
@@ -167,5 +181,29 @@ function buildEntry (config, build) {
     }
 
     return exports.write(config.dest, code)
+  })
+}
+
+exports.readIcons = function (src) {
+  return glob.sync(src, { nosort: true }).reduce((icons, file) => {
+    const name = path.basename(file, '.svg')
+    const data = fs.readFileSync(file).toString().trim().replace(/\n/g, '').replace(/>\s+</g, '><')
+    icons[name] = data
+    return icons
+  }, {})
+}
+
+exports.optimizeIcon = function (icon) {
+  return new Promise((resolve, reject) => {
+    svgo.optimize(icon, result => {
+      resolve(result)
+    })
+  })
+}
+
+// simple template compile
+exports.compileTmpl = function (content, data) {
+  return content.replace(/#{(\w+)}/gi, function (match, name) {
+    return data[name] ? data[name] : ''
   })
 }

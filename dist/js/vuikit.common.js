@@ -5232,6 +5232,57 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
+var svg = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var width = props.width;
+    var height = props.height;
+    var name = props.name;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+
+    return h('svg', {
+      attrs: {
+        version: '1.1',
+        viewBox: viewBox,
+        width: width * ratio,
+        height: height * ratio,
+        ratio: ratio,
+        icon: name
+      },
+      domProps: {
+        innerHTML: props.data
+      }
+    })
+  }
+};
+
+// import icons from './icons'
+var icon = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+    var data = ref.data;
+    var listeners = ref.listeners;
+
+    var icon = icons.get(props.icon);
+
+    return h('span', Object.assign({}, data,
+      {class: 'uk-icon',
+      on: listeners}), [
+      h(svg, {
+        props: Object.assign({}, icon,
+          {ratio: props.ratio})
+      })
+    ])
+  },
+  register: function register (icon) {
+    // icons.register(icon)
+  }
+};
+
 var Tween = createCommonjsModule(function (module, exports) {
 /**
  * Tween.js - Licensed under the MIT license
@@ -7679,6 +7730,7 @@ var lib = Object.freeze({
 	Datepicker: datepicker,
 	Drop: drop,
 	Dropdown: dropdown,
+	Icon: icon,
 	LoadingBar: loadingBar,
 	Modal: modal,
 	ModalDialog: modalDialog,

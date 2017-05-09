@@ -1,4 +1,13 @@
+import Vue from 'vue'
+import * as vuikit from 'src/js/vuikit'
 import explorer from 'vuikit-explorer'
+
+// register Vuikit components
+const keys = Object.keys(vuikit)
+let i = keys.length
+while (i--) {
+  Vue.component(`Vk${keys[i]}`, vuikit[keys[i]])
+}
 
 explorer({
   title: 'Vuikit'
@@ -6,7 +15,8 @@ explorer({
 .add('Basic', [
   ['Button', require('./scenarios/basic/button.vue')],
   ['Button Checkbox', require('./scenarios/basic/button-checkbox.vue')],
-  ['Button Radio', require('./scenarios/basic/button-radio.vue')]
+  ['Button Radio', require('./scenarios/basic/button-radio.vue')],
+  ['Icon', require('./scenarios/basic/icon.vue')]
 ])
 .add('Data', [
   ['Table', require('./scenarios/data/table.vue')]

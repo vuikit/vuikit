@@ -5230,6 +5230,57 @@ var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
+var svg = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var width = props.width;
+    var height = props.height;
+    var name = props.name;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+
+    return h('svg', {
+      attrs: {
+        version: '1.1',
+        viewBox: viewBox,
+        width: width * ratio,
+        height: height * ratio,
+        ratio: ratio,
+        icon: name
+      },
+      domProps: {
+        innerHTML: props.data
+      }
+    })
+  }
+};
+
+// import icons from './icons'
+var icon = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+    var data = ref.data;
+    var listeners = ref.listeners;
+
+    var icon = icons.get(props.icon);
+
+    return h('span', Object.assign({}, data,
+      {class: 'uk-icon',
+      on: listeners}), [
+      h(svg, {
+        props: Object.assign({}, icon,
+          {ratio: props.ratio})
+      })
+    ])
+  },
+  register: function register (icon) {
+    // icons.register(icon)
+  }
+};
+
 var Tween = createCommonjsModule(function (module, exports) {
 /**
  * Tween.js - Licensed under the MIT license
@@ -7677,6 +7728,7 @@ var lib = Object.freeze({
 	Datepicker: datepicker,
 	Drop: drop,
 	Dropdown: dropdown,
+	Icon: icon,
 	LoadingBar: loadingBar,
 	Modal: modal,
 	ModalDialog: modalDialog,
@@ -7725,4 +7777,4 @@ if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vuikit$1);
 }
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, drop as Drop, dropdown as Dropdown, loadingBar as LoadingBar, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableColumns as TableColumns, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;
+export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, drop as Drop, dropdown as Dropdown, icon as Icon, loadingBar as LoadingBar, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableColumns as TableColumns, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;
