@@ -1,13 +1,12 @@
 <template>
   <table class="uk-table">
-    <slot></slot>
     <thead>
       <tr>
-        <column-headers></column-headers>
+        <slot></slot>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="row in data"
+      <tr v-for="(row, index) in data"
         :class="getRowClass(row)"
         @click="e => emitClickRow(e, row)">
         <row-cells :row="row"></row-cells>
@@ -17,7 +16,7 @@
 </template>
 
 <script>
-import { isFunction } from 'src/js/util/index'
+import { isFunction, get } from 'src/js/util/index'
 
 export default {
   name: 'VkTable',
@@ -26,36 +25,44 @@ export default {
       type: Array,
       required: true
     },
+    // required by column-sort
     sortedBy: {
       type: Object,
       default: () => ({}) // { field: [asc|desc] }
     },
     rowClass: [String, Function]
   },
-  data: () => ({
-    columns: []
-  }),
+  mounted () {
+    // force rerendering when $children
+    // is available for cell rendering
+    this.$forceUpdate()
+  },
   components: {
-    ColumnHeaders: {
-      functional: true,
-      render (h, { parent }) {
-        return parent.getColumns().map(col =>
-          col._headerRender && col._headerRender.call(col._renderProxy)
-        )
-      }
-    },
     RowCells: {
       functional: true,
       props: ['row'],
       render (h, { parent, props }) {
         const { row } = props
-        return parent.getColumns().map(col =>
-          col._cellRender && col._cellRender.call(col._renderProxy, { row })
-        )
+        return parent.getColumns().map(col => {
+          const compCellRender = col.$vnode.componentOptions.Ctor.options.cellRender
+          const cellRender = compCellRender || defaultCellRender
+          return cellRender.call(col, h, row)
+        })
       }
     }
   },
   methods: {
+    getColumns () {
+      const slots = this.$slots.default
+      return slots.filter(c => c.tag).map((node, index) => {
+        if (node.key === undefined) {
+          return this.$children[index]
+        } else {
+          const itHasSameKey = child => child.$vnode.key === node.key
+          return this.$children.find(itHasSameKey)
+        }
+      }).filter(c => c)
+    },
     getRowClass (row, index) {
       return (isFunction(this.rowClass))
         ? this.rowClass(row, index)
@@ -66,20 +73,18 @@ export default {
       if (noChildWasClicked) {
         this.$emit('click-row', row)
       }
-    },
-    getColumns () {
-      // always try getting the columns from slots
-      // as it keeps the order up to date
-      let cols = this.$slots.default.map(node =>
-        this.columns.find(col => col.cell === node.key)
-      ).filter(c => c)
-
-      // fallback to default
-      // if slots not ready
-      return cols.length
-        ? cols
-        : this.columns
     }
   }
+}
+
+function defaultCellRender (h, row) {
+  const scoped = this.$scopedSlots.default
+  return h('td', {
+    staticClass: this.cellClass
+  }, [
+    scoped
+      ? scoped.call(this, row)
+      : get(row, this.cell, '')
+  ])
 }
 </script>

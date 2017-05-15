@@ -1,7 +1,7 @@
 export default {
   functional: true,
   props: ['checked'],
-  render (h, { data, props }) {
+  render (h, { data, props, listeners }) {
     return h('input', {
       ...data,
       ...{
@@ -13,7 +13,7 @@ export default {
           checked: props.checked
         },
         on: {
-          ...data.on,
+          ...listeners,
           ...{
             change: e => {
               // ensures checked state consistency

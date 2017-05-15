@@ -19,7 +19,7 @@ explorer({
   ['Icon', require('./scenarios/basic/icon.vue')]
 ])
 .add('Data', [
-  ['Table', require('./scenarios/data/table.vue')]
+  ['Table', require('./scenarios/data/table/index.vue')]
 ])
 .add('Navigation', [
   ['Dropdown', require('./scenarios/navigation/dropdown/default.vue')],

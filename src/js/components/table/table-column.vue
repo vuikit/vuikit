@@ -1,8 +1,12 @@
-import Column from './column.js'
+<template>
+  <th :class="headerClass">
+    {{ header }}
+  </th>
+</template>
 
+<script>
 export default {
   name: 'VkTableColumn',
-  extends: Column,
   props: {
     // the header label
     header: {
@@ -20,3 +24,4 @@ export default {
     }
   }
 }
+</script>
