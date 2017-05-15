@@ -7,6 +7,7 @@ const buble = require('rollup-plugin-buble')
 const commonjs = require('rollup-plugin-commonjs')
 const rollupAlias = require('rollup-plugin-alias')
 const nodeResolve = require('rollup-plugin-node-resolve')
+const localResolve = require('rollup-plugin-local-resolve')
 const alias = require('../alias')
 const util = require('../util')
 const banner = require('../config.base').banner
@@ -20,12 +21,10 @@ const config = {
   env: 'production',
   banner: banner,
   plugins: [
+    localResolve(),
     rollupAlias(Object.assign({
-      resolve: ['.jsx', '.js']
+      resolve: ['.jsx', '.js', 'index.js']
     }, alias)),
-    nodeResolve({
-      extensions: [ '.js', '.json', '.vue' ]
-    }),
     vue({
       compileTemplate: true
     }),
@@ -34,6 +33,7 @@ const config = {
       jsx: 'h'
     }),
     nodeResolve({
+      extensions: [ '.js', '.json', '.vue' ],
       jsnext: true,
       main: true,
       browser: true
@@ -47,13 +47,15 @@ const builds = [
   {
     entry: path.resolve(__dirname, './dist-esm.js'),
     dest: path.resolve(__dirname, '../../dist/js/vuikit.esm.js'),
-    format: 'es'
+    format: 'es',
+    env: 'development'
   },
   // CommonJS
   {
     entry: path.resolve(__dirname, './dist.js'),
     dest: path.resolve(__dirname, '../../dist/js/vuikit.common.js'),
-    format: 'cjs'
+    format: 'cjs',
+    env: 'development'
   },
   // Browser
   {

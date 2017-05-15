@@ -1,8 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const ora = require('ora')
 const less = require('less')
-const webpack = require('webpack')
 const rollup = require('rollup')
 const replace = require('rollup-plugin-replace')
 const CleanCSS = require('clean-css')
@@ -122,23 +120,6 @@ exports.cyan = function (str) {
 exports.cleanPath = function (path) {
   rmrf(path)
   mkdirp(path)
-}
-
-// runs a webpack build
-exports.webpackBuild = function (config, msg) {
-  const spinner = ora(msg || 'building for production...')
-  spinner.start()
-  webpack(config, function (err, stats) {
-    spinner.stop()
-    if (err) throw err
-    process.stdout.write(stats.toString({
-      colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
-    }) + '\n')
-  })
 }
 
 // runs a rollup build
