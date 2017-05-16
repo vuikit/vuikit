@@ -1,12 +1,5 @@
-/* eslint-disable no-unused-vars */
-
-const fs = require('fs')
 const path = require('path')
-const glob = require('glob')
 const util = require('./util')
-
-const iconsSource = 'node_modules/uikit/src/images/icons/*.svg'
-const targetPath = path.resolve(__dirname, '../src/icons')
 
 // the template file which to generate icon files
 const iconTmpl =
@@ -21,14 +14,14 @@ const iconTmpl =
 
 const exportTmpl = `export { default as #{iconCamel} } from './#{icon}'`
 
-async function processIcons (src) {
+async function processIcons (src, dest) {
   try {
-    const icons = await util.readIcons(src)
-    const index = []
+    const srcIcons = await util.readIcons(src)
+    const icons = []
 
     // for each icon
-    for (let name in icons) {
-      let icon = icons[name]
+    for (let name in srcIcons) {
+      let icon = srcIcons[name]
 
       // optimize
       icon = await util.optimizeIcon(icon)
@@ -49,19 +42,28 @@ async function processIcons (src) {
       })
 
       // save file
-      util.write(`${targetPath}/${name}.js`, content)
+      util.write(`${dest}/${name}.js`, content)
 
-      index.push(util.compileTmpl(exportTmpl, {
-        icon: name,
-        iconCamel: util.camelize(name)
-      }))
+      icons.push({ content, name })
     }
 
-    // save index
-    util.write(`${targetPath}/index.js`, `${index.join('\n')}\n`)
+    return icons
   } catch (err) {
     console.log(err)
   }
 }
 
-processIcons(iconsSource)
+// uikit icons
+const dest = path.resolve(__dirname, '../src/icons')
+processIcons('node_modules/uikit/src/images/icons/*.svg', dest).then(icons => {
+  // save index
+  const index = icons.map(icon => util.compileTmpl(exportTmpl, {
+    icon: icon.name,
+    iconCamel: util.camelize(icon.name)
+  }))
+
+  util.write(`${dest}/index.js`, `${index.join('\n')}\n`)
+})
+
+// custom icons
+processIcons('custom-icons/*svg', 'custom-icons/result')
