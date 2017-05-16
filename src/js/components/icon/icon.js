@@ -1,4 +1,4 @@
-import { warn } from 'src/js/util'
+import { warn } from 'src/js/util/index'
 import svg from './svg'
 const icons = {}
 
