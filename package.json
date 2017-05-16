@@ -31,11 +31,10 @@
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
     "build": "node build/prod/build.js",
-    "dev": "node build/dev/server.js",
+    "dev": "poi --config explorer/poi.config.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",
     "precompile": "node build/precompile-helpers.js",
-    "explorer": "poi --config explorer/poi.config.js",
     "icons": "node build/icons"
   },
   "dependencies": {
