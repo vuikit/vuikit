@@ -7,8 +7,7 @@ const iconTmpl =
   name: '#{name}',
   data: '#{data}',
   width: #{width},
-  height: #{height},
-  viewBox: '#{viewBox}'
+  height: #{height}
 }
 `
 
@@ -27,18 +26,11 @@ async function processIcons (src, dest) {
       icon = await util.optimizeIcon(icon)
 
       const data = icon.data.replace(/<svg[^>]+>/gi, '').replace(/<\/svg>/gi, '')
-      let viewBox = icon.data.match(/viewBox="([\d.]+\s[\d.]+\s[\d.]+\s[\d.]+)"/)
-
-      if (viewBox && viewBox.length > 1) {
-        viewBox = viewBox[1]
-      }
-
       const content = util.compileTmpl(iconTmpl, {
         name,
         data,
         width: parseFloat(icon.info.width) || 20,
-        height: parseFloat(icon.info.height) || 20,
-        viewBox: viewBox
+        height: parseFloat(icon.info.height) || 20
       })
 
       // save file

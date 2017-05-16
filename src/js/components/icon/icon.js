@@ -1,3 +1,4 @@
+import { warn } from 'src/js/util'
 import svg from './svg'
 const icons = {}
 
@@ -8,25 +9,28 @@ export default {
     const isLink = props.link !== undefined
     const icon = icons[props.icon]
 
-    if (icon) {
-      return h(isLink ? 'a' : 'span', {
-        class: 'uk-icon',
-        on: listeners,
-        attrs: {
-          href: isLink ? '' : false,
-          icon: null,
-          ratio: null
-        },
-        ...data
-      }, [
-        h(svg, {
-          props: {
-            ...icon,
-            ratio: props.ratio
-          }
-        })
-      ])
+    if (!icon) {
+      warn(`VkIcon: the icon '${props.icon}' is not registered`)
+      return
     }
+
+    // add class
+    data.class = ['uk-icon', data.class]
+
+    return h(isLink ? 'a' : 'span', {
+      on: listeners,
+      attrs: {
+        href: isLink ? '' : false
+      },
+      ...data
+    }, [
+      h(svg, {
+        props: {
+          ...icon,
+          ratio: props.ratio
+        }
+      })
+    ])
   },
   register (icon) {
     if (!icons[icon.name]) {
