@@ -9,8 +9,8 @@ const iconsSource = 'node_modules/uikit/src/images/icons/*.svg'
 const targetPath = path.resolve(__dirname, '../src/icons')
 
 // the template file which to generate icon files
-const template =
-`export default {
+const iconTmpl =
+`module.exports = {
   name: '#{name}',
   data: '#{data}',
   width: #{width},
@@ -19,9 +19,12 @@ const template =
 }
 `
 
+const exportTmpl = `export { default as #{iconCamel} } from './#{icon}'`
+
 async function processIcons (src) {
   try {
     const icons = await util.readIcons(src)
+    const index = []
 
     // for each icon
     for (let name in icons) {
@@ -37,7 +40,7 @@ async function processIcons (src) {
         viewBox = viewBox[1]
       }
 
-      const content = util.compileTmpl(template, {
+      const content = util.compileTmpl(iconTmpl, {
         name,
         data,
         width: parseFloat(icon.info.width) || 20,
@@ -47,7 +50,15 @@ async function processIcons (src) {
 
       // save file
       util.write(`${targetPath}/${name}.js`, content)
+
+      index.push(util.compileTmpl(exportTmpl, {
+        icon: name,
+        iconCamel: util.camelize(name)
+      }))
     }
+
+    // save index
+    util.write(`${targetPath}/index.js`, `${index.join('\n')}\n`)
   } catch (err) {
     console.log(err)
   }

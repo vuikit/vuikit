@@ -1,13 +1,14 @@
-import icons from './icons'
 import svg from './svg'
+const icons = {}
 
 export default {
   functional: true,
   render (h, { props, data, listeners }) {
-    const icon = icons.get(props.icon)
+    const isLink = props.link !== undefined
+    const icon = icons[props.icon]
 
     if (icon) {
-      return h('span', {
+      return h(isLink ? 'a' : 'span', {
         ...data,
         class: 'uk-icon',
         on: listeners
@@ -22,6 +23,8 @@ export default {
     }
   },
   register (icon) {
-    icons.register(icon)
+    if (!icons[icon.name]) {
+      icons[icon.name] = icon
+    }
   }
 }

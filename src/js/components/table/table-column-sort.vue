@@ -15,11 +15,9 @@
 
 <script>
 import Icon from 'src/js/components/icon/icon'
-import IconArroDown from 'src/icons/arrow-down'
-import IconArroUp from 'src/icons/arrow-up'
-
-Icon.register(IconArroDown)
-Icon.register(IconArroUp)
+import { arrowDown, arrowUp } from 'src/icons/index'
+Icon.register(arrowDown)
+Icon.register(arrowUp)
 
 export default {
   name: 'VkTableColumnSort',

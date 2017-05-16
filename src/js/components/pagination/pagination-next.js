@@ -1,3 +1,5 @@
+import Icon from '../icon/icon'
+
 export default {
   functional: true,
   props: ['label', 'expand'],
@@ -19,10 +21,14 @@ export default {
         on: { click: e => parent.$emit('change', parent.nextPage) }
       }, [
         label && label,
-        h('span', {
-          staticClass: 'uk-pagination-next uk-icon',
-          class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-icon': 'icon: chevron-right' }
+        h(Icon, {
+          props: {
+            icon: 'chevron-right'
+          },
+          staticClass: 'uk-pagination-next',
+          class: {
+            'uk-margin-small-left': label
+          }
         })
       ])
     ])

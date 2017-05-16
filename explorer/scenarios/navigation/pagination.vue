@@ -26,11 +26,10 @@
     </vk-pagination>
 
     <h2>Layout</h2>
-    <vk-pagination :page="page" :total="0" :perPage="perPage"
+    <vk-pagination :page="page" :total="total" :perPage="perPage"
       @change="p => { page = p }">
       <vk-pagination-first />
       <vk-pagination-prev />
-      <vk-pagination-pages />
       <vk-pagination-next />
       <vk-pagination-last />
     </vk-pagination>

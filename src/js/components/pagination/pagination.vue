@@ -15,6 +15,12 @@ import PaginationLast from './pagination-last'
 import PaginationPrev from './pagination-prev'
 import PaginationNext from './pagination-next'
 import PaginationPages from './pagination-pages'
+import Icon from '../icon/icon'
+
+// register icons
+import { chevronLeft, chevronRight } from 'src/icons/index'
+Icon.register(chevronLeft)
+Icon.register(chevronRight)
 
 const partsMap = {
   first: PaginationFirst,

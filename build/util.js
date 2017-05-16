@@ -188,3 +188,13 @@ exports.compileTmpl = function (content, data) {
     return data[name] ? data[name] : ''
   })
 }
+
+// camelize string
+const camelizeRE = /-(\w)/g
+exports.camelize = function camelize (str) {
+  return str.replace(camelizeRE, toUpper)
+}
+
+function toUpper (_, c) {
+  return c ? c.toUpperCase() : ''
+}
