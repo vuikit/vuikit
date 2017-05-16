@@ -6,6 +6,7 @@ export default {
     cellClass: 'uk-text-center uk-text-bold'
   },
   hits: {
+    type: 'sort',
     header: 'Hits - Scoped Slot',
     cell: 'hits',
     cellRender (row) {

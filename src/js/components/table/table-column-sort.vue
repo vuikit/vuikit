@@ -4,6 +4,9 @@
       @click="emitSortEvent">
       {{ header }}
       <vk-icon class="uk-position-absolute"
+        :class="{
+          'uk-invisible': !orderedBy
+          }"
         :icon="(orderedBy === 'asc' || orderedBy === undefined)
           ? 'arrow-down'
           : 'arrow-up'
