@@ -6,7 +6,7 @@ export default {
     return h('svg', {
       attrs: {
         version: '1.1',
-        viewBox,
+        viewBox: viewBox || '0 0 20 20',
         width: width * ratio,
         height: height * ratio,
         ratio,
