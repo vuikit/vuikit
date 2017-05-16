@@ -25,16 +25,16 @@ export default {
       type: Array,
       required: true
     },
-    // required by column-sort
+    rowClass: [String, Function],
+    // column-sort related
     sortedBy: {
       type: Object,
       default: () => ({}) // { field: [asc|desc] }
     },
-    rowClass: [String, Function]
+    selection: Array
   },
   mounted () {
-    // force rerendering when $children
-    // is available for cell rendering
+    // forced rerendering required for cells
     this.$forceUpdate()
   },
   components: {

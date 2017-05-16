@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { warn } from 'src/js/util/index'
 import Checkbox from './checkbox'
 import { joinClasses } from '../util'
 
@@ -19,13 +20,12 @@ export default {
     },
     cellClass: {
       type: String
-    },
-    selection: {
-      type: Array,
-      default: []
     }
   },
   computed: {
+    selection () {
+      return this.$parent.selection
+    },
     rows () {
       return this.$parent.data
     },
@@ -36,18 +36,27 @@ export default {
       return this.selectedRows.length && (this.selectedRows.length === this.rows.length)
     }
   },
+  created () {
+    if (this.selection === undefined) {
+      warn('Missing required prop: "selection"', this.$parent)
+      this.$destroy()
+    }
+  },
   methods: {
+    triggerUpdateEvent (selection) {
+      this.$parent.$emit('update:selection', selection)
+    },
     isSelected (row) {
       return this.selection.find(r => r.id === row.id)
     },
     select (row) {
       const newSelection = [...this.selection, row]
-      this.$emit('update:selection', newSelection)
+      this.triggerUpdateEvent(newSelection)
     },
     unselect (row) {
       const newSelection = [...this.selection]
       newSelection.splice(this.selection.indexOf(row), 1)
-      this.$emit('update:selection', newSelection)
+      this.triggerUpdateEvent(newSelection)
     },
     toggle (row) {
       this.isSelected(row)
@@ -56,7 +65,7 @@ export default {
       this.$parent.$forceUpdate()
     },
     toggleAll () {
-      this.$emit('update:selection', this.allSelected
+      this.triggerUpdateEvent(this.allSelected
         ? []
         : [...this.rows]
       )

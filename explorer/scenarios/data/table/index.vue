@@ -5,10 +5,11 @@
       <vk-table class="uk-table-small"
         :data="rows"
         :sortedBy="sortedBy"
+        :selection.sync="selection"
         @sort="order => {
           sortedBy = order
         }">
-        <vk-table-column-select :selection.sync="selection" />
+        <vk-table-column-select />
         <vk-table-column header="ScopedSlot">
           <template scope="row">
             {{ row.id }}
