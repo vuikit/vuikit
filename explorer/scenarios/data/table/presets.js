@@ -10,8 +10,7 @@ export default {
     type: 'sort',
     header: 'Hits',
     cell: 'hits',
-    cellRender (row) {
-      const h = this.$createElement
+    cellRender (h, row) {
       return h('i', row.hits)
     }
   },

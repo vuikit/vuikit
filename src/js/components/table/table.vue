@@ -78,12 +78,14 @@ export default {
 }
 
 function defaultCellRender (h, row) {
-  const scoped = this.$scopedSlots.default
+  const scopedFn = this.$scopedSlots.default
   return h('td', {
     staticClass: this.cellClass
   }, [
-    scoped
-      ? scoped.call(this, row)
+    scopedFn
+      ? scopedFn.length === 2
+        ? scopedFn.call(this, h, row)
+        : scopedFn.call(this, row)
       : get(row, this.cell, '')
   ])
 }
