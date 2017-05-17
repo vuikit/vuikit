@@ -10,7 +10,7 @@
           sortedBy = order
         }">
         <vk-table-column-select />
-        <vk-table-column header="ScopedSlot">
+        <vk-table-column header="ID">
           <template scope="row">
             {{ row.id }}
           </template>
@@ -32,7 +32,7 @@ export default {
   data: () => ({
     presets,
     selection: [],
-    columns: ['name', 'hits', 'nested', 'sort'],
+    columns: ['name', 'hits', 'nested'],
     sortedBy: {
       name: 'asc'
     }

@@ -1,13 +1,14 @@
 export default {
   name: {
-    header: 'Name - Custom Class',
+    type: 'sort',
+    header: 'Name',
     headerClass: 'uk-text-center',
     cell: 'name',
     cellClass: 'uk-text-center uk-text-bold'
   },
   hits: {
     type: 'sort',
-    header: 'Hits - Scoped Slot',
+    header: 'Hits',
     cell: 'hits',
     cellRender (row) {
       const h = this.$createElement
@@ -15,12 +16,7 @@ export default {
     }
   },
   nested: {
-    header: 'Author - Nested Value',
+    header: 'Author',
     cell: 'author.name'
-  },
-  sort: {
-    type: 'sort',
-    header: 'Sort By Name',
-    cell: 'name'
   }
 }
