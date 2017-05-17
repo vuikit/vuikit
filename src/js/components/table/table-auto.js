@@ -26,7 +26,7 @@ export default {
     return columns.map(column => {
       const component = mapColumnComponent(column)
       // important: add the unique column key for correct rendering
-      const key = hash({ ...column, type: component.name })
+      const key = hash({ ...column, type: component.name || component })
       // render
       return h(component, { key, ...getColumnObject(column) })
     })
@@ -34,9 +34,12 @@ export default {
 }
 
 function hash (obj) {
-  return Object.keys(obj)
+  // obj => string
+  const string = Object.keys(obj)
     .reduce((hash, key) => `${obj[key]}${hash}`, '')
     .replace(/ /g, '')
+
+  return strhash(string)
 }
 
 function mapColumnComponent (column) {
@@ -85,4 +88,37 @@ function getColumnObject (column) {
 
   // render
   return { props, scopedSlots }
+}
+
+// Simple but unreliable function to create string hash
+function strhash (str) {
+  if (str.length % 32 > 0) str += Array(33 - str.length % 32).join('z')
+  let hash = ''
+  const bytes = []
+  let i = 0
+  let j = 0
+  let k = 0
+  let a = 0
+  let dict = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+  for (i = 0; i < str.length; i++) {
+    let ch = str.charCodeAt(i)
+    bytes[j++] = (ch < 127) ? ch & 0xFF : 127
+  }
+  const chunkLen = Math.ceil(bytes.length / 32)
+  for (i = 0; i < bytes.length; i++) {
+    j += bytes[i]
+    k++
+    if ((k === chunkLen) || (i === bytes.length - 1)) {
+      a = Math.floor(j / k)
+      if (a < 32) {
+        hash += '0'
+      } else if (a > 126) {
+        hash += 'z'
+      } else {
+        hash += dict[ Math.floor((a - 32) / 2.76) ]
+      }
+      j = k = 0
+    }
+  }
+  return hash
 }
