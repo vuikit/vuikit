@@ -4,37 +4,67 @@ const icons = {}
 
 export default {
   functional: true,
-  props: ['icon', 'link', 'ratio'],
+  props: {
+    icon: {
+      type: String,
+      required: true
+    },
+    link: {
+      type: Boolean,
+      default: false
+    },
+    linkReset: {
+      type: Boolean,
+      default: false
+    },
+    ratio: {
+      default: 1
+    },
+    button: {
+      type: Boolean,
+      default: false
+    }
+  },
   render (h, { props, data, listeners }) {
-    const isLink = props.link !== undefined
-    const icon = icons[props.icon]
+    const { link, ratio, icon, button, linkReset } = props
+    const iconObj = icons[icon]
 
-    if (!icon) {
-      warn(`VkIcon: the icon '${props.icon}' is not registered`)
+    if (!iconObj) {
+      warn(`VkIcon: the icon '${icon}' is not registered`)
       return
     }
 
-    // add class
-    data.class = ['uk-icon', data.class]
+    // determine tag
+    const tag = link || button
+      ? 'a'
+      : 'span'
 
-    return h(isLink ? 'a' : 'span', {
+    // add custom class
+    data.class = ['uk-icon', data.class, {
+      'uk-icon-button': button,
+      'uk-icon-link': linkReset
+    }]
+
+    return h(tag, {
       on: listeners,
       attrs: {
-        href: isLink ? '' : false
+        href: tag === 'a'
+          ? ''
+          : false
       },
       ...data
     }, [
       h(svg, {
         props: {
-          ...icon,
-          ratio: props.ratio
+          ...iconObj,
+          ratio
         }
       })
     ])
   },
-  register (icon) {
-    if (!icons[icon.name]) {
-      icons[icon.name] = icon
+  register (iconObj) {
+    if (!icons[iconObj.name]) {
+      icons[iconObj.name] = iconObj
     }
   }
 }

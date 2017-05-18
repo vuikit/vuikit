@@ -2,9 +2,9 @@
   <div>
     <vk-icon icon="album"></vk-icon>
     <vk-icon icon="album" ratio="2"></vk-icon>
-    <vk-icon link icon="check" href="#"></vk-icon>
-    <vk-icon link icon="check" href="#" class="uk-icon-link"></vk-icon>
-    <vk-icon link icon="check" href="#" class="uk-icon-button"></vk-icon>
+    <vk-icon icon="check" link></vk-icon>
+    <vk-icon icon="check" link link-reset></vk-icon>
+    <vk-icon icon="check" link button></vk-icon>
   </div>
 </template>
 
