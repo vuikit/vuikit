@@ -1,28 +1,25 @@
 <template>
   <div>
-    <vk-button>
-      Hover
+    <div class="uk-inline">
+      <vk-button>Hover</vk-button>
       <vk-dropdown
         :show="hover"
         @mouseenter="hover = true"
-        @mouseleave="({ delay }) => {
-          delay(800, () => {
-            hover = false
-          })
-        }">
+        @mouseleave="({ delay }) => delay(800, () => {
+          hover = false
+        })">
         <div v-html="content" />
       </vk-dropdown>
-    </vk-button>
-
-    <vk-button>
-      Click
+    </div>
+    <div class="uk-inline">
+      <vk-button>Click</vk-button>
       <vk-dropdown
         :show="click"
         @click-out="click = false"
         @click-target="click = !click">
         <div v-html="content" />
       </vk-dropdown>
-    </vk-button>
+    </div>
   </div>
 </template>
 
