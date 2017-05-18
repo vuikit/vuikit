@@ -35,7 +35,8 @@
     "deploy": "cd build && ./deploy.sh",
     "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",
     "precompile": "node build/precompile-helpers.js",
-    "icons": "node build/icons"
+    "icons": "node build/icons",
+    "uikit-less": "rm -rf src/less/uikit && cp -RfX node_modules/uikit/src/less src/less/uikit"
   },
   "dependencies": {
     "vue": "^2.3.2"
