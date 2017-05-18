@@ -14,8 +14,13 @@ export default {
       return h('i', row.hits)
     }
   },
-  nested: {
+  author: {
     header: 'Author',
     cell: 'author.name'
+  },
+  desc: {
+    type: 'sort',
+    header: 'Description',
+    cell: 'desc'
   }
 }

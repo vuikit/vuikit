@@ -17,7 +17,9 @@
         </vk-table-column>
         <vk-table-auto :presets="presets" :columns="columns" />
       </vk-table>
-      <vk-button @click="randomizeColumns">Randomize Columns</vk-button>
+      <vk-button @click="randomizeColumns">Sort Random</vk-button>
+      <vk-button @click="addColumn('desc')">Add Column</vk-button>
+      <vk-button @click="removeColumn('desc')">Remove Column</vk-button>
     </div>
   </div>
 </template>
@@ -32,7 +34,7 @@ export default {
   data: () => ({
     presets,
     selection: [],
-    columns: ['name', 'hits', 'nested'],
+    columns: ['name', 'hits', 'author'],
     sortedBy: {
       name: 'asc'
     }
@@ -47,6 +49,12 @@ export default {
   methods: {
     randomizeColumns () {
       this.columns = shuffle(this.columns)
+    },
+    addColumn (col) {
+      this.columns.push(col)
+    },
+    removeColumn (col) {
+      this.columns.splice(this.columns.indexOf(col), 1)
     }
   }
 }

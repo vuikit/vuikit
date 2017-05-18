@@ -33,9 +33,30 @@ export default {
     },
     selection: Array
   },
+  data: () => ({
+    children: []
+  }),
+  computed: {
+    columns: {
+      get () {
+        return this.$slots.default
+          .filter(c => c.tag)
+          .map((node, index) => {
+            if (node.key === undefined) {
+              return this.children[index]
+            } else {
+              const itHasSameKey = child => child.$vnode.key === node.key
+              return this.children.find(itHasSameKey)
+            }
+          })
+          .filter(c => c)
+      },
+      cache: false
+    }
+  },
   mounted () {
-    // forced rerendering required for cells
-    this.$forceUpdate()
+    // required for reactivity
+    this.children = this.$children
   },
   components: {
     RowCells: {
@@ -43,26 +64,17 @@ export default {
       props: ['row'],
       render (h, { parent, props }) {
         const { row } = props
-        return parent.getColumns().map(col => {
-          const compCellRender = col.$vnode.componentOptions.Ctor.options.cellRender
-          const cellRender = compCellRender || defaultCellRender
-          return cellRender.call(col, h, row)
-        })
+
+        return parent.columns
+          .map(col => {
+            const compCellRender = col.$vnode.componentOptions.Ctor.options.cellRender
+            const cellRender = compCellRender || defaultCellRender
+            return cellRender.call(col, h, row)
+          })
       }
     }
   },
   methods: {
-    getColumns () {
-      const slots = this.$slots.default
-      return slots.filter(c => c.tag).map((node, index) => {
-        if (node.key === undefined) {
-          return this.$children[index]
-        } else {
-          const itHasSameKey = child => child.$vnode.key === node.key
-          return this.$children.find(itHasSameKey)
-        }
-      }).filter(c => c)
-    },
     getRowClass (row, index) {
       return (isFunction(this.rowClass))
         ? this.rowClass(row, index)
