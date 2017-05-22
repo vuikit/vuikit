@@ -19,11 +19,14 @@
 <script>
 import Icon from 'src/js/components/icon/icon'
 import { arrowDown, arrowUp } from 'src/icons/index'
+import Column from './table-column'
+
 Icon.register(arrowDown)
 Icon.register(arrowUp)
 
 export default {
   name: 'VkTableColumnSort',
+  extends: Column,
   props: {
     header: {
       type: String

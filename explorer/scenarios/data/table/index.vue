@@ -1,49 +1,65 @@
 <template>
   <div>
     <h1 class="uk-h1">Table</h1>
-    <div class="uk-overflow-auto">
-      <vk-table class="uk-table-small"
-        :data="rows"
-        :sortedBy="sortedBy"
-        :selection.sync="selection"
-        @sort="order => {
-          sortedBy = order
-        }">
-        <vk-table-column-select />
-        <vk-table-column header="ID">
-          <template scope="row">
-            {{ row.id }}
-          </template>
-        </vk-table-column>
-        <vk-table-auto :presets="presets" :columns="columns" />
-      </vk-table>
-      <vk-button @click="randomizeColumns">Sort Random</vk-button>
-      <vk-button @click="addColumn('desc')">Add Column</vk-button>
-      <vk-button @click="removeColumn('desc')">Remove Column</vk-button>
-    </div>
+    <vk-table class="uk-table-small uk-table-middle"
+      ref="table"
+      :data="rows"
+      :sortedBy="sortedBy"
+      :selection.sync="selection"
+      @sort="order => {
+        sortedBy = order
+      }">
+      <vk-table-column-select />
+      <vk-table-column-sort header="ID" cell="id" />
+      <vk-table-column-sort header="Company" cell="company" />
+      <vk-table-column
+        header="Website"
+        class="uk-text-right"
+        cellClass="uk-text-right">
+        <template scope="row">
+          <a :href="`http://${row.website}`">{{ row.website }}</a>
+        </template>
+      </vk-table-column>
+    </vk-table>
+
+    <h2 class="uk-h2">Presets</h2>
+    <vk-table class="uk-table-small uk-table-middle"
+      ref="table"
+      :data="rows"
+      :sortedBy="sortedBy"
+      :selection.sync="selection"
+      @sort="order => {
+        sortedBy = order
+      }">
+      <vk-table-presets :definition="presets" :columns="columns" />
+    </vk-table>
+    <vk-button @click="randomizeColumns">Sort Random</vk-button>
+    <vk-button @click="addColumn('version')">Add Column</vk-button>
+    <vk-button @click="removeColumn('version')">Remove Column</vk-button>
   </div>
 </template>
 
 <script>
+import mockData from 'root/mock-data.json'
 import orderBy from 'lodash/orderBy'
 import shuffle from 'lodash/shuffle'
-import data from './data'
 import presets from './presets'
 
 export default {
   data: () => ({
     presets,
     selection: [],
-    columns: ['name', 'hits', 'author'],
+    columns: ['select', 'id', 'company', 'website'],
     sortedBy: {
-      name: 'asc'
-    }
+      id: 'asc'
+    },
+    dirtyRows: mockData.splice(0, 5)
   }),
   computed: {
     rows () {
       const by = Object.keys(this.sortedBy)[0]
       const dir = this.sortedBy[by]
-      return orderBy(data, [item => item[by]], dir)
+      return orderBy(this.dirtyRows, [item => item[by]], dir)
     }
   },
   methods: {

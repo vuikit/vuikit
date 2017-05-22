@@ -1,26 +1,30 @@
 export default {
-  name: {
-    type: 'sort',
-    header: 'Name',
-    headerClass: 'uk-text-center',
-    cell: 'name',
-    cellClass: 'uk-text-center uk-text-bold'
+  select: {
+    type: 'select'
   },
-  hits: {
+  id: {
     type: 'sort',
-    header: 'Hits',
-    cell: 'hits',
-    cellRender (h, row) {
-      return h('i', row.hits)
+    header: 'Id',
+    cell: 'id'
+  },
+  company: {
+    type: 'sort',
+    header: 'Company',
+    cell: 'company'
+  },
+  website: {
+    header: 'Websiste',
+    cell: 'website',
+    class: 'uk-text-right',
+    cellClass: 'uk-text-right',
+    cellTemplate (h, row) {
+      return h('a', {
+        href: `http://${row.website}`
+      }, [ row.website ])
     }
   },
-  author: {
-    header: 'Author',
-    cell: 'author.name'
-  },
-  desc: {
-    type: 'sort',
-    header: 'Description',
-    cell: 'desc'
+  version: {
+    header: 'Version',
+    cell: 'version'
   }
 }

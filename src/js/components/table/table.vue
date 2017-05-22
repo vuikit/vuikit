@@ -9,17 +9,37 @@
       <tr v-for="(row, index) in data"
         :class="getRowClass(row)"
         @click="e => emitClickRow(e, row)">
-        <row-cells :row="row"></row-cells>
+        <cell v-for="col in columns"
+          :key="col._uid"
+          :col="col"
+          :row="row">
+        </cell>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
-import { isFunction, get } from 'src/js/util/index'
+import { isFunction } from 'src/js/util/index'
+
+const Cell = {
+  functional: true,
+  props: ['row', 'col'],
+  render (h, { data, props }) {
+    const { col, row } = props
+    const cellRender = col.$vnode.componentOptions.Ctor.options.cellRender
+
+    if (cellRender) {
+      return cellRender.call(col, h, row)
+    } else {
+      // warn
+    }
+  }
+}
 
 export default {
   name: 'VkTable',
+  components: { Cell },
   props: {
     data: {
       type: Array,
@@ -31,6 +51,7 @@ export default {
       type: Object,
       default: () => ({}) // { field: [asc|desc] }
     },
+    // column-select related
     selection: Array
   },
   data: () => ({
@@ -39,40 +60,28 @@ export default {
   computed: {
     columns: {
       get () {
-        return this.$slots.default
-          .filter(c => c.tag)
-          .map((node, index) => {
-            if (node.key === undefined) {
-              return this.children[index]
-            } else {
-              const itHasSameKey = child => child.$vnode.key === node.key
-              return this.children.find(itHasSameKey)
-            }
+        if (!this.$slots.default) {
+          return []
+        }
+        return this.children
+          .filter(child => child.$el.nodeName === 'TH')
+          .sort((a, b) => {
+            const findByProps = comp => slot =>
+              JSON.stringify(slot.componentOptions.propsData) === JSON.stringify(comp.$options.propsData)
+            const slots = this.$slots.default.filter(s => s.tag)
+            const indexA = slots.findIndex(findByProps(a))
+            const indexB = slots.findIndex(findByProps(b))
+
+            if (indexA === indexB) return 0
+            return (indexA > indexB) ? 1 : -1
           })
-          .filter(c => c)
       },
       cache: false
     }
   },
   mounted () {
-    // required for reactivity
+    // workaround for reactivity
     this.children = this.$children
-  },
-  components: {
-    RowCells: {
-      functional: true,
-      props: ['row'],
-      render (h, { parent, props }) {
-        const { row } = props
-
-        return parent.columns
-          .map(col => {
-            const compCellRender = col.$vnode.componentOptions.Ctor.options.cellRender
-            const cellRender = compCellRender || defaultCellRender
-            return cellRender.call(col, h, row)
-          })
-      }
-    }
   },
   methods: {
     getRowClass (row, index) {
@@ -87,18 +96,5 @@ export default {
       }
     }
   }
-}
-
-function defaultCellRender (h, row) {
-  const scopedFn = this.$scopedSlots.default
-  return h('td', {
-    staticClass: this.cellClass
-  }, [
-    scopedFn
-      ? scopedFn.length === 2
-        ? scopedFn.call(this, h, row)
-        : scopedFn.call(this, row)
-      : get(row, this.cell, '')
-  ])
 }
 </script>
