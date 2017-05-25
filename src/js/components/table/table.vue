@@ -68,22 +68,7 @@ export default {
       get () {
         return this.children
           .filter(child => child.$el.nodeName === 'TH')
-          .sort((a, b) => {
-            const findByProps = comp => slot =>
-              JSON.stringify(slot.componentOptions.propsData) === JSON.stringify(comp.$options.propsData)
-            const slots = this.$slots.default.filter(s => s.tag)
-            const indexA = slots.findIndex(findByProps(a))
-            const indexB = slots.findIndex(findByProps(b))
-
-            if (indexA === indexB) return 0
-            return (indexA > indexB) ? 1 : -1
-          })
-      },
-      cache: false
-    },
-    columns2: {
-      get () {
-        return this.columns.map(col => col.header)
+          .sort(this.sortAsSlots)
       },
       cache: false
     }
@@ -114,6 +99,16 @@ export default {
       if (noChildWasClicked) {
         this.$emit('click-row', row)
       }
+    },
+    sortAsSlots (a, b) {
+      const findByProps = comp => slot =>
+        JSON.stringify(slot.componentOptions.propsData) === JSON.stringify(comp.$options.propsData)
+      const slots = this.$slots.default.filter(s => s.tag)
+      const indexA = slots.findIndex(findByProps(a))
+      const indexB = slots.findIndex(findByProps(b))
+
+      if (indexA === indexB) return 0
+      return (indexA > indexB) ? 1 : -1
     }
   }
 }
