@@ -12,7 +12,7 @@ const columnTypes = {
 export default {
   functional: true,
   props: {
-    definition: {
+    presets: {
       type: Object,
       required: true
     },
@@ -22,7 +22,7 @@ export default {
     }
   },
   render (h, { props }) {
-    const columns = mapPresets(props.definition, props.columns)
+    const columns = mapPresets(props.presets, props.columns)
     return columns.map(column => {
       const key = JSON.stringify(column)
       return h(mapColumnComponent(column), { key, ...getColumnObject(column) })

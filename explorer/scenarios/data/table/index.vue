@@ -31,7 +31,7 @@
       @sort="order => {
         sortedBy = order
       }">
-      <vk-table-presets :definition="presets" :columns="columns" />
+      <vk-table-setup :presets="presets" :columns="columns" />
     </vk-table>
     <vk-button @click="randomizeColumns">Sort Random</vk-button>
     <vk-button @click="addColumn('version')">Add Column</vk-button>
