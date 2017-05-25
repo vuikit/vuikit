@@ -24,10 +24,15 @@ export default {
   render (h, { props }) {
     const columns = mapPresets(props.presets, props.columns)
     return columns.map(column => {
-      const key = JSON.stringify(column)
+      const key = getKey(column)
       return h(mapColumnComponent(column), { key, ...getColumnObject(column) })
     })
   }
+}
+
+function getKey (column) {
+  const type = mapColumnComponent(column)
+  return JSON.stringify({ column, type: type.name || type })
 }
 
 function mapColumnComponent (column) {

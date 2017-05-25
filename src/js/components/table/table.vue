@@ -10,7 +10,7 @@
         :class="getRowClass(row)"
         @click="e => emitClickRow(e, row)">
         <cell v-for="col in columns"
-          :key="col._uid"
+          :key="getKey(col)"
           :col="col"
           :row="row">
         </cell>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { isFunction } from 'src/js/util/index'
+import { isFunction, warn } from 'src/js/util/index'
 
 const Cell = {
   functional: true,
@@ -32,7 +32,7 @@ const Cell = {
     if (cellRender) {
       return cellRender.call(col, h, row)
     } else {
-      // warn
+      warn('Missing cellRender', col)
     }
   }
 }
@@ -55,14 +55,17 @@ export default {
     selection: Array
   },
   data: () => ({
-    children: []
+    children: [],
+    forcingUpdate: false
   }),
+  updated () {
+    // workaround for edge situations
+    // where children reactivity fails
+    this.forceUpdateOnce()
+  },
   computed: {
     columns: {
       get () {
-        if (!this.$slots.default) {
-          return []
-        }
         return this.children
           .filter(child => child.$el.nodeName === 'TH')
           .sort((a, b) => {
@@ -77,6 +80,12 @@ export default {
           })
       },
       cache: false
+    },
+    columns2: {
+      get () {
+        return this.columns.map(col => col.header)
+      },
+      cache: false
     }
   },
   mounted () {
@@ -84,6 +93,17 @@ export default {
     this.children = this.$children
   },
   methods: {
+    getKey (col) {
+      return JSON.stringify({ name: col.name, props: col.$options.propsData })
+    },
+    forceUpdateOnce () {
+      if (!this.forcingUpdate) {
+        this.forcingUpdate = true
+        this.$forceUpdate()
+        return
+      }
+      this.forcingUpdate = false
+    },
     getRowClass (row, index) {
       return (isFunction(this.rowClass))
         ? this.rowClass(row, index)

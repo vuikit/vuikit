@@ -32,10 +32,16 @@
         sortedBy = order
       }">
       <vk-table-setup :presets="presets" :columns="columns" />
+      <vk-table-column v-if="togglePreset" header="no preset" />
+      <vk-table-column v-if="!togglePreset" header="no preset 2" />
     </vk-table>
     <vk-button @click="randomizeColumns">Sort Random</vk-button>
     <vk-button @click="addColumn('version')">Add Column</vk-button>
     <vk-button @click="removeColumn('version')">Remove Column</vk-button>
+    <p>
+      <vk-button @click="togglePreset = !togglePreset">Toggle</vk-button>
+      Toggling no preset columns should conserve the order
+    </p>
   </div>
 </template>
 
@@ -48,6 +54,7 @@ import presets from './presets'
 export default {
   data: () => ({
     presets,
+    togglePreset: true,
     selection: [],
     columns: ['select', 'id', 'company', 'website'],
     sortedBy: {
