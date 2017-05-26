@@ -1,15 +1,23 @@
 <template>
   <div>
-    <vk-icon icon="album"></vk-icon>
-    <vk-icon icon="album" ratio="2"></vk-icon>
+    <h1>Icon</h1>
+    <vk-icon icon="check"></vk-icon>
+
+    <h2>Ratio</h2>
+    <vk-icon icon="check" ratio="2"></vk-icon>
+
+    <h2>Link</h2>
     <vk-icon icon="check" link></vk-icon>
+
+    <h2>Link Reset</h2>
     <vk-icon icon="check" link link-reset></vk-icon>
+
+    <h2>Link Button</h2>
     <vk-icon icon="check" link button></vk-icon>
   </div>
 </template>
 
 <script>
 import { Icon } from 'src/js/vuikit'
-Icon.register(require('src/icons/album'))
 Icon.register(require('src/icons/check'))
 </script>

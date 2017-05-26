@@ -47,7 +47,7 @@ function mapPresets (presets, columns) {
     const definition = presets[column]
 
     if (definition === undefined) {
-      warn(`Vuikit Table: The column preset '${column}' doesn't exist.`)
+      warn(`Table preset '${column}' doesn't exist.`)
       return false
     }
 

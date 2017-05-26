@@ -1,17 +1,17 @@
 <template>
   <th class="uk-visible-hover-inline" :class="headerClass">
-    <a class="uk-position-relative uk-display-block uk-link-reset uk-text-nowrap"
-      @click="emitSortEvent">
-      {{ header }}
-      <vk-icon class="uk-position-absolute"
-        :class="{
-          'uk-invisible': !orderedBy
-          }"
-        :icon="(orderedBy === 'asc' || orderedBy === undefined)
-          ? 'arrow-down'
-          : 'arrow-up'
-        ">
-      </vk-icon>
+    <a
+      class="uk-display-block uk-link-reset uk-text-nowrap"
+      @click.prevent="emitSortEvent">
+      <span class="uk-position-relative">
+        {{ header }}
+        <vk-icon
+          class="uk-position-absolute"
+          ratio="0.9"
+          :icon="icon"
+          :class="{ 'uk-invisible': !orderedBy }"
+        ></vk-icon>
+      </span>
     </a>
   </th>
 </template>
@@ -50,6 +50,11 @@ export default {
     },
     orderedBy () {
       return this.$parent.sortedBy[this.sortBy]
+    },
+    icon () {
+      return (this.orderedBy === 'asc' || this.orderedBy === undefined)
+        ? 'arrow-down'
+        : 'arrow-up'
     }
   },
   methods: {

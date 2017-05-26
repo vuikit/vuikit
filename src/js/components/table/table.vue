@@ -101,8 +101,6 @@ export default {
       }
     },
     sortAsSlots (a, b) {
-      const findByProps = comp => slot =>
-        JSON.stringify(slot.componentOptions.propsData) === JSON.stringify(comp.$options.propsData)
       const slots = this.$slots.default.filter(s => s.tag)
       const indexA = slots.findIndex(findByProps(a))
       const indexB = slots.findIndex(findByProps(b))
@@ -111,5 +109,14 @@ export default {
       return (indexA > indexB) ? 1 : -1
     }
   }
+}
+
+const findByProps = comp => slot => {
+  if (!slot.componentOptions || !comp.$options) {
+    return false
+  }
+  const propsSlot = slot.componentOptions.propsData
+  const propsComp = comp.$options.propsData
+  return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
 }
 </script>

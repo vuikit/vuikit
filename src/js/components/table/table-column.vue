@@ -33,7 +33,7 @@ export default {
       staticClass: this.cellClass
     }, [
       scopedSlot
-        ? scopedSlot(...scopedArgs)
+        ? scopedSlot.call(this, ...scopedArgs)
         : get(row, this.cell, '')
     ])
   }
