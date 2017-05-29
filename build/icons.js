@@ -46,7 +46,7 @@ async function processIcons (src, dest) {
 }
 
 // uikit icons
-const dest = path.resolve(__dirname, '../src/icons')
+const dest = path.resolve(__dirname, '../icons')
 processIcons('node_modules/uikit/src/images/icons/*.svg', dest).then(icons => {
   // save index
   const index = icons.map(icon => util.compileTmpl(exportTmpl, {
@@ -56,6 +56,9 @@ processIcons('node_modules/uikit/src/images/icons/*.svg', dest).then(icons => {
 
   util.write(`${dest}/index.js`, `${index.join('\n')}\n`)
 })
+
+// uikit component icons
+processIcons('node_modules/uikit/src/images/components/*.svg', 'icons/components')
 
 // custom icons
 processIcons('custom-icons/*svg', 'custom-icons/result')

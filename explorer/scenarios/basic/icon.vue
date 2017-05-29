@@ -19,5 +19,5 @@
 
 <script>
 import { Icon } from 'src/js/vuikit'
-Icon.register(require('src/icons/check'))
+Icon.register(require('icons/check'))
 </script>

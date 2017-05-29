@@ -17,12 +17,13 @@
 </template>
 
 <script>
-import Icon from 'src/js/components/icon/icon'
-import { arrowDown, arrowUp } from 'src/icons/index'
 import Column from './table-column'
+import Icon from 'src/js/components/icon/icon'
+import IconArrowUp from 'icons/arrow-up'
+import IconArrowDown from 'icons/arrow-down'
 
-Icon.register(arrowDown)
-Icon.register(arrowUp)
+Icon.register(IconArrowUp)
+Icon.register(IconArrowDown)
 
 export default {
   name: 'VkTableColumnSort',

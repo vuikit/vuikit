@@ -30,7 +30,7 @@ export default {
     const iconObj = icons[icon]
 
     if (!iconObj) {
-      warn(`VkIcon: the icon '${icon}' is not registered`)
+      warn(`the icon '${icon}' is not registered`)
       return
     }
 
