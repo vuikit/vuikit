@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import * as vuikit from 'src/js/vuikit'
 import explorer from 'vuikit-explorer'
+import 'root/dist/css/vuikit.css'
 
 // register Vuikit components
 const keys = Object.keys(vuikit)
