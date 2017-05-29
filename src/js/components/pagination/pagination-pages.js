@@ -8,19 +8,19 @@ export default {
       return h('li', 'pages')
     }
 
-    const { page } = parent
-    return parent.pages.map(p => {
-      const isPage = isInteger(p)
-      const isActive = isPage && page === p
+    const { page: currentPage } = parent
+    return parent.pages.map(page => {
+      const isPage = isInteger(page)
+      const isActive = isPage && currentPage === page
       return h('li', { class: { 'uk-active': isActive } }, [
         isPage
           ? isActive
-            ? h('span', p)
+            ? h('span', page)
             : h('a', {
               on: { click: e => {
-                parent.$emit('change', p)
+                parent.$emit('update:page', page)
               }}
-            }, p)
+            }, page)
           : h('span', '...')
       ])
     })

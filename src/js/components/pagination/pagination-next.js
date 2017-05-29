@@ -18,12 +18,12 @@ export default {
       }
     }, [
       h('a', {
-        on: { click: e => parent.$emit('change', parent.nextPage) }
+        on: { click: e => parent.$emit('update:page', parent.nextPage) }
       }, [
         label && label,
         h(Icon, {
           props: {
-            icon: 'chevron-right'
+            icon: 'pagination-next'
           },
           staticClass: 'uk-pagination-next',
           class: {

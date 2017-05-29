@@ -18,11 +18,11 @@ export default {
       }
     }, [
       h('a', {
-        on: { click: e => parent.$emit('change', parent.prevPage) }
+        on: { click: e => parent.$emit('update:page', parent.prevPage) }
       }, [
         h(Icon, {
           props: {
-            icon: 'chevron-left'
+            icon: 'pagination-previous'
           },
           staticClass: 'uk-pagination-prev',
           class: {
