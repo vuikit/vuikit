@@ -1,5 +1,8 @@
 <template>
-  <th>
+  <th :class="{
+    'uk-table-shrink': shrink,
+    'uk-table-expand': expand
+  }">
     {{ header }}
   </th>
 </template>
@@ -18,6 +21,14 @@ export default {
     },
     cellClass: {
       type: String
+    },
+    shrink: {
+      type: Boolean,
+      default: false
+    },
+    expand: {
+      type: Boolean,
+      default: false
     }
   },
   cellRender (h, row) {

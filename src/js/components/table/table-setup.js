@@ -61,6 +61,8 @@ function getColumnObject (column) {
 
   // header
   props.header = column.header
+  props.shrink = column.shrink
+  props.expand = column.expand
   let staticClass = column.class
 
   // cell

@@ -1,8 +1,10 @@
 <template>
   <div>
     <h1 class="uk-h1">Table</h1>
-    <vk-table class="uk-table-small uk-table-middle"
-      ref="table"
+    <vk-table
+      small
+      middle
+      divider
       :data="rows"
       :sortedBy="sortedBy"
       :selection.sync="selection"
@@ -23,8 +25,10 @@
     </vk-table>
 
     <h2 class="uk-h2">Presets</h2>
-    <vk-table class="uk-table-small uk-table-middle"
-      ref="table"
+    <vk-table
+      small
+      middle
+      divider
       :data="rows"
       :sortedBy="sortedBy"
       :selection.sync="selection"

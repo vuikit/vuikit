@@ -47,7 +47,7 @@ export default {
       this.$parent.$emit('update:selection', selection)
     },
     isSelected (row) {
-      return this.selection.find(r => r.id === row.id)
+      return this.selection.findIndex(r => r.id === row.id) !== -1
     },
     select (row) {
       const newSelection = [...this.selection, row]

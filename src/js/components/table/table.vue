@@ -1,5 +1,15 @@
 <template>
-  <table class="uk-table">
+  <table class="uk-table"
+    :class="{
+      'uk-table-hover': hover,
+      'uk-table-small': small,
+      'uk-table-middle': middle,
+      'uk-table-justify': justify,
+      'uk-table-divider': divider,
+      'uk-table-striped': striped,
+      'uk-table-responsive': responsive
+    }"
+  >
     <thead>
       <tr>
         <slot></slot>
@@ -8,12 +18,13 @@
     <tbody>
       <tr v-for="(row, index) in data"
         :class="getRowClass(row)"
-        @click="e => emitClickRow(e, row)">
+        @click="e => emitClickRow(e, row)"
+      >
         <cell v-for="col in columns"
           :key="getKey(col)"
           :col="col"
-          :row="row">
-        </cell>
+          :row="row"
+        ></cell>
       </tr>
     </tbody>
   </table>
@@ -46,6 +57,34 @@ export default {
       required: true
     },
     rowClass: [String, Function],
+    small: {
+      type: Boolean,
+      default: false
+    },
+    middle: {
+      type: Boolean,
+      default: false
+    },
+    divider: {
+      type: Boolean,
+      default: false
+    },
+    striped: {
+      type: Boolean,
+      default: false
+    },
+    hover: {
+      type: Boolean,
+      default: false
+    },
+    justify: {
+      type: Boolean,
+      default: false
+    },
+    responsive: {
+      type: Boolean,
+      default: false
+    },
     // column-sort related
     sortedBy: {
       type: Object,
