@@ -72,7 +72,7 @@ export default {
     }
   },
   cellRender (h, row) {
-    const defaultClasses = 'uk-form uk-text-center vk-table-width-minimum'
+    const defaultClasses = 'uk-form uk-text-center'
 
     return h('td', {
       staticClass: joinClasses(defaultClasses, this.cellClass)

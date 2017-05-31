@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(row, index) in data"
+      <tr v-for="row in data"
         :class="getRowClass(row)"
         @click="e => emitClickRow(e, row)"
       >
@@ -97,11 +97,6 @@ export default {
     children: [],
     forcingUpdate: false
   }),
-  updated () {
-    // workaround for edge situations
-    // where children reactivity fails
-    this.forceUpdateOnce()
-  },
   computed: {
     columns: {
       get () {
@@ -111,10 +106,6 @@ export default {
       },
       cache: false
     }
-  },
-  mounted () {
-    // workaround for reactivity
-    this.children = this.$children
   },
   methods: {
     getKey (col) {
@@ -147,6 +138,15 @@ export default {
       if (indexA === indexB) return 0
       return (indexA > indexB) ? 1 : -1
     }
+  },
+  mounted () {
+    // workaround for reactivity
+    this.children = this.$children
+  },
+  updated () {
+    // workaround for edge situations
+    // where children reactivity fails
+    this.forceUpdateOnce()
   }
 }
 
