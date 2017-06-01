@@ -5,6 +5,8 @@
       small
       middle
       divider
+      select
+      highlight
       :data="rows"
       :sortedBy="sortedBy"
       :selection.sync="selection"

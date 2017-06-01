@@ -56,7 +56,6 @@ export default {
       type: Array,
       required: true
     },
-    rowClass: [String, Function],
     small: {
       type: Boolean,
       default: false
@@ -85,13 +84,29 @@ export default {
       type: Boolean,
       default: false
     },
-    // column-sort related
     sortedBy: {
       type: Object,
       default: () => ({}) // { field: [asc|desc] }
     },
-    // column-select related
-    selection: Array
+    rowClass: {
+      type: Function
+    },
+    selection: {
+      type: Array,
+      default: []
+    },
+    highlight: {
+      type: Boolean,
+      default: false
+    },
+    select: {
+      type: Boolean,
+      default: false
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false
+    }
   },
   data: () => ({
     children: [],
@@ -105,6 +120,12 @@ export default {
           .sort(this.sortAsSlots)
       },
       cache: false
+    },
+    selectedRows () {
+      return this.data.filter(this.isSelected)
+    },
+    isAllSelected () {
+      return this.selectedRows.length && (this.selectedRows.length === this.data.length)
     }
   },
   methods: {
@@ -120,9 +141,17 @@ export default {
       this.forcingUpdate = false
     },
     getRowClass (row, index) {
-      return (isFunction(this.rowClass))
-        ? this.rowClass(row, index)
-        : this.rowClass
+      const classes = []
+
+      if (isFunction(this.rowClass)) {
+        classes.push(this.rowClass(row, index))
+      }
+
+      if (this.highlight && this.isSelected(row)) {
+        classes.push('uk-active')
+      }
+
+      return classes.join(' ')
     },
     emitClickRow (e, row) {
       const noChildWasClicked = e.target.tagName === 'TR' || e.target.tagName === 'TD'
@@ -137,7 +166,38 @@ export default {
 
       if (indexA === indexB) return 0
       return (indexA > indexB) ? 1 : -1
+    },
+    // row selection related
+    isSelected (row) {
+      return this.selection.findIndex(r => r.id === row.id) !== -1
+    },
+    selectRow (row) {
+      const newSelection = [...this.selection, row]
+      this.triggerUpdateEvent(newSelection)
+    },
+    unselectRow (row) {
+      const newSelection = [...this.selection]
+      newSelection.splice(this.selection.indexOf(row), 1)
+      this.triggerUpdateEvent(newSelection)
+    },
+    toggleSelection (row) {
+      this.isSelected(row)
+        ? this.unselectRow(row)
+        : this.selectRow(row)
+      this.$forceUpdate()
+    },
+    triggerUpdateEvent (selection) {
+      this.$emit('update:selection', selection)
     }
+  },
+  created () {
+    this.$on('click-row', row => {
+      if (this.singleSelect) {
+        this.$emit('update:selection', [row])
+      } else if (this.select) {
+        this.toggleSelection(row)
+      }
+    })
   },
   mounted () {
     // workaround for reactivity

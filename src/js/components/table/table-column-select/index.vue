@@ -1,6 +1,6 @@
 <template>
   <th class="uk-form uk-text-center uk-table-shrink" :class="headerClass">
-    <checkbox :checked="allSelected"
+    <checkbox :checked="$parent.isAllSelected"
       @click="toggleAll">
     </checkbox>
   </th>
@@ -22,53 +22,18 @@ export default {
       type: String
     }
   },
-  computed: {
-    selection () {
-      return this.$parent.selection
-    },
-    rows () {
-      return this.$parent.data
-    },
-    selectedRows () {
-      return this.rows.filter(this.isSelected)
-    },
-    allSelected () {
-      return this.selectedRows.length && (this.selectedRows.length === this.rows.length)
+  methods: {
+    toggleAll () {
+      const selection = this.$parent.isAllSelected
+        ? []
+        : [...this.$parent.data]
+      this.$parent.triggerUpdateEvent(selection)
     }
   },
   created () {
-    if (this.selection === undefined) {
+    if (this.$parent.selection === undefined) {
       warn('Missing required prop: "selection"', this.$parent)
       this.$destroy()
-    }
-  },
-  methods: {
-    triggerUpdateEvent (selection) {
-      this.$parent.$emit('update:selection', selection)
-    },
-    isSelected (row) {
-      return this.selection.findIndex(r => r.id === row.id) !== -1
-    },
-    select (row) {
-      const newSelection = [...this.selection, row]
-      this.triggerUpdateEvent(newSelection)
-    },
-    unselect (row) {
-      const newSelection = [...this.selection]
-      newSelection.splice(this.selection.indexOf(row), 1)
-      this.triggerUpdateEvent(newSelection)
-    },
-    toggle (row) {
-      this.isSelected(row)
-        ? this.unselect(row)
-        : this.select(row)
-      this.$parent.$forceUpdate()
-    },
-    toggleAll () {
-      this.triggerUpdateEvent(this.allSelected
-        ? []
-        : [...this.rows]
-      )
     }
   },
   cellRender (h, row) {
@@ -78,8 +43,8 @@ export default {
       staticClass: joinClasses(defaultClasses, this.cellClass)
     }, [
       h(Checkbox, {
-        props: { checked: this.isSelected(row) },
-        on: { click: e => this.toggle(row) }
+        props: { checked: this.$parent.isSelected(row) },
+        on: { click: e => this.$parent.toggleSelection(row) }
       })
     ])
   }
