@@ -9,8 +9,8 @@ export default {
         viewBox: `0 0 ${width} ${height}`,
         width: width * ratio,
         height: height * ratio,
-        ratio,
-        icon: name
+        icon: name,
+        ratio
       },
       domProps: {
         innerHTML: props.data
