@@ -30,7 +30,15 @@
 
 <script>
 import ModalMixin from 'lib/mixins/modal'
-import { on, addClass, removeClass, forceRedraw, css, toMs, isString } from 'src/js/util/index'
+import {
+  on,
+  addClass,
+  removeClass,
+  forceRedraw,
+  css,
+  toMs,
+  warn
+} from 'src/js/util/index'
 
 const doc = document.documentElement
 const body = document.body
@@ -40,10 +48,6 @@ export default {
   name: 'VkOffcanvas',
   mixins: [ModalMixin],
   props: {
-    contentEl: {
-      // Ref or Dom
-      required: true
-    },
     flip: {
       type: Boolean,
       default: false
@@ -71,11 +75,6 @@ export default {
     clsContent: 'uk-offcanvas-content'
   }),
   computed: {
-    content () {
-      return isString(this.contentEl)
-        ? this.getRefElement(this.contentEl)
-        : this.contentEl
-    },
     clsFlip () {
       return this.flip
         ? this.defaults.clsFlip
@@ -137,7 +136,7 @@ export default {
 
       addClass(this.$refs.panel, `${this.clsSidebarAnimation} ${this.mode !== 'reveal' ? this.clsMode : ''}`)
       addClass(this.$el, this.clsOverlay)
-      addClass(this.content, this.clsContentAnimation)
+      addClass(this.$refs.content, this.clsContentAnimation)
 
       // toggle element
       addClass(this.$el, this.clsOverlay)
@@ -146,7 +145,7 @@ export default {
       addClass(this.$el, 'uk-open')
     },
     beforeHide () {
-      removeClass(this.content, this.clsContentAnimation)
+      removeClass(this.$refs.content, this.clsContentAnimation)
       removeClass(this.$el, 'uk-open')
     },
     transitionEnd: function (el, done) {
@@ -169,9 +168,9 @@ export default {
       body.scrollTop = scroll.y
 
       css(doc, 'overflow-y', '')
-      css(this.content, 'width', '')
-      css(this.content, 'height', '')
-      forceRedraw(this.content)
+      css(this.$refs.content, 'width', '')
+      css(this.$refs.content, 'height', '')
+      forceRedraw(this.$refs.content)
 
       window.scrollTo(scroll.x, scroll.y)
       scroll = null
@@ -181,13 +180,19 @@ export default {
     }
   },
   mounted () {
+    this.$refs.content = document.body.querySelector(`.${this.clsContent}`)
+
+    if (!this.$refs.content) {
+      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this)
+      this.$destroy()
+      return
+    }
+
     const clickHandler = e => {
       if (e.target === this.$refs.panel || this.$refs.panel.contains(e.target)) {
         this.$emit('click-in', e)
       }
     }
-
-    addClass(this.content, 'uk-offcanvas-content')
 
     on(this.$el, 'click', clickHandler, this._uid)
     if ('ontouchstart' in document.documentElement) {

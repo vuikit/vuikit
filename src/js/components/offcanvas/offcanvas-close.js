@@ -1,13 +1,21 @@
+import Svg from '../icon/svg'
+import Icon from 'icons/components/close-icon'
+
 export default {
   functional: true,
   render (h, { data }) {
     return h('button', {
-      staticClass: 'uk-offcanvas-close uk-close-large',
+      staticClass: 'uk-offcanvas-close uk-close uk-icon',
       attrs: {
-        type: 'button',
-        'uk-close': true
+        type: 'button'
       },
       on: data.on
-    })
+    }, [
+      h(Svg, {
+        props: {
+          ...Icon
+        }
+      })
+    ])
   }
 }
