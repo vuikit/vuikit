@@ -1,19 +1,18 @@
 export default {
   functional: true,
   render (h, { props }) {
-    const { width, height, name, ratio = 1 } = props
+    const { meta, data, viewBox, width, height } = props
 
     return h('svg', {
       attrs: {
+        meta,
+        width,
+        height,
         version: '1.1',
-        viewBox: `0 0 ${width} ${height}`,
-        width: width * ratio,
-        height: height * ratio,
-        icon: name,
-        ratio
+        viewBox: viewBox || `0 0 ${width} ${height}`
       },
       domProps: {
-        innerHTML: props.data
+        innerHTML: data
       }
     })
   }

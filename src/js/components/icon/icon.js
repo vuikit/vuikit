@@ -23,10 +23,13 @@ export default {
     button: {
       type: Boolean,
       default: false
-    }
+    },
+    viewBox: String,
+    width: Number,
+    height: Number
   },
   render (h, { props, data, listeners }) {
-    const { link, ratio, icon, button, linkReset } = props
+    const { icon, ratio, link, linkReset, button } = props
     const iconObj = icons[icon]
 
     if (!iconObj) {
@@ -35,7 +38,7 @@ export default {
     }
 
     // determine tag
-    const tag = link || button
+    const tag = link || linkReset || button
       ? 'a'
       : 'span'
 
@@ -44,6 +47,17 @@ export default {
       'uk-icon-button': button,
       'uk-icon-link': linkReset
     }]
+
+    // dimensions
+    let width = props.width || iconObj.width
+    let height = props.height || iconObj.height
+    const viewBox = props.viewBox || iconObj.viewBox
+
+    // ratio
+    if (ratio !== 1) {
+      width = width * ratio
+      height = height * ratio
+    }
 
     return h(tag, {
       on: listeners,
@@ -56,8 +70,11 @@ export default {
     }, [
       h(svg, {
         props: {
-          ...iconObj,
-          ratio
+          meta: `icon-${iconObj.name} ratio-${ratio}`,
+          data: iconObj.data,
+          viewBox,
+          width,
+          height
         }
       })
     ])

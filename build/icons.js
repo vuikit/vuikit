@@ -6,6 +6,7 @@ const iconTmpl =
 `module.exports = {
   name: '#{name}',
   data: '#{data}',
+  viewBox: '#{viewBox}',
   width: #{width},
   height: #{height}
 }
@@ -26,11 +27,15 @@ async function processIcons (src, dest) {
       icon = await util.optimizeIcon(icon)
 
       const data = icon.data.replace(/<svg[^>]+>/gi, '').replace(/<\/svg>/gi, '')
+      const width = parseFloat(icon.info.width) || 20
+      const height = parseFloat(icon.info.height) || 20
+
       const content = util.compileTmpl(iconTmpl, {
         name,
         data,
-        width: parseFloat(icon.info.width) || 20,
-        height: parseFloat(icon.info.height) || 20
+        width,
+        height,
+        viewBox: `0 0 ${width} ${height}`
       })
 
       // save file

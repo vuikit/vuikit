@@ -2,18 +2,10 @@
   <div>
     <h1>Icon</h1>
     <vk-icon icon="check"></vk-icon>
-
-    <h2>Ratio</h2>
     <vk-icon icon="check" ratio="2"></vk-icon>
-
-    <h2>Link</h2>
     <vk-icon icon="check" link></vk-icon>
-
-    <h2>Link Reset</h2>
-    <vk-icon icon="check" link link-reset></vk-icon>
-
-    <h2>Link Button</h2>
-    <vk-icon icon="check" link button></vk-icon>
+    <vk-icon icon="check" link-reset></vk-icon>
+    <vk-icon icon="check" button></vk-icon>
   </div>
 </template>
 
