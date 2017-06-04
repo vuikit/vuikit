@@ -93,7 +93,7 @@ export default {
     },
     selection: {
       type: Array,
-      default: []
+      default: () => []
     },
     highlight: {
       type: Boolean,
