@@ -17,7 +17,8 @@ explorer({
   ['Button', require('./scenarios/basic/button.vue')],
   ['Button Checkbox', require('./scenarios/basic/button-checkbox.vue')],
   ['Button Radio', require('./scenarios/basic/button-radio.vue')],
-  ['Icon', require('./scenarios/basic/icon.vue')]
+  ['Icon', require('./scenarios/basic/icon.vue')],
+  ['Spinner', require('./scenarios/basic/spinner.vue')]
 ])
 .add('Data', [
   ['Table', require('./scenarios/data/table/index.vue')]
