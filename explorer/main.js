@@ -31,7 +31,6 @@ explorer({
   ['Tabs', require('./scenarios/navigation/tabs.vue')]
 ])
 .add('Notice', [
-  ['Loading', require('./scenarios/notice/loading.vue')],
   ['Notification', require('./scenarios/notice/notification.vue')]
 ])
 .add('Others', [
