@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "build": "node build/prod/build.js",
+    "build": "node build/prod/build.js && node build/build-es.js",
     "dev": "poi --config explorer/poi.config.js",
     "deploy": "cd build && ./deploy.sh",
     "test": "yarn precompile && yarn build && ./node_modules/.bin/jest",

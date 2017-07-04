@@ -1,0 +1,7 @@
+export { default as Modal } from './modal.vue'
+export { default as ModalBody } from './modal-body.js'
+export { default as ModalCaption } from './modal-caption.js'
+export { default as ModalClose } from './modal-close.js'
+export { default as ModalDialog } from './modal-dialog.js'
+export { default as ModalFooter } from './modal-footer.js'
+export { default as ModalHeader } from './modal-header.js'

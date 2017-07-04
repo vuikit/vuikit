@@ -1,0 +1,6 @@
+export { default as Pagination } from './pagination.vue'
+export { default as PaginationFirst } from './pagination-first.js'
+export { default as PaginationLast } from './pagination-last.js'
+export { default as PaginationNext } from './pagination-next.js'
+export { default as PaginationPrev } from './pagination-prev.js'
+export { default as PaginationPages } from './pagination-pages.js'

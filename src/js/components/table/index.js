@@ -1,0 +1,5 @@
+export { default as Table } from './table.vue'
+export { default as TableSetup } from './table-setup.js'
+export { default as TableColumn } from './table-column.vue'
+export { default as TableColumnSort } from './table-column-sort.vue'
+export { default as TableColumnSelect } from './table-column-select/index.vue'
