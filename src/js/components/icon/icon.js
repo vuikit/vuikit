@@ -1,4 +1,4 @@
-import { warn } from 'src/js/util/index'
+import { warn, isString } from 'src/js/util/index'
 import svg from './svg'
 const icons = {}
 
@@ -6,7 +6,7 @@ export default {
   functional: true,
   props: {
     icon: {
-      type: String,
+      type: [String, Object],
       required: true
     },
     link: {
@@ -30,7 +30,9 @@ export default {
   },
   render (h, { props, data, listeners }) {
     const { icon, ratio, link, linkReset, button } = props
-    const iconObj = icons[icon]
+    const iconObj = isString(icon)
+      ? icons[icon]
+      : icon
 
     if (!iconObj) {
       warn(`the icon '${icon}' is not registered`)
