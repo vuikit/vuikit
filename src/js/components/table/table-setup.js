@@ -63,7 +63,7 @@ function getColumnObject (column) {
   props.header = column.header
   props.shrink = column.shrink
   props.expand = column.expand
-  let staticClass = column.class
+  props.headerClass = column.headerClass
 
   // cell
   props.cell = column.cell
@@ -73,5 +73,5 @@ function getColumnObject (column) {
   }
 
   // render
-  return { staticClass, props, scopedSlots }
+  return { props, scopedSlots }
 }

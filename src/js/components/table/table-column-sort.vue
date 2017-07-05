@@ -1,8 +1,8 @@
 <template>
-  <th class="uk-visible-hover-inline" :class="{
+  <th class="uk-visible-hover-inline" :class="[headerClass, {
     'uk-table-shrink': shrink,
     'uk-table-expand': expand
-  }">
+  }]">
     <a
       class="uk-display-block uk-link-reset uk-text-nowrap"
       @click.prevent="emitSortEvent">
@@ -33,6 +33,9 @@ export default {
   extends: Column,
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {

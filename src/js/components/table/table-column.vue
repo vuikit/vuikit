@@ -1,8 +1,8 @@
 <template>
-  <th :class="{
+  <th :class="[headerClass, {
     'uk-table-shrink': shrink,
     'uk-table-expand': expand
-  }">
+  }]">
     {{ header }}
   </th>
 </template>
@@ -14,6 +14,9 @@ export default {
   name: 'VkTableColumn',
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {
