@@ -110,6 +110,106 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
+var config = {
+  silent: false // TODO: use Vue config instead
+};
+
+/**
+ * Perform no operation.
+ */
+function noop () {}
+
+var warn = noop;
+var tip = noop;
+var formatComponentName;
+
+{
+  var hasConsole = typeof console !== 'undefined';
+  var classifyRE = /(?:^|[-_])(\w)/g;
+  var classify = function (str) { return str
+    .replace(classifyRE, function (c) { return c.toUpperCase(); })
+    .replace(/[-_]/g, ''); };
+
+  warn = function (msg, vm) {
+    if (hasConsole && (!config.silent)) {
+      console.error("[Vuikit warn]: " + msg + (
+        vm ? generateComponentTrace(vm) : ''
+      ));
+    }
+  };
+
+  tip = function (msg, vm) {
+    if (hasConsole && (!config.silent)) {
+      console.warn("[Vue tip]: " + msg + (
+        vm ? generateComponentTrace(vm) : ''
+      ));
+    }
+  };
+
+  formatComponentName = function (vm, includeFile) {
+    if (vm.$root === vm) {
+      return '<Root>'
+    }
+    var name = typeof vm === 'string'
+      ? vm
+      : typeof vm === 'function' && vm.options
+        ? vm.options.name
+        : vm._isVue
+          ? vm.$options.name || vm.$options._componentTag
+          : vm.name;
+
+    var file = vm._isVue && vm.$options.__file;
+    if (!name && file) {
+      var match = file.match(/([^/\\]+)\.vue$/);
+      name = match && match[1];
+    }
+
+    return (
+      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
+      (file && includeFile !== false ? (" at " + file) : '')
+    )
+  };
+
+  var repeat = function (str, n) {
+    var res = '';
+    while (n) {
+      if (n % 2 === 1) { res += str; }
+      if (n > 1) { str += str; }
+      n >>= 1;
+    }
+    return res
+  };
+
+  var generateComponentTrace = function (vm) {
+    if (vm._isVue && vm.$parent) {
+      var tree = [];
+      var currentRecursiveSequence = 0;
+      while (vm) {
+        if (tree.length > 0) {
+          var last = tree[tree.length - 1];
+          if (last.constructor === vm.constructor) {
+            currentRecursiveSequence++;
+            vm = vm.$parent;
+            continue
+          } else if (currentRecursiveSequence > 0) {
+            tree[tree.length - 1] = [last, currentRecursiveSequence];
+            currentRecursiveSequence = 0;
+          }
+        }
+        tree.push(vm);
+        vm = vm.$parent;
+      }
+      return '\n\nfound in\n\n' + tree
+        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
+            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
+            : formatComponentName(vm))); })
+        .join('\n')
+    } else {
+      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
+    }
+  };
+}
+
 var isRtl$$1 = document.documentElement.getAttribute('dir') === 'rtl';
 
 
@@ -203,7 +303,7 @@ function forceRedraw$$1 (el) {
   el.offsetHeight; // eslint-disable-line
 }
 
-function classify (str) {
+function classify$1 (str) {
   return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
 }
 
@@ -281,9 +381,7 @@ function toNumber (value) {
 //             : [value];
 // }
 
-function toInteger (n) {
-  return parseInt(n, 10)
-}
+
 
 function toString$1 (string) {
   return Object.prototype.toString.call(string)
@@ -395,9 +493,9 @@ var animationend = prefix('animation', 'animation-end');
 // }
 //
 function prefix (name, event) {
-  var ucase = classify(name);
-  var lowered = classify(event).toLowerCase();
-  var classified = classify(event);
+  var ucase = classify$1(name);
+  var lowered = classify$1(event).toLowerCase();
+  var classified = classify$1(event);
   var element = document.body || document.documentElement;
   var names = {};
   names[("Webkit" + ucase)] = ("webkit" + classified);
@@ -627,12 +725,6 @@ function flipPosition$$1 (pos) {
       return pos
   }
 }
-
-/**
- * Warn about errors only in no production
- */
-
-var warn;
 
 function filterByTag (nodes, tag) {
   var result = [];
@@ -2827,7 +2919,7 @@ var onTargetMouseenter;
 var onTargetMouseleave;
 var onClickTarget;
 
-var drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-drop",class:( obj = { 'uk-open': _vm.show, 'uk-drop-boundary': _vm.boundaryAlign }, obj[("uk-drop-" + (_vm.position))] = _vm.show, obj[("uk-drop-" + (_vm.dir) + "-" + (_vm.align))] = _vm.offset === false, obj ),style:({
+var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-drop",class:( obj = { 'uk-open': _vm.show, 'uk-drop-boundary': _vm.boundaryAlign }, obj[("uk-drop-" + (_vm.position))] = _vm.show, obj[("uk-drop-" + (_vm.dir) + "-" + (_vm.align))] = _vm.offset === false, obj ),style:({
     'top': ((_vm.top) + "px"),
     'left': ((_vm.left) + "px")
   })},[_vm._t("default")],2)
@@ -2994,6 +3086,1752 @@ var obj;},staticRenderFns: [],
     offAll$$1(this._uid);
     if (this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
+    }
+  }
+};
+
+var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",class:( obj = { 'uk-open': _vm.show }, obj[("uk-dropdown-" + (_vm.position))] = _vm.show, obj ),style:({
+    'top': ((_vm.top) + "px"),
+    'left': ((_vm.left) + "px")
+  })},[_vm._t("default")],2)
+var obj;},staticRenderFns: [],
+  name: 'VkDropdown',
+  extends: Drop
+};
+
+var Svg = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var meta = props.meta;
+    var data = props.data;
+    var viewBox = props.viewBox;
+    var width = props.width;
+    var height = props.height;
+
+    return h('svg', {
+      attrs: {
+        meta: meta,
+        width: width,
+        height: height,
+        version: '1.1',
+        viewBox: viewBox || ("0 0 " + width + " " + height)
+      },
+      domProps: {
+        innerHTML: data
+      }
+    })
+  }
+};
+
+var icons = {};
+
+var Icon = {
+  functional: true,
+  props: {
+    icon: {
+      type: [String, Object],
+      required: true
+    },
+    link: {
+      type: Boolean,
+      default: false
+    },
+    linkReset: {
+      type: Boolean,
+      default: false
+    },
+    ratio: {
+      default: 1
+    },
+    button: {
+      type: Boolean,
+      default: false
+    },
+    viewBox: String,
+    width: Number,
+    height: Number
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+    var data = ref.data;
+    var listeners = ref.listeners;
+
+    var icon = props.icon;
+    var ratio = props.ratio;
+    var link = props.link;
+    var linkReset = props.linkReset;
+    var button = props.button;
+    var iconObj = isString(icon)
+      ? icons[icon]
+      : icon;
+
+    if (!iconObj) {
+      warn(("the icon '" + icon + "' is not registered"));
+      return
+    }
+
+    // determine tag
+    var tag = link || linkReset || button
+      ? 'a'
+      : 'span';
+
+    // add custom class
+    data.class = ['uk-icon', data.class, {
+      'uk-icon-button': button,
+      'uk-icon-link': linkReset
+    }];
+
+    // dimensions
+    var width = props.width || iconObj.width;
+    var height = props.height || iconObj.height;
+    var viewBox = props.viewBox || iconObj.viewBox;
+
+    // ratio
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h(tag, Object.assign({}, {on: listeners,
+      attrs: {
+        href: tag === 'a'
+          ? ''
+          : false
+      }},
+      data), [
+      h(Svg, {
+        props: {
+          meta: ("icon-" + (iconObj.name) + " ratio-" + ratio),
+          data: iconObj.data,
+          viewBox: viewBox,
+          width: width,
+          height: height
+        }
+      })
+    ])
+  },
+  register: function register (iconObj) {
+    if (!icons[iconObj.name]) {
+      icons[iconObj.name] = iconObj;
+    }
+  }
+};
+
+var doc$1 = document.documentElement;
+var body = document.body;
+
+var active;
+var activeCount;
+
+on$$1(doc$1, 'click', function (e) {
+  if (active && !active.$refs.panel.contains(e.target)) {
+    active.$emit('click-out', e);
+  }
+});
+
+on$$1(doc$1, 'keyup', function (e) {
+  if (e.keyCode === 27 && active) {
+    e.preventDefault();
+    active.$emit('key-esc', e);
+  }
+});
+
+var ModalMixin = {
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    overlay: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: function () { return ({
+    active: active,
+    activeCount: activeCount
+  }); },
+  methods: {
+    _beforeEnter: function _beforeEnter () {
+      if (!active) {
+        body.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
+      }
+    },
+    _afterEnter: function _afterEnter () {
+      // if any previous modal active
+      // emit event for further actions
+      if (active) {
+        active.$emit('inactive');
+      }
+      // change current active modal
+      active = this;
+      activeCount++;
+    },
+    _afterLeave: function _afterLeave () {
+      activeCount--;
+      // if no active modals left
+      if (!activeCount) {
+        body.style['overflow-y'] = '';
+      }
+      if (active === this) {
+        active = null;
+      }
+    },
+    getScrollbarWidth: function getScrollbarWidth () {
+      var width = doc$1.style.width;
+      doc$1.style.width = '';
+      var scrollbarWidth = window.innerWidth - doc$1.offsetWidth;
+
+      if (width) {
+        doc$1.style.width = width;
+      }
+
+      return scrollbarWidth
+    }
+  },
+  beforeDestroy: function beforeDestroy () {
+    offAll$$1(this._uid);
+    if (this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el);
+    }
+  }
+};
+
+var doc = document.documentElement;
+
+var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
+  name: 'VkModal',
+  mixins: [ModalMixin],
+  components: {
+    'modal-content': {
+      functional: true,
+      render: function render (h, ref) {
+        var vm = ref.parent;
+
+        return vm.dialogIsOverriden
+          ? vm.$slots.default
+          : h('vk-modal-dialog', vm.$slots.default)
+      }
+    }
+  },
+  props: {
+    center: {
+      type: Boolean,
+      default: false
+    },
+    container: {
+      type: Boolean,
+      default: false
+    },
+    lightbox: {
+      type: Boolean,
+      default: false
+    },
+    full: {
+      type: Boolean,
+      default: false
+    },
+    blank: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    // if dialog is passed as slot is considered overriden
+    dialogIsOverriden: function dialogIsOverriden () {
+      return this.$slots.default[0] &&
+        this.$slots.default[0].data &&
+        this.$slots.default[0].data.staticClass === 'uk-modal-dialog'
+    }
+  },
+  mounted: function mounted () {
+    var this$1 = this;
+
+    // execute transition hooks if visible on load
+    if (this.show) {
+      this.beforeEnter();
+      this.afterEnter();
+    }
+
+    // set refs programatically
+    this.$refs.panel = this.$el.querySelector('.uk-modal-dialog');
+    this.$refs.close = this.$el.querySelector('button.uk-close');
+
+    // place close-top outside the dialog
+    if (this.$refs.close && hasClass$$1(this.$refs.close, 'vk-modal-close-top')) {
+      removeClass$$1(this.$refs.close, 'vk-modal-close-top');
+      var bar = document.createElement('div');
+      addClass$$1(bar, 'uk-modal-bar');
+      addClass$$1(bar, 'uk-position-top');
+      bar.appendChild(this.$refs.close);
+      this.$el.appendChild(bar);
+    }
+
+    // place caption bottom outside the dialog
+    var caption = this.$el.querySelector('.vk-modal-caption-bottom');
+    if (caption) {
+      addClass$$1(caption, 'uk-modal-bar');
+      addClass$$1(caption, 'uk-position-bottom');
+      removeClass$$1(caption, 'vk-modal-caption-bottom');
+      this.$el.appendChild(caption);
+    }
+
+    // update close style if full
+    if (this.full) {
+      removeClass$$1(this.$refs.close, 'uk-modal-close-default');
+      addClass$$1(this.$refs.close, 'uk-modal-close-full');
+    }
+
+    // init events
+    var clickHandler = function (e) {
+      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
+        this$1.$emit('click-in', e);
+      }
+    };
+
+    on$$1(this.$el, 'click', clickHandler, this._uid);
+    if ('ontouchstart' in doc) {
+      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
+    }
+  },
+  methods: {
+    beforeEnter: function beforeEnter () {
+      var this$1 = this;
+
+      this._beforeEnter();
+      this.$nextTick(function () {
+        addClass$$1(doc, 'uk-modal-page');
+        this$1.resize();
+      });
+    },
+    afterEnter: function afterEnter () {
+      this._afterEnter();
+      addClass$$1(this.$el, 'uk-open');
+    },
+    afterLeave: function afterLeave () {
+      this._afterLeave();
+      // if no active modals left
+      if (!this.activeCount) {
+        removeClass$$1(doc, 'uk-modal-page');
+      }
+    },
+    resize: function resize () {
+      if (css$$1(this.$el, 'display') === 'block' && this.center) {
+        removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+
+        var dialog = this.$refs.panel;
+        var dh = dialog.offsetHeight;
+        var marginTop = css$$1(dialog, 'margin-top');
+        var marginBottom = css$$1(dialog, 'margin-bottom');
+        var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
+
+        if (window.innerHeight > (dh + pad)) {
+          addClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+        } else {
+          removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+        }
+        this.$el.style.display = hasClass$$1(this.$el, 'uk-flex') ? '' : 'block';
+      }
+    }
+  }
+};
+
+var modalDialog = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-dialog',
+      class: [data.staticClass]}), children)
+  }
+};
+
+var modalHeader = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-header',
+      class: [data.staticClass]}), children)
+  }
+};
+
+var modalBody = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-body',
+      class: [data.staticClass]}), children)
+  }
+};
+
+var modalFooter = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-footer',
+      class: [data.staticClass]}), children)
+  }
+};
+
+var modalCaption = {
+  functional: true,
+  props: ['bottom'],
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+    var props = ref.props;
+
+    var bottom = props.bottom !== undefined;
+    return h('div', Object.assign({}, data,
+      {class: [
+        {
+          'uk-modal-caption': !bottom,
+          'vk-modal-caption-bottom': bottom
+        },
+        data.staticClass
+      ]}), children)
+  }
+};
+
+var modalClose = {
+  functional: true,
+  props: ['outside', 'full', 'top'],
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+    var props = ref.props;
+
+    var outside = props.outside !== undefined;
+    var full = props.full !== undefined;
+    var top = props.top !== undefined;
+    return h('button', Object.assign({}, data,
+      {staticClass: 'uk-close uk-icon',
+      class: [
+        {
+          'uk-modal-close-default': !outside && !full,
+          'uk-modal-close-outside': outside,
+          'uk-modal-close-full': full,
+          'vk-modal-close-top': top
+        },
+        data.staticClass
+      ],
+      attrs: {
+        type: 'button',
+        'uk-close': true
+      }}), children)
+  }
+};
+
+var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'VkNotification',
+  props: {
+    position: {
+      type: String,
+      default: 'top-center' // (top|bottom)-(left|center|right)
+    }
+  },
+  mounted: function mounted () {
+    // move to body
+    document.body.appendChild(this.$el);
+  },
+  beforeDestroy: function beforeDestroy () {
+    if (this.$el.parentNode) {
+      document.body.removeChild(this.$el);
+    }
+  }
+};
+
+var notificationMessage = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
+var obj;},staticRenderFns: [],
+  name: 'VkNotificationMessage',
+  props: {
+    id: {
+      type: [Number, String, Object],
+      default: 0
+    },
+    /* primary|success|warning|danger */
+    status: {
+      type: String,
+      default: ''
+    },
+    timeout: {
+      type: Number,
+      default: 5000
+    },
+    transition: {
+      type: String,
+      default: ''
+    }
+  },
+  mounted: function mounted () {
+    var this$1 = this;
+
+    if (this.timeout > 0) {
+      setTimeout(function () {
+        this$1.$parent.$emit('timeout', this$1.id);
+      }, this.timeout);
+    }
+  }
+};
+
+var doc$2 = document.documentElement;
+var body$1 = document.body;
+var scroll;
+
+var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
+  name: 'VkOffcanvas',
+  mixins: [ModalMixin],
+  props: {
+    flip: {
+      type: Boolean,
+      default: false
+    },
+    overlay: {
+      type: Boolean,
+      default: false
+    },
+    mode: {
+      type: String,
+      default: 'slide' // none|slide|push|reveal
+    }
+  },
+  data: function () { return ({
+    defaults: {
+      clsMode: 'uk-offcanvas',
+      clsFlip: 'uk-offcanvas-flip',
+      clsOverlay: 'uk-offcanvas-overlay',
+      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
+      clsContentAnimation: 'uk-offcanvas-content-animation'
+    },
+    clsPage: 'uk-offcanvas-page',
+    clsPageAnimation: 'uk-offcanvas-page-animation',
+    clsContainer: 'uk-offcanvas-container',
+    clsContent: 'uk-offcanvas-content'
+  }); },
+  computed: {
+    clsFlip: function clsFlip () {
+      return this.flip
+        ? this.defaults.clsFlip
+        : ''
+    },
+    clsOverlay: function clsOverlay () {
+      return this.overlay
+        ? this.defaults.clsOverlay
+        : ''
+    },
+    clsMode: function clsMode () {
+      return ((this.defaults.clsMode) + "-" + (this.mode))
+    },
+    clsSidebarAnimation: function clsSidebarAnimation () {
+      return this.mode === 'none' || this.mode === 'reveal'
+        ? ''
+        : this.defaults.clsSidebarAnimation
+    },
+    clsContentAnimation: function clsContentAnimation () {
+      return this.mode !== 'push' && this.mode !== 'reveal'
+        ? ''
+        : this.defaults.clsContentAnimation
+    },
+    transitionElement: function transitionElement () {
+      return this.mode === 'reveal'
+        ? this.$refs.panel.parentNode
+        : this.$refs.panel
+    },
+    transitionDuration: function transitionDuration () {
+      return toMs(css$$1(this.transitionElement, 'transition-duration'))
+    }
+  },
+  methods: {
+    afterEnter: function afterEnter (el) {
+      this._afterEnter();
+      this.$emit('displayed');
+    },
+    getRefElement: function getRefElement (ref) {
+      var context = this.$vnode.context;
+      var target = context.$refs[ref];
+      if (target) {
+        return target._isVue
+          ? target.$el
+          : target
+      }
+      return false
+    },
+    beforeShow: function beforeShow () {
+      scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
+
+      css$$1(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
+
+      // set fixed with so the page can slide-out without shinking
+      css$$1(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
+
+      addClass$$1(doc$2, ("" + (this.clsPage)));
+      addClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      forceRedraw$$1(body$1);
+
+      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
+      addClass$$1(this.$el, this.clsOverlay);
+      addClass$$1(this.$refs.content, this.clsContentAnimation);
+
+      // toggle element
+      addClass$$1(this.$el, this.clsOverlay);
+      css$$1(this.$el, 'display', 'block');
+      forceRedraw$$1(this.$el);
+      addClass$$1(this.$el, 'uk-open');
+    },
+    beforeHide: function beforeHide () {
+      removeClass$$1(this.$refs.content, this.clsContentAnimation);
+      removeClass$$1(this.$el, 'uk-open');
+    },
+    transitionEnd: function (el, done) {
+      setTimeout(done, this.transitionDuration);
+    },
+    hidden: function hidden () {
+      if (!this.overlay) {
+        scroll = { x: window.pageXOffset, y: window.pageYOffset };
+      }
+
+      css$$1(doc$2, 'width', '');
+      removeClass$$1(doc$2, ("" + (this.clsPage)));
+
+      removeClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
+      removeClass$$1(this.$el, this.clsOverlay);
+      css$$1(this.$el, 'display', 'none');
+      forceRedraw$$1(this.$el);
+      removeClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+
+      body$1.scrollTop = scroll.y;
+
+      css$$1(doc$2, 'overflow-y', '');
+      css$$1(this.$refs.content, 'width', '');
+      css$$1(this.$refs.content, 'height', '');
+      forceRedraw$$1(this.$refs.content);
+
+      window.scrollTo(scroll.x, scroll.y);
+      scroll = null;
+
+      this._afterLeave();
+      this.$emit('hidden');
+    }
+  },
+  mounted: function mounted () {
+    var this$1 = this;
+
+    this.$refs.content = document.body.querySelector(("." + (this.clsContent)));
+
+    if (!this.$refs.content) {
+      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
+      this.$destroy();
+      return
+    }
+
+    var clickHandler = function (e) {
+      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
+        this$1.$emit('click-in', e);
+      }
+    };
+
+    on$$1(this.$el, 'click', clickHandler, this._uid);
+    if ('ontouchstart' in document.documentElement) {
+      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
+    }
+  },
+  beforeDestroy: function beforeDestroy () {
+    removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+    doc$2.style['margin-left'] = '';
+    this._afterLeave();
+  }
+};
+
+var offcanvasContent = {
+  name: 'VkOffcanvasContent',
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+
+    var nodesCount = children.length;
+
+    if (nodesCount === 1) {
+      var rawChild = children[0];
+
+      if (rawChild.tag) {
+        addNodeClass(rawChild);
+        return rawChild
+      }
+    }
+
+    return h('div', {
+      staticClass: 'uk-offcanvas-content'
+    }, children)
+  }
+};
+
+function addNodeClass (node) {
+  var classes = node.data.staticClass
+    ? node.data.staticClass.split(' ')
+    : [];
+  classes.push('uk-offcanvas-content');
+  node.data.staticClass = classes.join(' ');
+}
+
+var closeIcon = {
+  name: 'close-icon',
+  data: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>',
+  viewBox: '0 0 14 14',
+  width: 14,
+  height: 14
+};
+
+var offcanvasClose = {
+  functional: true,
+  render: function render (h, ref) {
+    var data = ref.data;
+
+    return h('button', {
+      staticClass: 'uk-offcanvas-close uk-close uk-icon',
+      attrs: {
+        type: 'button'
+      },
+      on: data.on
+    }, [
+      h(Svg, {
+        props: Object.assign({}, closeIcon)
+      })
+    ])
+  }
+};
+
+var def = { total: 200, page: 1, perPage: 10, range: 3 };
+
+/**
+ * Returns an array with represented ranges pages
+ */
+var paginationMatrix = function (ref) {
+  if ( ref === void 0 ) ref = def;
+  var total = ref.total; if ( total === void 0 ) total = def.total;
+  var page = ref.page; if ( page === void 0 ) page = def.page;
+  var perPage = ref.perPage; if ( perPage === void 0 ) perPage = def.perPage;
+  var range$$1 = ref.range; if ( range$$1 === void 0 ) range$$1 = def.range;
+
+  var matrix = [];
+  var totalPages = Math.ceil(total / perPage);
+  // return early if no more than 1 page
+  if (totalPages < 2) {
+    return [1]
+  }
+  // get main pages
+  var mainPages = getMainPages({ page: page, range: range$$1, totalPages: totalPages });
+  var first = mainPages[0];
+  var last = mainPages[mainPages.length - 1];
+  // get pre/post pages
+  var prePages = range(1, (first <= 3) ? first : 2);
+  var postPages = range(
+    last >= (totalPages - 2) ? last + 1 : totalPages,
+    totalPages + 1
+  );
+
+  var nextPage = 1;[].concat(prePages, mainPages, postPages).forEach(function (p) {
+    if (p === nextPage) {
+      matrix.push(p);
+      nextPage++;
+    } else {
+      matrix.push('...');
+      matrix.push(p);
+      nextPage = p + 1;
+    }
+  });
+
+  return matrix
+};
+
+var getMainPages = function (ref) {
+  var page = ref.page;
+  var range$$1 = ref.range;
+  var totalPages = ref.totalPages;
+
+  var start = page - range$$1;
+  var end = page + range$$1;
+  if (end > totalPages) {
+    end = totalPages;
+    start = totalPages - (range$$1 * 2);
+    start = start < 1 ? 1 : start;
+  }
+  if (start <= 1) {
+    start = 1;
+    end = Math.min((range$$1 * 2) + 1, totalPages);
+  }
+  return range(start, end + 1)
+};
+
+var PaginationFirst = {
+  functional: true,
+  props: ['label', 'expand'],
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+
+    var label = props.label;
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'first')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.prevPage < 1,
+        'uk-margin-auto-right': expand !== undefined
+      }
+    }, [
+      h('a', {
+        on: { click: function (e) { return parent.$emit('update:page', 1); } }
+      }, [
+        h(Icon, {
+          props: {
+            icon: 'pagination-previous'
+          },
+          staticClass: 'uk-pagination-prev',
+          class: {
+            'uk-margin-small-right': label
+          }
+        }),
+        label && label
+      ])
+    ])
+  }
+};
+
+var PaginationLast = {
+  functional: true,
+  props: ['label', 'expand'],
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+
+    var label = props.label;
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'last')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.nextPage > parent.lastPage,
+        'uk-margin-auto-left': expand !== undefined
+      }
+    }, [
+      h('a', {
+        on: { click: function (e) { return parent.$emit('update:page', parent.lastPage); } }
+      }, [
+        label && label,
+        h(Icon, {
+          props: {
+            icon: 'pagination-next'
+          },
+          staticClass: 'uk-pagination-next',
+          class: {
+            'uk-margin-small-left': label
+          }
+        })
+      ])
+    ])
+  }
+};
+
+var PaginationPrev = {
+  functional: true,
+  props: ['label', 'expand'],
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+
+    var label = props.label;
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'prev')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.prevPage < 1,
+        'uk-margin-auto-right': expand !== undefined
+      }
+    }, [
+      h('a', {
+        on: { click: function (e) { return parent.$emit('update:page', parent.prevPage); } }
+      }, [
+        h(Icon, {
+          props: {
+            icon: 'pagination-previous'
+          },
+          staticClass: 'uk-pagination-prev',
+          class: {
+            'uk-margin-small-right': label
+          }
+        }),
+        label && label
+      ])
+    ])
+  }
+};
+
+var PaginationNext = {
+  functional: true,
+  props: ['label', 'expand'],
+  render: function render (h, ref) {
+    var props = ref.props;
+    var parent = ref.parent;
+
+    var label = props.label;
+    var expand = props.expand;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', { attrs: { label: label, expand: expand } }, 'next')
+    }
+
+    return h('li', {
+      class: {
+        'uk-disabled': parent.nextPage > parent.lastPage,
+        'uk-margin-auto-left': expand !== undefined
+      }
+    }, [
+      h('a', {
+        on: { click: function (e) { return parent.$emit('update:page', parent.nextPage); } }
+      }, [
+        label && label,
+        h(Icon, {
+          props: {
+            icon: 'pagination-next'
+          },
+          staticClass: 'uk-pagination-next',
+          class: {
+            'uk-margin-small-left': label
+          }
+        })
+      ])
+    ])
+  }
+};
+
+var PaginationPages = {
+  functional: true,
+  render: function render (h, ref) {
+    var parent = ref.parent;
+
+    // if not rendered by VkPagination, return comment to mark the position
+    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
+      return h('li', 'pages')
+    }
+
+    var currentPage = parent.page;
+    return parent.pages.map(function (page) {
+      var isPage = isInteger(page);
+      var isActive = isPage && currentPage === page;
+      return h('li', { class: { 'uk-active': isActive } }, [
+        isPage
+          ? isActive
+            ? h('span', page)
+            : h('a', {
+              on: { click: function (e) {
+                parent.$emit('update:page', page);
+              }}
+            }, page)
+          : h('span', '...')
+      ])
+    })
+  }
+};
+
+var paginationNext = {
+  name: 'pagination-next',
+  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/>',
+  viewBox: '0 0 7 12',
+  width: 7,
+  height: 12
+};
+
+var paginationPrevious = {
+  name: 'pagination-previous',
+  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>',
+  viewBox: '0 0 7 12',
+  width: 7,
+  height: 12
+};
+
+// register icons
+Icon.register(paginationNext);
+Icon.register(paginationPrevious);
+
+var partsMap = {
+  first: PaginationFirst,
+  last: PaginationLast,
+  prev: PaginationPrev,
+  next: PaginationNext,
+  pages: PaginationPages
+};
+
+var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' }},[_c('pag-parts')],1)},staticRenderFns: [],
+  name: 'VkPagination',
+  props: {
+    align: {
+      type: String,
+      default: 'center' // left|center|right
+    },
+    // the active page
+    page: {
+      type: Number
+    },
+    // items displayed on each page
+    perPage: {
+      type: Number
+    },
+    // amount of visible pages around the active one
+    range: {
+      type: Number,
+      default: 3
+    },
+    // total amount of items
+    total: {
+      type: Number
+    }
+  },
+  computed: {
+    prevPage: function prevPage () {
+      return this.page - 1
+    },
+    nextPage: function nextPage () {
+      return this.page + 1
+    },
+    pages: function pages () {
+      return paginationMatrix({ total: this.total, page: this.page, perPage: this.perPage })
+    },
+    lastPage: function lastPage () {
+      return this.pages[this.pages.length - 1]
+    }
+  },
+  components: {
+    'pag-parts': {
+      functional: true,
+      render: function render (h, ref) {
+        var parent = ref.parent;
+
+        var lis = [];
+        parent.$parts.forEach(function (part) {
+          part = parent.$createElement(part.comp, { props: part.props });
+          lis = isArray(part)
+            ? lis.concat( part)
+            : lis.concat( [part]);
+        });
+        return lis
+      }
+    }
+  },
+  created: function created () {
+    this.$parts = this.$slots.default
+      .filter(function (slot) { return slot.children; })
+      .map(function (slot) { return ({
+        comp: partsMap[slot.children[0].text],
+        props: (slot.data && slot.data.attrs) || {}
+      }); });
+  }
+};
+
+var spinner$1 = {
+  name: 'spinner',
+  data: '<circle fill="none" stroke="#000" cx="15" cy="15" r="14"/>',
+  viewBox: '0 0 30 30',
+  width: 30,
+  height: 30
+};
+
+var spinner = {
+  name: 'VkSpinner',
+  functional: true,
+  props: {
+    ratio: {
+      default: 1
+    }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var ratio = props.ratio;
+
+    // dimensions
+    var width = spinner$1.width;
+    var height = spinner$1.height;
+
+    // ratio
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('div', {
+      staticClass: 'uk-spinner uk-icon'
+    }, [
+      h(Svg, {
+        props: Object.assign({}, spinner$1,
+          {width: width,
+          height: height})
+      })
+    ])
+  }
+};
+
+var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'VkSubnav',
+  props: {
+    activeItem: [String, Number],
+    divider: {
+      type: Boolean,
+      default: false
+    },
+    pill: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    items: {
+      get: function get () {
+        return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-subnav-item'; }
+        )
+      },
+      cache: false
+    }
+  },
+  beforeMount: function beforeMount () {
+    this.updateItems();
+  },
+  beforeUpdate: function beforeUpdate () {
+    this.updateItems();
+  },
+  methods: {
+    updateItems: function updateItems () {
+      var this$1 = this;
+
+      this.items.forEach(function (item, index) {
+        var alias = this$1.getItemAlias(item);
+        var active = this$1.activeItem === alias;
+        var props = item.componentOptions.propsData;
+        props.active = active;
+        props.alias = alias;
+      });
+    },
+    getItemAlias: function getItemAlias (item) {
+      return item.componentOptions.propsData.alias || this.items.indexOf(item) + 1
+    }
+  }
+};
+
+var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+  name: 'VkSubnavItem',
+  props: {
+    label: String,
+    alias: {
+      type: [String, Number],
+      default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
+
+var Cell = {
+  functional: true,
+  props: ['row', 'col'],
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+
+    var col = props.col;
+    var row = props.row;
+    var cellRender = col.$vnode.componentOptions.Ctor.options.cellRender;
+
+    if (cellRender) {
+      return cellRender.call(col, h, row)
+    } else {
+      warn('Missing cellRender', col);
+    }
+  }
+};
+
+var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
+  name: 'VkTable',
+  components: { Cell: Cell },
+  props: {
+    data: {
+      type: Array,
+      required: true
+    },
+    small: {
+      type: Boolean,
+      default: false
+    },
+    middle: {
+      type: Boolean,
+      default: false
+    },
+    divider: {
+      type: Boolean,
+      default: false
+    },
+    striped: {
+      type: Boolean,
+      default: false
+    },
+    hover: {
+      type: Boolean,
+      default: false
+    },
+    justify: {
+      type: Boolean,
+      default: false
+    },
+    responsive: {
+      type: Boolean,
+      default: false
+    },
+    sortedBy: {
+      type: Object,
+      default: function () { return ({}); } // { field: [asc|desc] }
+    },
+    rowClass: {
+      type: Function
+    },
+    selection: {
+      type: Array,
+      default: function () { return []; }
+    },
+    highlight: {
+      type: Boolean,
+      default: false
+    },
+    select: {
+      type: Boolean,
+      default: false
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data: function () { return ({
+    children: [],
+    forcingUpdate: false
+  }); },
+  computed: {
+    columns: {
+      get: function get$$1 () {
+        return this.children
+          .filter(function (child) { return child.$el.nodeName === 'TH'; })
+          .sort(this.sortAsSlots)
+      },
+      cache: false
+    },
+    selectedRows: function selectedRows () {
+      return this.data.filter(this.isSelected)
+    },
+    isAllSelected: function isAllSelected () {
+      return this.selectedRows.length && (this.selectedRows.length === this.data.length)
+    }
+  },
+  methods: {
+    getKey: function getKey (col) {
+      return JSON.stringify({ name: col.name, props: col.$options.propsData })
+    },
+    forceUpdateOnce: function forceUpdateOnce () {
+      if (!this.forcingUpdate) {
+        this.forcingUpdate = true;
+        this.$forceUpdate();
+        return
+      }
+      this.forcingUpdate = false;
+    },
+    getRowClass: function getRowClass (row, index) {
+      var classes = [];
+
+      if (isFunction(this.rowClass)) {
+        classes.push(this.rowClass(row, index));
+      }
+
+      if (this.highlight && this.isSelected(row)) {
+        classes.push('uk-active');
+      }
+
+      return classes.join(' ')
+    },
+    emitClickRow: function emitClickRow (e, row) {
+      var noChildWasClicked = e.target.tagName === 'TR' || e.target.tagName === 'TD';
+      if (noChildWasClicked) {
+        this.$emit('click-row', row);
+      }
+    },
+    sortAsSlots: function sortAsSlots (a, b) {
+      var slots = this.$slots.default.filter(function (s) { return s.tag; });
+      var indexA = slots.findIndex(findByProps(a));
+      var indexB = slots.findIndex(findByProps(b));
+
+      if (indexA === indexB) { return 0 }
+      return (indexA > indexB) ? 1 : -1
+    },
+    // row selection related
+    isSelected: function isSelected (row) {
+      return this.selection.findIndex(function (r) { return r.id === row.id; }) !== -1
+    },
+    selectRow: function selectRow (row) {
+      var newSelection = this.selection.concat( [row]);
+      this.triggerUpdateEvent(newSelection);
+    },
+    unselectRow: function unselectRow (row) {
+      var newSelection = [].concat( this.selection );
+      newSelection.splice(this.selection.indexOf(row), 1);
+      this.triggerUpdateEvent(newSelection);
+    },
+    toggleSelection: function toggleSelection (row) {
+      this.isSelected(row)
+        ? this.unselectRow(row)
+        : this.selectRow(row);
+      this.$forceUpdate();
+    },
+    triggerUpdateEvent: function triggerUpdateEvent (selection) {
+      this.$emit('update:selection', selection);
+    }
+  },
+  created: function created () {
+    var this$1 = this;
+
+    this.$on('click-row', function (row) {
+      if (this$1.singleSelect) {
+        this$1.$emit('update:selection', [row]);
+      } else if (this$1.select) {
+        this$1.toggleSelection(row);
+      }
+    });
+  },
+  mounted: function mounted () {
+    // workaround for reactivity
+    this.children = this.$children;
+  },
+  updated: function updated () {
+    // workaround for edge situations
+    // where children reactivity fails
+    this.forceUpdateOnce();
+  }
+};
+
+var findByProps = function (comp) { return function (slot) {
+  if (!slot.componentOptions || !comp.$options) {
+    return false
+  }
+  var propsSlot = slot.componentOptions.propsData;
+  var propsComp = comp.$options.propsData;
+  return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
+}; };
+
+var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
+  name: 'VkTableColumn',
+  props: {
+    header: {
+      type: String
+    },
+    cell: {
+      type: String
+    },
+    cellClass: {
+      type: String
+    },
+    shrink: {
+      type: Boolean,
+      default: false
+    },
+    expand: {
+      type: Boolean,
+      default: false
+    }
+  },
+  cellRender: function cellRender (h, row) {
+    var scopedSlot = this.$scopedSlots.default;
+    var scopedArgs = [row];
+
+    if (this.$scopedSlots.cellTemplate) {
+      scopedSlot = this.$scopedSlots.cellTemplate;
+      scopedArgs = [h, row];
+    }
+
+    return h('td', {
+      staticClass: this.cellClass
+    }, [
+      scopedSlot
+        ? scopedSlot.call.apply(scopedSlot, [ this ].concat( scopedArgs ))
+        : get(row, this.cell, '')
+    ])
+  }
+};
+
+var Checkbox = {
+  functional: true,
+  props: ['checked'],
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+    var listeners = ref.listeners;
+
+    return h('input', Object.assign({}, data,
+      {
+        staticClass: 'uk-checkbox',
+        attrs: {
+          type: 'checkbox'
+        },
+        domProps: {
+          checked: props.checked
+        },
+        on: Object.assign({}, listeners,
+          {
+            change: function (e) {
+              // ensures checked state consistency
+              e.target.checked = props.checked;
+            }
+          })
+      }))
+  }
+};
+
+function joinClasses () {
+  var classes = [], len = arguments.length;
+  while ( len-- ) classes[ len ] = arguments[ len ];
+
+  var isNotEmpty = function (c) { return c; };
+  return classes.filter(isNotEmpty).join(' ')
+}
+
+var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-form uk-text-center uk-table-shrink",class:_vm.headerClass},[_c('checkbox',{attrs:{"checked":_vm.$parent.isAllSelected},on:{"click":_vm.toggleAll}})],1)},staticRenderFns: [],
+  name: 'VkTableColumnSelect',
+  components: { Checkbox: Checkbox },
+  props: {
+    headerClass: {
+      type: String
+    },
+    cellClass: {
+      type: String
+    }
+  },
+  methods: {
+    toggleAll: function toggleAll () {
+      var selection = this.$parent.isAllSelected
+        ? []
+        : [].concat( this.$parent.data );
+      this.$parent.triggerUpdateEvent(selection);
+    }
+  },
+  created: function created () {
+    if (this.$parent.selection === undefined) {
+      warn('Missing required prop: "selection"', this.$parent);
+      this.$destroy();
+    }
+  },
+  cellRender: function cellRender (h, row) {
+    var this$1 = this;
+
+    var defaultClasses = 'uk-form uk-text-center';
+
+    return h('td', {
+      staticClass: joinClasses(defaultClasses, this.cellClass)
+    }, [
+      h(Checkbox, {
+        props: { checked: this.$parent.isSelected(row) },
+        on: { click: function (e) { return this$1.$parent.toggleSelection(row); } }
+      })
+    ])
+  }
+};
+
+var arrowUp = {
+  name: 'arrow-up',
+  data: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>',
+  viewBox: '0 0 20 20',
+  width: 20,
+  height: 20
+};
+
+var arrowDown = {
+  name: 'arrow-down',
+  data: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>',
+  viewBox: '0 0 20 20',
+  width: 20,
+  height: 20
+};
+
+Icon.register(arrowUp);
+Icon.register(arrowDown);
+
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_c('span',{staticClass:"uk-position-relative"},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])])},staticRenderFns: [],
+  name: 'VkTableColumnSort',
+  extends: Column,
+  props: {
+    header: {
+      type: String
+    },
+    cell: {
+      type: String
+    },
+    cellClass: {
+      type: String
+    },
+    shrink: {
+      type: Boolean,
+      default: false
+    },
+    expand: {
+      type: Boolean,
+      default: false
+    }
+  },
+  computed: {
+    $table: function $table () {
+      return this.$parent
+    },
+    sortBy: function sortBy () {
+      return this.cell
+    },
+    orderedBy: function orderedBy () {
+      return this.$parent.sortedBy[this.sortBy]
+    },
+    icon: function icon () {
+      return (this.orderedBy === 'asc' || this.orderedBy === undefined)
+        ? 'arrow-down'
+        : 'arrow-up'
+    }
+  },
+  methods: {
+    emitSortEvent: function emitSortEvent (e) {
+      var sortOrder = getSortOrder(this.$table.sortedBy, this.sortBy, e.shiftKey);
+      this.$table.$emit('sort', sortOrder);
+    }
+  }
+};
+
+function getSortOrder (currentSort, by, multi) {
+  var order = currentSort[by] === 'asc'
+    ? 'desc'
+    : 'asc';
+  var sort = {};
+  sort[by] = order;
+  return multi
+    ? Object.assign({}, currentSort, sort)
+    : sort
+}
+
+var columnTypes = {
+  default: Column,
+  select: ColumnSelect,
+  sort: ColumnSort
+};
+
+var tableSetup = {
+  functional: true,
+  props: {
+    presets: {
+      type: Object,
+      required: true
+    },
+    columns: {
+      type: Array,
+      required: true
+    }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var columns = mapPresets(props.presets, props.columns);
+    return columns.map(function (column) {
+      var key = getKey(column);
+      return h(mapColumnComponent(column), Object.assign({}, {key: key}, getColumnObject(column)))
+    })
+  }
+};
+
+function getKey (column) {
+  var type = mapColumnComponent(column);
+  return JSON.stringify({ column: column, type: type.name || type })
+}
+
+function mapColumnComponent (column) {
+  var type = column.type || 'default';
+  return columnTypes[type] !== undefined
+    ? columnTypes[type]
+    : type
+}
+
+function mapPresets (presets, columns) {
+  return columns.map(function (column) {
+    var definition = presets[column];
+
+    if (definition === undefined) {
+      warn(("Table preset '" + column + "' doesn't exist."));
+      return false
+    }
+
+    return definition
+  }).filter(function (c) { return c; })
+}
+
+function getColumnObject (column) {
+  var props = {};
+  var scopedSlots = {};
+
+  // header
+  props.header = column.header;
+  props.shrink = column.shrink;
+  props.expand = column.expand;
+  var staticClass = column.class;
+
+  // cell
+  props.cell = column.cell;
+  props.cellClass = column.cellClass;
+  if (column.cellTemplate && isFunction(column.cellTemplate)) {
+    scopedSlots.cellTemplate = column.cellTemplate;
+  }
+
+  // render
+  return { staticClass: staticClass, props: props, scopedSlots: scopedSlots }
+}
+
+var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'VkTab',
+  props: {
+    label: String,
+    alias: {
+      type: [String, Number],
+      default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  },
+  created: function created () {
+    if (!this.disabled && !this.$slots.default) {
+      warn(("[VkTabs]: content is missing in tab " + (this.label)));
+    }
+  }
+};
+
+var core = {
+  components: {
+    TabContent: {
+      functional: true,
+      render: function render (h, ref) {
+        var parent = ref.parent;
+
+        return parent.$tabsNodes.filter(function (vn) { return parent.activeTab === parent.getTabId(vn); })
+      }
+    }
+  },
+  props: {
+    activeTab: {
+      type: [String, Number],
+      required: true
+    },
+    transition: {
+      type: String,
+      default: 'vk-tabs-transition'
+    }
+  },
+  computed: {
+    tabs: {
+      get: function get$$1 () {
+        var this$1 = this;
+
+        return this.$tabsNodes.map(function (vn) { return ({
+          id: this$1.getTabId(vn),
+          label: vn.componentOptions.propsData.label,
+          disabled: vn.componentOptions.propsData.disabled !== undefined
+        }); })
+      },
+      cache: false
+    }
+  },
+  created: function created () {
+    var this$1 = this;
+
+    // save tabs nodes
+    this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
+    );
+    if (warn && !this.$tabsNodes) {
+      warn("[VkTabs]: there are no tabs defined");
+    }
+    // set tabs key for keep-alive
+    this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
+  },
+  methods: {
+    getTabId: function getTabId (vn) {
+      return vn.componentOptions.propsData.alias || this.$tabsNodes.indexOf(vn) + 1
+    }
+  }
+};
+
+var tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
+var id = ref.id;
+var label = ref.label;
+var disabled = ref.disabled;
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])})),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])
+var obj;},staticRenderFns: [],
+  name: 'VkTabs',
+  extends: core,
+  props: {
+    alignment: {
+      type: String,
+      default: 'left' // left|right|center|justify
+    },
+    // flips tabs vertically
+    bottom: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
+
+var tabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
+var id = ref.id;
+var label = ref.label;
+var disabled = ref.disabled;
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])}))]),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
+  name: 'VkTabsVertical',
+  extends: core,
+  props: {
+    alignment: {
+      type: String,
+      default: 'left' // left|right
     }
   }
 };
@@ -5287,2542 +7125,7 @@ var PopperMixin = {
   }
 };
 
-var onClickOut$1;
 var onMouseenter$1;
-var onTargetMouseenter$1;
-var onTargetMouseleave$1;
-var onClickTarget$1;
-
-var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open","enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-enter":_vm.afterEnter}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",staticStyle:{"display":"block"}},[_vm._t("default")],2)])},staticRenderFns: [],
-  name: 'VkDropdown',
-  mixins: [PopperMixin],
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
-    /* [top|right|bottom|left]-[left|center|right|justify] */
-    position: {
-      type: String,
-      default: 'bottom-left'
-    }
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    var leaveTimeout;
-    // prepare delay helper function
-    var delayFn = function (time, cb) {
-      setTimeout(function (_) { return cb(); }, time);
-    };
-
-    onClickTarget$1 = function (e) {
-      this$1.$emit('click-target', e);
-    };
-
-    onMouseenter$1 = function (e) {
-      // ignore childs triggers
-      if (this$1.targetElement.contains(e.fromElement)) {
-        return
-      }
-      clearTimeout(leaveTimeout);
-      this$1.$emit('mouseenter', { delay: delayFn }, e);
-    };
-
-    onTargetMouseenter$1 = function (e) {
-      // ignore childs triggers
-      if (this$1.targetElement.contains(e.fromElement)) {
-        return
-      }
-      clearTimeout(leaveTimeout);
-      this$1.$emit('mouseenter', { delay: delayFn }, e);
-    };
-
-    onTargetMouseleave$1 = function (e) {
-      // ignore childs triggers
-      if (e.relatedTarget === this$1.targetElement || e.relatedTarget === this$1.$el ||
-        this$1.targetElement.contains(e.relatedTarget) || this$1.$el.contains(e.relatedTarget)
-      ) {
-        return
-      }
-      var delayFn = function (time, cb) { leaveTimeout = setTimeout(function (_) { return cb(); }, time); };
-      this$1.$emit('mouseleave', { delay: delayFn }, e);
-    };
-
-    onClickOut$1 = function (e) {
-      if (this$1.show) {
-        // clicking target
-        if (e.target === this$1.targetElement || this$1.targetElement.contains(e.target)) {
-          return
-        }
-        // click in/out dropdown
-        if (e.target === this$1.$el || this$1.$el.contains(e.target)) {
-          this$1.$emit('click-in', e);
-        } else {
-          this$1.$emit('click-out', e);
-        }
-      }
-    };
-
-    on$$1(this.$el, 'mouseleave', onTargetMouseleave$1, this._uid);
-    on$$1(this.$el, 'mouseenter', onMouseenter$1, this._uid);
-    on$$1(this.targetElement, 'mouseenter', onTargetMouseenter$1, this._uid);
-    on$$1(this.targetElement, 'mouseleave', onTargetMouseleave$1, this._uid);
-    on$$1(this.targetElement, 'click', onClickTarget$1, this._uid);
-    on$$1(document, 'click', onClickOut$1, this._uid);
-    if ('ontouchstart' in document.documentElement) {
-      on$$1(document, 'touchstart', onClickOut$1, this._uid);
-    }
-  },
-  methods: {
-    afterEnter: function afterEnter () {
-      addClass$$1(this.$el, 'uk-open');
-    },
-    remove: function remove () {
-      if (this.$el.parentNode) {
-        this.$el.parentNode.removeChild(this.$el);
-      }
-    }
-  },
-  beforeDestroy: function beforeDestroy () {
-    offAll$$1(this._uid);
-    this.remove();
-  }
-};
-
-var icons = {};
-
-var icons$1 = {
-  get: function get (icon) {
-    return icons[icon]
-  },
-  register: function register (icon) {
-    if (!this.get(icon.name)) {
-      icons[icon.name] = icon;
-    }
-  }
-};
-
-var svg = {
-  functional: true,
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var width = props.width;
-    var height = props.height;
-    var name = props.name;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        viewBox: viewBox,
-        width: width * ratio,
-        height: height * ratio,
-        ratio: ratio,
-        icon: name
-      },
-      domProps: {
-        innerHTML: props.data
-      }
-    })
-  }
-};
-
-var icon = {
-  functional: true,
-  render: function render (h, ref) {
-    var props = ref.props;
-    var data = ref.data;
-    var listeners = ref.listeners;
-
-    var icon = icons$1.get(props.icon);
-
-    if (icon) {
-      return h('span', Object.assign({}, data,
-        {class: 'uk-icon',
-        on: listeners}), [
-        h(svg, {
-          props: Object.assign({}, icon,
-            {ratio: props.ratio})
-        })
-      ])
-    }
-  },
-  register: function register (icon) {
-    icons$1.register(icon);
-  }
-};
-
-var iconLink = {
-  functional: true,
-  render: function render (h, ref) {
-    var props = ref.props;
-    var data = ref.data;
-    var listeners = ref.listeners;
-
-    var icon = icons$1.get(props.icon);
-
-    if (icon) {
-      return h('a', Object.assign({}, data,
-        {class: 'uk-icon',
-        on: listeners}), [
-        h(svg, {
-          props: icon
-        })
-      ])
-    }
-  },
-  register: function register (icon) {
-    icons$1.register(icon);
-  }
-};
-
-var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
-
-
-
-
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var Tween = createCommonjsModule(function (module, exports) {
-/**
- * Tween.js - Licensed under the MIT license
- * https://github.com/tweenjs/tween.js
- * ----------------------------------------------
- *
- * See https://github.com/tweenjs/tween.js/graphs/contributors for the full list of contributors.
- * Thank you all, you're awesome!
- */
-
-var TWEEN = TWEEN || (function () {
-
-	var _tweens = [];
-
-	return {
-
-		getAll: function () {
-
-			return _tweens;
-
-		},
-
-		removeAll: function () {
-
-			_tweens = [];
-
-		},
-
-		add: function (tween) {
-
-			_tweens.push(tween);
-
-		},
-
-		remove: function (tween) {
-
-			var i = _tweens.indexOf(tween);
-
-			if (i !== -1) {
-				_tweens.splice(i, 1);
-			}
-
-		},
-
-		update: function (time, preserve) {
-
-			if (_tweens.length === 0) {
-				return false;
-			}
-
-			var i = 0;
-
-			time = time !== undefined ? time : TWEEN.now();
-
-			while (i < _tweens.length) {
-
-				if (_tweens[i].update(time) || preserve) {
-					i++;
-				} else {
-					_tweens.splice(i, 1);
-				}
-
-			}
-
-			return true;
-
-		}
-	};
-
-})();
-
-
-// Include a performance.now polyfill.
-// In node.js, use process.hrtime.
-if (typeof (window) === 'undefined' && typeof (process) !== 'undefined') {
-	TWEEN.now = function () {
-		var time = process.hrtime();
-
-		// Convert [seconds, nanoseconds] to milliseconds.
-		return time[0] * 1000 + time[1] / 1000000;
-	};
-}
-// In a browser, use window.performance.now if it is available.
-else if (typeof (window) !== 'undefined' &&
-         window.performance !== undefined &&
-		 window.performance.now !== undefined) {
-	// This must be bound, because directly assigning this function
-	// leads to an invocation exception in Chrome.
-	TWEEN.now = window.performance.now.bind(window.performance);
-}
-// Use Date.now if it is available.
-else if (Date.now !== undefined) {
-	TWEEN.now = Date.now;
-}
-// Otherwise, use 'new Date().getTime()'.
-else {
-	TWEEN.now = function () {
-		return new Date().getTime();
-	};
-}
-
-
-TWEEN.Tween = function (object) {
-
-	var _object = object;
-	var _valuesStart = {};
-	var _valuesEnd = {};
-	var _valuesStartRepeat = {};
-	var _duration = 1000;
-	var _repeat = 0;
-	var _repeatDelayTime;
-	var _yoyo = false;
-	var _isPlaying = false;
-	var _reversed = false;
-	var _delayTime = 0;
-	var _startTime = null;
-	var _easingFunction = TWEEN.Easing.Linear.None;
-	var _interpolationFunction = TWEEN.Interpolation.Linear;
-	var _chainedTweens = [];
-	var _onStartCallback = null;
-	var _onStartCallbackFired = false;
-	var _onUpdateCallback = null;
-	var _onCompleteCallback = null;
-	var _onStopCallback = null;
-
-	this.to = function (properties, duration) {
-
-		_valuesEnd = properties;
-
-		if (duration !== undefined) {
-			_duration = duration;
-		}
-
-		return this;
-
-	};
-
-	this.start = function (time) {
-
-		TWEEN.add(this);
-
-		_isPlaying = true;
-
-		_onStartCallbackFired = false;
-
-		_startTime = time !== undefined ? time : TWEEN.now();
-		_startTime += _delayTime;
-
-		for (var property in _valuesEnd) {
-
-			// Check if an Array was provided as property value
-			if (_valuesEnd[property] instanceof Array) {
-
-				if (_valuesEnd[property].length === 0) {
-					continue;
-				}
-
-				// Create a local copy of the Array with the start value at the front
-				_valuesEnd[property] = [_object[property]].concat(_valuesEnd[property]);
-
-			}
-
-			// If `to()` specifies a property that doesn't exist in the source object,
-			// we should not set that property in the object
-			if (_object[property] === undefined) {
-				continue;
-			}
-
-			// Save the starting value.
-			_valuesStart[property] = _object[property];
-
-			if ((_valuesStart[property] instanceof Array) === false) {
-				_valuesStart[property] *= 1.0; // Ensures we're using numbers, not strings
-			}
-
-			_valuesStartRepeat[property] = _valuesStart[property] || 0;
-
-		}
-
-		return this;
-
-	};
-
-	this.stop = function () {
-
-		if (!_isPlaying) {
-			return this;
-		}
-
-		TWEEN.remove(this);
-		_isPlaying = false;
-
-		if (_onStopCallback !== null) {
-			_onStopCallback.call(_object, _object);
-		}
-
-		this.stopChainedTweens();
-		return this;
-
-	};
-
-	this.end = function () {
-
-		this.update(_startTime + _duration);
-		return this;
-
-	};
-
-	this.stopChainedTweens = function () {
-
-		for (var i = 0, numChainedTweens = _chainedTweens.length; i < numChainedTweens; i++) {
-			_chainedTweens[i].stop();
-		}
-
-	};
-
-	this.delay = function (amount) {
-
-		_delayTime = amount;
-		return this;
-
-	};
-
-	this.repeat = function (times) {
-
-		_repeat = times;
-		return this;
-
-	};
-
-	this.repeatDelay = function (amount) {
-
-		_repeatDelayTime = amount;
-		return this;
-
-	};
-
-	this.yoyo = function (yoyo) {
-
-		_yoyo = yoyo;
-		return this;
-
-	};
-
-
-	this.easing = function (easing) {
-
-		_easingFunction = easing;
-		return this;
-
-	};
-
-	this.interpolation = function (interpolation) {
-
-		_interpolationFunction = interpolation;
-		return this;
-
-	};
-
-	this.chain = function () {
-
-		_chainedTweens = arguments;
-		return this;
-
-	};
-
-	this.onStart = function (callback) {
-
-		_onStartCallback = callback;
-		return this;
-
-	};
-
-	this.onUpdate = function (callback) {
-
-		_onUpdateCallback = callback;
-		return this;
-
-	};
-
-	this.onComplete = function (callback) {
-
-		_onCompleteCallback = callback;
-		return this;
-
-	};
-
-	this.onStop = function (callback) {
-
-		_onStopCallback = callback;
-		return this;
-
-	};
-
-	this.update = function (time) {
-
-		var property;
-		var elapsed;
-		var value;
-
-		if (time < _startTime) {
-			return true;
-		}
-
-		if (_onStartCallbackFired === false) {
-
-			if (_onStartCallback !== null) {
-				_onStartCallback.call(_object, _object);
-			}
-
-			_onStartCallbackFired = true;
-		}
-
-		elapsed = (time - _startTime) / _duration;
-		elapsed = elapsed > 1 ? 1 : elapsed;
-
-		value = _easingFunction(elapsed);
-
-		for (property in _valuesEnd) {
-
-			// Don't update properties that do not exist in the source object
-			if (_valuesStart[property] === undefined) {
-				continue;
-			}
-
-			var start = _valuesStart[property] || 0;
-			var end = _valuesEnd[property];
-
-			if (end instanceof Array) {
-
-				_object[property] = _interpolationFunction(end, value);
-
-			} else {
-
-				// Parses relative end values with start as base (e.g.: +10, -3)
-				if (typeof (end) === 'string') {
-
-					if (end.charAt(0) === '+' || end.charAt(0) === '-') {
-						end = start + parseFloat(end);
-					} else {
-						end = parseFloat(end);
-					}
-				}
-
-				// Protect against non numeric properties.
-				if (typeof (end) === 'number') {
-					_object[property] = start + (end - start) * value;
-				}
-
-			}
-
-		}
-
-		if (_onUpdateCallback !== null) {
-			_onUpdateCallback.call(_object, value);
-		}
-
-		if (elapsed === 1) {
-
-			if (_repeat > 0) {
-
-				if (isFinite(_repeat)) {
-					_repeat--;
-				}
-
-				// Reassign starting values, restart by making startTime = now
-				for (property in _valuesStartRepeat) {
-
-					if (typeof (_valuesEnd[property]) === 'string') {
-						_valuesStartRepeat[property] = _valuesStartRepeat[property] + parseFloat(_valuesEnd[property]);
-					}
-
-					if (_yoyo) {
-						var tmp = _valuesStartRepeat[property];
-
-						_valuesStartRepeat[property] = _valuesEnd[property];
-						_valuesEnd[property] = tmp;
-					}
-
-					_valuesStart[property] = _valuesStartRepeat[property];
-
-				}
-
-				if (_yoyo) {
-					_reversed = !_reversed;
-				}
-
-				if (_repeatDelayTime !== undefined) {
-					_startTime = time + _repeatDelayTime;
-				} else {
-					_startTime = time + _delayTime;
-				}
-
-				return true;
-
-			} else {
-
-				if (_onCompleteCallback !== null) {
-
-					_onCompleteCallback.call(_object, _object);
-				}
-
-				for (var i = 0, numChainedTweens = _chainedTweens.length; i < numChainedTweens; i++) {
-					// Make the chained tweens start exactly at the time they should,
-					// even if the `update()` method was called way past the duration of the tween
-					_chainedTweens[i].start(_startTime + _duration);
-				}
-
-				return false;
-
-			}
-
-		}
-
-		return true;
-
-	};
-
-};
-
-
-TWEEN.Easing = {
-
-	Linear: {
-
-		None: function (k) {
-
-			return k;
-
-		}
-
-	},
-
-	Quadratic: {
-
-		In: function (k) {
-
-			return k * k;
-
-		},
-
-		Out: function (k) {
-
-			return k * (2 - k);
-
-		},
-
-		InOut: function (k) {
-
-			if ((k *= 2) < 1) {
-				return 0.5 * k * k;
-			}
-
-			return - 0.5 * (--k * (k - 2) - 1);
-
-		}
-
-	},
-
-	Cubic: {
-
-		In: function (k) {
-
-			return k * k * k;
-
-		},
-
-		Out: function (k) {
-
-			return --k * k * k + 1;
-
-		},
-
-		InOut: function (k) {
-
-			if ((k *= 2) < 1) {
-				return 0.5 * k * k * k;
-			}
-
-			return 0.5 * ((k -= 2) * k * k + 2);
-
-		}
-
-	},
-
-	Quartic: {
-
-		In: function (k) {
-
-			return k * k * k * k;
-
-		},
-
-		Out: function (k) {
-
-			return 1 - (--k * k * k * k);
-
-		},
-
-		InOut: function (k) {
-
-			if ((k *= 2) < 1) {
-				return 0.5 * k * k * k * k;
-			}
-
-			return - 0.5 * ((k -= 2) * k * k * k - 2);
-
-		}
-
-	},
-
-	Quintic: {
-
-		In: function (k) {
-
-			return k * k * k * k * k;
-
-		},
-
-		Out: function (k) {
-
-			return --k * k * k * k * k + 1;
-
-		},
-
-		InOut: function (k) {
-
-			if ((k *= 2) < 1) {
-				return 0.5 * k * k * k * k * k;
-			}
-
-			return 0.5 * ((k -= 2) * k * k * k * k + 2);
-
-		}
-
-	},
-
-	Sinusoidal: {
-
-		In: function (k) {
-
-			return 1 - Math.cos(k * Math.PI / 2);
-
-		},
-
-		Out: function (k) {
-
-			return Math.sin(k * Math.PI / 2);
-
-		},
-
-		InOut: function (k) {
-
-			return 0.5 * (1 - Math.cos(Math.PI * k));
-
-		}
-
-	},
-
-	Exponential: {
-
-		In: function (k) {
-
-			return k === 0 ? 0 : Math.pow(1024, k - 1);
-
-		},
-
-		Out: function (k) {
-
-			return k === 1 ? 1 : 1 - Math.pow(2, - 10 * k);
-
-		},
-
-		InOut: function (k) {
-
-			if (k === 0) {
-				return 0;
-			}
-
-			if (k === 1) {
-				return 1;
-			}
-
-			if ((k *= 2) < 1) {
-				return 0.5 * Math.pow(1024, k - 1);
-			}
-
-			return 0.5 * (- Math.pow(2, - 10 * (k - 1)) + 2);
-
-		}
-
-	},
-
-	Circular: {
-
-		In: function (k) {
-
-			return 1 - Math.sqrt(1 - k * k);
-
-		},
-
-		Out: function (k) {
-
-			return Math.sqrt(1 - (--k * k));
-
-		},
-
-		InOut: function (k) {
-
-			if ((k *= 2) < 1) {
-				return - 0.5 * (Math.sqrt(1 - k * k) - 1);
-			}
-
-			return 0.5 * (Math.sqrt(1 - (k -= 2) * k) + 1);
-
-		}
-
-	},
-
-	Elastic: {
-
-		In: function (k) {
-
-			if (k === 0) {
-				return 0;
-			}
-
-			if (k === 1) {
-				return 1;
-			}
-
-			return -Math.pow(2, 10 * (k - 1)) * Math.sin((k - 1.1) * 5 * Math.PI);
-
-		},
-
-		Out: function (k) {
-
-			if (k === 0) {
-				return 0;
-			}
-
-			if (k === 1) {
-				return 1;
-			}
-
-			return Math.pow(2, -10 * k) * Math.sin((k - 0.1) * 5 * Math.PI) + 1;
-
-		},
-
-		InOut: function (k) {
-
-			if (k === 0) {
-				return 0;
-			}
-
-			if (k === 1) {
-				return 1;
-			}
-
-			k *= 2;
-
-			if (k < 1) {
-				return -0.5 * Math.pow(2, 10 * (k - 1)) * Math.sin((k - 1.1) * 5 * Math.PI);
-			}
-
-			return 0.5 * Math.pow(2, -10 * (k - 1)) * Math.sin((k - 1.1) * 5 * Math.PI) + 1;
-
-		}
-
-	},
-
-	Back: {
-
-		In: function (k) {
-
-			var s = 1.70158;
-
-			return k * k * ((s + 1) * k - s);
-
-		},
-
-		Out: function (k) {
-
-			var s = 1.70158;
-
-			return --k * k * ((s + 1) * k + s) + 1;
-
-		},
-
-		InOut: function (k) {
-
-			var s = 1.70158 * 1.525;
-
-			if ((k *= 2) < 1) {
-				return 0.5 * (k * k * ((s + 1) * k - s));
-			}
-
-			return 0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2);
-
-		}
-
-	},
-
-	Bounce: {
-
-		In: function (k) {
-
-			return 1 - TWEEN.Easing.Bounce.Out(1 - k);
-
-		},
-
-		Out: function (k) {
-
-			if (k < (1 / 2.75)) {
-				return 7.5625 * k * k;
-			} else if (k < (2 / 2.75)) {
-				return 7.5625 * (k -= (1.5 / 2.75)) * k + 0.75;
-			} else if (k < (2.5 / 2.75)) {
-				return 7.5625 * (k -= (2.25 / 2.75)) * k + 0.9375;
-			} else {
-				return 7.5625 * (k -= (2.625 / 2.75)) * k + 0.984375;
-			}
-
-		},
-
-		InOut: function (k) {
-
-			if (k < 0.5) {
-				return TWEEN.Easing.Bounce.In(k * 2) * 0.5;
-			}
-
-			return TWEEN.Easing.Bounce.Out(k * 2 - 1) * 0.5 + 0.5;
-
-		}
-
-	}
-
-};
-
-TWEEN.Interpolation = {
-
-	Linear: function (v, k) {
-
-		var m = v.length - 1;
-		var f = m * k;
-		var i = Math.floor(f);
-		var fn = TWEEN.Interpolation.Utils.Linear;
-
-		if (k < 0) {
-			return fn(v[0], v[1], f);
-		}
-
-		if (k > 1) {
-			return fn(v[m], v[m - 1], m - f);
-		}
-
-		return fn(v[i], v[i + 1 > m ? m : i + 1], f - i);
-
-	},
-
-	Bezier: function (v, k) {
-
-		var b = 0;
-		var n = v.length - 1;
-		var pw = Math.pow;
-		var bn = TWEEN.Interpolation.Utils.Bernstein;
-
-		for (var i = 0; i <= n; i++) {
-			b += pw(1 - k, n - i) * pw(k, i) * v[i] * bn(n, i);
-		}
-
-		return b;
-
-	},
-
-	CatmullRom: function (v, k) {
-
-		var m = v.length - 1;
-		var f = m * k;
-		var i = Math.floor(f);
-		var fn = TWEEN.Interpolation.Utils.CatmullRom;
-
-		if (v[0] === v[m]) {
-
-			if (k < 0) {
-				i = Math.floor(f = m * (1 + k));
-			}
-
-			return fn(v[(i - 1 + m) % m], v[i], v[(i + 1) % m], v[(i + 2) % m], f - i);
-
-		} else {
-
-			if (k < 0) {
-				return v[0] - (fn(v[0], v[0], v[1], v[1], -f) - v[0]);
-			}
-
-			if (k > 1) {
-				return v[m] - (fn(v[m], v[m], v[m - 1], v[m - 1], f - m) - v[m]);
-			}
-
-			return fn(v[i ? i - 1 : 0], v[i], v[m < i + 1 ? m : i + 1], v[m < i + 2 ? m : i + 2], f - i);
-
-		}
-
-	},
-
-	Utils: {
-
-		Linear: function (p0, p1, t) {
-
-			return (p1 - p0) * t + p0;
-
-		},
-
-		Bernstein: function (n, i) {
-
-			var fc = TWEEN.Interpolation.Utils.Factorial;
-
-			return fc(n) / fc(i) / fc(n - i);
-
-		},
-
-		Factorial: (function () {
-
-			var a = [1];
-
-			return function (n) {
-
-				var s = 1;
-
-				if (a[n]) {
-					return a[n];
-				}
-
-				for (var i = n; i > 1; i--) {
-					s *= i;
-				}
-
-				a[n] = s;
-				return s;
-
-			};
-
-		})(),
-
-		CatmullRom: function (p0, p1, p2, p3, t) {
-
-			var v0 = (p2 - p0) * 0.5;
-			var v1 = (p3 - p1) * 0.5;
-			var t2 = t * t;
-			var t3 = t * t2;
-
-			return (2 * p1 - 2 * p2 + v0 + v1) * t3 + (- 3 * p1 + 3 * p2 - 2 * v0 - v1) * t2 + v0 * t + p1;
-
-		}
-
-	}
-
-};
-
-// UMD (Universal Module Definition)
-(function (root) {
-
-	if (typeof undefined === 'function' && undefined.amd) {
-
-		// AMD
-		undefined([], function () {
-			return TWEEN;
-		});
-
-	} else {
-
-		// Node.js
-		module.exports = TWEEN;
-
-	}
-
-})(commonjsGlobal);
-});
-
-var loadingBar = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"vk-loading-bar",class:{ 'vk-loading-bar-warning': _vm.state === 'timeout', 'vk-loading-bar-danger': _vm.state === 'error' },style:({ width: ((_vm.width) + "%") })})},staticRenderFns: [],
-  name: 'VkLoadingBar',
-  props: {
-    progress: {
-      type: Number,
-      default: 0,
-      required: true
-    },
-    state: {
-      type: String,
-      default: '' // timeout|error
-    }
-  },
-  data: function () { return ({
-    width: 0
-  }); },
-  created: function created () {
-    var this$1 = this;
-
-    this.$watch('progress', function (progress) {
-      progress = this$1.normalize(progress);
-      progress > this$1.width
-        ? this$1.animate(progress)
-        : this$1.width = progress;
-    }, {
-      immediate: true
-    });
-  },
-  methods: {
-    // within 0-100 range
-    normalize: function normalize (value) {
-      return Math.max(Math.min(toInteger(value), 100), 0)
-    },
-    animate: function animate$$1 (progress) {
-      var animationFrame;
-      function animate$$1 (time) {
-        Tween.update(time);
-        animationFrame = window.requestAnimationFrame(animate$$1);
-      }
-      new Tween.Tween(this)
-        .easing(Tween.Easing.Quadratic.Out)
-        .to({ width: progress }, 500)
-        .onComplete(function () {
-          window.cancelAnimationFrame(animationFrame);
-          this.$emit('animation-complete', this.width);
-        })
-        .start();
-      animationFrame = window.requestAnimationFrame(animate$$1);
-    }
-  }
-};
-
-var doc$1 = document.documentElement;
-var body = document.body;
-
-var active;
-var activeCount;
-
-on$$1(doc$1, 'click', function (e) {
-  if (active && !active.$refs.panel.contains(e.target)) {
-    active.$emit('click-out', e);
-  }
-});
-
-on$$1(doc$1, 'keyup', function (e) {
-  if (e.keyCode === 27 && active) {
-    e.preventDefault();
-    active.$emit('key-esc', e);
-  }
-});
-
-var ModalMixin = {
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
-    overlay: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data: function () { return ({
-    active: active,
-    activeCount: activeCount
-  }); },
-  methods: {
-    _beforeEnter: function _beforeEnter () {
-      if (!active) {
-        body.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
-      }
-    },
-    _afterEnter: function _afterEnter () {
-      // if any previous modal active
-      // emit event for further actions
-      if (active) {
-        active.$emit('inactive');
-      }
-      // change current active modal
-      active = this;
-      activeCount++;
-    },
-    _afterLeave: function _afterLeave () {
-      activeCount--;
-      // if no active modals left
-      if (!activeCount) {
-        body.style['overflow-y'] = '';
-      }
-      if (active === this) {
-        active = null;
-      }
-    },
-    getScrollbarWidth: function getScrollbarWidth () {
-      var width = doc$1.style.width;
-      doc$1.style.width = '';
-      var scrollbarWidth = window.innerWidth - doc$1.offsetWidth;
-
-      if (width) {
-        doc$1.style.width = width;
-      }
-
-      return scrollbarWidth
-    }
-  },
-  beforeDestroy: function beforeDestroy () {
-    offAll$$1(this._uid);
-    if (this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-  }
-};
-
-var doc = document.documentElement;
-
-var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
-  name: 'VkModal',
-  mixins: [ModalMixin],
-  components: {
-    'modal-content': {
-      functional: true,
-      render: function render (h, ref) {
-        var vm = ref.parent;
-
-        return vm.dialogIsOverriden
-          ? vm.$slots.default
-          : h('vk-modal-dialog', vm.$slots.default)
-      }
-    }
-  },
-  props: {
-    center: {
-      type: Boolean,
-      default: false
-    },
-    container: {
-      type: Boolean,
-      default: false
-    },
-    lightbox: {
-      type: Boolean,
-      default: false
-    },
-    full: {
-      type: Boolean,
-      default: false
-    },
-    blank: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    // if dialog is passed as slot is considered overriden
-    dialogIsOverriden: function dialogIsOverriden () {
-      return this.$slots.default[0] &&
-        this.$slots.default[0].data &&
-        this.$slots.default[0].data.staticClass === 'uk-modal-dialog'
-    }
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    // execute transition hooks if visible on load
-    if (this.show) {
-      this.beforeEnter();
-      this.afterEnter();
-    }
-
-    // set refs programatically
-    this.$refs.panel = this.$el.querySelector('.uk-modal-dialog');
-    this.$refs.close = this.$el.querySelector('button.uk-close');
-
-    // place close-top outside the dialog
-    if (this.$refs.close && hasClass$$1(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass$$1(this.$refs.close, 'vk-modal-close-top');
-      var bar = document.createElement('div');
-      addClass$$1(bar, 'uk-modal-bar');
-      addClass$$1(bar, 'uk-position-top');
-      bar.appendChild(this.$refs.close);
-      this.$el.appendChild(bar);
-    }
-
-    // place caption bottom outside the dialog
-    var caption = this.$el.querySelector('.vk-modal-caption-bottom');
-    if (caption) {
-      addClass$$1(caption, 'uk-modal-bar');
-      addClass$$1(caption, 'uk-position-bottom');
-      removeClass$$1(caption, 'vk-modal-caption-bottom');
-      this.$el.appendChild(caption);
-    }
-
-    // update close style if full
-    if (this.full) {
-      removeClass$$1(this.$refs.close, 'uk-modal-close-default');
-      addClass$$1(this.$refs.close, 'uk-modal-close-full');
-    }
-
-    // init events
-    var clickHandler = function (e) {
-      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('click-in', e);
-      }
-    };
-
-    on$$1(this.$el, 'click', clickHandler, this._uid);
-    if ('ontouchstart' in doc) {
-      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
-    }
-  },
-  methods: {
-    beforeEnter: function beforeEnter () {
-      var this$1 = this;
-
-      this._beforeEnter();
-      this.$nextTick(function () {
-        addClass$$1(doc, 'uk-modal-page');
-        this$1.resize();
-      });
-    },
-    afterEnter: function afterEnter () {
-      this._afterEnter();
-      addClass$$1(this.$el, 'uk-open');
-    },
-    afterLeave: function afterLeave () {
-      this._afterLeave();
-      // if no active modals left
-      if (!this.activeCount) {
-        removeClass$$1(doc, 'uk-modal-page');
-      }
-    },
-    resize: function resize () {
-      if (css$$1(this.$el, 'display') === 'block' && this.center) {
-        removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-
-        var dialog = this.$refs.panel;
-        var dh = dialog.offsetHeight;
-        var marginTop = css$$1(dialog, 'margin-top');
-        var marginBottom = css$$1(dialog, 'margin-bottom');
-        var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
-
-        if (window.innerHeight > (dh + pad)) {
-          addClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-        } else {
-          removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-        }
-        this.$el.style.display = hasClass$$1(this.$el, 'uk-flex') ? '' : 'block';
-      }
-    }
-  }
-};
-
-var modalDialog = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-dialog',
-      class: [data.staticClass]}), children)
-  }
-};
-
-var modalHeader = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-header',
-      class: [data.staticClass]}), children)
-  }
-};
-
-var modalBody = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-body',
-      class: [data.staticClass]}), children)
-  }
-};
-
-var modalFooter = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-footer',
-      class: [data.staticClass]}), children)
-  }
-};
-
-var modalCaption = {
-  functional: true,
-  props: ['bottom'],
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-    var props = ref.props;
-
-    var bottom = props.bottom !== undefined;
-    return h('div', Object.assign({}, data,
-      {class: [
-        {
-          'uk-modal-caption': !bottom,
-          'vk-modal-caption-bottom': bottom
-        },
-        data.staticClass
-      ]}), children)
-  }
-};
-
-var modalClose = {
-  functional: true,
-  props: ['outside', 'full', 'top'],
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-    var props = ref.props;
-
-    var outside = props.outside !== undefined;
-    var full = props.full !== undefined;
-    var top = props.top !== undefined;
-    return h('button', Object.assign({}, data,
-      {staticClass: 'uk-close uk-icon',
-      class: [
-        {
-          'uk-modal-close-default': !outside && !full,
-          'uk-modal-close-outside': outside,
-          'uk-modal-close-full': full,
-          'vk-modal-close-top': top
-        },
-        data.staticClass
-      ],
-      attrs: {
-        type: 'button',
-        'uk-close': true
-      }}), children)
-  }
-};
-
-var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkNotification',
-  props: {
-    position: {
-      type: String,
-      default: 'top-center' // (top|bottom)-(left|center|right)
-    }
-  },
-  mounted: function mounted () {
-    // move to body
-    document.body.appendChild(this.$el);
-  },
-  beforeDestroy: function beforeDestroy () {
-    if (this.$el.parentNode) {
-      document.body.removeChild(this.$el);
-    }
-  }
-};
-
-var notificationMessage = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
-var obj;},staticRenderFns: [],
-  name: 'VkNotificationMessage',
-  props: {
-    id: {
-      type: [Number, String, Object],
-      default: 0
-    },
-    /* primary|success|warning|danger */
-    status: {
-      type: String,
-      default: ''
-    },
-    timeout: {
-      type: Number,
-      default: 5000
-    },
-    transition: {
-      type: String,
-      default: ''
-    }
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    if (this.timeout > 0) {
-      setTimeout(function () {
-        this$1.$parent.$emit('timeout', this$1.id);
-      }, this.timeout);
-    }
-  }
-};
-
-var doc$2 = document.documentElement;
-var body$1 = document.body;
-var scroll;
-
-var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
-  name: 'VkOffcanvas',
-  mixins: [ModalMixin],
-  props: {
-    contentEl: {
-      // Ref or Dom
-      required: true
-    },
-    flip: {
-      type: Boolean,
-      default: false
-    },
-    overlay: {
-      type: Boolean,
-      default: false
-    },
-    mode: {
-      type: String,
-      default: 'slide' // none|slide|push|reveal
-    }
-  },
-  data: function () { return ({
-    defaults: {
-      clsMode: 'uk-offcanvas',
-      clsFlip: 'uk-offcanvas-flip',
-      clsOverlay: 'uk-offcanvas-overlay',
-      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-      clsContentAnimation: 'uk-offcanvas-content-animation'
-    },
-    clsPage: 'uk-offcanvas-page',
-    clsPageAnimation: 'uk-offcanvas-page-animation',
-    clsContainer: 'uk-offcanvas-container',
-    clsContent: 'uk-offcanvas-content'
-  }); },
-  computed: {
-    content: function content () {
-      return isString(this.contentEl)
-        ? this.getRefElement(this.contentEl)
-        : this.contentEl
-    },
-    clsFlip: function clsFlip () {
-      return this.flip
-        ? this.defaults.clsFlip
-        : ''
-    },
-    clsOverlay: function clsOverlay () {
-      return this.overlay
-        ? this.defaults.clsOverlay
-        : ''
-    },
-    clsMode: function clsMode () {
-      return ((this.defaults.clsMode) + "-" + (this.mode))
-    },
-    clsSidebarAnimation: function clsSidebarAnimation () {
-      return this.mode === 'none' || this.mode === 'reveal'
-        ? ''
-        : this.defaults.clsSidebarAnimation
-    },
-    clsContentAnimation: function clsContentAnimation () {
-      return this.mode !== 'push' && this.mode !== 'reveal'
-        ? ''
-        : this.defaults.clsContentAnimation
-    },
-    transitionElement: function transitionElement () {
-      return this.mode === 'reveal'
-        ? this.$refs.panel.parentNode
-        : this.$refs.panel
-    },
-    transitionDuration: function transitionDuration () {
-      return toMs(css$$1(this.transitionElement, 'transition-duration'))
-    }
-  },
-  methods: {
-    afterEnter: function afterEnter (el) {
-      this._afterEnter();
-      this.$emit('displayed');
-    },
-    getRefElement: function getRefElement (ref) {
-      var context = this.$vnode.context;
-      var target = context.$refs[ref];
-      if (target) {
-        return target._isVue
-          ? target.$el
-          : target
-      }
-      return false
-    },
-    beforeShow: function beforeShow () {
-      scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
-
-      css$$1(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
-
-      // set fixed with so the page can slide-out without shinking
-      css$$1(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
-
-      addClass$$1(doc$2, ("" + (this.clsPage)));
-      addClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-      forceRedraw$$1(body$1);
-
-      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
-      addClass$$1(this.$el, this.clsOverlay);
-      addClass$$1(this.content, this.clsContentAnimation);
-
-      // toggle element
-      addClass$$1(this.$el, this.clsOverlay);
-      css$$1(this.$el, 'display', 'block');
-      forceRedraw$$1(this.$el);
-      addClass$$1(this.$el, 'uk-open');
-    },
-    beforeHide: function beforeHide () {
-      removeClass$$1(this.content, this.clsContentAnimation);
-      removeClass$$1(this.$el, 'uk-open');
-    },
-    transitionEnd: function (el, done) {
-      setTimeout(done, this.transitionDuration);
-    },
-    hidden: function hidden () {
-      if (!this.overlay) {
-        scroll = { x: window.pageXOffset, y: window.pageYOffset };
-      }
-
-      css$$1(doc$2, 'width', '');
-      removeClass$$1(doc$2, ("" + (this.clsPage)));
-
-      removeClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass$$1(this.$el, this.clsOverlay);
-      css$$1(this.$el, 'display', 'none');
-      forceRedraw$$1(this.$el);
-      removeClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-
-      body$1.scrollTop = scroll.y;
-
-      css$$1(doc$2, 'overflow-y', '');
-      css$$1(this.content, 'width', '');
-      css$$1(this.content, 'height', '');
-      forceRedraw$$1(this.content);
-
-      window.scrollTo(scroll.x, scroll.y);
-      scroll = null;
-
-      this._afterLeave();
-      this.$emit('hidden');
-    }
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    var clickHandler = function (e) {
-      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('click-in', e);
-      }
-    };
-
-    addClass$$1(this.content, 'uk-offcanvas-content');
-
-    on$$1(this.$el, 'click', clickHandler, this._uid);
-    if ('ontouchstart' in document.documentElement) {
-      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
-    }
-  },
-  beforeDestroy: function beforeDestroy () {
-    removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-    doc$2.style['margin-left'] = '';
-    this._afterLeave();
-  }
-};
-
-var offcanvasClose = {
-  functional: true,
-  render: function render (h, ref) {
-    var data = ref.data;
-
-    return h('button', {
-      staticClass: 'uk-offcanvas-close uk-close-large',
-      attrs: {
-        type: 'button',
-        'uk-close': true
-      },
-      on: data.on
-    })
-  }
-};
-
-var def = { total: 200, page: 1, perPage: 10, range: 3 };
-
-/**
- * Returns an array with represented ranges pages
- */
-var paginationMatrix = function (ref) {
-  if ( ref === void 0 ) ref = def;
-  var total = ref.total; if ( total === void 0 ) total = def.total;
-  var page = ref.page; if ( page === void 0 ) page = def.page;
-  var perPage = ref.perPage; if ( perPage === void 0 ) perPage = def.perPage;
-  var range$$1 = ref.range; if ( range$$1 === void 0 ) range$$1 = def.range;
-
-  var matrix = [];
-  var totalPages = Math.ceil(total / perPage);
-  // return early if no more than 1 page
-  if (totalPages < 2) {
-    return [1]
-  }
-  // get main pages
-  var mainPages = getMainPages({ page: page, range: range$$1, totalPages: totalPages });
-  var first = mainPages[0];
-  var last = mainPages[mainPages.length - 1];
-  // get pre/post pages
-  var prePages = range(1, (first <= 3) ? first : 2);
-  var postPages = range(
-    last >= (totalPages - 2) ? last + 1 : totalPages,
-    totalPages + 1
-  );
-
-  var nextPage = 1;[].concat(prePages, mainPages, postPages).forEach(function (p) {
-    if (p === nextPage) {
-      matrix.push(p);
-      nextPage++;
-    } else {
-      matrix.push('...');
-      matrix.push(p);
-      nextPage = p + 1;
-    }
-  });
-
-  return matrix
-};
-
-var getMainPages = function (ref) {
-  var page = ref.page;
-  var range$$1 = ref.range;
-  var totalPages = ref.totalPages;
-
-  var start = page - range$$1;
-  var end = page + range$$1;
-  if (end > totalPages) {
-    end = totalPages;
-    start = totalPages - (range$$1 * 2);
-    start = start < 1 ? 1 : start;
-  }
-  if (start <= 1) {
-    start = 1;
-    end = Math.min((range$$1 * 2) + 1, totalPages);
-  }
-  return range(start, end + 1)
-};
-
-var PaginationFirst = {
-  functional: true,
-  props: ['label', 'expand'],
-  render: function render (h, ref) {
-    var props = ref.props;
-    var parent = ref.parent;
-
-    var label = props.label;
-    var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', { attrs: { label: label, expand: expand } }, 'first')
-    }
-
-    return h('li', {
-      class: {
-        'uk-disabled': parent.prevPage < 1,
-        'uk-margin-auto-right': expand !== undefined
-      }
-    }, [
-      h('a', {
-        on: { click: function (e) { return parent.$emit('change', 1); } }
-      }, [
-        h('span', {
-          staticClass: 'uk-pagination-prev uk-icon',
-          class: { 'uk-margin-small-right': label },
-          attrs: { 'uk-icon': 'icon: chevron-left' }
-        }),
-        label && label
-      ])
-    ])
-  }
-};
-
-var PaginationLast = {
-  functional: true,
-  props: ['label', 'expand'],
-  render: function render (h, ref) {
-    var props = ref.props;
-    var parent = ref.parent;
-
-    var label = props.label;
-    var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', { attrs: { label: label, expand: expand } }, 'last')
-    }
-
-    return h('li', {
-      class: {
-        'uk-disabled': parent.nextPage > parent.lastPage,
-        'uk-margin-auto-left': expand !== undefined
-      }
-    }, [
-      h('a', {
-        on: { click: function (e) { return parent.$emit('change', parent.lastPage); } }
-      }, [
-        label && label,
-        h('span', {
-          staticClass: 'uk-pagination-next uk-icon',
-          class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-icon': 'icon: chevron-right' }
-        })
-      ])
-    ])
-  }
-};
-
-var PaginationPrev = {
-  functional: true,
-  props: ['label', 'expand'],
-  render: function render (h, ref) {
-    var props = ref.props;
-    var parent = ref.parent;
-
-    var label = props.label;
-    var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', { attrs: { label: label, expand: expand } }, 'prev')
-    }
-
-    return h('li', {
-      class: {
-        'uk-disabled': parent.prevPage < 1,
-        'uk-margin-auto-right': expand !== undefined
-      }
-    }, [
-      h('a', {
-        on: { click: function (e) { return parent.$emit('change', parent.prevPage); } }
-      }, [
-        h('span', {
-          staticClass: 'uk-pagination-prev uk-icon',
-          class: { 'uk-margin-small-right': label },
-          attrs: { 'uk-icon': 'icon: chevron-left' }
-        }),
-        label && label
-      ])
-    ])
-  }
-};
-
-var PaginationNext = {
-  functional: true,
-  props: ['label', 'expand'],
-  render: function render (h, ref) {
-    var props = ref.props;
-    var parent = ref.parent;
-
-    var label = props.label;
-    var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', { attrs: { label: label, expand: expand } }, 'next')
-    }
-
-    return h('li', {
-      class: {
-        'uk-disabled': parent.nextPage > parent.lastPage,
-        'uk-margin-auto-left': expand !== undefined
-      }
-    }, [
-      h('a', {
-        on: { click: function (e) { return parent.$emit('change', parent.nextPage); } }
-      }, [
-        label && label,
-        h('span', {
-          staticClass: 'uk-pagination-next uk-icon',
-          class: { 'uk-margin-small-left': label },
-          attrs: { 'uk-icon': 'icon: chevron-right' }
-        })
-      ])
-    ])
-  }
-};
-
-var PaginationPages = {
-  functional: true,
-  render: function render (h, ref) {
-    var parent = ref.parent;
-
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', 'pages')
-    }
-
-    var page = parent.page;
-    return parent.pages.map(function (p) {
-      var isPage = isInteger(p);
-      var isActive = isPage && page === p;
-      return h('li', { class: { 'uk-active': isActive } }, [
-        isPage
-          ? isActive
-            ? h('span', p)
-            : h('a', {
-              on: { click: function (e) {
-                parent.$emit('change', p);
-              }}
-            }, p)
-          : h('span', '...')
-      ])
-    })
-  }
-};
-
-var partsMap = {
-  first: PaginationFirst,
-  last: PaginationLast,
-  prev: PaginationPrev,
-  next: PaginationNext,
-  pages: PaginationPages
-};
-
-var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' }},[_c('pag-parts')],1)},staticRenderFns: [],
-  name: 'VkPagination',
-  props: {
-    align: {
-      type: String,
-      default: 'center' // left|center|right
-    },
-    // the active page
-    page: {
-      type: Number
-    },
-    // items displayed on each page
-    perPage: {
-      type: Number
-    },
-    // amount of visible pages around the active one
-    range: {
-      type: Number,
-      default: 3
-    },
-    // total amount of items
-    total: {
-      type: Number
-    }
-  },
-  computed: {
-    prevPage: function prevPage () {
-      return this.page - 1
-    },
-    nextPage: function nextPage () {
-      return this.page + 1
-    },
-    pages: function pages () {
-      return paginationMatrix({ total: this.total, page: this.page, perPage: this.perPage })
-    },
-    lastPage: function lastPage () {
-      return this.pages[this.pages.length - 1]
-    }
-  },
-  components: {
-    'pag-parts': {
-      functional: true,
-      render: function render (h, ref) {
-        var parent = ref.parent;
-
-        var lis = [];
-        parent.$parts.forEach(function (part) {
-          part = parent.$createElement(part.comp, { props: part.props });
-          lis = isArray(part)
-            ? lis.concat( part)
-            : lis.concat( [part]);
-        });
-        return lis
-      }
-    }
-  },
-  created: function created () {
-    this.$parts = this.$slots.default
-      .filter(function (slot) { return slot.children; })
-      .map(function (slot) { return ({
-        comp: partsMap[slot.children[0].text],
-        props: (slot.data && slot.data.attrs) || {}
-      }); });
-  }
-};
-
-var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkSubnav',
-  props: {
-    activeItem: [String, Number],
-    divider: {
-      type: Boolean,
-      default: false
-    },
-    pill: {
-      type: Boolean,
-      default: false
-    }
-  },
-  computed: {
-    items: {
-      get: function get () {
-        return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-subnav-item'; }
-        )
-      },
-      cache: false
-    }
-  },
-  beforeMount: function beforeMount () {
-    this.updateItems();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this.updateItems();
-  },
-  methods: {
-    updateItems: function updateItems () {
-      var this$1 = this;
-
-      this.items.forEach(function (item, index) {
-        var alias = this$1.getItemAlias(item);
-        var active = this$1.activeItem === alias;
-        var props = item.componentOptions.propsData;
-        props.active = active;
-        props.alias = alias;
-      });
-    },
-    getItemAlias: function getItemAlias (item) {
-      return item.componentOptions.propsData.alias || this.items.indexOf(item) + 1
-    }
-  }
-};
-
-var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
-  name: 'VkSubnavItem',
-  props: {
-    label: String,
-    alias: {
-      type: [String, Number],
-      default: ''
-    },
-    active: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  }
-};
-
-var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table"},[_vm._t("default"),_c('thead',[_c('tr',[_c('column-headers')],1)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},[_c('row-cells',{attrs:{"row":row}})],1)}))],2)},staticRenderFns: [],
-  name: 'VkTable',
-  props: {
-    data: {
-      type: Array,
-      required: true
-    },
-    sortedBy: {
-      type: Object,
-      default: function () { return ({}); } // { field: [asc|desc] }
-    },
-    rowClass: [String, Function]
-  },
-  data: function () { return ({
-    columns: []
-  }); },
-  components: {
-    ColumnHeaders: {
-      functional: true,
-      render: function render (h, ref) {
-        var parent = ref.parent;
-
-        return parent.getColumns().map(function (col) { return col._headerRender && col._headerRender.call(col._renderProxy); }
-        )
-      }
-    },
-    RowCells: {
-      functional: true,
-      props: ['row'],
-      render: function render (h, ref) {
-        var parent = ref.parent;
-        var props = ref.props;
-
-        var row = props.row;
-        return parent.getColumns().map(function (col) { return col._cellRender && col._cellRender.call(col._renderProxy, { row: row }); }
-        )
-      }
-    }
-  },
-  methods: {
-    getRowClass: function getRowClass (row, index) {
-      return (isFunction(this.rowClass))
-        ? this.rowClass(row, index)
-        : this.rowClass
-    },
-    emitClickRow: function emitClickRow (e, row) {
-      var noChildWasClicked = e.target.tagName === 'TR' || e.target.tagName === 'TD';
-      if (noChildWasClicked) {
-        this.$emit('click-row', row);
-      }
-    },
-    getColumns: function getColumns () {
-      var this$1 = this;
-
-      // always try getting the columns from slots
-      // as it keeps the order up to date
-      var cols = this.$slots.default.map(function (node) { return this$1.columns.find(function (col) { return col.cell === node.key; }); }
-      ).filter(function (c) { return c; });
-
-      // fallback to default
-      // if slots not ready
-      return cols.length
-        ? cols
-        : this.columns
-    }
-  }
-};
-
-var Column$1 = {
-  render: function render (h) {
-    return h('col')
-  },
-  created: function created () {
-    // make available the below render functions on component instance
-    this._headerRender = this.$options._parentVnode.componentOptions.Ctor.options.headerRender;
-    this._cellRender = this.$options._parentVnode.componentOptions.Ctor.options.cellRender;
-    // add column
-    this.$parent.columns.push(this);
-  },
-  headerRender: function headerRender () {
-    var h = this.$createElement;
-    var defaultContent = this.header;
-    var slot = this.processSlot('header', {}, defaultContent);
-    return h('th', { staticClass: this.headerClass }, [ slot ])
-  },
-  cellRender: function cellRender (ref) {
-    var row = ref.row;
-
-    var h = this.$createElement;
-    var defaultContent = get(row, this.cell, '');
-    var slot = this.processSlot('cell', { row: row }, defaultContent);
-    return h('td', { staticClass: this.cellClass }, [ slot ])
-  },
-  methods: {
-    processSlot: function processSlot (name, props, fallback) {
-      var slot = this.$scopedSlots[name];
-      return slot
-        ? slot.call(this._renderProxy, props)
-        : fallback
-    },
-    joinClasses: function joinClasses () {
-      var classes = [], len = arguments.length;
-      while ( len-- ) classes[ len ] = arguments[ len ];
-
-      var isNotEmpty = function (className) { return className; };
-      return classes.filter(isNotEmpty).join(' ')
-    }
-  }
-};
-
-var Column = {
-  name: 'VkTableColumn',
-  extends: Column$1,
-  props: {
-    // the header label
-    header: {
-      type: String
-    },
-    headerClass: {
-      type: String
-    },
-    // the cell key
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    }
-  }
-};
-
-var Checkbox = {
-  functional: true,
-  props: ['checked'],
-  render: function render (h, ref) {
-    var data = ref.data;
-    var props = ref.props;
-
-    return h('input', Object.assign({}, data,
-      {
-        staticClass: 'uk-checkbox',
-        attrs: {
-          type: 'checkbox'
-        },
-        domProps: {
-          checked: props.checked
-        },
-        on: Object.assign({}, data.on,
-          {
-            change: function (e) {
-              // ensures checked state consistency
-              e.target.checked = props.checked;
-            }
-          })
-      }))
-  }
-};
-
-var ColumnSelect = {
-  name: 'VkTableColumnSelect',
-  extends: Column$1,
-  props: {
-    headerClass: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    },
-    isSelected: {
-      type: Function,
-      default: function () { return false; }
-    }
-  },
-  headerRender: function headerRender () {
-    var this$1 = this;
-
-    var h = this.$createElement;
-    var rows = this.$parent.data;
-    var selected = rows.filter(this.isSelected);
-    var isAllSelected = selected.length && selected.length === rows.length;
-    var defaultContent = h(Checkbox, {
-      props: { checked: isAllSelected },
-      on: { click: function (e) { return this$1.$emit('select-all'); } }
-    });
-    var slot = this.processSlot('header', {}, defaultContent);
-    var staticClass = this.joinClasses(
-      'uk-form uk-text-center uk-table-shrink', this.headerClass
-    );
-    return h('th', { staticClass: staticClass }, [ slot ])
-  },
-  cellRender: function cellRender (ref) {
-    var this$1 = this;
-    var row = ref.row;
-
-    var h = this.$createElement;
-    var defaultContent = h(Checkbox, {
-      props: { checked: this.isSelected(row) },
-      on: { click: function (e) { return this$1.$emit('select', row); } }
-    });
-    var slot = this.processSlot('cell', { row: row }, defaultContent);
-    var staticClass = this.joinClasses(
-      'uk-form uk-text-center vk-table-width-minimum', this.cellClass
-    );
-    return h('td', { staticClass: staticClass }, [ slot ])
-  },
-  created: function created () {
-    var this$1 = this;
-
-    // as there is no select state to react on, the update must be forced
-    this.$parent.$on('click-row', function () { return this$1.$parent.$forceUpdate(); });
-    this.$on('select', function () { return this$1.$parent.$forceUpdate(); });
-    this.$on('select-all', function () { return this$1.$parent.$forceUpdate(); });
-  }
-};
-
-var ColumnSort = {
-  name: 'VkTableColumnSort',
-  extends: Column$1,
-  props: {
-    header: {
-      type: String
-    },
-    headerClass: {
-      type: String
-    },
-    // sort by and display data
-    // use scopedSlots for altering the display
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    }
-  },
-  headerRender: function headerRender () {
-    var h = this.$createElement;
-    var Table = this.$parent;
-    var sortBy = this.cell;
-    var orderedBy = Table.sortedBy[sortBy];
-    var defaultContent = h(Header, {
-      props: {
-        sortBy: sortBy,
-        orderedBy: orderedBy,
-        name: this.header,
-        Table: Table
-      }
-    });
-    var slot = this.processSlot('header', {}, defaultContent);
-    var staticClass = this.joinClasses('uk-visible-hover-inline', this.headerClass);
-    return h('th', { staticClass: staticClass, class: { 'uk-active': orderedBy } }, [ slot ])
-  }
-};
-
-var Header = {
-  functional: true,
-  props: ['name', 'sortBy', 'orderedBy', 'Table'],
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var name = props.name;
-    var sortBy = props.sortBy;
-    var orderedBy = props.orderedBy;
-    var Table = props.Table;
-    return h('a', {
-      staticClass: 'uk-position-relative uk-display-block uk-link-reset uk-text-nowrap',
-      on: {
-        click: function (e) {
-          Table.$emit('sort', processSortOrder(Table.sortedBy, sortBy, e.shiftKey));
-        }
-      }
-    }, [
-      name,
-      h('span', {
-        staticClass: 'uk-icon uk-position-absolute',
-        attrs: {
-          'uk-icon': 'icon: arrow-down'
-        },
-        class: {
-          'uk-invisible': !orderedBy
-        },
-        directives: [{
-          name: 'show',
-          value: (orderedBy === 'asc' || orderedBy === undefined)
-        }]
-      }),
-      h('span', {
-        staticClass: 'uk-icon uk-position-absolute',
-        attrs: {
-          'uk-icon': 'icon: arrow-up'
-        },
-        class: {
-          'uk-invisible': !orderedBy
-        },
-        directives: [{
-          name: 'show',
-          value: orderedBy === 'desc'
-        }]
-      })
-    ])
-  }
-};
-
-function processSortOrder (currentSort, by, multi) {
-  var order = currentSort[by] === 'asc'
-    ? 'desc'
-    : 'asc';
-  var sort = {};
-  sort[by] = order;
-  return multi
-    ? Object.assign({}, currentSort, sort)
-    : sort
-}
-
-var columns = {
-  default: Column,
-  select: ColumnSelect,
-  sort: ColumnSort
-};
-
-var tableColumns = {
-  functional: true,
-  props: {
-    definition: {
-      type: Array,
-      required: true
-    }
-  },
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    return props.definition.map(function (col) { return h(parseType(col), parseData(col)); })
-  }
-};
-
-function parseType (col) {
-  var type = col.type || 'default';
-  return columns[type] !== undefined
-    ? columns[type]
-    : col.type
-}
-
-function parseData (col) {
-  var props = {};
-  var scopedSlots = {};
-
-  // header
-  props.header = col.header;
-  props.headerClass = col.headerClass;
-  if (col.headerRender && isFunction(col.headerRender)) {
-    scopedSlots.header = col.headerRender;
-  }
-
-  // cell
-  props.cell = col.cell;
-  props.cellClass = col.cellClass;
-  if (col.cellRender && isFunction(col.cellRender)) {
-    scopedSlots.cell = col.cellRender;
-  }
-
-  return { props: props, scopedSlots: scopedSlots }
-}
-
-var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkTab',
-  props: {
-    label: String,
-    alias: {
-      type: [String, Number],
-      default: ''
-    },
-    active: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  },
-  created: function created () {
-    if (!this.disabled && !this.$slots.default) {
-      warn(("[VkTabs]: content is missing in tab " + (this.label)));
-    }
-  }
-};
-
-var core = {
-  components: {
-    TabContent: {
-      functional: true,
-      render: function render (h, ref) {
-        var parent = ref.parent;
-
-        return parent.$tabsNodes.filter(function (vn) { return parent.activeTab === parent.getTabId(vn); })
-      }
-    }
-  },
-  props: {
-    activeTab: {
-      type: [String, Number],
-      required: true
-    },
-    transition: {
-      type: String,
-      default: 'vk-tabs-transition'
-    }
-  },
-  computed: {
-    tabs: {
-      get: function get$$1 () {
-        var this$1 = this;
-
-        return this.$tabsNodes.map(function (vn) { return ({
-          id: this$1.getTabId(vn),
-          label: vn.componentOptions.propsData.label,
-          disabled: vn.componentOptions.propsData.disabled !== undefined
-        }); })
-      },
-      cache: false
-    }
-  },
-  created: function created () {
-    var this$1 = this;
-
-    // save tabs nodes
-    this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
-    );
-    if (warn && !this.$tabsNodes) {
-      warn("[VkTabs]: there are no tabs defined");
-    }
-    // set tabs key for keep-alive
-    this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
-  },
-  methods: {
-    getTabId: function getTabId (vn) {
-      return vn.componentOptions.propsData.alias || this.$tabsNodes.indexOf(vn) + 1
-    }
-  }
-};
-
-var tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
-var id = ref.id;
-var label = ref.label;
-var disabled = ref.disabled;
-return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])})),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])
-var obj;},staticRenderFns: [],
-  name: 'VkTabs',
-  extends: core,
-  props: {
-    alignment: {
-      type: String,
-      default: 'left' // left|right|center|justify
-    },
-    // flips tabs vertically
-    bottom: {
-      type: Boolean,
-      default: false
-    }
-  }
-};
-
-var tabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
-var id = ref.id;
-var label = ref.label;
-var disabled = ref.disabled;
-return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])}))]),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
-  name: 'VkTabsVertical',
-  extends: core,
-  props: {
-    alignment: {
-      type: String,
-      default: 'left' // left|right
-    }
-  }
-};
-
-var onMouseenter$2;
 var onMouseleave;
 
 var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
@@ -7865,7 +7168,7 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
     // initially the tooltip is off document
     this.remove();
 
-    onMouseenter$2 = function () {
+    onMouseenter$1 = function () {
       setTimeout(function (_) {
         document.body.appendChild(this$1.$el);
         this$1.active = true;
@@ -7888,8 +7191,8 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
 
     on$$1(this.$el, 'mouseleave', onMouseleave, this._uid);
     on$$1(this.targetElement, 'mouseleave', onMouseleave, this._uid);
-    on$$1(this.targetElement, 'mouseenter', onMouseenter$2, this._uid);
-    on$$1(this.targetElement, 'focus', onMouseenter$2, this._uid);
+    on$$1(this.targetElement, 'mouseenter', onMouseenter$1, this._uid);
+    on$$1(this.targetElement, 'focus', onMouseenter$1, this._uid);
     on$$1(this.targetElement, 'blur', onMouseleave, this._uid);
   },
   methods: {
@@ -7934,11 +7237,10 @@ var lib = Object.freeze({
 	ButtonCheckbox: buttonCheckbox,
 	ButtonRadio: buttonRadio,
 	Datepicker: datepicker,
-	Drop: drop,
+	Drop: Drop,
 	Dropdown: dropdown,
-	Icon: icon,
-	IconLink: iconLink,
-	LoadingBar: loadingBar,
+	Icon: Icon,
+	Svg: Svg,
 	Modal: modal,
 	ModalDialog: modalDialog,
 	ModalHeader: modalHeader,
@@ -7949,6 +7251,7 @@ var lib = Object.freeze({
 	Notification: notification,
 	NotificationMessage: notificationMessage,
 	Offcanvas: offcanvas,
+	OffcanvasContent: offcanvasContent,
 	OffcanvasClose: offcanvasClose,
 	Pagination: pagination,
 	PaginationFirst: PaginationFirst,
@@ -7956,13 +7259,14 @@ var lib = Object.freeze({
 	PaginationPrev: PaginationPrev,
 	PaginationNext: PaginationNext,
 	PaginationPages: PaginationPages,
+	Spinner: spinner,
 	Subnav: subnav,
 	SubnavItem: subnavItem,
 	Table: table,
 	TableColumn: Column,
 	TableColumnSelect: ColumnSelect,
 	TableColumnSort: ColumnSort,
-	TableColumns: tableColumns,
+	TableSetup: tableSetup,
 	Tab: tabsTab,
 	Tabs: tabs,
 	TabsVertical: tabsVertical,
