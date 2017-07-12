@@ -3,6 +3,8 @@
  * (c) 2017 Miljan Aleksic
  * Released under the MIT License.
  */
+'use strict';
+
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkBreadcrumb',
   props: {
@@ -4448,10 +4450,13 @@ var findByProps = function (comp) { return function (slot) {
   return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
 }; };
 
-var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
+var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
   name: 'VkTableColumn',
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {
@@ -4584,11 +4589,14 @@ var arrowDown = {
 Icon.register(arrowUp);
 Icon.register(arrowDown);
 
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_c('span',{staticClass:"uk-position-relative"},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])])},staticRenderFns: [],
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_c('span',{staticClass:"uk-position-relative"},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])])},staticRenderFns: [],
   name: 'VkTableColumnSort',
   extends: Column,
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {
@@ -4703,7 +4711,7 @@ function getColumnObject (column) {
   props.header = column.header;
   props.shrink = column.shrink;
   props.expand = column.expand;
-  var staticClass = column.class;
+  props.headerClass = column.headerClass;
 
   // cell
   props.cell = column.cell;
@@ -4713,7 +4721,7 @@ function getColumnObject (column) {
   }
 
   // render
-  return { staticClass: staticClass, props: props, scopedSlots: scopedSlots }
+  return { props: props, scopedSlots: scopedSlots }
 }
 
 var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
@@ -7268,7 +7276,7 @@ var lib = Object.freeze({
 	Upload: upload
 });
 
-var Vuikit$1 = Object.assign({}, lib,
+var Vuikit = Object.assign({}, lib,
   {install: function install (Vue) {
     var this$1 = this;
 
@@ -7281,7 +7289,7 @@ var Vuikit$1 = Object.assign({}, lib,
   }});
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(Vuikit$1);
+  window.Vue.use(Vuikit);
 }
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, Icon, Svg, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;
+module.exports = Vuikit;

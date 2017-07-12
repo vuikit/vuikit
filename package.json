@@ -13,8 +13,8 @@
     "uikit",
     "vuikit"
   ],
-  "main": "dist/js/vuikit.common.js",
-  "module": "dist/js/vuikit.esm.js",
+  "main": "dist/vuikit.common.js",
+  "module": "dist/vuikit.esm.js",
   "files": [
     "dist",
     "src",
@@ -94,7 +94,7 @@
     ],
     "moduleNameMapper": {
       "^vue$": "vue/dist/vue.common.js",
-      "^vuikit$": "<rootDir>/dist/js/vuikit.esm.js",
+      "^vuikit$": "<rootDir>/dist/vuikit.esm.js",
       "tests/(.*)$": "<rootDir>/tests/$1.js",
       "helpers/(.*)$": "<rootDir>/helpers/$1.js",
       "src/(.*)$": "<rootDir>/src/$1.js"

@@ -4454,10 +4454,13 @@ var findByProps = function (comp) { return function (slot) {
   return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
 }; };
 
-var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
+var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
   name: 'VkTableColumn',
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {
@@ -4590,11 +4593,14 @@ var arrowDown = {
 Icon.register(arrowUp);
 Icon.register(arrowDown);
 
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:{ 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_c('span',{staticClass:"uk-position-relative"},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])])},staticRenderFns: [],
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_c('span',{staticClass:"uk-position-relative"},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])])},staticRenderFns: [],
   name: 'VkTableColumnSort',
   extends: Column,
   props: {
     header: {
+      type: String
+    },
+    headerClass: {
       type: String
     },
     cell: {
@@ -4709,7 +4715,7 @@ function getColumnObject (column) {
   props.header = column.header;
   props.shrink = column.shrink;
   props.expand = column.expand;
-  var staticClass = column.class;
+  props.headerClass = column.headerClass;
 
   // cell
   props.cell = column.cell;
@@ -4719,7 +4725,7 @@ function getColumnObject (column) {
   }
 
   // render
-  return { staticClass: staticClass, props: props, scopedSlots: scopedSlots }
+  return { props: props, scopedSlots: scopedSlots }
 }
 
 var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],

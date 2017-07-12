@@ -43,7 +43,7 @@ const builds = getDirectories(
 ).map(component => {
   return {
     entry: path.resolve(__dirname, `../src/js/components/${component}/index.js`),
-    dest: path.resolve(__dirname, `../dist/es/${component}.js`),
+    dest: path.resolve(__dirname, `../dist/components/es/${component}.js`),
     format: 'es',
     env: 'development'
   }

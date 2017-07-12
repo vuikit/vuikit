@@ -46,28 +46,28 @@ const builds = [
   // ES
   {
     entry: path.resolve(__dirname, './dist-esm.js'),
-    dest: path.resolve(__dirname, '../../dist/js/vuikit.esm.js'),
+    dest: path.resolve(__dirname, '../../dist/vuikit.esm.js'),
     format: 'es',
     env: 'development'
   },
   // CommonJS
   {
     entry: path.resolve(__dirname, './dist.js'),
-    dest: path.resolve(__dirname, '../../dist/js/vuikit.common.js'),
+    dest: path.resolve(__dirname, '../../dist/vuikit.common.js'),
     format: 'cjs',
     env: 'development'
   },
   // Browser
   {
     entry: path.resolve(__dirname, './dist.js'),
-    dest: path.resolve(__dirname, '../../dist/js/vuikit.js'),
+    dest: path.resolve(__dirname, '../../dist/vuikit.js'),
     format: 'umd',
     env: 'development'
   },
   // production build (Browser)
   {
     entry: path.resolve(__dirname, './dist.js'),
-    dest: path.resolve(__dirname, '../../dist/js/vuikit.min.js'),
+    dest: path.resolve(__dirname, '../../dist/vuikit.min.js'),
     format: 'umd',
     sourceMap: true
   }
@@ -97,6 +97,4 @@ const compile = async (file, dist) => {
   }
 }
 
-rmrf('dist/css')
-mkdirp('dist/css')
-compile('src/less/theme.less', 'dist/css/vuikit.css')
+compile('src/less/theme.less', 'dist/vuikit.css')
