@@ -116,14 +116,7 @@ var isRtl$$1 = document.documentElement.getAttribute('dir') === 'rtl';
 
 /* Retrieve style */
 
-function css$$1 (el, style, value) {
-  // retrieve
-  if (isUndefined(value)) {
-    return window.getComputedStyle(el)[style]
-  }
-  // or add style
-  el.style[style] = value;
-}
+
 
 /* Events */
 
@@ -174,23 +167,16 @@ function classify$1 (str) {
 //     return typeof value === 'number';
 // }
 //
-function isUndefined (value) {
-  return value === undefined
-}
 
 
 
-function isInteger (val) {
-  return Number.isInteger(val)
-}
+
+
 
 
 
 /* https://github.com/sindresorhus/is-obj */
-function isObject (x) {
-  var type = typeof x;
-  return x !== null && (type === 'object' || type === 'function')
-}
+
 
 /**
  * Strict object type check. Only returns true
@@ -220,12 +206,7 @@ function isObject (x) {
 //                 : value;
 // }
 //
-function toNumber (value) {
-  var number = Number(value);
-  return !isNaN(number)
-    ? number
-    : false
-}
+
 //
 // export function toList(value) {
 //     return isArray(value)
@@ -244,21 +225,7 @@ function toNumber (value) {
 
 
 
-function each (obj, iterator) {
-  var i, key;
-  if (isInteger(obj.length)) {
-    for (i = 0; i < obj.length; i++) {
-      iterator.call(obj[i], obj[i], i);
-    }
-  } else if (isObject(obj)) {
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        iterator.call(obj[key], obj[key], key);
-      }
-    }
-  }
-  return obj
-}
+
 
 
 
@@ -332,117 +299,17 @@ function prefix (name, event) {
   }
 }
 
-var dirs = {
-  x: ['width', 'left', 'right'],
-  y: ['height', 'top', 'bottom']
-};
-
-function getPosition$$1 (element, target, attach, targetAttach, offset$$1, targetOffset, flip, boundary) {
-  var dim = getDimensions$$1(element);
-  var targetDim = getDimensions$$1(target);
-  var position = targetDim;
-
-  attach = getPos(attach);
-  targetAttach = getPos(targetAttach);
-
-  moveTo(position, attach, dim, -1);
-  moveTo(position, targetAttach, targetDim, 1);
-
-  offset$$1 = getOffsets(offset$$1, dim.width, dim.height);
-  targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height);
-
-  offset$$1['x'] += targetOffset['x'];
-  offset$$1['y'] += targetOffset['y'];
-
-  position.left += offset$$1['x'];
-  position.top += offset$$1['y'];
-
-  boundary = getDimensions$$1(boundary || window);
-
-  var flipped = {element: attach, target: targetAttach};
-
-  if (flip) {
-    each(dirs, function (ref, dir) {
-      var prop = ref[0];
-      var align = ref[1];
-      var alignFlip = ref[2];
-
-      if (!(flip === true || ~flip.indexOf(dir))) {
-        return
-      }
-
-      var elemOffset = attach[dir] === align
-        ? -dim[prop]
-        : attach[dir] === alignFlip
-          ? dim[prop]
-          : 0;
-      var targetOffset = targetAttach[dir] === align
-        ? targetDim[prop]
-        : targetAttach[dir] === alignFlip
-          ? -targetDim[prop]
-          : 0;
-
-      if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
-        var newVal = position[align] + elemOffset + targetOffset - offset$$1[dir] * 2;
-
-        if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
-          position[align] = newVal
-
-          ;['element', 'target'].forEach(function (el) {
-            flipped[el][dir] = !elemOffset
-              ? flipped[el][dir]
-              : flipped[el][dir] === dirs[dir][1]
-                ? dirs[dir][2]
-                : dirs[dir][1];
-          });
-        }
-      }
-    });
-  }
-
-  return Object.assign({}, flipped,
-    windowToPageOffset$$1(element, { left: position.left, top: position.top }))
-}
-
 /*
  * Translate top and left window relative coordinates to
  * document relative ones.
  */
-function windowToPageOffset$$1 (element, coords) {
-  var parentOffset = offset$$1(offsetParent(element));
-  var props = {
-    top: coords.top - parentOffset.top,
-    left: coords.left - parentOffset.left
-  };
-  return props
-}
+
 
 /*
  * Get position of the element in the document.
  * Returns an object with properties: top, left, width and height.
  */
-function offset$$1 (element) {
-  var obj = element.getBoundingClientRect();
-  return {
-    left: obj.left + window.pageXOffset,
-    top: obj.top + window.pageYOffset,
-    width: Math.round(obj.width),
-    height: Math.round(obj.height)
-  }
-}
 
-/**
- * Find the first ancestor element that is positioned,
- * meaning its CSS position value is “relative”, “absolute” or “fixed”.
- */
-var rootNodeRE = /^(?:body|html)$/i;
-function offsetParent (element) {
-  var parent = element.offsetParent || document.body;
-  while (parent && !rootNodeRE.test(parent.nodeName) && css$$1(parent, 'position') === 'static') {
-    parent = parent.offsetParent;
-  }
-  return parent
-}
 
 function getDimensions$$1 (element) {
   var window = getWindow(element);
@@ -490,8 +357,473 @@ function getWindow (element) {
     : window
 }
 
-function moveTo (position, attach, dim, factor) {
-  each(dirs, function (ref, dir) {
+var config$1 = {
+  silent: false // TODO: use Vue config instead
+};
+
+/**
+ * Perform no operation.
+ */
+function noop$1 () {}
+
+var warn$1 = noop$1;
+var tip$1 = noop$1;
+var formatComponentName$1;
+
+{
+  var hasConsole$1 = typeof console !== 'undefined';
+  var classifyRE$1 = /(?:^|[-_])(\w)/g;
+  var classify$2 = function (str) { return str
+    .replace(classifyRE$1, function (c) { return c.toUpperCase(); })
+    .replace(/[-_]/g, ''); };
+
+  warn$1 = function (msg, vm) {
+    if (hasConsole$1 && (!config$1.silent)) {
+      console.error("[Vuikit warn]: " + msg + (
+        vm ? generateComponentTrace$1(vm) : ''
+      ));
+    }
+  };
+
+  tip$1 = function (msg, vm) {
+    if (hasConsole$1 && (!config$1.silent)) {
+      console.warn("[Vue tip]: " + msg + (
+        vm ? generateComponentTrace$1(vm) : ''
+      ));
+    }
+  };
+
+  formatComponentName$1 = function (vm, includeFile) {
+    if (vm.$root === vm) {
+      return '<Root>'
+    }
+    var name = typeof vm === 'string'
+      ? vm
+      : typeof vm === 'function' && vm.options
+        ? vm.options.name
+        : vm._isVue
+          ? vm.$options.name || vm.$options._componentTag
+          : vm.name;
+
+    var file = vm._isVue && vm.$options.__file;
+    if (!name && file) {
+      var match = file.match(/([^/\\]+)\.vue$/);
+      name = match && match[1];
+    }
+
+    return (
+      (name ? ("<" + (classify$2(name)) + ">") : "<Anonymous>") +
+      (file && includeFile !== false ? (" at " + file) : '')
+    )
+  };
+
+  var repeat$1 = function (str, n) {
+    var res = '';
+    while (n) {
+      if (n % 2 === 1) { res += str; }
+      if (n > 1) { str += str; }
+      n >>= 1;
+    }
+    return res
+  };
+
+  var generateComponentTrace$1 = function (vm) {
+    if (vm._isVue && vm.$parent) {
+      var tree = [];
+      var currentRecursiveSequence = 0;
+      while (vm) {
+        if (tree.length > 0) {
+          var last = tree[tree.length - 1];
+          if (last.constructor === vm.constructor) {
+            currentRecursiveSequence++;
+            vm = vm.$parent;
+            continue
+          } else if (currentRecursiveSequence > 0) {
+            tree[tree.length - 1] = [last, currentRecursiveSequence];
+            currentRecursiveSequence = 0;
+          }
+        }
+        tree.push(vm);
+        vm = vm.$parent;
+      }
+      return '\n\nfound in\n\n' + tree
+        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat$1(' ', 5 + i * 2)) + (Array.isArray(vm)
+            ? ((formatComponentName$1(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
+            : formatComponentName$1(vm))); })
+        .join('\n')
+    } else {
+      return ("\n\n(found in " + (formatComponentName$1(vm)) + ")")
+    }
+  };
+}
+
+var isRtl$1$$1 = document.documentElement.getAttribute('dir') === 'rtl';
+
+
+
+
+
+/* Add/Remove class */
+
+
+
+
+
+
+
+
+
+/* Retrieve style */
+
+function css$1$$1 (el, style, value) {
+  // retrieve
+  if (isUndefined$1(value)) {
+    return window.getComputedStyle(el)[style]
+  }
+  // or add style
+  el.style[style] = value;
+}
+
+// add event listener shorthand
+
+
+
+
+
+
+
+
+// force redraw/repaint for WebKit
+
+function classify$3 (str) {
+  return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
+}
+
+
+
+
+// export function isNumber(value) {
+//     return typeof value === 'number';
+// }
+//
+function isUndefined$1 (value) {
+  return value === undefined
+}
+
+
+
+function isInteger$1 (val) {
+  return Number.isInteger(val)
+}
+
+
+
+/* https://github.com/sindresorhus/is-obj */
+function isObject$1 (x) {
+  var type = typeof x;
+  return x !== null && (type === 'object' || type === 'function')
+}
+
+/**
+ * Strict object type check. Only returns true
+ * for plain JavaScript objects
+ */
+
+
+/* https://github.com/sindresorhus/is-fn */
+
+
+//
+// export function isContextSelector(selector) {
+//     return isString(selector) && selector.match(/^(!|>|\+|-)/);
+// }
+//
+// export function getContextSelectors(selector) {
+//     return isContextSelector(selector) && selector.split(/(?=\s(?:!|>|\+|-))/g).map(value => value.trim());
+// }
+//
+// export function toBoolean(value) {
+//     return typeof value === 'boolean'
+//         ? value
+//         : value === 'true' || value == '1' || value === ''
+//             ? true
+//             : value === 'false' || value == '0'
+//                 ? false
+//                 : value;
+// }
+//
+function toNumber$1 (value) {
+  var number = Number(value);
+  return !isNaN(number)
+    ? number
+    : false
+}
+//
+// export function toList(value) {
+//     return isArray(value)
+//         ? value
+//         : isString(value)
+//             ? value.split(',').map(value => value.trim())
+//             : [value];
+// }
+
+
+
+
+
+/* https://github.com/sindresorhus/arrify */
+
+
+
+
+function each$1 (obj, iterator) {
+  var i, key;
+  if (isInteger$1(obj.length)) {
+    for (i = 0; i < obj.length; i++) {
+      iterator.call(obj[i], obj[i], i);
+    }
+  } else if (isObject$1(obj)) {
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        iterator.call(obj[key], obj[key], key);
+      }
+    }
+  }
+  return obj
+}
+
+
+
+
+
+/**
+ * Gets the value at `path` of `object`. If the resolved value is
+ * `undefined`, the `defaultValue` is returned in its place.
+ */
+
+// export const Observer = window.MutationObserver || window.WebKitMutationObserver
+
+
+//
+// export const hasTouch = 'ontouchstart' in window
+//     || window.DocumentTouch && document instanceof DocumentTouch
+//     || navigator.msPointerEnabled && navigator.msMaxTouchPoints > 0 // IE 10
+//     || navigator.pointerEnabled && navigator.maxTouchPoints > 0; // IE >=11
+//
+// export const pointerDown = !hasTouch ? 'mousedown' : window.PointerEvent ? 'pointerdown' : 'touchstart';
+// export const pointerMove = !hasTouch ? 'mousemove' : window.PointerEvent ? 'pointermove' : 'touchmove';
+// export const pointerUp = !hasTouch ? 'mouseup' : window.PointerEvent ? 'pointerup' : 'touchend';
+// export const pointerEnter = hasTouch && window.PointerEvent ? 'pointerenter' : 'mouseenter';
+// export const pointerLeave = hasTouch && window.PointerEvent ? 'pointerleave' : 'mouseleave';
+//
+var transitionstart$1 = prefix$1('transition', 'transition-start');
+var transitionend$1 = prefix$1('transition', 'transition-end');
+var animationstart$1 = prefix$1('animation', 'animation-start');
+var animationend$1 = prefix$1('animation', 'animation-end');
+//
+// export function getStyle(element, property, pseudoElt) {
+//     return (window.getComputedStyle(element, pseudoElt) || {})[property];
+// }
+//
+// export function getCssVar(name) {
+//
+//     /* usage in css:  .var-name:before { content:"xyz" } */
+//
+//     var val, doc = document.documentElement,
+//         element = doc.appendChild(document.createElement('div'));
+//
+//     element.classList.add(`var-${name}`);
+//
+//     try {
+//
+//         val = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1');
+//         val = JSON.parse(val);
+//
+//     } catch (e) {}
+//
+//     doc.removeChild(element);
+//
+//     return val || undefined;
+// }
+//
+function prefix$1 (name, event) {
+  var ucase = classify$3(name);
+  var lowered = classify$3(event).toLowerCase();
+  var classified = classify$3(event);
+  var element = document.body || document.documentElement;
+  var names = {};
+  names[("Webkit" + ucase)] = ("webkit" + classified);
+  names[("Moz" + ucase)] = lowered;
+  names[("o" + ucase)] = ("o" + classified + " o" + lowered);
+  names[name] = lowered;
+
+  for (name in names) {
+    if (element.style[name] !== undefined) {
+      return names[name]
+    }
+  }
+}
+
+var dirs$1 = {
+  x: ['width', 'left', 'right'],
+  y: ['height', 'top', 'bottom']
+};
+
+function getPosition$1$$1 (element, target, attach, targetAttach, offset, targetOffset, flip, boundary) {
+  var dim = getDimensions$1$$1(element);
+  var targetDim = getDimensions$1$$1(target);
+  var position = targetDim;
+
+  attach = getPos$1(attach);
+  targetAttach = getPos$1(targetAttach);
+
+  moveTo$1(position, attach, dim, -1);
+  moveTo$1(position, targetAttach, targetDim, 1);
+
+  offset = getOffsets$1(offset, dim.width, dim.height);
+  targetOffset = getOffsets$1(targetOffset, targetDim.width, targetDim.height);
+
+  offset['x'] += targetOffset['x'];
+  offset['y'] += targetOffset['y'];
+
+  position.left += offset['x'];
+  position.top += offset['y'];
+
+  boundary = getDimensions$1$$1(boundary || window);
+
+  var flipped = {element: attach, target: targetAttach};
+
+  if (flip) {
+    each$1(dirs$1, function (ref, dir) {
+      var prop = ref[0];
+      var align = ref[1];
+      var alignFlip = ref[2];
+
+      if (!(flip === true || ~flip.indexOf(dir))) {
+        return
+      }
+
+      var elemOffset = attach[dir] === align
+        ? -dim[prop]
+        : attach[dir] === alignFlip
+          ? dim[prop]
+          : 0;
+      var targetOffset = targetAttach[dir] === align
+        ? targetDim[prop]
+        : targetAttach[dir] === alignFlip
+          ? -targetDim[prop]
+          : 0;
+
+      if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
+        var newVal = position[align] + elemOffset + targetOffset - offset[dir] * 2;
+
+        if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
+          position[align] = newVal
+
+          ;['element', 'target'].forEach(function (el) {
+            flipped[el][dir] = !elemOffset
+              ? flipped[el][dir]
+              : flipped[el][dir] === dirs$1[dir][1]
+                ? dirs$1[dir][2]
+                : dirs$1[dir][1];
+          });
+        }
+      }
+    });
+  }
+
+  return Object.assign({}, flipped,
+    windowToPageOffset$1$$1(element, { left: position.left, top: position.top }))
+}
+
+/*
+ * Translate top and left window relative coordinates to
+ * document relative ones.
+ */
+function windowToPageOffset$1$$1 (element, coords) {
+  var parentOffset = offset$1$$1(offsetParent$1(element));
+  var props = {
+    top: coords.top - parentOffset.top,
+    left: coords.left - parentOffset.left
+  };
+  return props
+}
+
+/*
+ * Get position of the element in the document.
+ * Returns an object with properties: top, left, width and height.
+ */
+function offset$1$$1 (element) {
+  var obj = element.getBoundingClientRect();
+  return {
+    left: obj.left + window.pageXOffset,
+    top: obj.top + window.pageYOffset,
+    width: Math.round(obj.width),
+    height: Math.round(obj.height)
+  }
+}
+
+/**
+ * Find the first ancestor element that is positioned,
+ * meaning its CSS position value is “relative”, “absolute” or “fixed”.
+ */
+var rootNodeRE$1 = /^(?:body|html)$/i;
+function offsetParent$1 (element) {
+  var parent = element.offsetParent || document.body;
+  while (parent && !rootNodeRE$1.test(parent.nodeName) && css$1$$1(parent, 'position') === 'static') {
+    parent = parent.offsetParent;
+  }
+  return parent
+}
+
+function getDimensions$1$$1 (element) {
+  var window = getWindow$1(element);
+  var top = window.pageYOffset;
+  var left = window.pageXOffset;
+
+  if (!element.ownerDocument) {
+    return {
+      top: top,
+      left: left,
+      height: window.innerHeight,
+      width: window.innerWidth,
+      bottom: top + window.innerHeight,
+      right: left + window.innerWidth
+    }
+  }
+
+  var display;
+  if (!element.offsetHeight) {
+    display = window.getComputedStyle(element).display;
+    element.style.display = 'block';
+  }
+
+  var rect = element.getBoundingClientRect();
+
+  if (display) {
+    element.style.display = display;
+  }
+
+  return {
+    height: rect.height,
+    width: rect.width,
+    top: rect.top + top,
+    left: rect.left + left,
+    bottom: rect.bottom + top,
+    right: rect.right + left
+  }
+}
+
+
+
+function getWindow$1 (element) {
+  return element.ownerDocument
+    ? element.ownerDocument.defaultView
+    : window
+}
+
+function moveTo$1 (position, attach, dim, factor) {
+  each$1(dirs$1, function (ref, dir) {
     var prop = ref[0];
     var align = ref[1];
     var alignFlip = ref[2];
@@ -504,7 +836,7 @@ function moveTo (position, attach, dim, factor) {
   });
 }
 
-function getPos (pos) {
+function getPos$1 (pos) {
   var x = /left|center|right/;
   var y = /top|center|bottom/;
 
@@ -524,7 +856,7 @@ function getPos (pos) {
   }
 }
 
-function getOffsets (offsets, width, height) {
+function getOffsets$1 (offsets, width, height) {
   offsets = (offsets || '').split(' ');
 
   return {
@@ -533,7 +865,7 @@ function getOffsets (offsets, width, height) {
   }
 }
 
-function flipPosition$$1 (pos) {
+function flipPosition$1$$1 (pos) {
   switch (pos) {
     case 'left':
       return 'right'
@@ -584,21 +916,21 @@ var PositionMixin = {
   },
   methods: {
     positionAt: function positionAt (element, target, boundary) {
-      var offset$$1 = toNumber(this.offset) || 0;
+      var offset = toNumber$1(this.offset) || 0;
       var axis = this.getAxis();
-      var flipped = getPosition$$1(
+      var flipped = getPosition$1$$1(
         element,
         target,
         axis === 'x'
-          ? ((flipPosition$$1(this.dir)) + " " + (this.align))
-          : ((this.align) + " " + (flipPosition$$1(this.dir))),
+          ? ((flipPosition$1$$1(this.dir)) + " " + (this.align))
+          : ((this.align) + " " + (flipPosition$1$$1(this.dir))),
         axis === 'x'
           ? ((this.dir) + " " + (this.align))
           : ((this.align) + " " + (this.dir)),
         axis === 'x'
           ? ("" + (this.dir === 'left'
-            ? -1 * offset$$1 : offset$$1))
-            : (" " + (this.dir === 'top' ? -1 * offset$$1 : offset$$1)),
+            ? -1 * offset : offset))
+            : (" " + (this.dir === 'top' ? -1 * offset : offset)),
         null,
         this.flip,
         boundary

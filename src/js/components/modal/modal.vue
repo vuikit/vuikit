@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { on, css, hasClass, addClass, removeClass } from 'src/js/util/index'
+import { on, css, hasClass, addClass, removeClass } from '@vuikit/util/es'
 import ModalMixin from 'lib/mixins/modal'
 const doc = document.documentElement
 

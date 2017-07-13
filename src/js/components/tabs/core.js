@@ -1,4 +1,4 @@
-import { warn } from 'src/js/util/index'
+import { warn } from '@vuikit/util/es'
 
 export default {
   components: {

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { isFunction, warn } from 'src/js/util/index'
+import { isFunction, warn } from '@vuikit/util/es'
 
 const Cell = {
   functional: true,

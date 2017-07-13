@@ -1,4 +1,4 @@
-import { on, offAll } from 'src/js/util/index'
+import { on, offAll } from '@vuikit/util/es'
 
 const doc = document.documentElement
 const body = document.body

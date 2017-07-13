@@ -1,4 +1,4 @@
-import { warn, isString } from 'src/js/util/index'
+import { warn, isString } from '@vuikit/util/es'
 import svg from './svg'
 const icons = {}
 

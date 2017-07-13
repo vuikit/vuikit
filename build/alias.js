@@ -1,9 +1,13 @@
 const path = require('path')
 
 module.exports = {
-  root: path.resolve(__dirname, '..'),
-  src: path.resolve(__dirname, '../src'),
-  lib: path.resolve(__dirname, '../src/js'),
-  helpers: path.resolve(__dirname, '../helpers'),
-  icons: path.resolve(__dirname, '../icons')
+  root: resolve(''),
+  src: resolve('src'),
+  lib: resolve('src/js'),
+  helpers: resolve('helpers'),
+  icons: resolve('icons')
+}
+
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
 }

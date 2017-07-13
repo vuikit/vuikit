@@ -1,4 +1,4 @@
-import { isInteger } from 'src/js/util/index'
+import { isInteger } from '@vuikit/util/es'
 
 export default {
   functional: true,

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { isArray } from 'src/js/util/index'
+import { isArray } from '@vuikit/util/es'
 import paginationMatrix from 'helpers/pagination-matrix'
 import PaginationFirst from './pagination-first'
 import PaginationLast from './pagination-last'

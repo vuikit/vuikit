@@ -38,7 +38,7 @@ import {
   css,
   toMs,
   warn
-} from 'src/js/util/index'
+} from '@vuikit/util/es'
 
 const doc = document.documentElement
 const body = document.body

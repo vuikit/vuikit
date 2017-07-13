@@ -1,4 +1,4 @@
-import { isFunction, warn } from 'src/js/util/index'
+import { isFunction, warn } from '@vuikit/util/es'
 import Column from './table-column'
 import ColumnSelect from './table-column-select'
 import ColumnSort from './table-column-sort'

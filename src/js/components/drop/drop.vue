@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { isRtl, on, offAll, getDimensions } from 'src/js/util/index'
+import { isRtl, on, offAll, getDimensions } from '@vuikit/util/es'
 import PositionMixin from 'lib/mixins/position'
 
 let onClickOut
