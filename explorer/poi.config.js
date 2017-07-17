@@ -8,7 +8,8 @@ module.exports = {
   webpack: {
     resolve: {
       alias,
-      mainFiles: ['index', 'index.vue']
+      mainFiles: ['index', 'index.vue'],
+      extensions: ['.js', '.vue', '.json']
     }
   }
 }

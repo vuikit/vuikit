@@ -12,4 +12,6 @@
 <script>
 import { Icon } from 'src/js/vuikit'
 Icon.register(require('icons/check'))
+
+export default {}
 </script>

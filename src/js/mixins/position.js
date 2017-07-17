@@ -1,4 +1,4 @@
-import { flipPosition, getPosition, toNumber } from '../util/index'
+import { flipPosition, getPosition, toNumber } from '@vuikit/util/es'
 
 export default {
   props: {

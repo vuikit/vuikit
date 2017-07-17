@@ -1,6 +1,5 @@
 <template>
   <div class="uk-container uk-margin-bottom">
-    <app-header></app-header>
     <h1>{{ $route.name }}</h1>
     <vk-upload
       @dropped="events.dropped.emited = true"
