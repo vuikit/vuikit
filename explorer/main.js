@@ -20,6 +20,7 @@ import ModalScenario from './scenarios/others/modal.vue'
 import OffcanvasScenario from './scenarios/others/offcanvas.vue'
 import TooltipScenario from './scenarios/others/tooltip.vue'
 import UploadScenario from './scenarios/others/upload.vue'
+import StickyScenario from './scenarios/others/sticky.vue'
 
 // register Vuikit components
 const keys = Object.keys(vuikit)
@@ -56,6 +57,7 @@ explorer({
     ['Modal', ModalScenario],
     ['Offcanvas', OffcanvasScenario],
     ['Tooltip', TooltipScenario],
-    ['Upload', UploadScenario]
+    ['Upload', UploadScenario],
+    ['Sticky', StickyScenario]
   ])
   .run()

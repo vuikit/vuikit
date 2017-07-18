@@ -27,6 +27,7 @@ export { default as PaginationPrev } from './components/pagination/pagination-pr
 export { default as PaginationNext } from './components/pagination/pagination-next'
 export { default as PaginationPages } from './components/pagination/pagination-pages'
 export { default as Spinner } from './components/spinner/spinner'
+export { default as Sticky } from './components/sticky/sticky'
 export { default as Subnav } from './components/subnav/subnav'
 export { default as SubnavItem } from './components/subnav/subnav-item'
 export { default as Table } from './components/table/table'
