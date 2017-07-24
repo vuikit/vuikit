@@ -126,6 +126,8 @@ function _removeClass$$1 (el, className) {
   el.classList.remove(className);
 }
 
+
+
 // export function attrFilter (element, attr, pattern, replacement) {
 //   element = $(element)
 //   return element.attr(attr, (i, value) => value ? value.replace(pattern, replacement) : value)
@@ -144,7 +146,10 @@ function sanitizeClasses (classes) {
 function css$$1 (el, style, value) {
   // retrieve
   if (isUndefined(value)) {
-    return window.getComputedStyle(el)[style]
+    // return window.getComputedStyle(el)[style]
+    return window.getComputedStyle
+      ? window.getComputedStyle(el, null)[style]
+      : el.currentStyle[style]
   }
   // or add style
   el.style[style] = value;

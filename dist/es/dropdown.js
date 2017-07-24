@@ -114,12 +114,17 @@ var isRtl$$1 = document.documentElement.getAttribute('dir') === 'rtl';
 
 
 
+
+
 /* Retrieve style */
 
 function css$$1 (el, style, value) {
   // retrieve
   if (isUndefined(value)) {
-    return window.getComputedStyle(el)[style]
+    // return window.getComputedStyle(el)[style]
+    return window.getComputedStyle
+      ? window.getComputedStyle(el, null)[style]
+      : el.currentStyle[style]
   }
   // or add style
   el.style[style] = value;
