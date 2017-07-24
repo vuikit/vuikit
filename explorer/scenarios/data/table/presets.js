@@ -15,7 +15,7 @@ export default {
   website: {
     header: 'Websiste',
     cell: 'website',
-    class: 'uk-text-right',
+    headerClass: 'uk-text-right',
     cellClass: 'uk-text-right',
     cellTemplate (h, row) {
       return h('a', {
