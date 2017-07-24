@@ -5,16 +5,15 @@
   }]">
     <a
       class="uk-display-block uk-link-reset uk-text-nowrap"
-      @click.prevent="emitSortEvent">
-      <span class="uk-position-relative">
-        {{ header }}
-        <vk-icon
-          class="uk-position-absolute"
-          ratio="0.9"
-          :icon="icon"
-          :class="{ 'uk-invisible': !orderedBy }"
-        ></vk-icon>
-      </span>
+      @click.prevent="emitSortEvent"
+    >
+      {{ header }}
+      <vk-icon
+        class="uk-position-absolute"
+        ratio="0.9"
+        :icon="icon"
+        :class="{ 'uk-invisible': !orderedBy }"
+      ></vk-icon>
     </a>
   </th>
 </template>
