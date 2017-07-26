@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import ModalDialog from './modal-dialog'
 import { on, css, hasClass, addClass, removeClass } from '@vuikit/util/es'
 import ModalMixin from 'lib/mixins/modal'
 const doc = document.documentElement
@@ -32,7 +33,7 @@ export default {
       render (h, { parent: vm }) {
         return vm.dialogIsOverriden
           ? vm.$slots.default
-          : h('vk-modal-dialog', vm.$slots.default)
+          : h(ModalDialog, vm.$slots.default)
       }
     }
   },
