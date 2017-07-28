@@ -60,6 +60,7 @@
     "poi": "^9.1.6",
     "popper.js": "^1.0.8",
     "uikit": "^3.0.0-beta.27",
+    "vue-loader": "^13.0.2",
     "vue-template-compiler": "^2.4.2"
   },
   "jest": {
