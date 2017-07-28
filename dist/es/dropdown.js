@@ -189,7 +189,9 @@ function isInteger (val) {
   return Number.isInteger(val)
 }
 
-
+function isArray (val) {
+  return Array.isArray(val)
+}
 
 /* https://github.com/sindresorhus/is-obj */
 function isObject (x) {
@@ -201,7 +203,9 @@ function isObject (x) {
  * Strict object type check. Only returns true
  * for plain JavaScript objects
  */
-
+function isPlainObject (obj) {
+  return toString(obj) === '[object Object]'
+}
 
 /* https://github.com/sindresorhus/is-fn */
 
@@ -242,7 +246,9 @@ function toNumber (value) {
 
 
 
-
+function toString (string) {
+  return Object.prototype.toString.call(string)
+}
 
 /* https://github.com/sindresorhus/arrify */
 
@@ -265,7 +271,29 @@ function each (obj, iterator) {
   return obj
 }
 
+function merge (target) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  args.forEach(function (source) {
+    _merge(target, source, true);
+  });
+  return target
+}
 
+function _merge (target, source, deep) {
+  for (var key in source) {
+    if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+      if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
+        target[key] = {};
+      }
+      if (isArray(source[key]) && !isArray(target[key])) {
+        target[key] = [];
+      }
+      _merge(target[key], source[key], deep);
+    } else if (source[key] !== undefined) {
+      target[key] = source[key];
+    }
+  }
+}
 
 
 
@@ -405,8 +433,10 @@ function getPosition$$1 (element, target, attach, targetAttach, offset$$1, targe
     });
   }
 
-  return Object.assign({}, flipped,
-    windowToPageOffset$$1(element, { left: position.left, top: position.top }))
+  return merge({},
+    flipped,
+    windowToPageOffset$$1(element, { left: position.left, top: position.top })
+  )
 }
 
 /*
@@ -579,12 +609,6 @@ var PositionMixin = {
   computed: {
     pos: function pos () {
       return (this.position + (!~this.position.indexOf('-') ? '-center' : '')).split('-')
-    },
-    dir: function dir () {
-      return this.pos[0]
-    },
-    align: function align () {
-      return this.pos[1]
     }
   },
   methods: {

@@ -414,7 +414,9 @@ function isObject (x) {
  * Strict object type check. Only returns true
  * for plain JavaScript objects
  */
-
+function isPlainObject (obj) {
+  return toString$1(obj) === '[object Object]'
+}
 
 /* https://github.com/sindresorhus/is-fn */
 function isFunction (obj) {
@@ -484,7 +486,29 @@ function each (obj, iterator) {
   return obj
 }
 
+function merge (target) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  args.forEach(function (source) {
+    _merge(target, source, true);
+  });
+  return target
+}
 
+function _merge (target, source, deep) {
+  for (var key in source) {
+    if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
+      if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
+        target[key] = {};
+      }
+      if (isArray(source[key]) && !isArray(target[key])) {
+        target[key] = [];
+      }
+      _merge(target[key], source[key], deep);
+    } else if (source[key] !== undefined) {
+      target[key] = source[key];
+    }
+  }
+}
 
 function range (start, stop, step) {
   if ( step === void 0 ) step = 1;
@@ -652,8 +676,10 @@ function getPosition$$1 (element, target, attach, targetAttach, offset$$1, targe
     });
   }
 
-  return Object.assign({}, flipped,
-    windowToPageOffset$$1(element, { left: position.left, top: position.top }))
+  return merge({},
+    flipped,
+    windowToPageOffset$$1(element, { left: position.left, top: position.top })
+  )
 }
 
 /*
@@ -2937,12 +2963,6 @@ var PositionMixin = {
   computed: {
     pos: function pos () {
       return (this.position + (!~this.position.indexOf('-') ? '-center' : '')).split('-')
-    },
-    dir: function dir () {
-      return this.pos[0]
-    },
-    align: function align () {
-      return this.pos[1]
     }
   },
   methods: {
@@ -3295,6 +3315,18 @@ var Icon = {
   }
 };
 
+var ModalDialog = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-dialog',
+      class: [data.staticClass]}), children)
+  }
+};
+
 var doc$1 = document.documentElement;
 var body = document.body;
 
@@ -3388,7 +3420,7 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
         return vm.dialogIsOverriden
           ? vm.$slots.default
-          : h('vk-modal-dialog', vm.$slots.default)
+          : h(ModalDialog, vm.$slots.default)
       }
     }
   },
@@ -3511,18 +3543,6 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
         this.$el.style.display = hasClass$$1(this.$el, 'uk-flex') ? '' : 'block';
       }
     }
-  }
-};
-
-var modalDialog = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-dialog',
-      class: [data.staticClass]}), children)
   }
 };
 
@@ -5202,7 +5222,7 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.10.8
+ * @version 1.11.0
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -5372,30 +5392,6 @@ function getScrollParent(element) {
   return getScrollParent(getParentNode(element));
 }
 
-function isOffsetContainer(element) {
-  var nodeName = element.nodeName;
-
-  if (nodeName === 'BODY') {
-    return false;
-  }
-  return nodeName === 'HTML' || element.firstElementChild.offsetParent === element;
-}
-
-/**
- * Finds the root node (document, shadowDOM root) of the given element
- * @method
- * @memberof Popper.Utils
- * @argument {Element} node
- * @returns {Element} root node
- */
-function getRoot(node) {
-  if (node.parentNode !== null) {
-    return getRoot(node.parentNode);
-  }
-
-  return node;
-}
-
 /**
  * Returns the offset parent of the given element
  * @method
@@ -5412,7 +5408,37 @@ function getOffsetParent(element) {
     return window.document.documentElement;
   }
 
+  // .offsetParent will return the closest TD or TABLE in case
+  // no offsetParent is present, I hate this job...
+  if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+    return getOffsetParent(offsetParent);
+  }
+
   return offsetParent;
+}
+
+function isOffsetContainer(element) {
+  var nodeName = element.nodeName;
+
+  if (nodeName === 'BODY') {
+    return false;
+  }
+  return nodeName === 'HTML' || getOffsetParent(element.firstElementChild) === element;
+}
+
+/**
+ * Finds the root node (document, shadowDOM root) of the given element
+ * @method
+ * @memberof Popper.Utils
+ * @argument {Element} node
+ * @returns {Element} root node
+ */
+function getRoot(node) {
+  if (node.parentNode !== null) {
+    return getRoot(node.parentNode);
+  }
+
+  return node;
 }
 
 /**
@@ -6117,10 +6143,10 @@ function isModifierEnabled(modifiers, modifierName) {
  * @method
  * @memberof Popper.Utils
  * @argument {String} property (camelCase)
- * @returns {String} prefixed property (camelCase)
+ * @returns {String} prefixed property (camelCase or PascalCase, depending on the vendor prefix)
  */
 function getSupportedPropertyName(property) {
-  var prefixes = [false, 'ms', 'webkit', 'moz', 'o'];
+  var prefixes = [false, 'ms', 'Webkit', 'Moz', 'O'];
   var upperProp = property.charAt(0).toUpperCase() + property.slice(1);
 
   for (var i = 0; i < prefixes.length - 1; i++) {
@@ -7831,7 +7857,7 @@ var lib = Object.freeze({
 	Icon: Icon,
 	Svg: Svg,
 	Modal: modal,
-	ModalDialog: modalDialog,
+	ModalDialog: ModalDialog,
 	ModalHeader: modalHeader,
 	ModalBody: modalBody,
 	ModalFooter: modalFooter,
@@ -7880,4 +7906,4 @@ if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vuikit$1);
 }
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, Icon, Svg, modal as Modal, modalDialog as ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;
+export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, Icon, Svg, modal as Modal, ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;

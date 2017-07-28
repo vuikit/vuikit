@@ -1,3 +1,15 @@
+var ModalDialog = {
+  functional: true,
+  render: function render (h, ref) {
+    var children = ref.children;
+    var data = ref.data;
+
+    return h('div', Object.assign({}, data,
+      {staticClass: 'uk-modal-dialog',
+      class: [data.staticClass]}), children)
+  }
+};
+
 var config = {
   silent: false // TODO: use Vue config instead
 };
@@ -442,7 +454,7 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
         return vm.dialogIsOverriden
           ? vm.$slots.default
-          : h('vk-modal-dialog', vm.$slots.default)
+          : h(ModalDialog, vm.$slots.default)
       }
     }
   },
@@ -629,18 +641,6 @@ var modalClose = {
   }
 };
 
-var modalDialog = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    return h('div', Object.assign({}, data,
-      {staticClass: 'uk-modal-dialog',
-      class: [data.staticClass]}), children)
-  }
-};
-
 var modalFooter = {
   functional: true,
   render: function render (h, ref) {
@@ -665,4 +665,4 @@ var modalHeader = {
   }
 };
 
-export { modal as Modal, modalBody as ModalBody, modalCaption as ModalCaption, modalClose as ModalClose, modalDialog as ModalDialog, modalFooter as ModalFooter, modalHeader as ModalHeader };
+export { modal as Modal, modalBody as ModalBody, modalCaption as ModalCaption, modalClose as ModalClose, ModalDialog, modalFooter as ModalFooter, modalHeader as ModalHeader };
