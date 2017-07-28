@@ -26,12 +26,6 @@ export default {
   computed: {
     pos () {
       return (this.position + (!~this.position.indexOf('-') ? '-center' : '')).split('-')
-    },
-    dir () {
-      return this.pos[0]
-    },
-    align () {
-      return this.pos[1]
     }
   },
   methods: {
