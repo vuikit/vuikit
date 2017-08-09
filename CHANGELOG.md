@@ -3,6 +3,7 @@
 ### WIP
 
  - Fixed Datepicker disabled dates evaluation
+ - Fixed IE e.target.selectedOptions bug affecting Calendar
 
 ### 0.6.2
 
