@@ -8,6 +8,15 @@
 
 While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by providing native, unopinionated, components outputting UIkit layout.
 
+## Supporting Vuikit
+
+Special thanks to the supporters who help pushing this project forward.
+
+<p align="center">
+  <br />
+  <a href="http://www.zoolanders.com"><img width="150px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/zoolanders.png"></a>
+</p>
+
 ## Documentation and examples
 
 There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information about each component. As well as a [codepen](http://codepen.io/miljan/pen/YWXVKj) playground.
@@ -113,7 +122,7 @@ You can use UIkit themes out of a box with few exceptions you should be aware of
 
 UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. The solution is to reset those and apply new ones.
 
-```css
+```less
 .hook-modal() {
   // reset hardcoded transitions
   display: inherit;
@@ -157,12 +166,46 @@ UIkit Modal transitions are hardcoded plus incompatible with Vue transitions. Th
 
 Similar as with Modal, Dropdown transition styles must be reseted.
 
-```css
+```less
 // reset hardcoded transitions
 .hook-dropdown-misc() {
   .uk-dropdown,
   .uk-dropdown-blank {
     display: inherit;
+  }
+}
+```
+
+### Offcanvas
+
+```less
+@offcanvas-transition-speed: .3s;
+@offcanvas-transition-timing: ease;
+
+.hook-offcanvas() {
+  // null hardcoded transitions
+  display: inherit;
+  // necessary for Vue transition hooks
+  transition-duration: @offcanvas-transition-speed;
+}
+
+.hook-offcanvas-bar() {
+  // apply new transitions
+  -webkit-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  transform: translateX(-100%);
+  transition: transform @offcanvas-transition-speed @offcanvas-transition-timing;
+}
+
+.hook-offcanvas-misc() {
+  .uk-offcanvas-page {
+    transition: margin-left @offcanvas-transition-speed @offcanvas-transition-timing;
+  }
+  .uk-offcanvas-page-open .uk-offcanvas-bar,
+  .uk-offcanvas-page-open .uk-offcanvas-bar {
+    -webkit-transform: translateX(0%);
+    -ms-transform: translateX(0%); // IE9
+    transform: translateX(0%);
   }
 }
 ```
@@ -177,6 +220,6 @@ Until Vuikit reaches a 1.0 release, breaking changes will be released with a new
 
 ## License
 
-Vuikit is open source and released under the [MIT License](LICENSE.md).
+Vuikit is open source and released under the [MIT License](LICENSE).
 
-Copyright (c) 2016 ZOOlanders.com
+Copyright (c) 2016-present, [Miljan Aleksic](https://twitter.com/AleksicMiljan)

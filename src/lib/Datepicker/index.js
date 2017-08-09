@@ -49,10 +49,10 @@ export default {
       return this.datesMoments.some(d => d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD'))
     },
     isDisabled (date) {
-      return this.disabledDatesMoments.some(d =>
-        d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD') ||
-        !date.isBetween(this.minMoment, this.maxMoment)
-      )
+      return !date.isBetween(this.minMoment, this.maxMoment) ||
+        this.disabledDatesMoments.some(d =>
+          d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD')
+        )
     },
     toggle (date) {
       this.isPicked(date)

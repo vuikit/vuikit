@@ -27,7 +27,7 @@ export default {
               display: parent.date.format('MMMM'),
               options: parent.listMonths,
               onChange: e => {
-                parent.selectedMonth = e.target.selectedOptions[0].value
+                parent.selectedMonth = e.target.value
               }
             }
           })}
@@ -38,7 +38,7 @@ export default {
               display: parent.date.format('YYYY'),
               options: parent.listYears,
               onChange: e => {
-                parent.selectedYear = e.target.selectedOptions[0].value
+                parent.selectedYear = e.target.value
               }
             }
           })}

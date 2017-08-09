@@ -1,6 +1,6 @@
 /*!
- * Vuikit v0.6.2 (https://github.com/vuikit/vuikit)
- * (c) 2016 ZOOlanders
+ * Vuikit v0.6.3 (https://github.com/vuikit/vuikit)
+ * (c) 2017 ZOOlanders
  * Released under the MIT License.
  */
 module.exports =
@@ -920,10 +920,8 @@ module.exports =
 	      });
 	    },
 	    isDisabled: function isDisabled(date) {
-	      var _this = this;
-
-	      return this.disabledDatesMoments.some(function (d) {
-	        return d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD') || !date.isBetween(_this.minMoment, _this.maxMoment);
+	      return !date.isBetween(this.minMoment, this.maxMoment) || this.disabledDatesMoments.some(function (d) {
+	        return d.format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
 	      });
 	    },
 	    toggle: function toggle(date) {
@@ -1880,7 +1878,7 @@ module.exports =
 	            display: parent.date.format('MMMM'),
 	            options: parent.listMonths,
 	            onChange: function onChange(e) {
-	              parent.selectedMonth = e.target.selectedOptions[0].value;
+	              parent.selectedMonth = e.target.value;
 	            }
 	          }
 	        }), "\xA0", h(Select, {
@@ -1889,7 +1887,7 @@ module.exports =
 	            display: parent.date.format('YYYY'),
 	            options: parent.listYears,
 	            onChange: function onChange(e) {
-	              parent.selectedYear = e.target.selectedOptions[0].value;
+	              parent.selectedYear = e.target.value;
 	            }
 	          }
 	        })]
