@@ -1,4 +1,4 @@
-import { isInteger } from '@vuikit/util/es'
+import { isInteger } from '@vuikit/util'
 
 export default {
   functional: true,

@@ -9,7 +9,7 @@ import {
   Animation,
   removeClass,
   toggleClass
-} from '@vuikit/util/es'
+} from '@vuikit/util'
 
 // let dir
 let scroll = 0

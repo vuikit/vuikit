@@ -1,112 +1,132 @@
-const fs = require('fs')
 const path = require('path')
-const util = require('@vuikit/util')
-const alias = require('./alias.js')
+const nodeResolve = require('rollup-plugin-node-resolve')
+const vue = require('rollup-plugin-vue')
+const buble = require('rollup-plugin-buble')
+const rollupAlias = require('rollup-plugin-alias')
+
+const lumpit = require('@lump/it')
+const task = require('@lump/task')
+const remove = require('@lump/remove')
+const rollup = require('@lump/rollup')
+const minify = require('@lump/minify')
+const less = require('@lump/less')
+const bannerit = require('@lump/banner')
+
 const pkg = require('../package.json')
+const alias = require('./alias.js')
 
-util.checkNode(pkg.engines)
+const banner = `/*
+* Vuikit ${pkg.version}
+* (c) ${(new Date()).getFullYear()} Miljan Aleksic
+* Released under the ${pkg.license} License.
+*/`
 
-util.run(async _ => {
+const rollupSharedConfig = {
+  plugins: [
+    nodeResolve({
+      extensions: [ '.js', '.json', '.vue' ]
+    }),
+    vue({
+      compileTemplate: true
+    }),
+    buble({
+      objectAssign: 'Object.assign',
+      jsx: 'h'
+    }),
+    rollupAlias(alias)
+  ]
+}
 
-  await util.task({
-    text: 'Build',
-    task: () => Promise.all([
-      buildCommon(),
-      buildEs(),
-      buildUmd(),
-      ...getEsBuilds().map(async (build) => {
-        await util.buildRollup(build)
-      })
-    ])
-  })
-
-  await util.compileLess({
-    src: 'src/less/theme.less',
-    dest: 'dist/vuikit.css',
-    options: {
-      relativeUrls: true,
-      rootpath: '../../',
-      paths: ['src/less/']
-    }
-  })
-
-  await util.fileMinify({
-    src: 'dist/vuikit.css'
-  })
-
-  await util.banner({
-    src: 'dist/*',
-    product: 'Vuikit',
-    version: pkg.version,
-    license: pkg.license,
-    author: 'Miljan Aleksic'
-  })
-
+const rollupCommonConfig = Object.assign({}, rollupSharedConfig, {
+  entry: resolve('build/prod/dist.js'),
+  dest: resolve('dist/vuikit.common.js'),
+  format: 'cjs',
+  external: [
+    '@vuikit/util'
+  ]
 })
 
-async function buildCommon () {
-  util.buildRollup({
-    entry: resolve('build/prod/dist.js'),
-    dest: resolve('dist/vuikit.common.js'),
-    format: 'cjs',
-    env: 'development',
-    alias
-  })
-}
+const rollupEsmConfig = Object.assign({}, rollupSharedConfig, {
+  entry: resolve('build/prod/dist-esm.js'),
+  dest: resolve('dist/vuikit.esm.js'),
+  format: 'es',
+  external: [
+    '@vuikit/util'
+  ]
+})
 
-async function buildEs () {
-  await util.buildRollup({
-    entry: resolve('build/prod/dist-esm.js'),
-    dest: resolve('dist/vuikit.esm.js'),
-    format: 'es',
-    env: 'development',
-    alias
-  })
-}
+const rollupUmdConfig = Object.assign({}, rollupSharedConfig, {
+  entry: resolve('build/prod/dist.js'),
+  dest: resolve('dist/vuikit.js'),
+  format: 'umd',
+  moduleName: 'Vuikit'
+})
 
-async function buildUmd () {
-  await util.buildRollup({
-    entry: resolve('build/prod/dist.js'),
-    dest: resolve('dist/vuikit.js'),
-    format: 'umd',
-    env: 'production',
-    moduleName: 'Vuikit',
-    alias
-  })
+lumpit(async () => {
+  await remove('dist')
 
-  await util.fileMinify({
-    src: 'dist/vuikit.js'
-  })
-
-  // override umd with development env
-  await util.buildRollup({
-    entry: resolve('build/prod/dist.js'),
-    dest: resolve('dist/vuikit.js'),
-    format: 'umd',
-    env: 'development',
-    moduleName: 'Vuikit',
-    alias
-  })
-}
-
-function getEsBuilds () {
-  return getDirectories(
-    resolve('src/js/components/')
-  ).map(component => {
-    return {
-      entry: resolve(`src/js/components/${component}/index.js`),
-      dest: resolve(`dist/es/${component}.js`),
-      alias,
-      format: 'es',
+  await task({
+    text: 'Build Common',
+    exec: () => rollup({
+      config: rollupCommonConfig
+    }, {
       env: 'development'
+    })
+  })
+
+  await task({
+    text: 'Build ES',
+    exec: () => rollup({
+      config: rollupEsmConfig
+    }, {
+      env: 'development'
+    })
+  })
+
+  await task({
+    text: 'Build UMD',
+    exec: async () => {
+      await rollup({
+        config: rollupUmdConfig
+      }, {
+        env: 'production'
+      })
+      await minify({
+        src: 'dist/vuikit.js',
+        sourceMap: true
+      })
+      await rollup({
+        config: rollupUmdConfig
+      }, {
+        env: 'development'
+      })
     }
   })
-}
 
-function getDirectories (srcpath) {
-  return fs.readdirSync(srcpath)
-    .filter(file => fs.lstatSync(path.join(srcpath, file)).isDirectory())
-}
+  await task({
+    text: 'Compile Theme',
+    exec: async () => {
+      await less({
+        src: 'src/less/theme.less',
+        dest: 'dist/vuikit.css',
+        options: {
+          relativeUrls: true,
+          rootpath: '../../',
+          paths: ['src/less/']
+        }
+      })
+
+      await minify({
+        src: 'dist/vuikit.css'
+      })
+    }
+  })
+
+  await bannerit({
+    src: 'dist/*.{js,css}',
+    banner
+  })
+})
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)

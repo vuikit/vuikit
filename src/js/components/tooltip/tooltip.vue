@@ -11,7 +11,7 @@
 
 <script>
 import PopperMixin from 'lib/mixins/popper'
-import { on, offAll } from '@vuikit/util/es'
+import { on, offAll } from '@vuikit/util'
 
 let onMouseenter
 let onMouseleave

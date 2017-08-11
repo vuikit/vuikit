@@ -1,4 +1,4 @@
-import { on, offAll } from '@vuikit/util/es'
+import { on, offAll } from '@vuikit/util'
 
 const doc = document.documentElement
 const body = document.body

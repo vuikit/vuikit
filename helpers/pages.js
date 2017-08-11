@@ -1,4 +1,4 @@
-import { each, isArray } from '@vuikit/util/es'
+import { each, isArray } from '@vuikit/util'
 import pick from 'lodash-es/pick'
 
 export default function (compProps, pageProps) {

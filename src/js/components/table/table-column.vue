@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { get } from '@vuikit/util/es'
+import { get } from '@vuikit/util'
 
 export default {
   name: 'VkTableColumn',

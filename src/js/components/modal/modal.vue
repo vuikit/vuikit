@@ -20,7 +20,7 @@
 
 <script>
 import ModalDialog from './modal-dialog'
-import { on, css, hasClass, addClass, removeClass } from '@vuikit/util/es'
+import { on, css, hasClass, addClass, removeClass } from '@vuikit/util'
 import ModalMixin from 'lib/mixins/modal'
 const doc = document.documentElement
 

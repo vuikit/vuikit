@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { warn } from '@vuikit/util/es'
+import { warn } from '@vuikit/util'
 import Checkbox from './checkbox'
 import { joinClasses } from '../util'
 

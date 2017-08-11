@@ -1,4 +1,4 @@
-import { warn } from '@vuikit/util/es'
+import { warn } from '@vuikit/util'
 
 export default {
   components: {
