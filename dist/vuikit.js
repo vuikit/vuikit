@@ -1,8 +1,8 @@
 /*
- * Vuikit 0.7.0
- * (c) 2017 Miljan Aleksic
- * Released under the MIT License.
- */
+* Vuikit 0.7.0
+* (c) 2017 Miljan Aleksic
+* Released under the MIT License.
+*/
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -127,7 +127,7 @@ var formatComponentName;
 {
   var hasConsole = typeof console !== 'undefined';
   var classifyRE = /(?:^|[-_])(\w)/g;
-  var classify = function (str) { return str
+  var classify$1 = function (str) { return str
     .replace(classifyRE, function (c) { return c.toUpperCase(); })
     .replace(/[-_]/g, ''); };
 
@@ -166,7 +166,7 @@ var formatComponentName;
     }
 
     return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
+      (name ? ("<" + (classify$1(name)) + ">") : "<Anonymous>") +
       (file && includeFile !== false ? (" at " + file) : '')
     )
   };
@@ -349,8 +349,6 @@ function _on (el, type, listener, namespace) {
   el.addEventListener(type, listener);
 }
 
-
-
 function offAll$$1 (namespace) {
   if ( namespace === void 0 ) namespace = 'default';
 
@@ -383,13 +381,9 @@ function promise (executor) {
   return new window.Promise(executor)
 }
 
-function classify$1 (str) {
+function classify (str) {
   return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
 }
-
-
-
-
 // export function isNumber(value) {
 //     return typeof value === 'number';
 // }
@@ -414,14 +408,6 @@ function isArray (val) {
 function isObject (x) {
   var type = typeof x;
   return x !== null && (type === 'object' || type === 'function')
-}
-
-/**
- * Strict object type check. Only returns true
- * for plain JavaScript objects
- */
-function isPlainObject (obj) {
-  return toString$1(obj) === '[object Object]'
 }
 
 /* https://github.com/sindresorhus/is-fn */
@@ -454,23 +440,9 @@ function toNumber (value) {
     ? number
     : false
 }
-//
-// export function toList(value) {
-//     return isArray(value)
-//         ? value
-//         : isString(value)
-//             ? value.split(',').map(value => value.trim())
-//             : [value];
-// }
-
-
-
 function toString$1 (string) {
   return Object.prototype.toString.call(string)
 }
-
-/* https://github.com/sindresorhus/arrify */
-
 
 function inArray (array, value) {
   return (array || []).indexOf(value) !== -1
@@ -490,30 +462,6 @@ function each (obj, iterator) {
     }
   }
   return obj
-}
-
-function merge (target) {
-  var args = Array.prototype.slice.call(arguments, 1);
-  args.forEach(function (source) {
-    _merge(target, source, true);
-  });
-  return target
-}
-
-function _merge (target, source, deep) {
-  for (var key in source) {
-    if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-      if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
-        target[key] = {};
-      }
-      if (isArray(source[key]) && !isArray(target[key])) {
-        target[key] = [];
-      }
-      _merge(target[key], source[key], deep);
-    } else if (source[key] !== undefined) {
-      target[key] = source[key];
-    }
-  }
 }
 
 function range (start, stop, step) {
@@ -553,7 +501,6 @@ function toMs (time) {
 
 // export const Observer = window.MutationObserver || window.WebKitMutationObserver
 var requestAnimationFrame$1 = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 1000 / 60) };
-
 //
 // export const hasTouch = 'ontouchstart' in window
 //     || window.DocumentTouch && document instanceof DocumentTouch
@@ -597,9 +544,9 @@ var animationend = prefix('animation', 'animation-end');
 // }
 //
 function prefix (name, event) {
-  var ucase = classify$1(name);
-  var lowered = classify$1(event).toLowerCase();
-  var classified = classify$1(event);
+  var ucase = classify(name);
+  var lowered = classify(event).toLowerCase();
+  var classified = classify(event);
   var element = document.body || document.documentElement;
   var names = {};
   names[("Webkit" + ucase)] = ("webkit" + classified);
@@ -612,6 +559,25 @@ function prefix (name, event) {
       return names[name]
     }
   }
+}
+
+// https://github.com/UmbraEngineering/node-merge-recursive/blob/master/lib/index.js
+
+// Flat merge
+function merge (host) {
+  var donors = slice(arguments, 1);
+  donors.forEach(function (donor) {
+    Object.keys(donor).forEach(function (key) {
+      host[key] = donor[key];
+    });
+  });
+  return host
+}
+
+// Helpers
+
+function slice (arr, i) {
+  return Array.prototype.slice.call(arr, i)
 }
 
 var dirs = {
@@ -4363,7 +4329,7 @@ var sticky = {
     }
 
     // warn multiple elements
-    if ("development" !== 'production' && children.length > 1) {
+    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
       warn(
         '<vk-sticky> can only be used on a single element.',
         this.$parent
@@ -5228,7 +5194,7 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.11.0
+ * @version 1.11.1
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -5327,7 +5293,7 @@ var supportsNativeMutationObserver = isBrowser && isNative(window.MutationObserv
 * @argument {Function} fn
 * @returns {Function}
 */
-var debounce = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce;
+var debounce$1 = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce;
 
 /**
  * Check if the given variable is a function
@@ -6908,7 +6874,7 @@ function parseOffset(offset, popperOffsets, referenceOffsets, basePlacement) {
  * The offset value as described in the modifier description
  * @returns {Object} The data object, properly modified
  */
-function offset$1(data, _ref) {
+function offset(data, _ref) {
   var offset = _ref.offset;
   var placement = data.placement,
       _data$offsets = data.offsets,
@@ -7170,7 +7136,7 @@ var modifiers = {
     /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
     enabled: true,
     /** @prop {ModifierFn} */
-    fn: offset$1,
+    fn: offset,
     /** @prop {Number|String} offset=0
      * The offset value as described in the modifier description
      */
@@ -7523,7 +7489,7 @@ var Popper = function () {
     };
 
     // make update() debounced, so that it only runs at most once-per-tick
-    this.update = debounce(this.update.bind(this));
+    this.update = debounce$1(this.update.bind(this));
 
     // with {} we create a new object with the options inside it
     this.options = _extends({}, Popper.Defaults, options);

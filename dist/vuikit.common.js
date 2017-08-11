@@ -1,10 +1,12 @@
 /*
- * Vuikit 0.7.0
- * (c) 2017 Miljan Aleksic
- * Released under the MIT License.
- */
+* Vuikit 0.7.0
+* (c) 2017 Miljan Aleksic
+* Released under the MIT License.
+*/
 
 'use strict';
+
+var _vuikit_util = require('@vuikit/util');
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkBreadcrumb',
@@ -16,7 +18,7 @@ var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   },
   computed: {
     items: {
-      get: function get () {
+      get: function get$$1 () {
         return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-breadcrumb-item'; }
         )
       },
@@ -107,729 +109,6 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var config = {
-  silent: false // TODO: use Vue config instead
-};
-
-/**
- * Perform no operation.
- */
-function noop () {}
-
-var warn = noop;
-var tip = noop;
-var formatComponentName;
-
-{
-  var hasConsole = typeof console !== 'undefined';
-  var classifyRE = /(?:^|[-_])(\w)/g;
-  var classify = function (str) { return str
-    .replace(classifyRE, function (c) { return c.toUpperCase(); })
-    .replace(/[-_]/g, ''); };
-
-  warn = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.error("[Vuikit warn]: " + msg + (
-        vm ? generateComponentTrace(vm) : ''
-      ));
-    }
-  };
-
-  tip = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.warn("[Vue tip]: " + msg + (
-        vm ? generateComponentTrace(vm) : ''
-      ));
-    }
-  };
-
-  formatComponentName = function (vm, includeFile) {
-    if (vm.$root === vm) {
-      return '<Root>'
-    }
-    var name = typeof vm === 'string'
-      ? vm
-      : typeof vm === 'function' && vm.options
-        ? vm.options.name
-        : vm._isVue
-          ? vm.$options.name || vm.$options._componentTag
-          : vm.name;
-
-    var file = vm._isVue && vm.$options.__file;
-    if (!name && file) {
-      var match = file.match(/([^/\\]+)\.vue$/);
-      name = match && match[1];
-    }
-
-    return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
-      (file && includeFile !== false ? (" at " + file) : '')
-    )
-  };
-
-  var repeat = function (str, n) {
-    var res = '';
-    while (n) {
-      if (n % 2 === 1) { res += str; }
-      if (n > 1) { str += str; }
-      n >>= 1;
-    }
-    return res
-  };
-
-  var generateComponentTrace = function (vm) {
-    if (vm._isVue && vm.$parent) {
-      var tree = [];
-      var currentRecursiveSequence = 0;
-      while (vm) {
-        if (tree.length > 0) {
-          var last = tree[tree.length - 1];
-          if (last.constructor === vm.constructor) {
-            currentRecursiveSequence++;
-            vm = vm.$parent;
-            continue
-          } else if (currentRecursiveSequence > 0) {
-            tree[tree.length - 1] = [last, currentRecursiveSequence];
-            currentRecursiveSequence = 0;
-          }
-        }
-        tree.push(vm);
-        vm = vm.$parent;
-      }
-      return '\n\nfound in\n\n' + tree
-        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
-            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
-            : formatComponentName(vm))); })
-        .join('\n')
-    } else {
-      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
-    }
-  };
-}
-
-var isRtl$$1 = document.documentElement.getAttribute('dir') === 'rtl';
-
-var Animation$$1 = {
-  in: function in$1 (element, animation, duration, origin) {
-    return animate$$1(element, animation, duration, origin, false)
-  },
-  out: function out (element, animation, duration, origin) {
-    return animate$$1(element, animation, duration, origin, true)
-  },
-  inProgress: function inProgress (element) {
-    return hasClass$$1(element, 'uk-animation-enter') || hasClass$$1(element, 'uk-animation-leave')
-  },
-  cancel: function cancel (element) {
-    var event = document.createEvent('Event');
-    event.initEvent('animationend', true, true);
-    element.dispatchEvent(event);
-    return event.promise || Promise.resolve()
-  }
-};
-
-function animate$$1 (element, animation, duration, origin, out) {
-  if ( duration === void 0 ) duration = 200;
-
-  var p = promise(function (resolve) {
-    var cls = out ? 'uk-animation-leave' : 'uk-animation-enter';
-
-    if (animation.lastIndexOf('uk-animation-', 0) === 0) {
-      if (origin) {
-        animation += " uk-animation-" + origin;
-      }
-      if (out) {
-        animation += ' uk-animation-reverse';
-      }
-    }
-
-    reset();
-
-    one$$1(element, animationend || 'animationend', function (e) {
-      e.promise = p;
-      p.then(reset);
-      resolve();
-    });
-    css$$1(element, 'animation-duration', (duration + "ms"));
-    addClass$$1(element, (cls + " " + animation));
-
-    if (!animationend) {
-      requestAnimationFrame$1(function () { return Animation$$1.cancel(element); });
-    }
-
-    function reset () {
-      css$$1(element, 'animation-duration', '');
-      removeClass$$1(element, (cls + " " + animation));
-    }
-  });
-
-  return p
-}
-
-/* Add/Remove class */
-
-function hasClass$$1 (el, className) {
-  return el.classList.contains(className)
-}
-
-function addClass$$1 (el, classes) {
-  return sanitizeClasses(classes).forEach(function (className) { return _addClass(el, className); })
-}
-
-function _addClass (el, className) {
-  el.classList.add(className);
-}
-
-function removeClass$$1 (el, classes) {
-  return sanitizeClasses(classes).forEach(function (className) { return _removeClass$$1(el, className); })
-}
-
-function _removeClass$$1 (el, className) {
-  el.classList.remove(className);
-}
-
-function toggleClass$$1 (el, className, state) {
-  if ( state === void 0 ) state = null;
-
-  if (state !== null) {
-    return state
-      ? addClass$$1(el, className)
-      : removeClass$$1(el, className)
-  }
-
-  return hasClass$$1(el, className)
-    ? removeClass$$1(el, className)
-    : addClass$$1(el, className)
-}
-
-// export function attrFilter (element, attr, pattern, replacement) {
-//   element = $(element)
-//   return element.attr(attr, (i, value) => value ? value.replace(pattern, replacement) : value)
-// }
-//
-// export function removeClass (element, cls) {
-//   return attrFilter(element, 'class', new RegExp(`(^|\\s)${cls}(?!\\S)`, 'g'), '')
-// }
-
-function sanitizeClasses (classes) {
-  return classes.split(' ').filter(function (c) { return c; })
-}
-
-/* Retrieve style */
-
-function css$$1 (el, style, value) {
-  // retrieve
-  if (isUndefined(value)) {
-    // return window.getComputedStyle(el)[style]
-    return window.getComputedStyle
-      ? window.getComputedStyle(el, null)[style]
-      : el.currentStyle[style]
-  }
-  // or add style
-  el.style[style] = value;
-}
-
-/* Events */
-
-var boundEvents = [];
-
-// add event listener shorthand
-function on$$1 (el, type, listener, namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  type.split(' ').forEach(function (type) { return _on(el, type, listener, namespace); });
-}
-
-function _on (el, type, listener, namespace) {
-  boundEvents[namespace] = boundEvents[namespace] || [];
-  boundEvents[namespace].push({ el: el, type: type, listener: listener });
-  el.addEventListener(type, listener);
-}
-
-
-
-function offAll$$1 (namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  if (boundEvents[namespace] !== undefined) {
-    for (var i = 0; i < boundEvents[namespace].length; ++i) {
-      var ref = boundEvents[namespace][i];
-      var el = ref.el;
-      var type = ref.type;
-      var listener = ref.listener;
-      el.removeEventListener(type, listener);
-    }
-    delete boundEvents[namespace];
-  }
-}
-
-function one$$1 (el, type, listener) {
-  var finalCallback = function (e) {
-    listener(e);
-    el.removeEventListener(type, finalCallback);
-  };
-  el.addEventListener(type, finalCallback);
-}
-
-// force redraw/repaint for WebKit
-function forceRedraw$$1 (el) {
-  el.offsetHeight; // eslint-disable-line
-}
-
-function promise (executor) {
-  return new window.Promise(executor)
-}
-
-function classify$1 (str) {
-  return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
-}
-
-
-
-
-// export function isNumber(value) {
-//     return typeof value === 'number';
-// }
-//
-function isUndefined (value) {
-  return value === undefined
-}
-
-function isString (val) {
-  return typeof val === 'string'
-}
-
-function isInteger (val) {
-  return Number.isInteger(val)
-}
-
-function isArray (val) {
-  return Array.isArray(val)
-}
-
-/* https://github.com/sindresorhus/is-obj */
-function isObject (x) {
-  var type = typeof x;
-  return x !== null && (type === 'object' || type === 'function')
-}
-
-/**
- * Strict object type check. Only returns true
- * for plain JavaScript objects
- */
-function isPlainObject (obj) {
-  return toString$1(obj) === '[object Object]'
-}
-
-/* https://github.com/sindresorhus/is-fn */
-function isFunction (obj) {
-  return toString$1(obj) === '[object Function]'
-}
-
-//
-// export function isContextSelector(selector) {
-//     return isString(selector) && selector.match(/^(!|>|\+|-)/);
-// }
-//
-// export function getContextSelectors(selector) {
-//     return isContextSelector(selector) && selector.split(/(?=\s(?:!|>|\+|-))/g).map(value => value.trim());
-// }
-//
-// export function toBoolean(value) {
-//     return typeof value === 'boolean'
-//         ? value
-//         : value === 'true' || value == '1' || value === ''
-//             ? true
-//             : value === 'false' || value == '0'
-//                 ? false
-//                 : value;
-// }
-//
-function toNumber (value) {
-  var number = Number(value);
-  return !isNaN(number)
-    ? number
-    : false
-}
-//
-// export function toList(value) {
-//     return isArray(value)
-//         ? value
-//         : isString(value)
-//             ? value.split(',').map(value => value.trim())
-//             : [value];
-// }
-
-
-
-function toString$1 (string) {
-  return Object.prototype.toString.call(string)
-}
-
-/* https://github.com/sindresorhus/arrify */
-
-
-function inArray (array, value) {
-  return (array || []).indexOf(value) !== -1
-}
-
-function each (obj, iterator) {
-  var i, key;
-  if (isInteger(obj.length)) {
-    for (i = 0; i < obj.length; i++) {
-      iterator.call(obj[i], obj[i], i);
-    }
-  } else if (isObject(obj)) {
-    for (key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        iterator.call(obj[key], obj[key], key);
-      }
-    }
-  }
-  return obj
-}
-
-function merge (target) {
-  var args = Array.prototype.slice.call(arguments, 1);
-  args.forEach(function (source) {
-    _merge(target, source, true);
-  });
-  return target
-}
-
-function _merge (target, source, deep) {
-  for (var key in source) {
-    if (deep && (isPlainObject(source[key]) || isArray(source[key]))) {
-      if (isPlainObject(source[key]) && !isPlainObject(target[key])) {
-        target[key] = {};
-      }
-      if (isArray(source[key]) && !isArray(target[key])) {
-        target[key] = [];
-      }
-      _merge(target[key], source[key], deep);
-    } else if (source[key] !== undefined) {
-      target[key] = source[key];
-    }
-  }
-}
-
-function range (start, stop, step) {
-  if ( step === void 0 ) step = 1;
-
-  if (typeof stop === 'undefined') {
-    stop = start;
-    start = 0;
-  }
-  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + (i * step); })
-}
-
-/**
- * Gets the value at `path` of `object`. If the resolved value is
- * `undefined`, the `defaultValue` is returned in its place.
- */
-function get (object, path, defaultValue) {
-  var result = isObject(object) && isString(path)
-    ? baseGet(object, path)
-    : undefined;
-  return result === undefined
-    ? defaultValue
-    : result
-}
-
-function baseGet (object, path) {
-  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, object)
-}
-
-function toMs (time) {
-  return !time
-    ? 0
-    : time.substr(-2) === 'ms'
-      ? parseFloat(time)
-      : parseFloat(time) * 1000
-}
-
-// export const Observer = window.MutationObserver || window.WebKitMutationObserver
-var requestAnimationFrame$1 = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 1000 / 60) };
-
-//
-// export const hasTouch = 'ontouchstart' in window
-//     || window.DocumentTouch && document instanceof DocumentTouch
-//     || navigator.msPointerEnabled && navigator.msMaxTouchPoints > 0 // IE 10
-//     || navigator.pointerEnabled && navigator.maxTouchPoints > 0; // IE >=11
-//
-// export const pointerDown = !hasTouch ? 'mousedown' : window.PointerEvent ? 'pointerdown' : 'touchstart';
-// export const pointerMove = !hasTouch ? 'mousemove' : window.PointerEvent ? 'pointermove' : 'touchmove';
-// export const pointerUp = !hasTouch ? 'mouseup' : window.PointerEvent ? 'pointerup' : 'touchend';
-// export const pointerEnter = hasTouch && window.PointerEvent ? 'pointerenter' : 'mouseenter';
-// export const pointerLeave = hasTouch && window.PointerEvent ? 'pointerleave' : 'mouseleave';
-//
-var transitionstart = prefix('transition', 'transition-start');
-var transitionend = prefix('transition', 'transition-end');
-var animationstart = prefix('animation', 'animation-start');
-var animationend = prefix('animation', 'animation-end');
-//
-// export function getStyle(element, property, pseudoElt) {
-//     return (window.getComputedStyle(element, pseudoElt) || {})[property];
-// }
-//
-// export function getCssVar(name) {
-//
-//     /* usage in css:  .var-name:before { content:"xyz" } */
-//
-//     var val, doc = document.documentElement,
-//         element = doc.appendChild(document.createElement('div'));
-//
-//     element.classList.add(`var-${name}`);
-//
-//     try {
-//
-//         val = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1');
-//         val = JSON.parse(val);
-//
-//     } catch (e) {}
-//
-//     doc.removeChild(element);
-//
-//     return val || undefined;
-// }
-//
-function prefix (name, event) {
-  var ucase = classify$1(name);
-  var lowered = classify$1(event).toLowerCase();
-  var classified = classify$1(event);
-  var element = document.body || document.documentElement;
-  var names = {};
-  names[("Webkit" + ucase)] = ("webkit" + classified);
-  names[("Moz" + ucase)] = lowered;
-  names[("o" + ucase)] = ("o" + classified + " o" + lowered);
-  names[name] = lowered;
-
-  for (name in names) {
-    if (element.style[name] !== undefined) {
-      return names[name]
-    }
-  }
-}
-
-var dirs = {
-  x: ['width', 'left', 'right'],
-  y: ['height', 'top', 'bottom']
-};
-
-function getPosition$$1 (element, target, attach, targetAttach, offset$$1, targetOffset, flip, boundary) {
-  var dim = getDimensions$$1(element);
-  var targetDim = getDimensions$$1(target);
-  var position = targetDim;
-
-  attach = getPos(attach);
-  targetAttach = getPos(targetAttach);
-
-  moveTo(position, attach, dim, -1);
-  moveTo(position, targetAttach, targetDim, 1);
-
-  offset$$1 = getOffsets(offset$$1, dim.width, dim.height);
-  targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height);
-
-  offset$$1['x'] += targetOffset['x'];
-  offset$$1['y'] += targetOffset['y'];
-
-  position.left += offset$$1['x'];
-  position.top += offset$$1['y'];
-
-  boundary = getDimensions$$1(boundary || window);
-
-  var flipped = {element: attach, target: targetAttach};
-
-  if (flip) {
-    each(dirs, function (ref, dir) {
-      var prop = ref[0];
-      var align = ref[1];
-      var alignFlip = ref[2];
-
-      if (!(flip === true || ~flip.indexOf(dir))) {
-        return
-      }
-
-      var elemOffset = attach[dir] === align
-        ? -dim[prop]
-        : attach[dir] === alignFlip
-          ? dim[prop]
-          : 0;
-      var targetOffset = targetAttach[dir] === align
-        ? targetDim[prop]
-        : targetAttach[dir] === alignFlip
-          ? -targetDim[prop]
-          : 0;
-
-      if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
-        var newVal = position[align] + elemOffset + targetOffset - offset$$1[dir] * 2;
-
-        if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
-          position[align] = newVal
-
-          ;['element', 'target'].forEach(function (el) {
-            flipped[el][dir] = !elemOffset
-              ? flipped[el][dir]
-              : flipped[el][dir] === dirs[dir][1]
-                ? dirs[dir][2]
-                : dirs[dir][1];
-          });
-        }
-      }
-    });
-  }
-
-  return merge({},
-    flipped,
-    windowToPageOffset$$1(element, { left: position.left, top: position.top })
-  )
-}
-
-/*
- * Translate top and left window relative coordinates to
- * document relative ones.
- */
-function windowToPageOffset$$1 (element, coords) {
-  var parentOffset = offset$$1(offsetParent(element));
-  var props = {
-    top: coords.top - parentOffset.top,
-    left: coords.left - parentOffset.left
-  };
-  return props
-}
-
-/*
- * Get position of the element in the document.
- * Returns an object with properties: top, left, width and height.
- */
-function offset$$1 (element) {
-  var obj = element.getBoundingClientRect();
-  return {
-    left: obj.left + window.pageXOffset,
-    top: obj.top + window.pageYOffset,
-    width: Math.round(obj.width),
-    height: Math.round(obj.height)
-  }
-}
-
-/**
- * Find the first ancestor element that is positioned,
- * meaning its CSS position value is “relative”, “absolute” or “fixed”.
- */
-var rootNodeRE = /^(?:body|html)$/i;
-function offsetParent (element) {
-  var parent = element.offsetParent || document.body;
-  while (parent && !rootNodeRE.test(parent.nodeName) && css$$1(parent, 'position') === 'static') {
-    parent = parent.offsetParent;
-  }
-  return parent
-}
-
-function getDimensions$$1 (element) {
-  var window = getWindow(element);
-  var top = window.pageYOffset;
-  var left = window.pageXOffset;
-
-  if (!element.ownerDocument) {
-    return {
-      top: top,
-      left: left,
-      height: window.innerHeight,
-      width: window.innerWidth,
-      bottom: top + window.innerHeight,
-      right: left + window.innerWidth
-    }
-  }
-
-  var display;
-  if (!element.offsetHeight) {
-    display = window.getComputedStyle(element).display;
-    element.style.display = 'block';
-  }
-
-  var rect = element.getBoundingClientRect();
-
-  if (display) {
-    element.style.display = display;
-  }
-
-  return {
-    height: rect.height,
-    width: rect.width,
-    top: rect.top + top,
-    left: rect.left + left,
-    bottom: rect.bottom + top,
-    right: rect.right + left
-  }
-}
-
-function offsetTop$$1 (element) {
-  return element.getBoundingClientRect().top + getWindow(element).pageYOffset
-}
-
-function getWindow (element) {
-  return element.ownerDocument
-    ? element.ownerDocument.defaultView
-    : window
-}
-
-function moveTo (position, attach, dim, factor) {
-  each(dirs, function (ref, dir) {
-    var prop = ref[0];
-    var align = ref[1];
-    var alignFlip = ref[2];
-
-    if (attach[dir] === alignFlip) {
-      position[align] += dim[prop] * factor;
-    } else if (attach[dir] === 'center') {
-      position[align] += dim[prop] * factor / 2;
-    }
-  });
-}
-
-function getPos (pos) {
-  var x = /left|center|right/;
-  var y = /top|center|bottom/;
-
-  pos = (pos || '').split(' ');
-
-  if (pos.length === 1) {
-    pos = x.test(pos[0])
-      ? pos.concat(['center'])
-      : y.test(pos[0])
-        ? ['center'].concat(pos)
-        : ['center', 'center'];
-  }
-
-  return {
-    x: x.test(pos[0]) ? pos[0] : 'center',
-    y: y.test(pos[1]) ? pos[1] : 'center'
-  }
-}
-
-function getOffsets (offsets, width, height) {
-  offsets = (offsets || '').split(' ');
-
-  return {
-    x: offsets[0] ? parseFloat(offsets[0]) * (offsets[0][offsets[0].length - 1] === '%' ? width / 100 : 1) : 0,
-    y: offsets[1] ? parseFloat(offsets[1]) * (offsets[1][offsets[1].length - 1] === '%' ? height / 100 : 1) : 0
-  }
-}
-
-function flipPosition$$1 (pos) {
-  switch (pos) {
-    case 'left':
-      return 'right'
-    case 'right':
-      return 'left'
-    case 'top':
-      return 'bottom'
-    case 'bottom':
-      return 'top'
-    default:
-      return pos
-  }
-}
-
 function filterByTag (nodes, tag) {
   var result = [];
   nodes.forEach(function (node) {
@@ -875,7 +154,7 @@ var buttonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;
 
       filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
         var props = getProps(component);
-        props.active = inArray(this$1.value, props.value);
+        props.active = _vuikit_util.inArray(this$1.value, props.value);
       });
     },
     toggle: function toggle (selected) {
@@ -2748,7 +2027,7 @@ function getMonthsRange (startDate, endDate) {
   var months = [];
   // if diff is bigger than 12, include all months
   if (index$45(endDate, startDate) >= 12) {
-    range(12).forEach(function (month) {
+    _vuikit_util.range(12).forEach(function (month) {
       months.push(month);
     });
   // otherwise iterate range
@@ -2762,8 +2041,8 @@ function getMonthsRange (startDate, endDate) {
   return months
 }
 
-var rows = range(6);
-var cols = range(7);
+var rows = _vuikit_util.range(6);
+var cols = _vuikit_util.range(7);
 
 /**
  * Returns a two-dimensional array with calendar represented dates
@@ -2846,7 +2125,7 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       type: [Date, String, Number],
       default: '1980-01-01',
       validator: function (date) {
-        return isInteger(date)
+        return _vuikit_util.isInteger(date)
           ? true
           : index$11(index$1(date))
       }
@@ -2855,7 +2134,7 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       type: [Date, String, Number],
       default: '2050-12-31',
       validator: function (date) {
-        return isInteger(date)
+        return _vuikit_util.isInteger(date)
           ? true
           : index$11(index$1(date))
       }
@@ -2876,18 +2155,18 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       return this.format(index$16(this.date, 1), 'YYYY-MM')
     },
     minPickableDate: function minPickableDate () {
-      return isInteger(this.minDate)
+      return _vuikit_util.isInteger(this.minDate)
         ? index$21(Date.now(), this.minDate + 1)
         : this.minDate
     },
     maxPickableDate: function maxPickableDate () {
-      return isInteger(this.maxDate)
+      return _vuikit_util.isInteger(this.maxDate)
         ? index$19(Date.now(), this.maxDate)
         : this.maxDate
     },
     weekDays: function weekDays () {
       var startDay = index$14(this.date, { weekStartsOn: this.weekStartsOn });
-      return range(7).map(function (val, index$$1) { return index$19(startDay, index$$1); })
+      return _vuikit_util.range(7).map(function (val, index$$1) { return index$19(startDay, index$$1); })
     }
   },
   methods: {
@@ -2969,14 +2248,14 @@ var PositionMixin = {
   },
   methods: {
     positionAt: function positionAt (element, target, boundary) {
-      var offset = toNumber(this.offset) || 0;
+      var offset = _vuikit_util.toNumber(this.offset) || 0;
       var axis = this.getAxis();
-      var flipped = getPosition$$1(
+      var flipped = _vuikit_util.getPosition(
         element,
         target,
         axis === 'x'
-          ? ((flipPosition$$1(this.dir)) + " " + (this.align))
-          : ((this.align) + " " + (flipPosition$$1(this.dir))),
+          ? ((_vuikit_util.flipPosition(this.dir)) + " " + (this.align))
+          : ((this.align) + " " + (_vuikit_util.flipPosition(this.dir))),
         axis === 'x'
           ? ((this.dir) + " " + (this.align))
           : ((this.align) + " " + (this.dir)),
@@ -3043,7 +2322,7 @@ var obj;},staticRenderFns: [],
     /* [top|right|bottom|left]-[left|center|right] */
     position: {
       type: String,
-      default: !isRtl$$1
+      default: !_vuikit_util.isRtl
         ? 'bottom-left'
         : 'bottom-right'
     }
@@ -3076,10 +2355,10 @@ var obj;},staticRenderFns: [],
       this.top = '';
       this.left = '';
 
-      var boundary = getDimensions$$1(this.$boundary);
+      var boundary = _vuikit_util.getDimensions(this.$boundary);
       var alignTo = this.boundaryAlign
         ? boundary
-        : getDimensions$$1(this.$target);
+        : _vuikit_util.getDimensions(this.$target);
 
       if (this.align === 'justify') {
         var prop = this.getAxis() === 'y'
@@ -3170,18 +2449,18 @@ var obj;},staticRenderFns: [],
       }
     };
 
-    on$$1(this.$el, 'mouseleave', onTargetMouseleave, this._uid);
-    on$$1(this.$el, 'mouseenter', onMouseenter, this._uid);
-    on$$1(this.$target, 'mouseenter', onTargetMouseenter, this._uid);
-    on$$1(this.$target, 'mouseleave', onTargetMouseleave, this._uid);
-    on$$1(this.$target, 'click', onClickTarget, this._uid);
-    on$$1(document, 'click', onClickOut, this._uid);
+    _vuikit_util.on(this.$el, 'mouseleave', onTargetMouseleave, this._uid);
+    _vuikit_util.on(this.$el, 'mouseenter', onMouseenter, this._uid);
+    _vuikit_util.on(this.$target, 'mouseenter', onTargetMouseenter, this._uid);
+    _vuikit_util.on(this.$target, 'mouseleave', onTargetMouseleave, this._uid);
+    _vuikit_util.on(this.$target, 'click', onClickTarget, this._uid);
+    _vuikit_util.on(document, 'click', onClickOut, this._uid);
     if ('ontouchstart' in document.documentElement) {
-      on$$1(document, 'touchstart', onClickOut, this._uid);
+      _vuikit_util.on(document, 'touchstart', onClickOut, this._uid);
     }
   },
   beforeDestroy: function beforeDestroy () {
-    offAll$$1(this._uid);
+    _vuikit_util.offAll(this._uid);
     if (this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }
@@ -3261,12 +2540,12 @@ var Icon = {
     var link = props.link;
     var linkReset = props.linkReset;
     var button = props.button;
-    var iconObj = isString(icon)
+    var iconObj = _vuikit_util.isString(icon)
       ? icons[icon]
       : icon;
 
     if (!iconObj) {
-      warn(("the icon '" + icon + "' is not registered"));
+      _vuikit_util.warn(("the icon '" + icon + "' is not registered"));
       return
     }
 
@@ -3335,13 +2614,13 @@ var body = document.body;
 var active;
 var activeCount;
 
-on$$1(doc$1, 'click', function (e) {
+_vuikit_util.on(doc$1, 'click', function (e) {
   if (active && !active.$refs.panel.contains(e.target)) {
     active.$emit('click-out', e);
   }
 });
 
-on$$1(doc$1, 'keyup', function (e) {
+_vuikit_util.on(doc$1, 'keyup', function (e) {
   if (e.keyCode === 27 && active) {
     e.preventDefault();
     active.$emit('key-esc', e);
@@ -3402,7 +2681,7 @@ var ModalMixin = {
     }
   },
   beforeDestroy: function beforeDestroy () {
-    offAll$$1(this._uid);
+    _vuikit_util.offAll(this._uid);
     if (this.$el.parentNode) {
       this.$el.parentNode.removeChild(this.$el);
     }
@@ -3470,11 +2749,11 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     this.$refs.close = this.$el.querySelector('button.uk-close');
 
     // place close-top outside the dialog
-    if (this.$refs.close && hasClass$$1(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass$$1(this.$refs.close, 'vk-modal-close-top');
+    if (this.$refs.close && _vuikit_util.hasClass(this.$refs.close, 'vk-modal-close-top')) {
+      _vuikit_util.removeClass(this.$refs.close, 'vk-modal-close-top');
       var bar = document.createElement('div');
-      addClass$$1(bar, 'uk-modal-bar');
-      addClass$$1(bar, 'uk-position-top');
+      _vuikit_util.addClass(bar, 'uk-modal-bar');
+      _vuikit_util.addClass(bar, 'uk-position-top');
       bar.appendChild(this.$refs.close);
       this.$el.appendChild(bar);
     }
@@ -3482,16 +2761,16 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     // place caption bottom outside the dialog
     var caption = this.$el.querySelector('.vk-modal-caption-bottom');
     if (caption) {
-      addClass$$1(caption, 'uk-modal-bar');
-      addClass$$1(caption, 'uk-position-bottom');
-      removeClass$$1(caption, 'vk-modal-caption-bottom');
+      _vuikit_util.addClass(caption, 'uk-modal-bar');
+      _vuikit_util.addClass(caption, 'uk-position-bottom');
+      _vuikit_util.removeClass(caption, 'vk-modal-caption-bottom');
       this.$el.appendChild(caption);
     }
 
     // update close style if full
     if (this.full) {
-      removeClass$$1(this.$refs.close, 'uk-modal-close-default');
-      addClass$$1(this.$refs.close, 'uk-modal-close-full');
+      _vuikit_util.removeClass(this.$refs.close, 'uk-modal-close-default');
+      _vuikit_util.addClass(this.$refs.close, 'uk-modal-close-full');
     }
 
     // init events
@@ -3501,9 +2780,9 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       }
     };
 
-    on$$1(this.$el, 'click', clickHandler, this._uid);
+    _vuikit_util.on(this.$el, 'click', clickHandler, this._uid);
     if ('ontouchstart' in doc) {
-      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
+      _vuikit_util.on(this.$el, 'touchstart', clickHandler, this._uid);
     }
   },
   methods: {
@@ -3512,37 +2791,37 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
 
       this._beforeEnter();
       this.$nextTick(function () {
-        addClass$$1(doc, 'uk-modal-page');
+        _vuikit_util.addClass(doc, 'uk-modal-page');
         this$1.resize();
       });
     },
     afterEnter: function afterEnter () {
       this._afterEnter();
-      addClass$$1(this.$el, 'uk-open');
+      _vuikit_util.addClass(this.$el, 'uk-open');
     },
     afterLeave: function afterLeave () {
       this._afterLeave();
       // if no active modals left
       if (!this.activeCount) {
-        removeClass$$1(doc, 'uk-modal-page');
+        _vuikit_util.removeClass(doc, 'uk-modal-page');
       }
     },
     resize: function resize () {
-      if (css$$1(this.$el, 'display') === 'block' && this.center) {
-        removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+      if (_vuikit_util.css(this.$el, 'display') === 'block' && this.center) {
+        _vuikit_util.removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
 
         var dialog = this.$refs.panel;
         var dh = dialog.offsetHeight;
-        var marginTop = css$$1(dialog, 'margin-top');
-        var marginBottom = css$$1(dialog, 'margin-bottom');
+        var marginTop = _vuikit_util.css(dialog, 'margin-top');
+        var marginBottom = _vuikit_util.css(dialog, 'margin-bottom');
         var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
 
         if (window.innerHeight > (dh + pad)) {
-          addClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          _vuikit_util.addClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         } else {
-          removeClass$$1(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
+          _vuikit_util.removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
         }
-        this.$el.style.display = hasClass$$1(this.$el, 'uk-flex') ? '' : 'block';
+        this.$el.style.display = _vuikit_util.hasClass(this.$el, 'uk-flex') ? '' : 'block';
       }
     }
   }
@@ -3749,7 +3028,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
         : this.$refs.panel
     },
     transitionDuration: function transitionDuration () {
-      return toMs(css$$1(this.transitionElement, 'transition-duration'))
+      return _vuikit_util.toMs(_vuikit_util.css(this.transitionElement, 'transition-duration'))
     }
   },
   methods: {
@@ -3770,28 +3049,28 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     beforeShow: function beforeShow () {
       scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
 
-      css$$1(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
+      _vuikit_util.css(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
 
       // set fixed with so the page can slide-out without shinking
-      css$$1(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
+      _vuikit_util.css(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
 
-      addClass$$1(doc$2, ("" + (this.clsPage)));
-      addClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-      forceRedraw$$1(body$1);
+      _vuikit_util.addClass(doc$2, ("" + (this.clsPage)));
+      _vuikit_util.addClass(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      _vuikit_util.forceRedraw(body$1);
 
-      addClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
-      addClass$$1(this.$el, this.clsOverlay);
-      addClass$$1(this.$refs.content, this.clsContentAnimation);
+      _vuikit_util.addClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
+      _vuikit_util.addClass(this.$el, this.clsOverlay);
+      _vuikit_util.addClass(this.$refs.content, this.clsContentAnimation);
 
       // toggle element
-      addClass$$1(this.$el, this.clsOverlay);
-      css$$1(this.$el, 'display', 'block');
-      forceRedraw$$1(this.$el);
-      addClass$$1(this.$el, 'uk-open');
+      _vuikit_util.addClass(this.$el, this.clsOverlay);
+      _vuikit_util.css(this.$el, 'display', 'block');
+      _vuikit_util.forceRedraw(this.$el);
+      _vuikit_util.addClass(this.$el, 'uk-open');
     },
     beforeHide: function beforeHide () {
-      removeClass$$1(this.$refs.content, this.clsContentAnimation);
-      removeClass$$1(this.$el, 'uk-open');
+      _vuikit_util.removeClass(this.$refs.content, this.clsContentAnimation);
+      _vuikit_util.removeClass(this.$el, 'uk-open');
     },
     transitionEnd: function (el, done) {
       setTimeout(done, this.transitionDuration);
@@ -3801,21 +3080,21 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
         scroll = { x: window.pageXOffset, y: window.pageYOffset };
       }
 
-      css$$1(doc$2, 'width', '');
-      removeClass$$1(doc$2, ("" + (this.clsPage)));
+      _vuikit_util.css(doc$2, 'width', '');
+      _vuikit_util.removeClass(doc$2, ("" + (this.clsPage)));
 
-      removeClass$$1(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass$$1(this.$el, this.clsOverlay);
-      css$$1(this.$el, 'display', 'none');
-      forceRedraw$$1(this.$el);
-      removeClass$$1(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      _vuikit_util.removeClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
+      _vuikit_util.removeClass(this.$el, this.clsOverlay);
+      _vuikit_util.css(this.$el, 'display', 'none');
+      _vuikit_util.forceRedraw(this.$el);
+      _vuikit_util.removeClass(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
 
       body$1.scrollTop = scroll.y;
 
-      css$$1(doc$2, 'overflow-y', '');
-      css$$1(this.$refs.content, 'width', '');
-      css$$1(this.$refs.content, 'height', '');
-      forceRedraw$$1(this.$refs.content);
+      _vuikit_util.css(doc$2, 'overflow-y', '');
+      _vuikit_util.css(this.$refs.content, 'width', '');
+      _vuikit_util.css(this.$refs.content, 'height', '');
+      _vuikit_util.forceRedraw(this.$refs.content);
 
       window.scrollTo(scroll.x, scroll.y);
       scroll = null;
@@ -3830,7 +3109,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     this.$refs.content = document.body.querySelector(("." + (this.clsContent)));
 
     if (!this.$refs.content) {
-      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
+      _vuikit_util.warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
       this.$destroy();
       return
     }
@@ -3841,13 +3120,13 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       }
     };
 
-    on$$1(this.$el, 'click', clickHandler, this._uid);
+    _vuikit_util.on(this.$el, 'click', clickHandler, this._uid);
     if ('ontouchstart' in document.documentElement) {
-      on$$1(this.$el, 'touchstart', clickHandler, this._uid);
+      _vuikit_util.on(this.$el, 'touchstart', clickHandler, this._uid);
     }
   },
   beforeDestroy: function beforeDestroy () {
-    removeClass$$1(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+    _vuikit_util.removeClass(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
     doc$2.style['margin-left'] = '';
     this._afterLeave();
   }
@@ -3934,8 +3213,8 @@ var paginationMatrix = function (ref) {
   var first = mainPages[0];
   var last = mainPages[mainPages.length - 1];
   // get pre/post pages
-  var prePages = range(1, (first <= 3) ? first : 2);
-  var postPages = range(
+  var prePages = _vuikit_util.range(1, (first <= 3) ? first : 2);
+  var postPages = _vuikit_util.range(
     last >= (totalPages - 2) ? last + 1 : totalPages,
     totalPages + 1
   );
@@ -3970,7 +3249,7 @@ var getMainPages = function (ref) {
     start = 1;
     end = Math.min((range$$1 * 2) + 1, totalPages);
   }
-  return range(start, end + 1)
+  return _vuikit_util.range(start, end + 1)
 };
 
 var PaginationFirst = {
@@ -4141,7 +3420,7 @@ var PaginationPages = {
 
     var currentPage = parent.page;
     return parent.pages.map(function (page) {
-      var isPage = isInteger(page);
+      var isPage = _vuikit_util.isInteger(page);
       var isActive = isPage && currentPage === page;
       return h('li', { class: { 'uk-active': isActive } }, [
         isPage
@@ -4234,7 +3513,7 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
         var lis = [];
         parent.$parts.forEach(function (part) {
           part = parent.$createElement(part.comp, { props: part.props });
-          lis = isArray(part)
+          lis = _vuikit_util.isArray(part)
             ? lis.concat( part)
             : lis.concat( [part]);
         });
@@ -4298,7 +3577,7 @@ var spinner = {
 // let dir
 var scroll$1 = 0;
 
-on$$1(window, 'scroll', function () {
+_vuikit_util.on(window, 'scroll', function () {
   // dir = scroll < window.pageYOffset
   //   ? 'down'
   //   : 'up'
@@ -4359,8 +3638,8 @@ var sticky = {
     }
 
     // warn multiple elements
-    if ("development" !== 'production' && children.length > 1) {
-      warn(
+    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
+      _vuikit_util.warn(
         '<vk-sticky> can only be used on a single element.',
         this.$parent
       );
@@ -4368,8 +3647,8 @@ var sticky = {
 
     var rawChild = children[0];
 
-    on$$1(window, 'scroll', function () {
-      this$1.offsetTop = offsetTop$$1(this$1.$el);
+    _vuikit_util.on(window, 'scroll', function () {
+      this$1.offsetTop = _vuikit_util.offsetTop(this$1.$el);
       this$1.visible = isVisible(this$1.$el);
       this$1.onScroll();
     }, this._uid);
@@ -4380,9 +3659,9 @@ var sticky = {
     stickyStartPoint: function stickyStartPoint () {
       var top = this.top;
 
-      if (isInteger(top) && this.topOffset) {
+      if (_vuikit_util.isInteger(top) && this.topOffset) {
         top = this.topOffset + parseFloat(top);
-      } else if (isString(top) && top.match(/^-?\d+vh$/)) {
+      } else if (_vuikit_util.isString(top) && top.match(/^-?\d+vh$/)) {
         top = getViewportHeightOffset(top);
       } else {
         top = this.getElementOffset(top);
@@ -4418,11 +3697,11 @@ var sticky = {
       this.placeholder.removeAttribute('hidden');
     },
     hide: function hide () {
-      addClass$$1(this.$el, this.clsInactive);
-      removeClass$$1(this.$el, ((this.clsFixed) + " " + (this.clsActive) + " " + (this.clsBelow)));
-      css$$1(this.$el, 'position', '');
-      css$$1(this.$el, 'width', '');
-      css$$1(this.$el, 'top', '');
+      _vuikit_util.addClass(this.$el, this.clsInactive);
+      _vuikit_util.removeClass(this.$el, ((this.clsFixed) + " " + (this.clsActive) + " " + (this.clsBelow)));
+      _vuikit_util.css(this.$el, 'position', '');
+      _vuikit_util.css(this.$el, 'width', '');
+      _vuikit_util.css(this.$el, 'top', '');
       this.placeholder.setAttribute('hidden', 'hidden');
     },
     update: function update () {
@@ -4433,14 +3712,14 @@ var sticky = {
         top = this.stickyEndPoint - scroll$1;
       }
 
-      addClass$$1(this.$el, this.clsFixed);
-      css$$1(this.$el, 'width', ((this.$widthElement.offsetWidth) + "px"));
-      css$$1(this.$el, 'position', 'fixed');
-      css$$1(this.$el, 'top', (top + "px"));
+      _vuikit_util.addClass(this.$el, this.clsFixed);
+      _vuikit_util.css(this.$el, 'width', ((this.$widthElement.offsetWidth) + "px"));
+      _vuikit_util.css(this.$el, 'position', 'fixed');
+      _vuikit_util.css(this.$el, 'top', (top + "px"));
 
-      toggleClass$$1(this.$el, this.clsActive, active);
-      toggleClass$$1(this.$el, this.clsInactive, !active);
-      toggleClass$$1(this.$el, this.clsBelow, scroll$1 > this.bottomOffset);
+      _vuikit_util.toggleClass(this.$el, this.clsActive, active);
+      _vuikit_util.toggleClass(this.$el, this.clsInactive, !active);
+      _vuikit_util.toggleClass(this.$el, this.clsBelow, scroll$1 > this.bottomOffset);
     },
     // ready () {
     //   if (!(this.target && window.location.hash && window.pageYOffset > 0)) {
@@ -4481,7 +3760,7 @@ var sticky = {
         this.isActive = false;
 
         if (this.animation && scroll$1 > this.topOffset) {
-          Animation$$1.cancel(this.$el).then(function () { return Animation$$1.out(this$1.$el, this$1.animation).then(function () { return this$1.hide(); }); }
+          _vuikit_util.Animation.cancel(this.$el).then(function () { return _vuikit_util.Animation.out(this$1.$el, this$1.animation).then(function () { return this$1.hide(); }); }
           );
         } else {
           this.hide();
@@ -4489,9 +3768,9 @@ var sticky = {
       } else if (this.isActive) {
         this.update();
       } else if (this.animation) {
-        Animation$$1.cancel(this.$el).then(function () {
+        _vuikit_util.Animation.cancel(this.$el).then(function () {
           this$1.show();
-          Animation$$1.in(this$1.$el, this$1.animation);
+          _vuikit_util.Animation.in(this$1.$el, this$1.animation);
         });
       } else {
         this.show();
@@ -4499,39 +3778,39 @@ var sticky = {
     },
     createPlaceholder: function createPlaceholder () {
       this.placeholder = document.createElement('div');
-      addClass$$1(this.placeholder, 'uk-sticky-placeholder');
+      _vuikit_util.addClass(this.placeholder, 'uk-sticky-placeholder');
       this.placeholder.setAttribute('hidden', 'hidden');
       if (!this.$el.parentNode.contains(this.placeholder)) {
         this.$el.parentNode.appendChild(this.placeholder);
       }
     },
     updatePlaceholder: function updatePlaceholder () {
-      css$$1(this.placeholder, 'height', ((this.outerHeight) + "px"));
-      css$$1(this.placeholder, 'marginTop', css$$1(this.$el, 'marginTop'));
-      css$$1(this.placeholder, 'marginBottom', css$$1(this.$el, 'marginBottom'));
-      css$$1(this.placeholder, 'marginLeft', css$$1(this.$el, 'marginLeft'));
-      css$$1(this.placeholder, 'marginRight', css$$1(this.$el, 'marginRight'));
+      _vuikit_util.css(this.placeholder, 'height', ((this.outerHeight) + "px"));
+      _vuikit_util.css(this.placeholder, 'marginTop', _vuikit_util.css(this.$el, 'marginTop'));
+      _vuikit_util.css(this.placeholder, 'marginBottom', _vuikit_util.css(this.$el, 'marginBottom'));
+      _vuikit_util.css(this.placeholder, 'marginLeft', _vuikit_util.css(this.$el, 'marginLeft'));
+      _vuikit_util.css(this.placeholder, 'marginRight', _vuikit_util.css(this.$el, 'marginRight'));
     },
     getElementOffset: function getElementOffset (el) {
-      el = isString(el)
+      el = _vuikit_util.isString(el)
         ? this.$vnode.context.$refs[el]
         : el;
 
       if (el) {
-        return offsetTop$$1(el) + el.offsetHeight
+        return _vuikit_util.offsetTop(el) + el.offsetHeight
       }
     }
   },
   mounted: function mounted () {
     // add sticky class
-    addClass$$1(this.$el, 'uk-sticky');
+    _vuikit_util.addClass(this.$el, 'uk-sticky');
 
     // calculate offset on load and resize
     // this.topOffset = this.isActive
     //   ? offsetTop(this.placeholder)
     //   : offsetTop(this.$el)
 
-    this.topOffset = offsetTop$$1(this.$el);
+    this.topOffset = _vuikit_util.offsetTop(this.$el);
 
     // calculate outerHeight
     // const outerElement = active
@@ -4552,7 +3831,7 @@ var sticky = {
       this.isActive = true;
       this.update();
     } else {
-      addClass$$1(this.$el, this.clsInactive);
+      _vuikit_util.addClass(this.$el, this.clsInactive);
     }
   }
 };
@@ -4592,7 +3871,7 @@ var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   },
   computed: {
     items: {
-      get: function get () {
+      get: function get$$1 () {
         return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-subnav-item'; }
         )
       },
@@ -4656,7 +3935,7 @@ var Cell = {
     if (cellRender) {
       return cellRender.call(col, h, row)
     } else {
-      warn('Missing cellRender', col);
+      _vuikit_util.warn('Missing cellRender', col);
     }
   }
 };
@@ -4756,7 +4035,7 @@ var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     getRowClass: function getRowClass (row, index) {
       var classes = [];
 
-      if (isFunction(this.rowClass)) {
+      if (_vuikit_util.isFunction(this.rowClass)) {
         classes.push(this.rowClass(row, index));
       }
 
@@ -4872,7 +4151,7 @@ var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     }, [
       scopedSlot
         ? scopedSlot.call.apply(scopedSlot, [ this ].concat( scopedArgs ))
-        : get(row, this.cell, '')
+        : _vuikit_util.get(row, this.cell, '')
     ])
   }
 };
@@ -4934,7 +4213,7 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   },
   created: function created () {
     if (this.$parent.selection === undefined) {
-      warn('Missing required prop: "selection"', this.$parent);
+      _vuikit_util.warn('Missing required prop: "selection"', this.$parent);
       this.$destroy();
     }
   },
@@ -5079,7 +4358,7 @@ function mapPresets (presets, columns) {
     var definition = presets[column];
 
     if (definition === undefined) {
-      warn(("Table preset '" + column + "' doesn't exist."));
+      _vuikit_util.warn(("Table preset '" + column + "' doesn't exist."));
       return false
     }
 
@@ -5100,7 +4379,7 @@ function getColumnObject (column) {
   // cell
   props.cell = column.cell;
   props.cellClass = column.cellClass;
-  if (column.cellTemplate && isFunction(column.cellTemplate)) {
+  if (column.cellTemplate && _vuikit_util.isFunction(column.cellTemplate)) {
     scopedSlots.cellTemplate = column.cellTemplate;
   }
 
@@ -5127,7 +4406,7 @@ var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   },
   created: function created () {
     if (!this.disabled && !this.$slots.default) {
-      warn(("[VkTabs]: content is missing in tab " + (this.label)));
+      _vuikit_util.warn(("[VkTabs]: content is missing in tab " + (this.label)));
     }
   }
 };
@@ -5173,8 +4452,8 @@ var core = {
     // save tabs nodes
     this.$tabsNodes = this.$slots.default.filter(function (vn) { return vn.componentOptions && vn.componentOptions.tag === 'vk-tab'; }
     );
-    if (warn && !this.$tabsNodes) {
-      warn("[VkTabs]: there are no tabs defined");
+    if (_vuikit_util.warn && !this.$tabsNodes) {
+      _vuikit_util.warn("[VkTabs]: there are no tabs defined");
     }
     // set tabs key for keep-alive
     this.$tabsNodes.forEach(function (vn) { vn.key = this$1.getTabId(vn); });
@@ -5224,7 +4503,7 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.11.0
+ * @version 1.11.1
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -5349,8 +4628,8 @@ function getStyleComputedProperty(element, property) {
     return [];
   }
   // NOTE: 1 DOM access here
-  var css = window.getComputedStyle(element, null);
-  return property ? css[property] : css;
+  var css$$1 = window.getComputedStyle(element, null);
+  return property ? css$$1[property] : css$$1;
 }
 
 /**
@@ -5463,10 +4742,10 @@ function findCommonOffsetParent(element1, element2) {
   var end = order ? element2 : element1;
 
   // Get common ancestor container
-  var range = document.createRange();
-  range.setStart(start, 0);
-  range.setEnd(end, 0);
-  var commonAncestorContainer = range.commonAncestorContainer;
+  var range$$1 = document.createRange();
+  range$$1.setStart(start, 0);
+  range$$1.setEnd(end, 0);
+  var commonAncestorContainer = range$$1.commonAncestorContainer;
 
   // Both nodes are inside #document
 
@@ -6904,7 +6183,7 @@ function parseOffset(offset, popperOffsets, referenceOffsets, basePlacement) {
  * The offset value as described in the modifier description
  * @returns {Object} The data object, properly modified
  */
-function offset$1(data, _ref) {
+function offset(data, _ref) {
   var offset = _ref.offset;
   var placement = data.placement,
       _data$offsets = data.offsets,
@@ -7166,7 +6445,7 @@ var modifiers = {
     /** @prop {Boolean} enabled=true - Whether the modifier is enabled or not */
     enabled: true,
     /** @prop {ModifierFn} */
-    fn: offset$1,
+    fn: offset,
     /** @prop {Number|String} offset=0
      * The offset value as described in the modifier description
      */
@@ -7802,15 +7081,15 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       }
 
       this$1.active = false;
-      offAll$$1(this$1.$el, this$1._uid);
+      _vuikit_util.offAll(this$1.$el, this$1._uid);
       this$1.$emit('hide');
     };
 
-    on$$1(this.$el, 'mouseleave', onMouseleave, this._uid);
-    on$$1(this.targetElement, 'mouseleave', onMouseleave, this._uid);
-    on$$1(this.targetElement, 'mouseenter', onMouseenter$1, this._uid);
-    on$$1(this.targetElement, 'focus', onMouseenter$1, this._uid);
-    on$$1(this.targetElement, 'blur', onMouseleave, this._uid);
+    _vuikit_util.on(this.$el, 'mouseleave', onMouseleave, this._uid);
+    _vuikit_util.on(this.targetElement, 'mouseleave', onMouseleave, this._uid);
+    _vuikit_util.on(this.targetElement, 'mouseenter', onMouseenter$1, this._uid);
+    _vuikit_util.on(this.targetElement, 'focus', onMouseenter$1, this._uid);
+    _vuikit_util.on(this.targetElement, 'blur', onMouseleave, this._uid);
   },
   methods: {
     remove: function remove () {
@@ -7821,7 +7100,7 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   },
   beforeDestroy: function beforeDestroy () {
     if (this.targetElement) {
-      offAll$$1(this.targetElement, this._uid);
+      _vuikit_util.offAll(this.targetElement, this._uid);
     }
     this.active = false;
     this.remove();
