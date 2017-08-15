@@ -52,9 +52,9 @@
 </template>
 
 <script>
-import mockData from 'explorer/mock-data.json'
 import orderBy from 'lodash/orderBy'
 import shuffle from 'lodash/shuffle'
+import mockData from '../mock-data.json'
 import presets from './presets'
 
 export default {
