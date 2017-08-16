@@ -3,10 +3,10 @@ const path = require('path')
 const globby = require('globby')
 const SVGO = require('svgo')
 
-const buildit = require('@buildit/buildit')
-const write = require('@buildit/write')
+const lumpit = require('@lump/it')
+const write = require('@lump/write')
 
-buildit(async () => {
+lumpit(async () => {
   // uikit component
   await compileIcons({
     src: 'node_modules/uikit/src/images/components/*.svg',
