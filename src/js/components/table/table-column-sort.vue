@@ -10,26 +10,32 @@
       {{ header }}
       <vk-icon
         class="uk-position-absolute"
-        ratio="0.9"
-        :icon="icon"
         :class="{ 'uk-invisible': !orderedBy }"
-      ></vk-icon>
+      >
+        <icon-arrow-down
+          v-if="orderedBy === 'asc' || orderedBy === undefined"
+          ratio="0.9"
+        ></icon-arrow-down>
+        <icon-arrow-up
+          v-else
+          ratio="0.9"
+        ></icon-arrow-up>
+      </vk-icon>
     </a>
   </th>
 </template>
 
 <script>
 import Column from './table-column'
-import Icon from 'src/js/components/icon/icon'
-import IconArrowUp from 'icons/arrow-up'
-import IconArrowDown from 'icons/arrow-down'
-
-Icon.register(IconArrowUp)
-Icon.register(IconArrowDown)
+import { IconArrowUp, IconArrowDown } from '@vuikit/icons'
 
 export default {
   name: 'VkTableColumnSort',
   extends: Column,
+  components: {
+    IconArrowUp,
+    IconArrowDown
+  },
   props: {
     header: {
       type: String
@@ -61,11 +67,6 @@ export default {
     },
     orderedBy () {
       return this.$parent.sortedBy[this.sortBy]
-    },
-    icon () {
-      return (this.orderedBy === 'asc' || this.orderedBy === undefined)
-        ? 'arrow-down'
-        : 'arrow-up'
     }
   },
   methods: {

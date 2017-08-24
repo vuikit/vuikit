@@ -1,35 +1,16 @@
-import Svg from '../icon/svg'
-import Icon from 'icons/components/spinner'
+import { IconSpinner } from '@vuikit/icons'
 
 export default {
   name: 'VkSpinner',
   functional: true,
-  props: {
-    ratio: {
-      default: 1
-    }
-  },
+  props: ['ratio'],
   render (h, { props }) {
-    const { ratio } = props
-
-    // dimensions
-    let width = Icon.width
-    let height = Icon.height
-
-    // ratio
-    if (ratio !== 1) {
-      width = width * ratio
-      height = height * ratio
-    }
-
     return h('div', {
-      staticClass: 'uk-spinner uk-icon'
+      staticClass: 'uk-icon uk-spinner'
     }, [
-      h(Svg, {
+      h(IconSpinner, {
         props: {
-          ...Icon,
-          width,
-          height
+          ratio: props.ratio
         }
       })
     ])

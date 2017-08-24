@@ -1,4 +1,4 @@
-import Icon from '../icon/icon'
+import { IconPaginationNext } from '@vuikit/icons'
 
 export default {
   functional: true,
@@ -21,15 +21,12 @@ export default {
         on: { click: e => parent.$emit('update:page', parent.nextPage) }
       }, [
         label && label,
-        h(Icon, {
-          props: {
-            icon: 'pagination-next'
-          },
-          staticClass: 'uk-pagination-next',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-next',
           class: {
             'uk-margin-small-left': label
           }
-        })
+        }, [ h(IconPaginationNext) ])
       ])
     ])
   }

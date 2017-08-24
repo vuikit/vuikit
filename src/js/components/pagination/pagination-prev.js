@@ -1,4 +1,4 @@
-import Icon from '../icon/icon'
+import { IconPaginationPrevious } from '@vuikit/icons'
 
 export default {
   functional: true,
@@ -20,15 +20,12 @@ export default {
       h('a', {
         on: { click: e => parent.$emit('update:page', parent.prevPage) }
       }, [
-        h(Icon, {
-          props: {
-            icon: 'pagination-previous'
-          },
-          staticClass: 'uk-pagination-prev',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-prev',
           class: {
             'uk-margin-small-right': label
           }
-        }),
+        }, [ h(IconPaginationPrevious) ]),
         label && label
       ])
     ])

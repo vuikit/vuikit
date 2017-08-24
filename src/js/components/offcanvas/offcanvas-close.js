@@ -1,7 +1,7 @@
-import Svg from '../icon/svg'
-import Icon from 'icons/components/close-icon'
+import { IconCloseIcon } from '@vuikit/icons'
 
 export default {
+  name: 'VkOffcanvasClose',
   functional: true,
   render (h, { data }) {
     return h('button', {
@@ -11,11 +11,7 @@ export default {
       },
       on: data.on
     }, [
-      h(Svg, {
-        props: {
-          ...Icon
-        }
-      })
+      h(IconCloseIcon)
     ])
   }
 }

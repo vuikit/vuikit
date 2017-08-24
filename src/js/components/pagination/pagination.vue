@@ -15,13 +15,6 @@ import PaginationLast from './pagination-last'
 import PaginationPrev from './pagination-prev'
 import PaginationNext from './pagination-next'
 import PaginationPages from './pagination-pages'
-import Icon from '../icon/icon'
-import IconPaginationNext from 'icons/components/pagination-next'
-import IconPaginationPrevious from 'icons/components/pagination-previous'
-
-// register icons
-Icon.register(IconPaginationNext)
-Icon.register(IconPaginationPrevious)
 
 const partsMap = {
   first: PaginationFirst,
