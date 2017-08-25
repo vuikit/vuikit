@@ -3,10 +3,9 @@ export default {
   functional: true,
   render (h, { data, listeners, children }) {
     // add static class now to avoid overrides
-    data.class = ['uk-icon', data.class]
+    data.class = ['uk-icon uk-icon-button', data.class]
 
     return h('a', {
-      staticClass: 'uk-icon uk-icon-button',
       on: listeners,
       ...data
     }, children)
