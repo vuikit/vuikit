@@ -2,10 +2,7 @@ const path = require('path')
 
 module.exports = {
   src: resolve('src'),
-  lib: resolve('src/js'),
-  helpers: resolve('helpers'),
-  explorer: resolve('explorer'),
-  icons: resolve('icons')
+  helpers: resolve('helpers')
 }
 
 function resolve (dir) {

@@ -38,25 +38,27 @@ const rollupSharedConfig = {
 }
 
 const rollupCommonConfig = Object.assign({}, rollupSharedConfig, {
-  entry: resolve('build/prod/dist.js'),
+  entry: resolve('src/main.js'),
   dest: resolve('dist/vuikit.common.js'),
   format: 'cjs',
   external: [
-    '@vuikit/util'
+    '@vuikit/util',
+    '@vuikit/icons'
   ]
 })
 
 const rollupEsmConfig = Object.assign({}, rollupSharedConfig, {
-  entry: resolve('build/prod/dist-esm.js'),
+  entry: resolve('src/main.js'),
   dest: resolve('dist/vuikit.esm.js'),
   format: 'es',
   external: [
-    '@vuikit/util'
+    '@vuikit/util',
+    '@vuikit/icons'
   ]
 })
 
 const rollupUmdConfig = Object.assign({}, rollupSharedConfig, {
-  entry: resolve('build/prod/dist.js'),
+  entry: resolve('src/main.js'),
   dest: resolve('dist/vuikit.js'),
   format: 'umd',
   moduleName: 'Vuikit'
