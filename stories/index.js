@@ -40,3 +40,7 @@ storiesOf('Others', module)
   .add('Sticky', () => require('./others/sticky.vue'))
   .add('Tooltip', () => require('./others/tooltip.vue'))
   .add('Upload', () => require('./others/upload.vue'))
+
+storiesOf('Directives/HeightViewport', module)
+  .add('Default', () => require('./directives/height-viewport/default.vue'))
+  .add('Expand', () => require('./directives/height-viewport/expand.vue'))
