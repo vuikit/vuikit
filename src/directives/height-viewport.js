@@ -11,6 +11,11 @@ export default {
       update(el, binding.modifiers, binding.value)
     }, 50), 'vk-height-viewport')
   },
+  componentUpdated (el, binding, vnode) {
+    Vue.nextTick(() => {
+      update(el, binding.modifiers, binding.value)
+    })
+  },
   unbind (el, binding, vnode) {
     off(window, 'resize', 'vk-height-viewport')
   }
