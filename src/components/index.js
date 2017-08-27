@@ -1,145 +1,43 @@
-import Breadcrumb from './breadcrumb/breadcrumb'
-import BreadcrumbItem from './breadcrumb/breadcrumb-item'
-import Button from './button/button'
-import ButtonCheckbox from './button/button-checkbox'
-import ButtonRadio from './button/button-radio'
-import Datepicker from './datepicker/datepicker'
-import Drop from './drop/drop'
-import Dropdown from './dropdown/dropdown'
-import Icon from './icon/icon'
-import IconLink from './icon/icon-link'
-import IconButton from './icon/icon-button'
-import Modal from './modal/modal'
-import ModalDialog from './modal/modal-dialog'
-import ModalHeader from './modal/modal-header'
-import ModalBody from './modal/modal-body'
-import ModalFooter from './modal/modal-footer'
-import ModalCaption from './modal/modal-caption'
-import ModalClose from './modal/modal-close'
-import Notification from './notification/notification'
-import NotificationMessage from './notification/notification-message'
-import Offcanvas from './offcanvas/offcanvas'
-import OffcanvasContent from './offcanvas/offcanvas-content'
-import OffcanvasClose from './offcanvas/offcanvas-close'
-import Pagination from './pagination/pagination'
-import PaginationFirst from './pagination/pagination-first'
-import PaginationLast from './pagination/pagination-last'
-import PaginationPrev from './pagination/pagination-prev'
-import PaginationNext from './pagination/pagination-next'
-import PaginationPages from './pagination/pagination-pages'
-import Spinner from './spinner/spinner'
-import Sticky from './sticky/sticky'
-import Subnav from './subnav/subnav'
-import SubnavItem from './subnav/subnav-item'
-import Table from './table/table'
-import TableColumn from './table/table-column'
-import TableColumnSelect from './table/table-column-select'
-import TableColumnSort from './table/table-column-sort'
-import TableSetup from './table/table-setup'
-import Tab from './tabs/tabs-tab'
-import Tabs from './tabs/tabs'
-import TabsVertical from './tabs/tabs-vertical'
-import Tooltip from './tooltip/tooltip'
-import Upload from './upload/upload'
-
-export {
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  ButtonCheckbox,
-  ButtonRadio,
-  Datepicker,
-  Drop,
-  Dropdown,
-  Icon,
-  IconLink,
-  IconButton,
-  Modal,
-  ModalDialog,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalCaption,
-  ModalClose,
-  Notification,
-  NotificationMessage,
-  Offcanvas,
-  OffcanvasContent,
-  OffcanvasClose,
-  Pagination,
-  PaginationFirst,
-  PaginationLast,
-  PaginationPrev,
-  PaginationNext,
-  PaginationPages,
-  Spinner,
-  Sticky,
-  Subnav,
-  SubnavItem,
-  Table,
-  TableColumn,
-  TableColumnSelect,
-  TableColumnSort,
-  TableSetup,
-  Tab,
-  Tabs,
-  TabsVertical,
-  Tooltip,
-  Upload
-}
-
-export default {
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  ButtonCheckbox,
-  ButtonRadio,
-  Datepicker,
-  Drop,
-  Dropdown,
-  Icon,
-  IconLink,
-  IconButton,
-  Modal,
-  ModalDialog,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  ModalCaption,
-  ModalClose,
-  Notification,
-  NotificationMessage,
-  Offcanvas,
-  OffcanvasContent,
-  OffcanvasClose,
-  Pagination,
-  PaginationFirst,
-  PaginationLast,
-  PaginationPrev,
-  PaginationNext,
-  PaginationPages,
-  Spinner,
-  Sticky,
-  Subnav,
-  SubnavItem,
-  Table,
-  TableColumn,
-  TableColumnSelect,
-  TableColumnSort,
-  TableSetup,
-  Tab,
-  Tabs,
-  TabsVertical,
-  Tooltip,
-  Upload,
-
-  install (Vue) {
-    const keys = Object.keys(this)
-    keys.pop() // remove 'install' from keys
-    let i = keys.length
-
-    while (i--) {
-      Vue.component(`Vk${keys[i]}`, this[keys[i]])
-    }
-  }
-}
+export { default as Breadcrumb } from './breadcrumb/breadcrumb'
+export { default as BreadcrumbItem } from './breadcrumb/breadcrumb-item'
+export { default as Button } from './button/button'
+export { default as ButtonCheckbox } from './button/button-checkbox'
+export { default as ButtonRadio } from './button/button-radio'
+export { default as Datepicker } from './datepicker/datepicker'
+export { default as Drop } from './drop/drop'
+export { default as Dropdown } from './dropdown/dropdown'
+export { default as Icon } from './icon/icon'
+export { default as IconLink } from './icon/icon-link'
+export { default as IconButton } from './icon/icon-button'
+export { default as Modal } from './modal/modal'
+export { default as ModalDialog } from './modal/modal-dialog'
+export { default as ModalHeader } from './modal/modal-header'
+export { default as ModalBody } from './modal/modal-body'
+export { default as ModalFooter } from './modal/modal-footer'
+export { default as ModalCaption } from './modal/modal-caption'
+export { default as ModalClose } from './modal/modal-close'
+export { default as Notification } from './notification/notification'
+export { default as NotificationMessage } from './notification/notification-message'
+export { default as Offcanvas } from './offcanvas/offcanvas'
+export { default as OffcanvasContent } from './offcanvas/offcanvas-content'
+export { default as OffcanvasClose } from './offcanvas/offcanvas-close'
+export { default as Pagination } from './pagination/pagination'
+export { default as PaginationFirst } from './pagination/pagination-first'
+export { default as PaginationLast } from './pagination/pagination-last'
+export { default as PaginationPrev } from './pagination/pagination-prev'
+export { default as PaginationNext } from './pagination/pagination-next'
+export { default as PaginationPages } from './pagination/pagination-pages'
+export { default as Spinner } from './spinner/spinner'
+export { default as Sticky } from './sticky/sticky'
+export { default as Subnav } from './subnav/subnav'
+export { default as SubnavItem } from './subnav/subnav-item'
+export { default as Table } from './table/table'
+export { default as TableColumn } from './table/table-column'
+export { default as TableColumnSelect } from './table/table-column-select'
+export { default as TableColumnSort } from './table/table-column-sort'
+export { default as TableSetup } from './table/table-setup'
+export { default as Tab } from './tabs/tabs-tab'
+export { default as Tabs } from './tabs/tabs'
+export { default as TabsVertical } from './tabs/tabs-vertical'
+export { default as Tooltip } from './tooltip/tooltip'
+export { default as Upload } from './upload/upload'
