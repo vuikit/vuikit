@@ -8,17 +8,16 @@
       @click.prevent="emitSortEvent"
     >
       {{ header }}
-      <vk-icon
-        class="uk-position-absolute"
-        :class="{ 'uk-invisible': !orderedBy }"
-      >
+      <vk-icon :class="{ 'uk-invisible': !orderedBy }">
         <icon-arrow-down
           v-if="orderedBy === 'asc' || orderedBy === undefined"
           ratio="0.9"
+          viewBox="0 2 20 20"
         ></icon-arrow-down>
         <icon-arrow-up
           v-else
           ratio="0.9"
+          viewBox="0 2 20 20"
         ></icon-arrow-up>
       </vk-icon>
     </a>
