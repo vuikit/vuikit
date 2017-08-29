@@ -42,6 +42,7 @@ const rollupCommonConfig = Object.assign({}, rollupSharedConfig, {
   dest: resolve('dist/vuikit.common.js'),
   format: 'cjs',
   external: [
+    'vue',
     '@vuikit/util',
     '@vuikit/icons'
   ]
@@ -52,6 +53,7 @@ const rollupEsmConfig = Object.assign({}, rollupSharedConfig, {
   dest: resolve('dist/vuikit.esm.js'),
   format: 'es',
   external: [
+    'vue',
     '@vuikit/util',
     '@vuikit/icons'
   ]
@@ -61,7 +63,13 @@ const rollupUmdConfig = Object.assign({}, rollupSharedConfig, {
   entry: resolve('src/vuikit.js'),
   dest: resolve('dist/vuikit.js'),
   format: 'umd',
-  moduleName: 'Vuikit'
+  moduleName: 'Vuikit',
+  globals: {
+    vue: 'Vue'
+  },
+  external: [
+    'vue'
+  ]
 })
 
 lumpit(async () => {
