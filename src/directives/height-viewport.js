@@ -1,9 +1,8 @@
-import Vue from 'vue'
 import { css, on, off, offsetTop, debounce, isInteger } from '@vuikit/util'
 
 export default {
   bind (el, binding, vnode) {
-    Vue.nextTick(() => {
+    vnode.context.$nextTick(() => {
       update(el, binding.modifiers, binding.value)
     })
 
@@ -12,7 +11,7 @@ export default {
     }, 50), 'vk-height-viewport')
   },
   componentUpdated (el, binding, vnode) {
-    Vue.nextTick(() => {
+    vnode.context.$nextTick(() => {
       update(el, binding.modifiers, binding.value)
     })
   },
@@ -67,9 +66,14 @@ function update (el, modifiers, value = {}) {
     css(el, 'min-height', height)
   }
 
+  // This fix is present in UIkit but is not a good fix.
+  // The component content can be updated after applying a fixed height
+  // forcing the height to be lower than the page. Until better
+  // approach keep this fix disabled.
+
   // IE 10-11 fix (min-height on a flex container won't apply to its flex items)
-  css(el, 'height', '')
-  if (height && viewport - offset >= el.offsetHeight) {
-    css(el, 'height', height)
-  }
+  // css(el, 'height', '')
+  // if (height && viewport - offset >= el.offsetHeight) {
+  //   css(el, 'height', height)
+  // }
 }
