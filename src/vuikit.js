@@ -2,6 +2,9 @@ import { each } from '@vuikit/util'
 import * as components from './components'
 import * as directives from './directives'
 
+export * from './components'
+export * from './directives'
+
 const Vuikit = {
   ...components,
   ...directives,
@@ -14,10 +17,6 @@ const Vuikit = {
       Vue.directive(`Vk${name}`, def)
     })
   }
-}
-
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(Vuikit)
 }
 
 export default Vuikit
