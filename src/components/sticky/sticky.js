@@ -1,3 +1,4 @@
+import { filterOutEmptyNodes } from 'src/util/index'
 import {
   on,
   css,
@@ -66,8 +67,9 @@ export default {
       return
     }
 
-    // filter out text nodes (possible whitespaces)
-    children = children.filter(c => c.tag || isAsyncPlaceholder(c))
+    // filter out possible whitespaces
+    children = filterOutEmptyNodes(children)
+
     if (!children.length) {
       return
     }
@@ -268,10 +270,6 @@ export default {
       addClass(this.$el, this.clsInactive)
     }
   }
-}
-
-function isAsyncPlaceholder (node) {
-  return node.isComment && node.asyncFactory
 }
 
 function isVisible (el) {
