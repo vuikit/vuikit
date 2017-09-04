@@ -1,8 +1,8 @@
 const path = require('path')
-const nodeResolve = require('rollup-plugin-node-resolve')
 const vue = require('rollup-plugin-vue')
 const buble = require('rollup-plugin-buble')
 const rollupAlias = require('rollup-plugin-alias')
+const nodeResolve = require('rollup-plugin-node-resolve')
 
 const lumpit = require('@lump/it')
 const task = require('@lump/task')
