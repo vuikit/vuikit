@@ -58,7 +58,7 @@ export default {
       on: {
         ...listeners
       },
-      class: {
+      class: ['uk-button', {
         'uk-active': active,
         'uk-button-default': !(primary || secondary || danger || text || link),
         'uk-button-primary': primary,
@@ -68,10 +68,10 @@ export default {
         'uk-button-link': link,
         'uk-button-large': large,
         'uk-button-small': small
-      }
+      }]
     }
 
-    return <button class="uk-button" { ...data }>{ children }</button>
+    return <button { ...data }>{ children }</button>
   }
 }
 </script>
