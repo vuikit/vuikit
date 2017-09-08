@@ -1,4 +1,3 @@
-import Icon from '../icon/icon'
 import { IconPaginationNext } from '@vuikit/icons'
 
 export default {
