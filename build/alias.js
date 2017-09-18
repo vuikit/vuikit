@@ -1,8 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  src: resolve('src'),
-  helpers: resolve('helpers')
+  '~': resolve('src')
 }
 
 function resolve (dir) {

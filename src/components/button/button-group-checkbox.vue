@@ -1,6 +1,6 @@
 <script>
 import { inArray } from '@vuikit/util'
-import { filterOutEmptyNodes } from 'src/util/index'
+import { filterOutEmptyNodes } from '~/helpers/component'
 
 export default {
   name: 'VkButtonGroupCheckbox',

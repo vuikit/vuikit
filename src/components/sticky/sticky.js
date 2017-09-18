@@ -1,4 +1,4 @@
-import { filterOutEmptyNodes } from 'src/util/index'
+import { filterOutEmptyNodes } from '~/helpers/component'
 import {
   on,
   css,

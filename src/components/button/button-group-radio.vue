@@ -1,5 +1,5 @@
 <script>
-import { filterOutEmptyNodes } from 'src/util/index'
+import { filterOutEmptyNodes } from '~/helpers/component'
 
 export default {
   name: 'VkButtonGroupRadio',

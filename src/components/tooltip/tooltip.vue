@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PopperMixin from 'src/mixins/popper'
+import PopperMixin from '~/mixins/popper'
 import { on, offAll } from '@vuikit/util'
 
 let onMouseenter

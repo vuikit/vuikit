@@ -9,7 +9,7 @@
 
 <script>
 import { isArray } from '@vuikit/util'
-import paginationMatrix from 'helpers/pagination-matrix'
+import paginationMatrix from '~/helpers/pagination-matrix'
 import PaginationFirst from './pagination-first'
 import PaginationLast from './pagination-last'
 import PaginationPrev from './pagination-prev'

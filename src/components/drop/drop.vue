@@ -17,7 +17,7 @@
 
 <script>
 import { isRtl, on, offAll, getDimensions } from '@vuikit/util'
-import PositionMixin from 'src/mixins/position'
+import PositionMixin from '~/mixins/position'
 
 let onClickOut
 let onMouseenter

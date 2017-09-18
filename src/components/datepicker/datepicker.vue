@@ -58,7 +58,7 @@ import subDays from 'date-fns/sub_days'
 import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
 import PickerHeader from './header'
-import dateMatrix from 'helpers/date-matrix'
+import dateMatrix from '~/helpers/date-matrix'
 import { range, isInteger } from '@vuikit/util'
 
 export default {

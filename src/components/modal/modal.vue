@@ -21,7 +21,7 @@
 <script>
 import ModalDialog from './modal-dialog'
 import { on, css, hasClass, addClass, removeClass } from '@vuikit/util'
-import ModalMixin from 'src/mixins/modal'
+import ModalMixin from '~/mixins/modal'
 const doc = document.documentElement
 
 export default {

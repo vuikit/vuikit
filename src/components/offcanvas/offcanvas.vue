@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import ModalMixin from 'src/mixins/modal'
+import ModalMixin from '~/mixins/modal'
 import {
   on,
   addClass,
