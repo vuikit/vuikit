@@ -30,14 +30,14 @@
 
 <script>
 import ModalMixin from '~/mixins/modal'
+import { warn } from '~/helpers/debug'
 import {
   on,
   addClass,
   removeClass,
   forceRedraw,
   css,
-  toMs,
-  warn
+  toMs
 } from '@vuikit/util'
 
 const doc = document.documentElement
