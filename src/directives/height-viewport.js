@@ -1,19 +1,14 @@
 import { css, on, off, offsetTop, debounce, isInteger } from '@vuikit/util'
 
 export default {
-  bind (el, binding, vnode) {
+  inserted (el, binding, vnode) {
     vnode.context.$nextTick(() => {
       update(el, binding.modifiers, binding.value)
     })
 
     on(window, 'resize', debounce(() => {
       update(el, binding.modifiers, binding.value)
-    }, 50), 'vk-height-viewport')
-  },
-  componentUpdated (el, binding, vnode) {
-    vnode.context.$nextTick(() => {
-      update(el, binding.modifiers, binding.value)
-    })
+    }, 20), 'vk-height-viewport')
   },
   unbind (el, binding, vnode) {
     off(window, 'resize', 'vk-height-viewport')
@@ -33,10 +28,8 @@ function update (el, modifiers, value = {}) {
 
     const diff = viewport - document.documentElement.offsetHeight
 
-    if (diff > 0) {
-      height = `${el.offsetHeight + diff}px`
-      css(el, 'minHeight', height)
-    }
+    height = `${el.offsetHeight + diff}px`
+    css(el, 'minHeight', height)
   } else {
     const top = offsetTop(el)
 
