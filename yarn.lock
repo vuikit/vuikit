@@ -196,9 +196,9 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@vuikit/icons/-/icons-0.1.0.tgz#7c82f27f9c8470075754612b39b2c4293960200e"
 
-"@vuikit/util@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-1.3.0.tgz#5ee41710374b3d1479d3c153e801b93157e8fecb"
+"@vuikit/util@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.1.0.tgz#5b391de7f83f9ca8633e4a799acc332845233dc4"
 
 abab@^1.0.3:
   version "1.0.3"
