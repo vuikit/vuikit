@@ -39,7 +39,7 @@
   "dependencies": {
     "@vuikit/icons": "^0.1.0",
     "@vuikit/util": "^0.1.0",
-    "vue": "^2.4.2"
+    "vue": "^2.4.4"
   },
   "devDependencies": {
     "@lump/banner": "^0.1.1",
@@ -73,7 +73,7 @@
     "rollup-plugin-vue": "^2.4.1",
     "uikit": "^3.0.0-beta.27",
     "vue-loader": "^13.0.2",
-    "vue-template-compiler": "^2.4.2"
+    "vue-template-compiler": "^2.4.4"
   },
   "jest": {
     "testRegex": "/tests/.*(test|spec)\\.js$",
