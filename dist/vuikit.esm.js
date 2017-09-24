@@ -4,7 +4,8 @@
 * Released under the MIT License.
 */
 
-import { Animation, addClass, css, flipPosition, forceRedraw, get, getDimensions, getPosition, hasClass, inArray, isArray, isFunction, isInteger, isRtl, isString, offAll, offsetTop, on, range, removeClass, toMs, toNumber, toggleClass, warn } from '@vuikit/util';
+import { Animation, addClass, css, debounce, each, flipPosition, forceRedraw, get, getDimensions, getPosition, hasClass, inArray, isArray, isFunction, isInteger, isRtl, isString, off, offAll, offsetTop, on, range, removeClass, toMs, toNumber, toggleClass, warn } from '@vuikit/util';
+import { IconArrowDown, IconArrowUp, IconCloseIcon, IconPaginationNext, IconPaginationPrevious, IconSpinner } from '@vuikit/icons';
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkBreadcrumb',
@@ -60,8 +61,9 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !(_vm.primary || _vm.secondary || _vm.danger || _vm.text || _vm.link), 'uk-button-primary': _vm.primary, 'uk-button-secondary': _vm.secondary, 'uk-button-danger': _vm.danger, 'uk-button-text': _vm.text, 'uk-button-link': _vm.link, 'uk-button-large': _vm.large, 'uk-button-small': _vm.small, },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
+var button = {
   name: 'VkButton',
+  functional: true,
   props: {
     value: {},
     type: {
@@ -104,100 +106,136 @@ var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       type: Boolean,
       default: false
     }
+  },
+  render: function render (h, ref) {
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
+
+    var value = props.value;
+    var type = props.type;
+    var active = props.active;
+    var large = props.large;
+    var small = props.small;
+    var disabled = props.disabled;
+    var primary = props.primary;
+    var secondary = props.secondary;
+    var danger = props.danger;
+    var text = props.text;
+    var link = props.link;
+
+    var data = {
+      value: value,
+      attrs: {
+        type: type,
+        disabled: disabled
+      },
+      on: Object.assign({}, listeners),
+      class: ['uk-button', {
+        'uk-active': active,
+        'uk-button-default': !(primary || secondary || danger || text || link),
+        'uk-button-primary': primary,
+        'uk-button-secondary': secondary,
+        'uk-button-danger': danger,
+        'uk-button-text': text,
+        'uk-button-link': link,
+        'uk-button-large': large,
+        'uk-button-small': small
+      }]
+    };
+
+    return h( 'button', data, children)
   }
 };
 
-function filterByTag (nodes, tag) {
-  var result = [];
-  nodes.forEach(function (node) {
-    if (node.componentOptions && node.componentOptions.tag === tag) {
-      result.push(node);
-    }
-  });
-  return result
+// filter out text nodes (possible whitespaces)
+function filterOutEmptyNodes (nodes) {
+  return nodes.filter(function (c) { return c.tag || isAsyncPlaceholder(c); })
 }
 
-function getProps (vm) {
-  return vm.componentOptions.propsData
+function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
 }
 
-var buttonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkButtonCheckbox',
+var buttonGroupCheckbox = {
+  name: 'VkButtonGroupCheckbox',
+  functional: true,
   props: {
-    value: {
-      type: Array,
-      default: function () { return []; }
-    },
-    group: {
+    spaced: {
       type: Boolean,
       default: false
     }
   },
-  beforeMount: function beforeMount () {
-    this.updateButtonsState();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this.updateButtonsState();
-  },
-  mounted: function mounted () {
-    var this$1 = this;
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
 
-    this.$children.forEach(function (button) {
-      button.$on('click', function () { return this$1.toggle(button); });
+    var renderData = {
+      class: {
+        'uk-button-group': !props.spaced
+      }
+    };
+
+    var value = [].concat( data.model.value );
+    var buttons = filterOutEmptyNodes(children);
+
+    buttons.forEach(function (btnNode) {
+      var btnValue = btnNode.data.value;
+      var isActive = inArray(value, btnValue);
+
+      btnNode.data.class['uk-active'] = isActive;
+      btnNode.data.on.click = function () {
+        // toggle value
+        if (isActive) {
+          var index = value.findIndex(function (v) { return v === btnValue; });
+          value.splice(index, 1);
+        } else {
+          var index$1 = buttons.findIndex(function (v) { return v === btnNode; });
+          value.splice(index$1, 0, btnValue);
+        }
+
+        listeners.input(value);
+      };
     });
-  },
-  methods: {
-    updateButtonsState: function updateButtonsState () {
-      var this$1 = this;
 
-      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
-        var props = getProps(component);
-        props.active = inArray(this$1.value, props.value);
-      });
-    },
-    toggle: function toggle (selected) {
-      // recreate new value respecting buttons order
-      var value = this.$children
-        .filter(function (button) { return button === selected
-          ? !button.active
-          : button.active; })
-        .map(function (button) { return button.value; });
-      this.$emit('change', value);
-    }
+    return h( 'div', renderData, children)
   }
 };
 
-var buttonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkButtonRadio',
+var buttonGroupRadio = {
+  name: 'VkButtonGroupRadio',
+  functional: true,
   props: {
-    value: {},
-    group: {
+    spaced: {
       type: Boolean,
       default: false
     }
   },
-  beforeMount: function beforeMount () {
-    this.updateButtonsState();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this.updateButtonsState();
-  },
-  mounted: function mounted () {
-    var this$1 = this;
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
 
-    this.$children.forEach(function (button) {
-      button.$on('click', function () { return this$1.$emit('change', button.value); });
+    var renderData = {
+      class: {
+        'uk-button-group': !props.spaced
+      }
+    };
+
+    var radioValue = data.model.value;
+    var buttons = filterOutEmptyNodes(children);
+
+    buttons.forEach(function (node) {
+      var btnValue = node.data.value;
+
+      node.data.class['uk-active'] = btnValue === radioValue;
+      node.data.on.click = function () { return listeners.input(btnValue); };
     });
-  },
-  methods: {
-    updateButtonsState: function updateButtonsState () {
-      var this$1 = this;
 
-      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
-        var props = getProps(component);
-        props.active = props.value === this$1.value;
-      });
-    }
+    return h( 'div', renderData, children)
   }
 };
 
@@ -2474,123 +2512,60 @@ var obj;},staticRenderFns: [],
   extends: Drop
 };
 
-var Svg = {
+var icon = {
+  name: 'VkIcon',
   functional: true,
   render: function render (h, ref) {
-    var props = ref.props;
+    var data = ref.data;
+    var listeners = ref.listeners;
+    var children = ref.children;
 
-    var meta = props.meta;
-    var data = props.data;
-    var viewBox = props.viewBox;
-    var width = props.width;
-    var height = props.height;
+    // add static class now to avoid overrides
+    data.class = ['uk-icon', data.class];
 
-    return h('svg', {
-      attrs: {
-        meta: meta,
-        width: width,
-        height: height,
-        version: '1.1',
-        viewBox: viewBox || ("0 0 " + width + " " + height)
-      },
-      domProps: {
-        innerHTML: data
-      }
-    })
+    return h('span', Object.assign({}, {on: listeners},
+      data), children)
   }
 };
 
-var icons = {};
-
-var Icon = {
+var iconLink = {
+  name: 'VkIconLink',
   functional: true,
   props: {
-    icon: {
-      type: [String, Object],
-      required: true
-    },
-    link: {
+    reset: {
       type: Boolean,
       default: false
-    },
-    linkReset: {
-      type: Boolean,
-      default: false
-    },
-    ratio: {
-      default: 1
-    },
-    button: {
-      type: Boolean,
-      default: false
-    },
-    viewBox: String,
-    width: Number,
-    height: Number
+    }
   },
   render: function render (h, ref) {
     var props = ref.props;
     var data = ref.data;
     var listeners = ref.listeners;
+    var children = ref.children;
 
-    var icon = props.icon;
-    var ratio = props.ratio;
-    var link = props.link;
-    var linkReset = props.linkReset;
-    var button = props.button;
-    var iconObj = isString(icon)
-      ? icons[icon]
-      : icon;
-
-    if (!iconObj) {
-      warn(("the icon '" + icon + "' is not registered"));
-      return
-    }
-
-    // determine tag
-    var tag = link || linkReset || button
-      ? 'a'
-      : 'span';
-
-    // add custom class
+    // add static class now to avoid overrides
     data.class = ['uk-icon', data.class, {
-      'uk-icon-button': button,
-      'uk-icon-link': linkReset
+      'uk-icon-link': !props.reset
     }];
 
-    // dimensions
-    var width = props.width || iconObj.width;
-    var height = props.height || iconObj.height;
-    var viewBox = props.viewBox || iconObj.viewBox;
+    return h('a', Object.assign({}, {on: listeners},
+      data), children)
+  }
+};
 
-    // ratio
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
+var iconButton = {
+  name: 'VkIconButton',
+  functional: true,
+  render: function render (h, ref) {
+    var data = ref.data;
+    var listeners = ref.listeners;
+    var children = ref.children;
 
-    return h(tag, Object.assign({}, {on: listeners,
-      attrs: {
-        href: tag === 'a'
-          ? ''
-          : false
-      }},
-      data), [
-      h(Svg, {
-        props: {
-          meta: ("icon-" + (iconObj.name) + " ratio-" + ratio),
-          data: iconObj.data,
-          viewBox: viewBox,
-          width: width,
-          height: height
-        }
-      })
-    ])
-  },
-  register: function register (iconObj) {
-    if (!icons[iconObj.name]) {
-      icons[iconObj.name] = iconObj;
-    }
+    // add static class now to avoid overrides
+    data.class = ['uk-icon uk-icon-button', data.class];
+
+    return h('a', Object.assign({}, {on: listeners},
+      data), children)
   }
 };
 
@@ -2962,6 +2937,10 @@ var obj;},staticRenderFns: [],
   }
 };
 
+function warn$1 (msg, vm) {
+  return warn(("[Vuikit Warn]: " + msg), vm)
+}
+
 var doc$2 = document.documentElement;
 var body$1 = document.body;
 var scroll;
@@ -3107,7 +3086,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     this.$refs.content = document.body.querySelector(("." + (this.clsContent)));
 
     if (!this.$refs.content) {
-      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
+      warn$1('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
       this.$destroy();
       return
     }
@@ -3161,15 +3140,8 @@ function addNodeClass (node) {
   node.data.staticClass = classes.join(' ');
 }
 
-var closeIcon = {
-  name: 'close-icon',
-  data: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>',
-  viewBox: '0 0 14 14',
-  width: 14,
-  height: 14
-};
-
 var offcanvasClose = {
+  name: 'VkOffcanvasClose',
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
@@ -3181,9 +3153,7 @@ var offcanvasClose = {
       },
       on: data.on
     }, [
-      h(Svg, {
-        props: Object.assign({}, closeIcon)
-      })
+      h(IconCloseIcon)
     ])
   }
 };
@@ -3274,15 +3244,12 @@ var PaginationFirst = {
       h('a', {
         on: { click: function (e) { return parent.$emit('update:page', 1); } }
       }, [
-        h(Icon, {
-          props: {
-            icon: 'pagination-previous'
-          },
-          staticClass: 'uk-pagination-prev',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-prev',
           class: {
             'uk-margin-small-right': label
           }
-        }),
+        }, [ h(IconPaginationPrevious) ]),
         label && label
       ])
     ])
@@ -3314,15 +3281,12 @@ var PaginationLast = {
         on: { click: function (e) { return parent.$emit('update:page', parent.lastPage); } }
       }, [
         label && label,
-        h(Icon, {
-          props: {
-            icon: 'pagination-next'
-          },
-          staticClass: 'uk-pagination-next',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-next',
           class: {
             'uk-margin-small-left': label
           }
-        })
+        }, [ h(IconPaginationNext) ])
       ])
     ])
   }
@@ -3352,15 +3316,12 @@ var PaginationPrev = {
       h('a', {
         on: { click: function (e) { return parent.$emit('update:page', parent.prevPage); } }
       }, [
-        h(Icon, {
-          props: {
-            icon: 'pagination-previous'
-          },
-          staticClass: 'uk-pagination-prev',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-prev',
           class: {
             'uk-margin-small-right': label
           }
-        }),
+        }, [ h(IconPaginationPrevious) ]),
         label && label
       ])
     ])
@@ -3392,15 +3353,12 @@ var PaginationNext = {
         on: { click: function (e) { return parent.$emit('update:page', parent.nextPage); } }
       }, [
         label && label,
-        h(Icon, {
-          props: {
-            icon: 'pagination-next'
-          },
-          staticClass: 'uk-pagination-next',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-next',
           class: {
             'uk-margin-small-left': label
           }
-        })
+        }, [ h(IconPaginationNext) ])
       ])
     ])
   }
@@ -3434,26 +3392,6 @@ var PaginationPages = {
     })
   }
 };
-
-var paginationNext = {
-  name: 'pagination-next',
-  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/>',
-  viewBox: '0 0 7 12',
-  width: 7,
-  height: 12
-};
-
-var paginationPrevious = {
-  name: 'pagination-previous',
-  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>',
-  viewBox: '0 0 7 12',
-  width: 7,
-  height: 12
-};
-
-// register icons
-Icon.register(paginationNext);
-Icon.register(paginationPrevious);
 
 var partsMap = {
   first: PaginationFirst,
@@ -3529,44 +3467,20 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var spinner$1 = {
-  name: 'spinner',
-  data: '<circle fill="none" stroke="#000" cx="15" cy="15" r="14"/>',
-  viewBox: '0 0 30 30',
-  width: 30,
-  height: 30
-};
-
 var spinner = {
   name: 'VkSpinner',
   functional: true,
-  props: {
-    ratio: {
-      default: 1
-    }
-  },
+  props: ['ratio'],
   render: function render (h, ref) {
     var props = ref.props;
 
-    var ratio = props.ratio;
-
-    // dimensions
-    var width = spinner$1.width;
-    var height = spinner$1.height;
-
-    // ratio
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
-
     return h('div', {
-      staticClass: 'uk-spinner uk-icon'
+      staticClass: 'uk-icon uk-spinner'
     }, [
-      h(Svg, {
-        props: Object.assign({}, spinner$1,
-          {width: width,
-          height: height})
+      h(IconSpinner, {
+        props: {
+          ratio: props.ratio
+        }
       })
     ])
   }
@@ -3629,8 +3543,9 @@ var sticky = {
       return
     }
 
-    // filter out text nodes (possible whitespaces)
-    children = children.filter(function (c) { return c.tag || isAsyncPlaceholder(c); });
+    // filter out possible whitespaces
+    children = filterOutEmptyNodes(children);
+
     if (!children.length) {
       return
     }
@@ -3834,10 +3749,6 @@ var sticky = {
   }
 };
 
-function isAsyncPlaceholder (node) {
-  return node.isComment && node.asyncFactory
-}
-
 function isVisible (el) {
   if (!el) {
     return false
@@ -3933,7 +3844,7 @@ var Cell = {
     if (cellRender) {
       return cellRender.call(col, h, row)
     } else {
-      warn('Missing cellRender', col);
+      warn$1('Missing cellRender', col);
     }
   }
 };
@@ -4211,7 +4122,7 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   },
   created: function created () {
     if (this.$parent.selection === undefined) {
-      warn('Missing required prop: "selection"', this.$parent);
+      warn$1('Missing required prop: "selection"', this.$parent);
       this.$destroy();
     }
   },
@@ -4231,28 +4142,13 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   }
 };
 
-var arrowUp = {
-  name: 'arrow-up',
-  data: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>',
-  viewBox: '0 0 20 20',
-  width: 20,
-  height: 20
-};
-
-var arrowDown = {
-  name: 'arrow-down',
-  data: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>',
-  viewBox: '0 0 20 20',
-  width: 20,
-  height: 20
-};
-
-Icon.register(arrowUp);
-Icon.register(arrowDown);
-
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])},staticRenderFns: [],
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy }},[(_vm.orderedBy === 'asc' || _vm.orderedBy === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
   name: 'VkTableColumnSort',
   extends: Column,
+  components: {
+    IconArrowUp: IconArrowUp,
+    IconArrowDown: IconArrowDown
+  },
   props: {
     header: {
       type: String
@@ -4284,11 +4180,6 @@ var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     },
     orderedBy: function orderedBy () {
       return this.$parent.sortedBy[this.sortBy]
-    },
-    icon: function icon () {
-      return (this.orderedBy === 'asc' || this.orderedBy === undefined)
-        ? 'arrow-down'
-        : 'arrow-up'
     }
   },
   methods: {
@@ -4600,7 +4491,7 @@ var supportsNativeMutationObserver = isBrowser && isNative(window.MutationObserv
 * @argument {Function} fn
 * @returns {Function}
 */
-var debounce = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce;
+var debounce$1 = supportsNativeMutationObserver ? microtaskDebounce : taskDebounce;
 
 /**
  * Check if the given variable is a function
@@ -6796,7 +6687,7 @@ var Popper = function () {
     };
 
     // make update() debounced, so that it only runs at most once-per-tick
-    this.update = debounce(this.update.bind(this));
+    this.update = debounce$1(this.update.bind(this));
 
     // with {} we create a new object with the options inside it
     this.options = _extends({}, Popper.Defaults, options);
@@ -7124,17 +7015,18 @@ var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
 
 
 
-var lib = Object.freeze({
+var components = Object.freeze({
 	Breadcrumb: breadcrumb,
 	BreadcrumbItem: breadcrumbItem,
 	Button: button,
-	ButtonCheckbox: buttonCheckbox,
-	ButtonRadio: buttonRadio,
+	ButtonGroupCheckbox: buttonGroupCheckbox,
+	ButtonGroupRadio: buttonGroupRadio,
 	Datepicker: datepicker,
 	Drop: Drop,
 	Dropdown: dropdown,
-	Icon: Icon,
-	Svg: Svg,
+	Icon: icon,
+	IconLink: iconLink,
+	IconButton: iconButton,
 	Modal: modal,
 	ModalDialog: ModalDialog,
 	ModalHeader: modalHeader,
@@ -7169,20 +7061,95 @@ var lib = Object.freeze({
 	Upload: upload
 });
 
-var Vuikit$1 = Object.assign({}, lib,
-  {install: function install (Vue) {
-    var this$1 = this;
+var heightViewport = {
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () {
+      update$1(el, binding.modifiers, binding.value);
+    });
 
-    var keys = Object.keys(this);
-    keys.pop(); // remove 'install' from keys
-    var i = keys.length;
-    while (i--) {
-      Vue.component(("Vk" + (keys[i])), this$1[keys[i]]);
+    on(window, 'resize', debounce(function () {
+      update$1(el, binding.modifiers, binding.value);
+    }, 20), 'vk-height-viewport');
+  },
+  unbind: function unbind (el, binding, vnode) {
+    off(window, 'resize', 'vk-height-viewport');
+  }
+};
+
+function update$1 (el, modifiers, value) {
+  if ( value === void 0 ) value = {};
+
+  var viewport = window.innerHeight;
+  var offset = 0;
+  var height;
+
+  css(el, 'boxSizing', 'border-box');
+
+  if (modifiers.expand) {
+    css(el, 'height', '');
+    css(el, 'minHeight', '');
+
+    var diff = viewport - document.documentElement.offsetHeight;
+
+    height = (el.offsetHeight + diff) + "px";
+    css(el, 'minHeight', height);
+  } else {
+    var top = offsetTop(el);
+
+    if (top < viewport / 2 && value.offsetTop) {
+      offset += top;
     }
-  }});
 
-if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use(Vuikit$1);
+    if (value.offsetBottom === true) {
+      // offset += this.$el.next().outerHeight() || 0
+      offset += el.nextElementSibling.offsetHeight || 0;
+    } else if (isInteger(value.offsetBottom)) {
+      offset += (viewport / 100) * value.offsetBottom;
+    } else if (value.offsetBottom && value.offsetBottom.substr(-2) === 'px') {
+      offset += parseFloat(value.offsetBottom);
+    }
+
+    // TODO: support Vue el ref instead of query?
+    // else if (isString(value.offsetBottom)) {
+    //   var el = query(value.offsetBottom, el)
+    //   offset += el && el.offsetHeight || 0
+    // }
+
+    height = offset
+      ? ("calc(100vh - " + offset + "px)")
+      : '100vh';
+
+    css(el, 'min-height', height);
+  }
+
+  // This fix is present in UIkit but is not a good fix.
+  // The component content can be updated after applying a fixed height
+  // forcing the height to be lower than the page. Until better
+  // approach keep this fix disabled.
+
+  // IE 10-11 fix (min-height on a flex container won't apply to its flex items)
+  // css(el, 'height', '')
+  // if (height && viewport - offset >= el.offsetHeight) {
+  //   css(el, 'height', height)
+  // }
 }
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonCheckbox as ButtonCheckbox, buttonRadio as ButtonRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, Icon, Svg, modal as Modal, ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload };export default Vuikit$1;
+
+
+var directives = Object.freeze({
+	HeightViewport: heightViewport
+});
+
+var Vuikit = Object.assign({}, components,
+  directives,
+
+  {install: function install (Vue) {
+    each(components, function (def, name) {
+      Vue.component(("Vk" + name), def);
+    });
+    each(directives, function (def, name) {
+      Vue.directive(("Vk" + name), def);
+    });
+  }});
+
+export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, icon as Icon, iconLink as IconLink, iconButton as IconButton, modal as Modal, ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload, heightViewport as HeightViewport };export default Vuikit;

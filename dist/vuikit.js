@@ -10,111 +10,6 @@
 	(global.Vuikit = factory());
 }(this, (function () { 'use strict';
 
-var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkBreadcrumb',
-  props: {
-    location: {
-      type: String,
-      default: '/'
-    }
-  },
-  computed: {
-    items: {
-      get: function get () {
-        return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-breadcrumb-item'; }
-        )
-      },
-      cache: false
-    }
-  },
-  beforeMount: function beforeMount () {
-    this.updateItems();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this.updateItems();
-  },
-  methods: {
-    updateItems: function updateItems () {
-      var this$1 = this;
-
-      this.items.forEach(function (item) {
-        var props = item.componentOptions.propsData;
-        props.active = this$1.location === props.path;
-      });
-    }
-  }
-};
-
-var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2):_c('span',[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
-  name: 'VkBreadcrumbItem',
-  props: {
-    label: String,
-    path: {
-      type: String,
-      required: true
-    },
-    active: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    }
-  }
-};
-
-var button = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('button',{staticClass:"uk-button",class:{ 'uk-active': _vm.active, 'uk-button-default': !(_vm.primary || _vm.secondary || _vm.danger || _vm.text || _vm.link), 'uk-button-primary': _vm.primary, 'uk-button-secondary': _vm.secondary, 'uk-button-danger': _vm.danger, 'uk-button-text': _vm.text, 'uk-button-link': _vm.link, 'uk-button-large': _vm.large, 'uk-button-small': _vm.small, },attrs:{"type":_vm.type,"disabled":_vm.disabled},on:{"click":function (e) { return _vm.$emit('click', e); }}},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkButton',
-  props: {
-    value: {},
-    type: {
-      type: String,
-      default: 'button'
-    },
-    active: {
-      type: Boolean,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
-    primary: {
-      type: Boolean,
-      default: false
-    },
-    secondary: {
-      type: Boolean,
-      default: false
-    },
-    danger: {
-      type: Boolean,
-      default: false
-    },
-    text: {
-      type: Boolean,
-      default: false
-    },
-    link: {
-      type: Boolean,
-      default: false
-    },
-    large: {
-      type: Boolean,
-      default: false
-    },
-    small: {
-      type: Boolean,
-      default: false
-    }
-  }
-};
-
-var config = {
-  silent: false // TODO: use Vue config instead
-};
-
 /**
  * Perform no operation.
  */
@@ -122,7 +17,6 @@ function noop () {}
 
 var warn = noop;
 var tip = noop;
-var formatComponentName;
 
 {
   var hasConsole = typeof console !== 'undefined';
@@ -132,22 +26,22 @@ var formatComponentName;
     .replace(/[-_]/g, ''); };
 
   warn = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.error("[Vuikit warn]: " + msg + (
+    if (hasConsole) {
+      console.error(msg + (
         vm ? generateComponentTrace(vm) : ''
       ));
     }
   };
 
   tip = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.warn("[Vue tip]: " + msg + (
+    if (hasConsole) {
+      console.warn(msg + (
         vm ? generateComponentTrace(vm) : ''
       ));
     }
   };
 
-  formatComponentName = function (vm, includeFile) {
+  var formatComponentName = function (vm, includeFile) {
     if (vm.$root === vm) {
       return '<Root>'
     }
@@ -349,6 +243,17 @@ function _on (el, type, listener, namespace) {
   el.addEventListener(type, listener);
 }
 
+function off$$1 (el, type, namespace) {
+  if ( namespace === void 0 ) namespace = 'default';
+
+  var event = boundEvents[namespace].find(function (bound) {
+    return bound.el === el && bound.type === type
+  });
+  if (event) {
+    el.removeEventListener(type, event.listener);
+  }
+}
+
 function offAll$$1 (namespace) {
   if ( namespace === void 0 ) namespace = 'default';
 
@@ -497,6 +402,26 @@ function toMs (time) {
     : time.substr(-2) === 'ms'
       ? parseFloat(time)
       : parseFloat(time) * 1000
+}
+
+// Returns a function, that, as long as it continues to be invoked, will not
+// be triggered. The function will be called after it stops being called for
+// N milliseconds. If `immediate` is passed, trigger the function on the
+// leading edge, instead of the trailing.
+function debounce (func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this;
+    var args = arguments;
+    var later = function () {
+      timeout = null;
+      if (!immediate) { func.apply(context, args); }
+    };
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) { func.apply(context, args); }
+  }
 }
 
 // export const Observer = window.MutationObserver || window.WebKitMutationObserver
@@ -800,97 +725,235 @@ function flipPosition$$1 (pos) {
   }
 }
 
-function filterByTag (nodes, tag) {
-  var result = [];
-  nodes.forEach(function (node) {
-    if (node.componentOptions && node.componentOptions.tag === tag) {
-      result.push(node);
-    }
-  });
-  return result
-}
-
-function getProps (vm) {
-  return vm.componentOptions.propsData
-}
-
-var buttonCheckbox = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkButtonCheckbox',
+var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'VkBreadcrumb',
   props: {
-    value: {
-      type: Array,
-      default: function () { return []; }
-    },
-    group: {
-      type: Boolean,
-      default: false
+    location: {
+      type: String,
+      default: '/'
+    }
+  },
+  computed: {
+    items: {
+      get: function get () {
+        return this.$slots.default.filter(function (c) { return c.componentOptions && c.componentOptions.tag === 'vk-breadcrumb-item'; }
+        )
+      },
+      cache: false
     }
   },
   beforeMount: function beforeMount () {
-    this.updateButtonsState();
+    this.updateItems();
   },
   beforeUpdate: function beforeUpdate () {
-    this.updateButtonsState();
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    this.$children.forEach(function (button) {
-      button.$on('click', function () { return this$1.toggle(button); });
-    });
+    this.updateItems();
   },
   methods: {
-    updateButtonsState: function updateButtonsState () {
+    updateItems: function updateItems () {
       var this$1 = this;
 
-      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
-        var props = getProps(component);
-        props.active = inArray(this$1.value, props.value);
+      this.items.forEach(function (item) {
+        var props = item.componentOptions.propsData;
+        props.active = this$1.location === props.path;
       });
-    },
-    toggle: function toggle (selected) {
-      // recreate new value respecting buttons order
-      var value = this.$children
-        .filter(function (button) { return button === selected
-          ? !button.active
-          : button.active; })
-        .map(function (button) { return button.value; });
-      this.$emit('change', value);
     }
   }
 };
 
-var buttonRadio = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-button-group': _vm.group }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkButtonRadio',
+var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2):_c('span',[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+  name: 'VkBreadcrumbItem',
+  props: {
+    label: String,
+    path: {
+      type: String,
+      required: true
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    }
+  }
+};
+
+var button = {
+  name: 'VkButton',
+  functional: true,
   props: {
     value: {},
-    group: {
+    type: {
+      type: String,
+      default: 'button'
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    primary: {
+      type: Boolean,
+      default: false
+    },
+    secondary: {
+      type: Boolean,
+      default: false
+    },
+    danger: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: Boolean,
+      default: false
+    },
+    link: {
+      type: Boolean,
+      default: false
+    },
+    large: {
+      type: Boolean,
+      default: false
+    },
+    small: {
       type: Boolean,
       default: false
     }
   },
-  beforeMount: function beforeMount () {
-    this.updateButtonsState();
-  },
-  beforeUpdate: function beforeUpdate () {
-    this.updateButtonsState();
-  },
-  mounted: function mounted () {
-    var this$1 = this;
+  render: function render (h, ref) {
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
 
-    this.$children.forEach(function (button) {
-      button.$on('click', function () { return this$1.$emit('change', button.value); });
-    });
-  },
-  methods: {
-    updateButtonsState: function updateButtonsState () {
-      var this$1 = this;
+    var value = props.value;
+    var type = props.type;
+    var active = props.active;
+    var large = props.large;
+    var small = props.small;
+    var disabled = props.disabled;
+    var primary = props.primary;
+    var secondary = props.secondary;
+    var danger = props.danger;
+    var text = props.text;
+    var link = props.link;
 
-      filterByTag(this.$slots.default, 'vk-button').forEach(function (component) {
-        var props = getProps(component);
-        props.active = props.value === this$1.value;
-      });
+    var data = {
+      value: value,
+      attrs: {
+        type: type,
+        disabled: disabled
+      },
+      on: Object.assign({}, listeners),
+      class: ['uk-button', {
+        'uk-active': active,
+        'uk-button-default': !(primary || secondary || danger || text || link),
+        'uk-button-primary': primary,
+        'uk-button-secondary': secondary,
+        'uk-button-danger': danger,
+        'uk-button-text': text,
+        'uk-button-link': link,
+        'uk-button-large': large,
+        'uk-button-small': small
+      }]
+    };
+
+    return h( 'button', data, children)
+  }
+};
+
+// filter out text nodes (possible whitespaces)
+function filterOutEmptyNodes (nodes) {
+  return nodes.filter(function (c) { return c.tag || isAsyncPlaceholder(c); })
+}
+
+function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
+}
+
+var buttonGroupCheckbox = {
+  name: 'VkButtonGroupCheckbox',
+  functional: true,
+  props: {
+    spaced: {
+      type: Boolean,
+      default: false
     }
+  },
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
+
+    var renderData = {
+      class: {
+        'uk-button-group': !props.spaced
+      }
+    };
+
+    var value = [].concat( data.model.value );
+    var buttons = filterOutEmptyNodes(children);
+
+    buttons.forEach(function (btnNode) {
+      var btnValue = btnNode.data.value;
+      var isActive = inArray(value, btnValue);
+
+      btnNode.data.class['uk-active'] = isActive;
+      btnNode.data.on.click = function () {
+        // toggle value
+        if (isActive) {
+          var index = value.findIndex(function (v) { return v === btnValue; });
+          value.splice(index, 1);
+        } else {
+          var index$1 = buttons.findIndex(function (v) { return v === btnNode; });
+          value.splice(index$1, 0, btnValue);
+        }
+
+        listeners.input(value);
+      };
+    });
+
+    return h( 'div', renderData, children)
+  }
+};
+
+var buttonGroupRadio = {
+  name: 'VkButtonGroupRadio',
+  functional: true,
+  props: {
+    spaced: {
+      type: Boolean,
+      default: false
+    }
+  },
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+    var children = ref.children;
+    var listeners = ref.listeners;
+
+    var renderData = {
+      class: {
+        'uk-button-group': !props.spaced
+      }
+    };
+
+    var radioValue = data.model.value;
+    var buttons = filterOutEmptyNodes(children);
+
+    buttons.forEach(function (node) {
+      var btnValue = node.data.value;
+
+      node.data.class['uk-active'] = btnValue === radioValue;
+      node.data.on.click = function () { return listeners.input(btnValue); };
+    });
+
+    return h( 'div', renderData, children)
   }
 };
 
@@ -3167,123 +3230,60 @@ var obj;},staticRenderFns: [],
   extends: Drop
 };
 
-var Svg = {
+var icon = {
+  name: 'VkIcon',
   functional: true,
   render: function render (h, ref) {
-    var props = ref.props;
+    var data = ref.data;
+    var listeners = ref.listeners;
+    var children = ref.children;
 
-    var meta = props.meta;
-    var data = props.data;
-    var viewBox = props.viewBox;
-    var width = props.width;
-    var height = props.height;
+    // add static class now to avoid overrides
+    data.class = ['uk-icon', data.class];
 
-    return h('svg', {
-      attrs: {
-        meta: meta,
-        width: width,
-        height: height,
-        version: '1.1',
-        viewBox: viewBox || ("0 0 " + width + " " + height)
-      },
-      domProps: {
-        innerHTML: data
-      }
-    })
+    return h('span', Object.assign({}, {on: listeners},
+      data), children)
   }
 };
 
-var icons = {};
-
-var Icon = {
+var iconLink = {
+  name: 'VkIconLink',
   functional: true,
   props: {
-    icon: {
-      type: [String, Object],
-      required: true
-    },
-    link: {
+    reset: {
       type: Boolean,
       default: false
-    },
-    linkReset: {
-      type: Boolean,
-      default: false
-    },
-    ratio: {
-      default: 1
-    },
-    button: {
-      type: Boolean,
-      default: false
-    },
-    viewBox: String,
-    width: Number,
-    height: Number
+    }
   },
   render: function render (h, ref) {
     var props = ref.props;
     var data = ref.data;
     var listeners = ref.listeners;
+    var children = ref.children;
 
-    var icon = props.icon;
-    var ratio = props.ratio;
-    var link = props.link;
-    var linkReset = props.linkReset;
-    var button = props.button;
-    var iconObj = isString(icon)
-      ? icons[icon]
-      : icon;
-
-    if (!iconObj) {
-      warn(("the icon '" + icon + "' is not registered"));
-      return
-    }
-
-    // determine tag
-    var tag = link || linkReset || button
-      ? 'a'
-      : 'span';
-
-    // add custom class
+    // add static class now to avoid overrides
     data.class = ['uk-icon', data.class, {
-      'uk-icon-button': button,
-      'uk-icon-link': linkReset
+      'uk-icon-link': !props.reset
     }];
 
-    // dimensions
-    var width = props.width || iconObj.width;
-    var height = props.height || iconObj.height;
-    var viewBox = props.viewBox || iconObj.viewBox;
+    return h('a', Object.assign({}, {on: listeners},
+      data), children)
+  }
+};
 
-    // ratio
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
+var iconButton = {
+  name: 'VkIconButton',
+  functional: true,
+  render: function render (h, ref) {
+    var data = ref.data;
+    var listeners = ref.listeners;
+    var children = ref.children;
 
-    return h(tag, Object.assign({}, {on: listeners,
-      attrs: {
-        href: tag === 'a'
-          ? ''
-          : false
-      }},
-      data), [
-      h(Svg, {
-        props: {
-          meta: ("icon-" + (iconObj.name) + " ratio-" + ratio),
-          data: iconObj.data,
-          viewBox: viewBox,
-          width: width,
-          height: height
-        }
-      })
-    ])
-  },
-  register: function register (iconObj) {
-    if (!icons[iconObj.name]) {
-      icons[iconObj.name] = iconObj;
-    }
+    // add static class now to avoid overrides
+    data.class = ['uk-icon uk-icon-button', data.class];
+
+    return h('a', Object.assign({}, {on: listeners},
+      data), children)
   }
 };
 
@@ -3655,6 +3655,10 @@ var obj;},staticRenderFns: [],
   }
 };
 
+function warn$1 (msg, vm) {
+  return warn(("[Vuikit Warn]: " + msg), vm)
+}
+
 var doc$2 = document.documentElement;
 var body$1 = document.body;
 var scroll;
@@ -3800,7 +3804,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     this.$refs.content = document.body.querySelector(("." + (this.clsContent)));
 
     if (!this.$refs.content) {
-      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
+      warn$1('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
       this.$destroy();
       return
     }
@@ -3855,14 +3859,200 @@ function addNodeClass (node) {
 }
 
 var closeIcon = {
+  functional: true,
   name: 'close-icon',
-  data: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>',
-  viewBox: '0 0 14 14',
-  width: 14,
-  height: 14
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 14;
+    var height = props.height; if ( height === void 0 ) height = 14;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-close-icon ratio-" + ratio),
+        viewBox: viewBox || '0 0 14 14'
+      },
+      domProps: {
+        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>'
+      }
+    })
+  }
 };
 
+var paginationNext = {
+  functional: true,
+  name: 'pagination-next',
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 7;
+    var height = props.height; if ( height === void 0 ) height = 12;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-pagination-next ratio-" + ratio),
+        viewBox: viewBox || '0 0 7 12'
+      },
+      domProps: {
+        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/>'
+      }
+    })
+  }
+};
+
+var paginationPrevious = {
+  functional: true,
+  name: 'pagination-previous',
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 7;
+    var height = props.height; if ( height === void 0 ) height = 12;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-pagination-previous ratio-" + ratio),
+        viewBox: viewBox || '0 0 7 12'
+      },
+      domProps: {
+        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>'
+      }
+    })
+  }
+};
+
+var spinner = {
+  functional: true,
+  name: 'spinner',
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 30;
+    var height = props.height; if ( height === void 0 ) height = 30;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-spinner ratio-" + ratio),
+        viewBox: viewBox || '0 0 30 30'
+      },
+      domProps: {
+        innerHTML: '<circle fill="none" stroke="#000" cx="15" cy="15" r="14"/>'
+      }
+    })
+  }
+};
+
+var arrowDown = {
+  functional: true,
+  name: 'arrow-down',
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 20;
+    var height = props.height; if ( height === void 0 ) height = 20;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-arrow-down ratio-" + ratio),
+        viewBox: viewBox || '0 0 20 20'
+      },
+      domProps: {
+        innerHTML: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>'
+      }
+    })
+  }
+};
+
+var arrowUp = {
+  functional: true,
+  name: 'arrow-up',
+  render: function render (h, ref) {
+    var props = ref.props;
+
+    var viewBox = props.viewBox;
+    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
+    var width = props.width; if ( width === void 0 ) width = 20;
+    var height = props.height; if ( height === void 0 ) height = 20;
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        width: width,
+        height: height,
+        version: '1.1',
+        meta: ("icon-arrow-up ratio-" + ratio),
+        viewBox: viewBox || '0 0 20 20'
+      },
+      domProps: {
+        innerHTML: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>'
+      }
+    })
+  }
+};
+
+var IconCloseIcon = closeIcon;
+var IconPaginationNext = paginationNext;
+var IconPaginationPrevious = paginationPrevious;
+var IconSpinner = spinner;
+var IconArrowDown = arrowDown;
+var IconArrowUp = arrowUp;
+
 var offcanvasClose = {
+  name: 'VkOffcanvasClose',
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
@@ -3874,9 +4064,7 @@ var offcanvasClose = {
       },
       on: data.on
     }, [
-      h(Svg, {
-        props: Object.assign({}, closeIcon)
-      })
+      h(IconCloseIcon)
     ])
   }
 };
@@ -3967,15 +4155,12 @@ var PaginationFirst = {
       h('a', {
         on: { click: function (e) { return parent.$emit('update:page', 1); } }
       }, [
-        h(Icon, {
-          props: {
-            icon: 'pagination-previous'
-          },
-          staticClass: 'uk-pagination-prev',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-prev',
           class: {
             'uk-margin-small-right': label
           }
-        }),
+        }, [ h(IconPaginationPrevious) ]),
         label && label
       ])
     ])
@@ -4007,15 +4192,12 @@ var PaginationLast = {
         on: { click: function (e) { return parent.$emit('update:page', parent.lastPage); } }
       }, [
         label && label,
-        h(Icon, {
-          props: {
-            icon: 'pagination-next'
-          },
-          staticClass: 'uk-pagination-next',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-next',
           class: {
             'uk-margin-small-left': label
           }
-        })
+        }, [ h(IconPaginationNext) ])
       ])
     ])
   }
@@ -4045,15 +4227,12 @@ var PaginationPrev = {
       h('a', {
         on: { click: function (e) { return parent.$emit('update:page', parent.prevPage); } }
       }, [
-        h(Icon, {
-          props: {
-            icon: 'pagination-previous'
-          },
-          staticClass: 'uk-pagination-prev',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-prev',
           class: {
             'uk-margin-small-right': label
           }
-        }),
+        }, [ h(IconPaginationPrevious) ]),
         label && label
       ])
     ])
@@ -4085,15 +4264,12 @@ var PaginationNext = {
         on: { click: function (e) { return parent.$emit('update:page', parent.nextPage); } }
       }, [
         label && label,
-        h(Icon, {
-          props: {
-            icon: 'pagination-next'
-          },
-          staticClass: 'uk-pagination-next',
+        h('span', {
+          staticClass: 'uk-icon uk-pagination-next',
           class: {
             'uk-margin-small-left': label
           }
-        })
+        }, [ h(IconPaginationNext) ])
       ])
     ])
   }
@@ -4127,26 +4303,6 @@ var PaginationPages = {
     })
   }
 };
-
-var paginationNext = {
-  name: 'pagination-next',
-  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/>',
-  viewBox: '0 0 7 12',
-  width: 7,
-  height: 12
-};
-
-var paginationPrevious = {
-  name: 'pagination-previous',
-  data: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>',
-  viewBox: '0 0 7 12',
-  width: 7,
-  height: 12
-};
-
-// register icons
-Icon.register(paginationNext);
-Icon.register(paginationPrevious);
 
 var partsMap = {
   first: PaginationFirst,
@@ -4222,44 +4378,20 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var spinner$1 = {
-  name: 'spinner',
-  data: '<circle fill="none" stroke="#000" cx="15" cy="15" r="14"/>',
-  viewBox: '0 0 30 30',
-  width: 30,
-  height: 30
-};
-
-var spinner = {
+var spinner$2 = {
   name: 'VkSpinner',
   functional: true,
-  props: {
-    ratio: {
-      default: 1
-    }
-  },
+  props: ['ratio'],
   render: function render (h, ref) {
     var props = ref.props;
 
-    var ratio = props.ratio;
-
-    // dimensions
-    var width = spinner$1.width;
-    var height = spinner$1.height;
-
-    // ratio
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
-
     return h('div', {
-      staticClass: 'uk-spinner uk-icon'
+      staticClass: 'uk-icon uk-spinner'
     }, [
-      h(Svg, {
-        props: Object.assign({}, spinner$1,
-          {width: width,
-          height: height})
+      h(IconSpinner, {
+        props: {
+          ratio: props.ratio
+        }
       })
     ])
   }
@@ -4322,8 +4454,9 @@ var sticky = {
       return
     }
 
-    // filter out text nodes (possible whitespaces)
-    children = children.filter(function (c) { return c.tag || isAsyncPlaceholder(c); });
+    // filter out possible whitespaces
+    children = filterOutEmptyNodes(children);
+
     if (!children.length) {
       return
     }
@@ -4527,10 +4660,6 @@ var sticky = {
   }
 };
 
-function isAsyncPlaceholder (node) {
-  return node.isComment && node.asyncFactory
-}
-
 function isVisible (el) {
   if (!el) {
     return false
@@ -4626,12 +4755,12 @@ var Cell = {
     if (cellRender) {
       return cellRender.call(col, h, row)
     } else {
-      warn('Missing cellRender', col);
+      warn$1('Missing cellRender', col);
     }
   }
 };
 
-var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
+var table$2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
   name: 'VkTable',
   components: { Cell: Cell },
   props: {
@@ -4904,7 +5033,7 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   },
   created: function created () {
     if (this.$parent.selection === undefined) {
-      warn('Missing required prop: "selection"', this.$parent);
+      warn$1('Missing required prop: "selection"', this.$parent);
       this.$destroy();
     }
   },
@@ -4924,28 +5053,13 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   }
 };
 
-var arrowUp = {
-  name: 'arrow-up',
-  data: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>',
-  viewBox: '0 0 20 20',
-  width: 20,
-  height: 20
-};
-
-var arrowDown = {
-  name: 'arrow-down',
-  data: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>',
-  viewBox: '0 0 20 20',
-  width: 20,
-  height: 20
-};
-
-Icon.register(arrowUp);
-Icon.register(arrowDown);
-
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy },attrs:{"ratio":"0.9","icon":_vm.icon}})],1)])},staticRenderFns: [],
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy }},[(_vm.orderedBy === 'asc' || _vm.orderedBy === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
   name: 'VkTableColumnSort',
   extends: Column,
+  components: {
+    IconArrowUp: IconArrowUp,
+    IconArrowDown: IconArrowDown
+  },
   props: {
     header: {
       type: String
@@ -4977,11 +5091,6 @@ var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     },
     orderedBy: function orderedBy () {
       return this.$parent.sortedBy[this.sortBy]
-    },
-    icon: function icon () {
-      return (this.orderedBy === 'asc' || this.orderedBy === undefined)
-        ? 'arrow-down'
-        : 'arrow-up'
     }
   },
   methods: {
@@ -7798,7 +7907,7 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
+var upload$2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'VkUpload',
   data: function () { return ({
     dragged: false
@@ -7817,17 +7926,18 @@ var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
 
 
 
-var lib = Object.freeze({
+var components = Object.freeze({
 	Breadcrumb: breadcrumb,
 	BreadcrumbItem: breadcrumbItem,
 	Button: button,
-	ButtonCheckbox: buttonCheckbox,
-	ButtonRadio: buttonRadio,
+	ButtonGroupCheckbox: buttonGroupCheckbox,
+	ButtonGroupRadio: buttonGroupRadio,
 	Datepicker: datepicker,
 	Drop: Drop,
 	Dropdown: dropdown,
-	Icon: Icon,
-	Svg: Svg,
+	Icon: icon,
+	IconLink: iconLink,
+	IconButton: iconButton,
 	Modal: modal,
 	ModalDialog: ModalDialog,
 	ModalHeader: modalHeader,
@@ -7846,11 +7956,11 @@ var lib = Object.freeze({
 	PaginationPrev: PaginationPrev,
 	PaginationNext: PaginationNext,
 	PaginationPages: PaginationPages,
-	Spinner: spinner,
+	Spinner: spinner$2,
 	Sticky: sticky,
 	Subnav: subnav,
 	SubnavItem: subnavItem,
-	Table: table,
+	Table: table$2,
 	TableColumn: Column,
 	TableColumnSelect: ColumnSelect,
 	TableColumnSort: ColumnSort,
@@ -7859,19 +7969,98 @@ var lib = Object.freeze({
 	Tabs: tabs,
 	TabsVertical: tabsVertical,
 	Tooltip: tooltip,
-	Upload: upload
+	Upload: upload$2
 });
 
-var Vuikit = Object.assign({}, lib,
-  {install: function install (Vue) {
-    var this$1 = this;
+var heightViewport = {
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () {
+      update$1(el, binding.modifiers, binding.value);
+    });
 
-    var keys = Object.keys(this);
-    keys.pop(); // remove 'install' from keys
-    var i = keys.length;
-    while (i--) {
-      Vue.component(("Vk" + (keys[i])), this$1[keys[i]]);
+    on$$1(window, 'resize', debounce(function () {
+      update$1(el, binding.modifiers, binding.value);
+    }, 20), 'vk-height-viewport');
+  },
+  unbind: function unbind (el, binding, vnode) {
+    off$$1(window, 'resize', 'vk-height-viewport');
+  }
+};
+
+function update$1 (el, modifiers, value) {
+  if ( value === void 0 ) value = {};
+
+  var viewport = window.innerHeight;
+  var offset = 0;
+  var height;
+
+  css$$1(el, 'boxSizing', 'border-box');
+
+  if (modifiers.expand) {
+    css$$1(el, 'height', '');
+    css$$1(el, 'minHeight', '');
+
+    var diff = viewport - document.documentElement.offsetHeight;
+
+    height = (el.offsetHeight + diff) + "px";
+    css$$1(el, 'minHeight', height);
+  } else {
+    var top = offsetTop$$1(el);
+
+    if (top < viewport / 2 && value.offsetTop) {
+      offset += top;
     }
+
+    if (value.offsetBottom === true) {
+      // offset += this.$el.next().outerHeight() || 0
+      offset += el.nextElementSibling.offsetHeight || 0;
+    } else if (isInteger(value.offsetBottom)) {
+      offset += (viewport / 100) * value.offsetBottom;
+    } else if (value.offsetBottom && value.offsetBottom.substr(-2) === 'px') {
+      offset += parseFloat(value.offsetBottom);
+    }
+
+    // TODO: support Vue el ref instead of query?
+    // else if (isString(value.offsetBottom)) {
+    //   var el = query(value.offsetBottom, el)
+    //   offset += el && el.offsetHeight || 0
+    // }
+
+    height = offset
+      ? ("calc(100vh - " + offset + "px)")
+      : '100vh';
+
+    css$$1(el, 'min-height', height);
+  }
+
+  // This fix is present in UIkit but is not a good fix.
+  // The component content can be updated after applying a fixed height
+  // forcing the height to be lower than the page. Until better
+  // approach keep this fix disabled.
+
+  // IE 10-11 fix (min-height on a flex container won't apply to its flex items)
+  // css(el, 'height', '')
+  // if (height && viewport - offset >= el.offsetHeight) {
+  //   css(el, 'height', height)
+  // }
+}
+
+
+
+var directives = Object.freeze({
+	HeightViewport: heightViewport
+});
+
+var Vuikit = Object.assign({}, components,
+  directives,
+
+  {install: function install (Vue) {
+    each(components, function (def, name) {
+      Vue.component(("Vk" + name), def);
+    });
+    each(directives, function (def, name) {
+      Vue.directive(("Vk" + name), def);
+    });
   }});
 
 if (typeof window !== 'undefined' && window.Vue) {
