@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/vuikit",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "UIkit with all the power of Vue",
   "author": {
     "name": "Miljan Aleksic",
@@ -17,8 +17,7 @@
   "module": "dist/vuikit.esm.js",
   "files": [
     "dist",
-    "src",
-    "helpers"
+    "src"
   ],
   "license": "MIT",
   "repository": {

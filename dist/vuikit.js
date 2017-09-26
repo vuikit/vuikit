@@ -1,5 +1,5 @@
 /*
-* Vuikit 0.7.0
+* Vuikit 0.7.1
 * (c) 2017 Miljan Aleksic
 * Released under the MIT License.
 */
@@ -976,7 +976,7 @@ function isDate (argument) {
   return argument instanceof Date
 }
 
-var index$2 = isDate;
+var is_date = isDate;
 
 var MILLISECONDS_IN_HOUR = 3600000;
 var MILLISECONDS_IN_MINUTE = 60000;
@@ -1052,7 +1052,7 @@ var parseTokenTimezoneHHMM = /^([+-])(\d{2}):?(\d{2})$/;
  * //=> Fri Apr 11 2014 00:00:00
  */
 function parse (argument, dirtyOptions) {
-  if (index$2(argument)) {
+  if (is_date(argument)) {
     // Prevent the date to lose the milliseconds when passed to new Date() in IE10
     return new Date(argument.getTime())
   } else if (typeof argument !== 'string') {
@@ -1295,7 +1295,7 @@ function dayOfISOYear (isoYear, week, day) {
   return date
 }
 
-var index$1 = parse;
+var parse_1 = parse;
 
 /**
  * @category Year Helpers
@@ -1313,12 +1313,12 @@ var index$1 = parse;
  * //=> 2014
  */
 function getYear (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var year = date.getFullYear();
   return year
 }
 
-var index = getYear;
+var get_year = getYear;
 
 /**
  * @category Month Helpers
@@ -1336,12 +1336,12 @@ var index = getYear;
  * //=> 1
  */
 function getMonth (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var month = date.getMonth();
   return month
 }
 
-var index$4 = getMonth;
+var get_month = getMonth;
 
 /**
  * @category Day Helpers
@@ -1359,12 +1359,12 @@ var index$4 = getMonth;
  * //=> 29
  */
 function getDate (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var dayOfMonth = date.getDate();
   return dayOfMonth
 }
 
-var index$5 = getDate;
+var get_date = getDate;
 
 /**
  * @category Month Helpers
@@ -1386,13 +1386,13 @@ var index$5 = getDate;
  * //=> true
  */
 function isSameMonth (dirtyDateLeft, dirtyDateRight) {
-  var dateLeft = index$1(dirtyDateLeft);
-  var dateRight = index$1(dirtyDateRight);
+  var dateLeft = parse_1(dirtyDateLeft);
+  var dateRight = parse_1(dirtyDateRight);
   return dateLeft.getFullYear() === dateRight.getFullYear() &&
     dateLeft.getMonth() === dateRight.getMonth()
 }
 
-var index$6 = isSameMonth;
+var is_same_month = isSameMonth;
 
 /**
  * @category Day Helpers
@@ -1411,12 +1411,12 @@ var index$6 = isSameMonth;
  * //=> Tue Sep 02 2014 00:00:00
  */
 function startOfDay (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
-var index$8 = startOfDay;
+var start_of_day = startOfDay;
 
 /**
  * @category Day Helpers
@@ -1438,13 +1438,13 @@ var index$8 = startOfDay;
  * //=> true
  */
 function isSameDay (dirtyDateLeft, dirtyDateRight) {
-  var dateLeftStartOfDay = index$8(dirtyDateLeft);
-  var dateRightStartOfDay = index$8(dirtyDateRight);
+  var dateLeftStartOfDay = start_of_day(dirtyDateLeft);
+  var dateRightStartOfDay = start_of_day(dirtyDateRight);
 
   return dateLeftStartOfDay.getTime() === dateRightStartOfDay.getTime()
 }
 
-var index$7 = isSameDay;
+var is_same_day = isSameDay;
 
 /**
  * @category Range Helpers
@@ -1474,9 +1474,9 @@ var index$7 = isSameDay;
  * //=> false
  */
 function isWithinRange (dirtyDate, dirtyStartDate, dirtyEndDate) {
-  var time = index$1(dirtyDate).getTime();
-  var startTime = index$1(dirtyStartDate).getTime();
-  var endTime = index$1(dirtyEndDate).getTime();
+  var time = parse_1(dirtyDate).getTime();
+  var startTime = parse_1(dirtyStartDate).getTime();
+  var endTime = parse_1(dirtyEndDate).getTime();
 
   if (startTime > endTime) {
     throw new Error('The start of the range cannot be after the end of the range')
@@ -1485,7 +1485,7 @@ function isWithinRange (dirtyDate, dirtyStartDate, dirtyEndDate) {
   return time >= startTime && time <= endTime
 }
 
-var index$10 = isWithinRange;
+var is_within_range = isWithinRange;
 
 /**
  * @category Common Helpers
@@ -1512,14 +1512,14 @@ var index$10 = isWithinRange;
  * //=> false
  */
 function isValid (dirtyDate) {
-  if (index$2(dirtyDate)) {
+  if (is_date(dirtyDate)) {
     return !isNaN(dirtyDate)
   } else {
     throw new TypeError(toString.call(dirtyDate) + ' is not an instance of Date')
   }
 }
 
-var index$11 = isValid;
+var is_valid = isValid;
 
 /**
  * @category Range Helpers
@@ -1550,10 +1550,10 @@ var index$11 = isValid;
  * //=> false
  */
 function areRangesOverlapping (dirtyInitialRangeStartDate, dirtyInitialRangeEndDate, dirtyComparedRangeStartDate, dirtyComparedRangeEndDate) {
-  var initialStartTime = index$1(dirtyInitialRangeStartDate).getTime();
-  var initialEndTime = index$1(dirtyInitialRangeEndDate).getTime();
-  var comparedStartTime = index$1(dirtyComparedRangeStartDate).getTime();
-  var comparedEndTime = index$1(dirtyComparedRangeEndDate).getTime();
+  var initialStartTime = parse_1(dirtyInitialRangeStartDate).getTime();
+  var initialEndTime = parse_1(dirtyInitialRangeEndDate).getTime();
+  var comparedStartTime = parse_1(dirtyComparedRangeStartDate).getTime();
+  var comparedEndTime = parse_1(dirtyComparedRangeEndDate).getTime();
 
   if (initialStartTime > initialEndTime || comparedStartTime > comparedEndTime) {
     throw new Error('The start of the range cannot be after the end of the range')
@@ -1562,7 +1562,7 @@ function areRangesOverlapping (dirtyInitialRangeStartDate, dirtyInitialRangeEndD
   return initialStartTime < comparedEndTime && comparedStartTime < initialEndTime
 }
 
-var index$12 = areRangesOverlapping;
+var are_ranges_overlapping = areRangesOverlapping;
 
 /**
  * @category Month Helpers
@@ -1581,13 +1581,13 @@ var index$12 = areRangesOverlapping;
  * //=> Mon Sep 01 2014 00:00:00
  */
 function startOfMonth (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   date.setDate(1);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
-var index$13 = startOfMonth;
+var start_of_month = startOfMonth;
 
 /**
  * @category Week Helpers
@@ -1615,7 +1615,7 @@ var index$13 = startOfMonth;
 function startOfWeek (dirtyDate, dirtyOptions) {
   var weekStartsOn = dirtyOptions ? (Number(dirtyOptions.weekStartsOn) || 0) : 0;
 
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var day = date.getDay();
   var diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
 
@@ -1624,7 +1624,7 @@ function startOfWeek (dirtyDate, dirtyOptions) {
   return date
 }
 
-var index$14 = startOfWeek;
+var start_of_week = startOfWeek;
 
 /**
  * @category Month Helpers
@@ -1643,14 +1643,14 @@ var index$14 = startOfWeek;
  * //=> Tue Sep 30 2014 23:59:59.999
  */
 function endOfMonth (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var month = date.getMonth();
   date.setFullYear(date.getFullYear(), month + 1, 0);
   date.setHours(23, 59, 59, 999);
   return date
 }
 
-var index$15 = endOfMonth;
+var end_of_month = endOfMonth;
 
 /**
  * @category Month Helpers
@@ -1668,7 +1668,7 @@ var index$15 = endOfMonth;
  * //=> 29
  */
 function getDaysInMonth (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var year = date.getFullYear();
   var monthIndex = date.getMonth();
   var lastDayOfMonth = new Date(0);
@@ -1677,7 +1677,7 @@ function getDaysInMonth (dirtyDate) {
   return lastDayOfMonth.getDate()
 }
 
-var index$17 = getDaysInMonth;
+var get_days_in_month = getDaysInMonth;
 
 /**
  * @category Month Helpers
@@ -1696,20 +1696,20 @@ var index$17 = getDaysInMonth;
  * //=> Sun Feb 01 2015 00:00:00
  */
 function addMonths (dirtyDate, dirtyAmount) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var amount = Number(dirtyAmount);
   var desiredMonth = date.getMonth() + amount;
   var dateWithDesiredMonth = new Date(0);
   dateWithDesiredMonth.setFullYear(date.getFullYear(), desiredMonth, 1);
   dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  var daysInMonth = index$17(dateWithDesiredMonth);
+  var daysInMonth = get_days_in_month(dateWithDesiredMonth);
   // Set the last day of the new month
   // if the original date was the last day of the longer month
   date.setMonth(desiredMonth, Math.min(daysInMonth, date.getDate()));
   return date
 }
 
-var index$16 = addMonths;
+var add_months = addMonths;
 
 /**
  * @category Day Helpers
@@ -1728,13 +1728,13 @@ var index$16 = addMonths;
  * //=> Thu Sep 11 2014 00:00:00
  */
 function addDays (dirtyDate, dirtyAmount) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var amount = Number(dirtyAmount);
   date.setDate(date.getDate() + amount);
   return date
 }
 
-var index$19 = addDays;
+var add_days = addDays;
 
 /**
  * @category Month Helpers
@@ -1754,10 +1754,10 @@ var index$19 = addDays;
  */
 function subMonths (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return index$16(dirtyDate, -amount)
+  return add_months(dirtyDate, -amount)
 }
 
-var index$20 = subMonths;
+var sub_months = subMonths;
 
 /**
  * @category Day Helpers
@@ -1777,10 +1777,10 @@ var index$20 = subMonths;
  */
 function subDays (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return index$19(dirtyDate, -amount)
+  return add_days(dirtyDate, -amount)
 }
 
-var index$21 = subDays;
+var sub_days = subDays;
 
 /**
  * @category Year Helpers
@@ -1799,14 +1799,14 @@ var index$21 = subDays;
  * //=> Wed Jan 01 2014 00:00:00
  */
 function startOfYear (dirtyDate) {
-  var cleanDate = index$1(dirtyDate);
+  var cleanDate = parse_1(dirtyDate);
   var date = new Date(0);
   date.setFullYear(cleanDate.getFullYear(), 0, 1);
   date.setHours(0, 0, 0, 0);
   return date
 }
 
-var index$25 = startOfYear;
+var start_of_year = startOfYear;
 
 var MILLISECONDS_IN_MINUTE$1 = 60000;
 var MILLISECONDS_IN_DAY = 86400000;
@@ -1832,8 +1832,8 @@ var MILLISECONDS_IN_DAY = 86400000;
  * //=> 366
  */
 function differenceInCalendarDays (dirtyDateLeft, dirtyDateRight) {
-  var startOfDayLeft = index$8(dirtyDateLeft);
-  var startOfDayRight = index$8(dirtyDateRight);
+  var startOfDayLeft = start_of_day(dirtyDateLeft);
+  var startOfDayRight = start_of_day(dirtyDateRight);
 
   var timestampLeft = startOfDayLeft.getTime() -
     startOfDayLeft.getTimezoneOffset() * MILLISECONDS_IN_MINUTE$1;
@@ -1846,7 +1846,7 @@ function differenceInCalendarDays (dirtyDateLeft, dirtyDateRight) {
   return Math.round((timestampLeft - timestampRight) / MILLISECONDS_IN_DAY)
 }
 
-var index$27 = differenceInCalendarDays;
+var difference_in_calendar_days = differenceInCalendarDays;
 
 /**
  * @category Day Helpers
@@ -1864,13 +1864,13 @@ var index$27 = differenceInCalendarDays;
  * //=> 183
  */
 function getDayOfYear (dirtyDate) {
-  var date = index$1(dirtyDate);
-  var diff = index$27(date, index$25(date));
+  var date = parse_1(dirtyDate);
+  var diff = difference_in_calendar_days(date, start_of_year(date));
   var dayOfYear = diff + 1;
   return dayOfYear
 }
 
-var index$23 = getDayOfYear;
+var get_day_of_year = getDayOfYear;
 
 /**
  * @category ISO Week Helpers
@@ -1891,10 +1891,10 @@ var index$23 = getDayOfYear;
  * //=> Mon Sep 01 2014 00:00:00
  */
 function startOfISOWeek (dirtyDate) {
-  return index$14(dirtyDate, {weekStartsOn: 1})
+  return start_of_week(dirtyDate, {weekStartsOn: 1})
 }
 
-var index$31 = startOfISOWeek;
+var start_of_iso_week = startOfISOWeek;
 
 /**
  * @category ISO Week-Numbering Year Helpers
@@ -1915,18 +1915,18 @@ var index$31 = startOfISOWeek;
  * //=> 2004
  */
 function getISOYear (dirtyDate) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var year = date.getFullYear();
 
   var fourthOfJanuaryOfNextYear = new Date(0);
   fourthOfJanuaryOfNextYear.setFullYear(year + 1, 0, 4);
   fourthOfJanuaryOfNextYear.setHours(0, 0, 0, 0);
-  var startOfNextYear = index$31(fourthOfJanuaryOfNextYear);
+  var startOfNextYear = start_of_iso_week(fourthOfJanuaryOfNextYear);
 
   var fourthOfJanuaryOfThisYear = new Date(0);
   fourthOfJanuaryOfThisYear.setFullYear(year, 0, 4);
   fourthOfJanuaryOfThisYear.setHours(0, 0, 0, 0);
-  var startOfThisYear = index$31(fourthOfJanuaryOfThisYear);
+  var startOfThisYear = start_of_iso_week(fourthOfJanuaryOfThisYear);
 
   if (date.getTime() >= startOfNextYear.getTime()) {
     return year + 1
@@ -1937,7 +1937,7 @@ function getISOYear (dirtyDate) {
   }
 }
 
-var index$35 = getISOYear;
+var get_iso_year = getISOYear;
 
 /**
  * @category ISO Week-Numbering Year Helpers
@@ -1959,15 +1959,15 @@ var index$35 = getISOYear;
  * //=> Mon Jan 03 2005 00:00:00
  */
 function startOfISOYear (dirtyDate) {
-  var year = index$35(dirtyDate);
+  var year = get_iso_year(dirtyDate);
   var fourthOfJanuary = new Date(0);
   fourthOfJanuary.setFullYear(year, 0, 4);
   fourthOfJanuary.setHours(0, 0, 0, 0);
-  var date = index$31(fourthOfJanuary);
+  var date = start_of_iso_week(fourthOfJanuary);
   return date
 }
 
-var index$33 = startOfISOYear;
+var start_of_iso_year = startOfISOYear;
 
 var MILLISECONDS_IN_WEEK = 604800000;
 
@@ -1989,8 +1989,8 @@ var MILLISECONDS_IN_WEEK = 604800000;
  * //=> 53
  */
 function getISOWeek (dirtyDate) {
-  var date = index$1(dirtyDate);
-  var diff = index$31(date).getTime() - index$33(date).getTime();
+  var date = parse_1(dirtyDate);
+  var diff = start_of_iso_week(date).getTime() - start_of_iso_year(date).getTime();
 
   // Round the number of days to the nearest integer
   // because the number of milliseconds in a week is not constant
@@ -1998,7 +1998,7 @@ function getISOWeek (dirtyDate) {
   return Math.round(diff / MILLISECONDS_IN_WEEK) + 1
 }
 
-var index$29 = getISOWeek;
+var get_iso_week = getISOWeek;
 
 function buildDistanceInWordsLocale () {
   var distanceInWordsLocale = {
@@ -2098,7 +2098,7 @@ function buildDistanceInWordsLocale () {
   }
 }
 
-var index$39 = buildDistanceInWordsLocale;
+var build_distance_in_words_locale = buildDistanceInWordsLocale;
 
 var commonFormatterKeys = [
   'M', 'MM', 'Q', 'D', 'DD', 'DDD', 'DDDD', 'd',
@@ -2127,7 +2127,7 @@ function buildFormattingTokensRegExp (formatters) {
   return formattingTokensRegExp
 }
 
-var index$43 = buildFormattingTokensRegExp;
+var build_formatting_tokens_reg_exp = buildFormattingTokensRegExp;
 
 function buildFormatLocale () {
   // Note: in English, the names of days of the week and months are capitalized.
@@ -2195,7 +2195,7 @@ function buildFormatLocale () {
 
   return {
     formatters: formatters,
-    formattingTokensRegExp: index$43(formatters)
+    formattingTokensRegExp: build_formatting_tokens_reg_exp(formatters)
   }
 }
 
@@ -2214,15 +2214,15 @@ function ordinal (number) {
   return number + 'th'
 }
 
-var index$41 = buildFormatLocale;
+var build_format_locale = buildFormatLocale;
 
 /**
  * @category Locales
  * @summary English locale.
  */
-var index$37 = {
-  distanceInWords: index$39(),
-  format: index$41()
+var en = {
+  distanceInWords: build_distance_in_words_locale(),
+  format: build_format_locale()
 };
 
 /**
@@ -2313,8 +2313,8 @@ function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
   var options = dirtyOptions || {};
 
   var locale = options.locale;
-  var localeFormatters = index$37.format.formatters;
-  var formattingTokensRegExp = index$37.format.formattingTokensRegExp;
+  var localeFormatters = en.format.formatters;
+  var formattingTokensRegExp = en.format.formattingTokensRegExp;
   if (locale && locale.format && locale.format.formatters) {
     localeFormatters = locale.format.formatters;
 
@@ -2323,9 +2323,9 @@ function format (dirtyDate, dirtyFormatStr, dirtyOptions) {
     }
   }
 
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
 
-  if (!index$11(date)) {
+  if (!is_valid(date)) {
     return 'Invalid Date'
   }
 
@@ -2362,12 +2362,12 @@ var formatters = {
 
   // Day of year: 1, 2, ..., 366
   'DDD': function (date) {
-    return index$23(date)
+    return get_day_of_year(date)
   },
 
   // Day of year: 001, 002, ..., 366
   'DDDD': function (date) {
-    return addLeadingZeros(index$23(date), 3)
+    return addLeadingZeros(get_day_of_year(date), 3)
   },
 
   // Day of week: 0, 1, ..., 6
@@ -2382,12 +2382,12 @@ var formatters = {
 
   // ISO week: 1, 2, ..., 53
   'W': function (date) {
-    return index$29(date)
+    return get_iso_week(date)
   },
 
   // ISO week: 01, 02, ..., 53
   'WW': function (date) {
-    return addLeadingZeros(index$29(date), 2)
+    return addLeadingZeros(get_iso_week(date), 2)
   },
 
   // Year: 00, 01, ..., 99
@@ -2402,12 +2402,12 @@ var formatters = {
 
   // ISO week-numbering year: 00, 01, ..., 99
   'GG': function (date) {
-    return String(index$35(date)).substr(2)
+    return String(get_iso_year(date)).substr(2)
   },
 
   // ISO week-numbering year: 1900, 1901, ..., 2099
   'GGGG': function (date) {
-    return index$35(date)
+    return get_iso_year(date)
   },
 
   // Hour: 0, 1, ... 23
@@ -2545,7 +2545,7 @@ function addLeadingZeros (number, targetLength) {
   return output
 }
 
-var index$22 = format;
+var format_1 = format;
 
 /**
  * @category Month Helpers
@@ -2567,8 +2567,8 @@ var index$22 = format;
  * //=> 8
  */
 function differenceInCalendarMonths (dirtyDateLeft, dirtyDateRight) {
-  var dateLeft = index$1(dirtyDateLeft);
-  var dateRight = index$1(dirtyDateRight);
+  var dateLeft = parse_1(dirtyDateLeft);
+  var dateRight = parse_1(dirtyDateRight);
 
   var yearDiff = dateLeft.getFullYear() - dateRight.getFullYear();
   var monthDiff = dateLeft.getMonth() - dateRight.getMonth();
@@ -2576,7 +2576,7 @@ function differenceInCalendarMonths (dirtyDateLeft, dirtyDateRight) {
   return yearDiff * 12 + monthDiff
 }
 
-var index$45 = differenceInCalendarMonths;
+var difference_in_calendar_months = differenceInCalendarMonths;
 
 /**
  * @category Common Helpers
@@ -2595,12 +2595,12 @@ var index$45 = differenceInCalendarMonths;
  * //=> false
  */
 function isBefore (dirtyDate, dirtyDateToCompare) {
-  var date = index$1(dirtyDate);
-  var dateToCompare = index$1(dirtyDateToCompare);
+  var date = parse_1(dirtyDate);
+  var dateToCompare = parse_1(dirtyDateToCompare);
   return date.getTime() < dateToCompare.getTime()
 }
 
-var index$46 = isBefore;
+var is_before = isBefore;
 
 /**
  * @category Year Helpers
@@ -2620,10 +2620,10 @@ var index$46 = isBefore;
  */
 function addYears (dirtyDate, dirtyAmount) {
   var amount = Number(dirtyAmount);
-  return index$16(dirtyDate, amount * 12)
+  return add_months(dirtyDate, amount * 12)
 }
 
-var index$47 = addYears;
+var add_years = addYears;
 
 /**
  * @category Year Helpers
@@ -2642,13 +2642,13 @@ var index$47 = addYears;
  * //=> Sun Sep 01 2013 00:00:00
  */
 function setYear (dirtyDate, dirtyYear) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var year = Number(dirtyYear);
   date.setFullYear(year);
   return date
 }
 
-var index$48 = setYear;
+var set_year = setYear;
 
 /**
  * @category Month Helpers
@@ -2667,7 +2667,7 @@ var index$48 = setYear;
  * //=> Sat Feb 01 2014 00:00:00
  */
 function setMonth (dirtyDate, dirtyMonth) {
-  var date = index$1(dirtyDate);
+  var date = parse_1(dirtyDate);
   var month = Number(dirtyMonth);
   var year = date.getFullYear();
   var day = date.getDate();
@@ -2675,14 +2675,14 @@ function setMonth (dirtyDate, dirtyMonth) {
   var dateWithDesiredMonth = new Date(0);
   dateWithDesiredMonth.setFullYear(year, month, 15);
   dateWithDesiredMonth.setHours(0, 0, 0, 0);
-  var daysInMonth = index$17(dateWithDesiredMonth);
+  var daysInMonth = get_days_in_month(dateWithDesiredMonth);
   // Set the last day of the new month
   // if the original date was the last day of the longer month
   date.setMonth(month, Math.min(day, daysInMonth));
   return date
 }
 
-var index$49 = setMonth;
+var set_month = setMonth;
 
 var PickerHeader = {
   functional: true,
@@ -2692,17 +2692,17 @@ var PickerHeader = {
     return h('div', { class: 'uk-datepicker-heading' }, [
       h(Select, {
         props: {
-          value: index$4(vm.date),
+          value: get_month(vm.date),
           options: getMonthsRange(vm.minPickableDate, vm.maxPickableDate)
-            .filter(function (month) { return index$10(index$49(vm.date, month), vm.minPickableDate, vm.maxPickableDate); }
+            .filter(function (month) { return is_within_range(set_month(vm.date, month), vm.minPickableDate, vm.maxPickableDate); }
             )
             .map(function (month) { return ({
-              text: vm.format(index$49(vm.date, month), 'MMMM'),
+              text: vm.format(set_month(vm.date, month), 'MMMM'),
               value: month
             }); }),
           onChange: function (e) {
             var selectedMonth = e.target.selectedOptions[0].value;
-            vm.$emit('change', index$49(vm.date, selectedMonth));
+            vm.$emit('change', set_month(vm.date, selectedMonth));
           }
         }
       }, [
@@ -2711,18 +2711,18 @@ var PickerHeader = {
       '&nbsp',
       h(Select, {
         props: {
-          value: index(vm.date),
+          value: get_year(vm.date),
           options: getYearsRange(vm.minPickableDate, vm.maxPickableDate)
-            .filter(function (year) { return index$10(index$48(vm.date, year), vm.minPickableDate, vm.maxPickableDate); }
+            .filter(function (year) { return is_within_range(set_year(vm.date, year), vm.minPickableDate, vm.maxPickableDate); }
             )
             .map(function (year) { return ({ text: year, value: year }); }),
           onChange: function (e) {
             var selectedYear = e.target.selectedOptions[0].value;
-            vm.$emit('change', index$48(vm.date, selectedYear));
+            vm.$emit('change', set_year(vm.date, selectedYear));
           }
         }
       }, [
-        index(vm.date)
+        get_year(vm.date)
       ])
     ])
   }
@@ -2770,9 +2770,9 @@ var Select = {
 function getYearsRange (startDate, endDate) {
   var years = [];
   var curDate = startDate;
-  while (index$46(curDate, endDate)) {
-    years.push(index(curDate));
-    curDate = index$47(curDate, 1);
+  while (is_before(curDate, endDate)) {
+    years.push(get_year(curDate));
+    curDate = add_years(curDate, 1);
   }
   return years
 }
@@ -2780,16 +2780,16 @@ function getYearsRange (startDate, endDate) {
 function getMonthsRange (startDate, endDate) {
   var months = [];
   // if diff is bigger than 12, include all months
-  if (index$45(endDate, startDate) >= 12) {
+  if (difference_in_calendar_months(endDate, startDate) >= 12) {
     range(12).forEach(function (month) {
       months.push(month);
     });
   // otherwise iterate range
   } else {
     var curDate = startDate;
-    while (index$46(curDate, endDate)) {
-      months.push(index$4(curDate));
-      curDate = index$16(curDate, 1);
+    while (is_before(curDate, endDate)) {
+      months.push(get_month(curDate));
+      curDate = add_months(curDate, 1);
     }
   }
   return months
@@ -2806,8 +2806,8 @@ var cols = range(7);
  */
 var dateMatrix = function (ref, plain) {
   if ( ref === void 0 ) ref = {
-  year: index(Date.now()),
-  month: index$4(Date.now()),
+  year: get_year(Date.now()),
+  month: get_month(Date.now()),
   weekStartsOn: 0
 };
   var year = ref.year;
@@ -2819,21 +2819,21 @@ var dateMatrix = function (ref, plain) {
   var date = arguments[0] instanceof Date
     ? arguments[0]
     : new Date(year, month);
-  var curDate = index$14(date, { weekStartsOn: weekStartsOn });
+  var curDate = start_of_week(date, { weekStartsOn: weekStartsOn });
 
   rows.forEach(function (row) {
     var week = [];
     cols.forEach(function (col) {
       // when plain return a raw date re
       if (plain) {
-        week.push(index$6(curDate, date)
-          ? index$5(curDate)
-          : -index$5(curDate)
+        week.push(is_same_month(curDate, date)
+          ? get_date(curDate)
+          : -get_date(curDate)
         );
       } else {
         week.push(curDate);
       }
-      curDate = index$19(curDate, 1);
+      curDate = add_days(curDate, 1);
     });
 
     matrix.push(week);
@@ -2842,7 +2842,7 @@ var dateMatrix = function (ref, plain) {
   return matrix
 };
 
-var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index$$1){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
+var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
             ? _vm.triggerUnpickEvent(date)
             : _vm.triggerPickEvent (date)
           );}}},[_vm._v(_vm._s(_vm.format(date, 'D')))])])}))}))])])},staticRenderFns: [],
@@ -2854,7 +2854,7 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     date: {
       type: [Date, String, Number],
       default: function () { return Date.now(); },
-      validator: function (date) { return index$11(index$1(date)); }
+      validator: function (date) { return is_valid(parse_1(date)); }
     },
     // index first day week (0 - Sunday)
     weekStartsOn: {
@@ -2881,7 +2881,7 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       validator: function (date) {
         return isInteger(date)
           ? true
-          : index$11(index$1(date))
+          : is_valid(parse_1(date))
       }
     },
     maxDate: {
@@ -2890,37 +2890,37 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       validator: function (date) {
         return isInteger(date)
           ? true
-          : index$11(index$1(date))
+          : is_valid(parse_1(date))
       }
     }
   },
   computed: {
     matrix: function matrix () {
       return dateMatrix({
-        year: index(this.date),
-        month: index$4(this.date),
+        year: get_year(this.date),
+        month: get_month(this.date),
         weekStartsOn: this.weekStartsOn
       })
     },
     prevMonth: function prevMonth () {
-      return this.format(index$20(this.date, 1), 'YYYY-MM')
+      return this.format(sub_months(this.date, 1), 'YYYY-MM')
     },
     nextMonth: function nextMonth () {
-      return this.format(index$16(this.date, 1), 'YYYY-MM')
+      return this.format(add_months(this.date, 1), 'YYYY-MM')
     },
     minPickableDate: function minPickableDate () {
       return isInteger(this.minDate)
-        ? index$21(Date.now(), this.minDate + 1)
+        ? sub_days(Date.now(), this.minDate + 1)
         : this.minDate
     },
     maxPickableDate: function maxPickableDate () {
       return isInteger(this.maxDate)
-        ? index$19(Date.now(), this.maxDate)
+        ? add_days(Date.now(), this.maxDate)
         : this.maxDate
     },
     weekDays: function weekDays () {
-      var startDay = index$14(this.date, { weekStartsOn: this.weekStartsOn });
-      return range(7).map(function (val, index$$1) { return index$19(startDay, index$$1); })
+      var startDay = start_of_week(this.date, { weekStartsOn: this.weekStartsOn });
+      return range(7).map(function (val, index) { return add_days(startDay, index); })
     }
   },
   methods: {
@@ -2940,34 +2940,34 @@ var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     },
     triggerUnpickEvent: function triggerUnpickEvent (unpickedDate) {
       var dirtyPickedDays = [].concat( this.pickedDates );
-      var index$$1 = dirtyPickedDays.findIndex(function (d) { return index$5(d) === index$5(unpickedDate); });
-      dirtyPickedDays.splice(index$$1, 1);
+      var index = dirtyPickedDays.findIndex(function (d) { return get_date(d) === get_date(unpickedDate); });
+      dirtyPickedDays.splice(index, 1);
       this.$emit('unpick', {
-        date: index$1(unpickedDate),
+        date: parse_1(unpickedDate),
         dates: dirtyPickedDays,
         format: this.format
       });
     },
     isCurrentMonth: function isCurrentMonth (date) {
-      return index$6(this.date, date)
+      return is_same_month(this.date, date)
     },
     isPicked: function isPicked (date) {
-      return this.pickedDates.some(function (d) { return index$7(d, date); })
+      return this.pickedDates.some(function (d) { return is_same_day(d, date); })
     },
     isDisabled: function isDisabled (date) {
-      return this.disabledDates.some(function (d) { return index$7(d, date); }) ||
-        !index$10(date, this.minPickableDate, this.maxPickableDate)
+      return this.disabledDates.some(function (d) { return is_same_day(d, date); }) ||
+        !is_within_range(date, this.minPickableDate, this.maxPickableDate)
     },
     isMonthDisplayable: function isMonthDisplayable (date) {
-      return index$12(
-        index$13(date),
-        index$15(date),
+      return are_ranges_overlapping(
+        start_of_month(date),
+        end_of_month(date),
         this.minPickableDate,
         this.maxPickableDate
       )
     },
     format: function format (date, format$1) {
-      return index$22(date, format$1, { locale: this.locale })
+      return format_1(date, format$1, { locale: this.locale })
     }
   }
 };
@@ -3263,7 +3263,7 @@ var iconLink = {
 
     // add static class now to avoid overrides
     data.class = ['uk-icon', data.class, {
-      'uk-icon-link': !props.reset
+      'uk-icon-link': props.reset
     }];
 
     return h('a', Object.assign({}, {on: listeners},
@@ -5303,7 +5303,7 @@ return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabl
 
 /**!
  * @fileOverview Kickass library to create and place poppers near their reference elements.
- * @version 1.11.1
+ * @version 1.12.5
  * @license
  * Copyright (c) 2016 Federico Zivolo and contributors
  *
@@ -5644,7 +5644,7 @@ var isIE10$1 = function () {
 };
 
 function getSize(axis, body, html, computedStyle) {
-  return Math.max(body['offset' + axis], html['client' + axis], html['offset' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
+  return Math.max(body['offset' + axis], body['scroll' + axis], html['client' + axis], html['offset' + axis], html['scroll' + axis], isIE10$1() ? html['offset' + axis] + computedStyle['margin' + (axis === 'Height' ? 'Top' : 'Left')] + computedStyle['margin' + (axis === 'Height' ? 'Bottom' : 'Right')] : 0);
 }
 
 function getWindowSizes() {
@@ -6172,6 +6172,7 @@ function update() {
   var data = {
     instance: this,
     styles: {},
+    arrowStyles: {},
     attributes: {},
     flipped: false,
     offsets: {}
@@ -6416,9 +6417,9 @@ function applyStyle(data) {
   // they will be set as HTML attributes of the element
   setAttributes(data.instance.popper, data.attributes);
 
-  // if the arrow style has been computed, apply the arrow style
-  if (data.offsets.arrow) {
-    setStyles(data.arrowElement, data.offsets.arrow);
+  // if arrowElement is defined and arrowStyles has some properties
+  if (data.arrowElement && Object.keys(data.arrowStyles).length) {
+    setStyles(data.arrowElement, data.arrowStyles);
   }
 
   return data;
@@ -6538,9 +6539,10 @@ function computeStyle(data, options) {
     'x-placement': data.placement
   };
 
-  // Update attributes and styles of `data`
+  // Update `data` attributes, styles and arrowStyles
   data.attributes = _extends({}, attributes, data.attributes);
   data.styles = _extends({}, styles, data.styles);
+  data.arrowStyles = _extends({}, data.offsets.arrow, data.arrowStyles);
 
   return data;
 }
@@ -6613,13 +6615,15 @@ function arrow(data, options) {
   var isVertical = ['left', 'right'].indexOf(placement) !== -1;
 
   var len = isVertical ? 'height' : 'width';
-  var side = isVertical ? 'top' : 'left';
+  var sideCapitalized = isVertical ? 'Top' : 'Left';
+  var side = sideCapitalized.toLowerCase();
   var altSide = isVertical ? 'left' : 'top';
   var opSide = isVertical ? 'bottom' : 'right';
   var arrowElementSize = getOuterSizes(arrowElement)[len];
 
   //
-  // extends keepTogether behavior making sure the popper and its reference have enough pixels in conjuction
+  // extends keepTogether behavior making sure the popper and its
+  // reference have enough pixels in conjuction
   //
 
   // top/left side
@@ -6635,7 +6639,9 @@ function arrow(data, options) {
   var center = reference[side] + reference[len] / 2 - arrowElementSize / 2;
 
   // Compute the sideValue using the updated popper offsets
-  var sideValue = center - getClientRect(data.offsets.popper)[side];
+  // take popper margin in account because we don't have this info available
+  var popperMarginSide = getStyleComputedProperty(data.instance.popper, 'margin' + sideCapitalized).replace('px', '');
+  var sideValue = center - getClientRect(data.offsets.popper)[side] - popperMarginSide;
 
   // prevent arrowElement from being placed not contiguously to its popper
   sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
@@ -7157,7 +7163,7 @@ function inner(data) {
 
   var subtractLength = ['top', 'left'].indexOf(basePlacement) === -1;
 
-  popper[isHoriz ? 'left' : 'top'] = reference[placement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
+  popper[isHoriz ? 'left' : 'top'] = reference[basePlacement] - (subtractLength ? popper[isHoriz ? 'width' : 'height'] : 0);
 
   data.placement = getOppositePlacement(placement);
   data.offsets.popper = getClientRect(popper);
@@ -7235,6 +7241,9 @@ var modifiers = {
    * '10 - 5vh + 3%'
    * '-10px + 5vh, 5px - 6%'
    * ```
+   * > **NB**: If you desire to apply offsets to your poppers in a way that may make them overlap
+   * > with their reference element, unfortunately, you will have to disable the `flip` modifier.
+   * > More on this [reading this issue](https://github.com/FezVrasta/popper.js/issues/373)
    *
    * @memberof modifiers
    * @inner
@@ -7497,6 +7506,7 @@ var modifiers = {
  * @property {Boolean} data.hide True if the reference element is out of boundaries, useful to know when to hide the popper.
  * @property {HTMLElement} data.arrowElement Node used as arrow by arrow modifier
  * @property {Object} data.styles Any CSS property defined here will be applied to the popper, it expects the JavaScript nomenclature (eg. `marginBottom`)
+ * @property {Object} data.arrowStyles Any CSS property defined here will be applied to the popper arrow, it expects the JavaScript nomenclature (eg. `marginBottom`)
  * @property {Object} data.boundaries Offsets of the popper boundaries
  * @property {Object} data.offsets The measurements of popper, reference and arrow elements.
  * @property {Object} data.offsets.popper `top`, `left`, `width`, `height` values
