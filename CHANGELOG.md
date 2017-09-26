@@ -2,24 +2,32 @@
 
 ### WIP
 
+ - Complete refactor for UIkit 3
  - Raised Vue minimum version to 2.1
  - Removed ARIA declarations
  - Removed Moment.js dependency
- - New components
-   - VkNotify
-   - VkTooltip
  - Refactored components with braking changes
-   - VkTable
-   - VkTabs
-   - VkDropdown
-   - VkDatepicker
+   - Table
+   - Tabs
+   - Dropdown
+   - Datepicker
    - VkPagination
  - Removed components (check Examples section for alternatives)
-   - VkCalendar
-   - VKPicker
-   - VkPickerDrop
-   - VkDatepickerDrop
-   - VkSwitcher
+   - Calendar
+   - Picker
+   - PickerDrop
+   - DatepickerDrop
+   - Switcher
+
+  - Added components
+    - Notify
+    - Tooltip
+    - Icon
+    - IconLink
+    - IconButton
+
+  - Added Directives
+   - HeightViewport
 
 ### 0.6.0
 
