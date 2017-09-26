@@ -10,7 +10,7 @@ export default {
   render (h, { props, data, listeners, children }) {
     // add static class now to avoid overrides
     data.class = ['uk-icon', data.class, {
-      'uk-icon-link': !props.reset
+      'uk-icon-link': props.reset
     }]
 
     return h('a', {
