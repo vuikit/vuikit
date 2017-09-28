@@ -9,10 +9,9 @@
 <script>
 import { warn } from '~/helpers/debug'
 import Checkbox from './checkbox'
-import { joinClasses } from '../util'
 
 export default {
-  name: 'VkTableColumnSelect',
+  name: 'TableColumnSelect',
   components: { Checkbox },
   props: {
     headerClass: {
@@ -37,10 +36,8 @@ export default {
     }
   },
   cellRender (h, row) {
-    const defaultClasses = 'uk-form uk-text-center'
-
     return h('td', {
-      staticClass: joinClasses(defaultClasses, this.cellClass)
+      class: ['uk-form uk-text-center', this.cellClass]
     }, [
       h(Checkbox, {
         props: { checked: this.$parent.isSelected(row) },

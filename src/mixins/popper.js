@@ -1,7 +1,6 @@
 import Popper from 'popper.js'
 
 export default {
-  name: 'VkDropdown',
   props: {
     // dom element reference,
     // defaults to parent

@@ -1,0 +1,90 @@
+<template>
+  <ul class="uk-pagination" :class="{
+    'uk-flex-center': align !== 'left' && align !== 'right',
+    'uk-flex-right': align === 'right'
+  }">
+    <pag-parts></pag-parts>
+  </ul>
+</template>
+
+<script>
+import { isArray } from '@vuikit/util'
+import paginationMatrix from '~/helpers/pagination-matrix'
+import PaginationFirst from '../pagination-first'
+import PaginationLast from '../pagination-last'
+import PaginationPrev from '../pagination-prev'
+import PaginationNext from '../pagination-next'
+import PaginationPages from '../pagination-pages'
+
+const partsMap = {
+  first: PaginationFirst,
+  last: PaginationLast,
+  prev: PaginationPrev,
+  next: PaginationNext,
+  pages: PaginationPages
+}
+
+export default {
+  name: 'Pagination',
+  props: {
+    align: {
+      type: String,
+      default: 'center' // left|center|right
+    },
+    // the active page
+    page: {
+      type: Number
+    },
+    // items displayed on each page
+    perPage: {
+      type: Number
+    },
+    // amount of visible pages around the active one
+    range: {
+      type: Number,
+      default: 3
+    },
+    // total amount of items
+    total: {
+      type: Number
+    }
+  },
+  computed: {
+    prevPage () {
+      return this.page - 1
+    },
+    nextPage () {
+      return this.page + 1
+    },
+    pages () {
+      return paginationMatrix({ total: this.total, page: this.page, perPage: this.perPage })
+    },
+    lastPage () {
+      return this.pages[this.pages.length - 1]
+    }
+  },
+  components: {
+    'pag-parts': {
+      functional: true,
+      render (h, { parent }) {
+        let lis = []
+        parent.$parts.forEach(part => {
+          part = parent.$createElement(part.comp, { props: part.props })
+          lis = isArray(part)
+            ? [...lis, ...part]
+            : [...lis, part]
+        })
+        return lis
+      }
+    }
+  },
+  created () {
+    this.$parts = this.$slots.default
+      .filter(slot => slot.children)
+      .map(slot => ({
+        comp: partsMap[slot.children[0].text],
+        props: (slot.data && slot.data.attrs) || {}
+      }))
+  }
+}
+</script>

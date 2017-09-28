@@ -123,4 +123,4 @@ Until Vuikit reaches a 1.0 release, breaking changes will be released with a new
 
 Vuikit is open source and released under the [MIT License](LICENSE).
 
-Copyright (c) 2016-present, [Miljan Aleksic](https://twitter.com/AleksicMiljan)
+[MIT](LICENSE) &copy; [Miljan Aleksic](https://twitter.com/AleksicMiljan)

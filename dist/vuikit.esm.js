@@ -1,14 +1,14 @@
 /*
-* Vuikit 0.7.1
-* (c) 2017 Miljan Aleksic
-* Released under the MIT License.
+ * Vuikit 0.7.1
+ * (c) 2017 Miljan Aleksic
+ * Released under the MIT License.
 */
 
 import { Animation, addClass, css, debounce, each, flipPosition, forceRedraw, get, getDimensions, getPosition, hasClass, inArray, isArray, isFunction, isInteger, isRtl, isString, off, offAll, offsetTop, on, range, removeClass, toMs, toNumber, toggleClass, warn } from '@vuikit/util';
 import { IconArrowDown, IconArrowUp, IconCloseIcon, IconPaginationNext, IconPaginationPrevious, IconSpinner } from '@vuikit/icons';
 
-var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkBreadcrumb',
+var index = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'Breadcrumb',
   props: {
     location: {
       type: String,
@@ -42,8 +42,8 @@ var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2):_c('span',[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
-  name: 'VkBreadcrumbItem',
+var index$1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2):_c('span',[_vm._t("default",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2)])},staticRenderFns: [],
+  name: 'BreadcrumbItem',
   props: {
     label: String,
     path: {
@@ -61,8 +61,8 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-var button = {
-  name: 'VkButton',
+var index$2 = {
+  name: 'Button',
   functional: true,
   props: {
     value: {},
@@ -157,8 +157,8 @@ function isAsyncPlaceholder (node) {
   return node.isComment && node.asyncFactory
 }
 
-var buttonGroupCheckbox = {
-  name: 'VkButtonGroupCheckbox',
+var index$3 = {
+  name: 'ButtonGroupCheckbox',
   functional: true,
   props: {
     spaced: {
@@ -204,8 +204,8 @@ var buttonGroupCheckbox = {
   }
 };
 
-var buttonGroupRadio = {
-  name: 'VkButtonGroupRadio',
+var index$4 = {
+  name: 'ButtonGroupRadio',
   functional: true,
   props: {
     spaced: {
@@ -2124,11 +2124,11 @@ var dateMatrix = function (ref, plain) {
   return matrix
 };
 
-var datepicker = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_c('picker-header')],1),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(_vm._s(_vm.format(day, 'ddd')))])}))]),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
+var index$5 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_c('div',{staticClass:"uk-datepicker-nav"},[_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.prevMonth)),expression:"isMonthDisplayable(prevMonth)"}],staticClass:"uk-datepicker-previous",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.prevMonth);}}}),_vm._v(" "),_c('a',{directives:[{name:"show",rawName:"v-show",value:(_vm.isMonthDisplayable(_vm.nextMonth)),expression:"isMonthDisplayable(nextMonth)"}],staticClass:"uk-datepicker-next",on:{"click":function($event){$event.preventDefault();_vm.triggerChangeEvent(_vm.nextMonth);}}}),_vm._v(" "),_c('picker-header')],1),_vm._v(" "),_c('table',{staticClass:"uk-datepicker-table"},[_c('thead',[_c('tr',_vm._l((_vm.weekDays),function(day){return _c('th',[_vm._v(" "+_vm._s(_vm.format(day, 'ddd'))+" ")])}))]),_vm._v(" "),_c('tbody',_vm._l((_vm.matrix),function(week){return _c('tr',_vm._l((week),function(date,index){return _c('td',[_c('a',{class:{ 'uk-active': _vm.isPicked(date), 'uk-datepicker-table-disabled': _vm.isDisabled(date), 'uk-datepicker-table-muted': !_vm.isCurrentMonth(date) || _vm.isDisabled(date) },on:{"click":function($event){$event.preventDefault();!_vm.isDisabled(date) && (_vm.isPicked(date)
             ? _vm.triggerUnpickEvent(date)
             : _vm.triggerPickEvent (date)
-          );}}},[_vm._v(_vm._s(_vm.format(date, 'D')))])])}))}))])])},staticRenderFns: [],
-  name: 'VkDatepicker',
+          );}}},[_vm._v(" "+_vm._s(_vm.format(date, 'D'))+" ")])])}))}))])])},staticRenderFns: [],
+  name: 'Datepicker',
   components: {
     PickerHeader: PickerHeader
   },
@@ -2337,7 +2337,7 @@ var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm
     'left': ((_vm.left) + "px")
   })},[_vm._t("default")],2)
 var obj;},staticRenderFns: [],
-  name: 'VkDrop',
+  name: 'Drop',
   mixins: [PositionMixin],
   props: {
     show: {
@@ -2503,17 +2503,17 @@ var obj;},staticRenderFns: [],
   }
 };
 
-var dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",class:( obj = { 'uk-open': _vm.show }, obj[("uk-dropdown-" + (_vm.position))] = _vm.show, obj ),style:({
+var index$6 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-dropdown",class:( obj = { 'uk-open': _vm.show }, obj[("uk-dropdown-" + (_vm.position))] = _vm.show, obj ),style:({
     'top': ((_vm.top) + "px"),
     'left': ((_vm.left) + "px")
   })},[_vm._t("default")],2)
 var obj;},staticRenderFns: [],
-  name: 'VkDropdown',
+  name: 'Dropdown',
   extends: Drop
 };
 
-var icon = {
-  name: 'VkIcon',
+var index$7 = {
+  name: 'Icon',
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
@@ -2528,8 +2528,8 @@ var icon = {
   }
 };
 
-var iconLink = {
-  name: 'VkIconLink',
+var index$8 = {
+  name: 'IconLink',
   functional: true,
   props: {
     reset: {
@@ -2553,8 +2553,8 @@ var iconLink = {
   }
 };
 
-var iconButton = {
-  name: 'VkIconButton',
+var index$9 = {
+  name: 'IconButton',
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
@@ -2663,8 +2663,8 @@ var ModalMixin = {
 
 var doc = document.documentElement;
 
-var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
-  name: 'VkModal',
+var index$10 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
+  name: 'Modal',
   mixins: [ModalMixin],
   components: {
     'modal-content': {
@@ -2800,7 +2800,7 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   }
 };
 
-var modalHeader = {
+var index$11 = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -2812,7 +2812,7 @@ var modalHeader = {
   }
 };
 
-var modalBody = {
+var index$12 = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -2824,7 +2824,7 @@ var modalBody = {
   }
 };
 
-var modalFooter = {
+var index$13 = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -2836,7 +2836,7 @@ var modalFooter = {
   }
 };
 
-var modalCaption = {
+var index$14 = {
   functional: true,
   props: ['bottom'],
   render: function render (h, ref) {
@@ -2856,7 +2856,7 @@ var modalCaption = {
   }
 };
 
-var modalClose = {
+var index$15 = {
   functional: true,
   props: ['outside', 'full', 'top'],
   render: function render (h, ref) {
@@ -2885,8 +2885,8 @@ var modalClose = {
   }
 };
 
-var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkNotification',
+var index$16 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-notification",class:[("uk-notification-" + (_vm.position))]},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'Notification',
   props: {
     position: {
       type: String,
@@ -2904,9 +2904,9 @@ var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   }
 };
 
-var notificationMessage = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
+var index$17 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"name":_vm.transition}},[_c('div',{staticClass:"uk-notification-message",class:( obj = {}, obj[("uk-notification-message-" + (_vm.status))] = _vm.status, obj ),on:{"click":function($event){_vm.$parent.$emit('click', _vm.id);}}},[_vm._t("default")],2)])
 var obj;},staticRenderFns: [],
-  name: 'VkNotificationMessage',
+  name: 'NotificationMessage',
   props: {
     id: {
       type: [Number, String, Object],
@@ -2945,8 +2945,8 @@ var doc$2 = document.documentElement;
 var body$1 = document.body;
 var scroll;
 
-var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
-  name: 'VkOffcanvas',
+var index$18 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
+  name: 'Offcanvas',
   mixins: [ModalMixin],
   props: {
     flip: {
@@ -3109,8 +3109,8 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
   }
 };
 
-var offcanvasContent = {
-  name: 'VkOffcanvasContent',
+var index$19 = {
+  name: 'OffcanvasContent',
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
@@ -3140,8 +3140,8 @@ function addNodeClass (node) {
   node.data.staticClass = classes.join(' ');
 }
 
-var offcanvasClose = {
-  name: 'VkOffcanvasClose',
+var index$20 = {
+  name: 'OffcanvasClose',
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
@@ -3401,8 +3401,8 @@ var partsMap = {
   pages: PaginationPages
 };
 
-var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' }},[_c('pag-parts')],1)},staticRenderFns: [],
-  name: 'VkPagination',
+var index$21 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-pagination",class:{ 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' }},[_c('pag-parts')],1)},staticRenderFns: [],
+  name: 'Pagination',
   props: {
     align: {
       type: String,
@@ -3467,8 +3467,8 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-var spinner = {
-  name: 'VkSpinner',
+var index$22 = {
+  name: 'Spinner',
   functional: true,
   props: ['ratio'],
   render: function render (h, ref) {
@@ -3496,8 +3496,8 @@ on(window, 'scroll', function () {
   scroll$1 = window.pageYOffset;
 });
 
-var sticky = {
-  name: 'VkSticky',
+var index$23 = {
+  name: 'Sticky',
   abstract: true,
   props: {
     top: {
@@ -3551,7 +3551,7 @@ var sticky = {
     }
 
     // warn multiple elements
-    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
+    if ("development" !== 'production' && children.length > 1) {
       warn(
         '<vk-sticky> can only be used on a single element.',
         this.$parent
@@ -3765,8 +3765,8 @@ function getViewportHeightOffset (height) {
   return window.innerHeight * parseFloat(height) / 100
 }
 
-var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkSubnav',
+var index$24 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-subnav",class:{ 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill }},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'Subnav',
   props: {
     activeItem: [String, Number],
     divider: {
@@ -3811,8 +3811,8 @@ var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   }
 };
 
-var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
-  name: 'VkSubnavItem',
+var index$25 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
+  name: 'SubnavItem',
   props: {
     label: String,
     alias: {
@@ -3849,8 +3849,8 @@ var Cell = {
   }
 };
 
-var table = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
-  name: 'VkTable',
+var index$26 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_vm._v(" "),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
+  name: 'Table',
   components: { Cell: Cell },
   props: {
     data: {
@@ -4022,8 +4022,8 @@ var findByProps = function (comp) { return function (slot) {
   return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
 }; };
 
-var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._v(_vm._s(_vm.header))])},staticRenderFns: [],
-  name: 'VkTableColumn',
+var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._v(" "+_vm._s(_vm.header)+" ")])},staticRenderFns: [],
+  name: 'TableColumn',
   props: {
     header: {
       type: String
@@ -4093,16 +4093,8 @@ var Checkbox = {
   }
 };
 
-function joinClasses () {
-  var classes = [], len = arguments.length;
-  while ( len-- ) classes[ len ] = arguments[ len ];
-
-  var isNotEmpty = function (c) { return c; };
-  return classes.filter(isNotEmpty).join(' ')
-}
-
 var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-form uk-text-center uk-table-shrink",class:_vm.headerClass},[_c('checkbox',{attrs:{"checked":_vm.$parent.isAllSelected},on:{"click":_vm.toggleAll}})],1)},staticRenderFns: [],
-  name: 'VkTableColumnSelect',
+  name: 'TableColumnSelect',
   components: { Checkbox: Checkbox },
   props: {
     headerClass: {
@@ -4129,10 +4121,8 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   cellRender: function cellRender (h, row) {
     var this$1 = this;
 
-    var defaultClasses = 'uk-form uk-text-center';
-
     return h('td', {
-      staticClass: joinClasses(defaultClasses, this.cellClass)
+      class: ['uk-form uk-text-center', this.cellClass]
     }, [
       h(Checkbox, {
         props: { checked: this.$parent.isSelected(row) },
@@ -4142,8 +4132,8 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
   }
 };
 
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(_vm._s(_vm.header)),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy }},[(_vm.orderedBy === 'asc' || _vm.orderedBy === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
-  name: 'VkTableColumnSort',
+var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(" "+_vm._s(_vm.header)+" "),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy }},[(_vm.orderedBy === 'asc' || _vm.orderedBy === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
+  name: 'TableColumnSort',
   extends: Column,
   components: {
     IconArrowUp: IconArrowUp,
@@ -4207,7 +4197,7 @@ var columnTypes = {
   sort: ColumnSort
 };
 
-var tableSetup = {
+var index$27 = {
   functional: true,
   props: {
     presets: {
@@ -4276,8 +4266,8 @@ function getColumnObject (column) {
   return { props: props, scopedSlots: scopedSlots }
 }
 
-var tabsTab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkTab',
+var index$28 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'Tab',
   props: {
     label: String,
     alias: {
@@ -4354,13 +4344,13 @@ var core = {
   }
 };
 
-var tabs = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
+var index$29 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
-return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])})),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(" "+_vm._s(label)+" ")])])})),_vm._v(" "),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])
 var obj;},staticRenderFns: [],
-  name: 'VkTabs',
+  name: 'Tabs',
   extends: core,
   props: {
     alignment: {
@@ -4375,12 +4365,12 @@ var obj;},staticRenderFns: [],
   }
 };
 
-var tabsVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
+var index$30 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
-return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(_vm._s(label))])])}))]),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
-  name: 'VkTabsVertical',
+return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(" "+_vm._s(label)+" ")])])}))]),_vm._v(" "),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
+  name: 'TabsVertical',
   extends: core,
   props: {
     alignment: {
@@ -6831,7 +6821,6 @@ Popper.placements = placements;
 Popper.Defaults = Defaults;
 
 var PopperMixin = {
-  name: 'VkDropdown',
   props: {
     // dom element reference,
     // defaults to parent
@@ -6923,8 +6912,8 @@ var PopperMixin = {
 var onMouseenter$1;
 var onMouseleave;
 
-var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
-  name: 'VkTooltip',
+var index$31 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
+  name: 'Tooltip',
   mixins: [PopperMixin],
   props: {
     /* [top|right|bottom|left]-[left|center|right|justify] */
@@ -7006,8 +6995,8 @@ var tooltip = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
-  name: 'VkUpload',
+var index$32 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
+  name: 'Upload',
   data: function () { return ({
     dragged: false
   }); },
@@ -7026,52 +7015,52 @@ var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
 
 
 var components = Object.freeze({
-	Breadcrumb: breadcrumb,
-	BreadcrumbItem: breadcrumbItem,
-	Button: button,
-	ButtonGroupCheckbox: buttonGroupCheckbox,
-	ButtonGroupRadio: buttonGroupRadio,
-	Datepicker: datepicker,
+	Breadcrumb: index,
+	BreadcrumbItem: index$1,
+	Button: index$2,
+	ButtonGroupCheckbox: index$3,
+	ButtonGroupRadio: index$4,
+	Datepicker: index$5,
 	Drop: Drop,
-	Dropdown: dropdown,
-	Icon: icon,
-	IconLink: iconLink,
-	IconButton: iconButton,
-	Modal: modal,
+	Dropdown: index$6,
+	Icon: index$7,
+	IconLink: index$8,
+	IconButton: index$9,
+	Modal: index$10,
 	ModalDialog: ModalDialog,
-	ModalHeader: modalHeader,
-	ModalBody: modalBody,
-	ModalFooter: modalFooter,
-	ModalCaption: modalCaption,
-	ModalClose: modalClose,
-	Notification: notification,
-	NotificationMessage: notificationMessage,
-	Offcanvas: offcanvas,
-	OffcanvasContent: offcanvasContent,
-	OffcanvasClose: offcanvasClose,
-	Pagination: pagination,
+	ModalHeader: index$11,
+	ModalBody: index$12,
+	ModalFooter: index$13,
+	ModalCaption: index$14,
+	ModalClose: index$15,
+	Notification: index$16,
+	NotificationMessage: index$17,
+	Offcanvas: index$18,
+	OffcanvasContent: index$19,
+	OffcanvasClose: index$20,
+	Pagination: index$21,
 	PaginationFirst: PaginationFirst,
 	PaginationLast: PaginationLast,
 	PaginationPrev: PaginationPrev,
 	PaginationNext: PaginationNext,
 	PaginationPages: PaginationPages,
-	Spinner: spinner,
-	Sticky: sticky,
-	Subnav: subnav,
-	SubnavItem: subnavItem,
-	Table: table,
+	Spinner: index$22,
+	Sticky: index$23,
+	Subnav: index$24,
+	SubnavItem: index$25,
+	Table: index$26,
 	TableColumn: Column,
 	TableColumnSelect: ColumnSelect,
 	TableColumnSort: ColumnSort,
-	TableSetup: tableSetup,
-	Tab: tabsTab,
-	Tabs: tabs,
-	TabsVertical: tabsVertical,
-	Tooltip: tooltip,
-	Upload: upload
+	TableSetup: index$27,
+	Tab: index$28,
+	Tabs: index$29,
+	TabsVertical: index$30,
+	Tooltip: index$31,
+	Upload: index$32
 });
 
-var heightViewport = {
+var index$33 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
       update$1(el, binding.modifiers, binding.value);
@@ -7147,7 +7136,7 @@ function update$1 (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	HeightViewport: heightViewport
+	HeightViewport: index$33
 });
 
 var Vuikit = Object.assign({}, components,
@@ -7162,4 +7151,4 @@ var Vuikit = Object.assign({}, components,
     });
   }});
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, datepicker as Datepicker, Drop, dropdown as Dropdown, icon as Icon, iconLink as IconLink, iconButton as IconButton, modal as Modal, ModalDialog, modalHeader as ModalHeader, modalBody as ModalBody, modalFooter as ModalFooter, modalCaption as ModalCaption, modalClose as ModalClose, notification as Notification, notificationMessage as NotificationMessage, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, table as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, tableSetup as TableSetup, tabsTab as Tab, tabs as Tabs, tabsVertical as TabsVertical, tooltip as Tooltip, upload as Upload, heightViewport as HeightViewport };export default Vuikit;
+export { index as Breadcrumb, index$1 as BreadcrumbItem, index$2 as Button, index$3 as ButtonGroupCheckbox, index$4 as ButtonGroupRadio, index$5 as Datepicker, Drop, index$6 as Dropdown, index$7 as Icon, index$8 as IconLink, index$9 as IconButton, index$10 as Modal, ModalDialog, index$11 as ModalHeader, index$12 as ModalBody, index$13 as ModalFooter, index$14 as ModalCaption, index$15 as ModalClose, index$16 as Notification, index$17 as NotificationMessage, index$18 as Offcanvas, index$19 as OffcanvasContent, index$20 as OffcanvasClose, index$21 as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, index$22 as Spinner, index$23 as Sticky, index$24 as Subnav, index$25 as SubnavItem, index$26 as Table, Column as TableColumn, ColumnSelect as TableColumnSelect, ColumnSort as TableColumnSort, index$27 as TableSetup, index$28 as Tab, index$29 as Tabs, index$30 as TabsVertical, index$31 as Tooltip, index$32 as Upload, index$33 as HeightViewport };export default Vuikit;
