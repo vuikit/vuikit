@@ -10,10 +10,10 @@
       {{ header }}
       <vk-icon
         class="uk-position-absolute"
-        :class="{ 'uk-invisible': !orderedBy }"
+        :class="{ 'uk-invisible': !order }"
       >
         <icon-arrow-down
-          v-if="orderedBy === 'asc' || orderedBy === undefined"
+          v-if="order === 'asc' || order === undefined"
           ratio="0.9"
         ></icon-arrow-down>
         <icon-arrow-up
@@ -36,44 +36,24 @@ export default {
     IconArrowUp,
     IconArrowDown
   },
-  props: {
-    header: {
-      type: String
-    },
-    headerClass: {
-      type: String
-    },
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    },
-    shrink: {
-      type: Boolean,
-      default: false
-    },
-    expand: {
-      type: Boolean,
-      default: false
-    }
-  },
   computed: {
-    $table () {
-      return this.$parent
+    // an attribute set on the table wrapper
+    // because is to be used by all sort columns
+    sortedBy () {
+      return this.$table.$attrs.sortedBy
     },
-    sortBy () {
-      return this.cell
-    },
-    orderedBy () {
-      return this.$parent.sortedBy[this.sortBy]
+    order () {
+      return this.sortedBy[this.cell]
     }
   },
   methods: {
     emitSortEvent (e) {
-      const sortOrder = getSortOrder(this.$table.sortedBy, this.sortBy, e.shiftKey)
+      const sortOrder = getSortOrder(this.sortedBy, this.cell, e.shiftKey)
       this.$table.$emit('sort', sortOrder)
     }
+  },
+  created () {
+    this.$table = this.$parent
   }
 }
 
@@ -82,6 +62,7 @@ function getSortOrder (currentSort, by, multi) {
     ? 'desc'
     : 'asc'
   const sort = { [by]: order }
+
   return multi
     ? { ...currentSort, ...sort }
     : sort

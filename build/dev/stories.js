@@ -43,6 +43,8 @@ play('Subnav')
 
 play('Table')
   .add('Default', require('~/components/table/story/default').default)
+  .add('Select', require('~/components/table/story/select').default)
+  .add('Sort', require('~/components/table/story/sort').default)
 
 play('Tabs')
   .add('Default', require('~/components/tabs/story').default)

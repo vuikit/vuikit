@@ -1,14 +1,15 @@
 <template>
-  <th class="uk-form uk-text-center uk-table-shrink" :class="headerClass">
-    <checkbox :checked="$parent.isAllSelected"
-      @click="toggleAll">
-    </checkbox>
+  <th :class="['uk-form uk-text-center uk-table-shrink', headerClass]">
+    <checkbox
+      :checked="allSelected"
+      @click="toggleAll"
+    ></checkbox>
   </th>
 </template>
 
 <script>
-import { warn } from '~/helpers/debug'
 import Checkbox from './checkbox'
+import { get } from '@vuikit/util'
 
 export default {
   name: 'TableColumnSelect',
@@ -21,29 +22,47 @@ export default {
       type: String
     }
   },
+  computed: {
+    $table () {
+      return this.$parent
+    },
+    allSelected () {
+      return isAllSelected(this.$table.selection, this.$table.data)
+    }
+  },
   methods: {
     toggleAll () {
-      const selection = this.$parent.isAllSelected
+      const selection = this.allSelected
         ? []
-        : [...this.$parent.data]
-      this.$parent.triggerUpdateEvent(selection)
+        : [...this.$table.data]
+
+      this.$table.updateSelection(selection)
     }
   },
-  created () {
-    if (this.$parent.selection === undefined) {
-      warn('Missing required prop: "selection"', this.$parent)
-      this.$destroy()
-    }
-  },
-  cellRender (h, row) {
-    return h('td', {
-      class: ['uk-form uk-text-center', this.cellClass]
-    }, [
-      h(Checkbox, {
-        props: { checked: this.$parent.isSelected(row) },
-        on: { click: e => this.$parent.toggleSelection(row) }
-      })
-    ])
+  cellRender: (h, { row, col, table }) => {
+    const props = get(col, 'componentOptions.propsData')
+
+    return <td class={ ['uk-form uk-text-center', props.cellClass] }>
+      <Checkbox
+        checked={ table.isSelected(row) }
+        onClick={ e => table.toggleSelection(row) }
+      ></Checkbox>
+    </td>
   }
+}
+
+function isSelected (selection, row) {
+  return selection.findIndex(r => r.id === row.id) !== -1
+}
+
+function isAllSelected (selection, rows) {
+  const ifSelected = row => isSelected(selection, row)
+  const selected = rows.filter(ifSelected)
+
+  if (selected.length === 0) {
+    return false
+  }
+
+  return selected.length === rows.length
 }
 </script>

@@ -32,24 +32,20 @@ export default {
     expand: {
       type: Boolean,
       default: false
+    },
+    // when using TableColumns the group
+    // name will be provided as prop
+    columnGroup: {
+      type: String
     }
   },
-  cellRender (h, row) {
-    let scopedSlot = this.$scopedSlots.default
-    let scopedArgs = [row]
+  cellRender: (h, { row, col }) => {
+    const scopedSlot = get(col, 'data.scopedSlots.default')
+    const props = get(col, 'componentOptions.propsData')
 
-    if (this.$scopedSlots.cellTemplate) {
-      scopedSlot = this.$scopedSlots.cellTemplate
-      scopedArgs = [h, row]
-    }
-
-    return h('td', {
-      staticClass: this.cellClass
-    }, [
-      scopedSlot
-        ? scopedSlot.call(this, ...scopedArgs)
-        : get(row, this.cell, '')
-    ])
+    return <td class={ props.cellClass }>
+      { scopedSlot ? scopedSlot(row) : get(row, props.cell, props.cell) }
+    </td>
   }
 }
 </script>
