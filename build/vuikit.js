@@ -5,6 +5,10 @@ import * as directives from '~/directives/index.js'
 export * from '~/components/index.js'
 export * from '~/directives/index.js'
 
+each(components, (def, name) => {
+  def.name = `Vk${def.name}`
+})
+
 const Vuikit = {
   ...components,
   ...directives,

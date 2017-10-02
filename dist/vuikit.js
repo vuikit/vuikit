@@ -424,6 +424,19 @@ function debounce (func, wait, immediate) {
   }
 }
 
+// get function argument names
+function getFnArgs (func) {
+  // first match everything inside the function argument parens
+  var args = func.toString().match(/function\s.*?\(([^)]*)\)/)[1];
+
+  // split the arguments string into an array comma delimited
+  return args.split(',')
+    // ensure no inline comments are parsed and trim the whitespace
+    .map(function (arg) { return arg.replace(/\/\*.*\*\//, '').trim(); })
+    // ensure no undefined values are added
+    .filter(function (arg) { return arg; })
+}
+
 // export const Observer = window.MutationObserver || window.WebKitMutationObserver
 var requestAnimationFrame$1 = window.requestAnimationFrame || function (fn) { return setTimeout(fn, 1000 / 60) };
 //
@@ -4741,28 +4754,122 @@ var index$25 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
+var Row = {
+  functional: true,
+  render: function render (h, ref) {
+    var props = ref.props;
+    var children = ref.children;
+    var table = ref.parent;
+
+    var row = props.row;
+    var onClick = function (e) { return targetIsRow(e) && table.$emit('click-row', row); };
+    var classes = [ resolveClass(table.rowClass, row) || '' ];
+
+    if (table.isSelected(row)) {
+      classes.push('uk-active');
+    }
+
+    return h( 'tr', { onClick: onClick, class: classes },
+      children
+    )
+  }
+};
+
+function targetIsRow (e) {
+  return e.target.tagName === 'TR' || e.target.tagName === 'TD'
+}
+
+function resolveClass (c, row) {
+  return isFunction(c)
+    ? c(row)
+    : c
+}
+
 var Cell = {
   functional: true,
-  props: ['row', 'col'],
   render: function render (h, ref) {
+    var parent = ref.parent;
     var data = ref.data;
     var props = ref.props;
 
     var col = props.col;
     var row = props.row;
-    var cellRender = col.$vnode.componentOptions.Ctor.options.cellRender;
+    var cellRender = get(col, 'componentOptions.Ctor.options.cellRender');
+    var scopedSlot = get(col, 'data.scopedSlots.default');
+
+    // workaround when passing scopedSlot programatically
+    if (scopedSlot) {
+      var args = getFnArgs(scopedSlot);
+
+      if (args[0] === 'h') {
+        col.data.scopedSlots.default = scopedSlot.bind(null, h);
+      }
+    }
 
     if (cellRender) {
-      return cellRender.call(col, h, row)
+      return cellRender(h, { row: row, col: col, table: parent })
     } else {
-      warn$1('Missing cellRender', col);
+      warn$1('The Column definition is missing the cellRender', parent);
     }
   }
 };
 
-var index$26 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_vm._v(" "),_c('tbody',_vm._l((_vm.data),function(row){return _c('tr',{class:_vm.getRowClass(row),on:{"click":function (e) { return _vm.emitClickRow(e, row); }}},_vm._l((_vm.columns),function(col){return _c('cell',{key:_vm.getKey(col),attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
+var MixinSelect = {
+  props: {
+    selection: {
+      type: Array,
+      default: function () { return []; }
+    },
+    select: {
+      type: Boolean,
+      default: false
+    },
+    selectSingle: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    isSelected: function isSelected (row) {
+      return this.selection.findIndex(function (r) { return r.id === row.id; }) !== -1
+    },
+    selectRow: function selectRow (row) {
+      this.updateSelection(this.selection.concat( [row]));
+    },
+    unselectRow: function unselectRow (row) {
+      var index = this.selection.indexOf(row);
+      var newSelection = [].concat( this.selection );
+      newSelection.splice(index, 1);
+
+      this.updateSelection(newSelection);
+    },
+    toggleSelection: function toggleSelection (row) {
+      this.isSelected(row)
+        ? this.unselectRow(row)
+        : this.selectRow(row);
+    },
+    updateSelection: function updateSelection (selection) {
+      this.$emit('update:selection', selection);
+    }
+  },
+  created: function created () {
+    var this$1 = this;
+
+    this.$on('click-row', function (row) {
+      if (this$1.selectSingle) {
+        this$1.updateSelection([row]);
+      } else if (this$1.select) {
+        this$1.toggleSelection(row);
+      }
+    });
+  }
+};
+
+var index$26 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_vm._v(" "),_c('tbody',_vm._l((_vm.data),function(row){return _c('row',{key:JSON.stringify(row),attrs:{"row":row}},_vm._l((_vm.columns),function(col,i){return _c('cell',{key:i,attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
   name: 'Table',
-  components: { Cell: Cell },
+  components: { Row: Row, Cell: Cell },
+  mixins: [ MixinSelect ],
+  inheritAttrs: false,
   props: {
     data: {
       type: Array,
@@ -4796,142 +4903,29 @@ var index$26 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
       type: Boolean,
       default: false
     },
-    sortedBy: {
-      type: Object,
-      default: function () { return ({}); } // { field: [asc|desc] }
-    },
     rowClass: {
       type: Function
-    },
-    selection: {
-      type: Array,
-      default: function () { return []; }
-    },
-    highlight: {
-      type: Boolean,
-      default: false
-    },
-    select: {
-      type: Boolean,
-      default: false
-    },
-    singleSelect: {
-      type: Boolean,
-      default: false
     }
   },
   data: function () { return ({
-    children: [],
-    forcingUpdate: false
+    children: []
   }); },
   computed: {
     columns: {
-      get: function get$$1 () {
-        return this.children
-          .filter(function (child) { return child.$el.nodeName === 'TH'; })
-          .sort(this.sortAsSlots)
+      get: function get () {
+        // default slots excluding spaces and comments
+        return this.$slots.default.filter(function (vnode) { return vnode.tag; })
       },
       cache: false
-    },
-    selectedRows: function selectedRows () {
-      return this.data.filter(this.isSelected)
-    },
-    isAllSelected: function isAllSelected () {
-      return this.selectedRows.length && (this.selectedRows.length === this.data.length)
-    }
-  },
-  methods: {
-    getKey: function getKey (col) {
-      return JSON.stringify({ name: col.name, props: col.$options.propsData })
-    },
-    forceUpdateOnce: function forceUpdateOnce () {
-      if (!this.forcingUpdate) {
-        this.forcingUpdate = true;
-        this.$forceUpdate();
-        return
-      }
-      this.forcingUpdate = false;
-    },
-    getRowClass: function getRowClass (row, index) {
-      var classes = [];
-
-      if (isFunction(this.rowClass)) {
-        classes.push(this.rowClass(row, index));
-      }
-
-      if (this.highlight && this.isSelected(row)) {
-        classes.push('uk-active');
-      }
-
-      return classes.join(' ')
-    },
-    emitClickRow: function emitClickRow (e, row) {
-      var noChildWasClicked = e.target.tagName === 'TR' || e.target.tagName === 'TD';
-      if (noChildWasClicked) {
-        this.$emit('click-row', row);
-      }
-    },
-    sortAsSlots: function sortAsSlots (a, b) {
-      var slots = this.$slots.default.filter(function (s) { return s.tag; });
-      var indexA = slots.findIndex(findByProps(a));
-      var indexB = slots.findIndex(findByProps(b));
-
-      if (indexA === indexB) { return 0 }
-      return (indexA > indexB) ? 1 : -1
-    },
-    // row selection related
-    isSelected: function isSelected (row) {
-      return this.selection.findIndex(function (r) { return r.id === row.id; }) !== -1
-    },
-    selectRow: function selectRow (row) {
-      var newSelection = this.selection.concat( [row]);
-      this.triggerUpdateEvent(newSelection);
-    },
-    unselectRow: function unselectRow (row) {
-      var newSelection = [].concat( this.selection );
-      newSelection.splice(this.selection.indexOf(row), 1);
-      this.triggerUpdateEvent(newSelection);
-    },
-    toggleSelection: function toggleSelection (row) {
-      this.isSelected(row)
-        ? this.unselectRow(row)
-        : this.selectRow(row);
-      this.$forceUpdate();
-    },
-    triggerUpdateEvent: function triggerUpdateEvent (selection) {
-      this.$emit('update:selection', selection);
     }
   },
   created: function created () {
-    var this$1 = this;
-
-    this.$on('click-row', function (row) {
-      if (this$1.singleSelect) {
-        this$1.$emit('update:selection', [row]);
-      } else if (this$1.select) {
-        this$1.toggleSelection(row);
-      }
-    });
-  },
-  mounted: function mounted () {
-    // workaround for reactivity
+    // forces the table to rerender
+    // when children are available
+    // which is required by some cols
     this.children = this.$children;
-  },
-  updated: function updated () {
-    // workaround for edge situations
-    // where children reactivity fails
-    this.forceUpdateOnce();
   }
 };
-
-var findByProps = function (comp) { return function (slot) {
-  if (!slot.componentOptions || !comp.$options) {
-    return false
-  }
-  var propsSlot = slot.componentOptions.propsData;
-  var propsComp = comp.$options.propsData;
-  return JSON.stringify(propsSlot) === JSON.stringify(propsComp)
-}; };
 
 var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._v(" "+_vm._s(_vm.header)+" ")])},staticRenderFns: [],
   name: 'TableColumn',
@@ -4955,24 +4949,23 @@ var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
     expand: {
       type: Boolean,
       default: false
+    },
+    // when using TableColumns the group
+    // name will be provided as prop
+    columnGroup: {
+      type: String
     }
   },
-  cellRender: function cellRender (h, row) {
-    var scopedSlot = this.$scopedSlots.default;
-    var scopedArgs = [row];
+  cellRender: function (h, ref) {
+    var row = ref.row;
+    var col = ref.col;
 
-    if (this.$scopedSlots.cellTemplate) {
-      scopedSlot = this.$scopedSlots.cellTemplate;
-      scopedArgs = [h, row];
-    }
+    var scopedSlot = get(col, 'data.scopedSlots.default');
+    var props = get(col, 'componentOptions.propsData');
 
-    return h('td', {
-      staticClass: this.cellClass
-    }, [
-      scopedSlot
-        ? scopedSlot.call.apply(scopedSlot, [ this ].concat( scopedArgs ))
-        : get(row, this.cell, '')
-    ])
+    return h( 'td', { class: props.cellClass },
+      scopedSlot ? scopedSlot(row) : get(row, props.cell, props.cell)
+    )
   }
 };
 
@@ -5004,7 +4997,7 @@ var Checkbox = {
   }
 };
 
-var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-form uk-text-center uk-table-shrink",class:_vm.headerClass},[_c('checkbox',{attrs:{"checked":_vm.$parent.isAllSelected},on:{"click":_vm.toggleAll}})],1)},staticRenderFns: [],
+var index$27 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:['uk-form uk-text-center uk-table-shrink', _vm.headerClass]},[_c('checkbox',{attrs:{"checked":_vm.allSelected},on:{"click":_vm.toggleAll}})],1)},staticRenderFns: [],
   name: 'TableColumnSelect',
   components: { Checkbox: Checkbox },
   props: {
@@ -5015,79 +5008,77 @@ var ColumnSelect = {render: function(){var _vm=this;var _h=_vm.$createElement;va
       type: String
     }
   },
+  computed: {
+    $table: function $table () {
+      return this.$parent
+    },
+    allSelected: function allSelected () {
+      return isAllSelected(this.$table.selection, this.$table.data)
+    }
+  },
   methods: {
     toggleAll: function toggleAll () {
-      var selection = this.$parent.isAllSelected
+      var selection = this.allSelected
         ? []
-        : [].concat( this.$parent.data );
-      this.$parent.triggerUpdateEvent(selection);
-    }
-  },
-  created: function created () {
-    if (this.$parent.selection === undefined) {
-      warn$1('Missing required prop: "selection"', this.$parent);
-      this.$destroy();
-    }
-  },
-  cellRender: function cellRender (h, row) {
-    var this$1 = this;
+        : [].concat( this.$table.data );
 
-    return h('td', {
-      class: ['uk-form uk-text-center', this.cellClass]
-    }, [
-      h(Checkbox, {
-        props: { checked: this.$parent.isSelected(row) },
-        on: { click: function (e) { return this$1.$parent.toggleSelection(row); } }
-      })
-    ])
+      this.$table.updateSelection(selection);
+    }
+  },
+  cellRender: function (h, ref) {
+    var row = ref.row;
+    var col = ref.col;
+    var table = ref.table;
+
+    var props = get(col, 'componentOptions.propsData');
+
+    return h( 'td', { class: ['uk-form uk-text-center', props.cellClass] },
+      h( Checkbox, {
+        checked: table.isSelected(row), onClick: function (e) { return table.toggleSelection(row); } })
+    )
   }
 };
 
-var ColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(" "+_vm._s(_vm.header)+" "),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.orderedBy }},[(_vm.orderedBy === 'asc' || _vm.orderedBy === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
+function isSelected (selection, row) {
+  return selection.findIndex(function (r) { return r.id === row.id; }) !== -1
+}
+
+function isAllSelected (selection, rows) {
+  var ifSelected = function (row) { return isSelected(selection, row); };
+  var selected = rows.filter(ifSelected);
+
+  if (selected.length === 0) {
+    return false
+  }
+
+  return selected.length === rows.length
+}
+
+var index$28 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(" "+_vm._s(_vm.header)+" "),_c('vk-icon',{staticClass:"uk-position-absolute",class:{ 'uk-invisible': !_vm.order }},[(_vm.order === 'asc' || _vm.order === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)],1)])},staticRenderFns: [],
   name: 'TableColumnSort',
   extends: Column,
   components: {
     IconArrowUp: IconArrowUp,
     IconArrowDown: IconArrowDown
   },
-  props: {
-    header: {
-      type: String
-    },
-    headerClass: {
-      type: String
-    },
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    },
-    shrink: {
-      type: Boolean,
-      default: false
-    },
-    expand: {
-      type: Boolean,
-      default: false
-    }
-  },
   computed: {
-    $table: function $table () {
-      return this.$parent
+    // an attribute set on the table wrapper
+    // because is to be used by all sort columns
+    sortedBy: function sortedBy () {
+      return this.$table.$attrs.sortedBy
     },
-    sortBy: function sortBy () {
-      return this.cell
-    },
-    orderedBy: function orderedBy () {
-      return this.$parent.sortedBy[this.sortBy]
+    order: function order () {
+      return this.sortedBy[this.cell]
     }
   },
   methods: {
     emitSortEvent: function emitSortEvent (e) {
-      var sortOrder = getSortOrder(this.$table.sortedBy, this.sortBy, e.shiftKey);
+      var sortOrder = getSortOrder(this.sortedBy, this.cell, e.shiftKey);
       this.$table.$emit('sort', sortOrder);
     }
+  },
+  created: function created () {
+    this.$table = this.$parent;
   }
 };
 
@@ -5097,87 +5088,13 @@ function getSortOrder (currentSort, by, multi) {
     : 'asc';
   var sort = {};
   sort[by] = order;
+
   return multi
     ? Object.assign({}, currentSort, sort)
     : sort
 }
 
-var columnTypes = {
-  default: Column,
-  select: ColumnSelect,
-  sort: ColumnSort
-};
-
-var index$27 = {
-  functional: true,
-  props: {
-    presets: {
-      type: Object,
-      required: true
-    },
-    columns: {
-      type: Array,
-      required: true
-    }
-  },
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var columns = mapPresets(props.presets, props.columns);
-    return columns.map(function (column) {
-      var key = getKey(column);
-      return h(mapColumnComponent(column), Object.assign({}, {key: key}, getColumnObject(column)))
-    })
-  }
-};
-
-function getKey (column) {
-  var type = mapColumnComponent(column);
-  return JSON.stringify({ column: column, type: type.name || type })
-}
-
-function mapColumnComponent (column) {
-  var type = column.type || 'default';
-  return columnTypes[type] !== undefined
-    ? columnTypes[type]
-    : type
-}
-
-function mapPresets (presets, columns) {
-  return columns.map(function (column) {
-    var definition = presets[column];
-
-    if (definition === undefined) {
-      warn(("Table preset '" + column + "' doesn't exist."));
-      return false
-    }
-
-    return definition
-  }).filter(function (c) { return c; })
-}
-
-function getColumnObject (column) {
-  var props = {};
-  var scopedSlots = {};
-
-  // header
-  props.header = column.header;
-  props.shrink = column.shrink;
-  props.expand = column.expand;
-  props.headerClass = column.headerClass;
-
-  // cell
-  props.cell = column.cell;
-  props.cellClass = column.cellClass;
-  if (column.cellTemplate && isFunction(column.cellTemplate)) {
-    scopedSlots.cellTemplate = column.cellTemplate;
-  }
-
-  // render
-  return { props: props, scopedSlots: scopedSlots }
-}
-
-var index$28 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
+var index$29 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Tab',
   props: {
     label: String,
@@ -5255,7 +5172,7 @@ var core = {
   }
 };
 
-var index$29 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
+var index$30 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ul',{staticClass:"uk-tab",class:( obj = { 'uk-flex-right': _vm.alignment === 'right', 'uk-flex-center': _vm.alignment === 'center', 'uk-tab-bottom uk-margin-remove-bottom': _vm.bottom }, obj[("uk-child-width-1-" + (_vm.tabs.length))] = _vm.alignment === 'justify', obj )},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
@@ -5276,7 +5193,7 @@ var obj;},staticRenderFns: [],
   }
 };
 
-var index$30 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
+var index$31 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ul',{staticClass:"uk-tab",class:[_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left' ]},_vm._l((_vm.tabs),function(ref){
 var id = ref.id;
 var label = ref.label;
 var disabled = ref.disabled;
@@ -7823,7 +7740,7 @@ var PopperMixin = {
 var onMouseenter$1;
 var onMouseleave;
 
-var index$31 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
+var index$32 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-active-class":_vm.enterActiveClass,"leave-active-class":_vm.leaveActiveClass},on:{"after-leave":_vm.remove}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.active),expression:"active"}],staticClass:"uk-tooltip",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-tooltip-inner",domProps:{"textContent":_vm._s(_vm.content)}})])])},staticRenderFns: [],
   name: 'Tooltip',
   mixins: [PopperMixin],
   props: {
@@ -7906,7 +7823,7 @@ var index$31 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }
 };
 
-var index$32 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
+var index$33 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Upload',
   data: function () { return ({
     dragged: false
@@ -7961,17 +7878,16 @@ var components = Object.freeze({
 	SubnavItem: index$25,
 	Table: index$26,
 	TableColumn: Column,
-	TableColumnSelect: ColumnSelect,
-	TableColumnSort: ColumnSort,
-	TableSetup: index$27,
-	Tab: index$28,
-	Tabs: index$29,
-	TabsVertical: index$30,
-	Tooltip: index$31,
-	Upload: index$32
+	TableColumnSelect: index$27,
+	TableColumnSort: index$28,
+	Tab: index$29,
+	Tabs: index$30,
+	TabsVertical: index$31,
+	Tooltip: index$32,
+	Upload: index$33
 });
 
-var index$33 = {
+var index$34 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
       update$1(el, binding.modifiers, binding.value);
@@ -8047,7 +7963,11 @@ function update$1 (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	HeightViewport: index$33
+	HeightViewport: index$34
+});
+
+each(components, function (def, name) {
+  def.name = "Vk" + (def.name);
 });
 
 var Vuikit = Object.assign({}, components,
@@ -8055,6 +7975,7 @@ var Vuikit = Object.assign({}, components,
 
   {install: function install (Vue) {
     each(components, function (def, name) {
+      def.name = "Vk" + (def.name);
       Vue.component(("Vk" + name), def);
     });
     each(directives, function (def, name) {
