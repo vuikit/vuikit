@@ -2,7 +2,7 @@ const path = require('path')
 const alias = require('../alias')
 
 const vue = require('rollup-plugin-vue')
-const buble = require('rollup-plugin-buble')
+const babel = require('rollup-plugin-babel')
 const rollupAlias = require('rollup-plugin-alias')
 const nodeResolve = require('rollup-plugin-node-resolve')
 
@@ -18,9 +18,9 @@ const config = {
     vue({
       compileTemplate: true
     }),
-    buble({
-      objectAssign: 'Object.assign',
-      jsx: 'h'
+    babel({
+      exclude: 'node_modules/**',
+      runtimeHelpers: true
     }),
     rollupAlias(alias)
   ]
