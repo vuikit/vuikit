@@ -1,4 +1,4 @@
-import { IconCloseIcon } from '@vuikit/icons'
+import IconClose from '~/icons/close'
 
 export default {
   name: 'OffcanvasClose',
@@ -11,7 +11,7 @@ export default {
       },
       on: data.on
     }, [
-      h(IconCloseIcon)
+      h(IconClose)
     ])
   }
 }

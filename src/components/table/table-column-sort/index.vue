@@ -27,7 +27,8 @@
 
 <script>
 import Column from '../table-column'
-import { IconArrowUp, IconArrowDown } from '@vuikit/icons'
+import IconArrowUp from '@vuikit/icons/lib/arrow-up.mjs'
+import IconArrowDown from '@vuikit/icons/lib/arrow-down.mjs'
 
 export default {
   name: 'TableColumnSort',

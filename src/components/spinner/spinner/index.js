@@ -1,4 +1,4 @@
-import { IconSpinner } from '@vuikit/icons'
+import IconSpinner from '~/icons/spinner'
 
 export default {
   name: 'Spinner',

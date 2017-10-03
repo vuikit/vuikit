@@ -62,9 +62,9 @@
   dependencies:
     mkdirp "^0.5.1"
 
-"@vuikit/icons@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/icons/-/icons-0.1.0.tgz#7c82f27f9c8470075754612b39b2c4293960200e"
+"@vuikit/icons@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@vuikit/icons/-/icons-0.2.0.tgz#36d8b5cb027b280703c68cb106ef00aa9aae1d87"
 
 "@vuikit/theme@^0.1.0":
   version "0.1.0"

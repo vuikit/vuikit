@@ -36,8 +36,7 @@ module.exports = async () => {
       format: 'cjs',
       external: [
         'vue',
-        '@vuikit/util',
-        '@vuikit/icons'
+        '@vuikit/util'
       ]
     }), {
       env: 'production'

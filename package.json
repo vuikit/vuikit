@@ -34,7 +34,7 @@
     "size": "size-limit"
   },
   "dependencies": {
-    "@vuikit/icons": "^0.1.0",
+    "@vuikit/icons": "^0.2.0",
     "@vuikit/util": "^0.2.0",
     "vue": "^2.4.4"
   },

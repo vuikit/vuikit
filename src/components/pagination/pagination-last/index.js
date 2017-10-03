@@ -1,4 +1,4 @@
-import { IconPaginationNext } from '@vuikit/icons'
+import IconNext from '~/icons/pagination-next'
 
 export default {
   functional: true,
@@ -26,7 +26,7 @@ export default {
           class: {
             'uk-margin-small-left': label
           }
-        }, [ h(IconPaginationNext) ])
+        }, [ h(IconNext) ])
       ])
     ])
   }

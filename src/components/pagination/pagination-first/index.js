@@ -1,4 +1,4 @@
-import { IconPaginationPrevious } from '@vuikit/icons'
+import IconPrevious from '~/icons/pagination-previous'
 
 export default {
   functional: true,
@@ -25,7 +25,7 @@ export default {
           class: {
             'uk-margin-small-right': label
           }
-        }, [ h(IconPaginationPrevious) ]),
+        }, [ h(IconPrevious) ]),
         label && label
       ])
     ])
