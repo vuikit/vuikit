@@ -11,7 +11,9 @@
 
 <script>
 import PopperMixin from '~/mixins/popper'
-import { on, offAll } from '@vuikit/util'
+import { domEvent } from '@vuikit/util'
+
+const { on, offAll } = domEvent
 
 let onMouseenter
 let onMouseleave

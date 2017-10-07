@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { warn } from '@vuikit/util'
+import { warn } from '~/helpers/debug'
 
 export default {
   name: 'Tab',

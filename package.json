@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@vuikit/icons": "^0.2.0",
-    "@vuikit/util": "^0.2.0",
+    "@vuikit/util": "^0.3.0",
     "vue": "^2.4.4"
   },
   "devDependencies": {

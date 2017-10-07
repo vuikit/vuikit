@@ -1,5 +1,5 @@
 <script>
-import { inArray } from '@vuikit/util'
+import { inArray } from '~/helpers/util'
 import { filterOutEmptyNodes } from '~/helpers/component'
 
 export default {

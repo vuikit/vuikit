@@ -70,9 +70,9 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@vuikit/theme/-/theme-0.1.0.tgz#667dfbe383874a14d0529d29ebd319dcf90ba087"
 
-"@vuikit/util@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.2.0.tgz#e606759d667d36c2f71c4fd2a6e9b20f4e7afb49"
+"@vuikit/util@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.3.0.tgz#98fe87165d74f324b327a3ee59c671771a0e00c7"
 
 abbrev@1:
   version "1.1.0"

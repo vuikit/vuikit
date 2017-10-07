@@ -16,8 +16,12 @@
 </template>
 
 <script>
-import { isRtl, on, offAll, getDimensions } from '@vuikit/util'
+import { isRtl } from '~/helpers/util'
+import { domEvent } from '@vuikit/util'
+import { getDimensions } from '~/helpers/position'
 import PositionMixin from '~/mixins/position'
+
+const { on, offAll } = domEvent
 
 let onClickOut
 let onMouseenter

@@ -31,17 +31,13 @@
 <script>
 import ModalMixin from '~/mixins/modal'
 import { warn } from '~/helpers/debug'
-import {
-  on,
-  addClass,
-  removeClass,
-  forceRedraw,
-  css,
-  toMs
-} from '@vuikit/util'
+import { domEvent, domClass, css } from '@vuikit/util'
+import { forceRedraw, toMs } from '~/helpers/util'
 
 const doc = document.documentElement
 const body = document.body
+const { on } = domEvent
+const { addClass, removeClass } = domClass
 let scroll
 
 export default {

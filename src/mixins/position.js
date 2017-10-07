@@ -1,4 +1,5 @@
-import { flipPosition, getPosition, toNumber } from '@vuikit/util'
+import { flipPosition, getPosition } from '~/helpers/position'
+import { toInteger } from '@vuikit/util'
 
 export default {
   props: {
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     positionAt (element, target, boundary) {
-      const offset = toNumber(this.offset) || 0
+      const offset = toInteger(this.offset) || 0
       const axis = this.getAxis()
       const flipped = getPosition(
         element,

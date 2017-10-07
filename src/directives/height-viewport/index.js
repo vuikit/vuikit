@@ -1,4 +1,7 @@
-import { css, on, off, offsetTop, debounce, isInteger } from '@vuikit/util'
+import { css, domEvent, debounce, isInteger } from '@vuikit/util'
+import { offsetTop } from '~/helpers/position'
+
+const { on, off } = domEvent
 
 export default {
   inserted (el, binding, vnode) {

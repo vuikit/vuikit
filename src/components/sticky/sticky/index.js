@@ -1,16 +1,11 @@
+import { warn } from '~/helpers/debug'
+import { domClass, domEvent, css, isString, isInteger } from '@vuikit/util'
 import { filterOutEmptyNodes } from '~/helpers/component'
-import {
-  on,
-  css,
-  warn,
-  addClass,
-  isString,
-  offsetTop,
-  isInteger,
-  Animation,
-  removeClass,
-  toggleClass
-} from '@vuikit/util'
+import { offsetTop } from '~/helpers/position'
+import { Animation } from '~/helpers/animation'
+
+const { toggleClass, addClass, removeClass } = domClass
+const { on } = domEvent
 
 // let dir
 let scroll = 0

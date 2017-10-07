@@ -1,5 +1,6 @@
-import { on, offAll } from '@vuikit/util'
+import { domEvent } from '@vuikit/util'
 
+const { on, offAll } = domEvent
 const doc = document.documentElement
 const body = document.body
 
