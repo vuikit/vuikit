@@ -1,5 +1,5 @@
 import { warn } from '~/helpers/debug'
-import { inArray } from '~/helpers/util'
+import { inArray } from '@vuikit/util'
 import UiButtonGroup from '~/ui/button/button-group' // eslint-disable-line
 import { filterOutEmptyNodes } from '~/helpers/component'
 

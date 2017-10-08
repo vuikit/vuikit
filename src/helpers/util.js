@@ -1,9 +1,5 @@
 export const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 
-export function inArray (array, value) {
-  return (array || []).indexOf(value) !== -1
-}
-
 export function toMs (time) {
   return !time
     ? 0
