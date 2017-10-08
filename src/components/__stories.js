@@ -4,9 +4,7 @@ play('Breadcrumb')
   .add('Default', require('./breadcrumb/story').default)
 
 play('Button')
-  .add('Button', require('./button/story/default').default)
-  .add('Checkbox', require('./button/story/checkbox').default)
-  .add('Radio', require('./button/story/radio').default)
+  .add('Default', require('./button/story').default)
 
 play('Drop')
   .add('Default', require('./drop/story/default').default)
