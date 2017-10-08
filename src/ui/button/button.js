@@ -1,0 +1,41 @@
+const sizes = ['large', 'small']
+const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']
+
+export default {
+  functional: true,
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: 'default',
+      validator: style => styles.indexOf(style) !== -1
+    },
+    size: {
+      type: String,
+      validator: size => !size || sizes.indexOf(size) !== -1
+    },
+    htmlType: {
+      type: String,
+      default: 'button'
+    }
+  },
+  render (h, { data, props, children }) {
+    const { disabled, type, size, htmlType } = props
+
+    return h('button', {
+      attrs: {
+        type: htmlType,
+        disabled
+      },
+      class: ['uk-button', [`uk-button-${type}`], {
+        [`uk-button-${size}`]: size
+      }],
+      ...data
+    }, [
+      children
+    ])
+  }
+}
