@@ -30,6 +30,7 @@
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
     "dev": "poi --config build/dev/poi.config.js",
+    "dev:ui": "poi --config build/dev-ui/poi.config.js",
     "build": "node build/build.js",
     "size": "size-limit"
   },
