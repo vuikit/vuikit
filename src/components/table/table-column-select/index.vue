@@ -9,7 +9,7 @@
 
 <script>
 import Checkbox from './checkbox'
-import { get } from '@vuikit/util'
+import { get, cloneArray } from '@vuikit/util'
 
 export default {
   name: 'TableColumnSelect',
@@ -34,7 +34,7 @@ export default {
     toggleAll () {
       const selection = this.allSelected
         ? []
-        : [...this.$table.data]
+        : cloneArray(this.$table.data)
 
       this.$table.updateSelection(selection)
     }

@@ -5,18 +5,16 @@ const dirs = {
   y: ['height', 'top', 'bottom']
 }
 
-export function getPosition (element, target, attach, targetAttach, offset, targetOffset, flip, boundary) {
-  const dim = getDimensions(element)
-  const targetDim = getDimensions(target)
+export function getPosition ({ element, elDim, targetDim, attach, targetAttach, offset, targetOffset, flip, boundaryDim }) {
   let position = targetDim
 
   attach = getPos(attach)
   targetAttach = getPos(targetAttach)
 
-  moveTo(position, attach, dim, -1)
+  moveTo(position, attach, elDim, -1)
   moveTo(position, targetAttach, targetDim, 1)
 
-  offset = getOffsets(offset, dim.width, dim.height)
+  offset = getOffsets(offset, elDim.width, elDim.height)
   targetOffset = getOffsets(targetOffset, targetDim.width, targetDim.height)
 
   offset['x'] += targetOffset['x']
@@ -24,8 +22,6 @@ export function getPosition (element, target, attach, targetAttach, offset, targ
 
   position.left += offset['x']
   position.top += offset['y']
-
-  boundary = getDimensions(boundary || window)
 
   let flipped = {element: attach, target: targetAttach}
 
@@ -36,9 +32,9 @@ export function getPosition (element, target, attach, targetAttach, offset, targ
       }
 
       const elemOffset = attach[dir] === align
-        ? -dim[prop]
+        ? -elDim[prop]
         : attach[dir] === alignFlip
-          ? dim[prop]
+          ? elDim[prop]
           : 0
       const targetOffset = targetAttach[dir] === align
         ? targetDim[prop]
@@ -46,10 +42,10 @@ export function getPosition (element, target, attach, targetAttach, offset, targ
           ? -targetDim[prop]
           : 0
 
-      if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
+      if (position[align] < boundaryDim[align] || position[align] + elDim[prop] > boundaryDim[alignFlip]) {
         const newVal = position[align] + elemOffset + targetOffset - offset[dir] * 2
 
-        if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
+        if (newVal >= boundaryDim[align] && newVal + elDim[prop] <= boundaryDim[alignFlip]) {
           position[align] = newVal
 
           ;['element', 'target'].forEach((el) => {
@@ -129,12 +125,14 @@ export function getDimensions (element) {
   let display
   if (!element.offsetHeight) {
     display = window.getComputedStyle(element).display
+    // not side effects please!
     element.style.display = 'block'
   }
 
   const rect = element.getBoundingClientRect()
 
   if (display) {
+    // not side effects please!
     element.style.display = display
   }
 

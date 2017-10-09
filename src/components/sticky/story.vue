@@ -27,13 +27,13 @@
           </vk-sticky>
         </div>
 
-        <div>
+        <!-- <div>
           <vk-sticky top="viewport" animation="uk-animation-slide-top">
             <div class="uk-card uk-card-primary uk-card-body">
               Stick below container; animation
             </div>
           </vk-sticky>
-        </div>
+        </div> -->
 
         <!--
         <div>

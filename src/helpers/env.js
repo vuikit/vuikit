@@ -48,12 +48,11 @@ function prefix (name, event) {
   const lowered = classify(event).toLowerCase()
   const classified = classify(event)
   const element = document.body || document.documentElement
-  const names = {
-    [`Webkit${ucase}`]: `webkit${classified}`,
-    [`Moz${ucase}`]: lowered,
-    [`o${ucase}`]: `o${classified} o${lowered}`,
-    [name]: lowered
-  }
+  const names = {}
+  names[`Webkit${ucase}`] = `webkit${classified}`
+  names[`Moz${ucase}`] = lowered
+  names[`o${ucase}`] = `o${classified} o${lowered}`
+  names[name] = lowered
 
   for (name in names) {
     if (element.style[name] !== undefined) {

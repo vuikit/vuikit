@@ -1,11 +1,8 @@
 import { warn } from '~/helpers/debug'
-import { domClass, domEvent, css, isString, isInteger } from '@vuikit/util'
-import { filterOutEmptyNodes } from '~/helpers/component'
-import { offsetTop } from '~/helpers/position'
-import { Animation } from '~/helpers/animation'
-
-const { toggleClass, addClass, removeClass } = domClass
-const { on } = domEvent
+import { offsetTop } from '~/helpers/util'
+// import { Animation } from '~/helpers/animation'
+import filterOutEmptyNodes from '~/helpers/node/filter'
+import { on, css, isString, isInteger, toggleClass, addClass, removeClass } from '@vuikit/util'
 
 // let dir
 let scroll = 0
@@ -71,10 +68,7 @@ export default {
 
     // warn multiple elements
     if (process.env.NODE_ENV !== 'production' && children.length > 1) {
-      warn(
-        '<vk-sticky> can only be used on a single element.',
-        this.$parent
-      )
+      warn('<vk-sticky> can only be used on a single element.', this.$parent)
     }
 
     const rawChild = children[0]

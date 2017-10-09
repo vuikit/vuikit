@@ -1,8 +1,5 @@
-import { domClass, domEvent, css } from '@vuikit/util'
+import { hasClass, addClass, removeClass, one, css } from '@vuikit/util'
 import { requestAnimationFrame, animationend } from '~/helpers/env'
-
-const { hasClass, addClass, removeClass } = domClass
-const { one } = domEvent
 
 export const Animation = {
   in (element, animation, duration, origin) {
@@ -18,7 +15,7 @@ export const Animation = {
     var event = document.createEvent('Event')
     event.initEvent('animationend', true, true)
     element.dispatchEvent(event)
-    return event.promise || Promise.resolve()
+    return event.promise || Promise.resolve() // requires polifyll
   }
 }
 

@@ -1,18 +1,17 @@
 import { warn } from '~/helpers/debug'
-import { inArray } from '@vuikit/util'
-import UiButtonGroup from '~/ui/button/button-group' // eslint-disable-line
-import { filterOutEmptyNodes } from '~/helpers/component'
+import { inArray, toArray } from '@vuikit/util'
+import filterNodes from '~/helpers/node/filter'
 
 export default {
   functional: true,
   render (h, { data, props, children, listeners }) {
-    const buttons = filterOutEmptyNodes(children)
+    const buttons = filterNodes(children)
 
     if (!validate(data, buttons)) {
       return
     }
 
-    const groupValue = [...data.model.value]
+    const groupValue = toArray(data.model.value)
 
     buttons.forEach(btn => {
       const index = buttons.indexOf(btn)
@@ -37,7 +36,7 @@ export default {
       }
     })
 
-    return <UiButtonGroup>{ children }</UiButtonGroup>
+    return <div class="uk-button-group">{ children }</div>
   }
 }
 

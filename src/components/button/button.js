@@ -1,3 +1,3 @@
-import UiButton from '~/ui/button/button'
+import UiButton from './ui/button'
 
 export default UiButton

@@ -1,3 +1,5 @@
+import { cloneArray } from '@vuikit/util'
+
 export default {
   props: {
     selection: {
@@ -18,11 +20,13 @@ export default {
       return this.selection.findIndex(r => r.id === row.id) !== -1
     },
     selectRow (row) {
-      this.updateSelection([...this.selection, row])
+      const newSelection = cloneArray(this.selection)
+      newSelection.push(row)
+      this.updateSelection(newSelection)
     },
     unselectRow (row) {
       const index = this.selection.indexOf(row)
-      const newSelection = [...this.selection]
+      const newSelection = cloneArray(this.selection)
       newSelection.splice(index, 1)
 
       this.updateSelection(newSelection)

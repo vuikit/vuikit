@@ -4,12 +4,14 @@ play('Breadcrumb')
   .add('Default', require('./breadcrumb/story').default)
 
 play('Button')
-  .add('Default', require('./button/story').default)
+  .add('Button', require('./button/story').default)
+  .add('UI', require('./button/ui/story').default)
 
 play('Drop')
-  .add('Default', require('./drop/story/default').default)
-  .add('Boundary', require('./drop/story/boundary').default)
-  .add('Position', require('./drop/story/position').default)
+  .add('Default', require('./drop/story').default)
+  .add('Target', require('./drop/story-target').default)
+  .add('UI - Positions', require('./drop/ui/story-positions').default)
+  .add('UI - Boundary', require('./drop/ui/story-boundary').default)
 
 play('Dropdown')
   .add('Default', require('./dropdown/story/default').default)

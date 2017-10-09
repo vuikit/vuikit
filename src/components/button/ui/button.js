@@ -1,3 +1,5 @@
+import { merge } from '@vuikit/util'
+
 const sizes = ['large', 'small']
 const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']
 
@@ -25,16 +27,19 @@ export default {
   render (h, { data, props, children }) {
     const { disabled, type, size, htmlType } = props
 
-    return h('button', {
+    const def = {
       attrs: {
         type: htmlType,
         disabled
       },
-      class: ['uk-button', [`uk-button-${type}`], {
-        [`uk-button-${size}`]: size
-      }],
-      ...data
-    }, [
+      class: ['uk-button', [`uk-button-${type}`]]
+    }
+
+    if (size) {
+      def.class.push([`uk-button-${size}`])
+    }
+
+    return h('button', merge({}, def, data), [
       children
     ])
   }

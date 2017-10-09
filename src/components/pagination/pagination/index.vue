@@ -9,12 +9,12 @@
 
 <script>
 import { isArray } from '@vuikit/util'
-import paginationMatrix from '~/helpers/pagination-matrix'
-import PaginationFirst from '../pagination-first'
 import PaginationLast from '../pagination-last'
 import PaginationPrev from '../pagination-prev'
 import PaginationNext from '../pagination-next'
+import PaginationFirst from '../pagination-first'
 import PaginationPages from '../pagination-pages'
+import paginationMatrix from '~/helpers/pagination-matrix'
 
 const partsMap = {
   first: PaginationFirst,
@@ -70,10 +70,14 @@ export default {
         let lis = []
         parent.$parts.forEach(part => {
           part = parent.$createElement(part.comp, { props: part.props })
-          lis = isArray(part)
-            ? [...lis, ...part]
-            : [...lis, part]
+
+          if (isArray(part)) {
+            lis = lis.concat(part)
+          } else {
+            lis.push(part)
+          }
         })
+
         return lis
       }
     }

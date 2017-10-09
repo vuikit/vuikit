@@ -1,5 +1,6 @@
+import { merge } from '@vuikit/util'
+
 export default {
-  name: 'IconLink',
   functional: true,
   props: {
     reset: {
@@ -13,9 +14,8 @@ export default {
       'uk-icon-link': props.reset
     }]
 
-    return h('a', {
-      on: listeners,
-      ...data
-    }, children)
+    const def = merge({}, { on: listeners }, data)
+
+    return h('a', def, children)
   }
 }
