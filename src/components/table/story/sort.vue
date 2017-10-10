@@ -13,6 +13,7 @@
 <script>
 import orderBy from 'lodash/orderBy'
 import mockData from './mock-data.json'
+import { keys } from '@vuikit/util'
 
 const data = mockData.splice(0, 5)
 
@@ -24,7 +25,7 @@ export default {
   }),
   computed: {
     rows () {
-      const by = Object.keys(this.sortedBy)[0]
+      const by = keys(this.sortedBy)[0]
       const dir = this.sortedBy[by]
       return orderBy(data, [item => item[by]], dir)
     }

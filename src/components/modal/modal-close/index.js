@@ -1,3 +1,5 @@
+import { merge } from '@vuikit/util'
+
 export default {
   functional: true,
   props: ['outside', 'full', 'top'],
@@ -5,22 +7,20 @@ export default {
     const outside = props.outside !== undefined
     const full = props.full !== undefined
     const top = props.top !== undefined
-    return h('button', {
-      ...data,
-      staticClass: 'uk-close uk-icon',
-      class: [
-        {
-          'uk-modal-close-default': !outside && !full,
-          'uk-modal-close-outside': outside,
-          'uk-modal-close-full': full,
-          'vk-modal-close-top': top
-        },
-        data.staticClass
-      ],
+
+    const def = {
+      class: ['uk-close', 'uk-icon', data.staticClass, {
+        'uk-modal-close-default': !outside && !full,
+        'uk-modal-close-outside': outside,
+        'uk-modal-close-full': full,
+        'vk-modal-close-top': top
+      }],
       attrs: {
         type: 'button',
         'uk-close': true
       }
-    }, children)
+    }
+
+    return h('button', merge({}, data, def), children)
   }
 }

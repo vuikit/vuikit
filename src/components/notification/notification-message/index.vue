@@ -1,9 +1,7 @@
 <template>
   <transition :name="transition">
     <div class="uk-notification-message"
-      :class="{
-        [`uk-notification-message-${status}`]: status
-      }"
+      :class="classes"
       @click="$parent.$emit('click', id)">
       <slot></slot>
     </div>
@@ -30,6 +28,14 @@ export default {
     transition: {
       type: String,
       default: ''
+    }
+  },
+  computed: {
+    classes () {
+      const cls = {}
+      cls[`uk-notification-message-${this.status}`] = this.status
+
+      return cls
     }
   },
   mounted () {

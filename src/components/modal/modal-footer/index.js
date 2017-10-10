@@ -1,10 +1,12 @@
+import { merge } from '@vuikit/util'
+
 export default {
   functional: true,
   render (h, { children, data }) {
-    return h('div', {
-      ...data,
-      staticClass: 'uk-modal-footer',
-      class: [data.staticClass]
-    }, children)
+    const def = {
+      class: ['uk-modal-footer', data.staticClass]
+    }
+
+    return h('div', merge({}, data, def), children)
   }
 }

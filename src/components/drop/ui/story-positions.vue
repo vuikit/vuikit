@@ -1,47 +1,46 @@
 <template>
-  <div class="uk-padding uk-padding-bottom">
-    <div class="uk-section">
+  <div class="uk-padding">
+    <div class="uk-section uk-text-center">
       <div class="uk-flex uk-flex-center uk-flex-middle uk-height-medium">
+        <vk-button ref="btn">
+          Target
+        </vk-button>
         <ui-drop
-          :show="show"
+          :show="true"
           :position="position"
           :target="target"
+          :flip="false"
         >
           <ui-card>{{ position }}</ui-card>
         </ui-drop>
-        <vk-button
-          ref="btn"
-          @click="show = true"
-          v-text="show ? 'Target' : 'Show'"
-        ></vk-button>
       </div>
 
       <div>
-        <a v-for="pos in ['left', 'center', 'right', 'justify']"
-          @click.prevent="position = `bottom-${pos}`" class="uk-link-reset"
-        >
-          {{ `bottom-${pos}` }},
-        </a>
-      </div>
-      <div>
-        <a v-for="pos in ['left', 'center', 'right', 'justify']"
-          @click.prevent="position = `top-${pos}`" class="uk-link-reset"
+        <a v-for="pos in ['left', 'center', 'justify', 'right']"
+          @mouseenter="position = `top-${pos}`" class="uk-link-reset"
         >
           {{ `top-${pos}` }},
         </a>
       </div>
       <div>
         <a v-for="pos in ['top', 'center', 'bottom']"
-          @click.prevent="position = `left-${pos}`" class="uk-link-reset"
+          @mouseenter="position = `right-${pos}`" class="uk-link-reset"
+        >
+          {{ `right-${pos}` }},
+        </a>
+      </div>
+      <div>
+        <a v-for="pos in ['top', 'center', 'bottom']"
+          @mouseenter="position = `left-${pos}`" class="uk-link-reset"
         >
           {{ `left-${pos}` }},
         </a>
       </div>
       <div>
-        <a v-for="pos in ['top', 'center', 'bottom']"
-          @click.prevent="position = `right-${pos}`" class="uk-link-reset"
+        <a v-for="pos in ['left', 'center', 'justify', 'right']"
+          @mouseenter="position = `bottom-${pos}`" class="uk-link-reset"
         >
-          {{ `right-${pos}` }},
+          {{ `bottom-${pos}` }},
         </a>
       </div>
     </div>
@@ -50,7 +49,7 @@
 
 <script>
 import UiDrop from './drop'
-import position from './v-position'
+import DropPosition from './v-drop-position'
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'
 
@@ -69,7 +68,7 @@ export default {
     UiCard
   },
   directives: {
-    vkDropPosition: position
+    DropPosition
   },
   data: () => ({
     target: '',

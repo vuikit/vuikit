@@ -1,9 +1,9 @@
-import { each, isArray } from '@vuikit/util'
+import { each, isArray, keys } from '@vuikit/util'
 import pick from 'lodash-es/pick'
 
 export default function (compProps, pageProps) {
   // we only want to pick declared props
-  let pickedProps = pick(compProps, Object.keys(pageProps))
+  let pickedProps = pick(compProps, keys(pageProps))
   // merge the new properties
   const props = {...pickedProps, ...pageProps}
   each(props, prop => {

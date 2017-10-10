@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <row v-for="row in data" :row="row" :key="JSON.stringify(row)">
+      <row v-for="row in data" :row="row" :key="stringify(row)">
         <cell v-for="(col, i) in columns" :key="i" :col="col" :row="row"></cell>
       </row>
     </tbody>
@@ -27,6 +27,7 @@
 import Row from './row'
 import Cell from './cell'
 import MixinSelect from './mixin-select'
+import { stringify } from '@vuikit/util'
 
 export default {
   name: 'Table',
@@ -80,6 +81,11 @@ export default {
         return this.$slots.default.filter(vnode => vnode.tag)
       },
       cache: false
+    }
+  },
+  methods: {
+    stringify (obj) {
+      return stringify(obj)
     }
   },
   created () {

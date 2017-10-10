@@ -1,14 +1,8 @@
-import { css, addClass, removeClass, on, off, offAll, merge, debounce, each, isObject } from '@vuikit/util'
 import positions from 'positions'
 import getSize from 'positions/lib/size'
-
-const defaults = {
-  offset: 0,
-  flip: false,
-  target: false,
-  boundary: window,
-  position: 'bottom-left'
-}
+import { collides, emulateRect } from '~/helpers/position/collides'
+import { flip, flipPosition } from '~/helpers/position/flip'
+import { stringify, css, on, addClass, off, offAll, merge, debounce, each, isObject } from '@vuikit/util'
 
 export default {
   inserted (el, binding, vnode) {
@@ -42,19 +36,12 @@ function setResizeEvent (el, binding, vnode) {
 }
 
 function positionEl (el, binding, vnode) {
-  const opts = merge({}, defaults, binding.value)
+  const opts = binding.value
 
-  let { target } = opts
-  const { position } = opts
+  let { position } = opts
+  const { target, boundary, flip, clsPrefix } = opts
   const dir = position.split('-')[1]
   const justify = dir === 'justify'
-
-  // remove any previous position class
-  el.classList.forEach(cls => {
-    if (cls.match(/uk-drop-/)) {
-      removeClass(el, cls)
-    }
-  })
 
   if (justify) {
     const size = getSize(target)
@@ -68,11 +55,40 @@ function positionEl (el, binding, vnode) {
     el.style.height = null
   }
 
-  const cords = getCords(position, el, target)
+  // update el position
+  addClass(el, 'uk-open') // necessary for cords
+  let cords
+
+  // when boundary provided check for collisions
+  if (flip) {
+    // emulating we can predict collisions upfront
+    const elCords = getCords(position, el, target)
+
+    const boundaryRect = emulateRect(merge({}, { top: 0, left: 0 }, getSize(boundary)))
+    const elRect = emulateRect(merge({}, elCords, getSize(el)))
+
+    // flip if colliding
+    const collisions = collides(elRect, boundaryRect)
+
+    if (collisions) {
+      position = flipPosition(position, collisions)
+    }
+  }
+
+  // get final cords
+  cords = getCords(position, el, target)
 
   css(el, 'top', `${cords.top}px`)
   css(el, 'left', `${cords.left}px`)
-  addClass(el, `uk-drop-${position}`)
+
+  // update classes
+  const classList = [
+    'uk-open',
+    vnode.data.class,
+    `${clsPrefix}-${position}`
+  ]
+
+  el.classList = classList.join(' ')
 }
 
 function doesDiffer ({ value, oldValue }, { vnode, oldVnode }) {
@@ -93,31 +109,18 @@ function flatten (obj) {
 }
 
 function isEqual (obj1, obj2) {
-  return JSON.stringify(obj1) !== JSON.stringify(obj2)
+  return stringify(obj1) !== stringify(obj2)
 }
 
 function getCords (position, el, target) {
   const pos = position.split('-')[0]
   const dir = position.split('-')[1]
-  const elPos = `${flipPosition(pos)} ${dir}`
+
+  // set options as required by the util
+  const elPos = `${flip(pos)} ${dir}`
   const targetPos = `${pos} ${dir}`
 
   return positions(el, elPos, target, targetPos)
-}
-
-function flipPosition (pos) {
-  switch (pos) {
-    case 'left':
-      return 'right'
-    case 'right':
-      return 'left'
-    case 'top':
-      return 'bottom'
-    case 'bottom':
-      return 'top'
-    default:
-      return pos
-  }
 }
 
 function getAxis (position) {

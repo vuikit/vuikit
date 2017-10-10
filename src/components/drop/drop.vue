@@ -12,7 +12,7 @@
 
 <script>
 import UiDrop from './ui/drop'
-import vPosition from './ui/v-position'
+import DropPosition from './ui/v-drop-position'
 import { isString, get } from '@vuikit/util'
 
 const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
@@ -22,7 +22,7 @@ export default {
     UiDrop
   },
   directives: {
-    vkDropPosition: vPosition
+    DropPosition
   },
   props: {
     target: {},

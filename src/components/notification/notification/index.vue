@@ -1,5 +1,5 @@
 <template>
-  <div class="uk-notification" :class="[`uk-notification-${position}`]">
+  <div class="uk-notification" :class="classes">
     <slot></slot>
   </div>
 </template>
@@ -11,6 +11,11 @@ export default {
     position: {
       type: String,
       default: 'top-center' // (top|bottom)-(left|center|right)
+    }
+  },
+  computed: {
+    classes () {
+      return `uk-notification-${this.position}`
     }
   },
   mounted () {

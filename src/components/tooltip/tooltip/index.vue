@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import PopperMixin from '~/mixins/popper'
+// import PopperMixin from '~/mixins/popper'
 import { on, offAll } from '@vuikit/util'
 
 let onMouseenter
@@ -18,7 +18,7 @@ let onMouseleave
 
 export default {
   name: 'Tooltip',
-  mixins: [PopperMixin],
+  // mixins: [PopperMixin],
   props: {
     /* [top|right|bottom|left]-[left|center|right|justify] */
     position: {

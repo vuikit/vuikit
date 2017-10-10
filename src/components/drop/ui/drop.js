@@ -27,37 +27,45 @@ export default {
     target: {
       required: true
     },
-    boundary: {},
+    boundary: {
+      default: () => window
+    },
     show: {
       type: Boolean,
       default: false
+    },
+    flip: {
+      type: Boolean,
+      default: true
     },
     position: {
       type: String,
       default: 'bottom-left',
       validator: val => positions.indexOf(val) !== -1
+    },
+    clsPrefix: {
+      type: String,
+      default: 'uk-drop'
     }
   },
   render (h, { props, data, children }) {
-    const { show, target, boundary, position } = props
+    const { show, target, boundary, position, clsPrefix, flip } = props
 
-    // sometimes the target is provided with a delay,
-    // silently abort in such case
-    if (!target) {
+    // sometimes the target is provided
+    // with a delay, lets wait for it
+    if (!target || !show) {
       return
     }
 
     if (!isObject(target)) {
-      warn('The UiDrop target is not a dom element.')
+      warn('The drop target must be a dom element.')
       return
     }
 
     const def = {
-      class: ['uk-drop', {
-        'uk-open': show
-      }],
+      class: clsPrefix,
       directives: [{
-        name: 'vk-drop-position', value: { target, boundary, position }
+        name: 'drop-position', value: { target, boundary, position, clsPrefix, flip }
       }]
     }
 

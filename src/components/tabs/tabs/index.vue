@@ -2,12 +2,7 @@
   <div :class="{
     'uk-flex uk-flex-column-reverse': bottom
   }">
-    <ul class="uk-tab" :class="{
-      [`uk-child-width-1-${tabs.length}`]: alignment === 'justify',
-      'uk-flex-right': alignment === 'right',
-      'uk-flex-center': alignment === 'center',
-      'uk-tab-bottom uk-margin-remove-bottom': bottom
-    }">
+    <ul class="uk-tab" :class="classes">
       <li v-for="{ id, label, disabled } in tabs" :class="{
         'uk-active': activeTab === id,
         'uk-disabled': disabled
@@ -42,6 +37,19 @@ export default {
     bottom: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    classes () {
+      const cls = {
+        'uk-flex-right': this.alignment === 'right',
+        'uk-flex-center': this.alignment === 'center',
+        'uk-tab-bottom uk-margin-remove-bottom': this.bottom
+      }
+
+      cls[`uk-child-width-1-${this.tabs.length}`] = this.alignment === 'justify'
+
+      return cls
     }
   }
 }

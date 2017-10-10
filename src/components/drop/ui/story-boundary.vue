@@ -1,31 +1,64 @@
 <template>
-  <div class="uk-padding uk-padding-bottom">
-    <div class="uk-panel uk-placeholder" ref="boundary-align">
+  <div class="uk-padding">
+    <div class="uk-panel uk-placeholder uk-text-center" ref="boundary">
+      <span>bottom-left</span>
       <vk-button
         class="uk-float-left"
-        ref="btn"
-        @click="show = true, position = 'bottom-justify'"
-        v-text="'Justify'"
+        ref="btn1"
+        @mouseenter="
+          target = $refs.btn1,
+          position = 'bottom-left'
+        "
+        v-text="'Hover'"
       ></vk-button>
       <vk-button
+        ref="btn2"
         class="uk-float-right"
-        @click="show = true, position = 'bottom-center'"
-        v-text="'Center'"
+        @mouseenter="
+          target = $refs.btn2,
+          position = 'bottom-left'
+        "
+        v-text="'Hover'"
       ></vk-button>
-      <ui-drop
-        :show="show"
-        :position="position"
-        :target="target"
-      >
-        <ui-card />
-      </ui-drop>
     </div>
+
+    <div class="uk-panel uk-placeholder uk-text-center" ref="boundary-2">
+      <span>bottom-center</span>
+      <vk-button
+        class="uk-float-left"
+        ref="btn3"
+        @mouseenter="
+          target = $refs.btn3,
+          position = 'bottom-center'
+        "
+        v-text="'Hover'"
+      ></vk-button>
+      <vk-button
+        ref="btn4"
+        class="uk-float-right"
+        @mouseenter="
+          target = $refs.btn4,
+          position = 'bottom-center'
+        "
+        v-text="'Hover'"
+      ></vk-button>
+    </div>
+
+    <ui-drop
+      :flip="flip"
+      :show="true"
+      :target="target"
+      :boundary="boundary"
+      :position="position"
+    >
+      <ui-card />
+    </ui-drop>
   </div>
 </template>
 
 <script>
 import UiDrop from './drop'
-import position from './v-position'
+import DropPosition from './v-drop-position'
 
 const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'
 
@@ -44,15 +77,17 @@ export default {
     UiCard
   },
   directives: {
-    vkDropPosition: position
+    DropPosition
   },
   data: () => ({
-    target: '',
+    flip: true,
     show: false,
+    target: '',
+    boundary: '',
     position: 'bottom-left'
   }),
   mounted () {
-    this.target = this.$refs['boundary-align']
+    this.boundary = this.$refs['boundary']
   }
 }
 </script>
