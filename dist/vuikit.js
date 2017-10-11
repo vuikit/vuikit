@@ -1,5 +1,5 @@
 /*
- * Vuikit 0.7.3
+ * Vuikit 0.7.4
  * (c) 2017 Miljan Aleksic
  * Released under the MIT License.
 */
@@ -185,6 +185,25 @@ var isArray = function (val) {
 };
 
 /*
+ * Determines if the value is empty
+ */
+var isEmpty = val => {
+  if (isObject(val)) {
+    return Object.keys(val).length === 0
+  }
+
+  if (isString(val)) {
+    return val === ''
+  }
+
+  if (isArray(val)) {
+    return val.length === 0
+  }
+
+  return !val
+};
+
+/*
  * Determines if the value is a function
  */
 var isFunction = function (val) {
@@ -194,6 +213,18 @@ var isFunction = function (val) {
 function toString (val) {
   return Object.prototype.toString.call(val)
 }
+
+/**
+ * Object.keys alternative
+ */
+var keys = function (obj) {
+  var keys = [];
+  each(obj, (val, key) => {
+    keys.push(key);
+  });
+
+  return keys
+};
 
 /**
 * Flat merge, allows multiple args
@@ -304,6 +335,59 @@ function removeClass$1 (el, className) {
 
 function sanitize$2 (classes) {
   return classes.split(' ').filter(c => c)
+}
+
+/*
+ * Safely and quickly serialize JavaScript objects
+ * https://github.com/davidmarkclements/fast-safe-stringify
+ */
+var stringify = function (obj) {
+  if (isObject(obj) && !isFunction(obj.toJSON)) {
+    decirc(merge({}, obj), '', [], null);
+  }
+
+  return JSON.stringify(obj)
+};
+
+function Circle (val, k, parent) {
+  this.val = val;
+  this.k = k;
+  this.parent = parent;
+  this.count = 1;
+}
+
+Circle.prototype.toJSON = function toJSON () {
+  if (--this.count === 0) {
+    this.parent[this.k] = this.val;
+  }
+  return '[Circular]'
+};
+
+function decirc (val, k, stack, parent) {
+  var keys, len, i;
+  if (typeof val !== 'object' || val === null) {
+    // not an object, nothing to do
+    return
+  } else if (val instanceof Circle) {
+    val.count++;
+    return
+  } else if (typeof val.toJSON === 'function' && !val.toJSON.forceDecirc) {
+    return
+  } else if (parent) {
+    if (~stack.indexOf(val)) {
+      parent[k] = new Circle(val, k, parent);
+      return
+    }
+  }
+  stack.push(val);
+  keys = Object.keys(val);
+  len = keys.length;
+  i = 0;
+  for (; i < len; i++) {
+    k = keys[i];
+    decirc(val[k], k, stack, val);
+  }
+  stack.pop();
 }
 
 /*
@@ -451,7 +535,7 @@ function noop() {}
 var warn = noop;
 
 
-if (process.env.NODE_ENV !== 'production') {
+{
   var hasConsole = typeof console !== 'undefined';
   var classifyRE = /(?:^|[-_])(\w)/g;
   var classify = function classify(str) {
@@ -663,10 +747,18 @@ var UiDrop = {
     target: {
       required: true
     },
-    boundary: {},
+    boundary: {
+      default: function _default() {
+        return window;
+      }
+    },
     show: {
       type: Boolean,
       default: false
+    },
+    flip: {
+      type: Boolean,
+      default: true
     },
     position: {
       type: String,
@@ -674,6 +766,10 @@ var UiDrop = {
       validator: function validator(val) {
         return positions.indexOf(val) !== -1;
       }
+    },
+    clsPrefix: {
+      type: String,
+      default: 'uk-drop'
     }
   },
   render: function render(h, _ref) {
@@ -683,56 +779,32 @@ var UiDrop = {
     var show = props.show,
         target = props.target,
         boundary = props.boundary,
-        position = props.position;
+        position = props.position,
+        clsPrefix = props.clsPrefix,
+        flip = props.flip;
 
-    // sometimes the target is provided with a delay,
-    // silently abort in such case
+    // sometimes the target is provided
+    // with a delay, lets wait for it
 
-    if (!target) {
+    if (!target || !show) {
       return;
     }
 
     if (!isObject(target)) {
-      warn('The UiDrop target is not a dom element.');
+      warn('The drop target must be a dom element.');
       return;
     }
 
     var def = {
-      class: ['uk-drop', {
-        'uk-open': show
-      }],
+      class: clsPrefix,
       directives: [{
-        name: 'vk-drop-position', value: { target: target, boundary: boundary, position: position }
+        name: 'drop-position', value: { target: target, boundary: boundary, position: position, clsPrefix: clsPrefix, flip: flip }
       }]
     };
 
     return h('div', merge({}, def, data), [children]);
   }
 };
-
-function unwrapExports (x) {
-	return x && x.__esModule ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var _core = createCommonjsModule(function (module) {
-var core = module.exports = { version: '2.5.1' };
-if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
-});
-
-var $JSON = _core.JSON || (_core.JSON = { stringify: JSON.stringify });
-var stringify$1 = function stringify(it) { // eslint-disable-line no-unused-vars
-  return $JSON.stringify.apply($JSON, arguments);
-};
-
-var stringify = createCommonjsModule(function (module) {
-module.exports = { "default": stringify$1, __esModule: true };
-});
-
-var _JSON$stringify = unwrapExports(stringify);
 
 // position relative to top of document
 var offset = function offset (el) {
@@ -859,15 +931,94 @@ var positions$1 = function positions (el, my, target, their) {
   }
 };
 
-var defaults = {
-  offset: 0,
-  flip: false,
-  target: false,
-  boundary: window,
-  position: 'bottom-left'
-};
+/**
+ * Returns the positions where two elements collide
+ */
+function collides(rect1, rect2) {
+  var collisions = {
+    left: rect1.left < rect2.left,
+    right: rect1.right > rect2.right,
+    top: rect1.top < rect2.top,
+    bottom: rect1.bottom > rect2.bottom
 
-var vPosition = {
+    // remove false values
+  };each(collisions, function (val, key) {
+    if (!val) {
+      delete collisions[key];
+    }
+  });
+
+  return isEmpty(collisions) ? false : collisions;
+}
+
+/**
+ * Emulate rect object
+ */
+function emulateRect(_ref) {
+  var left = _ref.left,
+      top = _ref.top,
+      width = _ref.width,
+      height = _ref.height;
+
+  return {
+    height: height,
+    width: width,
+    left: left,
+    top: top,
+    x: top,
+    y: left,
+    right: left + width,
+    bottom: top + height
+  };
+}
+
+function flipPosition(position, collisions) {
+  var pos = position.split('-')[0];
+  var isHorizontal = pos.match(/(bottom|top)/);
+  var dir = position.split('-')[1];
+
+  if (isHorizontal) {
+    dir = flipDir(dir, { left: collisions.left, right: collisions.right });
+  } else {
+    dir = flipDir(dir, { top: collisions.top, bottom: collisions.bottom });
+  }
+
+  return pos + '-' + dir;
+}
+
+function flipDir(dir, collisions) {
+  var sides = keys(collisions).filter(function (s) {
+    return collisions[s];
+  });
+
+  // abort if no sides collades or do more than 2
+  if (sides.length === 0 || sides.length >= 2) {
+    return dir;
+  }
+
+  // if centered and only one side collisioned,
+  // we can flip to the other side
+  if (dir === 'center' && sides.length === 1) {
+    return sides[0];
+  }
+
+  // we know it's colliding on at least
+  // one side, lets flip it on the other
+  return flip(dir);
+}
+
+function flip(x) {
+  var flipMap = {
+    left: 'right',
+    right: 'left',
+    top: 'bottom',
+    bottom: 'top'
+  };
+
+  return flipMap[x] ? flipMap[x] : x;
+}
+
+var DropPosition = {
   inserted: function inserted(el, binding, vnode) {
     // give just enough time for any dom update,
     // required for ex if the target size changes
@@ -899,20 +1050,16 @@ function setResizeEvent(el, binding, vnode) {
 }
 
 function positionEl(el, binding, vnode) {
-  var opts = merge({}, defaults, binding.value);
+  var opts = binding.value;
 
-  var target = opts.target;
   var position = opts.position;
+  var target = opts.target,
+      boundary = opts.boundary,
+      flip$$1 = opts.flip,
+      clsPrefix = opts.clsPrefix;
 
   var dir = position.split('-')[1];
   var justify = dir === 'justify';
-
-  // remove any previous position class
-  el.classList.forEach(function (cls) {
-    if (cls.match(/uk-drop-/)) {
-      removeClass(el, cls);
-    }
-  });
 
   if (justify) {
     var size$$1 = size(target);
@@ -924,11 +1071,36 @@ function positionEl(el, binding, vnode) {
     el.style.height = null;
   }
 
-  var cords = getCords(position, el, target);
+  // update el position
+  addClass(el, 'uk-open'); // necessary for cords
+  var cords = void 0;
+
+  // when boundary provided check for collisions
+  if (flip$$1) {
+    // emulating we can predict collisions upfront
+    var elCords = getCords(position, el, target);
+
+    var boundaryRect = emulateRect(merge({}, { top: 0, left: 0 }, size(boundary)));
+    var elRect = emulateRect(merge({}, elCords, size(el)));
+
+    // flip if colliding
+    var collisions = collides(elRect, boundaryRect);
+
+    if (collisions) {
+      position = flipPosition(position, collisions);
+    }
+  }
+
+  // get final cords
+  cords = getCords(position, el, target);
 
   css(el, 'top', cords.top + 'px');
   css(el, 'left', cords.left + 'px');
-  addClass(el, 'uk-drop-' + position);
+
+  // update classes
+  var classList = ['uk-open', vnode.data.class, clsPrefix + '-' + position];
+
+  el.classList = classList.join(' ');
 }
 
 function doesDiffer(_ref, _ref2) {
@@ -954,31 +1126,18 @@ function flatten(obj) {
 }
 
 function isEqual(obj1, obj2) {
-  return _JSON$stringify(obj1) !== _JSON$stringify(obj2);
+  return stringify(obj1) !== stringify(obj2);
 }
 
 function getCords(position, el, target) {
   var pos = position.split('-')[0];
   var dir = position.split('-')[1];
-  var elPos = flipPosition(pos) + ' ' + dir;
+
+  // set options as required by the util
+  var elPos = flip(pos) + ' ' + dir;
   var targetPos = pos + ' ' + dir;
 
   return positions$1(el, elPos, target, targetPos);
-}
-
-function flipPosition(pos) {
-  switch (pos) {
-    case 'left':
-      return 'right';
-    case 'right':
-      return 'left';
-    case 'top':
-      return 'bottom';
-    case 'bottom':
-      return 'top';
-    default:
-      return pos;
-  }
 }
 
 function getAxis(position) {
@@ -990,14 +1149,14 @@ function getAxis(position) {
 
 var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
 
-var Drop = { render: function render() {
+var drop = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('ui-drop', { attrs: { "show": _vm.show, "position": _vm.position, "target": _vm.$target, "boundary": _vm.$boundary }, on: { "mouseleave": _vm.onMouseleave } }, [_vm._t("default")], 2);
   }, staticRenderFns: [],
   components: {
     UiDrop: UiDrop
   },
   directives: {
-    vkDropPosition: vPosition
+    DropPosition: DropPosition
   },
   props: {
     target: {},
@@ -1048,233 +1207,121 @@ var Drop = { render: function render() {
   }
 };
 
-var _global = createCommonjsModule(function (module) {
-// https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
-var global = module.exports = typeof window != 'undefined' && window.Math == Math
-  ? window : typeof self != 'undefined' && self.Math == Math ? self
-  // eslint-disable-next-line no-new-func
-  : Function('return this')();
-if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
-});
+var isRtl$1 = document.documentElement.getAttribute('dir') === 'rtl';
 
-var _aFunction = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
+var dropdown = { render: function render() {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('ui-drop', { attrs: { "show": _vm.show, "target": _vm.$target, "position": _vm.position, "boundary": _vm.$boundary, "clsPrefix": "uk-dropdown" }, on: { "mouseleave": _vm.onMouseleave, "mouseenter": _vm.onMouseenter } }, [_vm._t("default")], 2);
+  }, staticRenderFns: [],
+  components: {
+    UiDrop: UiDrop
+  },
+  directives: {
+    DropPosition: DropPosition
+  },
+  props: {
+    target: {},
+    boundary: {},
+    show: {
+      type: Boolean,
+      required: true
+    },
+    position: {
+      type: String,
+      default: 'bottom-' + (isRtl$1 ? 'right' : 'left')
+    },
+    delayShow: {
+      type: Number,
+      default: 150
+    },
+    delayHide: {
+      type: Number,
+      default: 800
+    }
+  },
+  computed: {
+    $target: {
+      get: function get$$1() {
+        var target = isString(this.target) ? get(this.$vnode.context, this.target) : this.target;
 
-// optional / simple context binding
+        return target || this.$el && this.$el.previousElementSibling;
+      },
 
-var _ctx = function (fn, that, length) {
-  _aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
+      cache: false
+    },
+    $boundary: {
+      get: function get$$1() {
+        var boundary = isString(this.boundary) ? get(this.$vnode.context, this.boundary) : this.boundary;
 
-var _isObject = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
+        return boundary || window;
+      },
 
-var _anObject = function (it) {
-  if (!_isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
+      cache: false
+    }
+  },
+  methods: {
+    onMouseenter: function onMouseenter(e) {
+      var _this = this;
 
-var _fails = function (exec) {
-  try {
-    return !!exec();
-  } catch (e) {
-    return true;
-  }
-};
+      // ignore childs triggers
+      if (this.$target.contains(e.fromElement)) {
+        return;
+      }
 
-// Thank's IE8 for his funny defineProperty
-var _descriptors = !_fails(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
+      // cancel any delayed hiding
+      clearTimeout(this.$hideTimeout);
 
-var document$1 = _global.document;
-// typeof document.createElement is 'object' in old IE
-var is = _isObject(document$1) && _isObject(document$1.createElement);
-var _domCreate = function (it) {
-  return is ? document$1.createElement(it) : {};
-};
+      this.$showTimeout = setTimeout(function () {
+        _this.$emit('mouseenter', e);
+      }, this.delayShow);
+    },
+    onMouseleave: function onMouseleave(e) {
+      var _this2 = this;
 
-var _ie8DomDefine = !_descriptors && !_fails(function () {
-  return Object.defineProperty(_domCreate('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
+      // ignore childs triggers
+      if (e.relatedTarget === this.$target || e.relatedTarget === this.$el || this.$target.contains(e.relatedTarget) || this.$el.contains(e.relatedTarget)) {
+        return;
+      }
 
-// 7.1.1 ToPrimitive(input [, PreferredType])
+      // cancel any delayed showing
+      clearTimeout(this.$showTimeout);
 
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-var _toPrimitive = function (it, S) {
-  if (!_isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !_isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !_isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
+      this.$hideTimeout = setTimeout(function () {
+        _this2.$emit('mouseleave', e);
+      }, this.delayHide);
+    },
+    onClickOut: function onClickOut(e) {
+      var clikedOnTarget = e.target === this.$target || this.$target.contains(e.target);
+      var clickedOnDrop = e.target === this.$el || this.$el.contains(e.target);
 
-var dP = Object.defineProperty;
+      if (!this.show || clikedOnTarget) {
+        return;
+      }
 
-var f = _descriptors ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  _anObject(O);
-  P = _toPrimitive(P, true);
-  _anObject(Attributes);
-  if (_ie8DomDefine) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
+      if (clickedOnDrop) {
+        this.$emit('click-in', e);
+      } else {
+        this.$emit('click-out', e);
+      }
+    }
+  },
+  mounted: function mounted() {
+    on(this.$target, 'mouseleave', this.onMouseleave, this._uid);
+    on(this.$target, 'mouseenter', this.onMouseenter, this._uid);
 
-var _objectDp = {
-	f: f
-};
-
-var _propertyDesc = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-var _hide = _descriptors ? function (object, key, value) {
-  return _objectDp.f(object, key, _propertyDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? _core : _core[name] || (_core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? _global : IS_STATIC ? _global[name] : (_global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? _ctx(out, _global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? _ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) _hide(expProto, key, out);
+    on(document, 'click', this.onClickOut, this._uid);
+    if ('ontouchstart' in document.documentElement) {
+      on(document, 'touchstart', this.onClickOut, this._uid);
+    }
+  },
+  beforeDestroy: function beforeDestroy() {
+    offAll(this._uid);
+    if (this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el);
     }
   }
 };
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-var _export = $export;
 
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-_export(_export.S + _export.F * !_descriptors, 'Object', { defineProperty: _objectDp.f });
-
-var $Object = _core.Object;
-var defineProperty$3 = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-var defineProperty$1 = createCommonjsModule(function (module) {
-module.exports = { "default": defineProperty$3, __esModule: true };
-});
-
-unwrapExports(defineProperty$1);
-
-var defineProperty = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-
-
-var _defineProperty2 = _interopRequireDefault(defineProperty$1);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-});
-
-var _defineProperty = unwrapExports(defineProperty);
-
-var index$2 = { render: function render() {
-        var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "uk-dropdown", class: _defineProperty({ 'uk-open': _vm.show }, 'uk-dropdown-' + _vm.position, _vm.show), style: {
-                'top': _vm.top + 'px',
-                'left': _vm.left + 'px'
-            } }, [_vm._t("default")], 2);
-    }, staticRenderFns: [],
-    name: 'Dropdown',
-    extends: Drop
-};
-
-var index$3 = {
+var index$2 = {
   functional: true,
   render: function render(h, _ref) {
     var data = _ref.data,
@@ -1290,7 +1337,7 @@ var index$3 = {
   }
 };
 
-var index$4 = {
+var index$3 = {
   functional: true,
   props: {
     reset: {
@@ -1315,7 +1362,7 @@ var index$4 = {
   }
 };
 
-var index$5 = {
+var index$4 = {
   functional: true,
   render: function render(h, _ref) {
     var data = _ref.data,
@@ -1413,239 +1460,23 @@ var ModalMixin = {
   }
 };
 
-var hasOwnProperty = {}.hasOwnProperty;
-var _has = function (it, key) {
-  return hasOwnProperty.call(it, key);
-};
-
-var toString$1$1 = {}.toString;
-
-var _cof = function (it) {
-  return toString$1$1.call(it).slice(8, -1);
-};
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-
-// eslint-disable-next-line no-prototype-builtins
-var _iobject = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return _cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-// 7.2.1 RequireObjectCoercible(argument)
-var _defined = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
-};
-
-// to indexed object, toObject with fallback for non-array-like ES3 strings
-
-
-var _toIobject = function (it) {
-  return _iobject(_defined(it));
-};
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-var _toInteger = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-// 7.1.15 ToLength
-
-var min = Math.min;
-var _toLength = function (it) {
-  return it > 0 ? min(_toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
-};
-
-var max = Math.max;
-var min$1 = Math.min;
-var _toAbsoluteIndex = function (index, length) {
-  index = _toInteger(index);
-  return index < 0 ? max(index + length, 0) : min$1(index, length);
-};
-
-// false -> Array#indexOf
-// true  -> Array#includes
-
-
-
-var _arrayIncludes = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = _toIobject($this);
-    var length = _toLength(O.length);
-    var index = _toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-var SHARED = '__core-js_shared__';
-var store = _global[SHARED] || (_global[SHARED] = {});
-var _shared = function (key) {
-  return store[key] || (store[key] = {});
-};
-
-var id = 0;
-var px = Math.random();
-var _uid = function (key) {
-  return 'Symbol('.concat(key === undefined ? '' : key, ')_', (++id + px).toString(36));
-};
-
-var shared = _shared('keys');
-
-var _sharedKey = function (key) {
-  return shared[key] || (shared[key] = _uid(key));
-};
-
-var arrayIndexOf = _arrayIncludes(false);
-var IE_PROTO = _sharedKey('IE_PROTO');
-
-var _objectKeysInternal = function (object, names) {
-  var O = _toIobject(object);
-  var i = 0;
-  var result = [];
-  var key;
-  for (key in O) if (key != IE_PROTO) _has(O, key) && result.push(key);
-  // Don't enum bug & hidden keys
-  while (names.length > i) if (_has(O, key = names[i++])) {
-    ~arrayIndexOf(result, key) || result.push(key);
-  }
-  return result;
-};
-
-// IE 8- don't enum bug keys
-var _enumBugKeys = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-
-
-
-var _objectKeys = Object.keys || function keys(O) {
-  return _objectKeysInternal(O, _enumBugKeys);
-};
-
-var f$1 = Object.getOwnPropertySymbols;
-
-var _objectGops = {
-	f: f$1
-};
-
-var f$2 = {}.propertyIsEnumerable;
-
-var _objectPie = {
-	f: f$2
-};
-
-// 7.1.13 ToObject(argument)
-
-var _toObject = function (it) {
-  return Object(_defined(it));
-};
-
-'use strict';
-// 19.1.2.1 Object.assign(target, source, ...)
-
-
-
-
-
-var $assign = Object.assign;
-
-// should work with symbols and should have deterministic property order (V8 bug)
-var _objectAssign = !$assign || _fails(function () {
-  var A = {};
-  var B = {};
-  // eslint-disable-next-line no-undef
-  var S = Symbol();
-  var K = 'abcdefghijklmnopqrst';
-  A[S] = 7;
-  K.split('').forEach(function (k) { B[k] = k; });
-  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
-}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
-  var T = _toObject(target);
-  var aLen = arguments.length;
-  var index = 1;
-  var getSymbols = _objectGops.f;
-  var isEnum = _objectPie.f;
-  while (aLen > index) {
-    var S = _iobject(arguments[index++]);
-    var keys = getSymbols ? _objectKeys(S).concat(getSymbols(S)) : _objectKeys(S);
-    var length = keys.length;
-    var j = 0;
-    var key;
-    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
-  } return T;
-} : $assign;
-
-// 19.1.3.1 Object.assign(target, source)
-
-
-_export(_export.S + _export.F, 'Object', { assign: _objectAssign });
-
-var assign$2 = _core.Object.assign;
-
-var assign = createCommonjsModule(function (module) {
-module.exports = { "default": assign$2, __esModule: true };
-});
-
-unwrapExports(assign);
-
-var _extends = createCommonjsModule(function (module, exports) {
-"use strict";
-
-exports.__esModule = true;
-
-
-
-var _assign2 = _interopRequireDefault(assign);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _assign2.default || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-});
-
-var _extends$1 = unwrapExports(_extends);
-
 var ModalDialog = {
   functional: true,
   render: function render(h, _ref) {
     var children = _ref.children,
         data = _ref.data;
 
-    return h('div', _extends$1({}, data, {
-      staticClass: 'uk-modal-dialog',
-      class: [data.staticClass]
-    }), children);
+    var def = {
+      class: ['uk-modal-dialog', data.staticClass]
+    };
+
+    return h('div', merge({}, data, def), children);
   }
 };
 
 var doc = document.documentElement;
 
-var index$6 = { render: function render() {
+var index$5 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "enter-to-class": "uk-open", "leave-class": "uk-open" }, on: { "before-enter": _vm.beforeEnter, "after-enter": _vm.afterEnter, "after-leave": _vm.afterLeave } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "uk-modal", class: { 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full }, staticStyle: { "display": "block" } }, [_c('modal-content')], 1)]);
   }, staticRenderFns: [],
   name: 'Modal',
@@ -1781,16 +1612,31 @@ var index$6 = { render: function render() {
   }
 };
 
+var index$6 = {
+  functional: true,
+  render: function render(h, _ref) {
+    var children = _ref.children,
+        data = _ref.data;
+
+    var def = {
+      class: ['uk-modal-header', data.staticClass]
+    };
+
+    return h('div', merge({}, data, def), children);
+  }
+};
+
 var index$7 = {
   functional: true,
   render: function render(h, _ref) {
     var children = _ref.children,
         data = _ref.data;
 
-    return h('div', _extends$1({}, data, {
-      staticClass: 'uk-modal-header',
-      class: [data.staticClass]
-    }), children);
+    var def = {
+      class: ['uk-modal-body', data.staticClass]
+    };
+
+    return h('div', merge({}, data, def), children);
   }
 };
 
@@ -1800,27 +1646,15 @@ var index$8 = {
     var children = _ref.children,
         data = _ref.data;
 
-    return h('div', _extends$1({}, data, {
-      staticClass: 'uk-modal-body',
-      class: [data.staticClass]
-    }), children);
+    var def = {
+      class: ['uk-modal-footer', data.staticClass]
+    };
+
+    return h('div', merge({}, data, def), children);
   }
 };
 
 var index$9 = {
-  functional: true,
-  render: function render(h, _ref) {
-    var children = _ref.children,
-        data = _ref.data;
-
-    return h('div', _extends$1({}, data, {
-      staticClass: 'uk-modal-footer',
-      class: [data.staticClass]
-    }), children);
-  }
-};
-
-var index$10 = {
   functional: true,
   props: ['bottom'],
   render: function render(h, _ref) {
@@ -1829,16 +1663,18 @@ var index$10 = {
         props = _ref.props;
 
     var bottom = props.bottom !== undefined;
-    return h('div', _extends$1({}, data, {
-      class: [{
+    var def = {
+      class: [data.staticClass, {
         'uk-modal-caption': !bottom,
         'vk-modal-caption-bottom': bottom
-      }, data.staticClass]
-    }), children);
+      }]
+    };
+
+    return h('div', merge({}, data, def), children);
   }
 };
 
-var index$11 = {
+var index$10 = {
   functional: true,
   props: ['outside', 'full', 'top'],
   render: function render(h, _ref) {
@@ -1849,30 +1685,37 @@ var index$11 = {
     var outside = props.outside !== undefined;
     var full = props.full !== undefined;
     var top = props.top !== undefined;
-    return h('button', _extends$1({}, data, {
-      staticClass: 'uk-close uk-icon',
-      class: [{
+
+    var def = {
+      class: ['uk-close', 'uk-icon', data.staticClass, {
         'uk-modal-close-default': !outside && !full,
         'uk-modal-close-outside': outside,
         'uk-modal-close-full': full,
         'vk-modal-close-top': top
-      }, data.staticClass],
+      }],
       attrs: {
         type: 'button',
         'uk-close': true
       }
-    }), children);
+    };
+
+    return h('button', merge({}, data, def), children);
   }
 };
 
-var index$12 = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "uk-notification", class: ["uk-notification-" + _vm.position] }, [_vm._t("default")], 2);
+var index$11 = { render: function render() {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "uk-notification", class: _vm.classes }, [_vm._t("default")], 2);
   }, staticRenderFns: [],
   name: 'Notification',
   props: {
     position: {
       type: String,
       default: 'top-center' // (top|bottom)-(left|center|right)
+    }
+  },
+  computed: {
+    classes: function classes() {
+      return "uk-notification-" + this.position;
     }
   },
   mounted: function mounted() {
@@ -1886,8 +1729,8 @@ var index$12 = { render: function render() {
   }
 };
 
-var index$13 = { render: function render() {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": _vm.transition } }, [_c('div', { staticClass: "uk-notification-message", class: _defineProperty({}, 'uk-notification-message-' + _vm.status, _vm.status), on: { "click": function click($event) {
+var index$12 = { render: function render() {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "name": _vm.transition } }, [_c('div', { staticClass: "uk-notification-message", class: _vm.classes, on: { "click": function click($event) {
           _vm.$parent.$emit('click', _vm.id);
         } } }, [_vm._t("default")], 2)]);
   }, staticRenderFns: [],
@@ -1911,6 +1754,14 @@ var index$13 = { render: function render() {
       default: ''
     }
   },
+  computed: {
+    classes: function classes() {
+      var cls = {};
+      cls['uk-notification-message-' + this.status] = this.status;
+
+      return cls;
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -1922,7 +1773,7 @@ var index$13 = { render: function render() {
   }
 };
 
-var isRtl$1 = document.documentElement.getAttribute('dir') === 'rtl';
+var isRtl$2 = document.documentElement.getAttribute('dir') === 'rtl';
 
 function toMs(time) {
   return !time ? 0 : time.substr(-2) === 'ms' ? parseFloat(time) : parseFloat(time) * 1000;
@@ -1945,7 +1796,7 @@ var doc$2 = document.documentElement;
 var body$1 = document.body;
 var scroll = void 0;
 
-var index$14 = { render: function render() {
+var index$13 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('transition', { attrs: { "css": false }, on: { "enter": _vm.transitionEnd, "leave": _vm.transitionEnd, "before-enter": _vm.beforeShow, "after-enter": _vm.afterEnter, "before-leave": _vm.beforeHide, "after-leave": _vm.hidden } }, [_c('div', { directives: [{ name: "show", rawName: "v-show", value: _vm.show, expression: "show" }], staticClass: "uk-offcanvas", staticStyle: { "display": "block" } }, [_vm.mode === 'reveal' ? _c('div', { class: [_vm.clsMode] }, [_c('div', { ref: "panel", staticClass: "uk-offcanvas-bar", class: { 'uk-offcanvas-bar-flip': _vm.flip } }, [_vm._t("default")], 2)]) : _c('div', { ref: "panel", staticClass: "uk-offcanvas-bar", class: { 'uk-offcanvas-bar-flip': _vm.flip } }, [_vm._t("default")], 2)])]);
   }, staticRenderFns: [],
   name: 'Offcanvas',
@@ -2102,7 +1953,7 @@ var index$14 = { render: function render() {
   }
 };
 
-var index$15 = {
+var index$14 = {
   name: 'OffcanvasContent',
   functional: true,
   render: function render(h, _ref) {
@@ -2165,7 +2016,7 @@ var IconClose = {
   }
 };
 
-var index$16 = {
+var index$15 = {
   name: 'OffcanvasClose',
   functional: true,
   render: function render(h, _ref) {
@@ -2476,7 +2327,7 @@ var partsMap = {
   pages: PaginationPages
 };
 
-var index$17 = { render: function render() {
+var index$16 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('ul', { staticClass: "uk-pagination", class: { 'uk-flex-center': _vm.align !== 'left' && _vm.align !== 'right', 'uk-flex-right': _vm.align === 'right' } }, [_c('pag-parts')], 1);
   }, staticRenderFns: [],
   name: 'Pagination',
@@ -2615,7 +2466,7 @@ on(window, 'scroll', function () {
   scroll$1 = window.pageYOffset;
 });
 
-var index$18 = {
+var index$17 = {
   name: 'Sticky',
   abstract: true,
   props: {
@@ -2672,7 +2523,7 @@ var index$18 = {
     }
 
     // warn multiple elements
-    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
+    if ("development" !== 'production' && children.length > 1) {
       warn('<vk-sticky> can only be used on a single element.', this.$parent);
     }
 
@@ -2883,7 +2734,7 @@ function getViewportHeightOffset(height) {
   return window.innerHeight * parseFloat(height) / 100;
 }
 
-var index$19 = { render: function render() {
+var index$18 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('ul', { staticClass: "uk-subnav", class: { 'uk-subnav-divider': _vm.divider, 'uk-subnav-pill': _vm.pill } }, [_vm._t("default")], 2);
   }, staticRenderFns: [],
   name: 'Subnav',
@@ -2934,7 +2785,7 @@ var index$19 = { render: function render() {
   }
 };
 
-var index$20 = { render: function render() {
+var index$19 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('li', { class: { 'uk-active': _vm.active, 'uk-disabled': _vm.disabled } }, [_c('a', { on: { "click": function click($event) {
           $event.preventDefault();!_vm.disabled && !_vm.active && _vm.$parent.$emit('change', _vm.alias);
         } } }, [_vm._t("default", [_vm._v(_vm._s(_vm.label))])], 2)]);
@@ -2957,57 +2808,6 @@ var index$20 = { render: function render() {
   }
 };
 
-var nestRE = /^(attrs|props|on|nativeOn|class|style|hook)$/;
-
-var babelHelperVueJsxMergeProps = function mergeJSXProps (objs) {
-  return objs.reduce(function (a, b) {
-    var aa, bb, key, nestedKey, temp;
-    for (key in b) {
-      aa = a[key];
-      bb = b[key];
-      if (aa && nestRE.test(key)) {
-        // normalize class
-        if (key === 'class') {
-          if (typeof aa === 'string') {
-            temp = aa;
-            a[key] = aa = {};
-            aa[temp] = true;
-          }
-          if (typeof bb === 'string') {
-            temp = bb;
-            b[key] = bb = {};
-            bb[temp] = true;
-          }
-        }
-        if (key === 'on' || key === 'nativeOn' || key === 'hook') {
-          // merge functions
-          for (nestedKey in bb) {
-            aa[nestedKey] = mergeFn(aa[nestedKey], bb[nestedKey]);
-          }
-        } else if (Array.isArray(aa)) {
-          a[key] = aa.concat(bb);
-        } else if (Array.isArray(bb)) {
-          a[key] = [aa].concat(bb);
-        } else {
-          for (nestedKey in bb) {
-            aa[nestedKey] = bb[nestedKey];
-          }
-        }
-      } else {
-        a[key] = b[key];
-      }
-    }
-    return a
-  }, {})
-};
-
-function mergeFn (a, b) {
-  return function () {
-    a.apply(this, arguments);
-    b.apply(this, arguments);
-  }
-}
-
 var Row = {
   functional: true,
   render: function render(h, _ref) {
@@ -3027,17 +2827,11 @@ var Row = {
 
     return h(
       'tr',
-      babelHelperVueJsxMergeProps([{ 'class': classes }, {
+      {
         on: {
-          'click': function click($event) {
-            for (var _len = arguments.length, attrs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-              attrs[_key - 1] = arguments[_key];
-            }
-
-            onClick.apply(undefined, [$event].concat(attrs));
-          }
-        }
-      }]),
+          'click': onClick
+        },
+        'class': classes },
       [children]
     );
   }
@@ -3135,9 +2929,9 @@ var MixinSelect = {
   }
 };
 
-var index$21 = { render: function render() {
+var index$20 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('table', { staticClass: "uk-table", class: { 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive } }, [_c('thead', [_c('tr', [_vm._t("default")], 2)]), _vm._v(" "), _c('tbody', _vm._l(_vm.data, function (row) {
-      return _c('row', { key: _JSON$stringify(row), attrs: { "row": row } }, _vm._l(_vm.columns, function (col, i) {
+      return _c('row', { key: _vm.stringify(row), attrs: { "row": row } }, _vm._l(_vm.columns, function (col, i) {
         return _c('cell', { key: i, attrs: { "col": col, "row": row } });
       }));
     }))]);
@@ -3190,7 +2984,7 @@ var index$21 = { render: function render() {
   },
   computed: {
     columns: {
-      get: function get() {
+      get: function get$$1() {
         // default slots excluding spaces and comments
         return this.$slots.default.filter(function (vnode) {
           return vnode.tag;
@@ -3198,6 +2992,11 @@ var index$21 = { render: function render() {
       },
 
       cache: false
+    }
+  },
+  methods: {
+    stringify: function stringify$$1(obj) {
+      return stringify(obj);
     }
   },
   created: function created() {
@@ -3282,7 +3081,7 @@ var Checkbox = {
   }
 };
 
-var index$22 = { render: function render() {
+var index$21 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('th', { class: ['uk-form uk-text-center uk-table-shrink', _vm.headerClass] }, [_c('checkbox', { attrs: { "checked": _vm.allSelected }, on: { "click": _vm.toggleAll } })], 1);
   }, staticRenderFns: [],
   name: 'TableColumnSelect',
@@ -3322,23 +3121,16 @@ var index$22 = { render: function render() {
       { 'class': ['uk-form uk-text-center', props.cellClass] },
       [h(
         Checkbox,
-        babelHelperVueJsxMergeProps([{
+        {
           attrs: {
             checked: table.isSelected(row)
-          }
-        }, {
+          },
           on: {
-            'click': function click($event) {
-              for (var _len = arguments.length, attrs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-                attrs[_key - 1] = arguments[_key];
-              }
-
-              (function (e) {
-                return table.toggleSelection(row);
-              }).apply(undefined, [$event].concat(attrs));
+            'click': function click(e) {
+              return table.toggleSelection(row);
             }
           }
-        }]),
+        },
         []
       )]
     );
@@ -3418,7 +3210,7 @@ var IconArrowDown = {
   }
 };
 
-var index$23 = { render: function render() {
+var index$22 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('th', { staticClass: "uk-visible-hover-inline", class: [_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }] }, [_c('a', { staticClass: "uk-display-block uk-link-reset uk-text-nowrap uk-position-relative", on: { "click": function click($event) {
           $event.preventDefault();_vm.emitSortEvent($event);
         } } }, [_vm._v(" " + _vm._s(_vm.header) + " "), _c('vk-icon', { staticClass: "uk-position-absolute", class: { 'uk-invisible': !_vm.order } }, [_vm.order === 'asc' || _vm.order === undefined ? _c('icon-arrow-down', { attrs: { "ratio": "0.9" } }) : _c('icon-arrow-up', { attrs: { "ratio": "0.9" } })], 1)], 1)]);
@@ -3459,7 +3251,7 @@ function getSortOrder(currentSort, by, multi) {
   return multi ? merge({}, currentSort, sort) : sort;
 }
 
-var index$24 = { render: function render() {
+var index$23 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', [_vm._t("default")], 2);
   }, staticRenderFns: [],
   name: 'Tab',
@@ -3548,10 +3340,8 @@ var core = {
   }
 };
 
-var index$25 = { render: function render() {
-    var _class;
-
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: { 'uk-flex uk-flex-column-reverse': _vm.bottom } }, [_c('ul', { staticClass: "uk-tab", class: (_class = {}, _defineProperty(_class, 'uk-child-width-1-' + _vm.tabs.length, _vm.alignment === 'justify'), _defineProperty(_class, 'uk-flex-right', _vm.alignment === 'right'), _defineProperty(_class, 'uk-flex-center', _vm.alignment === 'center'), _defineProperty(_class, 'uk-tab-bottom uk-margin-remove-bottom', _vm.bottom), _class) }, _vm._l(_vm.tabs, function (_ref) {
+var index$24 = { render: function render() {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { class: { 'uk-flex uk-flex-column-reverse': _vm.bottom } }, [_c('ul', { staticClass: "uk-tab", class: _vm.classes }, _vm._l(_vm.tabs, function (_ref) {
       var id = _ref.id,
           label = _ref.label,
           disabled = _ref.disabled;
@@ -3572,10 +3362,23 @@ var index$25 = { render: function render() {
       type: Boolean,
       default: false
     }
+  },
+  computed: {
+    classes: function classes() {
+      var cls = {
+        'uk-flex-right': this.alignment === 'right',
+        'uk-flex-center': this.alignment === 'center',
+        'uk-tab-bottom uk-margin-remove-bottom': this.bottom
+      };
+
+      cls['uk-child-width-1-' + this.tabs.length] = this.alignment === 'justify';
+
+      return cls;
+    }
   }
 };
 
-var index$26 = { render: function render() {
+var index$25 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "uk-grid", class: { 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' } }, [_c('div', { staticClass: "uk-width-auto" }, [_c('ul', { staticClass: "uk-tab", class: [_vm.alignment === 'right' ? 'uk-tab-right' : 'uk-tab-left'] }, _vm._l(_vm.tabs, function (_ref) {
       var id = _ref.id,
           label = _ref.label,
@@ -3595,7 +3398,7 @@ var index$26 = { render: function render() {
   }
 };
 
-var index$27 = { render: function render() {
+var index$26 = { render: function render() {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('div', { staticClass: "uk-placeholder uk-text-center", class: { 'uk-dragover': _vm.dragged }, on: { "dragenter": function dragenter($event) {
           $event.stopPropagation();$event.preventDefault();
         }, "dragover": function dragover($event) {
@@ -3630,41 +3433,41 @@ var components = Object.freeze({
 	Button: UiButton$1,
 	ButtonGroupCheckbox: buttonGroupCheckbox,
 	ButtonGroupRadio: buttonGroupRadio,
-	Drop: Drop,
-	Dropdown: index$2,
-	Icon: index$3,
-	IconLink: index$4,
-	IconButton: index$5,
-	Modal: index$6,
+	Drop: drop,
+	Dropdown: dropdown,
+	Icon: index$2,
+	IconLink: index$3,
+	IconButton: index$4,
+	Modal: index$5,
 	ModalDialog: ModalDialog,
-	ModalHeader: index$7,
-	ModalBody: index$8,
-	ModalFooter: index$9,
-	ModalCaption: index$10,
-	ModalClose: index$11,
-	Notification: index$12,
-	NotificationMessage: index$13,
-	Offcanvas: index$14,
-	OffcanvasContent: index$15,
-	OffcanvasClose: index$16,
-	Pagination: index$17,
+	ModalHeader: index$6,
+	ModalBody: index$7,
+	ModalFooter: index$8,
+	ModalCaption: index$9,
+	ModalClose: index$10,
+	Notification: index$11,
+	NotificationMessage: index$12,
+	Offcanvas: index$13,
+	OffcanvasContent: index$14,
+	OffcanvasClose: index$15,
+	Pagination: index$16,
 	PaginationFirst: PaginationFirst,
 	PaginationLast: PaginationLast,
 	PaginationPrev: PaginationPrev,
 	PaginationNext: PaginationNext,
 	PaginationPages: PaginationPages,
 	Spinner: spinner,
-	Sticky: index$18,
-	Subnav: index$19,
-	SubnavItem: index$20,
-	Table: index$21,
+	Sticky: index$17,
+	Subnav: index$18,
+	SubnavItem: index$19,
+	Table: index$20,
 	TableColumn: Column,
-	TableColumnSelect: index$22,
-	TableColumnSort: index$23,
-	Tab: index$24,
-	Tabs: index$25,
-	TabsVertical: index$26,
-	Upload: index$27
+	TableColumnSelect: index$21,
+	TableColumnSort: index$22,
+	Tab: index$23,
+	Tabs: index$24,
+	TabsVertical: index$25,
+	Upload: index$26
 });
 
 // export { default as HeightViewport } from './height-viewport'
