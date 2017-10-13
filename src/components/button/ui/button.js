@@ -32,11 +32,11 @@ export default {
         type: htmlType,
         disabled
       },
-      class: ['uk-button', [`uk-button-${type}`]]
+      class: ['uk-button', `uk-button-${type}`]
     }
 
     if (size) {
-      def.class.push([`uk-button-${size}`])
+      def.class.push(`uk-button-${size}`)
     }
 
     return h('button', merge({}, def, data), [
