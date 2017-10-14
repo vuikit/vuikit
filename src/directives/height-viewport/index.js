@@ -1,5 +1,5 @@
 import { css, on, off, debounce, isInteger } from '@vuikit/util'
-import { offsetTop } from '~/helpers/position'
+import { offsetTop } from '~/helpers/util'
 
 export default {
   inserted (el, binding, vnode) {
