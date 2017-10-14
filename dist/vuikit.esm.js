@@ -1,8 +1,8 @@
-/*
- * Vuikit 0.7.4
+/**
+ * Vuikit 0.7.5
  * (c) 2017 Miljan Aleksic
- * Released under the MIT License.
-*/
+ * @license MIT
+ */
 
 /**
  * Add classes to an element
@@ -510,11 +510,11 @@ var UiButton$1 = {
         type: htmlType,
         disabled: disabled
       },
-      class: ['uk-button', ['uk-button-' + type]]
+      class: ['uk-button', 'uk-button-' + type]
     };
 
     if (size) {
-      def.class.push(['uk-button-' + size]);
+      def.class.push('uk-button-' + size);
     }
 
     return h('button', merge({}, def, data), [children]);
@@ -3464,10 +3464,230 @@ var components = Object.freeze({
 	Upload: index$26
 });
 
-// export { default as HeightViewport } from './height-viewport'
+var index$27 = {
+  inserted: function inserted(el, binding, vnode) {
+    vnode.context.$nextTick(function () {
+      update(el, binding.modifiers, binding.value);
+    });
+
+    on(window, 'resize', debounce(function () {
+      update(el, binding.modifiers, binding.value);
+    }, 20), 'vk-height-viewport');
+  },
+  unbind: function unbind(el, binding, vnode) {
+    off(window, 'resize', 'vk-height-viewport');
+  }
+};
+
+function update(el, modifiers) {
+  var value = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+  var viewport = window.innerHeight;
+  var offset = 0;
+  var height = void 0;
+
+  css(el, 'boxSizing', 'border-box');
+
+  if (modifiers.expand) {
+    css(el, 'height', '');
+    css(el, 'minHeight', '');
+
+    var diff = viewport - document.documentElement.offsetHeight;
+
+    height = el.offsetHeight + diff + 'px';
+    css(el, 'minHeight', height);
+  } else {
+    var top = offsetTop(el);
+
+    if (top < viewport / 2 && value.offsetTop) {
+      offset += top;
+    }
+
+    if (value.offsetBottom === true) {
+      // offset += this.$el.next().outerHeight() || 0
+      offset += el.nextElementSibling.offsetHeight || 0;
+    } else if (isInteger(value.offsetBottom)) {
+      offset += viewport / 100 * value.offsetBottom;
+    } else if (value.offsetBottom && value.offsetBottom.substr(-2) === 'px') {
+      offset += parseFloat(value.offsetBottom);
+    }
+
+    // TODO: support Vue el ref instead of query?
+    // else if (isString(value.offsetBottom)) {
+    //   var el = query(value.offsetBottom, el)
+    //   offset += el && el.offsetHeight || 0
+    // }
+
+    height = offset ? 'calc(100vh - ' + offset + 'px)' : '100vh';
+
+    css(el, 'min-height', height);
+  }
+
+  // This fix is present in UIkit but is not a good fix.
+  // The component content can be updated after applying a fixed height
+  // forcing the height to be lower than the page. Until better
+  // approach keep this fix disabled.
+
+  // IE 10-11 fix (min-height on a flex container won't apply to its flex items)
+  // css(el, 'height', '')
+  // if (height && viewport - offset >= el.offsetHeight) {
+  //   css(el, 'height', height)
+  // }
+}
+
+var timeout = void 0;
+var tooltip = {};
+
+var index$28 = {
+  bind: function bind(target, binding, vnode) {
+    on(target, 'mouseenter', function () {
+      showTooltip(target, binding);
+    }, 'vk-tooltip');
+
+    on(target, 'mouseleave', function () {
+      hideTooltip();
+    }, 'vk-tooltip');
+  },
+  unbind: function unbind(target) {
+    hideTooltip();
+    off(target, 'mouseenter', 'vk-tooltip');
+    off(target, 'mouseleave', 'vk-tooltip');
+  }
+};
+
+function showTooltip(target, binding) {
+  var _getTooltipEl = getTooltipEl(),
+      outer = _getTooltipEl.outer,
+      inner = _getTooltipEl.inner;
+
+  var content = getContent(binding);
+  var position = getPosition(binding);
+  var delay = get(binding, 'value.delay', 1);
+
+  timeout = setTimeout(function () {
+    inner.innerHTML = content;
+    document.body.appendChild(outer);
+    positionTooltip({ el: outer, target: target, position: position });
+  }, delay);
+}
+
+function hideTooltip() {
+  var _getTooltipEl2 = getTooltipEl(),
+      outer = _getTooltipEl2.outer,
+      inner = _getTooltipEl2.inner;
+
+  // cancel any delayed showing
+
+
+  clearTimeout(timeout);
+
+  inner.innerHTML = '';
+  if (outer.parentNode) {
+    outer.parentNode.removeChild(outer);
+  }
+}
+
+function getTooltipEl() {
+  if (!isEmpty(tooltip)) {
+    return tooltip;
+  }
+
+  var outer = document.createElement('div');
+  var inner = document.createElement('div');
+
+  addClass(outer, 'uk-tooltip');
+  addClass(inner, 'uk-tooltip-inner');
+
+  outer.appendChild(inner);
+
+  tooltip.outer = outer;
+  tooltip.inner = inner;
+
+  return tooltip;
+}
+
+function getContent(_ref) {
+  var value = _ref.value;
+
+  var content = isObject(value) ? value.content : value;
+
+  if (isEmpty(content)) {
+    warn('Tooltip content missing');
+  }
+
+  return content;
+}
+
+function getPosition(_ref2) {
+  var arg = _ref2.arg,
+      _ref2$value = _ref2.value,
+      value = _ref2$value === undefined ? {} : _ref2$value;
+
+  var position = value.position || arg || 'top-center';
+
+  // position alias map
+  if (inArray(['top', 'bottom', 'left', 'right'], position)) {
+    position = position + '-center';
+  }
+
+  return position;
+}
+
+function positionTooltip(_ref3) {
+  var el = _ref3.el,
+      target = _ref3.target,
+      position = _ref3.position,
+      boundary = _ref3.boundary,
+      flip$$1 = _ref3.flip;
+
+  var cords = void 0;
+
+  // must be visible upfront to get the right cords
+  addClass(el, 'uk-active');
+
+  if (boundary && flip$$1) {
+    // emulating we can predict collisions upfront
+    var elCords = getCords$1(position, el, target);
+
+    var boundaryRect = emulateRect(merge({}, { top: 0, left: 0 }, size(boundary)));
+    var elRect = emulateRect(merge({}, elCords, size(el)));
+
+    // flip if colliding
+    var collisions = collides(elRect, boundaryRect);
+
+    if (collisions) {
+      position = flipPosition(position, collisions);
+    }
+  }
+
+  // get final cords
+  cords = getCords$1(position, el, target);
+
+  css(el, 'top', cords.top + 'px');
+  css(el, 'left', cords.left + 'px');
+
+  // update classes
+  var classList = ['uk-active', 'uk-tooltip', 'uk-tooltip-' + position];
+
+  el.classList = classList.join(' ');
+}
+
+function getCords$1(position, el, target) {
+  var pos = position.split('-')[0];
+  var dir = position.split('-')[1];
+
+  // set options as required by the util
+  var elPos = flip(pos) + ' ' + dir;
+  var targetPos = pos + ' ' + dir;
+
+  return positions$1(el, elPos, target, targetPos);
+}
+
+
 
 var directives = Object.freeze({
-
+	HeightViewport: index$27,
+	Tooltip: index$28
 });
 
 each(components, function (def, name) {
@@ -3485,5 +3705,5 @@ var Vuikit = merge({}, components, directives, {
   }
 });
 
-export { index as Breadcrumb, index$1 as BreadcrumbItem, UiButton$1 as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, drop as Drop, dropdown as Dropdown, index$2 as Icon, index$3 as IconLink, index$4 as IconButton, index$5 as Modal, ModalDialog, index$6 as ModalHeader, index$7 as ModalBody, index$8 as ModalFooter, index$9 as ModalCaption, index$10 as ModalClose, index$11 as Notification, index$12 as NotificationMessage, index$13 as Offcanvas, index$14 as OffcanvasContent, index$15 as OffcanvasClose, index$16 as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, index$17 as Sticky, index$18 as Subnav, index$19 as SubnavItem, index$20 as Table, Column as TableColumn, index$21 as TableColumnSelect, index$22 as TableColumnSort, index$23 as Tab, index$24 as Tabs, index$25 as TabsVertical, index$26 as Upload };
+export { index as Breadcrumb, index$1 as BreadcrumbItem, UiButton$1 as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, drop as Drop, dropdown as Dropdown, index$2 as Icon, index$3 as IconLink, index$4 as IconButton, index$5 as Modal, ModalDialog, index$6 as ModalHeader, index$7 as ModalBody, index$8 as ModalFooter, index$9 as ModalCaption, index$10 as ModalClose, index$11 as Notification, index$12 as NotificationMessage, index$13 as Offcanvas, index$14 as OffcanvasContent, index$15 as OffcanvasClose, index$16 as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, index$17 as Sticky, index$18 as Subnav, index$19 as SubnavItem, index$20 as Table, Column as TableColumn, index$21 as TableColumnSelect, index$22 as TableColumnSort, index$23 as Tab, index$24 as Tabs, index$25 as TabsVertical, index$26 as Upload, index$27 as HeightViewport, index$28 as Tooltip };
 export default Vuikit;
