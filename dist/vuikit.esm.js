@@ -3694,7 +3694,10 @@ each(components, function (def, name) {
   def.name = 'Vk' + def.name;
 });
 
-var Vuikit = merge({}, components, directives, {
+var Vuikit = {
+  components: components,
+  directives: directives,
+
   install: function install(Vue) {
     each(components, function (def, name) {
       Vue.component('Vk' + name, def);
@@ -3703,7 +3706,7 @@ var Vuikit = merge({}, components, directives, {
       Vue.directive('Vk' + name, def);
     });
   }
-});
+};
 
 export { index as Breadcrumb, index$1 as BreadcrumbItem, UiButton$1 as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, drop as Drop, dropdown as Dropdown, index$2 as Icon, index$3 as IconLink, index$4 as IconButton, index$5 as Modal, ModalDialog, index$6 as ModalHeader, index$7 as ModalBody, index$8 as ModalFooter, index$9 as ModalCaption, index$10 as ModalClose, index$11 as Notification, index$12 as NotificationMessage, index$13 as Offcanvas, index$14 as OffcanvasContent, index$15 as OffcanvasClose, index$16 as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, index$17 as Sticky, index$18 as Subnav, index$19 as SubnavItem, index$20 as Table, Column as TableColumn, index$21 as TableColumnSelect, index$22 as TableColumnSort, index$23 as Tab, index$24 as Tabs, index$25 as TabsVertical, index$26 as Upload, index$27 as HeightViewport, index$28 as Tooltip };
 export default Vuikit;

@@ -3696,7 +3696,10 @@ each(components, function (def, name) {
   def.name = 'Vk' + def.name;
 });
 
-var Vuikit = merge({}, components, directives, {
+var Vuikit = {
+  components: components,
+  directives: directives,
+
   install: function install(Vue) {
     each(components, function (def, name) {
       def.name = 'Vk' + def.name;
@@ -3706,7 +3709,7 @@ var Vuikit = merge({}, components, directives, {
       Vue.directive('Vk' + name, def);
     });
   }
-});
+};
 
 if (typeof window !== 'undefined' && window.Vue) {
   window.Vue.use(Vuikit);

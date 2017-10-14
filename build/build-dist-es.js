@@ -10,7 +10,7 @@ lumpit(async () => {
 
   const config = {
     ...rollupConfig,
-    input: 'build/vuikit.js',
+    input: 'build/dist.esm.js',
     output: {
       format: 'es'
     }
