@@ -48,11 +48,12 @@ play('Table')
 play('Tabs')
   .add('Default', require('./components/tabs/story').default)
 
-play('Tooltip')
-  .add('Default', require('./components/tooltip/story').default)
-
 play('Upload')
   .add('Default', require('./components/upload/story').default)
+
+play('Tooltip')
+  .add('Default', require('./directives/tooltip/story-default').default)
+  .add('Positions', require('./directives/tooltip/story-positions').default)
 
 play('HeightViewport Directive')
   .add('Default', require('./directives/height-viewport/story/default').default)
