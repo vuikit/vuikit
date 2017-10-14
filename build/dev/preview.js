@@ -2,7 +2,7 @@ import Vue from 'vue'
 import preview from 'vue-play/preview'
 
 import '../../src/stories'
-import Vuikit from '../vuikit'
+import Vuikit from '../dist.esm'
 
 // add vuikit default theme styles
 import '@vuikit/theme/dist/vuikit.min.css'
