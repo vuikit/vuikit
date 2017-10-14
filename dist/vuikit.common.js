@@ -1,5 +1,5 @@
 /**
- * Vuikit 0.7.5
+ * Vuikit 0.7.6
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */
@@ -250,39 +250,53 @@ function getEvents (namespace = 'default') {
   return boundEvents[namespace]
 }
 
+function findEvent (el, type, namespace = 'default') {
+  const events = getEvents(namespace);
+
+  return events.find(function (bound) {
+    return bound.el === el && bound.type === type
+  })
+}
+
+function removeEvent (el, type, namespace = 'default') {
+  var event = findEvent(el, type, namespace);
+
+  if (event) {
+    el.removeEventListener(type, event.listener);
+    var index = boundEvents[namespace].indexOf(event);
+    boundEvents[namespace].splice(index, 1);
+  }
+}
+
+function removeAllEvents (namespace = 'default') {
+  const events = getEvents(namespace);
+
+  if (events) {
+    for (let i = 0; i < events.length; ++i) {
+      var event = events[i];
+      event.el.removeEventListener(event.type, event.listener);
+    }
+
+    deleteNamespace(namespace);
+  }
+}
+
 function deleteNamespace (namespace = 'default') {
-  delete boundEvents[namespace];
+  if (boundEvents[namespace] !== undefined) {
+    delete boundEvents[namespace];
+  }
 }
 
 // removes event listener
 var off = function (el, type, namespace) {
-  const events = getEvents(namespace);
-
-  var event = events.find(function (bound) {
-    return bound.el === el && bound.type === type
-  });
-
-  if (event) {
-    el.removeEventListener(type, event.listener);
-  }
+  return removeEvent(el, type, namespace)
 };
 
 /*
  * Removes all event listeners from the namespace
  */
 var offAll = function (namespace) {
-  const events = getEvents(namespace);
-
-  if (events === undefined) {
-    return
-  }
-
-  for (let i = 0; i < events.length; ++i) {
-    var { el, type, listener } = events[i];
-    el.removeEventListener(type, listener);
-  }
-
-  deleteNamespace(namespace);
+  removeAllEvents(namespace);
 };
 
 // add event listener
@@ -3539,23 +3553,31 @@ function update(el, modifiers) {
 
 var timeout = void 0;
 var tooltip = {};
+var uid = 'vk-tooltip';
 
 var index$28 = {
-  bind: function bind(target, binding, vnode) {
-    on(target, 'mouseenter', function () {
-      showTooltip(target, binding);
-    }, 'vk-tooltip');
+  inserted: function inserted(target, binding) {
+    setShowEvents(target, binding);
+    on(target, 'mouseleave', hideTooltip, uid);
+  },
 
-    on(target, 'mouseleave', function () {
-      hideTooltip();
-    }, 'vk-tooltip');
+  // on each update reset events with new data
+  componentUpdated: function componentUpdated(target, binding) {
+    setShowEvents(target, binding);
   },
   unbind: function unbind(target) {
     hideTooltip();
-    off(target, 'mouseenter', 'vk-tooltip');
-    off(target, 'mouseleave', 'vk-tooltip');
+    off(target, 'mouseenter', uid);
+    off(target, 'mouseleave', uid);
   }
 };
+
+function setShowEvents(target, binding) {
+  off(target, 'mouseenter', uid);
+  on(target, 'mouseenter', function () {
+    return showTooltip(target, binding);
+  }, uid);
+}
 
 function showTooltip(target, binding) {
   var _getTooltipEl = getTooltipEl(),

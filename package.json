@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/vuikit",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "description": "UIkit with all the power of Vue",
   "author": {
     "name": "Miljan Aleksic",
@@ -41,7 +41,7 @@
   "dependencies": {
     "@lump/write": "^0.2.2",
     "@vuikit/icons": "^0.2.0",
-    "@vuikit/util": "^0.6.0",
+    "@vuikit/util": "^0.6.1",
     "vue": "^2.4.4"
   },
   "devDependencies": {

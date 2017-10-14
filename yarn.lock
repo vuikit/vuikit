@@ -71,6 +71,13 @@
     chalk "^2.1.0"
     mkdirp "^0.5.1"
 
+"@lump/write@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@lump/write/-/write-0.2.3.tgz#6e3198cc17aa377d2e8b4736e3531fee85d2fec2"
+  dependencies:
+    chalk "^2.1.0"
+    mkdirp "^0.5.1"
+
 "@std/esm@^0.11.3":
   version "0.11.3"
   resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.11.3.tgz#78afd0edb3546e36e68e73d0128cf930e4817606"
@@ -83,9 +90,11 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@vuikit/theme/-/theme-0.1.0.tgz#667dfbe383874a14d0529d29ebd319dcf90ba087"
 
-"@vuikit/util@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.6.0.tgz#1b226740dbc69ee64463366d6e67fffd6baa338a"
+"@vuikit/util@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.6.1.tgz#bbeda7243051f04034b227eb431a364a196eabca"
+  dependencies:
+    "@lump/write" "^0.2.3"
 
 abbrev@1:
   version "1.1.0"
