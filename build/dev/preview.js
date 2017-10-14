@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import preview from 'vue-play/preview'
 
-import '../../src/components/__stories'
+import '../../src/stories'
 import Vuikit from '../vuikit'
 
 // add vuikit default theme styles
