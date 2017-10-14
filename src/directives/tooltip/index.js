@@ -7,22 +7,27 @@ import { get, inArray, isEmpty, isObject, on, off, merge, css, addClass } from '
 
 let timeout
 const tooltip = {}
+const uid = 'vk-tooltip'
 
 export default {
-  bind (target, binding, vnode) {
-    on(target, 'mouseenter', () => {
-      showTooltip(target, binding)
-    }, 'vk-tooltip')
-
-    on(target, 'mouseleave', () => {
-      hideTooltip()
-    }, 'vk-tooltip')
+  inserted (target, binding) {
+    setShowEvents(target, binding)
+    on(target, 'mouseleave', hideTooltip, uid)
+  },
+  // on each update reset events with new data
+  componentUpdated (target, binding) {
+    setShowEvents(target, binding)
   },
   unbind (target) {
     hideTooltip()
-    off(target, 'mouseenter', 'vk-tooltip')
-    off(target, 'mouseleave', 'vk-tooltip')
+    off(target, 'mouseenter', uid)
+    off(target, 'mouseleave', uid)
   }
+}
+
+function setShowEvents (target, binding) {
+  off(target, 'mouseenter', uid)
+  on(target, 'mouseenter', () => showTooltip(target, binding), uid)
 }
 
 function showTooltip (target, binding) {
