@@ -2,7 +2,11 @@
   <div class="uk-padding">
     <vk-notification
       :notifications.sync="notifications"
-    ></vk-notification>
+    >
+      <div slot-scope="{ message }" class="uk-text-center">
+        <a>Hei</a>, I'm using a scoped slot with {{ message }}!
+      </div>
+    </vk-notification>
 
     <vk-button
       @click="addNotification">
@@ -23,7 +27,6 @@ export default {
 
       this.notifications.push({
         message: `Message ${this.message}`,
-        status: 'primary',
         timeout: 3000
       })
     }

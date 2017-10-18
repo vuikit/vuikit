@@ -27,6 +27,8 @@ play('Modal')
 
 play('Notification')
   .add('Default', require('./components/notification/story').default)
+  .add('Positions', require('./components/notification/story-positions').default)
+  .add('Slot', require('./components/notification/story-slot').default)
 
 play('Pagination')
   .add('Default', require('./components/pagination/story').default)
