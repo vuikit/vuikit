@@ -11,9 +11,11 @@
         header="Website"
         headerClass="uk-text-right"
         cellClass="uk-text-right">
-        <template scope="row">
-          <a :href="`http://${row.website}`">{{ row.website }}</a>
-        </template>
+        <a slot-scope="row"
+          :href="`http://${row.website}`"
+        >
+          {{ row.website }}
+        </a>
       </vk-table-column>
     </vk-table>
   </div>

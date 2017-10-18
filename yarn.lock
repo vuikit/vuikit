@@ -4840,6 +4840,14 @@ postcss@^6.0.2:
     source-map "^0.5.7"
     supports-color "^4.4.0"
 
+postcss@^6.0.8:
+  version "6.0.13"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.13.tgz#b9ecab4ee00c89db3ec931145bd9590bbf3f125f"
+  dependencies:
+    chalk "^2.1.0"
+    source-map "^0.6.1"
+    supports-color "^4.4.0"
+
 posthtml-attrs-parser@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/posthtml-attrs-parser/-/posthtml-attrs-parser-0.1.1.tgz#cc33e00155fb99ba96f67e25e330461f05742ac8"
@@ -5463,9 +5471,9 @@ rollup-plugin-replace@^2.0.0:
     minimatch "^3.0.2"
     rollup-pluginutils "^2.0.1"
 
-rollup-plugin-vue@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-vue/-/rollup-plugin-vue-2.5.0.tgz#bb8ed7e8f1c23286cfa98da68c839aa10df0affc"
+rollup-plugin-vue@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-vue/-/rollup-plugin-vue-2.5.2.tgz#8b8d2a90cd166b265a649b8533f02b5b23ace8a9"
   dependencies:
     babel-runtime "^6.22.0"
     camelcase "^4.0.0"
@@ -5734,6 +5742,10 @@ source-map@0.4.x, source-map@^0.4.2:
 source-map@0.5.x, source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, source-map@~0.5.1, source-map@~0.5.3:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
+
+source-map@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
 spdx-correct@~1.0.0:
   version "1.0.2"
@@ -6303,7 +6315,11 @@ vue-hot-reload-api@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.0.tgz#9ca58a6e0df9078554ce1708688b6578754d86de"
 
-vue-loader@^13.0.0, vue-loader@^13.0.2:
+vue-hot-reload-api@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.0.tgz#9a21b35ced3634434a43ee80efb7350ea8fb206d"
+
+vue-loader@^13.0.0:
   version "13.0.5"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.0.5.tgz#3639e9fb3940cded7f0fc34429277fb6de70a57c"
   dependencies:
@@ -6320,6 +6336,24 @@ vue-loader@^13.0.0, vue-loader@^13.0.2:
     vue-hot-reload-api "^2.1.0"
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.5.3"
+
+vue-loader@^13.3.0:
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.3.0.tgz#3bf837d490ba5dea6fc07e0835ffa6c688c8af33"
+  dependencies:
+    consolidate "^0.14.0"
+    hash-sum "^1.0.2"
+    loader-utils "^1.1.0"
+    lru-cache "^4.1.1"
+    postcss "^6.0.8"
+    postcss-load-config "^1.1.0"
+    postcss-selector-parser "^2.0.0"
+    prettier "^1.7.0"
+    resolve "^1.4.0"
+    source-map "^0.6.1"
+    vue-hot-reload-api "^2.2.0"
+    vue-style-loader "^3.0.0"
+    vue-template-es2015-compiler "^1.6.0"
 
 vue-play@^3.2.1:
   version "3.2.1"
@@ -6352,9 +6386,16 @@ vue-style-loader@^3.0.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
-vue-template-compiler@^2.3.3, vue-template-compiler@^2.4.4:
+vue-template-compiler@^2.3.3:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.4.4.tgz#2cde3b704124985c27d50b5387c9691ba515fb57"
+  dependencies:
+    de-indent "^1.0.2"
+    he "^1.1.0"
+
+vue-template-compiler@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.2.tgz#6f198ebc677b8f804315cd33b91e849315ae7177"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -6363,15 +6404,23 @@ vue-template-es2015-compiler@^1.5.0, vue-template-es2015-compiler@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
 
+vue-template-es2015-compiler@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
+
 vue-template-validator@^1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/vue-template-validator/-/vue-template-validator-1.1.5.tgz#22d1ee77d0647c1ab14ff7eb01865942d9b3c458"
   dependencies:
     chalk "^1.1.1"
 
-vue@^2.3.3, vue@^2.4.4:
+vue@^2.3.3:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
+
+vue@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.2.tgz#fd367a87bae7535e47f9dc5c9ec3b496e5feb5a4"
 
 vuex-router-sync@^4.1.2:
   version "4.3.2"
