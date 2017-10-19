@@ -11,12 +11,11 @@ const uid = 'vk-tooltip'
 
 export default {
   inserted (target, binding) {
-    setShowEvents(target, binding)
-    on(target, 'mouseleave', hideTooltip, uid)
+    setEvents(target, binding)
   },
   // on each update reset events with new data
   componentUpdated (target, binding) {
-    setShowEvents(target, binding)
+    setEvents(target, binding)
   },
   unbind (target) {
     hideTooltip()
@@ -25,9 +24,23 @@ export default {
   }
 }
 
-function setShowEvents (target, binding) {
+function setEvents (target, binding) {
+  // remove any previous events
+  off(target, 'click', uid)
   off(target, 'mouseenter', uid)
+  off(target, 'mouseleave', uid)
+
+  // on mouseenter show the tooltip
   on(target, 'mouseenter', () => showTooltip(target, binding), uid)
+  // on mouseleave hide the tooltip
+  on(target, 'mouseleave', () => {
+    hideTooltip()
+    setEvents(target, binding) // and reset the events for the next iteration
+  }, uid)
+  // on click cancel any delayed show,
+  // as as click means no need for a tip.
+  // the mouseleave will reset the events
+  on(target, 'click', hideTooltip)
 }
 
 function showTooltip (target, binding) {
