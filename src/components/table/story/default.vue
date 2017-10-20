@@ -11,7 +11,11 @@
         header="Website"
         headerClass="uk-text-right"
         cellClass="uk-text-right">
-        <a slot-scope="row"
+        <div slot="header">
+          My custom Header
+        </div>
+        <a
+          slot-scope="row"
           :href="`http://${row.website}`"
         >
           {{ row.website }}
@@ -26,7 +30,7 @@ import mockData from './mock-data.json'
 
 export default {
   data: () => ({
-    rows: mockData.splice(0, 5)
+    rows: [...mockData].splice(0, 5)
   })
 }
 </script>

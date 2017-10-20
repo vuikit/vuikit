@@ -3,25 +3,27 @@
     'uk-table-shrink': shrink,
     'uk-table-expand': expand
   }]">
-    <a
-      class="uk-display-block uk-link-reset uk-text-nowrap uk-position-relative"
-      @click.prevent="emitSortEvent"
-    >
-      {{ header }}
-      <vk-icon
-        class="uk-position-absolute"
-        :class="{ 'uk-invisible': !order }"
+    <slot name="header">
+      <a
+        class="uk-display-block uk-link-reset uk-text-nowrap uk-position-relative"
+        @click.prevent="emitSortEvent"
       >
-        <icon-arrow-down
-          v-if="order === 'asc' || order === undefined"
-          ratio="0.9"
-        ></icon-arrow-down>
-        <icon-arrow-up
-          v-else
-          ratio="0.9"
-        ></icon-arrow-up>
-      </vk-icon>
-    </a>
+        {{ header }}
+        <vk-icon
+          class="uk-position-absolute"
+          :class="{ 'uk-invisible': !order }"
+        >
+          <icon-arrow-down
+            v-if="order === 'asc' || order === undefined"
+            ratio="0.9"
+          ></icon-arrow-down>
+          <icon-arrow-up
+            v-else
+            ratio="0.9"
+          ></icon-arrow-up>
+        </vk-icon>
+      </a>
+    </slot>
   </th>
 </template>
 

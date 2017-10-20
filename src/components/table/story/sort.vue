@@ -6,6 +6,12 @@
       @sort="order => { sortedBy = order }">
       <vk-table-column-sort header="ID" cell="id" />
       <vk-table-column-sort header="Company" cell="company" />
+      <vk-table-column-sort>
+        <template slot="header">Custom Header</template>
+        <template slot-scope="row">
+          Custom Row
+        </template>
+      </vk-table-column-sort>
     </vk-table>
   </div>
 </template>
@@ -15,7 +21,7 @@ import orderBy from 'lodash/orderBy'
 import mockData from './mock-data.json'
 import { keys } from '@vuikit/util'
 
-const data = mockData.splice(0, 5)
+const data = [...mockData].splice(0, 5)
 
 export default {
   data: () => ({

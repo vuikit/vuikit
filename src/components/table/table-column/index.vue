@@ -3,7 +3,7 @@
     'uk-table-shrink': shrink,
     'uk-table-expand': expand
   }]">
-    {{ header }}
+    <slot name="header">{{ header }}</slot>
   </th>
 </template>
 
@@ -40,11 +40,11 @@ export default {
     }
   },
   cellRender: (h, { row, col }) => {
-    const scopedSlot = get(col, 'data.scopedSlots.default')
+    const rowSlot = get(col, 'data.scopedSlots.default')
     const props = get(col, 'componentOptions.propsData')
 
     return <td class={ props.cellClass }>
-      { scopedSlot ? scopedSlot(row) : get(row, props.cell, props.cell) }
+      { rowSlot ? rowSlot(row) : get(row, props.cell, props.cell) }
     </td>
   }
 }
