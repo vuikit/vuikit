@@ -28,6 +28,7 @@ import Row from './row'
 import Cell from './cell'
 import MixinSelect from './mixin-select'
 import { stringify } from '@vuikit/util'
+import { warn } from '~/helpers/debug'
 
 export default {
   name: 'Table',
@@ -78,7 +79,14 @@ export default {
     columns: {
       get () {
         // default slots excluding spaces and comments
-        return this.$slots.default.filter(vnode => vnode.tag)
+        const slots = (this.$slots.default || [])
+          .filter(vnode => vnode.tag)
+
+        if (!slots.length) {
+          warn('At least one TableColumn must be set', this)
+        }
+
+        return slots
       },
       cache: false
     }
