@@ -1,28 +1,51 @@
 <template>
-  <ui-drop
-    :show="show"
-    :position="position"
-    :target="$target"
-    :boundary="$boundary"
+  <div
+    :style="$style"
+    :class="['uk-drop', { 'uk-open': show }]"
     @mouseleave="onMouseleave"
+    v-position="{
+      flip,
+      target: $target,
+      clsPos: 'uk-drop',
+      position: $position,
+      boundary: $boundary
+    }"
   >
     <slot />
-  </ui-drop>
+  </div>
 </template>
 
 <script>
-import UiDrop from './ui/drop'
-import DropPosition from './ui/v-drop-position'
-import { isString, get } from '@vuikit/util'
+import Position from '~/directives/position'
+import { isString, get, includes } from '@vuikit/util'
+import { getPositionAxis } from '~/helpers/position'
 
 const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 
+const positions = [
+  'top-left',
+  'top-center',
+  'top-right',
+  'top-justify',
+
+  'bottom-left',
+  'bottom-center',
+  'bottom-right',
+  'bottom-justify',
+
+  'left-top',
+  'left-center',
+  'left-bottom',
+
+  'right-top',
+  'right-center',
+  'right-bottom'
+]
+
 export default {
-  components: {
-    UiDrop
-  },
+  name: 'Drop',
   directives: {
-    DropPosition
+    Position
   },
   props: {
     target: {},
@@ -31,12 +54,43 @@ export default {
       type: Boolean,
       required: true
     },
+    flip: {
+      type: Boolean,
+      default: true
+    },
     position: {
       type: String,
-      default: `bottom-${isRtl ? 'right' : 'left'}`
+      default: `bottom-${isRtl ? 'right' : 'left'}`,
+      validator: pos => includes(positions, pos)
     }
   },
   computed: {
+    $position () {
+      return this.position.replace('justify', 'center')
+    },
+    $dir () {
+      return this.position.split('-')[0]
+    },
+    $align () {
+      return this.position.split('-')[1]
+    },
+    $style () {
+      const style = {}
+      const isJustified = this.$align === 'justify'
+
+      if (!this.target || !isJustified) {
+        return style
+      }
+
+      const rect = this.target.getBoundingClientRect()
+      const prop = getPositionAxis(this.position) === 'y'
+        ? 'width'
+        : 'height'
+
+      style[prop] = `${rect[prop]}px`
+
+      return style
+    },
     $target: {
       get () {
         const target = isString(this.target)

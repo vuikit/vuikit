@@ -9,13 +9,11 @@ play('Button')
 
 play('Drop')
   .add('Default', require('./components/drop/story').default)
-  .add('Target', require('./components/drop/story-target').default)
-  .add('UI - Positions', require('./components/drop/ui/story-positions').default)
-  .add('UI - Alignment', require('./components/drop/ui/story-alignment').default)
-  .add('UI - Boundary', require('./components/drop/ui/story-boundary').default)
+  .add('Positions', require('./components/drop/story-positions').default)
 
 play('Dropdown')
   .add('Default', require('./components/dropdown/story').default)
+  .add('Positions', require('./components/dropdown/story-positions').default)
 
 play('Icon')
   .add('Icon', require('./components/icon/story/default').default)
@@ -53,10 +51,10 @@ play('Tabs')
 play('Upload')
   .add('Default', require('./components/upload/story').default)
 
-play('Tooltip')
-  .add('Default', require('./directives/tooltip/story-default').default)
-  .add('Positions', require('./directives/tooltip/story-positions').default)
-
 play('HeightViewport Directive')
   .add('Default', require('./directives/height-viewport/story/default').default)
   .add('Expand', require('./directives/height-viewport/story/expand').default)
+
+play('Directives')
+  .add('Position', require('./directives/position/story').default)
+  .add('Tooltip', require('./directives/tooltip/story').default)

@@ -36,7 +36,8 @@
     "build:cjs": "node -r @std/esm build/build-dist-cjs.js",
     "build:umd": "node -r @std/esm build/build-dist-umd.js",
     "build:add-banner": "node -r @std/esm build/build-add-banner.js",
-    "size": "size-limit"
+    "size": "size-limit",
+    "eslint": "eslint src"
   },
   "dependencies": {
     "@lump/write": "^0.2.2",
