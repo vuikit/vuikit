@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 export default {
   functional: true,
@@ -12,14 +12,14 @@ export default {
       domProps: {
         checked: props.checked
       },
-      on: merge({}, listeners, {
+      on: {
         change: e => {
           // ensures checked state consistency
           e.target.checked = props.checked
         }
-      })
+      }
     }
 
-    return h('input', merge({}, data, def))
+    return h('input', mergeData(data, def))
   }
 }

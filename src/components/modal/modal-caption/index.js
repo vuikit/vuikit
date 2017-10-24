@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 export default {
   functional: true,
@@ -12,6 +12,6 @@ export default {
       }]
     }
 
-    return h('div', merge({}, data, def), children)
+    return h('div', mergeData(data, def), children)
   }
 }

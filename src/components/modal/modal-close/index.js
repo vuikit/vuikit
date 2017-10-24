@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 export default {
   functional: true,
@@ -9,7 +9,7 @@ export default {
     const top = props.top !== undefined
 
     const def = {
-      class: ['uk-close', 'uk-icon', data.staticClass, {
+      class: ['uk-close', 'uk-icon', {
         'uk-modal-close-default': !outside && !full,
         'uk-modal-close-outside': outside,
         'uk-modal-close-full': full,
@@ -21,6 +21,6 @@ export default {
       }
     }
 
-    return h('button', merge({}, data, def), children)
+    return h('button', mergeData(data, def), children)
   }
 }

@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 const sizes = ['large', 'small']
 const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']
@@ -39,7 +39,7 @@ export default {
       def.class.push(`uk-button-${size}`)
     }
 
-    return h('button', merge({}, def, data), [
+    return h('button', mergeData(data, def), [
       children
     ])
   }

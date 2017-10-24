@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 const status = [
   'primary',
@@ -24,16 +24,14 @@ export default {
     const { status } = props
 
     const def = {
-      class: [
-        'uk-notification-message'
-      ]
+      class: ['uk-notification-message']
     }
 
     if (status) {
       def.class.push(`uk-notification-message-${status}`)
     }
 
-    return h('div', merge({}, def, data), [
+    return h('div', mergeData(data, def), [
       children
     ])
   }

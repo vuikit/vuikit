@@ -1,4 +1,4 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 export default {
   functional: true,
@@ -9,13 +9,12 @@ export default {
     }
   },
   render (h, { props, data, listeners, children }) {
-    // add static class now to avoid overrides
-    data.class = ['uk-icon', data.class, {
-      'uk-icon-link': props.reset
-    }]
+    const def = {
+      class: ['uk-icon', {
+        'uk-icon-link': props.reset
+      }]
+    }
 
-    const def = merge({}, { on: listeners }, data)
-
-    return h('a', def, children)
+    return h('a', mergeData(data, def), children)
   }
 }

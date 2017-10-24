@@ -1,12 +1,12 @@
-import { merge } from '@vuikit/util'
+import mergeData from 'vue-functional-data-merge'
 
 export default {
   functional: true,
   render (h, { children, data }) {
     const def = {
-      class: ['uk-modal-header', data.staticClass]
+      class: ['uk-modal-header']
     }
 
-    return h('div', merge({}, data, def), children)
+    return h('div', mergeData(data, def), children)
   }
 }
