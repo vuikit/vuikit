@@ -1,5 +1,5 @@
 import { warn } from '~/helpers/debug'
-import { inArray, toArray } from '@vuikit/util'
+import { includes, toArray } from '@vuikit/util'
 import filterNodes from '~/helpers/node/filter'
 
 export default {
@@ -16,7 +16,7 @@ export default {
     buttons.forEach(btn => {
       const index = buttons.indexOf(btn)
       const value = btn.data.attrs.value
-      const isActive = inArray(groupValue, value)
+      const isActive = includes(groupValue, value)
 
       if (isActive) {
         btn.data.class.push('uk-active')
@@ -49,7 +49,7 @@ function validate (data, buttons) {
 
   // check buttons def
   const btnValues = buttons.map(btn => btn.data.attrs.value)
-  if (inArray(btnValues, undefined)) {
+  if (includes(btnValues, undefined)) {
     warn(`Some of the ButtonGroupCheckbox buttons declaration is missing the 'value' prop.`)
     return false
   }

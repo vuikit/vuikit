@@ -1,33 +1,23 @@
 <template>
   <div class="uk-padding">
     <h2>Button</h2>
-    <vk-button @click="$log('clicked')">
-      Button
-    </vk-button>
+    <vk-button>Default</vk-button>
+    <vk-button disabled>Disabled</vk-button>
 
-    <h2>Button Group Checkbox</h2>
-    <vk-button-group-checkbox v-model="checkbox">
-      <vk-button :value="1">Button 1</vk-button>
-      <vk-button :value="2">Button 2</vk-button>
-      <vk-button :value="3">Button 3</vk-button>
-    </vk-button-group-checkbox>
-    <p>Group Value: {{ checkbox }}</p>
+    <h3>Type</h3>
+    <vk-button type="primary">Primary</vk-button>
+    <vk-button type="secondary">Secondary</vk-button>
+    <vk-button type="danger">Danger</vk-button>
+    <vk-button type="text">Text</vk-button>
+    <vk-button type="link">Link</vk-button>
 
-    <h2>Button Group Radio</h2>
-    <vk-button-group-radio v-model="radio">
-      <vk-button :value="1">Button 1</vk-button>
-      <vk-button :value="2">Button 2</vk-button>
-      <vk-button :value="3">Button 3</vk-button>
-    </vk-button-group-radio>
-    <p>Group Value: {{ radio }}</p>
+    <h3>Size</h3>
+    <vk-button size="large">Large</vk-button>
+    <vk-button>Default</vk-button>
+    <vk-button size="small">Small</vk-button>
   </div>
 </template>
 
 <script>
-export default {
-  data: () => ({
-    radio: 1,
-    checkbox: [1]
-  })
-}
+export default {}
 </script>

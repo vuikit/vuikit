@@ -4,8 +4,8 @@ play('Breadcrumb')
   .add('Default', require('./components/breadcrumb/story').default)
 
 play('Button')
-  .add('Button', require('./components/button/story').default)
-  .add('UI', require('./components/button/ui/story').default)
+  .add('Default', require('./components/button/story').default)
+  .add('Groups', require('./components/button/story-groups').default)
 
 play('Drop')
   .add('Default', require('./components/drop/story').default)
@@ -51,10 +51,8 @@ play('Tabs')
 play('Upload')
   .add('Default', require('./components/upload/story').default)
 
-play('HeightViewport Directive')
-  .add('Default', require('./directives/height-viewport/story/default').default)
-  .add('Expand', require('./directives/height-viewport/story/expand').default)
-
 play('Directives')
   .add('Position', require('./directives/position/story').default)
   .add('Tooltip', require('./directives/tooltip/story').default)
+  .add('HeightWiewport', require('./directives/height-viewport/story').default)
+  .add('HeightWiewport Expand', require('./directives/height-viewport/story-expand').default)

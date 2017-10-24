@@ -1,5 +1,5 @@
 import { warn } from '~/helpers/debug'
-import { inArray } from '@vuikit/util'
+import { includes } from '@vuikit/util'
 import filterNodes from '~/helpers/node/filter'
 
 export default {
@@ -38,7 +38,7 @@ function validate (data, buttons) {
 
   // check buttons def
   const btnValues = buttons.map(btn => btn.data.attrs.value)
-  if (inArray(btnValues, undefined)) {
+  if (includes(btnValues, undefined)) {
     warn(`Some of the ButtonGroupRadio buttons declaration is missing the 'value' prop.`)
     return false
   }
