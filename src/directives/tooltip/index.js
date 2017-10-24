@@ -126,8 +126,7 @@ function position (ctx) {
   const { outer: tooltip } = getTooltip()
   const { position, offset, boundary, flip } = props
 
-  let dir = position.split('-')[0]
-  let align = position.split('-')[1] || 'center'
+  let [dir, align = 'center'] = position.split('-')
 
   // remove any position class
   const classesRx = new RegExp(`uk-tooltip-(top|bottom|left|right)(-[a-z]+)?`)

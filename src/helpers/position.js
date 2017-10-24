@@ -290,7 +290,7 @@ export function flipPosition (pos) {
 }
 
 export function getPositionAxis (position) {
-  const dir = position.split('-')[0]
+  const [dir] = position.split('-')
   return dir === 'top' || dir === 'bottom'
     ? 'y'
     : 'x'

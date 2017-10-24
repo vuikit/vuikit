@@ -69,8 +69,7 @@ function position (ctx) {
     warn('Invalid v-position position', vnode)
   }
 
-  let dir = position.split('-')[0]
-  let align = position.split('-')[1]
+  let [dir, align] = position.split('-')
 
   // remove any position class
   const classesRx = new RegExp(`${clsPos}-(top|bottom|left|right)(-[a-z]+)?`)
@@ -136,10 +135,10 @@ function getProps (ctx) {
   return { target, delay, offset, flip, position, boundary, clsPos }
 }
 
-function setResizeEvent ({ el, binding, vnode }) {
+function setResizeEvent (ctx) {
   off(window, 'resize', uid)
   on(window, 'resize', debounce(() => {
-    binding.def.position(el, binding, vnode)
+    position(ctx)
   }, 50), uid)
 }
 

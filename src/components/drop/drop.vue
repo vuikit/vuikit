@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Position from '~/directives/position'
+import Position from '~/directives/position/index'
 import { isString, get, includes } from '@vuikit/util'
 import { getPositionAxis } from '~/helpers/position'
 
