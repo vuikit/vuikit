@@ -46,7 +46,15 @@ export default {
     const props = get(col, 'componentOptions.propsData')
 
     return h('td', {
-      class: ['uk-form uk-text-center', props.cellClass]
+      class: ['uk-form uk-text-center', props.cellClass],
+      on: {
+        click: e => {
+          const instance = col.componentInstance
+          const isCell = e => e.target.tagName === 'TD'
+
+          isCell(e) && instance && instance.$emit('click-cell', row, props.cell)
+        }
+      }
     }, [
       rowSlot
         ? rowSlot(row)
