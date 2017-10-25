@@ -1,4 +1,4 @@
-import { warn, tip } from '~/helpers/debug'
+import { warn } from '~/helpers/debug'
 import { positionAt, flipPosition, getPositionAxis } from '~/helpers/position'
 import {
   on,
@@ -46,6 +46,13 @@ export default {
     const ctx = getContext(el, binding, vnode)
 
     if (ctx) {
+
+      // a target should be provided at this moment
+      if (!isObject(ctx.props.target)) {
+        warn('Target missing on v-position, skiping positioning until provided', vnode)
+        return
+      }
+
       position(ctx)
     }
   },
@@ -57,13 +64,6 @@ export default {
 function position (ctx) {
   const { el, props, vnode } = ctx
   const { target, position, offset, boundary, flip, clsPos } = props
-
-  // a target could be provided at later moment,
-  // if not ready now, just skip execution
-  if (!isObject(target)) {
-    tip('Target missing on v-position, skiping positioning until provided', vnode)
-    return
-  }
 
   if (!includes(positions, position)) {
     warn('Invalid v-position position', vnode)
