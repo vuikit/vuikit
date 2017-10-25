@@ -1,6 +1,6 @@
 import alias from './alias'
 import vue from 'rollup-plugin-vue'
-import babel from 'rollup-plugin-babel'
+import buble from 'rollup-plugin-buble'
 import rollupAlias from 'rollup-plugin-alias'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
@@ -15,10 +15,7 @@ export default {
     vue({
       compileTemplate: true
     }),
-    babel({
-      exclude: 'node_modules/**',
-      runtimeHelpers: true
-    }),
+    buble(),
     rollupAlias(alias)
   ]
 }
