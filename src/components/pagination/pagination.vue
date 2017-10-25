@@ -9,11 +9,11 @@
 
 <script>
 import { isArray } from '@vuikit/util'
-import PaginationLast from '../pagination-last'
-import PaginationPrev from '../pagination-prev'
-import PaginationNext from '../pagination-next'
-import PaginationFirst from '../pagination-first'
-import PaginationPages from '../pagination-pages'
+import PaginationLast from './pagination-last'
+import PaginationPrev from './pagination-prev'
+import PaginationNext from './pagination-next'
+import PaginationFirst from './pagination-first'
+import PaginationPages from './pagination-pages'
 import paginationMatrix from '~/helpers/pagination-matrix'
 
 const partsMap = {
