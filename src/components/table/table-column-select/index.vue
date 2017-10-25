@@ -2,7 +2,7 @@
   <th :class="['uk-form uk-text-center uk-table-shrink', headerClass]">
     <slot name="header">
       <checkbox
-      :checked="allSelected"
+        :checked="allSelected"
         @click="toggleAll"
       ></checkbox>
     </slot>
@@ -45,15 +45,20 @@ export default {
     const rowSlot = get(col, 'data.scopedSlots.default')
     const props = get(col, 'componentOptions.propsData')
 
-    return <td class={ ['uk-form uk-text-center', props.cellClass] }>
-      { rowSlot
+    return h('td', {
+      class: ['uk-form uk-text-center', props.cellClass]
+    }, [
+      rowSlot
         ? rowSlot(row)
-        : <Checkbox
-          checked={ table.isSelected(row) }
-          onClick={ e => table.toggleSelection(row) }
-        ></Checkbox>
-      }
-    </td>
+        : h(Checkbox, {
+          props: {
+            checked: table.isSelected(row)
+          },
+          on: {
+            click: e => table.toggleSelection(row)
+          }
+        })
+    ])
   }
 }
 

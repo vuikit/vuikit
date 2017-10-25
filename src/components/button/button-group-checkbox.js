@@ -36,7 +36,11 @@ export default {
       }
     })
 
-    return <div class="uk-button-group">{ children }</div>
+    return h('div', {
+      class: ['uk-button-group']
+    }, [
+      children
+    ])
   }
 }
 

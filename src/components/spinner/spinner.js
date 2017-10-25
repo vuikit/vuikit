@@ -4,8 +4,14 @@ export default {
   functional: true,
   props: ['ratio'],
   render (h, { props }) {
-    return <div class="uk-icon uk-spinner">
-      <IconSpinner ratio={ props.ratio }></IconSpinner>
-    </div>
+    return h('div', {
+      class: ['uk-icon uk-spinner']
+    }, [
+      h(IconSpinner, {
+        props: {
+          ratio: props.ratio
+        }
+      })
+    ])
   }
 }

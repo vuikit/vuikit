@@ -11,9 +11,14 @@ export default {
       classes.push('uk-active')
     }
 
-    return <tr onClick={ onClick } class={ classes }>
-      { children }
-    </tr>
+    return h('tr', {
+      class: classes,
+      on: {
+        click: onClick
+      }
+    }, [
+      children
+    ])
   }
 }
 

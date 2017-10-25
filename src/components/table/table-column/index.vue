@@ -43,9 +43,13 @@ export default {
     const rowSlot = get(col, 'data.scopedSlots.default')
     const props = get(col, 'componentOptions.propsData')
 
-    return <td class={ props.cellClass }>
-      { rowSlot ? rowSlot(row) : get(row, props.cell, props.cell) }
-    </td>
+    return h('td', {
+      class: props.cellClass
+    }, [
+      rowSlot
+        ? rowSlot(row)
+        : get(row, props.cell, props.cell)
+    ])
   }
 }
 </script>
