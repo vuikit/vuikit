@@ -29,8 +29,8 @@
 
 <script>
 import Column from '../table-column'
-import IconArrowUp from '@vuikit/icons/lib/arrow-up.mjs'
-import IconArrowDown from '@vuikit/icons/lib/arrow-down.mjs'
+import IconArrowUp from '@vuikit/icons/lib/arrow-up'
+import IconArrowDown from '@vuikit/icons/lib/arrow-down'
 import { merge } from '@vuikit/util'
 
 export default {
