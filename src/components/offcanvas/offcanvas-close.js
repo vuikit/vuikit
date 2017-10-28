@@ -1,4 +1,4 @@
-import IconClose from '~/icons/close'
+import IconClose from '~/icons/close-icon'
 
 export default {
   name: 'OffcanvasClose',

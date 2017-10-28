@@ -1,9 +1,12 @@
+// icon-pagination-previous
 export default {
   functional: true,
-  name: 'pagination-previous',
-  render (h, { props }) {
-    const { viewBox, ratio = 1 } = props
-    let { width = 7, height = 12 } = props
+  render: function (h, ctx) {
+    var props = ctx.props
+    var ratio = props.ratio || 1
+    var width = props.width || 7
+    var height = props.height || 12
+    var viewBox = props.viewBox || '0 0 7 12'
 
     if (ratio !== 1) {
       width = width * ratio
@@ -12,11 +15,11 @@ export default {
 
     return h('svg', {
       attrs: {
-        width,
-        height,
         version: '1.1',
-        meta: `icon-pagination-previous ratio-${ratio}`,
-        viewBox: viewBox || '0 0 7 12'
+        meta: 'icon-pagination-previous ratio-' + ratio,
+        width: width,
+        height: height,
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>'
