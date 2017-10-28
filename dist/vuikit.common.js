@@ -1,10 +1,125 @@
 /**
- * Vuikit 0.7.7
+ * Vuikit 0.7.9
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */
 
 'use strict';
+
+var boundEvents = {};
+
+/**
+ * Adds an event listeners to an element
+ *
+ * @param type Multiple values allowed separated by space
+ */
+function on (el, type, listener, namespace) {
+  type.split(' ')
+    .forEach(function (type) { return _on(el, type, listener, namespace); });
+
+  return function () { return off(el, type, namespace); }
+}
+
+function _on (el, type, listener, namespace) {
+  var events = getEvents(namespace);
+
+  events.push({ el: el, type: type, listener: listener });
+  el.addEventListener(type, listener);
+}
+
+/**
+ * Removes an event listeners from the namespace
+ *
+ * @param type Multiple values allowed separated by space
+ */
+function off (el, type, namespace) {
+  type.split(' ')
+    .forEach(function (type) { return removeEvent(el, type, namespace); });
+}
+
+/**
+ * Add event listeners that will be executed only once
+ *
+ * @param el The element to listen the event at
+ * @param type Multiple values allowed separated by space
+ * @param listener The function to be called on event trigger
+ * @param condition Optional condition fn for the event to be considered valid
+ */
+function one (el, type, listener, condition) {
+  if ( condition === void 0 ) { condition = false; }
+
+  var off = on(el, type, function (e) {
+    var result = !condition || condition(e);
+
+    if (result) {
+      off();
+      listener(e, result);
+    }
+  });
+
+  return off
+}
+
+/*
+ * Removes all event listeners from the namespace
+ */
+function offAll (namespace) {
+  removeAllEvents(namespace);
+}
+
+function getEvents (namespace) {
+  if ( namespace === void 0 ) { namespace = 'default'; }
+
+  // init events namespace
+  boundEvents[namespace] = boundEvents[namespace] || [];
+
+  return boundEvents[namespace]
+}
+
+function findEvent (el, type, namespace) {
+  if ( namespace === void 0 ) { namespace = 'default'; }
+
+  var events = getEvents(namespace);
+
+  return events.find(function (bound) {
+    return bound.el === el && bound.type === type
+  })
+}
+
+function removeEvent (el, type, namespace) {
+  if ( namespace === void 0 ) { namespace = 'default'; }
+
+  var event = findEvent(el, type, namespace);
+
+  if (event) {
+    el.removeEventListener(type, event.listener);
+    var index = boundEvents[namespace].indexOf(event);
+    boundEvents[namespace].splice(index, 1);
+  }
+}
+
+function removeAllEvents (namespace) {
+  if ( namespace === void 0 ) { namespace = 'default'; }
+
+  var events = getEvents(namespace);
+
+  if (events) {
+    for (var i = 0; i < events.length; ++i) {
+      var event = events[i];
+      event.el.removeEventListener(event.type, event.listener);
+    }
+
+    deleteNamespace(namespace);
+  }
+}
+
+function deleteNamespace (namespace) {
+  if ( namespace === void 0 ) { namespace = 'default'; }
+
+  if (boundEvents[namespace] !== undefined) {
+    delete boundEvents[namespace];
+  }
+}
 
 /*
  * Deprecated, use include instead
@@ -57,6 +172,56 @@ var supportsMultiple;
 var supportsForce;
 var supportsClassList;
 
+/**
+ * Add classes to dom element
+ */
+function addClass (el, classes) {
+  apply(el, classes, 'add');
+}
+
+/**
+ * Remove classes from dom element
+ */
+function removeClass (el, classes) {
+  apply(el, classes, 'remove');
+}
+
+/**
+ * Toggles a class from an element
+ */
+function toggleClass (el, classes) {
+  if (!supportsClassList || !classes) {
+    return
+  }
+
+  var args = getArgs(classes);
+
+  var force = !isString(args[args.length - 1])
+    ? args.pop()
+    : undefined;
+
+  toArray(el).forEach(function (_el) {
+    var classList = _el.classList;
+    for (var i = 0; i < args.length; i++) {
+
+      if (supportsForce) {
+        _el.classList.toggle(args[i], force);
+      } else {
+
+        var check = !isUndefined(force)
+          ? force
+          : !classList.contains(args[i]);
+
+        var action = check
+          ? 'add'
+          : 'remove';
+
+        classList[action](args[i]);
+      }
+    }
+  });
+}
+
 function apply (element, args, fn) {
   args = getArgs(args).filter(function (arg) { return arg; });
 
@@ -89,20 +254,6 @@ function getArgs (args) {
 })();
 
 /**
- * Add classes to dom element
- */
-var addClass = function (el, classes) {
-  apply(el, classes, 'add');
-};
-
-/*
- * Creates a clone of the original array
- */
-var cloneArray = function (arr) {
-  return arr.slice(0)
-};
-
-/**
  * Get or Set an element style property
  */
 var css = function (el, style, val) {
@@ -114,10 +265,65 @@ var css = function (el, style, val) {
 };
 
 function _getStyle (el, style) {
+  if (!el || !style) {
+    return
+  }
+
   return window.getComputedStyle
     ? window.getComputedStyle(el, null)[style]
     : el.currentStyle[style]
 }
+
+/*
+ * Determines if the value is an object
+ */
+var isObject = function (val) {
+  var type = typeof val;
+  return val !== null && (type === 'object' || type === 'function')
+};
+
+/**
+ * Gets the Object value at specific `path`. If the resolved value is
+ * `undefined`, the `defVal` is returned in its place.
+ */
+var get = function (obj, path, defVal) {
+  var result = isObject(obj) && isString(path)
+    ? get$1(obj, path)
+    : undefined;
+
+  return result === undefined
+    ? defVal
+    : result
+};
+
+function get$1 (obj, path) {
+  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, obj)
+}
+
+/*
+ * Iterate over Object properties
+ */
+var each = function (obj, cb) {
+  for (var key in obj) {
+    if (cb.call(obj[key], obj[key], key) === false) {
+      break
+    }
+  }
+};
+
+/*
+ * Generates a range of numbers
+ */
+var range = function (start, stop, step) {
+  if ( step === void 0 ) { step = 1; }
+
+  if (typeof stop === 'undefined') {
+    stop = start;
+    start = 0;
+  }
+
+  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + (i * step); })
+};
 
 /**
  * Returns a function, that, as long as it continues to be invoked, will not
@@ -146,29 +352,6 @@ var debounce = function (fn, wait, immediate) {
   }
 };
 
-/*
- * Iterate over Object properties
- */
-var each = function (obj, cb) {
-  for (var key in obj) {
-    if (cb.call(obj[key], obj[key], key) === false) {
-      break
-    }
-  }
-};
-
-var strPrototype$1 = String.prototype;
-var endsWithFn = strPrototype$1.endsWith || function (search) {
-  return this.substr(-1 * search.length) === search
-};
-
-/**
- * Determines whether a string ends with the characters of a specified string
- */
-var endsWith = function (str, search) {
-  return endsWithFn.call(str, search)
-};
-
 /**
  * Get the argument names of a function
  */
@@ -185,62 +368,41 @@ var getFnArgs = function (fn) {
 };
 
 /*
- * Determines if the value is an object
+ * Creates a clone of the original array
  */
-var isObject = function (val) {
-  var type = typeof val;
-  return val !== null && (type === 'object' || type === 'function')
+var cloneArray = function (arr) {
+  return arr.slice(0)
 };
 
 /**
- * Gets the Object value at specific `path`. If the resolved value is
- * `undefined`, the `defVal` is returned in its place.
- */
-var get = function (obj, path, defVal) {
-  var result = isObject(obj) && isString(path)
-    ? get$1(obj, path)
-    : undefined;
+* Flat merge, allows multiple args
+*/
+var merge = function (host) {
+  var donors = slice(arguments, 1);
 
-  return result === undefined
-    ? defVal
-    : result
+  donors.forEach(function (donor) {
+    Object.keys(donor).forEach(function (key) {
+      host[key] = donor[key];
+    });
+  });
+
+  return host
 };
 
-function get$1 (obj, path) {
-  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, obj)
+function slice (arr, i) {
+  return Array.prototype.slice.call(arr, i)
 }
 
+var strPrototype$1 = String.prototype;
+var endsWithFn = strPrototype$1.endsWith || function (search) {
+  return this.substr(-1 * search.length) === search
+};
+
 /**
- * Check if an element has a class
+ * Determines whether a string ends with the characters of a specified string
  */
-var hasClass = function (el, className) {
-  return el.classList.contains(className)
-};
-
-/*
- * Determines if the value is the ocument object
- */
-var isDocument = function (obj) {
-  return isObject(obj) && obj.nodeType === 9
-};
-
-/*
- * Determines if the value is empty
- */
-var isEmpty = function (val) {
-  if (isObject(val)) {
-    return Object.keys(val).length === 0
-  }
-
-  if (isString(val)) {
-    return val === ''
-  }
-
-  if (isArray(val)) {
-    return val.length === 0
-  }
-
-  return !val
+var endsWith = function (str, search) {
+  return endsWithFn.call(str, search)
 };
 
 /*
@@ -253,146 +415,6 @@ var isFunction = function (val) {
 function toString (val) {
   return Object.prototype.toString.call(val)
 }
-
-/*
- * Determines if the value is an integer
- */
-var isInteger = function (val) {
-  return Number.isInteger(val)
-};
-
-/*
- * Determines if the value is the window object
- */
-var isWindow = function (obj) {
-  return isObject(obj) && obj === obj.window
-};
-
-/**
-* Flat merge, allows multiple args
-*/
-var merge = function (host) {
-  var donors = slice$1(arguments, 1);
-
-  donors.forEach(function (donor) {
-    Object.keys(donor).forEach(function (key) {
-      host[key] = donor[key];
-    });
-  });
-
-  return host
-};
-
-function slice$1 (arr, i) {
-  return Array.prototype.slice.call(arr, i)
-}
-
-var boundEvents = {};
-
-function getEvents (namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  // init events namespace
-  boundEvents[namespace] = boundEvents[namespace] || [];
-
-  return boundEvents[namespace]
-}
-
-function findEvent (el, type, namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  var events = getEvents(namespace);
-
-  return events.find(function (bound) {
-    return bound.el === el && bound.type === type
-  })
-}
-
-function removeEvent (el, type, namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  var event = findEvent(el, type, namespace);
-
-  if (event) {
-    el.removeEventListener(type, event.listener);
-    var index = boundEvents[namespace].indexOf(event);
-    boundEvents[namespace].splice(index, 1);
-  }
-}
-
-function removeAllEvents (namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  var events = getEvents(namespace);
-
-  if (events) {
-    for (var i = 0; i < events.length; ++i) {
-      var event = events[i];
-      event.el.removeEventListener(event.type, event.listener);
-    }
-
-    deleteNamespace(namespace);
-  }
-}
-
-function deleteNamespace (namespace) {
-  if ( namespace === void 0 ) namespace = 'default';
-
-  if (boundEvents[namespace] !== undefined) {
-    delete boundEvents[namespace];
-  }
-}
-
-// removes event listener
-var off = function (el, type, namespace) {
-  return removeEvent(el, type, namespace)
-};
-
-/*
- * Removes all event listeners from the namespace
- */
-var offAll = function (namespace) {
-  removeAllEvents(namespace);
-};
-
-// add event listener
-var on = function (el, type, listener, namespace) {
-  sanitize(type).forEach(function (type) {
-    _on(el, type, listener, namespace);
-  });
-};
-
-function _on (el, type, listener, namespace) {
-  var events = getEvents(namespace);
-
-  events.push({ el: el, type: type, listener: listener });
-  el.addEventListener(type, listener);
-}
-
-function sanitize (classes) {
-  return classes.split(' ').filter(function (c) { return c; })
-}
-
-/*
- * Generates a range of numbers
- */
-var range = function (start, stop, step) {
-  if ( step === void 0 ) step = 1;
-
-  if (typeof stop === 'undefined') {
-    stop = start;
-    start = 0;
-  }
-
-  return Array.from(new Array(Math.floor((stop - start) / step)), function (x, i) { return start + (i * step); })
-};
-
-/**
- * Remove classes from dom element
- */
-var removeClass = function (el, classes) {
-  apply(el, classes, 'remove');
-};
 
 /*
  * Safely and quickly serialize JavaScript objects
@@ -447,11 +469,44 @@ function decirc (val, k, stack, parent) {
   stack.pop();
 }
 
-/**
- * Capitalize the first letter of the first word
+/*
+ * Determines if the value is empty
  */
-var toCapital = function (str) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+var isEmpty = function (val) {
+  if (isObject(val)) {
+    return Object.keys(val).length === 0
+  }
+
+  if (isString(val)) {
+    return val === ''
+  }
+
+  if (isArray(val)) {
+    return val.length === 0
+  }
+
+  return !val
+};
+
+/*
+ * Determines if the value is the window object
+ */
+var isWindow = function (obj) {
+  return isObject(obj) && obj === obj.window
+};
+
+/*
+ * Determines if the value is an integer
+ */
+var isInteger = function (val) {
+  return Number.isInteger(val)
+};
+
+/*
+ * Determines if the value is the ocument object
+ */
+var isDocument = function (obj) {
+  return isObject(obj) && obj.nodeType === 9
 };
 
 /**
@@ -461,47 +516,18 @@ var toFloat = function (value) {
   return parseFloat(value) || 0
 };
 
+/**
+ * Capitalize the first letter of the first word
+ */
+var toCapital = function (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+};
+
 /*
  * Converts the value to an integer
  */
 var toInteger = function (val) {
   return parseInt(val, 10)
-};
-
-/**
- * Toggles a class from an element
- */
-var toggleClass = function (el, classes) {
-  if (!supportsClassList || !classes) {
-    return
-  }
-
-  var args = getArgs(classes);
-
-  var force = !isString(args[args.length - 1])
-    ? args.pop()
-    : undefined;
-
-  toArray(el).forEach(function (_el) {
-    var classList = _el.classList;
-    for (var i = 0; i < args.length; i++) {
-
-      if (supportsForce) {
-        _el.classList.toggle(args[i], force);
-      } else {
-
-        var check = !isUndefined(force)
-          ? force
-          : !classList.contains(args[i]);
-
-        var action = check
-          ? 'add'
-          : 'remove';
-
-        classList[action](args[i]);
-      }
-    }
-  });
 };
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
@@ -834,6 +860,9 @@ var dirs = {
   height: ['y', 'top', 'bottom']
 };
 
+var height = dimension('height');
+var width = dimension('width');
+
 function positionAt (ref) {
   var element = ref.element;
   var target = ref.target;
@@ -1014,9 +1043,6 @@ function offsetParent (element) {
 
   return parent || docEl(element)
 }
-
-var height = dimension('height');
-var width = dimension('width');
 
 function dimension (prop) {
   var propName = toCapital(prop);
@@ -1480,119 +1506,278 @@ var iconButton = {
   }
 };
 
-var doc$1 = document.documentElement;
-var body = document.body;
+var doc = document.documentElement;
 
-var active;
-var activeCount;
-
-on(doc$1, 'click', function (e) {
-  if (active && !active.$refs.panel.contains(e.target)) {
-    active.$emit('click-out', e);
-  }
-});
-
-on(doc$1, 'keyup', function (e) {
-  if (e.keyCode === 27 && active) {
-    e.preventDefault();
-    active.$emit('key-esc', e);
-  }
-});
-
-var ModalMixin = {
+var core = {
   props: {
     show: {
       type: Boolean,
       default: false
     },
-    overlay: {
+    // determines if the modal should be closed
+    // when a key is pressed. Accepts a key number,
+    // or false to disable
+    closeOnKey: {
+      type: [Number, Boolean],
+      default: 27 // esc key
+    },
+    // determines if the modal should be closed
+    // when the background is clicked
+    closeOnBg: {
       type: Boolean,
       default: true
     }
   },
-  data: function () { return ({
-    active: active,
-    activeCount: activeCount
-  }); },
-  methods: {
-    _beforeEnter: function _beforeEnter () {
-      if (!active) {
-        body.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
-      }
-    },
-    _afterEnter: function _afterEnter () {
-      // if any previous modal active
-      // emit event for further actions
-      if (active) {
-        active.$emit('inactive');
-      }
-      // change current active modal
-      active = this;
-      activeCount++;
-    },
-    _afterLeave: function _afterLeave () {
-      activeCount--;
-      // if no active modals left
-      if (!activeCount) {
-        body.style['overflow-y'] = '';
-      }
-      if (active === this) {
-        active = null;
-      }
-    },
-    getScrollbarWidth: function getScrollbarWidth () {
-      var width = doc$1.style.width;
-      doc$1.style.width = '';
-      var scrollbarWidth = window.innerWidth - doc$1.offsetWidth;
+  mounted: function mounted () {
+    var this$1 = this;
 
-      if (width) {
-        doc$1.style.width = width;
-      }
 
-      return scrollbarWidth
-    }
+    on(doc, 'keyup', function (e) {
+      if (this$1.closeOnKey && e.keyCode === this$1.closeOnKey) {
+        e.preventDefault();
+        this$1.$emit('update:show', false);
+      }
+    }, this._uid);
+
   },
   beforeDestroy: function beforeDestroy () {
-    offAll(this._uid);
-    if (this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
+    off(doc, 'key', this._uid);
   }
 };
 
-var ModalDialog = {
+var doc$2 = document.body;
+var docEl$1 = document.documentElement;
+
+
+
+
+// var hasTouchEvents = 'ontouchstart' in win
+// var hasPointerEvents = win.PointerEvent
+// export const hasTouch = 'ontouchstart' in win ||
+//     win.DocumentTouch && doc instanceof DocumentTouch ||
+//     navigator.msPointerEnabled && navigator.msMaxTouchPoints || // IE 10
+//     navigator.pointerEnabled && navigator.maxTouchPoints // IE >=11
+
+// export const pointerDown = !hasTouch ? 'mousedown' : `mousedown ${hasTouchEvents ? 'touchstart' : 'pointerdown'}`
+// export const pointerMove = !hasTouch ? 'mousemove' : `mousemove ${hasTouchEvents ? 'touchmove' : 'pointermove'}`
+// export const pointerUp = !hasTouch ? 'mouseup' : `mouseup ${hasTouchEvents ? 'touchend' : 'pointerup'}`
+// export const pointerEnter = hasTouch && hasPointerEvents ? 'pointerenter' : 'mouseenter'
+// export const pointerLeave = hasTouch && hasPointerEvents ? 'pointerleave' : 'mouseleave'
+
+var transitionend = prefix('transition', 'transition-end');
+var animationstart = prefix('animation', 'animation-start');
+var animationend = prefix('animation', 'animation-end');
+
+function prefix (name, event) {
+  var ucase = classify$1(name);
+  var lowered = classify$1(event).toLowerCase();
+  var classified = classify$1(event);
+  var element = doc$2.body || docEl$1;
+  var names = {};
+  names[name] = lowered;
+  names[("Webkit" + ucase)] = ("webkit" + classified);
+  names[("Moz" + ucase)] = lowered;
+  names[("o" + ucase)] = ("o" + classified + " o" + lowered);
+
+  for (name in names) {
+    if (element.style[name] !== undefined) {
+      return names[name]
+    }
+  }
+}
+
+function classify$1 (str) {
+  return str.replace(/(?:^|[-_/])(\w)/g, function (_, c) { return c ? c.toUpperCase() : ''; })
+}
+
+var doc$1 = document.documentElement;
+
+var active;
+var activeModals;
+
+var ModalTransition = {
   functional: true,
   render: function render (h, ref) {
+    var modal = ref.parent;
     var children = ref.children;
     var data = ref.data;
 
     var def = {
-      class: ['uk-modal-dialog']
+      props: {
+        css: false
+      },
+      on: {
+        beforeEnter: function (el) {
+          addClass(doc$1, 'uk-modal-page');
+
+          modal.$nextTick(function () {
+            // this.resize()
+          });
+        },
+        enter: function (el, done) {
+          // redraw workaround, necessary so the browser
+          // doesn't try to apply it all in one step not
+          // giving enough time for the transition to init
+          el.offsetWidth; // eslint-disable-line
+
+          addClass(el, 'uk-open');
+
+          // once uk-open transition finished
+          one(el, transitionend, done, function (e) { return e.target === el; });
+        },
+        afterEnter: function (el) {
+          activeModals++;
+
+          if (active) {
+            // close any active modal
+            active.$emit('update:show', false);
+          }
+
+          // change current active modal
+          active = modal;
+        },
+        beforeLeave: function beforeLeave (el) {
+          removeClass(el, 'uk-open');
+        },
+        leave: function leave (el, done) {
+          // once uk-open transition finished
+          one(el, transitionend, done, function (e) { return e.target === el; });
+        },
+        afterLeave: function (el) {
+          activeModals--;
+
+          if (!activeModals) {
+            // remove page class if not active modals left
+            removeClass(doc$1, 'uk-modal-page');
+          }
+
+          // if the closing modal is the active one,
+          // unset it
+          if (active === modal) {
+            active = null;
+          }
+        }
+      }
     };
 
-    return h('div', mergeData(data, def), children)
+    return h('transition', mergeData(data, def), children)
   }
 };
 
-var doc = document.documentElement;
+// icon-close-icon
+var IconClose = {
+  functional: true,
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 14;
+    var height = props.height || 14;
+    var viewBox = props.viewBox || '0 0 14 14';
 
-var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"enter-to-class":"uk-open","leave-class":"uk-open"},on:{"before-enter":_vm.beforeEnter,"after-enter":_vm.afterEnter,"after-leave":_vm.afterLeave}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal",class:{ 'uk-modal-lightbox': _vm.lightbox, 'uk-modal-container': _vm.container, 'uk-modal-full': _vm.full },staticStyle:{"display":"block"}},[_c('modal-content')],1)])},staticRenderFns: [],
-  name: 'Modal',
-  mixins: [ModalMixin],
-  components: {
-    'modal-content': {
-      functional: true,
-      render: function render (h, ref) {
-        var vm = ref.parent;
-
-        return vm.dialogIsOverriden
-          ? vm.$slots.default
-          : h(ModalDialog, vm.$slots.default)
-      }
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
     }
+
+    return h('svg', {
+      attrs: {
+        version: '1.1',
+        meta: 'icon-close-icon ratio-' + ratio,
+        width: width,
+        height: height,
+        viewBox: viewBox
+      },
+      domProps: {
+        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>'
+      }
+    })
+  }
+};
+
+// icon-close-large
+var IconCloseLarge = {
+  functional: true,
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 20;
+    var height = props.height || 20;
+    var viewBox = props.viewBox || '0 0 20 20';
+
+    if (ratio !== 1) {
+      width = width * ratio;
+      height = height * ratio;
+    }
+
+    return h('svg', {
+      attrs: {
+        version: '1.1',
+        meta: 'icon-close-large ratio-' + ratio,
+        width: width,
+        height: height,
+        viewBox: viewBox
+      },
+      domProps: {
+        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.4" d="M1 1l18 18M19 1L1 19"/>'
+      }
+    })
+  }
+};
+
+var ModalBtnClose = {
+  functional: true,
+  props: ['type'],
+  render: function render (h, ref) {
+    var data = ref.data;
+    var props = ref.props;
+
+    var type = props.type;
+    var large = type === 'large';
+    var outside = type === 'outside';
+
+    var def = {
+      class: ['uk-close', 'uk-icon', {
+        'uk-modal-close-large': large,
+        'uk-modal-close-outside': outside
+      }],
+      attrs: {
+        type: 'button'
+      }
+    };
+
+    return h('button', mergeData(data, def), [
+      large
+        ? h(IconCloseLarge)
+        : h(IconClose)
+    ])
+  }
+};
+
+var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',{on:{"enter":_vm.updateOverflowAuto}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],ref:"modal",class:['uk-modal', { 'uk-modal-container': _vm.container, 'uk-flex uk-flex-top': _vm.center }],style:({
+      display: _vm.center
+        ? ''
+        : 'block'
+    }),on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.closeOnBg && _vm.$emit('update:show', false);}}},[_c('div',{ref:"dialog",class:['uk-modal-dialog', _vm.widthClasses, { 'uk-margin-auto-vertical': _vm.center }]},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-default",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),(_vm.$slots.header || _vm.$slots.title)?_c('div',{ref:"header",staticClass:"uk-modal-header"},[_vm._t("header")],2):_vm._e(),_vm._v(" "),_c('div',{ref:"body",class:['uk-modal-body', { 'uk-overflow-auto': _vm.overflowAuto }]},[_vm._t("default")],2),_vm._v(" "),(_vm.$slots.footer)?_c('div',{ref:"footer",staticClass:"uk-modal-footer"},[_vm._t("footer")],2):_vm._e()],1)])])},staticRenderFns: [],
+  name: 'Modal',
+  extends: core,
+  components: {
+    ModalBtnClose: ModalBtnClose,
+    ModalTransition: ModalTransition
   },
   props: {
-    center: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    // determines if close button should be displayed
+    closeBtn: {
+      type: [Boolean, String],
+      default: true,
+      validator: function (val) { return !val || includes([true, 'outside'], val); }
+    },
+    // determines if the modal should auto
+    // adjust the height overflow
+    overflowAuto: {
       type: Boolean,
       default: false
     },
@@ -1600,207 +1785,67 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       type: Boolean,
       default: false
     },
-    lightbox: {
+    center: {
       type: Boolean,
       default: false
     },
-    full: {
-      type: Boolean,
-      default: false
-    },
-    blank: {
-      type: Boolean,
-      default: false
+    width: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    // if dialog is passed as slot is considered overriden
-    dialogIsOverriden: function dialogIsOverriden () {
-      return this.$slots.default[0] &&
-        this.$slots.default[0].data &&
-        this.$slots.default[0].data.staticClass === 'uk-modal-dialog'
+    widthClasses: function widthClasses () {
+      return this.width
+        ? this.width.split(' ').map(function (width$$1) { return ("uk-width-" + width$$1); })
+        : ''
+    }
+  },
+  methods: {
+    updateOverflowAuto: function updateOverflowAuto () {
+      if (!this.overflowAuto) {
+        return
+      }
+
+      var modal = this.$el;
+      var modalBody = this.$refs.body;
+      var modalDialog = this.$refs.dialog;
+
+      css(modalBody, 'maxHeight', '150px');
+      var maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight);
+      css(modalBody, 'maxHeight', (maxHeight + "px"));
     }
   },
   mounted: function mounted () {
     var this$1 = this;
 
-    // execute transition hooks if visible on load
-    if (this.show) {
-      this.beforeEnter();
-      this.afterEnter();
-    }
-
-    // set refs programatically
-    this.$refs.panel = this.$el.querySelector('.uk-modal-dialog');
-    this.$refs.close = this.$el.querySelector('button.uk-close');
-
-    // place close-top outside the dialog
-    if (this.$refs.close && hasClass(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass(this.$refs.close, 'vk-modal-close-top');
-      var bar = document.createElement('div');
-      addClass(bar, 'uk-modal-bar');
-      addClass(bar, 'uk-position-top');
-      bar.appendChild(this.$refs.close);
-      this.$el.appendChild(bar);
-    }
-
-    // place caption bottom outside the dialog
-    var caption = this.$el.querySelector('.vk-modal-caption-bottom');
-    if (caption) {
-      addClass(caption, 'uk-modal-bar');
-      addClass(caption, 'uk-position-bottom');
-      removeClass(caption, 'vk-modal-caption-bottom');
-      this.$el.appendChild(caption);
-    }
-
-    // update close style if full
-    if (this.full) {
-      removeClass(this.$refs.close, 'uk-modal-close-default');
-      addClass(this.$refs.close, 'uk-modal-close-full');
-    }
-
-    // init events
-    var clickHandler = function (e) {
-      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('click-in', e);
+    on(window, 'resize', debounce(function () {
+      if (!this$1.show) {
+        return
       }
-    };
 
-    on(this.$el, 'click', clickHandler, this._uid);
-    if ('ontouchstart' in doc) {
-      on(this.$el, 'touchstart', clickHandler, this._uid);
-    }
+      this$1.updateOverflowAuto();
+    }, 30), this._uid);
   },
-  methods: {
-    beforeEnter: function beforeEnter () {
-      var this$1 = this;
+  beforeDestroy: function beforeDestroy () {
+    off(window, 'resize', this._uid);
+  }
+};
 
-      this._beforeEnter();
-      this.$nextTick(function () {
-        addClass(doc, 'uk-modal-page');
-        this$1.resize();
-      });
-    },
-    afterEnter: function afterEnter () {
-      this._afterEnter();
-      addClass(this.$el, 'uk-open');
-    },
-    afterLeave: function afterLeave () {
-      this._afterLeave();
-      // if no active modals left
-      if (!this.activeCount) {
-        removeClass(doc, 'uk-modal-page');
-      }
-    },
-    resize: function resize () {
-      if (css(this.$el, 'display') === 'block' && this.center) {
-        removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-
-        var dialog = this.$refs.panel;
-        var dh = dialog.offsetHeight;
-        var marginTop = css(dialog, 'margin-top');
-        var marginBottom = css(dialog, 'margin-bottom');
-        var pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10);
-
-        if (window.innerHeight > (dh + pad)) {
-          addClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-        } else {
-          removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle');
-        }
-        this.$el.style.display = hasClass(this.$el, 'uk-flex') ? '' : 'block';
-      }
+var modalFull = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal uk-modal-full",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-modal-dialog uk-flex uk-flex-center uk-flex-middle",staticStyle:{"box-sizing":"border-box","min-height":"100vh","height":"100vh"}},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-full",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),_vm._t("default")],2)])])},staticRenderFns: [],
+  name: 'ModalFull',
+  extends: core,
+  components: {
+    ModalBtnClose: ModalBtnClose,
+    ModalTransition: ModalTransition
+  },
+  props: {
+    // determines if close button should be displayed
+    closeBtn: {
+      type: [Boolean, String],
+      default: true,
+      validator: function (val) { return !val || includes([true, 'large'], val); }
     }
-  }
-};
-
-var modalHeader = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    var def = {
-      class: ['uk-modal-header']
-    };
-
-    return h('div', mergeData(data, def), children)
-  }
-};
-
-var modalBody = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    var def = {
-      class: ['uk-modal-body']
-    };
-
-    return h('div', mergeData(data, def), children)
-  }
-};
-
-var modalFooter = {
-  functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-
-    var def = {
-      class: ['uk-modal-footer']
-    };
-
-    return h('div', mergeData(data, def), children)
-  }
-};
-
-var modalCaption = {
-  functional: true,
-  props: ['bottom'],
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-    var props = ref.props;
-
-    var bottom = props.bottom !== undefined;
-    var def = {
-      class: [data.staticClass, {
-        'uk-modal-caption': !bottom,
-        'vk-modal-caption-bottom': bottom
-      }]
-    };
-
-    return h('div', mergeData(data, def), children)
-  }
-};
-
-var modalClose = {
-  functional: true,
-  props: ['outside', 'full', 'top'],
-  render: function render (h, ref) {
-    var children = ref.children;
-    var data = ref.data;
-    var props = ref.props;
-
-    var outside = props.outside !== undefined;
-    var full = props.full !== undefined;
-    var top = props.top !== undefined;
-
-    var def = {
-      class: ['uk-close', 'uk-icon', {
-        'uk-modal-close-default': !outside && !full,
-        'uk-modal-close-outside': outside,
-        'uk-modal-close-full': full,
-        'vk-modal-close-top': top
-      }],
-      attrs: {
-        type: 'button',
-        'uk-close': true
-      }
-    };
-
-    return h('button', mergeData(data, def), children)
   }
 };
 
@@ -1954,6 +1999,86 @@ function getId (n) {
   return (msg + "-" + key + "-" + timeout)
 }
 
+var doc$4 = document.documentElement;
+var body$1 = document.body;
+
+var active$1;
+var activeCount;
+
+on(doc$4, 'click', function (e) {
+  if (active$1 && !active$1.$refs.panel.contains(e.target)) {
+    active$1.$emit('click-out', e);
+  }
+});
+
+on(doc$4, 'keyup', function (e) {
+  if (e.keyCode === 27 && active$1) {
+    e.preventDefault();
+    active$1.$emit('key-esc', e);
+  }
+});
+
+var ModalMixin = {
+  props: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    overlay: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data: function () { return ({
+    active: active$1,
+    activeCount: activeCount
+  }); },
+  methods: {
+    _beforeEnter: function _beforeEnter () {
+      if (!active$1) {
+        body$1.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
+      }
+    },
+    _afterEnter: function _afterEnter () {
+      // if any previous modal active
+      // emit event for further actions
+      if (active$1) {
+        active$1.$emit('inactive');
+      }
+      // change current active modal
+      active$1 = this;
+      activeCount++;
+    },
+    _afterLeave: function _afterLeave () {
+      activeCount--;
+      // if no active modals left
+      if (!activeCount) {
+        body$1.style['overflow-y'] = '';
+      }
+      if (active$1 === this) {
+        active$1 = null;
+      }
+    },
+    getScrollbarWidth: function getScrollbarWidth () {
+      var width = doc$4.style.width;
+      doc$4.style.width = '';
+      var scrollbarWidth = window.innerWidth - doc$4.offsetWidth;
+
+      if (width) {
+        doc$4.style.width = width;
+      }
+
+      return scrollbarWidth
+    }
+  },
+  beforeDestroy: function beforeDestroy () {
+    offAll(this._uid);
+    if (this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el);
+    }
+  }
+};
+
 var isRtl$1 = document.documentElement.getAttribute('dir') === 'rtl';
 
 function toMs (time) {
@@ -1979,8 +2104,8 @@ function getWindow$1 (element) {
     : window
 }
 
-var doc$2 = document.documentElement;
-var body$1 = document.body;
+var doc$3 = document.documentElement;
+var body = document.body;
 var scroll;
 
 var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
@@ -2064,14 +2189,14 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     beforeShow: function beforeShow () {
       scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
 
-      css(doc$2, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
+      css(doc$3, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
 
       // set fixed with so the page can slide-out without shinking
-      css(doc$2, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
+      css(doc$3, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
 
-      addClass(doc$2, ("" + (this.clsPage)));
-      addClass(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-      forceRedraw(body$1);
+      addClass(doc$3, ("" + (this.clsPage)));
+      addClass(body, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      forceRedraw(body);
 
       addClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
       addClass(this.$el, this.clsOverlay);
@@ -2095,18 +2220,18 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
         scroll = { x: window.pageXOffset, y: window.pageYOffset };
       }
 
-      css(doc$2, 'width', '');
-      removeClass(doc$2, ("" + (this.clsPage)));
+      css(doc$3, 'width', '');
+      removeClass(doc$3, ("" + (this.clsPage)));
 
       removeClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
       removeClass(this.$el, this.clsOverlay);
       css(this.$el, 'display', 'none');
       forceRedraw(this.$el);
-      removeClass(body$1, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
+      removeClass(body, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
 
-      body$1.scrollTop = scroll.y;
+      body.scrollTop = scroll.y;
 
-      css(doc$2, 'overflow-y', '');
+      css(doc$3, 'overflow-y', '');
       css(this.$refs.content, 'width', '');
       css(this.$refs.content, 'height', '');
       forceRedraw(this.$refs.content);
@@ -2141,8 +2266,8 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     }
   },
   beforeDestroy: function beforeDestroy () {
-    removeClass(doc$2, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-    doc$2.style['margin-left'] = '';
+    removeClass(doc$3, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
+    doc$3.style['margin-left'] = '';
     this._afterLeave();
   }
 };
@@ -2178,37 +2303,6 @@ function addNodeClass (node) {
   node.data.staticClass = classes.join(' ');
 }
 
-var IconClose = {
-  functional: true,
-  name: 'close-icon',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 14;
-    var height = props.height; if ( height === void 0 ) height = 14;
-
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
-
-    return h('svg', {
-      attrs: {
-        width: width,
-        height: height,
-        version: '1.1',
-        meta: ("icon-close-icon ratio-" + ratio),
-        viewBox: viewBox || '0 0 14 14'
-      },
-      domProps: {
-        innerHTML: '<path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13"/>'
-      }
-    })
-  }
-};
-
 var offcanvasClose = {
   name: 'OffcanvasClose',
   functional: true,
@@ -2227,16 +2321,15 @@ var offcanvasClose = {
   }
 };
 
+// icon-pagination-next
 var IconNext = {
   functional: true,
-  name: 'pagination-next',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 7;
-    var height = props.height; if ( height === void 0 ) height = 12;
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 7;
+    var height = props.height || 12;
+    var viewBox = props.viewBox || '0 0 7 12';
 
     if (ratio !== 1) {
       width = width * ratio;
@@ -2245,11 +2338,11 @@ var IconNext = {
 
     return h('svg', {
       attrs: {
+        version: '1.1',
+        meta: 'icon-pagination-next ratio-' + ratio,
         width: width,
         height: height,
-        version: '1.1',
-        meta: ("icon-pagination-next ratio-" + ratio),
-        viewBox: viewBox || '0 0 7 12'
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/>'
@@ -2294,16 +2387,15 @@ var PaginationLast = {
   }
 };
 
+// icon-pagination-previous
 var IconPrevious = {
   functional: true,
-  name: 'pagination-previous',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 7;
-    var height = props.height; if ( height === void 0 ) height = 12;
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 7;
+    var height = props.height || 12;
+    var viewBox = props.viewBox || '0 0 7 12';
 
     if (ratio !== 1) {
       width = width * ratio;
@@ -2312,11 +2404,11 @@ var IconPrevious = {
 
     return h('svg', {
       attrs: {
+        version: '1.1',
+        meta: 'icon-pagination-previous ratio-' + ratio,
         width: width,
         height: height,
-        version: '1.1',
-        meta: ("icon-pagination-previous ratio-" + ratio),
-        viewBox: viewBox || '0 0 7 12'
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/>'
@@ -2602,16 +2694,15 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
+// icon-spinner
 var IconSpinner = {
   functional: true,
-  name: 'spinner',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 30;
-    var height = props.height; if ( height === void 0 ) height = 30;
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 30;
+    var height = props.height || 30;
+    var viewBox = props.viewBox || '0 0 30 30';
 
     if (ratio !== 1) {
       width = width * ratio;
@@ -2620,11 +2711,11 @@ var IconSpinner = {
 
     return h('svg', {
       attrs: {
+        version: '1.1',
+        meta: 'icon-spinner ratio-' + ratio,
         width: width,
         height: height,
-        version: '1.1',
-        meta: ("icon-spinner ratio-" + ratio),
-        viewBox: viewBox || '0 0 30 30'
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<circle fill="none" stroke="#000" cx="15" cy="15" r="14"/>'
@@ -3340,16 +3431,15 @@ function isAllSelected (selection, rows) {
   return selected.length === rows.length
 }
 
+// icon-arrow-up
 var IconArrowUp = {
   functional: true,
-  name: 'arrow-up',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 20;
-    var height = props.height; if ( height === void 0 ) height = 20;
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 20;
+    var height = props.height || 20;
+    var viewBox = props.viewBox || '0 0 20 20';
 
     if (ratio !== 1) {
       width = width * ratio;
@@ -3358,11 +3448,11 @@ var IconArrowUp = {
 
     return h('svg', {
       attrs: {
+        version: '1.1',
+        meta: 'icon-arrow-up ratio-' + ratio,
         width: width,
         height: height,
-        version: '1.1',
-        meta: ("icon-arrow-up ratio-" + ratio),
-        viewBox: viewBox || '0 0 20 20'
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>'
@@ -3371,16 +3461,15 @@ var IconArrowUp = {
   }
 };
 
+// icon-arrow-down
 var IconArrowDown = {
   functional: true,
-  name: 'arrow-down',
-  render: function render (h, ref) {
-    var props = ref.props;
-
-    var viewBox = props.viewBox;
-    var ratio = props.ratio; if ( ratio === void 0 ) ratio = 1;
-    var width = props.width; if ( width === void 0 ) width = 20;
-    var height = props.height; if ( height === void 0 ) height = 20;
+  render: function (h, ctx) {
+    var props = ctx.props;
+    var ratio = props.ratio || 1;
+    var width = props.width || 20;
+    var height = props.height || 20;
+    var viewBox = props.viewBox || '0 0 20 20';
 
     if (ratio !== 1) {
       width = width * ratio;
@@ -3389,11 +3478,11 @@ var IconArrowDown = {
 
     return h('svg', {
       attrs: {
+        version: '1.1',
+        meta: 'icon-arrow-down ratio-' + ratio,
         width: width,
         height: height,
-        version: '1.1',
-        meta: ("icon-arrow-down ratio-" + ratio),
-        viewBox: viewBox || '0 0 20 20'
+        viewBox: viewBox
       },
       domProps: {
         innerHTML: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>'
@@ -3467,7 +3556,7 @@ var index$3 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
   }
 };
 
-var core = {
+var core$1 = {
   components: {
     TabContent: {
       functional: true,
@@ -3527,7 +3616,7 @@ var label = ref.label;
 var disabled = ref.disabled;
 return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(" "+_vm._s(label)+" ")])])})),_vm._v(" "),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
   name: 'Tabs',
-  extends: core,
+  extends: core$1,
   props: {
     alignment: {
       type: String,
@@ -3560,7 +3649,7 @@ var label = ref.label;
 var disabled = ref.disabled;
 return _c('li',{class:{ 'uk-active': _vm.activeTab === id, 'uk-disabled': disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();!disabled && _vm.$emit('change', id);}}},[_vm._v(" "+_vm._s(label)+" ")])])}))]),_vm._v(" "),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
   name: 'TabsVertical',
-  extends: core,
+  extends: core$1,
   props: {
     alignment: {
       type: String,
@@ -3600,12 +3689,7 @@ var components = Object.freeze({
 	IconLink: iconLink,
 	IconButton: iconButton,
 	Modal: modal,
-	ModalDialog: ModalDialog,
-	ModalHeader: modalHeader,
-	ModalBody: modalBody,
-	ModalFooter: modalFooter,
-	ModalCaption: modalCaption,
-	ModalClose: modalClose,
+	ModalFull: modalFull,
 	Notification: notification,
 	Offcanvas: offcanvas,
 	OffcanvasContent: offcanvasContent,
