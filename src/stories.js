@@ -21,7 +21,10 @@ play('Icon')
   .add('IconLink', require('./components/icon/story/link').default)
 
 play('Modal')
-  .add('Default', require('./components/modal/story').default)
+  .add('Default', require('./components/modal/story/default').default)
+  .add('Scrollbar', require('./components/modal/story/scrollbar').default)
+  .add('Sizes', require('./components/modal/story/sizes').default)
+  .add('Center', require('./components/modal/story/center').default)
 
 play('Notification')
   .add('Default', require('./components/notification/story').default)

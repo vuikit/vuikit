@@ -15,6 +15,9 @@ const dirs = {
   height: ['y', 'top', 'bottom']
 }
 
+export const height = dimension('height')
+export const width = dimension('width')
+
 export function positionAt ({ element, target, elAttach, targetAttach, elOffset, targetOffset, flip, boundary }) {
   elAttach = getPos(elAttach)
   targetAttach = getPos(targetAttach)
@@ -183,9 +186,6 @@ function offsetParent (element) {
 
   return parent || docEl(element)
 }
-
-export const height = dimension('height')
-export const width = dimension('width')
 
 function dimension (prop) {
   var propName = ucfirst(prop)

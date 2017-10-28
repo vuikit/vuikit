@@ -5,7 +5,7 @@ import '../../src/stories'
 import Vuikit from '../dist.esm'
 
 // add vuikit default theme styles
-import '@vuikit/theme/dist/vuikit.min.css'
+import '@vuikit/theme/dist/vuikit.css'
 
 Vue.use(Vuikit)
 

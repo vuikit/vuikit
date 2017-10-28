@@ -1,45 +1,92 @@
 <template>
-  <transition
-    enter-to-class="uk-open"
-    leave-class="uk-open"
-    @before-enter="beforeEnter"
-    @after-enter="afterEnter"
-    @after-leave="afterLeave">
-    <div class="uk-modal"
+  <modal-transition
+    @enter="updateOverflowAuto"
+  >
+    <div ref="modal"
       v-show="show"
-      style="display: block;"
-      :class="{
-        'uk-modal-lightbox': lightbox,
+      :style="{
+        display: center
+          ? ''
+          : 'block'
+      }"
+      :class="['uk-modal', {
         'uk-modal-container': container,
-        'uk-modal-full': full
-      }">
-        <modal-content></modal-content>
+        'uk-flex uk-flex-top': center
+      }]"
+      @click.self="closeOnBg && $emit('update:show', false)"
+    >
+      <div ref="dialog"
+        :class="['uk-modal-dialog', widthClasses, {
+          'uk-margin-auto-vertical': center
+        }]"
+      >
+        <!-- close button -->
+        <modal-btn-close
+          v-if="closeBtn"
+          :type="closeBtn"
+          class="uk-modal-close-default"
+          @click="$emit('update:show', false)"
+        ></modal-btn-close>
+
+        <!-- header -->
+        <div ref="header"
+          v-if="$slots.header || $slots.title"
+          class="uk-modal-header"
+        >
+          <slot name="header" />
+        </div>
+
+        <!-- body -->
+        <div ref="body"
+          :class="['uk-modal-body', {
+            'uk-overflow-auto': overflowAuto
+          }]"
+        >
+          <slot />
+        </div>
+
+        <!-- footer -->
+        <div ref="footer"
+          v-if="$slots.footer"
+          class="uk-modal-footer"
+        >
+          <slot name="footer" />
+        </div>
+
+      </div>
     </div>
-  </transition>
+  </modal-transition>
 </template>
 
 <script>
-import ModalMixin from '~/mixins/modal'
-import ModalDialog from './modal-dialog'
-import { on, css, hasClass, addClass, removeClass } from '@vuikit/util'
+import { height } from '~/helpers/position'
+import { on, off, css, debounce, includes } from '@vuikit/util'
 
-const doc = document.documentElement
+import core from './core'
+import ModalTransition from './transition'
+import ModalBtnClose from './ui/button-close'
 
 export default {
   name: 'Modal',
-  mixins: [ModalMixin],
+  extends: core,
   components: {
-    'modal-content': {
-      functional: true,
-      render (h, { parent: vm }) {
-        return vm.dialogIsOverriden
-          ? vm.$slots.default
-          : h(ModalDialog, vm.$slots.default)
-      }
-    }
+    ModalBtnClose,
+    ModalTransition
   },
   props: {
-    center: {
+    show: {
+      type: Boolean,
+      default: false
+    },
+    // determines if close button should be displayed
+    closeBtn: {
+      type: [Boolean, String],
+      default: true,
+      validator: val => !val || includes([true, 'outside'], val)
+    },
+    // determines if the modal should auto
+    // adjust the height overflow
+    overflowAuto: {
       type: Boolean,
       default: false
     },
@@ -47,112 +94,48 @@ export default {
       type: Boolean,
       default: false
     },
-    lightbox: {
+    center: {
       type: Boolean,
       default: false
     },
-    full: {
-      type: Boolean,
-      default: false
-    },
-    blank: {
-      type: Boolean,
-      default: false
+    width: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    // if dialog is passed as slot is considered overriden
-    dialogIsOverriden () {
-      return this.$slots.default[0] &&
-        this.$slots.default[0].data &&
-        this.$slots.default[0].data.staticClass === 'uk-modal-dialog'
-    }
-  },
-  mounted () {
-    // execute transition hooks if visible on load
-    if (this.show) {
-      this.beforeEnter()
-      this.afterEnter()
-    }
-
-    // set refs programatically
-    this.$refs.panel = this.$el.querySelector('.uk-modal-dialog')
-    this.$refs.close = this.$el.querySelector('button.uk-close')
-
-    // place close-top outside the dialog
-    if (this.$refs.close && hasClass(this.$refs.close, 'vk-modal-close-top')) {
-      removeClass(this.$refs.close, 'vk-modal-close-top')
-      const bar = document.createElement('div')
-      addClass(bar, 'uk-modal-bar')
-      addClass(bar, 'uk-position-top')
-      bar.appendChild(this.$refs.close)
-      this.$el.appendChild(bar)
-    }
-
-    // place caption bottom outside the dialog
-    const caption = this.$el.querySelector('.vk-modal-caption-bottom')
-    if (caption) {
-      addClass(caption, 'uk-modal-bar')
-      addClass(caption, 'uk-position-bottom')
-      removeClass(caption, 'vk-modal-caption-bottom')
-      this.$el.appendChild(caption)
-    }
-
-    // update close style if full
-    if (this.full) {
-      removeClass(this.$refs.close, 'uk-modal-close-default')
-      addClass(this.$refs.close, 'uk-modal-close-full')
-    }
-
-    // init events
-    const clickHandler = e => {
-      if (e.target === this.$refs.panel || this.$refs.panel.contains(e.target)) {
-        this.$emit('click-in', e)
-      }
-    }
-
-    on(this.$el, 'click', clickHandler, this._uid)
-    if ('ontouchstart' in doc) {
-      on(this.$el, 'touchstart', clickHandler, this._uid)
+    widthClasses () {
+      return this.width
+        ? this.width.split(' ').map(width => `uk-width-${width}`)
+        : ''
     }
   },
   methods: {
-    beforeEnter () {
-      this._beforeEnter()
-      this.$nextTick(() => {
-        addClass(doc, 'uk-modal-page')
-        this.resize()
-      })
-    },
-    afterEnter () {
-      this._afterEnter()
-      addClass(this.$el, 'uk-open')
-    },
-    afterLeave () {
-      this._afterLeave()
-      // if no active modals left
-      if (!this.activeCount) {
-        removeClass(doc, 'uk-modal-page')
+    updateOverflowAuto () {
+      if (!this.overflowAuto) {
+        return
       }
-    },
-    resize () {
-      if (css(this.$el, 'display') === 'block' && this.center) {
-        removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle')
 
-        const dialog = this.$refs.panel
-        const dh = dialog.offsetHeight
-        const marginTop = css(dialog, 'margin-top')
-        const marginBottom = css(dialog, 'margin-bottom')
-        const pad = parseInt(marginTop, 10) + parseInt(marginBottom, 10)
+      const modal = this.$el
+      const modalBody = this.$refs.body
+      const modalDialog = this.$refs.dialog
 
-        if (window.innerHeight > (dh + pad)) {
-          addClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle')
-        } else {
-          removeClass(this.$el, 'uk-flex uk-flex-center uk-flex-middle')
-        }
-        this.$el.style.display = hasClass(this.$el, 'uk-flex') ? '' : 'block'
-      }
+      css(modalBody, 'maxHeight', '150px')
+      const maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight)
+      css(modalBody, 'maxHeight', `${maxHeight}px`)
     }
+  },
+  mounted () {
+    on(window, 'resize', debounce(() => {
+      if (!this.show) {
+        return
+      }
+
+      this.updateOverflowAuto()
+    }, 30), this._uid)
+  },
+  beforeDestroy () {
+    off(window, 'resize', this._uid)
   }
 }
 </script>
