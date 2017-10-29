@@ -77,6 +77,32 @@
           :value="null"
         ></story-prop-toggler-option>
       </story-prop-toggler>
+
+      <story-prop-toggler v-model="animationIn" name="Animation In">
+        <story-prop-toggler-option
+          label="scale-up"
+          value="scale-up"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="fade"
+          value="fade"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="none"
+          value=""
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
+
+      <story-prop-toggler v-model="duration" name="Duration">
+        <story-prop-toggler-option
+          label="1000ms"
+          :value="1000"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="100ms"
+          :value="100"
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
     </div>
 
   </div>
@@ -95,8 +121,10 @@ const PosButton = {
         content: this.position,
         position: this.position,
         flip: this.$parent.flip,
+        delay: this.$parent.delay,
         boundary: this.$parent.boundary,
-        delay: this.$parent.delay
+        duration: this.$parent.duration,
+        animation: `${this.$parent.animationIn}, ${this.$parent.animationOut}`
       }}
     >
       { label }
@@ -111,7 +139,9 @@ export default {
   data: () => ({
     delay: 0,
     flip: false,
-    boundary: null
+    boundary: null,
+    animationIn: '',
+    duration: 100
   })
 }
 </script>

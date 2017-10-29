@@ -1,4 +1,5 @@
 import { warn } from '~/helpers/debug'
+import { Animation } from '~/helpers/animation'
 import { positionAt, flipPosition, getPositionAxis } from '~/helpers/position'
 import {
   on,
@@ -81,14 +82,23 @@ function show (ctx) {
 
   delayedShow = setTimeout(() => {
     document.body.appendChild(outer)
-    position(ctx)
+    const { dir, align } = positionTooltip(ctx)
+
+    Animation.in({
+      element: outer,
+      duration: props.duration,
+      origin: `${dir}-${align}`,
+      animation: props.animationIn
+    })
+
   }, props.delay)
 }
 
-function hide () {
+function hide (ctx) {
   const { outer } = getTooltip()
 
   clearTimeout(delayedShow)
+
   removeClass(outer, 'uk-active')
 
   // remove from dom
@@ -115,13 +125,13 @@ function updateVisibles (ctx) {
   const { inner } = getTooltip()
 
   inner.innerHTML = props.content
-  position(ctx)
+  positionTooltip(ctx)
 }
 
 /**
  * Position tooltip
 **/
-function position (ctx) {
+function positionTooltip (ctx) {
   const { target, props } = ctx
   const { outer: tooltip } = getTooltip()
   const { position, offset, boundary, flip } = props
@@ -163,8 +173,12 @@ function position (ctx) {
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
 
-  // add position class
   addClass(tooltip, `uk-tooltip-${dir}-${align} uk-active`)
+
+  return {
+    dir,
+    align
+  }
 }
 
 /**
@@ -177,8 +191,10 @@ function getProps (ctx) {
   let offset = 0
   let flip = true
   let content = null
+  let duration = 100
   let position = 'top'
   let boundary = window
+  let animation = 'scale-up'
 
   if (isObject(value)) {
     content = value.content
@@ -186,7 +202,9 @@ function getProps (ctx) {
     delay = get(value, 'delay', delay)
     offset = toInteger(offset) || offset
     boundary = value.boundary || boundary
+    duration = get(value, 'duration', duration)
     position = value.position || arg || position
+    animation = get(value, 'animation', animation)
   } else {
     content = value
     position = arg || position
@@ -202,7 +220,22 @@ function getProps (ctx) {
     return false
   }
 
-  return { delay, offset, flip, content, position, boundary }
+  // decompose animation
+  const animations = animation.split(',')
+  const animationIn = prefixAnimations(animations[0])
+
+  return { delay, offset, flip, content, position, boundary, animationIn, duration }
+}
+
+/**
+ * Prefix all animations (separated by space) with `uk-animation-`
+**/
+function prefixAnimations (str) {
+  if (!str.trim()) {
+    return ''
+  }
+
+  return str.match(/[\w-]+/g).map(v => `uk-animation-${v}`).join(' ')
 }
 
 /**
