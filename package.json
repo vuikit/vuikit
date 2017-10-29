@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@lump/write": "^0.2.4",
-    "@vuikit/util": "^0.8.0",
+    "@vuikit/util": "^0.8.1",
     "vue": "^2.5.2"
   },
   "devDependencies": {
