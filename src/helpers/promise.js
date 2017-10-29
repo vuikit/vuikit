@@ -8,17 +8,16 @@ const RESOLVED = 0
 const REJECTED = 1
 const PENDING = 2
 
-var async = 'setImmediate' in window ? setImmediate : setTimeout
+const async = 'setImmediate' in window ? setImmediate : setTimeout
 
-export const Promise = 'Promise' in window ? window.Promise : promiseFn
+export default 'Promise' in window ? window.Promise : Promise
 
-function promiseFn (executor) {
-
+function Promise (executor) {
   this.state = PENDING
   this.value = undefined
   this.deferred = []
 
-  var promise = this
+  const promise = this
 
   try {
     executor(function (x) {
@@ -77,7 +76,7 @@ Promise.race = function race (iterable) {
   })
 }
 
-var p = Promise.prototype
+const p = Promise.prototype
 
 p.resolve = function resolve (x) {
   var promise = this
