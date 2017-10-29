@@ -103,6 +103,25 @@
           :value="100"
         ></story-prop-toggler-option>
       </story-prop-toggler>
+
+      <story-prop-toggler v-model="triggers" name="Triggers">
+        <story-prop-toggler-option
+          label="Hover"
+          value="hover"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="Focus"
+          value="focus"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="Click"
+          value="click"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="All"
+          value="click hover focus"
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
     </div>
 
   </div>
@@ -124,6 +143,7 @@ const PosButton = {
         delay: this.$parent.delay,
         boundary: this.$parent.boundary,
         duration: this.$parent.duration,
+        triggers: this.$parent.triggers,
         animation: `${this.$parent.animationIn}, ${this.$parent.animationOut}`
       }}
     >
@@ -141,7 +161,8 @@ export default {
     flip: false,
     boundary: null,
     animationIn: '',
-    duration: 100
+    duration: 100,
+    triggers: 'hover focus'
   })
 }
 </script>

@@ -15,7 +15,7 @@ import {
 } from '@vuikit/util'
 
 let delayedShow
-const tooltip = {}
+let tooltip = {}
 const uid = 'v-tooltip'
 
 const positions = [
@@ -61,14 +61,27 @@ export default {
  * SET / REMOVE events
 **/
 function setEvents (ctx) {
+  const { triggers } = ctx.props
+
   removeEvents(ctx)
-  on(ctx.target, 'mouseenter', () => show(ctx), uid)
-  on(ctx.target, 'mouseleave', () => hide(ctx), uid)
+
+  if (triggers.match(/click/)) {
+    on(ctx.target, 'click', () => toggle(ctx), uid)
+  }
+
+  if (triggers.match(/hover/)) {
+    on(ctx.target, 'mouseenter', () => show(ctx), uid)
+    on(ctx.target, 'mouseleave', () => hide(ctx), uid)
+  }
+
+  if (triggers.match(/focus/)) {
+    on(ctx.target, 'focusin', () => show(ctx), uid)
+    on(ctx.target, 'focusout', () => hide(ctx), uid)
+  }
 }
 
 function removeEvents (ctx) {
-  off(ctx.target, 'mouseenter', uid)
-  off(ctx.target, 'mouseleave', uid)
+  off(ctx.target, 'click mouseenter mouseleave focusin focusout', uid)
 }
 
 /**
@@ -104,12 +117,17 @@ function hide (ctx) {
   // remove from dom
   if (outer.parentNode) {
     outer.parentNode.removeChild(outer)
-
-    // force recreating tooltip each time as in
-    // edge situations redrawing doesn't work well
-    delete tooltip.inner
-    delete tooltip.outer
   }
+
+  // force recreating tooltip each time as in
+  // edge situations redrawing doesn't work well
+  tooltip = {}
+}
+
+function toggle (ctx) {
+  isEmpty(tooltip)
+    ? show(ctx)
+    : hide(ctx)
 }
 
 /**
@@ -195,6 +213,7 @@ function getProps (ctx) {
   let position = 'top'
   let boundary = window
   let animation = 'scale-up'
+  let triggers = 'hover focus'
 
   if (isObject(value)) {
     content = value.content
@@ -203,6 +222,7 @@ function getProps (ctx) {
     offset = toInteger(offset) || offset
     boundary = value.boundary || boundary
     duration = get(value, 'duration', duration)
+    triggers = get(value, 'triggers', triggers)
     position = value.position || arg || position
     animation = get(value, 'animation', animation)
   } else {
@@ -224,7 +244,7 @@ function getProps (ctx) {
   const animations = animation.split(',')
   const animationIn = prefixAnimations(animations[0])
 
-  return { delay, offset, flip, content, position, boundary, animationIn, duration }
+  return { delay, offset, flip, content, position, boundary, animationIn, duration, triggers }
 }
 
 /**
