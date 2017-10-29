@@ -13,7 +13,6 @@ play('Drop')
 
 play('Dropdown')
   .add('Default', require('./components/dropdown/story').default)
-  .add('Positions', require('./components/dropdown/story-positions').default)
 
 play('Icon')
   .add('Icon', require('./components/icon/story/default').default)

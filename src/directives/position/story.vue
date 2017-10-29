@@ -1,94 +1,86 @@
 <template>
   <div class="uk-padding">
-    <div class="uk-height-viewport uk-flex uk-flex-center uk-flex-middle">
-      <div>
 
-        <div
-          ref="placeholder"
-          :style="{ width: '350px' }"
-          class="uk-panel uk-placeholder uk-padding-small uk-text-center"
-        >
-          <div class="uk-clearfix uk-margin">
-            <div class="uk-button-group uk-float-left">
-              <pos-button position="left-top" />
-              <pos-button position="top-left" />
-            </div>
-            <div class="uk-button-group">
-              <pos-button position="top-center" />
-            </div>
-            <div class="uk-button-group uk-float-right">
-              <pos-button position="top-right" />
-              <pos-button position="right-top" />
-            </div>
+    <div :style="{ padding: '50px' }">
+      <div
+        ref="placeholder"
+        class="uk-panel uk-placeholder uk-padding-small uk-text-center uk-margin-remove uk-margin-auto"
+        :style="{ width: '350px' }"
+      >
+        <div class="uk-clearfix uk-margin">
+          <div class="uk-button-group uk-float-left">
+            <pos-button position="left-top" />
+            <pos-button position="top-left" />
           </div>
-
-          <div class="uk-clearfix uk-margin">
-            <div class="uk-button-group uk-float-left">
-              <pos-button position="left-center" />
-            </div>
-            <div class="uk-button-group uk-float-right">
-              <pos-button position="right-center" />
-            </div>
+          <div class="uk-button-group">
+            <pos-button position="top-center" />
           </div>
-
-          <div class="uk-clearfix uk-margin">
-            <div class="uk-button-group uk-float-left">
-              <pos-button position="left-bottom" />
-              <pos-button position="bottom-left" />
-            </div>
-            <div class="uk-button-group">
-              <pos-button position="bottom-center" />
-            </div>
-            <div class="uk-button-group uk-float-right">
-              <pos-button position="bottom-right" />
-              <pos-button position="right-bottom" />
-            </div>
+          <div class="uk-button-group uk-float-right">
+            <pos-button position="top-right" />
+            <pos-button position="right-top" />
           </div>
         </div>
 
-        <div class="uk-margin-xlarge-top">
-          Boundary
-          <a :class="{
-              'uk-link-reset': flip === true
-            }"
-            v-text="'none'"
-            @click.prevent="flip = false"
-          ></a>
-          /
-          <a
-            :class="{
-              'uk-link-reset': boundary !== null || flip === false
-            }"
-            v-text="'window'"
-            @click.prevent="boundary = null, flip = true"
-          ></a>
-          /
-          <a
-            :class="{
-              'uk-link-reset': boundary === null || flip === false
-            }"
-            v-text="'placeholder'"
-            @click.prevent="boundary = $refs.placeholder, flip = true"
-          ></a>
-        </div>
-        <div>
-          Target
-          <a :class="{
-              'uk-link-reset': target === $refs.placeholder
-            }"
-            v-text="'button'"
-            @click.prevent="target = activeButton"
-          ></a>
-          /
-          <a :class="{
-              'uk-link-reset': target !== $refs.placeholder
-            }"
-            v-text="'placeholder'"
-            @click.prevent="target = $refs.placeholder"
-          ></a>
+        <div class="uk-clearfix uk-margin">
+          <div class="uk-button-group uk-float-left">
+            <pos-button position="left-center" />
+          </div>
+          <div class="uk-button-group uk-float-right">
+            <pos-button position="right-center" />
+          </div>
         </div>
 
+        <div class="uk-clearfix uk-margin">
+          <div class="uk-button-group uk-float-left">
+            <pos-button position="left-bottom" />
+            <pos-button position="bottom-left" />
+          </div>
+          <div class="uk-button-group">
+            <pos-button position="bottom-center" />
+          </div>
+          <div class="uk-button-group uk-float-right">
+            <pos-button position="bottom-right" />
+            <pos-button position="right-bottom" />
+          </div>
+        </div>
       </div>
+
+    </div>
+
+    <div class="uk-margin-large-top uk-width-large uk-margin-auto">
+
+      <story-prop-toggler v-model="flip" name="Flip">
+        <story-prop-toggler-option
+          label="Yes"
+          :value="true"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="No"
+          :value="false"
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
+
+      <story-prop-toggler v-model="boundary" name="Boundary">
+        <story-prop-toggler-option
+          label="placeholder"
+          :value="$refs.placeholder"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="window"
+          :value="null"
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
+
+      <story-prop-toggler v-model="target" name="Target">
+        <story-prop-toggler-option
+          label="Button"
+          :value="'button'"
+        ></story-prop-toggler-option>
+        <story-prop-toggler-option
+          label="placeholder"
+          :value="$refs.placeholder"
+        ></story-prop-toggler-option>
+      </story-prop-toggler>
     </div>
 
     <div
@@ -96,7 +88,7 @@
         zIndex: 888,
         position: 'absolute'
       }"
-      v-vk-position="{ target, position, boundary, flip }">
+      v-vk-position="{ target: activeTarget, position, boundary, flip }">
       <div class="uk-background-primary uk-padding-small uk-light uk-text-center uk-text-small">
         {{ position }}
       </div>
@@ -125,7 +117,7 @@ const PosButton = {
 
         // don't override placeholder target
         if (this.$parent.target !== this.$parent.$refs.placeholder) {
-          this.$parent.target = e.target
+          // this.$parent.activeButton = e.target
         }
 
         this.$forceUpdate()
@@ -143,20 +135,24 @@ export default {
   data: () => ({
     show: false,
     flip: false,
-    position: 'left-top',
+    position: 'top-center',
     target: null,
-    boundary: null, // defaults to window
-    content: 'Lorem ipsum'
+    boundary: null,
+    content: 'Lorem ipsum',
+    activeButton: null
   }),
   computed: {
-    activeButton () {
-      return this.$children
-        .filter(c => c && c.position === this.position)[0].$el
+    activeTarget () {
+      if (this.target === 'button') {
+        return this.$children
+          .filter(c => c && c.position === this.position)[0].$el
+      }
+
+      return this.target
     }
   },
   mounted () {
     this.target = this.$refs.placeholder
-    this.boundary = this.$refs.placeholder
   }
 }
 </script>
