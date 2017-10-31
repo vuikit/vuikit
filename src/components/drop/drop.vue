@@ -2,7 +2,8 @@
   <div
     :style="$style"
     :class="['uk-drop', { 'uk-open': show }]"
-    @mouseleave="onMouseleave"
+    @mouseenter.self="triggerShow"
+    @mouseleave.self="hideOnLeave && triggerHide()"
     v-position="{
       flip,
       target: $target,
@@ -17,8 +18,8 @@
 
 <script>
 import Position from '~/directives/position/index'
-import { isString, get, includes } from '@vuikit/util'
 import { getPositionAxis } from '~/helpers/position'
+import { includes, on, off, isString, get } from '@vuikit/util'
 
 const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 
@@ -48,8 +49,17 @@ export default {
     Position
   },
   props: {
+    // a Dom element to attach to,
+    // defaults to previousElementSibling
     target: {},
-    boundary: {},
+    // a Dom element as boundary
+    boundary: {
+      default: () => window
+    },
+    // a Dom element where to append the drop
+    placement: {
+      default: () => document.body
+    },
     show: {
       type: Boolean,
       required: true
@@ -62,6 +72,24 @@ export default {
       type: String,
       default: `bottom-${isRtl ? 'right' : 'left'}`,
       validator: pos => includes(positions, pos)
+    },
+    triggers: {
+      type: String,
+      default: 'hover focus'
+    },
+    showDelay: {
+      type: Number,
+      default: 0
+    },
+    hideDelay: {
+      type: Number,
+      default: 100
+    },
+    // determines if hide should be
+    // trriggered on drop mouseleave
+    hideOnLeave: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -91,38 +119,88 @@ export default {
 
       return style
     },
-    $target: {
-      get () {
-        const target = isString(this.target)
-          ? get(this.$vnode.context, this.target)
-          : this.target
-
-        return target || (this.$el && this.$el.previousElementSibling)
-      },
-      cache: false
+    $target () {
+      return isString(this.target)
+        ? get(this.$vnode.context.$refs, this.target)
+        : this.target
     },
-    $boundary: {
-      get () {
-        const boundary = isString(this.boundary)
-          ? get(this.$vnode.context, this.boundary)
-          : this.boundary
-
-        return boundary || window
-      },
-      cache: false
+    $boundary () {
+      return isString(this.boundary)
+        ? get(this.$vnode.context.$refs, this.boundary)
+        : this.boundary
+    },
+    $placement () {
+      return isString(this.placement)
+        ? get(this.$vnode.context.$refs, this.placement)
+        : this.placement
+    }
+  },
+  watch: {
+    triggers () {
+      this.removeTargetEvents(this.target)
+      this.setTargetEvents(this.target)
+    },
+    target (target, oldTarget) {
+      this.removeTargetEvents(oldTarget)
+      this.setTargetEvents()
     }
   },
   methods: {
-    onMouseleave (e) {
-      // ignore childs triggers
-      if (e.relatedTarget === this.$target || e.relatedTarget === this.$el ||
-        this.$target.contains(e.relatedTarget) || this.$el.contains(e.relatedTarget)
-      ) {
+    removeTargetEvents (target) {
+      if (!target) {
         return
       }
 
-      this.$emit('mouseleave', e)
+      off(target, 'click mouseenter mouseleave focusin focusout', this._uid)
+    },
+    setTargetEvents () {
+      if (!this.$target) {
+        return
+      }
+
+      if (this.triggers.match(/click/)) {
+        on(this.$target, 'click', this.toggleShow, this._uid)
+      }
+
+      if (this.triggers.match(/hover/)) {
+        on(this.$target, 'mouseenter', this.triggerShow, this._uid)
+        on(this.$target, 'mouseleave', this.triggerHide, this._uid)
+      }
+
+      if (this.triggers.match(/focus/)) {
+        on(this.$target, 'focusin', this.triggerShow, this._uid)
+        on(this.$target, 'focusout', this.triggerHide, this._uid)
+      }
+    },
+    triggerShow () {
+      clearTimeout(this.hideTimeout)
+
+      this.showTimeout = setTimeout(() => {
+        this.$emit('update:show', true)
+      }, this.showDelay)
+    },
+    triggerHide () {
+      clearTimeout(this.showTimeout)
+
+      this.hideTimeout = setTimeout(() => {
+        this.$emit('update:show', false)
+      }, this.hideDelay)
+    },
+    toggleShow () {
+      this.show
+        ? this.triggerHide()
+        : this.triggerShow()
     }
+  },
+  mounted () {
+    // placed in root to avoid being styled
+    // from parent elements rules
+    if (this.$placement) {
+      this.$placement.appendChild(this.$el)
+    }
+
+    // set events
+    this.setTargetEvents()
   },
   beforeDestroy () {
     if (this.$el.parentNode) {

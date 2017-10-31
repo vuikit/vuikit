@@ -2,7 +2,8 @@
   <div
     :style="$style"
     :class="['uk-dropdown', { 'uk-open': show }]"
-    @mouseleave="onMouseleave"
+    @mouseenter.self="triggerShow"
+    @mouseleave.self="hideOnLeave && triggerHide()"
     v-position="{
       flip,
       target: $target,
@@ -14,6 +15,7 @@
     <slot />
   </div>
 </template>
+
 <script>
 import Drop from '../drop/drop'
 

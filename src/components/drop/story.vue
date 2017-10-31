@@ -1,25 +1,27 @@
 <template>
   <div class="uk-padding">
-    <vk-button
-      @mouseenter="show1 = true"
-      @mouseleave="show1 = false"
-    >
-      Hover
-    </vk-button>
+    <vk-button ref="btn1">Default</vk-button>
     <vk-drop
-      :show="show1"
-      @mouseleave="show1 = false"
+      :show.sync="show1"
+      target="btn1"
     >
       <ui-card />
     </vk-drop>
 
-    <vk-button
-      @click="show2 = !show2"
-    >
-      Click
-    </vk-button>
+    <vk-button ref="btn2">On Click</vk-button>
     <vk-drop
-      :show="show2"
+      :show.sync="show2"
+      target="btn2"
+      triggers="click"
+    >
+      <ui-card />
+    </vk-drop>
+
+    <vk-button ref="btn3">Delayed</vk-button>
+    <vk-drop
+      :show.sync="show3"
+      target="btn3"
+      :show-delay="300"
     >
       <ui-card />
     </vk-drop>
@@ -42,7 +44,8 @@ export default {
   },
   data: () => ({
     show1: false,
-    show2: false
+    show2: false,
+    show3: false
   })
 }
 </script>
