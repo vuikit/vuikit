@@ -1,0 +1,6 @@
+export { default as Pagination } from './pagination'
+export { default as PaginationFirst } from './pagination-first'
+export { default as PaginationLast } from './pagination-last'
+export { default as PaginationPrev } from './pagination-prev'
+export { default as PaginationNext } from './pagination-next'
+export { default as PaginationPages } from './pagination-pages'
