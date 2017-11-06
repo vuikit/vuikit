@@ -54,6 +54,7 @@
     "@lump/size": "^0.1.0",
     "@lump/task": "^0.2.0",
     "@std/esm": "^0.12.4",
+    "@vuikit/core": "^0.1.0",
     "@vuikit/icons": "^0.4.0",
     "@vuikit/theme": "^0.1.1",
     "babel-core": "^6.26.0",

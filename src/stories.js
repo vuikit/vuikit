@@ -17,6 +17,9 @@ play('Dropdown')
 play('Icon')
   .add('Default', require('./components/icon/story').default)
 
+play('Iconnav')
+  .add('Default', require('./components/iconnav/story').default)
+
 play('Modal')
   .add('Default', require('./components/modal/story/default').default)
   .add('Scrollbar', require('./components/modal/story/scrollbar').default)
