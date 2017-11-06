@@ -16,6 +16,7 @@ play('Drop')
 
 play('Dropdown')
   .add('Default', require('./components/dropdown/story').default)
+  .add('Nav', require('./components/dropdown/story-nav').default)
 
 play('Icon')
   .add('Default', require('./components/icon/story').default)
