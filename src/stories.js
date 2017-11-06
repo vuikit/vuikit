@@ -15,9 +15,7 @@ play('Dropdown')
   .add('Default', require('./components/dropdown/story').default)
 
 play('Icon')
-  .add('Icon', require('./components/icon/story/default').default)
-  .add('IconButton', require('./components/icon/story/button').default)
-  .add('IconLink', require('./components/icon/story/link').default)
+  .add('Default', require('./components/icon/story').default)
 
 play('Modal')
   .add('Default', require('./components/modal/story/default').default)

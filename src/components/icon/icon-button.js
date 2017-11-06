@@ -1,12 +1,13 @@
-import mergeData from 'vue-functional-data-merge'
+import VkIcon from './icon'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 export default {
   functional: true,
-  render (h, { data, listeners, children }) {
-    const def = {
-      class: ['uk-icon', 'uk-icon-button']
-    }
+  props: VkIcon.props,
+  render: (h, { props, data, listeners, children }) =>
 
-    return h('a', mergeData(data, def), children)
-  }
+    h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
+      h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+    ])
+
 }

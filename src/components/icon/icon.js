@@ -1,12 +1,20 @@
-import mergeData from 'vue-functional-data-merge'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 export default {
   functional: true,
-  render (h, { data, children }) {
-    const def = {
-      class: ['uk-icon']
+  props: {
+    icon: {
+      type: String,
+      required: true
+    },
+    ratio: {
+      type: [String, Number]
     }
+  },
+  render: (h, { data, props }) =>
 
-    return h('span', mergeData(data, def), children)
-  }
+    h('span', mergeData(data, { class: ['uk-icon'] }), [
+      h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+    ])
+
 }
