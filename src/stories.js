@@ -26,6 +26,9 @@ play('Modal')
   .add('Sizes', require('./components/modal/story/sizes').default)
   .add('Center', require('./components/modal/story/center').default)
 
+play('Nav')
+  .add('Default', require('./components/nav/story').default)
+
 play('Notification')
   .add('Default', require('./components/notification/story').default)
   .add('Positions', require('./components/notification/story-positions').default)
