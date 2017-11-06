@@ -22,6 +22,15 @@
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
       </vk-dropdown>
     </div>
+
+    <vk-button ref="btn3">On Click</vk-button>
+    <vk-dropdown
+      :show.sync="show3"
+      target="btn3"
+      triggers="click"
+    >
+      Lorem ipsum dolor sit amet.
+    </vk-dropdown>
   </div>
 </template>
 
@@ -29,7 +38,8 @@
 export default {
   data: () => ({
     show1: false,
-    show2: false
+    show2: false,
+    show3: false
   })
 }
 </script>
