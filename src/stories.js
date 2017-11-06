@@ -7,6 +7,9 @@ play('Button')
   .add('Default', require('./components/button/story').default)
   .add('Groups', require('./components/button/story-groups').default)
 
+play('Card')
+  .add('Default', require('./components/card/story').default)
+
 play('Drop')
   .add('Default', require('./components/drop/story').default)
   .add('Positions', require('./components/drop/story-positions').default)
