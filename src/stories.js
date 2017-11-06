@@ -29,6 +29,9 @@ play('Modal')
 play('Nav')
   .add('Default', require('./components/nav/story').default)
 
+play('Navbar')
+  .add('Default', require('./components/navbar/story').default)
+
 play('Notification')
   .add('Default', require('./components/notification/story').default)
   .add('Positions', require('./components/notification/story-positions').default)
