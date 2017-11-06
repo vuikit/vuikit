@@ -1,4 +1,4 @@
-import mergeData from 'vue-functional-data-merge'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 export default {
   functional: true,
