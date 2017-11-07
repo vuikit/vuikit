@@ -5,7 +5,6 @@ import { on } from '@vuikit/core/utils/event'
 import { warn } from '@vuikit/core/helpers/debug'
 import isString from '@vuikit/core/utils/is-string'
 import isInteger from '@vuikit/core/utils/is-integer'
-import filterOutEmptyNodes from '~/helpers/node/filter'
 import { addClass, removeClass, toggleClass } from '@vuikit/core/utils/class'
 
 // let dir
@@ -64,7 +63,7 @@ export default {
     }
 
     // filter out possible whitespaces
-    children = filterOutEmptyNodes(children)
+    children = children.filter(n => n.tag)
 
     if (!children.length) {
       return

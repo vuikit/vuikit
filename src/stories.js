@@ -4,19 +4,19 @@ play('Breadcrumb')
   .add('Default', require('./components/breadcrumb/story').default)
 
 play('Button')
-  .add('Default', require('./components/button/story').default)
-  .add('Groups', require('./components/button/story-groups').default)
+  .add('Default', require('./components/button/story/default').default)
+  .add('Groups', require('./components/button/story/groups').default)
 
 play('Card')
   .add('Default', require('./components/card/story').default)
 
 play('Drop')
-  .add('Default', require('./components/drop/story').default)
-  .add('Positions', require('./components/drop/story-positions').default)
+  .add('Default', require('./components/drop/story/default').default)
+  .add('Positions', require('./components/drop/story/positions').default)
 
 play('Dropdown')
-  .add('Default', require('./components/dropdown/story').default)
-  .add('Nav', require('./components/dropdown/story-nav').default)
+  .add('Default', require('./components/dropdown/story/default').default)
+  .add('Nav', require('./components/dropdown/story/nav').default)
 
 play('Icon')
   .add('Default', require('./components/icon/story').default)
@@ -37,9 +37,9 @@ play('Navbar')
   .add('Default', require('./components/navbar/story').default)
 
 play('Notification')
-  .add('Default', require('./components/notification/story').default)
-  .add('Positions', require('./components/notification/story-positions').default)
-  .add('Slot', require('./components/notification/story-slot').default)
+  .add('Default', require('./components/notification/story/default').default)
+  .add('Positions', require('./components/notification/story/positions').default)
+  .add('Slot', require('./components/notification/story/slot').default)
 
 play('Pagination')
   .add('Default', require('./components/pagination/story').default)

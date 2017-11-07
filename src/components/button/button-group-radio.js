@@ -1,11 +1,10 @@
-import filterNodes from '~/helpers/node/filter'
 import { warn } from '@vuikit/core/helpers/debug'
 import includes from '@vuikit/core/utils/includes'
 
 export default {
   functional: true,
   render (h, { data, props, children, listeners }) {
-    const buttons = filterNodes(children)
+    const buttons = children.filter(n => n.tag)
 
     if (!validate(data, buttons)) {
       return

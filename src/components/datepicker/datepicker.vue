@@ -40,27 +40,29 @@
 </template>
 
 <script>
-import getYear from 'date-fns/get_year'
-import getMonth from 'date-fns/get_month'
-import getDate from 'date-fns/get_date'
-import isSameMonth from 'date-fns/is_same_month'
-import isSameDay from 'date-fns/is_same_day'
-import isWithinRange from 'date-fns/is_within_range'
-import isValid from 'date-fns/is_valid'
-import areRangesOverlapping from 'date-fns/are_ranges_overlapping'
-import startOfMonth from 'date-fns/start_of_month'
-import startOfWeek from 'date-fns/start_of_week'
-import endOfMonth from 'date-fns/end_of_month'
-import addMonths from 'date-fns/add_months'
-import addDays from 'date-fns/add_days'
-import subMonths from 'date-fns/sub_months'
-import subDays from 'date-fns/sub_days'
-import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
-import PickerHeader from './header'
-import dateMatrix from '~/helpers/date-matrix'
+import getYear from 'date-fns/get_year'
+import getDate from 'date-fns/get_date'
+import addDays from 'date-fns/add_days'
+import subDays from 'date-fns/sub_days'
+import isValid from 'date-fns/is_valid'
+import formatDate from 'date-fns/format'
+import getMonth from 'date-fns/get_month'
+import isSameDay from 'date-fns/is_same_day'
+import subMonths from 'date-fns/sub_months'
+import addMonths from 'date-fns/add_months'
+import endOfMonth from 'date-fns/end_of_month'
+import startOfWeek from 'date-fns/start_of_week'
+import isSameMonth from 'date-fns/is_same_month'
+import startOfMonth from 'date-fns/start_of_month'
+import isWithinRange from 'date-fns/is_within_range'
+import areRangesOverlapping from 'date-fns/are_ranges_overlapping'
+
 import range from '@vuikit/core/utils/range'
+import dateMatrix from '~/helpers/date-matrix'
 import isInteger from '@vuikit/core/utils/is-integer'
+
+import PickerHeader from './header'
 
 export default {
   name: 'Datepicker',
