@@ -1,4 +1,4 @@
-import { warn } from '@vuikit/core/helpers/debug'
+import { warn } from '~helpers/debug'
 
 const TabContent = {
   functional: true,

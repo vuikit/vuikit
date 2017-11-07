@@ -14,8 +14,8 @@ import PaginationNext from './pagination-next'
 import PaginationFirst from './pagination-first'
 import PaginationPages from './pagination-pages'
 
-import isArray from '@vuikit/core/utils/is-array'
-import paginationMatrix from '@vuikit/core/helpers/pagination-matrix'
+import isArray from '~utils/is-array'
+import paginationMatrix from '~helpers/pagination-matrix'
 
 const partsMap = {
   first: PaginationFirst,

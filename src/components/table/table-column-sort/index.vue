@@ -32,7 +32,7 @@
 import Column from '../table-column'
 import IconArrowUp from '@vuikit/icons/lib/arrow-up'
 import IconArrowDown from '@vuikit/icons/lib/arrow-down'
-import merge from '@vuikit/core/utils/merge'
+import merge from '~utils/merge'
 
 export default {
   name: 'TableColumnSort',

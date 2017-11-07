@@ -1,6 +1,6 @@
-import toArray from '@vuikit/core/utils/to-array'
-import includes from '@vuikit/core/utils/includes'
-import { warn } from '@vuikit/core/helpers/debug'
+import toArray from '~utils/to-array'
+import includes from '~utils/includes'
+import { warn } from '~helpers/debug'
 
 export default {
   functional: true,

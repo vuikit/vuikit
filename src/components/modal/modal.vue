@@ -59,11 +59,11 @@
 </template>
 
 <script>
-import css from '@vuikit/core/utils/css'
-import { on, off } from '@vuikit/core/utils/event'
-import includes from '@vuikit/core/utils/includes'
-import debounce from '@vuikit/core/utils/debounce'
-import { height } from '@vuikit/core/helpers/position'
+import css from '~utils/css'
+import { on, off } from '~utils/event'
+import includes from '~utils/includes'
+import debounce from '~utils/debounce'
+import { height } from '~helpers/position'
 
 import core from './core'
 import ModalTransition from './transition'

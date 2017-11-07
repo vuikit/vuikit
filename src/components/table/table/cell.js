@@ -1,6 +1,6 @@
-import get from '@vuikit/core/utils/get'
-import { warn } from '@vuikit/core/helpers/debug'
-import getFnArgs from '@vuikit/core/utils/get-fn-args'
+import get from '~utils/get'
+import { warn } from '~helpers/debug'
+import getFnArgs from '~utils/get-fn-args'
 
 export default {
   functional: true,

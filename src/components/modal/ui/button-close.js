@@ -1,6 +1,6 @@
 import IconClose from '~/icons/close-icon'
 import IconCloseLarge from '~/icons/close-large'
-import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import mergeData from '~helpers/fn-data-merge'
 
 export default {
   functional: true,

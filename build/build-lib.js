@@ -50,5 +50,8 @@ async function compile (input) {
     report: args.report
   })
 
+  // fix the @vuikit/core path which is altered by alias
+  code = code.replace(/from '(.*)node_modules\//g, `from '`)
+
   await write(`lib/${basename}.js`, code, { log: true })
 }

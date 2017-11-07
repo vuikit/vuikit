@@ -27,8 +27,8 @@
 import Row from './row'
 import Cell from './cell'
 import MixinSelect from './mixin-select'
-import { warn } from '@vuikit/core/helpers/debug'
-import stringify from '@vuikit/core/utils/stringify'
+import { warn } from '~helpers/debug'
+import stringify from '~utils/stringify'
 
 export default {
   name: 'Table',
