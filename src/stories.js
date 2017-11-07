@@ -58,9 +58,9 @@ play('Table')
   .add('Select', require('./components/table/story/select').default)
   .add('Sort', require('./components/table/story/sort').default)
 
-play('Tabs')
-  .add('Default', require('./components/tabs/story/default').default)
-  .add('Vertical', require('./components/tabs/story/vertical').default)
+play('Tab')
+  .add('Default', require('./components/tab/story/default').default)
+  .add('Vertical', require('./components/tab/story/vertical').default)
 
 play('Upload')
   .add('Default', require('./components/upload/story').default)

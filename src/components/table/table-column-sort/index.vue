@@ -9,9 +9,10 @@
         @click.prevent="emitSortEvent"
       >
         {{ header }}
-        <vk-icon
-          class="uk-position-absolute"
-          :class="{ 'uk-invisible': !order }"
+        <span
+          :class="['uk-icon uk-position-absolute',{
+            'uk-invisible': !order
+          }]"
         >
           <icon-arrow-down
             v-if="order === 'asc' || order === undefined"
@@ -21,7 +22,7 @@
             v-else
             ratio="0.9"
           ></icon-arrow-up>
-        </vk-icon>
+        </span>
       </a>
     </slot>
   </th>
