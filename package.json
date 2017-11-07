@@ -31,8 +31,9 @@
   "scripts": {
     "dev": "poi --config build/dev/poi.config.js",
     "prebuild": "rm -rf dist",
-    "build": "yarn build:dist",
+    "build": "yarn build:lib && yarn build:dist",
     "build:dist": "node -r @std/esm build/build-dist.js",
+    "build:lib": "node -r @std/esm build/build-lib.js",
     "size": "size-limit",
     "eslint": "eslint src"
   },
