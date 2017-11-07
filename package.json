@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/vuikit",
-  "version": "0.7.9",
+  "version": "0.7.10",
   "description": "UIkit with all the power of Vue",
   "author": {
     "name": "Miljan Aleksic",
@@ -38,7 +38,6 @@
     "eslint": "eslint src"
   },
   "dependencies": {
-    "@lump/write": "^0.2.4",
     "vue": "^2.5.2"
   },
   "devDependencies": {
@@ -50,8 +49,9 @@
     "@lump/rollup": "^0.3.4",
     "@lump/size": "^0.1.0",
     "@lump/task": "^0.2.0",
+    "@lump/write": "^0.2.4",
     "@std/esm": "^0.12.4",
-    "@vuikit/core": "^0.1.0",
+    "@vuikit/core": "^0.2.0",
     "@vuikit/icons": "^0.4.0",
     "@vuikit/theme": "^0.1.1",
     "babel-core": "^6.26.0",

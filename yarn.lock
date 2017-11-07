@@ -75,9 +75,9 @@
   version "0.12.4"
   resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.12.4.tgz#01e06a392ba577205a691d97916490406c39ef26"
 
-"@vuikit/core@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/core/-/core-0.1.0.tgz#edf0b2457d75fe41ba873e3c3af2ee051cd94bfc"
+"@vuikit/core@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@vuikit/core/-/core-0.2.0.tgz#788ae7f23b38aff33efdfc78e75433b1e3153eb6"
 
 "@vuikit/icons@^0.4.0":
   version "0.4.0"
