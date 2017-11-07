@@ -22,7 +22,7 @@ import Position from '~/directives/position/index'
 import { on, off } from '@vuikit/core/utils/event'
 import includes from '@vuikit/core/utils/includes'
 import isString from '@vuikit/core/utils/is-string'
-import { getPositionAxis } from '~/helpers/position'
+import { getPositionAxis } from '@vuikit/core/helpers/position'
 
 const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 

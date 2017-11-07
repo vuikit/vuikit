@@ -8,7 +8,7 @@ import isObject from '@vuikit/core/utils/is-object'
 import toInteger from '@vuikit/core/utils/to-integer'
 import isUndefined from '@vuikit/core/utils/is-undefined'
 import { on, off, offAll } from '@vuikit/core/utils/event'
-import { positionAt, flipPosition, getPositionAxis } from '~/helpers/position'
+import { positionAt, flipPosition, getPositionAxis } from '@vuikit/core/helpers/position'
 
 let uid = 'v-position'
 

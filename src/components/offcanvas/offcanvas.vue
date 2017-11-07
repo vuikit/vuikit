@@ -33,12 +33,24 @@ import ModalMixin from '~/mixins/modal'
 import css from '@vuikit/core/utils/css'
 import { on } from '@vuikit/core/utils/event'
 import { warn } from '@vuikit/core/helpers/debug'
-import { forceRedraw, toMs } from '~/helpers/util'
 import { addClass, removeClass } from '@vuikit/core/utils/class'
 
 const doc = document.documentElement
 const body = document.body
 let scroll
+
+function toMs (time) {
+  return !time
+    ? 0
+    : time.substr(-2) === 'ms'
+      ? parseFloat(time)
+      : parseFloat(time) * 1000
+}
+
+// force redraw/repaint for WebKit
+function forceRedraw (el) {
+  el.offsetHeight // eslint-disable-line
+}
 
 export default {
   name: 'Offcanvas',

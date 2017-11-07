@@ -1,6 +1,5 @@
-// import { Animation } from '~/helpers/animation'
+// import { Animation } from '@vuikit/core/utils/helpers/animation'
 import css from '@vuikit/core/utils/css'
-import { offsetTop } from '~/helpers/util'
 import { on } from '@vuikit/core/utils/event'
 import { warn } from '@vuikit/core/helpers/debug'
 import isString from '@vuikit/core/utils/is-string'
@@ -16,6 +15,10 @@ on(window, 'scroll', () => {
   //   : 'up'
   scroll = window.pageYOffset
 })
+
+function offsetTop (element) {
+  return element.getBoundingClientRect().top + window.pageYOffset
+}
 
 export default {
   name: 'Sticky',

@@ -8,13 +8,14 @@
 </template>
 
 <script>
-import isArray from '@vuikit/core/utils/is-array'
 import PaginationLast from './pagination-last'
 import PaginationPrev from './pagination-prev'
 import PaginationNext from './pagination-next'
 import PaginationFirst from './pagination-first'
 import PaginationPages from './pagination-pages'
-import paginationMatrix from '~/helpers/pagination-matrix'
+
+import isArray from '@vuikit/core/utils/is-array'
+import paginationMatrix from '@vuikit/core/helpers/pagination-matrix'
 
 const partsMap = {
   first: PaginationFirst,

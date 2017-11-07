@@ -60,10 +60,10 @@
 
 <script>
 import css from '@vuikit/core/utils/css'
-import { height } from '~/helpers/position'
 import { on, off } from '@vuikit/core/utils/event'
 import includes from '@vuikit/core/utils/includes'
 import debounce from '@vuikit/core/utils/debounce'
+import { height } from '@vuikit/core/helpers/position'
 
 import core from './core'
 import ModalTransition from './transition'

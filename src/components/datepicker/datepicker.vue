@@ -59,8 +59,8 @@ import isWithinRange from 'date-fns/is_within_range'
 import areRangesOverlapping from 'date-fns/are_ranges_overlapping'
 
 import range from '@vuikit/core/utils/range'
-import dateMatrix from '~/helpers/date-matrix'
 import isInteger from '@vuikit/core/utils/is-integer'
+import dateMatrix from '@vuikit/core/helpers/date-matrix'
 
 import PickerHeader from './header'
 
