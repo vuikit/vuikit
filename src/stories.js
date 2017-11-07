@@ -66,7 +66,6 @@ play('Upload')
   .add('Default', require('./components/upload/story').default)
 
 play('Directives')
-  .add('Position', require('./directives/position/story').default)
   .add('Tooltip', require('./directives/tooltip/story').default)
   .add('HeightWiewport', require('./directives/height-viewport/story').default)
   .add('HeightWiewport Expand', require('./directives/height-viewport/story-expand').default)
