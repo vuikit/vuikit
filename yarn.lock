@@ -40,9 +40,9 @@
   dependencies:
     del "^3.0.0"
 
-"@lump/rollup@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@lump/rollup/-/rollup-0.3.3.tgz#4a49de1b2acb5ba72eb817453729567d67042e13"
+"@lump/rollup@^0.3.4":
+  version "0.3.4"
+  resolved "https://registry.yarnpkg.com/@lump/rollup/-/rollup-0.3.4.tgz#e288c6760cca833c70acb534fd05d00f298e63ea"
   dependencies:
     rollup-analyzer "^1.0.3"
     rollup-plugin-commonjs "^8.2.1"

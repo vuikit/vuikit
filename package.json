@@ -31,11 +31,8 @@
   "scripts": {
     "dev": "poi --config build/dev/poi.config.js",
     "prebuild": "rm -rf dist",
-    "build": "yarn build:es && yarn build:cjs && yarn build:umd && yarn build:add-banner",
-    "build:es": "node -r @std/esm build/build-dist-es.js",
-    "build:cjs": "node -r @std/esm build/build-dist-cjs.js",
-    "build:umd": "node -r @std/esm build/build-dist-umd.js",
-    "build:add-banner": "node -r @std/esm build/build-add-banner.js",
+    "build": "yarn build:dist",
+    "build:dist": "node -r @std/esm build/build-dist.js",
     "size": "size-limit",
     "eslint": "eslint src"
   },
@@ -49,7 +46,7 @@
     "@lump/it": "^0.1.1",
     "@lump/minify": "^0.2.0",
     "@lump/remove": "^0.1.0",
-    "@lump/rollup": "^0.3.3",
+    "@lump/rollup": "^0.3.4",
     "@lump/size": "^0.1.0",
     "@lump/task": "^0.2.0",
     "@std/esm": "^0.12.4",
