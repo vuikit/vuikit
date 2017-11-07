@@ -7,7 +7,7 @@ import addYears from 'date-fns/add_years'
 import addMonths from 'date-fns/add_months'
 import setYear from 'date-fns/set_year'
 import setMonth from 'date-fns/set_month'
-import { range } from '@vuikit/util'
+import range from '@vuikit/core/utils/range'
 
 export default {
   functional: true,

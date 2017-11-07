@@ -17,9 +17,12 @@
 </template>
 
 <script>
+import get from '@vuikit/core/utils/get'
 import Position from '~/directives/position/index'
+import { on, off } from '@vuikit/core/utils/event'
+import includes from '@vuikit/core/utils/includes'
+import isString from '@vuikit/core/utils/is-string'
 import { getPositionAxis } from '~/helpers/position'
-import { includes, on, off, isString, get } from '@vuikit/util'
 
 const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
 

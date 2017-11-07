@@ -19,7 +19,7 @@
 <script>
 import orderBy from 'lodash/orderBy'
 import mockData from './mock-data.json'
-import { keys } from '@vuikit/util'
+import keys from '@vuikit/core/utils/keys'
 
 const data = [...mockData].splice(0, 5)
 

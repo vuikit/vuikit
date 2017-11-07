@@ -1,4 +1,4 @@
-import { range } from '@vuikit/util'
+import range from '@vuikit/core/utils/range'
 import isSameMonth from 'date-fns/is_same_month'
 import getYear from 'date-fns/get_year'
 import getMonth from 'date-fns/get_month'

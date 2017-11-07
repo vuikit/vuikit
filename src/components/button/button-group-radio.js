@@ -1,6 +1,6 @@
-import { warn } from '~/helpers/debug'
-import { includes } from '@vuikit/util'
 import filterNodes from '~/helpers/node/filter'
+import { warn } from '@vuikit/core/helpers/debug'
+import includes from '@vuikit/core/utils/includes'
 
 export default {
   functional: true,

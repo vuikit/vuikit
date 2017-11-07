@@ -1,4 +1,4 @@
-import { each } from '@vuikit/util'
+import each from '@vuikit/core/utils/each'
 import PropToggler from './prop-toggler.vue'
 import PropTogglerOption from './prop-toggler-option.vue'
 

@@ -11,7 +11,8 @@
 
 <script>
 import Checkbox from './checkbox'
-import { get, cloneArray } from '@vuikit/util'
+import get from '@vuikit/core/utils/get'
+import cloneArray from '@vuikit/core/utils/clone-array'
 
 export default {
   name: 'TableColumnSelect',

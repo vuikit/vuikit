@@ -1,4 +1,4 @@
-import { isFunction } from '@vuikit/util'
+import isFunction from '@vuikit/core/utils/is-function'
 
 export default {
   functional: true,

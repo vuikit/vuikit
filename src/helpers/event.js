@@ -1,4 +1,6 @@
-import { isArray, isString, toArray } from '@vuikit/util'
+import isArray from '@vuikit/core/utils/is-array'
+import toArray from '@vuikit/core/utils/to-array'
+import isString from '@vuikit/core/utils/is-string'
 
 const doc = document
 const win = window

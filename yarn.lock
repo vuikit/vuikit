@@ -87,12 +87,6 @@
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@vuikit/theme/-/theme-0.1.1.tgz#763766b90d8eb3e4f6292ed8ad3e3db0dd827903"
 
-"@vuikit/util@^0.8.1":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@vuikit/util/-/util-0.8.1.tgz#868aa610342fd42488f05118fc3524a1869c1188"
-  dependencies:
-    "@lump/write" "^0.2.4"
-
 abbrev@1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.0.tgz#d0554c2256636e2f56e7c2e5ad183f859428d81f"

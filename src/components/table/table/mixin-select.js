@@ -1,4 +1,4 @@
-import { cloneArray } from '@vuikit/util'
+import cloneArray from '@vuikit/core/utils/clone-array'
 
 export default {
   props: {

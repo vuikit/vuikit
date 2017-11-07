@@ -1,5 +1,7 @@
-import { each, isArray, keys } from '@vuikit/util'
 import pick from 'lodash-es/pick'
+import each from '@vuikit/core/utils/each'
+import keys from '@vuikit/core/utils/keys'
+import isArray from '@vuikit/core/utils/is-array'
 
 export default function (compProps, pageProps) {
   // we only want to pick declared props

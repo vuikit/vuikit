@@ -1,14 +1,13 @@
-import { css,
-  each,
-  toFloat,
-  toArray,
-  isWindow,
-  includes,
-  endsWith,
-  isDocument,
-  isUndefined,
-  toCapital as ucfirst
-} from '@vuikit/util'
+import css from '@vuikit/core/utils/css'
+import each from '@vuikit/core/utils/each'
+import toFloat from '@vuikit/core/utils/to-float'
+import toArray from '@vuikit/core/utils/to-array'
+import includes from '@vuikit/core/utils/includes'
+import isWindow from '@vuikit/core/utils/is-window'
+import ucfirst from '@vuikit/core/utils/to-capital'
+import endsWith from '@vuikit/core/utils/ends-with'
+import isDocument from '@vuikit/core/utils/is-document'
+import isUndefined from '@vuikit/core/utils/is-undefined'
 
 const dirs = {
   width: ['x', 'left', 'right'],

@@ -1,8 +1,12 @@
-import { warn } from '~/helpers/debug'
-import { offsetTop } from '~/helpers/util'
 // import { Animation } from '~/helpers/animation'
+import css from '@vuikit/core/utils/css'
+import { offsetTop } from '~/helpers/util'
+import { on } from '@vuikit/core/utils/event'
+import { warn } from '@vuikit/core/helpers/debug'
+import isString from '@vuikit/core/utils/is-string'
+import isInteger from '@vuikit/core/utils/is-integer'
 import filterOutEmptyNodes from '~/helpers/node/filter'
-import { on, css, isString, isInteger, toggleClass, addClass, removeClass } from '@vuikit/util'
+import { addClass, removeClass, toggleClass } from '@vuikit/core/utils/class'
 
 // let dir
 let scroll = 0

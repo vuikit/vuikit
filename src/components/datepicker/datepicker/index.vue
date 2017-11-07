@@ -59,7 +59,8 @@ import formatDate from 'date-fns/format'
 import parse from 'date-fns/parse'
 import PickerHeader from './header'
 import dateMatrix from '~/helpers/date-matrix'
-import { range, isInteger } from '@vuikit/util'
+import range from '@vuikit/core/utils/range'
+import isInteger from '@vuikit/core/utils/is-integer'
 
 export default {
   name: 'Datepicker',

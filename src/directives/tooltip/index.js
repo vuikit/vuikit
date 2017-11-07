@@ -1,18 +1,14 @@
-import { warn } from '~/helpers/debug'
+import css from '@vuikit/core/utils/css'
+import get from '@vuikit/core/utils/get'
 import { Animation } from '~/helpers/animation'
+import isEmpty from '@vuikit/core/utils/is-empty'
+import { warn } from '@vuikit/core/helpers/debug'
+import { on, off } from '@vuikit/core/utils/event'
+import includes from '@vuikit/core/utils/includes'
+import isObject from '@vuikit/core/utils/is-object'
+import toInteger from '@vuikit/core/utils/to-integer'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 import { positionAt, flipPosition, getPositionAxis } from '~/helpers/position'
-import {
-  on,
-  off,
-  css,
-  get,
-  isEmpty,
-  addClass,
-  includes,
-  isObject,
-  toInteger,
-  removeClass
-} from '@vuikit/util'
 
 let delayedShow
 let tooltip = {}

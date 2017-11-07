@@ -1,4 +1,7 @@
-import { isFunction, isObject, isUndefined, toArray } from '@vuikit/util'
+import toArray from '@vuikit/core/utils/to-array'
+import isObject from '@vuikit/core/utils/is-object'
+import isFunction from '@vuikit/core/utils/is-function'
+import isUndefined from '@vuikit/core/utils/is-undefined'
 
 export function attr (element, name, value) {
 

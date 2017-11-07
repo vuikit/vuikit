@@ -23,9 +23,9 @@
 
 <script>
 import core from './core'
-import { includes } from '@vuikit/util'
 import ModalTransition from './transition'
 import ModalBtnClose from './ui/button-close'
+import includes from '@vuikit/core/utils/includes'
 
 export default {
   name: 'ModalFull',

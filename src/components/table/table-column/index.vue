@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { get } from '@vuikit/util'
+import get from '@vuikit/core/utils/get'
 
 export default {
   name: 'TableColumn',

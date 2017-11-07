@@ -1,5 +1,6 @@
-import { warn } from '~/helpers/debug'
-import { includes, toArray } from '@vuikit/util'
+import toArray from '@vuikit/core/utils/to-array'
+import includes from '@vuikit/core/utils/includes'
+import { warn } from '@vuikit/core/helpers/debug'
 import filterNodes from '~/helpers/node/filter'
 
 export default {

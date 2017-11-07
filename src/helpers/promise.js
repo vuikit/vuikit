@@ -1,4 +1,5 @@
-import { isFunction, isObject } from '@vuikit/util'
+import isFunction from '@vuikit/core/utils/is-function'
+import isObject from '@vuikit/core/utils/is-object'
 
 /**
  * Promises/A+ polyfill v1.1.4 (https://github.com/bramstein/promis)

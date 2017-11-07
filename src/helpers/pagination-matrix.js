@@ -1,4 +1,4 @@
-import { range as getRange } from '@vuikit/util'
+import getRange from '@vuikit/core/utils/range'
 
 const def = { total: 200, page: 1, perPage: 10, range: 3 }
 

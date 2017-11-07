@@ -1,5 +1,6 @@
 import { transitionend } from '~/helpers/env'
-import { one, addClass, removeClass } from '@vuikit/util'
+import { one } from '@vuikit/core/utils/event'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 const doc = document.documentElement

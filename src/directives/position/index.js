@@ -1,18 +1,14 @@
-import { warn } from '~/helpers/debug'
+import css from '@vuikit/core/utils/css'
+import get from '@vuikit/core/utils/get'
+import { warn } from '@vuikit/core/helpers/debug'
+import { addClass } from '@vuikit/core/utils/class'
+import includes from '@vuikit/core/utils/includes'
+import debounce from '@vuikit/core/utils/debounce'
+import isObject from '@vuikit/core/utils/is-object'
+import toInteger from '@vuikit/core/utils/to-integer'
+import isUndefined from '@vuikit/core/utils/is-undefined'
+import { on, off, offAll } from '@vuikit/core/utils/event'
 import { positionAt, flipPosition, getPositionAxis } from '~/helpers/position'
-import {
-  on,
-  off,
-  css,
-  get,
-  offAll,
-  addClass,
-  includes,
-  debounce,
-  isObject,
-  toInteger,
-  isUndefined
-} from '@vuikit/util'
 
 let uid = 'v-position'
 

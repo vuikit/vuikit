@@ -1,8 +1,12 @@
 import { attr } from '~/helpers/attr'
 import Promise from '~/helpers/promise'
+import css from '@vuikit/core/utils/css'
 import { trigger } from '~/helpers/event'
+import { one } from '@vuikit/core/utils/event'
+import toArray from '@vuikit/core/utils/to-array'
+import startsWith from '@vuikit/core/utils/starts-with'
 import { requestAnimationFrame, animationend } from '~/helpers/env'
-import { css, hasClass, addClass, removeClass, one, startsWith, toArray } from '@vuikit/util'
+import { hasClass, addClass, removeClass } from '@vuikit/core/utils/class'
 
 const animationcancel = 'animationcancel'
 const animationPrefix = 'uk-animation-'

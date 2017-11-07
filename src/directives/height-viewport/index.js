@@ -1,5 +1,8 @@
-import { css, on, off, debounce, isInteger } from '@vuikit/util'
+import css from '@vuikit/core/utils/css'
 import { offsetTop } from '~/helpers/util'
+import { on, off } from '@vuikit/core/utils/event'
+import debounce from '@vuikit/core/utils/debounce'
+import isInteger from '@vuikit/core/utils/is-integer'
 
 export default {
   inserted (el, binding, vnode) {
