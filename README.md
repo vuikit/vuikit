@@ -6,9 +6,9 @@
 
 > UIkit with all the power of Vue
 
-Vuikit is a collection of unopinionated, modular Vue.js components outputting UIkit layout.
+Vuikit is a collection of modular Vue.js components outputting UIkit layout.
 
-While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by removing UIkit js and jQuery dependencies and rebuilding the logic with Vue natively.
+While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by removing UIkit js dependency and rebuilding the logic with Vue natively.
 
 ## Supporting Vuikit
 
@@ -19,14 +19,6 @@ Special thanks to the supporters who help pushing this project forward.
   <a href="http://www.zoolanders.com"><img width="150px" src="https://raw.githubusercontent.com/vuikit/vuikit/develop/static/sponsors/zoolanders.png"></a>
 </p>
 
-## Documentation and examples
-
-There is a live demo at [http://vuikit.github.io/vuikit](http://vuikit.github.io/vuikit) with technical information about each component. As well as a [codepen](http://codepen.io/miljan/pen/YWXVKj) playground.
-
-## Dependencies
-
-- [Vue](http://vuejs.org/) (^2.1.0)
-
 ## Code Samples
 > Note that all code examples are using ES6 syntax
 
@@ -34,27 +26,23 @@ Vuikit components are registered globally by default and ready to be used immedi
 
 ```js
 import Vue from 'vue'
-import Vuikit from 'vuikit'
+import Vuikit from '@vuikit/vuikit'
 
 Vue.use(Vuikit)
 ```
 ```html
 <template>
   <div>
-    <vk-button-checkbox>
-      <vk-button color="primary">Button</vk-button>
-      <vk-button active>Button</vk-button>
-      <vk-button>Button</vk-button>
-    </vk-button-checkbox>
+    <vk-button>Button</vk-button>
   </div>
 </template>
 ```
 
-Although is possible to load and register them individually.
+Although it is possible to load and register them individually.
 
 ```js
 import Vue from 'vue'
-import { Button, Modal } from 'vuikit'
+import { Button, Modal } from '@vuikit/vuikit'
 
 // globally
 Vue.component('VkButton', Button)
@@ -73,7 +61,7 @@ Changing the output or adding specific features is straightforward by extending 
 
 ```js
 import Vue from 'vue'
-import { Button } from 'vuikit'
+import { Button } from '@vuikit/vuikit'
 
 Vue.component('TmButton', {
   extends: Button,
@@ -88,11 +76,11 @@ Vue.component('TmButton', {
 ### NPM
 
 ```bash
-npm install vuikit --save
+yarn add -D vuikit
 ```
 ```js
 import Vue from 'vue'
-import Vuikit from 'vuikit'
+import Vuikit from '@vuikit/vuikit'
 
 Vue.use(Vuikit) // or register individually
 ```
