@@ -30,7 +30,7 @@
 
         <!-- header -->
         <div ref="header"
-          v-if="$slots.header || $slots.title"
+          v-if="$slots.header"
           class="uk-modal-header"
         >
           <slot name="header" />
@@ -52,7 +52,6 @@
         >
           <slot name="footer" />
         </div>
-
       </div>
     </div>
   </modal-transition>
