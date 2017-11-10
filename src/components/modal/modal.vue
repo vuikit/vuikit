@@ -36,6 +36,9 @@
           <slot name="header" />
         </div>
 
+        <!-- dialog slot allows placing content outside the body -->
+        <slot name="dialog" />
+
         <!-- body -->
         <div ref="body"
           :class="['uk-modal-body', {
