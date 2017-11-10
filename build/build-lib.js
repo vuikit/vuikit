@@ -16,7 +16,9 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 const args = argv()
 
 lumpit(async () => {
-  const components = await globby.sync('src/components/*/index.js')
+  const components = await globby.sync('src/components/*/index.js', {
+    ignore: 'src/components/datepicker/index.js'
+  })
   await Promise.all(components.map(compile))
 
   const directives = await globby.sync('src/directives/*/index.js')

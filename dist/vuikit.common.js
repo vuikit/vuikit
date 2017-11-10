@@ -1,5 +1,5 @@
 /**
- * Vuikit 0.7.9
+ * Vuikit 0.7.10
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */

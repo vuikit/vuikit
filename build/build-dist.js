@@ -1,5 +1,6 @@
 import alias from './alias'
 import pkg from '../package.json'
+import merge from '@vuikit/core/utils/merge'
 
 import lumpit from '@lump/it'
 import argv from '@lump/argv'
@@ -71,10 +72,7 @@ lumpit(async () => {
 })
 
 async function build (config, dest) {
-  config = {
-    ...rollupConfig,
-    ...config
-  }
+  config = merge({}, rollupConfig, config)
 
   config.plugins.push(
     replace({
