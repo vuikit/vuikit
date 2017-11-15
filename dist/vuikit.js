@@ -1,5 +1,5 @@
 /**
- * Vuikit 0.7.10
+ * Vuikit 0.7.11
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */
@@ -77,7 +77,7 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
 
 function concat(){return Array.prototype.concat.apply([],arguments)}function mergeData(){
 var arguments$1 = arguments;
-for(var e=__assign({},arguments[0]),a=1;a<arguments.length;a++){ for(var s=0,t=keys(arguments[a]);s<t.length;s++){var c=t[s];if(void 0!==e[c]){ switch(c){case"class":case"style":case"directives":e[c]=concat(e[c],arguments$1[a][c]);break;case"staticClass":e[c]&&(e[c]=e[c].trim()+" "),e[c]+=arguments$1[a][c].trim();break;case"on":case"nativeOn":for(var r=0,o=keys(arguments[a][c]);r<o.length;r++){var n=o[r];e[c][n]?e[c][n]=concat(arguments$1[a][c][n],e[c][n]):e[c][n]=arguments$1[a][c][n];}break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":e[c]=__assign({},e[c],arguments$1[a][c]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:e[c]=arguments$1[a][c];} }else { e[c]=arguments$1[a][c]; }} }return e}var __assign=Object.assign||function(e){
+for(var e=__assign({},arguments[0]),a=1;a<arguments.length;a++){ for(var s=0,t=keys(arguments[a]);s<t.length;s++){var c=t[s];if(void 0!==e[c]){ switch(c){case"class":case"style":case"directives":e[c]=concat(e[c],arguments$1[a][c]);break;case"staticClass":e[c]&&(e[c]=e[c].trim()+" "), e[c]+=arguments$1[a][c].trim();break;case"on":case"nativeOn":for(var r=0,o=keys(arguments[a][c]);r<o.length;r++){var n=o[r];e[c][n]?e[c][n]=concat(arguments$1[a][c][n],e[c][n]):e[c][n]=arguments$1[a][c][n];}break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":e[c]=__assign({},e[c],arguments$1[a][c]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:e[c]=arguments$1[a][c];} }else { e[c]=arguments$1[a][c]; }} }return e}var __assign=Object.assign||function(e){
 var arguments$1 = arguments;
 for(var a,s=1,t=arguments.length;s<t;s++){a=arguments$1[s];for(var c in a){ Object.prototype.hasOwnProperty.call(a,c)&&(e[c]=a[c]); }}return e}; var keys=Object.keys;
 
@@ -269,6 +269,7 @@ var buttonGroupCheckbox = {
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
+    var props = ref.props;
     var children = ref.children;
     var listeners = ref.listeners;
 
@@ -332,6 +333,7 @@ var buttonGroupRadio = {
   functional: true,
   render: function render (h, ref) {
     var data = ref.data;
+    var props = ref.props;
     var children = ref.children;
     var listeners = ref.listeners;
 
@@ -437,6 +439,7 @@ var card = {
   },
   render: function render (h, ref) {
     var props = ref.props;
+    var children = ref.children;
     var data = ref.data;
     var slots = ref.slots;
 
@@ -449,7 +452,7 @@ var card = {
       class: ['uk-card', ( obj = {
         'uk-card-default': !includes(types, type),
         'uk-card-hover': hover
-      }, obj[("uk-card-" + type)] = type, obj[("uk-card-" + padding)] = padding, obj )]
+      }, obj[("uk-card-" + type)] = type, obj[("uk-card-" + padding)] = padding, obj)]
     }), [
       _slots.header && h(Header, _slots.header),
       _slots.default && h(Body, _slots.default),
@@ -464,6 +467,7 @@ var card = {
 var cardTitle = {
   functional: true,
   render: function render (h, ref) {
+    var props = ref.props;
     var children = ref.children;
     var data = ref.data;
 
@@ -1507,7 +1511,7 @@ var VkIcon = {
   props: {
     icon: {
       type: String,
-      required: true
+      default: ''
     },
     ratio: {
       type: [String, Number]
@@ -1516,9 +1520,12 @@ var VkIcon = {
   render: function (h, ref) {
       var data = ref.data;
       var props = ref.props;
+      var children = ref.children;
 
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
-      h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+      props.icon
+        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        : children
     ]);
 }
 
@@ -1535,12 +1542,16 @@ var VkIconLink = {
   render: function (h, ref) {
       var props = ref.props;
       var data = ref.data;
+      var children = ref.children;
+
       return h('a', mergeData(data, {
       class: ['uk-icon', {
         'uk-icon-link': props.reset
       }]
     }), [
-      h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+      props.icon
+        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        : children
     ]);
 }
 
@@ -1552,8 +1563,13 @@ var iconButton = {
   render: function (h, ref) {
       var props = ref.props;
       var data = ref.data;
+      var listeners = ref.listeners;
+      var children = ref.children;
+
       return h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
-      h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+      props.icon
+        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        : children
     ]);
 }
 
@@ -1652,6 +1668,7 @@ var win = window;
 var doc$2 = document.body;
 var docEl$1 = document.documentElement;
 
+var Observer = win.MutationObserver || win.WebKitMutationObserver;
 var requestAnimationFrame = win.requestAnimationFrame || (function (fn) { return setTimeout(fn, 1000 / 60); });
 
 // var hasTouchEvents = 'ontouchstart' in win
@@ -1860,7 +1877,7 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       display: _vm.center
         ? ''
         : 'block'
-    }),on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.closeOnBg && _vm.$emit('update:show', false);}}},[_c('div',{ref:"dialog",class:['uk-modal-dialog', _vm.widthClasses, { 'uk-margin-auto-vertical': _vm.center }]},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-default",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),(_vm.$slots.header || _vm.$slots.title)?_c('div',{ref:"header",staticClass:"uk-modal-header"},[_vm._t("header")],2):_vm._e(),_vm._v(" "),_c('div',{ref:"body",class:['uk-modal-body', { 'uk-overflow-auto': _vm.overflowAuto }]},[_vm._t("default")],2),_vm._v(" "),(_vm.$slots.footer)?_c('div',{ref:"footer",staticClass:"uk-modal-footer"},[_vm._t("footer")],2):_vm._e()],1)])])},staticRenderFns: [],
+    }),on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.closeOnBg && _vm.$emit('update:show', false);}}},[_c('div',{ref:"dialog",class:['uk-modal-dialog', _vm.widthClasses, { 'uk-margin-auto-vertical': _vm.center }]},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-default",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),(_vm.$slots.header)?_c('div',{ref:"header",staticClass:"uk-modal-header"},[_vm._t("header")],2):_vm._e(),_vm._v(" "),_vm._t("dialog",[_c('div',{ref:"body",class:['uk-modal-body', { 'uk-overflow-auto': _vm.overflowAuto }]},[_vm._t("default")],2),_vm._v(" "),(_vm.$slots.footer)?_c('div',{ref:"footer",staticClass:"uk-modal-footer"},[_vm._t("footer")],2):_vm._e()])],2)])])},staticRenderFns: [],
   name: 'Modal',
   extends: core,
   components: {
@@ -2031,6 +2048,9 @@ var navItemHeader = {
   },
   render: function render (h, ref) {
     var props = ref.props;
+    var children = ref.children;
+
+
     return h('li', {
       class: 'uk-nav-header'
     }, [
@@ -2072,6 +2092,9 @@ var navItemParent = {
 var navItemDivider = {
   functional: true,
   render: function render (h, ref) {
+    var children = ref.children;
+
+
     return h('li', {
       class: 'uk-nav-divider'
     })
@@ -2216,6 +2239,7 @@ var navbarToggle = {
     }
   },
   render: function render (h, ref) {
+    var children = ref.children;
     var data = ref.data;
     var props = ref.props;
 
@@ -2340,6 +2364,7 @@ var NotificationMessage = {
     }
   },
   render: function render (h, ref) {
+    var parent = ref.parent;
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
@@ -3641,6 +3666,7 @@ var Cell = {
   functional: true,
   render: function render (h, ref) {
     var parent = ref.parent;
+    var data = ref.data;
     var props = ref.props;
 
     var col = props.col;
@@ -3924,6 +3950,8 @@ var Checkbox = {
   render: function render (h, ref) {
     var data = ref.data;
     var props = ref.props;
+    var listeners = ref.listeners;
+
     var def = {
       staticClass: 'uk-checkbox',
       attrs: {
@@ -4044,7 +4072,7 @@ var IconArrowUp = {
         viewBox: viewBox
       },
       domProps: {
-        innerHTML: '<path d="M10.5 4l4.87 5.4-.74.68-4.13-4.59-4.13 4.59-.74-.68z"/><path fill="none" stroke="#000" d="M10.5 16V5"/>'
+        innerHTML: '<polygon points="10.5,4 15.37,9.4 14.63,10.08 10.5,5.49 6.37,10.08 5.63,9.4"></polygon><line fill="none" stroke="#000" x1="10.5" y1="16" x2="10.5" y2="5"></line>'
       }
     })
   }
@@ -4074,7 +4102,7 @@ var IconArrowDown = {
         viewBox: viewBox
       },
       domProps: {
-        innerHTML: '<path d="M10.5 16.08l-4.87-5.42.74-.66 4.13 4.58L14.63 10l.74.66z"/><path fill="none" stroke="#000" d="M10.5 4v11"/>'
+        innerHTML: '<polygon points="10.5,16.08 5.63,10.66 6.37,10 10.5,14.58 14.63,10 15.37,10.66"></polygon><line fill="none" stroke="#000" x1="10.5" y1="4" x2="10.5" y2="15"></line>'
       }
     })
   }
