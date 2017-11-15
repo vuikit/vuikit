@@ -7,7 +7,9 @@ export default {
   render: (h, { props, data, listeners, children }) =>
 
     h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
-      h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+      props.icon
+        ? h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+        : children
     ])
 
 }

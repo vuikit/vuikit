@@ -5,16 +5,18 @@ export default {
   props: {
     icon: {
       type: String,
-      required: true
+      default: ''
     },
     ratio: {
       type: [String, Number]
     }
   },
-  render: (h, { data, props }) =>
+  render: (h, { data, props, children }) =>
 
     h('span', mergeData(data, { class: ['uk-icon'] }), [
-      h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+      props.icon
+        ? h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+        : children
     ])
 
 }

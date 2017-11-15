@@ -9,14 +9,16 @@ export default {
       default: false
     }
   }),
-  render: (h, { props, data, listeners, children }) =>
+  render: (h, { props, data, children }) =>
 
     h('a', mergeData(data, {
       class: ['uk-icon', {
         'uk-icon-link': props.reset
       }]
     }), [
-      h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+      props.icon
+        ? h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+        : children
     ])
 
 }
