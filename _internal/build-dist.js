@@ -41,7 +41,7 @@ const banner = `/**
 lumpit(async () => {
   // ES
   await build({
-    input: 'build/dist.esm.js',
+    input: '_internal/dist.esm.js',
     output: {
       format: 'es'
     }
@@ -49,7 +49,7 @@ lumpit(async () => {
 
   // CJS
   await build({
-    input: 'build/dist.common.js',
+    input: '_internal/dist.common.js',
     output: {
       format: 'cjs'
     }
@@ -57,7 +57,7 @@ lumpit(async () => {
 
   // UMD
   await build({
-    input: 'build/dist.common.js',
+    input: '_internal/dist.common.js',
     globals: {
       vue: 'Vue'
     },
