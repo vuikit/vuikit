@@ -24,6 +24,9 @@ play('Icon')
 play('Iconnav')
   .add('Default', require('./components/iconnav/story').default)
 
+play('Label')
+  .add('Default', require('./components/label/story').default)
+
 play('Modal')
   .add('Default', require('./components/modal/story/default').default)
   .add('Scrollbar', require('./components/modal/story/scrollbar').default)
