@@ -9,7 +9,7 @@ export default {
       default: false
     }
   }),
-  render: (h, { props, data, children }) =>
+  render: (h, { data, props, children }) =>
 
     h('a', mergeData(data, {
       class: ['uk-icon', {
@@ -17,7 +17,7 @@ export default {
       }]
     }), [
       props.icon
-        ? h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+        ? h(`icon-${props.icon}`, { props })
         : children
     ])
 

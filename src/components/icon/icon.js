@@ -7,15 +7,16 @@ export default {
       type: String,
       default: ''
     },
-    ratio: {
-      type: [String, Number]
-    }
+    viewBox: String,
+    ratio: [String, Number],
+    width: [String, Number],
+    height: [String, Number]
   },
   render: (h, { data, props, children }) =>
 
     h('span', mergeData(data, { class: ['uk-icon'] }), [
       props.icon
-        ? h(`icon-${props.icon}`, { props: { ratio: props.ratio } })
+        ? h(`icon-${props.icon}`, { props })
         : children
     ])
 
