@@ -52,8 +52,7 @@ export default {
     Position
   },
   props: {
-    // a Dom element to attach to,
-    // defaults to previousElementSibling
+    // a Dom element to attach to
     target: {},
     // a Dom element as boundary
     boundary: {
