@@ -1,10 +1,10 @@
-// import { Animation } from '~utils/helpers/animation'
-import css from '~utils/css'
-import { on } from '~utils/event'
-import { warn } from '~helpers/debug'
-import isString from '~utils/is-string'
-import isInteger from '~utils/is-integer'
-import { addClass, removeClass, toggleClass } from '~utils/class'
+// import { Animation } from '@vuikit/core/utils/helpers/animation'
+import css from '@vuikit/core/utils/css'
+import { on } from '@vuikit/core/utils/event'
+import { warn } from '@vuikit/core/helpers/debug'
+import isString from '@vuikit/core/utils/is-string'
+import isInteger from '@vuikit/core/utils/is-integer'
+import { addClass, removeClass, toggleClass } from '@vuikit/core/utils/class'
 
 // let dir
 let scroll = 0

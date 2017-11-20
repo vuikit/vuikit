@@ -1,4 +1,4 @@
-import mergeData from '~helpers/fn-data-merge'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 const Subtitle = {
   functional: true,

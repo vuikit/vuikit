@@ -30,10 +30,10 @@
 
 <script>
 import ModalMixin from '~/mixins/modal'
-import css from '~utils/css'
-import { on } from '~utils/event'
-import { warn } from '~helpers/debug'
-import { addClass, removeClass } from '~utils/class'
+import css from '@vuikit/core/utils/css'
+import { on } from '@vuikit/core/utils/event'
+import { warn } from '@vuikit/core/helpers/debug'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 
 const doc = document.documentElement
 const body = document.body

@@ -1,7 +1,7 @@
-import { one } from '~utils/event'
-import { transitionend } from '~helpers/env'
-import mergeData from '~helpers/fn-data-merge'
-import { addClass, removeClass } from '~utils/class'
+import { one } from '@vuikit/core/utils/event'
+import { transitionend } from '@vuikit/core/helpers/env'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 
 const doc = document.documentElement
 

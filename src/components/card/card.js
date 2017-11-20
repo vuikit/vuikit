@@ -1,5 +1,5 @@
-import includes from '~utils/includes'
-import mergeData from '~helpers/fn-data-merge'
+import includes from '@vuikit/core/utils/includes'
+import mergeData from '@vuikit/core/helpers/fn-data-merge'
 
 const padding = ['small', 'large']
 const types = ['primary', 'secondary', 'blank']

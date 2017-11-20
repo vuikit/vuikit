@@ -21,11 +21,11 @@
 
 <script>
 import NotificationMessage from './message'
-import { warn } from '~helpers/debug'
-import isObject from '~utils/is-object'
-import isInteger from '~utils/is-integer'
-import cloneArray from '~utils/clone-array'
-import isUndefined from '~utils/is-undefined'
+import { warn } from '@vuikit/core/helpers/debug'
+import isObject from '@vuikit/core/utils/is-object'
+import isInteger from '@vuikit/core/utils/is-integer'
+import cloneArray from '@vuikit/core/utils/clone-array'
+import isUndefined from '@vuikit/core/utils/is-undefined'
 
 const timeouts = {}
 const defaultTimeout = 4500

@@ -1,4 +1,4 @@
-import { on, off } from '~utils/event'
+import { on, off } from '@vuikit/core/utils/event'
 
 const doc = document.documentElement
 
