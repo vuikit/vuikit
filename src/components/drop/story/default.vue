@@ -32,9 +32,11 @@
 const UiCard = {
   functional: true,
   render (h) {
-    return <div class="uk-card uk-card-body uk-card-default">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
-    </div>
+    const Lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.'
+
+    return h('div', {
+      class: 'uk-card uk-card-body uk-card-default'
+    }, Lorem)
   }
 }
 

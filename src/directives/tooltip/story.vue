@@ -134,21 +134,24 @@ const PosButton = {
     let label = this.position.split('-')
     label = `${label[0][0]}${label[1][0]}`
 
-    return <vk-button
-      size="small"
-      v-vk-tooltip={{
-        content: this.position,
-        position: this.position,
-        flip: this.$parent.flip,
-        delay: this.$parent.delay,
-        boundary: this.$parent.boundary,
-        duration: this.$parent.duration,
-        triggers: this.$parent.triggers,
-        animation: `${this.$parent.animationIn}, ${this.$parent.animationOut}`
-      }}
-    >
-      { label }
-    </vk-button>
+    return h('vk-button', {
+      props: {
+        size: 'small'
+      },
+      directives: [{
+        name: 'vk-tooltip',
+        value: {
+          content: this.position,
+          position: this.position,
+          flip: this.$parent.flip,
+          delay: this.$parent.delay,
+          boundary: this.$parent.boundary,
+          duration: this.$parent.duration,
+          triggers: this.$parent.triggers,
+          animation: `${this.$parent.animationIn}, ${this.$parent.animationOut}`
+        }
+      }]
+    }, label)
   }
 }
 

@@ -105,21 +105,23 @@ const PosButton = {
     let label = this.position.split('-')
     label = `${label[0][0]}${label[1][0]}`
 
-    return <vk-button
-      size="small"
-      style={{
+    return h('vk-button', {
+      props: {
+        size: 'small'
+      },
+      style: {
         zIndex: 999
-      }}
-      class={{
+      },
+      class: {
         'uk-active': this.$parent.position === this.position
-      }}
-      onMouseenter={ e => {
-        this.$parent.position = this.position
-        this.$forceUpdate()
-      }}
-    >
-      { label }
-    </vk-button>
+      },
+      on: {
+        mouseenter: e => {
+          this.$parent.position = this.position
+          this.$forceUpdate()
+        }
+      }
+    }, label)
   }
 }
 
