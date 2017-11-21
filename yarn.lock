@@ -75,9 +75,9 @@
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.16.0.tgz#2a7a33ecb7f1701cebd4c87df6d0d945ed51f730"
 
-"@vuikit/core@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@vuikit/core/-/core-0.3.0.tgz#cffd66bece4884730021574b43cedf8814765c4f"
+"@vuikit/core@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@vuikit/core/-/core-0.3.1.tgz#14c8ecf7e9a5d7c23ba19ea0fbd3daed20dd56e5"
 
 "@vuikit/icons@^0.5.0":
   version "0.5.0"
@@ -6358,9 +6358,9 @@ vue-template-compiler@^2.3.3:
     de-indent "^1.0.2"
     he "^1.1.0"
 
-vue-template-compiler@^2.5.6:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.6.tgz#93f062a230a4437ef16064f1eef9cf3797d34bb4"
+vue-template-compiler@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.8.tgz#826ae77e1d5faa7fa5fca554f33872dde38de674"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
@@ -6383,9 +6383,9 @@ vue@^2.3.3:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
-vue@^2.5.6:
-  version "2.5.6"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.6.tgz#73654fefa4b37f25dfc657b8b834b44c90822cd7"
+vue@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.8.tgz#f855c1c27255184a82225f4bef225473e8faf15b"
 
 vuex-router-sync@^4.1.2:
   version "4.3.2"
