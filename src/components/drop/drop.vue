@@ -92,6 +92,12 @@ export default {
     hideOnLeave: {
       type: Boolean,
       default: true
+    },
+    // determines if hide should be
+    // trriggered on click outside
+    hideOnClick: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
@@ -145,6 +151,22 @@ export default {
     target (target, oldTarget) {
       this.removeTargetEvents(oldTarget)
       this.setTargetEvents()
+    },
+    show (val) {
+      if (val && this.triggers.match(/click/) && this.hideOnClick) {
+        // trigger events when clicked outside drop
+        on(window.document, 'click', e => {
+          const clickInside = this.$el.contains(e.target)
+
+          if (clickInside) {
+            return
+          }
+
+          this.triggerHide()
+        }, this._uid)
+      } else {
+        off(window.document, 'click', this._uid)
+      }
     }
   },
   methods: {
