@@ -7,9 +7,9 @@
     v-position="{
       flip,
       target: $target,
-      clsPos: 'uk-dropdown',
       position: $position,
-      boundary: $boundary
+      boundary: $boundary,
+      classPrefix: 'uk-dropdown',
     }"
   >
     <slot />
