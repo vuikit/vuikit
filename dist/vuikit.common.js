@@ -71,11 +71,11 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
   }
 };
 
-function concat(){return Array.prototype.concat.apply([],arguments)}function mergeData(){
+function mergeData(){
 var arguments$1 = arguments;
-for(var e=__assign({},arguments[0]),a=1;a<arguments.length;a++){ for(var s=0,t=keys(arguments[a]);s<t.length;s++){var c=t[s];if(void 0!==e[c]){ switch(c){case"class":case"style":case"directives":e[c]=concat(e[c],arguments$1[a][c]);break;case"staticClass":e[c]&&(e[c]=e[c].trim()+" "), e[c]+=arguments$1[a][c].trim();break;case"on":case"nativeOn":for(var r=0,o=keys(arguments[a][c]);r<o.length;r++){var n=o[r];e[c][n]?e[c][n]=concat(arguments$1[a][c][n],e[c][n]):e[c][n]=arguments$1[a][c][n];}break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":e[c]=__assign({},e[c],arguments$1[a][c]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:e[c]=arguments$1[a][c];} }else { e[c]=arguments$1[a][c]; }} }return e}var __assign=Object.assign||function(e){
+for(var e,a,s={},t=arguments.length;t--;){ for(var r=0,c=Object.keys(arguments[t]);r<c.length;r++){ switch(e=c[r]){case"class":case"style":case"directives":Array.isArray(s[e])||(s[e]=[]), s[e]=s[e].concat(arguments$1[t][e]);break;case"staticClass":if(!arguments$1[t][e]){ break; }void 0===s[e]&&(s[e]=""), s[e]&&(s[e]+=" "), s[e]+=arguments$1[t][e].trim();break;case"on":case"nativeOn":s[e]||(s[e]={});for(var o=0,n=Object.keys(arguments[t][e]);o<n.length;o++){ a=n[o], s[e][a]?s[e][a]=[].concat(s[e][a],arguments$1[t][e][a]):s[e][a]=arguments$1[t][e][a]; }break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":s[e]||(s[e]={}), s[e]=__assign({},arguments$1[t][e],s[e]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:s[e]||(s[e]=arguments$1[t][e]);} } }return s}var __assign=Object.assign||function(e){
 var arguments$1 = arguments;
-for(var a,s=1,t=arguments.length;s<t;s++){a=arguments$1[s];for(var c in a){ Object.prototype.hasOwnProperty.call(a,c)&&(e[c]=a[c]); }}return e}; var keys=Object.keys;
+for(var a,s=1,t=arguments.length;s<t;s++){a=arguments$1[s];for(var r in a){ Object.prototype.hasOwnProperty.call(a,r)&&(e[r]=a[r]); }}return e};
 
 var sizes = ['large', 'small'];
 var styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link'];
@@ -434,11 +434,12 @@ var card = {
     }
   },
   render: function render (h, ref) {
+    var obj;
+
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
     var slots = ref.slots;
-
     var type = props.type;
     var padding = props.padding;
     var hover = props.hover;
@@ -455,7 +456,6 @@ var card = {
       _slots.footer && h(Footer, _slots.footer),
       _slots.badge && h(Badge, _slots.badge)
     ])
-    var obj;
 
   }
 };
@@ -1166,7 +1166,7 @@ function position$1 (ctx) {
   var offset$$1 = props.offset;
   var boundary = props.boundary;
   var flip = props.flip;
-  var clsPos = props.clsPos;
+  var classPrefix = props.classPrefix;
 
   if (!includes(positions$1, position$$1)) {
     warn('Invalid v-position position', vnode);
@@ -1177,7 +1177,7 @@ function position$1 (ctx) {
   var align = ref[1];
 
   // remove any position class
-  var classesRx = new RegExp((clsPos + "-(top|bottom|left|right)(-[a-z]+)?"));
+  var classesRx = new RegExp((classPrefix + "-(top|bottom|left|right)(-[a-z]+)?"));
   el.className = el.className.replace(classesRx, '');
 
   // reset pos
@@ -1217,8 +1217,8 @@ function position$1 (ctx) {
   setResizeEvent(ctx);
 
   // add position class
-  if (clsPos) {
-    addClass(el, (clsPos + "-" + dir + "-" + align));
+  if (classPrefix) {
+    addClass(el, (classPrefix + "-" + dir + "-" + align));
   }
 }
 
@@ -1238,7 +1238,7 @@ function getProps (ctx) {
   var target = value.target || null;
   var delay = get(value, 'delay', 0);
   var flip = get(value, 'flip', true);
-  var clsPos = get(value, 'clsPos', '');
+  var classPrefix = get(value, 'classPrefix', 'v-position');
   var boundary = value.boundary || window;
   var offset$$1 = toInteger(value.offset) || 0;
   var position$$1 = value.position || 'top-center';
@@ -1247,13 +1247,7 @@ function getProps (ctx) {
     target = vnode.context.$refs[target];
   }
 
-  // a target must resolve as dom
-  if (!isObject(target)) {
-    warn('v-position Target missing', vnode.context);
-    return
-  }
-
-  return { target: target, delay: delay, offset: offset$$1, flip: flip, position: position$$1, boundary: boundary, clsPos: clsPos }
+  return { target: target, delay: delay, offset: offset$$1, flip: flip, position: position$$1, boundary: boundary, classPrefix: classPrefix }
 }
 
 function setResizeEvent (ctx) {
@@ -1303,17 +1297,16 @@ var positions = [
 var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"position",rawName:"v-position",value:({
     flip: _vm.flip,
     target: _vm.$target,
-    clsPos: 'uk-drop',
     position: _vm.$position,
-    boundary: _vm.$boundary
-  }),expression:"{\n    flip,\n    target: $target,\n    clsPos: 'uk-drop',\n    position: $position,\n    boundary: $boundary\n  }"}],class:['uk-drop', { 'uk-open': _vm.show }],style:(_vm.$style),on:{"mouseenter":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.triggerShow($event);},"mouseleave":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.hideOnLeave && _vm.triggerHide();}}},[_vm._t("default")],2)},staticRenderFns: [],
+    boundary: _vm.$boundary,
+    classPrefix: 'uk-drop'
+  }),expression:"{\n    flip,\n    target: $target,\n    position: $position,\n    boundary: $boundary,\n    classPrefix: 'uk-drop'\n  }"}],class:['uk-drop', { 'uk-open': _vm.show }],style:(_vm.$style),on:{"mouseenter":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.triggerShow($event);},"mouseleave":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.hideOnLeave && _vm.triggerHide();}}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Drop',
   directives: {
     Position: index
   },
   props: {
-    // a Dom element to attach to,
-    // defaults to previousElementSibling
+    // a Dom element to attach to
     target: {},
     // a Dom element as boundary
     boundary: {
@@ -1351,6 +1344,12 @@ var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm
     // determines if hide should be
     // trriggered on drop mouseleave
     hideOnLeave: {
+      type: Boolean,
+      default: true
+    },
+    // determines if hide should be
+    // trriggered on click outside
+    hideOnClick: {
       type: Boolean,
       default: true
     }
@@ -1406,6 +1405,24 @@ var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm
     target: function target (target$1, oldTarget) {
       this.removeTargetEvents(oldTarget);
       this.setTargetEvents();
+    },
+    show: function show (val) {
+      var this$1 = this;
+
+      if (val && this.triggers.match(/click/) && this.hideOnClick) {
+        // trigger events when clicked outside drop
+        on(window.document, 'click', function (e) {
+          var clickInside = this$1.$el.contains(e.target);
+
+          if (clickInside) {
+            return
+          }
+
+          this$1.triggerHide();
+        }, this._uid);
+      } else {
+        off(window.document, 'click', this._uid);
+      }
     }
   },
   methods: {
@@ -1479,10 +1496,10 @@ var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm
 var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"position",rawName:"v-position",value:({
     flip: _vm.flip,
     target: _vm.$target,
-    clsPos: 'uk-dropdown',
     position: _vm.$position,
-    boundary: _vm.$boundary
-  }),expression:"{\n    flip,\n    target: $target,\n    clsPos: 'uk-dropdown',\n    position: $position,\n    boundary: $boundary\n  }"}],class:['uk-dropdown', { 'uk-open': _vm.show }],style:(_vm.$style),on:{"mouseenter":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.triggerShow($event);},"mouseleave":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.hideOnLeave && _vm.triggerHide();}}},[_vm._t("default")],2)},staticRenderFns: [],
+    boundary: _vm.$boundary,
+    classPrefix: 'uk-dropdown',
+  }),expression:"{\n    flip,\n    target: $target,\n    position: $position,\n    boundary: $boundary,\n    classPrefix: 'uk-dropdown',\n  }"}],class:['uk-dropdown', { 'uk-open': _vm.show }],style:(_vm.$style),on:{"mouseenter":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.triggerShow($event);},"mouseleave":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.hideOnLeave && _vm.triggerHide();}}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Dropdown',
   extends: Drop
 };
@@ -1509,9 +1526,10 @@ var VkIcon = {
       type: String,
       default: ''
     },
-    ratio: {
-      type: [String, Number]
-    }
+    viewBox: String,
+    ratio: [String, Number],
+    width: [String, Number],
+    height: [String, Number]
   },
   render: function (h, ref) {
       var data = ref.data;
@@ -1520,7 +1538,7 @@ var VkIcon = {
 
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
       props.icon
-        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        ? h(("icon-" + (props.icon)), { props: props })
         : children
     ]);
 }
@@ -1536,8 +1554,8 @@ var VkIconLink = {
     }
   }),
   render: function (h, ref) {
-      var props = ref.props;
       var data = ref.data;
+      var props = ref.props;
       var children = ref.children;
 
       return h('a', mergeData(data, {
@@ -1546,7 +1564,7 @@ var VkIconLink = {
       }]
     }), [
       props.icon
-        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        ? h(("icon-" + (props.icon)), { props: props })
         : children
     ]);
 }
@@ -1557,14 +1575,13 @@ var iconButton = {
   functional: true,
   props: VkIcon.props,
   render: function (h, ref) {
-      var props = ref.props;
       var data = ref.data;
-      var listeners = ref.listeners;
+      var props = ref.props;
       var children = ref.children;
 
       return h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
       props.icon
-        ? h(("icon-" + (props.icon)), { props: { ratio: props.ratio } })
+        ? h(("icon-" + (props.icon)), { props: props })
         : children
     ]);
 }
@@ -1619,6 +1636,28 @@ var iconnavVertical = {
 
       return h('ul', mergeData(data, { class: 'uk-iconnav uk-iconnav-vertical' }), children);
 }
+};
+
+var obj;
+var label = {
+  functional: true,
+  props: {
+    type: {
+      type: String,
+      default: '',
+      validator: function (val) { return !val || includes(['success', 'warning', 'danger'], val); }
+    }
+  },
+  render: function (h, ref) {
+      var data = ref.data;
+      var props = ref.props;
+      var children = ref.children;
+
+      return h('span', mergeData(data, {
+      class: ['uk-label', ( obj = {}, obj[("uk-label-" + (props.type))] = props.type, obj)]
+    }), children);
+}
+
 };
 
 var doc = document.documentElement;
@@ -2504,107 +2543,337 @@ function getId (n) {
   return (msg + "-" + key + "-" + timeout)
 }
 
+var win$2 = window;
+var body = document.body;
 var doc$4 = document.documentElement;
-var body$1 = document.body;
 
+var scroll;
 var active$1;
 var activeCount;
+var scrollbarWidth;
 
-on(doc$4, 'click', function (e) {
-  if (active$1 && !active$1.$refs.panel.contains(e.target)) {
-    active$1.$emit('click-out', e);
+var common = function (vm) { return ({
+  on: {
+    beforeEnter: function beforeEnter (el) {
+      scrollbarWidth = width(win$2) - doc$4.offsetWidth;
+
+      scroll = scroll || { x: win$2.pageXOffset, y: win$2.pageYOffset };
+
+      addClass(doc$4, 'uk-offcanvas-page');
+      addClass(body, 'uk-offcanvas-container');
+
+      if (vm.flip) {
+        addClass(body, 'uk-offcanvas-flip');
+        addClass(vm.$refs.bar, 'uk-offcanvas-bar-flip');
+      }
+
+      if (vm.overlay) {
+        addClass(el, 'uk-offcanvas-overlay');
+        addClass(body, 'uk-offcanvas-overlay');
+      }
+    },
+    afterEnter: function afterEnter (el) {
+      if (vm.overlay) {
+        width(vm.$refs.content, width(win$2) - scrollbarWidth);
+        height(vm.$refs.content, height(win$2));
+
+        if (scroll) {
+          vm.$refs.content.scrollTop = scroll.y;
+        }
+      }
+
+      if (!activeCount) {
+        setGlobalEvents();
+      }
+
+      active$1 = vm;
+      activeCount++;
+    },
+    afterLeave: function afterLeave (el) {
+
+      if (!vm.overlay) {
+        scroll = { x: win$2.pageXOffset, y: win$2.pageYOffset };
+      } else if (!scroll) {
+        var ref = vm.$refs.content;
+        var x = ref.scrollLeft;
+        var y = ref.scrollTop;
+        scroll = { x: x, y: y };
+      }
+
+      removeClass(body, 'uk-offcanvas-flip');
+      removeClass(vm.$refs.bar, 'uk-offcanvas-bar-flip');
+
+      removeClass(doc$4, 'uk-offcanvas-page');
+      removeClass(body, 'uk-offcanvas-container');
+
+      removeClass(el, 'uk-offcanvas-overlay');
+      removeClass(body, 'uk-offcanvas-overlay');
+
+      body.scrollTop = scroll.y;
+      css(body, 'overflowY', '');
+      css(doc$4, 'overflowY', '');
+
+      width(vm.$refs.content, '');
+      height(vm.$refs.content, '');
+
+      win$2.scrollTo(scroll.x, scroll.y);
+
+      scroll = null;
+
+      activeCount--;
+
+      if (!activeCount) {
+        unsetGlobalEvents();
+      }
+
+      if (active$1 === vm) {
+        active$1 = null;
+      }
+    }
   }
-});
+}); };
 
-on(doc$4, 'keyup', function (e) {
-  if (e.keyCode === 27 && active$1) {
-    e.preventDefault();
-    active$1.$emit('key-esc', e);
+function unsetGlobalEvents () {
+  offAll('vk-offcanvas');
+}
+
+function setGlobalEvents () {
+  // hide on click out
+  on(doc$4, 'click', function (e) {
+    var clickOut = !active$1.$el.contains(e.target);
+    var clickOnOverlay = e.target === active$1.$el && active$1.overlay;
+
+    if (clickOut || clickOnOverlay) {
+      active$1.hide();
+    }
+  }, 'vk-offcanvas');
+
+  // hide on key-esc
+  on(doc$4, 'keyup', function (e) {
+    if (e.keyCode === 27 && active$1) {
+      e.preventDefault();
+      active$1.hide();
+    }
+  }, 'vk-offcanvas');
+}
+
+var win$1 = window;
+var doc$3 = document.documentElement;
+
+var VkOffcanvasTransitionNone = {
+  functional: true,
+  render: function render (h, ref) {
+    var vm = ref.parent;
+    var data = ref.data;
+    var children = ref.children;
+
+
+    var def = {
+      props: {
+        css: false
+      },
+      on: {
+        enter: function (el, done) { return done(); },
+        leave: function (el, done) { return done(); },
+        beforeEnter: function beforeEnter (el) {
+          var scrollbarWidth = width(win$1) - doc$3.offsetWidth;
+
+          css(doc$3, 'overflowY', scrollbarWidth && vm.overlay
+            ? 'scroll'
+            : ''
+          );
+
+          addClass(el, 'uk-open');
+          addClass(vm.$refs.bar, 'uk-offcanvas-none');
+        },
+        afterLeave: function afterLeave (el) {
+          removeClass(el, 'uk-open');
+          removeClass(vm.$refs.bar, 'uk-offcanvas-none');
+        }
+      }
+    };
+
+    return h('transition', mergeData(data, def, common(vm)), children)
   }
-});
+};
 
-var ModalMixin = {
+var win$3 = window;
+var doc$5 = document.documentElement;
+
+var VkOffcanvasTransitionPush = {
+  functional: true,
+  render: function render (h, ref) {
+    var vm = ref.parent;
+    var data = ref.data;
+    var children = ref.children;
+
+
+    var def = {
+      props: {
+        css: false
+      },
+      on: {
+        beforeEnter: function beforeEnter (el) {
+          var scrollbarWidth = width(win$3) - doc$5.offsetWidth;
+
+          css(doc$5, 'overflowY', vm.flip && scrollbarWidth && vm.overlay
+            ? 'scroll'
+            : ''
+          );
+
+          addClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push');
+        },
+        enter: function enter (el, done) {
+          height(el); // force reflow
+          addClass(el, 'uk-open');
+          addClass(vm.$refs.content, 'uk-offcanvas-content-animation');
+
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+        },
+        beforeLeave: function beforeLeave (el) {
+          removeClass(el, 'uk-open');
+          removeClass(vm.$refs.content, 'uk-offcanvas-content-animation');
+        },
+        leave: function leave (el, done) {
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+        },
+        afterLeave: function afterLeave (el) {
+          removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push');
+        }
+      }
+    };
+
+    return h('transition', mergeData(data, def, common(vm)), children)
+  }
+};
+
+var win$4 = window;
+var doc$6 = document.documentElement;
+
+var VkOffcanvasTransitionSlide = {
+  functional: true,
+  render: function render (h, ref) {
+    var vm = ref.parent;
+    var data = ref.data;
+    var children = ref.children;
+
+
+    var def = {
+      props: {
+        css: false
+      },
+      on: {
+        beforeEnter: function beforeEnter (el) {
+          var scrollbarWidth = width(win$4) - doc$6.offsetWidth;
+
+          css(doc$6, 'overflowY', scrollbarWidth && vm.overlay
+            ? 'scroll'
+            : ''
+          );
+
+          addClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-slide');
+        },
+        enter: function enter (el, done) {
+          height(el); // force reflow
+          addClass(el, 'uk-open');
+
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+        },
+        beforeLeave: function beforeLeave (el) {
+          removeClass(el, 'uk-open');
+        },
+        leave: function leave (el, done) {
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+        },
+        afterLeave: function afterLeave (el) {
+          removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-slide');
+        }
+      }
+    };
+
+    return h('transition', mergeData(data, def, common(vm)), children)
+  }
+};
+
+var win$5 = window;
+var doc$7 = document.documentElement;
+
+var VkOffcanvasTransitionReveal = {
+  functional: true,
+  render: function render (h, ref) {
+    var vm = ref.parent;
+    var data = ref.data;
+    var children = ref.children;
+
+    var wrapper = vm.$refs.wrapper;
+
+    var def = {
+      props: {
+        css: false
+      },
+      on: {
+        beforeEnter: function beforeEnter (el) {
+          var scrollbarWidth = width(win$5) - doc$7.offsetWidth;
+
+          width(vm.$refs.content, width(win$5) - scrollbarWidth);
+
+          css(doc$7, 'overflowY', vm.flip && scrollbarWidth && vm.overlay
+            ? 'scroll'
+            : ''
+          );
+
+          // wrap bar, required for this animation
+          wrapper = document.createElement('div');
+          addClass(wrapper, 'uk-offcanvas-reveal');
+          el.appendChild(wrapper);
+          wrapper.appendChild(vm.$refs.bar);
+          vm.$refs.wrapper = wrapper; // save ref
+        },
+        enter: function enter (el, done) {
+          height(el); // force reflow
+          addClass(el, 'uk-open');
+          addClass(vm.$refs.content, 'uk-offcanvas-content-animation');
+
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === wrapper; });
+        },
+        beforeLeave: function beforeLeave (el) {
+          removeClass(el, 'uk-open');
+          removeClass(vm.$refs.content, 'uk-offcanvas-content-animation');
+        },
+        leave: function leave (el, done) {
+          // indicate end of transition
+          one(el, transitionend, done, function (e) { return e.target === wrapper; });
+        },
+        afterLeave: function afterLeave (el) {
+          // remove wrapper
+          el.appendChild(vm.$refs.bar);
+          el.removeChild(wrapper);
+        }
+      }
+    };
+
+    return h('transition', mergeData(data, def, common(vm)), children)
+  }
+};
+
+var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(("vk-offcanvas-transition-" + (_vm.transition)),{tag:"component"},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"bar",staticClass:"uk-offcanvas-bar"},[_vm._t("default")],2)])])},staticRenderFns: [],
+  name: 'Offcanvas',
+  components: {
+    VkOffcanvasTransitionNone: VkOffcanvasTransitionNone,
+    VkOffcanvasTransitionPush: VkOffcanvasTransitionPush,
+    VkOffcanvasTransitionSlide: VkOffcanvasTransitionSlide,
+    VkOffcanvasTransitionReveal: VkOffcanvasTransitionReveal
+  },
   props: {
     show: {
       type: Boolean,
       default: false
     },
-    overlay: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data: function () { return ({
-    active: active$1,
-    activeCount: activeCount
-  }); },
-  methods: {
-    _beforeEnter: function _beforeEnter () {
-      if (!active$1) {
-        body$1.style['overflow-y'] = this.getScrollbarWidth() && this.overlay ? 'scroll' : '';
-      }
-    },
-    _afterEnter: function _afterEnter () {
-      // if any previous modal active
-      // emit event for further actions
-      if (active$1) {
-        active$1.$emit('inactive');
-      }
-      // change current active modal
-      active$1 = this;
-      activeCount++;
-    },
-    _afterLeave: function _afterLeave () {
-      activeCount--;
-      // if no active modals left
-      if (!activeCount) {
-        body$1.style['overflow-y'] = '';
-      }
-      if (active$1 === this) {
-        active$1 = null;
-      }
-    },
-    getScrollbarWidth: function getScrollbarWidth () {
-      var width = doc$4.style.width;
-      doc$4.style.width = '';
-      var scrollbarWidth = window.innerWidth - doc$4.offsetWidth;
-
-      if (width) {
-        doc$4.style.width = width;
-      }
-
-      return scrollbarWidth
-    }
-  },
-  beforeDestroy: function beforeDestroy () {
-    offAll(this._uid);
-    if (this.$el.parentNode) {
-      this.$el.parentNode.removeChild(this.$el);
-    }
-  }
-};
-
-var doc$3 = document.documentElement;
-var body = document.body;
-var scroll;
-
-function toMs (time) {
-  return !time
-    ? 0
-    : time.substr(-2) === 'ms'
-      ? parseFloat(time)
-      : parseFloat(time) * 1000
-}
-
-// force redraw/repaint for WebKit
-function forceRedraw (el) {
-  el.offsetHeight; // eslint-disable-line
-}
-
-var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('transition',{attrs:{"css":false},on:{"enter":_vm.transitionEnd,"leave":_vm.transitionEnd,"before-enter":_vm.beforeShow,"after-enter":_vm.afterEnter,"before-leave":_vm.beforeHide,"after-leave":_vm.hidden}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[(_vm.mode === 'reveal')?_c('div',{class:[_vm.clsMode]},[_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)]):_c('div',{ref:"panel",staticClass:"uk-offcanvas-bar",class:{ 'uk-offcanvas-bar-flip': _vm.flip }},[_vm._t("default")],2)])])},staticRenderFns: [],
-  name: 'Offcanvas',
-  mixins: [ModalMixin],
-  props: {
     flip: {
       type: Boolean,
       default: false
@@ -2613,205 +2882,55 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       type: Boolean,
       default: false
     },
-    mode: {
+    transition: {
       type: String,
-      default: 'slide' // none|slide|push|reveal
-    }
-  },
-  data: function () { return ({
-    defaults: {
-      clsMode: 'uk-offcanvas',
-      clsFlip: 'uk-offcanvas-flip',
-      clsOverlay: 'uk-offcanvas-overlay',
-      clsSidebarAnimation: 'uk-offcanvas-bar-animation',
-      clsContentAnimation: 'uk-offcanvas-content-animation'
-    },
-    clsPage: 'uk-offcanvas-page',
-    clsPageAnimation: 'uk-offcanvas-page-animation',
-    clsContainer: 'uk-offcanvas-container',
-    clsContent: 'uk-offcanvas-content'
-  }); },
-  computed: {
-    clsFlip: function clsFlip () {
-      return this.flip
-        ? this.defaults.clsFlip
-        : ''
-    },
-    clsOverlay: function clsOverlay () {
-      return this.overlay
-        ? this.defaults.clsOverlay
-        : ''
-    },
-    clsMode: function clsMode () {
-      return ((this.defaults.clsMode) + "-" + (this.mode))
-    },
-    clsSidebarAnimation: function clsSidebarAnimation () {
-      return this.mode === 'none' || this.mode === 'reveal'
-        ? ''
-        : this.defaults.clsSidebarAnimation
-    },
-    clsContentAnimation: function clsContentAnimation () {
-      return this.mode !== 'push' && this.mode !== 'reveal'
-        ? ''
-        : this.defaults.clsContentAnimation
-    },
-    transitionElement: function transitionElement () {
-      return this.mode === 'reveal'
-        ? this.$refs.panel.parentNode
-        : this.$refs.panel
-    },
-    transitionDuration: function transitionDuration () {
-      return toMs(css(this.transitionElement, 'transition-duration'))
+      default: 'slide',
+      validator: function (mode) { return mode.match(/none|slide|push|reveal/); }
     }
   },
   methods: {
-    afterEnter: function afterEnter (el) {
-      this._afterEnter();
-      this.$emit('displayed');
-    },
-    getRefElement: function getRefElement (ref) {
-      var context = this.$vnode.context;
-      var target = context.$refs[ref];
-      if (target) {
-        return target._isVue
-          ? target.$el
-          : target
-      }
-      return false
-    },
-    beforeShow: function beforeShow () {
-      scroll = scroll || { x: window.pageXOffset, y: window.pageYOffset };
-
-      css(doc$3, 'overflow-y', (!this.clsContentAnimation || this.flip) && this.getScrollbarWidth() && this.overlay ? 'scroll' : '');
-
-      // set fixed with so the page can slide-out without shinking
-      css(doc$3, 'width', window.innerWidth - this.getScrollbarWidth() + 'px');
-
-      addClass(doc$3, ("" + (this.clsPage)));
-      addClass(body, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-      forceRedraw(body);
-
-      addClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.mode !== 'reveal' ? this.clsMode : '')));
-      addClass(this.$el, this.clsOverlay);
-      addClass(this.$refs.content, this.clsContentAnimation);
-
-      // toggle element
-      addClass(this.$el, this.clsOverlay);
-      css(this.$el, 'display', 'block');
-      forceRedraw(this.$el);
-      addClass(this.$el, 'uk-open');
-    },
-    beforeHide: function beforeHide () {
-      removeClass(this.$refs.content, this.clsContentAnimation);
-      removeClass(this.$el, 'uk-open');
-    },
-    transitionEnd: function (el, done) {
-      setTimeout(done, this.transitionDuration);
-    },
-    hidden: function hidden () {
-      if (!this.overlay) {
-        scroll = { x: window.pageXOffset, y: window.pageYOffset };
-      }
-
-      css(doc$3, 'width', '');
-      removeClass(doc$3, ("" + (this.clsPage)));
-
-      removeClass(this.$refs.panel, ((this.clsSidebarAnimation) + " " + (this.clsMode)));
-      removeClass(this.$el, this.clsOverlay);
-      css(this.$el, 'display', 'none');
-      forceRedraw(this.$el);
-      removeClass(body, ((this.clsContainer) + " " + (this.clsFlip) + " " + (this.clsOverlay)));
-
-      body.scrollTop = scroll.y;
-
-      css(doc$3, 'overflow-y', '');
-      css(this.$refs.content, 'width', '');
-      css(this.$refs.content, 'height', '');
-      forceRedraw(this.$refs.content);
-
-      window.scrollTo(scroll.x, scroll.y);
-      scroll = null;
-
-      this._afterLeave();
-      this.$emit('hidden');
+    hide: function hide () {
+      this.$emit('update:show', false);
     }
   },
   mounted: function mounted () {
-    var this$1 = this;
-
-    this.$refs.content = document.body.querySelector(("." + (this.clsContent)));
+    this.$refs.content = document.body.querySelector(".uk-offcanvas-content");
 
     if (!this.$refs.content) {
-      warn('Offcanvas content is not detected, make sure to wrap it with OffcanvasContent.', this);
+      warn('Offcanvas content is not detected, make sure to wrap the content with VkOffcanvasContent or a custom div.uk-offcanvas-content.', this);
       this.$destroy();
-      return
     }
-
-    var clickHandler = function (e) {
-      if (e.target === this$1.$refs.panel || this$1.$refs.panel.contains(e.target)) {
-        this$1.$emit('click-in', e);
-      }
-    };
-
-    on(this.$el, 'click', clickHandler, this._uid);
-    if ('ontouchstart' in document.documentElement) {
-      on(this.$el, 'touchstart', clickHandler, this._uid);
-    }
-  },
-  beforeDestroy: function beforeDestroy () {
-    removeClass(doc$3, ((this.clsPage) + " " + (this.clsFlip) + " " + (this.clsPageOverlay)));
-    doc$3.style['margin-left'] = '';
-    this._afterLeave();
   }
 };
 
 var offcanvasContent = {
-  name: 'OffcanvasContent',
   functional: true,
-  render: function render (h, ref) {
-    var children = ref.children;
+  render: function (h, ref) {
+      var children = ref.children;
 
-    var nodesCount = children.length;
-
-    if (nodesCount === 1) {
-      var rawChild = children[0];
-
-      if (rawChild.tag) {
-        addNodeClass(rawChild);
-        return rawChild
-      }
-    }
-
-    return h('div', {
-      staticClass: 'uk-offcanvas-content'
-    }, children)
-  }
-};
-
-function addNodeClass (node) {
-  var classes = node.data.staticClass
-    ? node.data.staticClass.split(' ')
-    : [];
-  classes.push('uk-offcanvas-content');
-  node.data.staticClass = classes.join(' ');
+      return h('div', {
+      class: 'uk-offcanvas-content'
+    }, children);
 }
 
-var offcanvasClose = {
-  name: 'OffcanvasClose',
-  functional: true,
-  render: function render (h, ref) {
-    var data = ref.data;
+};
 
-    return h('button', {
-      staticClass: 'uk-offcanvas-close uk-close uk-icon',
+var offcanvasClose = {
+  functional: true,
+  render: function (h, ref) {
+      var data = ref.data;
+
+      return h('button', {
+      class: 'uk-offcanvas-close uk-close uk-icon',
       attrs: {
         type: 'button'
       },
       on: data.on
     }, [
       h(IconClose)
-    ])
-  }
+    ]);
+}
+
 };
 
 // icon-pagination-next
@@ -3250,7 +3369,7 @@ var spinner = {
   }
 };
 
-// import { Animation } from '~utils/helpers/animation'
+// import { Animation } from '@vuikit/core/utils/helpers/animation'
 // let dir
 var scroll$1 = 0;
 
@@ -3596,555 +3715,6 @@ var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
   }
 };
 
-/*
- * Determines if the value is a function
- */
-var isFunction = function (val) {
-  return toString(val) === '[object Function]'
-};
-
-function toString (val) {
-  return Object.prototype.toString.call(val)
-}
-
-var Row = {
-  functional: true,
-  render: function render (h, ref) {
-    var props = ref.props;
-    var children = ref.children;
-    var table = ref.parent;
-
-    var row = props.row;
-    var onClick = function (e) { return targetIsRow(e) && table.$emit('click-row', row); };
-    var classes = [ resolveClass(table.rowClass, row) || '' ];
-
-    if (table.isSelected(row)) {
-      classes.push('uk-active');
-    }
-
-    return h('tr', {
-      class: classes,
-      on: {
-        click: onClick
-      }
-    }, [
-      children
-    ])
-  }
-};
-
-function targetIsRow (e) {
-  return e.target.tagName === 'TR' || e.target.tagName === 'TD'
-}
-
-function resolveClass (c, row) {
-  return isFunction(c)
-    ? c(row)
-    : c
-}
-
-/**
- * Get the argument names of a function
- */
-var getFnArgs = function (fn) {
-  // first match everything inside the function argument parens
-  var args = fn.toString().match(/function\s.*?\(([^)]*)\)/)[1];
-
-  // split the arguments string into an array comma delimited
-  return args.split(',')
-    // ensure no inline comments are parsed and trim the whitespace
-    .map(function (arg) { return arg.replace(/\/\*.*\*\//, '').trim(); })
-    // ensure no undefined values are added
-    .filter(function (arg) { return arg; })
-};
-
-var Cell = {
-  functional: true,
-  render: function render (h, ref) {
-    var parent = ref.parent;
-    var data = ref.data;
-    var props = ref.props;
-
-    var col = props.col;
-    var row = props.row;
-    var cellRender = get(col, 'componentOptions.Ctor.options.cellRender');
-    var scopedSlot = get(col, 'data.scopedSlots.default');
-
-    // workaround when passing scopedSlot programatically
-    if (scopedSlot) {
-      var args = getFnArgs(scopedSlot);
-
-      if (args[0] === 'h') {
-        col.data.scopedSlots.default = scopedSlot.bind(null, h);
-      }
-    }
-
-    if (cellRender) {
-      return cellRender(h, { row: row, col: col, table: parent })
-    } else {
-      warn('The Column definition is missing the cellRender', parent);
-    }
-  }
-};
-
-var MixinSelect = {
-  props: {
-    selection: {
-      type: Array,
-      default: function () { return []; }
-    },
-    select: {
-      type: Boolean,
-      default: false
-    },
-    selectSingle: {
-      type: Boolean,
-      default: false
-    }
-  },
-  methods: {
-    isSelected: function isSelected (row) {
-      return this.selection.findIndex(function (r) { return r.id === row.id; }) !== -1
-    },
-    selectRow: function selectRow (row) {
-      var newSelection = cloneArray(this.selection);
-      newSelection.push(row);
-      this.updateSelection(newSelection);
-    },
-    unselectRow: function unselectRow (row) {
-      var index = this.selection.indexOf(row);
-      var newSelection = cloneArray(this.selection);
-      newSelection.splice(index, 1);
-
-      this.updateSelection(newSelection);
-    },
-    toggleSelection: function toggleSelection (row) {
-      this.isSelected(row)
-        ? this.unselectRow(row)
-        : this.selectRow(row);
-    },
-    updateSelection: function updateSelection (selection) {
-      this.$emit('update:selection', selection);
-    }
-  },
-  created: function created () {
-    var this$1 = this;
-
-    this.$on('click-row', function (row) {
-      if (this$1.selectSingle) {
-        this$1.updateSelection([row]);
-      } else if (this$1.select) {
-        this$1.toggleSelection(row);
-      }
-    });
-  }
-};
-
-/**
-* Flat merge, allows multiple args
-*/
-var merge = function (host) {
-  var donors = slice(arguments, 1);
-
-  donors.forEach(function (donor) {
-    Object.keys(donor).forEach(function (key) {
-      host[key] = donor[key];
-    });
-  });
-
-  return host
-};
-
-function slice (arr, i) {
-  return Array.prototype.slice.call(arr, i)
-}
-
-/*
- * Safely and quickly serialize JavaScript objects
- * https://github.com/davidmarkclements/fast-safe-stringify
- */
-var stringify = function (obj) {
-  if (isObject(obj) && !isFunction(obj.toJSON)) {
-    decirc(merge({}, obj), '', [], null);
-  }
-
-  return JSON.stringify(obj)
-};
-
-function Circle (val, k, parent) {
-  this.val = val;
-  this.k = k;
-  this.parent = parent;
-  this.count = 1;
-}
-
-Circle.prototype.toJSON = function toJSON () {
-  if (--this.count === 0) {
-    this.parent[this.k] = this.val;
-  }
-  return '[Circular]'
-};
-
-function decirc (val, k, stack, parent) {
-  var keys, len, i;
-  if (typeof val !== 'object' || val === null) {
-    // not an object, nothing to do
-    return
-  } else if (val instanceof Circle) {
-    val.count++;
-    return
-  } else if (typeof val.toJSON === 'function' && !val.toJSON.forceDecirc) {
-    return
-  } else if (parent) {
-    if (~stack.indexOf(val)) {
-      parent[k] = new Circle(val, k, parent);
-      return
-    }
-  }
-  stack.push(val);
-  keys = Object.keys(val);
-  len = keys.length;
-  i = 0;
-  for (; i < len; i++) {
-    k = keys[i];
-    decirc(val[k], k, stack, val);
-  }
-  stack.pop();
-}
-
-var index$1 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"uk-table",class:{ 'uk-table-hover': _vm.hover, 'uk-table-small': _vm.small, 'uk-table-middle': _vm.middle, 'uk-table-justify': _vm.justify, 'uk-table-divider': _vm.divider, 'uk-table-striped': _vm.striped, 'uk-table-responsive': _vm.responsive }},[_c('thead',[_c('tr',[_vm._t("default")],2)]),_vm._v(" "),_c('tbody',_vm._l((_vm.data),function(row){return _c('row',{key:_vm.stringify(row),attrs:{"row":row}},_vm._l((_vm.columns),function(col,i){return _c('cell',{key:i,attrs:{"col":col,"row":row}})}))}))])},staticRenderFns: [],
-  name: 'Table',
-  components: { Row: Row, Cell: Cell },
-  mixins: [ MixinSelect ],
-  inheritAttrs: false,
-  props: {
-    data: {
-      type: Array,
-      required: true
-    },
-    small: {
-      type: Boolean,
-      default: false
-    },
-    middle: {
-      type: Boolean,
-      default: false
-    },
-    divider: {
-      type: Boolean,
-      default: false
-    },
-    striped: {
-      type: Boolean,
-      default: false
-    },
-    hover: {
-      type: Boolean,
-      default: false
-    },
-    justify: {
-      type: Boolean,
-      default: false
-    },
-    responsive: {
-      type: Boolean,
-      default: false
-    },
-    rowClass: {
-      type: Function
-    }
-  },
-  data: function () { return ({
-    children: []
-  }); },
-  computed: {
-    columns: {
-      get: function get () {
-        // default slots excluding spaces and comments
-        var slots = (this.$slots.default || [])
-          .filter(function (vnode) { return vnode.tag; });
-
-        if (!slots.length) {
-          warn('At least one TableColumn must be set', this);
-        }
-
-        return slots
-      },
-      cache: false
-    }
-  },
-  methods: {
-    stringify: function stringify$1$$1 (obj) {
-      return stringify(obj)
-    }
-  },
-  created: function created () {
-    // forces the table to rerender
-    // when children are available
-    // which is required by some cols
-    this.children = this.$children;
-  }
-};
-
-var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._t("header",[_vm._v(_vm._s(_vm.header))])],2)},staticRenderFns: [],
-  name: 'TableColumn',
-  props: {
-    header: {
-      type: String
-    },
-    headerClass: {
-      type: String
-    },
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    },
-    shrink: {
-      type: Boolean,
-      default: false
-    },
-    expand: {
-      type: Boolean,
-      default: false
-    },
-    // when using TableColumns the group
-    // name will be provided as prop
-    columnGroup: {
-      type: String
-    }
-  },
-  cellRender: function (h, ref) {
-    var row = ref.row;
-    var col = ref.col;
-
-    var rowSlot = get(col, 'data.scopedSlots.default');
-    var props = get(col, 'componentOptions.propsData');
-
-    return h('td', {
-      class: props.cellClass,
-      on: {
-        click: function (e) {
-          var instance = col.componentInstance;
-          var isCell = function (e) { return e.target.tagName === 'TD'; };
-
-          isCell(e) && instance && instance.$emit('click-cell', row, props.cell);
-        }
-      }
-    }, [
-      rowSlot
-        ? rowSlot(row)
-        : get(row, props.cell, props.cell)
-    ])
-  }
-};
-
-var Checkbox = {
-  functional: true,
-  props: ['checked'],
-  render: function render (h, ref) {
-    var data = ref.data;
-    var props = ref.props;
-    var listeners = ref.listeners;
-
-    var def = {
-      staticClass: 'uk-checkbox',
-      attrs: {
-        type: 'checkbox'
-      },
-      domProps: {
-        checked: props.checked
-      },
-      on: {
-        change: function (e) {
-          // ensures checked state consistency
-          e.target.checked = props.checked;
-        }
-      }
-    };
-
-    return h('input', mergeData(data, def))
-  }
-};
-
-var index$2 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{class:['uk-form uk-text-center uk-table-shrink', _vm.headerClass]},[_vm._t("header",[_c('checkbox',{attrs:{"checked":_vm.allSelected},on:{"click":_vm.toggleAll}})])],2)},staticRenderFns: [],
-  name: 'TableColumnSelect',
-  components: { Checkbox: Checkbox },
-  props: {
-    headerClass: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    }
-  },
-  computed: {
-    $table: function $table () {
-      return this.$parent
-    },
-    allSelected: function allSelected () {
-      return isAllSelected(this.$table.selection, this.$table.data)
-    }
-  },
-  methods: {
-    toggleAll: function toggleAll () {
-      var selection = this.allSelected
-        ? []
-        : cloneArray(this.$table.data);
-
-      this.$table.updateSelection(selection);
-    }
-  },
-  cellRender: function (h, ref) {
-    var row = ref.row;
-    var col = ref.col;
-    var table = ref.table;
-
-    var rowSlot = get(col, 'data.scopedSlots.default');
-    var props = get(col, 'componentOptions.propsData');
-
-    return h('td', {
-      class: ['uk-form uk-text-center', props.cellClass],
-      on: {
-        click: function (e) {
-          var instance = col.componentInstance;
-          var isCell = function (e) { return e.target.tagName === 'TD'; };
-
-          isCell(e) && instance && instance.$emit('click-cell', row, props.cell);
-        }
-      }
-    }, [
-      rowSlot
-        ? rowSlot(row)
-        : h(Checkbox, {
-          props: {
-            checked: table.isSelected(row)
-          },
-          on: {
-            click: function (e) { return table.toggleSelection(row); }
-          }
-        })
-    ])
-  }
-};
-
-function isSelected (selection, row) {
-  return selection.findIndex(function (r) { return r.id === row.id; }) !== -1
-}
-
-function isAllSelected (selection, rows) {
-  var ifSelected = function (row) { return isSelected(selection, row); };
-  var selected = rows.filter(ifSelected);
-
-  if (selected.length === 0) {
-    return false
-  }
-
-  return selected.length === rows.length
-}
-
-// icon-arrow-up
-var IconArrowUp = {
-  functional: true,
-  render: function (h, ctx) {
-    var props = ctx.props;
-    var ratio = props.ratio || 1;
-    var width = props.width || 20;
-    var height = props.height || 20;
-    var viewBox = props.viewBox || '0 0 20 20';
-
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
-
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'icon-arrow-up ratio-' + ratio,
-        width: width,
-        height: height,
-        viewBox: viewBox
-      },
-      domProps: {
-        innerHTML: '<polygon points="10.5,4 15.37,9.4 14.63,10.08 10.5,5.49 6.37,10.08 5.63,9.4"></polygon><line fill="none" stroke="#000" x1="10.5" y1="16" x2="10.5" y2="5"></line>'
-      }
-    })
-  }
-};
-
-// icon-arrow-down
-var IconArrowDown = {
-  functional: true,
-  render: function (h, ctx) {
-    var props = ctx.props;
-    var ratio = props.ratio || 1;
-    var width = props.width || 20;
-    var height = props.height || 20;
-    var viewBox = props.viewBox || '0 0 20 20';
-
-    if (ratio !== 1) {
-      width = width * ratio;
-      height = height * ratio;
-    }
-
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'icon-arrow-down ratio-' + ratio,
-        width: width,
-        height: height,
-        viewBox: viewBox
-      },
-      domProps: {
-        innerHTML: '<polygon points="10.5,16.08 5.63,10.66 6.37,10 10.5,14.58 14.63,10 15.37,10.66"></polygon><line fill="none" stroke="#000" x1="10.5" y1="4" x2="10.5" y2="15"></line>'
-      }
-    })
-  }
-};
-
-var index$3 = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('th',{staticClass:"uk-visible-hover-inline",class:[_vm.headerClass, { 'uk-table-shrink': _vm.shrink, 'uk-table-expand': _vm.expand }]},[_vm._t("header",[_c('a',{staticClass:"uk-display-block uk-link-reset uk-text-nowrap uk-position-relative",on:{"click":function($event){$event.preventDefault();_vm.emitSortEvent($event);}}},[_vm._v(" "+_vm._s(_vm.header)+" "),_c('span',{class:['uk-icon uk-position-absolute',{ 'uk-invisible': !_vm.order }]},[(_vm.order === 'asc' || _vm.order === undefined)?_c('icon-arrow-down',{attrs:{"ratio":"0.9"}}):_c('icon-arrow-up',{attrs:{"ratio":"0.9"}})],1)])])],2)},staticRenderFns: [],
-  name: 'TableColumnSort',
-  extends: Column,
-  components: {
-    IconArrowUp: IconArrowUp,
-    IconArrowDown: IconArrowDown
-  },
-  computed: {
-    // an attribute set on the table wrapper
-    // because is to be used by all sort columns
-    sortedBy: function sortedBy () {
-      return this.$table.$attrs.sortedBy
-    },
-    order: function order () {
-      return this.sortedBy[this.cell]
-    }
-  },
-  methods: {
-    emitSortEvent: function emitSortEvent (e) {
-      var sortOrder = getSortOrder(this.sortedBy, this.cell, e.shiftKey);
-      this.$table.$emit('sort', sortOrder);
-    }
-  },
-  created: function created () {
-    this.$table = this.$parent;
-  }
-};
-
-function getSortOrder (currentSort, by, multi) {
-  var sort = {};
-  var order = currentSort[by] === 'asc'
-    ? 'desc'
-    : 'asc';
-
-  sort[by] = order;
-
-  return multi
-    ? merge({}, currentSort, sort)
-    : sort
-}
-
 var TabContent = {
   functional: true,
   render: function (h, ref) {
@@ -4372,6 +3942,7 @@ var components = Object.freeze({
 	Iconnav: iconnav,
 	IconnavItem: iconnavItem,
 	IconnavVertical: iconnavVertical,
+	Label: label,
 	Modal: modal,
 	ModalFull: modalFull,
 	Nav: nav,
@@ -4399,10 +3970,6 @@ var components = Object.freeze({
 	Sticky: sticky,
 	Subnav: subnav,
 	SubnavItem: subnavItem,
-	Table: index$1,
-	TableColumn: Column,
-	TableColumnSelect: index$2,
-	TableColumnSort: index$3,
 	Tab: tab,
 	TabItem: tabItem,
 	TabVertical: tabVertical,
@@ -4427,6 +3994,17 @@ var isEmpty = function (val) {
 
   return !val
 };
+
+/*
+ * Determines if the value is a function
+ */
+var isFunction = function (val) {
+  return toString(val) === '[object Function]'
+};
+
+function toString (val) {
+  return Object.prototype.toString.call(val)
+}
 
 function attr (element, name, value) {
 
@@ -4643,8 +4221,8 @@ p.catch = function (onRejected) {
   return this.then(undefined, onRejected)
 };
 
-var doc$5 = document;
-var win$1 = window;
+var doc$8 = document;
+var win$6 = window;
 
 function trigger (target, event, detail) {
   return toEventTargets(target).reduce(function (notCanceled, target) { return notCanceled && target.dispatchEvent(createEvent(event, true, true, detail)); }
@@ -4656,7 +4234,7 @@ function createEvent (e, bubbles, cancelable, detail) {
   if ( cancelable === void 0 ) { cancelable = false; }
 
   if (isString(e)) {
-    var event = doc$5.createEvent('CustomEvent');
+    var event = doc$8.createEvent('CustomEvent');
     event.initCustomEvent(e, bubbles, cancelable, detail);
     e = event;
   }
@@ -4665,7 +4243,7 @@ function createEvent (e, bubbles, cancelable, detail) {
 }
 
 function isEventTarget (target) {
-  return 'EventTarget' in win$1
+  return 'EventTarget' in win$6
     ? target instanceof EventTarget
     : 'addEventListener' in target
 }
@@ -4838,7 +4416,7 @@ var positions$3 = [
   'right-center'
 ];
 
-var index$4 = {
+var index$1 = {
   inserted: function inserted (target, binding, vnode) {
     var ctx = getContext$1(target, binding, vnode);
 
@@ -5121,7 +4699,7 @@ function offsetTop$1 (element) {
   return element.getBoundingClientRect().top + window.pageYOffset
 }
 
-var index$5 = {
+var index$2 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
       update(el, binding.modifiers, binding.value);
@@ -5197,8 +4775,8 @@ function update (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	Tooltip: index$4,
-	HeightViewport: index$5
+	Tooltip: index$1,
+	HeightViewport: index$2
 });
 
 each(components, function (def, name) {
