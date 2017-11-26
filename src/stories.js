@@ -44,6 +44,9 @@ play('Notification')
   .add('Positions', require('./components/notification/story/positions').default)
   .add('Slot', require('./components/notification/story/slot').default)
 
+play('Offcanvas')
+  .add('Default', require('./components/offcanvas/__stories__/default').default)
+
 play('Pagination')
   .add('Default', require('./components/pagination/story').default)
 
