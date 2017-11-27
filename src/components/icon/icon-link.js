@@ -16,8 +16,8 @@ export default {
         'uk-icon-link': props.reset
       }]
     }), [
-      props.icon
-        ? h(`icon-${props.icon}`, { props })
+      props.name
+        ? h(`icon-${props.name}`, { props })
         : children
     ])
 

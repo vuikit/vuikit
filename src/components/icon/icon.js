@@ -3,7 +3,7 @@ import mergeData from '@vuikit/core/helpers/fn-data-merge'
 export default {
   functional: true,
   props: {
-    icon: {
+    name: {
       type: String,
       default: ''
     },
@@ -15,8 +15,8 @@ export default {
   render: (h, { data, props, children }) =>
 
     h('span', mergeData(data, { class: ['uk-icon'] }), [
-      props.icon
-        ? h(`icon-${props.icon}`, { props })
+      props.name
+        ? h(`icon-${props.name}`, { props })
         : children
     ])
 
