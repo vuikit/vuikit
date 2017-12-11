@@ -1,5 +1,5 @@
 /**
- * Vuikit 0.7.11
+ * Vuikit 0.7.13
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */
@@ -1526,7 +1526,7 @@ var dropdownNav = {
 var VkIcon = {
   functional: true,
   props: {
-    icon: {
+    name: {
       type: String,
       default: ''
     },
@@ -1541,8 +1541,8 @@ var VkIcon = {
       var children = ref.children;
 
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
-      props.icon
-        ? h(("icon-" + (props.icon)), { props: props })
+      props.name
+        ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
@@ -1567,8 +1567,8 @@ var VkIconLink = {
         'uk-icon-link': props.reset
       }]
     }), [
-      props.icon
-        ? h(("icon-" + (props.icon)), { props: props })
+      props.name
+        ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
@@ -1584,8 +1584,8 @@ var iconButton = {
       var children = ref.children;
 
       return h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
-      props.icon
-        ? h(("icon-" + (props.icon)), { props: props })
+      props.name
+        ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
