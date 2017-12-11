@@ -19,7 +19,7 @@ export default {
     return h('li', { class: { 'uk-active': active } }, [
 
       h(VkIconLink, mergeData(data, {
-        props: { icon }
+        props: { name: icon }
       }))
 
     ])
