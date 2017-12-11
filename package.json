@@ -18,7 +18,8 @@
   "module": "dist/vuikit.esm.js",
   "files": [
     "dist",
-    "src"
+    "src",
+    "lib"
   ],
   "repository": {
     "type": "git",
