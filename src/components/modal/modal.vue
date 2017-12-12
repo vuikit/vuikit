@@ -3,7 +3,7 @@
     @enter="updateOverflowAuto"
   >
     <div ref="modal"
-      v-show="show"
+      v-if="show"
       :style="{
         display: center
           ? ''
@@ -33,19 +33,20 @@
           v-if="$slots.header"
           class="uk-modal-header"
         >
-          <slot name="header" />
+          <slot name="header"></slot>
         </div>
 
         <!-- dialog slot allows placing content outside the body -->
-        <slot name="dialog" />
+        <slot name="dialog"></slot>
 
         <!-- body -->
         <div ref="body"
+          v-if="$slots.body"
           :class="['uk-modal-body', {
             'uk-overflow-auto': overflowAuto
           }]"
         >
-          <slot />
+          <slot></slot>
         </div>
 
         <!-- footer -->
@@ -53,7 +54,7 @@
           v-if="$slots.footer"
           class="uk-modal-footer"
         >
-          <slot name="footer" />
+          <slot name="footer"></slot>
         </div>
       </div>
     </div>
@@ -86,7 +87,7 @@ export default {
     // determines if close button should be displayed
     closeBtn: {
       type: [Boolean, String],
-      default: true,
+      default: false,
       validator: val => !val || includes([true, 'outside'], val)
     },
     // determines if the modal should auto
@@ -95,14 +96,17 @@ export default {
       type: Boolean,
       default: false
     },
+    // expands the modal dialog to the default Container width
     container: {
       type: Boolean,
       default: false
     },
+    // vertically centers the modal dialog
     center: {
       type: Boolean,
       default: false
     },
+    // allows setting the dialog with using the uk-width-* classes
     width: {
       type: String,
       default: ''
@@ -131,6 +135,10 @@ export default {
     }
   },
   mounted () {
+    // place the el at dom root
+    document.body.appendChild(this.$el)
+
+    // init global events
     on(window, 'resize', debounce(() => {
       if (!this.show) {
         return

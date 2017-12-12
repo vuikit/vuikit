@@ -18,10 +18,6 @@ export default {
       on: {
         beforeEnter: (el) => {
           addClass(doc, 'uk-modal-page')
-
-          modal.$nextTick(() => {
-            // this.resize()
-          })
         },
         enter: (el, done) => {
           // redraw workaround, necessary so the browser

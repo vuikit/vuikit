@@ -1,7 +1,7 @@
 <template>
   <modal-transition>
     <div
-      v-show="show"
+      v-if="show"
       style="display: block"
       class="uk-modal uk-modal-full"
     >
@@ -15,7 +15,7 @@
           class="uk-modal-close-full"
           @click="$emit('update:show', false)"
         ></modal-btn-close>
-        <slot />
+        <slot></slot>
       </div>
     </div>
   </modal-transition>
