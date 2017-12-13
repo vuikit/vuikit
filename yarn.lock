@@ -71,9 +71,13 @@
     chalk "^2.1.0"
     mkdirp "^0.5.1"
 
-"@std/esm@^0.17.1":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.17.1.tgz#0780223a5b9df5af10bdd404738b0dc955735407"
+"@std/esm@^0.18.0":
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/@std/esm/-/esm-0.18.0.tgz#e212b565c765f93b29ec522a493a192ce7ae2ba6"
+
+"@types/node@*":
+  version "8.0.58"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.58.tgz#5b3881c0be3a646874803fee3197ea7f1ed6df90"
 
 "@vuikit/core@^0.3.2":
   version "0.3.2"
@@ -83,9 +87,9 @@
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/@vuikit/icons/-/icons-0.5.0.tgz#4e0d0490d8c082767e9f4d166abf21cbfc7a4c57"
 
-"@vuikit/theme@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@vuikit/theme/-/theme-0.1.3.tgz#5b1aa37896c663b61752e117e5f6dd4da26b72b9"
+"@vuikit/theme@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@vuikit/theme/-/theme-0.2.0.tgz#1d2fc17c2d6700490eb84c60e3b5746a3fa28ac9"
 
 abbrev@1:
   version "1.1.0"
@@ -593,9 +597,9 @@ babel-plugin-jsx-v-model@^2.0.1:
     html-tags "^2.0.0"
     svg-tags "^1.0.0"
 
-babel-plugin-jsx-vue-functional@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jsx-vue-functional/-/babel-plugin-jsx-vue-functional-2.1.0.tgz#5630a0c86fe1904d28c30465e6bf1cf71235a239"
+babel-plugin-react-require@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-require/-/babel-plugin-react-require-3.0.0.tgz#2e4e7b4496b93a654a1c80042276de4e4eeb20e3"
 
 babel-plugin-syntax-async-functions@^6.8.0:
   version "6.13.0"
@@ -905,11 +909,12 @@ babel-preset-env@^1.6.1:
     invariant "^2.2.2"
     semver "^5.3.0"
 
-babel-preset-poi@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/babel-preset-poi/-/babel-preset-poi-1.1.0.tgz#92e2bd185ebd83827d7d06db1858d33d06a302e3"
+babel-preset-poi@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/babel-preset-poi/-/babel-preset-poi-1.1.2.tgz#b1a1812f1ee4a063000c15636fe441e18ee82de4"
   dependencies:
     babel-macros "^1.2.0"
+    babel-plugin-react-require "^3.0.0"
     babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-plugin-transform-class-properties "^6.24.1"
     babel-plugin-transform-decorators-legacy "^1.3.4"
@@ -917,17 +922,16 @@ babel-preset-poi@^1.1.0:
     babel-plugin-transform-react-jsx "^6.24.1"
     babel-plugin-transform-runtime "^6.23.0"
     babel-preset-env "^1.6.1"
-    babel-preset-vue "^1.2.1"
+    babel-preset-vue "^2.0.0"
     babel-runtime "^6.26.0"
 
-babel-preset-vue@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-vue/-/babel-preset-vue-1.2.1.tgz#b0de8977e0ce981fc6824cf0a537917a02a6fe87"
+babel-preset-vue@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-vue/-/babel-preset-vue-2.0.0.tgz#441f7cf75836a0fa908a5df62bc243f8f9109d2c"
   dependencies:
     babel-helper-vue-jsx-merge-props "^2.0.2"
     babel-plugin-jsx-event-modifiers "^2.0.2"
     babel-plugin-jsx-v-model "^2.0.1"
-    babel-plugin-jsx-vue-functional "^2.1.0"
     babel-plugin-syntax-jsx "^6.18.0"
     babel-plugin-transform-vue-jsx "^3.5.0"
 
@@ -1872,7 +1876,7 @@ debug@2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@2.6.9, debug@^2.2.0, debug@^2.6.0, debug@^2.6.6, debug@^2.6.8:
+debug@2.6.9, debug@^2.2.0, debug@^2.6.6, debug@^2.6.8:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.9.tgz#5d128515df134ff327e90a4c93f4e077a536341f"
   dependencies:
@@ -2289,9 +2293,9 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.12.0:
-  version "4.12.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.12.0.tgz#a7ce78eba8cc8f2443acfbbc870cc31a65135884"
+eslint@^4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.13.1.tgz#0055e0014464c7eb7878caf549ef2941992b444f"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -3393,7 +3397,7 @@ is-path-inside@^1.0.0:
   dependencies:
     path-is-inside "^1.0.1"
 
-is-plain-obj@^1.0.0, is-plain-obj@^1.1.0:
+is-plain-obj@^1.0.0, is-plain-obj@^1.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/is-plain-obj/-/is-plain-obj-1.1.0.tgz#71a50c8429dfca773c92a390a4a03b39fcd51d3e"
 
@@ -3758,12 +3762,6 @@ macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
 
-magic-string@^0.19.0:
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.19.1.tgz#14d768013caf2ec8fdea16a49af82fc377e75201"
-  dependencies:
-    vlq "^0.2.1"
-
 magic-string@^0.22.4:
   version "0.22.4"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.22.4.tgz#31039b4e40366395618c1d6cf8193c53917475ff"
@@ -3831,11 +3829,11 @@ merge-descriptors@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
 
-merge-options@0.0.64:
-  version "0.0.64"
-  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-0.0.64.tgz#cbe04f594a6985eaf27f7f8f0b2a3acf6f9d562d"
+merge-options@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/merge-options/-/merge-options-1.0.0.tgz#5b4f339a957192b5b98994a3ac5c95d2ca651b94"
   dependencies:
-    is-plain-obj "^1.1.0"
+    is-plain-obj "^1.1"
 
 methods@~1.1.2:
   version "1.1.2"
@@ -4333,9 +4331,11 @@ parse-json@^3.0.0:
   dependencies:
     error-ex "^1.3.1"
 
-parse5@^2.1.0:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-2.2.3.tgz#0c4fc41c1000c5e6b93d48b03f8083837834e9f6"
+parse5@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-3.0.3.tgz#042f792ffdd36851551cf4e9e066b3874ab45b5c"
+  dependencies:
+    "@types/node" "*"
 
 parseurl@~1.3.1, parseurl@~1.3.2:
   version "1.3.2"
@@ -4445,9 +4445,9 @@ poi-dev-utils@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/poi-dev-utils/-/poi-dev-utils-1.0.1.tgz#c3089d1db60e9d2c56343decc6a3b9647d577c14"
 
-poi-load-config@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/poi-load-config/-/poi-load-config-1.1.2.tgz#5db24d0e2d149ada2c35369f4de21d1924365bda"
+poi-load-config@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/poi-load-config/-/poi-load-config-1.1.3.tgz#2b71d64b4f20c0f7b246709074a6e0808a2fdb03"
   dependencies:
     babel-core "^6.24.1"
     babel-load-config "^1.0.0"
@@ -4458,15 +4458,15 @@ poi-webpack-node-externals@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/poi-webpack-node-externals/-/poi-webpack-node-externals-2.0.0.tgz#3e23ae0673705f5f44b23ecd194b85c724de91fa"
 
-poi@^9.5.4:
-  version "9.5.4"
-  resolved "https://registry.yarnpkg.com/poi/-/poi-9.5.4.tgz#4d6e09da4fe5db40f2adedad37d61a41c366d911"
+poi@^9.6.1:
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/poi/-/poi-9.6.1.tgz#cc6bafeb937aa25562b4e1bffb3769ebf6b463e4"
   dependencies:
     address "^1.0.1"
     autoprefixer "^7.1.2"
     babel-core "^6.24.1"
     babel-loader "^7.0.0"
-    babel-preset-poi "^1.1.0"
+    babel-preset-poi "^1.1.2"
     cac "^4.0.0"
     case-sensitive-paths-webpack-plugin "^2.0.0"
     chalk "^2.0.1"
@@ -4488,7 +4488,7 @@ poi@^9.5.4:
     opn "^5.0.0"
     parse-json-config "^0.2.0"
     poi-dev-utils "^1.0.1"
-    poi-load-config "^1.1.2"
+    poi-load-config "^1.1.3"
     poi-webpack-node-externals "^2.0.0"
     post-compile-webpack-plugin "^0.1.1"
     postcss-loader "^2.0.6"
@@ -4844,9 +4844,9 @@ posthtml-attrs-parser@^0.1.1:
   dependencies:
     object-assign "^4.0.1"
 
-posthtml-parser@^0.2.0:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/posthtml-parser/-/posthtml-parser-0.2.1.tgz#35d530de386740c2ba24ff2eb2faf39ccdf271dd"
+posthtml-parser@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/posthtml-parser/-/posthtml-parser-0.3.0.tgz#af16ea406769f0f33d0011c48fac1f55502fca29"
   dependencies:
     htmlparser2 "^3.8.3"
     isobject "^2.1.0"
@@ -4855,11 +4855,11 @@ posthtml-render@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/posthtml-render/-/posthtml-render-1.0.6.tgz#1b88b8e7860a8ebdfe2f2a1310a4642a55cf5bda"
 
-posthtml@^0.9.2:
-  version "0.9.2"
-  resolved "https://registry.yarnpkg.com/posthtml/-/posthtml-0.9.2.tgz#f4c06db9f67b61fd17c4e256e7e3d9515bf726fd"
+posthtml@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/posthtml/-/posthtml-0.10.1.tgz#029caa80591d2788ac1903dcf92352f46cec3cb5"
   dependencies:
-    posthtml-parser "^0.2.0"
+    posthtml-parser "^0.3.0"
     posthtml-render "^1.0.5"
 
 prelude-ls@~1.1.2:
@@ -5466,28 +5466,28 @@ rollup-plugin-replace@^2.0.0:
     minimatch "^3.0.2"
     rollup-pluginutils "^2.0.1"
 
-rollup-plugin-vue@^2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-vue/-/rollup-plugin-vue-2.5.2.tgz#8b8d2a90cd166b265a649b8533f02b5b23ace8a9"
+rollup-plugin-vue@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-vue/-/rollup-plugin-vue-3.0.0.tgz#4fd08d2cfbb87321d070f016559cb11645e9f544"
   dependencies:
     babel-runtime "^6.22.0"
     camelcase "^4.0.0"
     de-indent "^1.0.2"
-    debug "^2.6.0"
+    debug "^3.1.0"
     hash-sum "^1.0.2"
     html-minifier "^3.2.3"
-    magic-string "^0.19.0"
-    merge-options "0.0.64"
-    parse5 "^2.1.0"
+    magic-string "^0.22.4"
+    merge-options "^1.0.0"
+    parse5 "^3.0.3"
     postcss "^5.2.11"
     postcss-load-config "^1.2.0"
     postcss-modules "^0.6.4"
     postcss-selector-parser "^2.2.3"
-    posthtml "^0.9.2"
+    posthtml "^0.10.1"
     posthtml-attrs-parser "^0.1.1"
     rollup-pluginutils "^2.0.1"
     typescript "^2.4.1"
-    vue-template-es2015-compiler "^1.5.0"
+    vue-template-es2015-compiler "^1.6.0"
     vue-template-validator "^1.1.5"
   optionalDependencies:
     coffee-script "^1.12.4"
@@ -5504,9 +5504,9 @@ rollup-pluginutils@^2.0.1:
     estree-walker "^0.3.0"
     micromatch "^2.3.11"
 
-rollup@^0.52.0:
-  version "0.52.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.52.0.tgz#cdb6927f53bf7b7fb09af3a936b9c8ee49b161e2"
+rollup@^0.52.2:
+  version "0.52.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.52.2.tgz#d75bc6f37be02fd27cbb344e57e77b30042bd2cf"
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -6332,9 +6332,9 @@ vue-loader@^13.0.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.5.3"
 
-vue-loader@^13.5.0:
-  version "13.5.0"
-  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.5.0.tgz#52f7b3790a267eff80012b77ea187a54586dd5d4"
+vue-loader@^13.6.0:
+  version "13.6.0"
+  resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-13.6.0.tgz#c1c9570e1e57475f8acb02cda35551b812f88086"
   dependencies:
     consolidate "^0.14.0"
     hash-sum "^1.0.2"
@@ -6388,14 +6388,14 @@ vue-template-compiler@^2.3.3:
     de-indent "^1.0.2"
     he "^1.1.0"
 
-vue-template-compiler@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.8.tgz#826ae77e1d5faa7fa5fca554f33872dde38de674"
+vue-template-compiler@^2.5.11:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.5.11.tgz#7dda6905e464ff173c8e70e1dfd1769a7888b7e8"
   dependencies:
     de-indent "^1.0.2"
     he "^1.1.0"
 
-vue-template-es2015-compiler@^1.5.0, vue-template-es2015-compiler@^1.5.3:
+vue-template-es2015-compiler@^1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.3.tgz#22787de4e37ebd9339b74223bc467d1adee30545"
 
@@ -6413,9 +6413,9 @@ vue@^2.3.3:
   version "2.4.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.4.4.tgz#ea9550b96a71465fd2b8b17b61673b3561861789"
 
-vue@^2.5.8:
-  version "2.5.8"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.8.tgz#f855c1c27255184a82225f4bef225473e8faf15b"
+vue@^2.5.11:
+  version "2.5.11"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.11.tgz#80ca2657aa81f03545cd8dd5a2f55454641e6405"
 
 vuex-router-sync@^4.1.2:
   version "4.3.2"
