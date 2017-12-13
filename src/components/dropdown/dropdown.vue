@@ -12,7 +12,7 @@
       classPrefix: 'uk-dropdown',
     }"
   >
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

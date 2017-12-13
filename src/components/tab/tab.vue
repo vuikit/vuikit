@@ -12,12 +12,12 @@
         :label="tab.label"
         :disabled="tab.disabled"
         @click.prevent="!tab.disabled && triggerTab(tab.name)"
-      />
+      ></ui-tab-item>
     </ui-tab>
     <div :class="{ 'uk-margin': bottom }">
       <transition :name="transition" mode="out-in">
         <keep-alive>
-          <tab-content />
+          <tab-content></tab-content>
         </keep-alive>
       </transition>
     </div>

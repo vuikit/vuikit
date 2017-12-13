@@ -12,7 +12,7 @@
       classPrefix: 'uk-drop'
     }"
   >
-    <slot />
+    <slot></slot>
   </div>
 </template>
 

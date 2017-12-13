@@ -10,7 +10,7 @@
           :label="tab.label"
           :disabled="tab.disabled"
           @click.prevent="!tab.disabled && triggerTab(tab.name)"
-        />
+        ></ui-tab-item>
       </ui-tab>
     </div>
     <div class="uk-width-expand">
