@@ -14,6 +14,7 @@ export default {
   functional: true,
   render (h, { parent: vm, data, children }) {
     let wrapper = vm.$refs.wrapper
+    let bar
 
     const def = {
       props: {
@@ -46,6 +47,9 @@ export default {
           one(el, transitionend, done, e => e.target === wrapper)
         },
         beforeLeave (el) {
+          // set bar, required at afterLeave
+          bar = vm.$refs.bar
+
           removeClass(el, 'uk-open')
           removeClass(vm.$refs.content, 'uk-offcanvas-content-animation')
         },
@@ -55,7 +59,7 @@ export default {
         },
         afterLeave (el) {
           // remove wrapper
-          el.appendChild(vm.$refs.bar)
+          el.appendChild(bar)
           el.removeChild(wrapper)
         }
       }

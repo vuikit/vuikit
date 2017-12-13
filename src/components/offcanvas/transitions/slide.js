@@ -40,8 +40,11 @@ export default {
           removeClass(el, 'uk-open')
         },
         leave (el, done) {
+          // save the ref before event end
+          // as the vm will be deleted after
+          const bar = vm.$refs.bar
           // indicate end of transition
-          one(el, transitionend, done, e => e.target === vm.$refs.bar)
+          one(el, transitionend, done, e => e.target === bar)
         },
         afterLeave (el) {
           removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-slide')

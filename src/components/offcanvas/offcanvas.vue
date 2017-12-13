@@ -1,7 +1,7 @@
 <template>
   <component :is="`vk-offcanvas-transition-${transition}`">
     <div
-      v-show="show"
+      v-if="show"
       class="uk-offcanvas"
       style="display: block;"
     >
