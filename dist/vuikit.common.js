@@ -1,5 +1,5 @@
 /**
- * Vuikit 0.7.13
+ * Vuikit 0.7.14
  * (c) 2017 Miljan Aleksic
  * @license MIT
  */
@@ -50,7 +50,7 @@ var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       });
     }
   }
-};
+}
 
 var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active }},[(!_vm.disabled && !_vm.active)?_c('a',{on:{"click":function($event){$event.preventDefault();_vm.$parent.$emit('change', _vm.path);}}},[_vm._t("default",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2):_c('span',[_vm._t("default",[_vm._v(" "+_vm._s(_vm.label)+" ")])],2)])},staticRenderFns: [],
   name: 'BreadcrumbItem',
@@ -69,7 +69,7 @@ var breadcrumbItem = {render: function(){var _vm=this;var _h=_vm.$createElement;
       default: false
     }
   }
-};
+}
 
 function mergeData(){
 var arguments$1 = arguments;
@@ -127,7 +127,7 @@ var button = {
       children
     ])
   }
-};
+}
 
 /*
  * Deprecated, use include instead
@@ -306,7 +306,7 @@ var buttonGroupCheckbox = {
       children
     ])
   }
-};
+}
 
 function validate (data, buttons) {
   // check group def
@@ -359,7 +359,7 @@ var buttonGroupRadio = {
       children
     ])
   }
-};
+}
 
 function validate$1 (data, buttons) {
   // check group def
@@ -458,7 +458,7 @@ var card = {
     ])
 
   }
-};
+}
 
 var cardTitle = {
   functional: true,
@@ -471,7 +471,7 @@ var cardTitle = {
     return h('h3', mergeData(data, { class: 'uk-card-title' }), children)
 
   }
-};
+}
 
 /*
  * Determines if the value is an object
@@ -1491,7 +1491,7 @@ var Drop = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm
       this.$el.parentNode.removeChild(this.$el);
     }
   }
-};
+}
 
 var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"position",rawName:"v-position",value:({
     flip: _vm.flip,
@@ -1502,7 +1502,7 @@ var Dropdown = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c
   }),expression:"{\n    flip,\n    target: $target,\n    position: $position,\n    boundary: $boundary,\n    classPrefix: 'uk-dropdown',\n  }"}],class:['uk-dropdown', { 'uk-open': _vm.show }],style:(_vm.$style),on:{"mouseenter":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.triggerShow($event);},"mouseleave":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.hideOnLeave && _vm.triggerHide();}}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Dropdown',
   extends: Drop
-};
+}
 
 var dropdownNav = {
   functional: true,
@@ -1517,7 +1517,7 @@ var dropdownNav = {
     ]);
 }
 
-};
+}
 
 var VkIcon = {
   functional: true,
@@ -1543,7 +1543,7 @@ var VkIcon = {
     ]);
 }
 
-};
+}
 
 var VkIconLink = {
   functional: true,
@@ -1569,7 +1569,7 @@ var VkIconLink = {
     ]);
 }
 
-};
+}
 
 var iconButton = {
   functional: true,
@@ -1586,7 +1586,7 @@ var iconButton = {
     ]);
 }
 
-};
+}
 
 var iconnav = {
   functional: true,
@@ -1596,7 +1596,7 @@ var iconnav = {
 
       return h('ul', mergeData(data, { class: 'uk-iconnav' }), children);
 }
-};
+}
 
 var iconnavItem = {
   functional: true,
@@ -1620,13 +1620,13 @@ var iconnavItem = {
     return h('li', { class: { 'uk-active': active } }, [
 
       h(VkIconLink, mergeData(data, {
-        props: { icon: icon }
+        props: { name: icon }
       }))
 
     ])
 
   }
-};
+}
 
 var iconnavVertical = {
   functional: true,
@@ -1636,7 +1636,7 @@ var iconnavVertical = {
 
       return h('ul', mergeData(data, { class: 'uk-iconnav uk-iconnav-vertical' }), children);
 }
-};
+}
 
 var obj;
 var label = {
@@ -1658,7 +1658,7 @@ var label = {
     }), children);
 }
 
-};
+}
 
 var doc = document.documentElement;
 
@@ -1697,7 +1697,7 @@ var core = {
   beforeDestroy: function beforeDestroy () {
     off(doc, 'key', this._uid);
   }
-};
+}
 
 var win = window;
 var doc$2 = document.body;
@@ -1764,10 +1764,6 @@ var ModalTransition = {
       on: {
         beforeEnter: function (el) {
           addClass(doc$1, 'uk-modal-page');
-
-          modal.$nextTick(function () {
-            // this.resize()
-          });
         },
         enter: function (el, done) {
           // redraw workaround, necessary so the browser
@@ -1817,7 +1813,7 @@ var ModalTransition = {
 
     return h('transition', mergeData(data, def), children)
   }
-};
+}
 
 // icon-close-icon
 var IconClose = {
@@ -1847,7 +1843,7 @@ var IconClose = {
       }
     })
   }
-};
+}
 
 // icon-close-large
 var IconCloseLarge = {
@@ -1877,7 +1873,7 @@ var IconCloseLarge = {
       }
     })
   }
-};
+}
 
 var ModalBtnClose = {
   functional: true,
@@ -1906,13 +1902,13 @@ var ModalBtnClose = {
         : h(IconClose)
     ])
   }
-};
+}
 
-var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',{on:{"enter":_vm.updateOverflowAuto}},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],ref:"modal",class:['uk-modal', { 'uk-modal-container': _vm.container, 'uk-flex uk-flex-top': _vm.center }],style:({
+var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',{on:{"enter":_vm.updateOverflowAuto}},[(_vm.show)?_c('div',{ref:"modal",class:['uk-modal', { 'uk-modal-container': _vm.container, 'uk-flex uk-flex-top': _vm.center }],style:({
       display: _vm.center
         ? ''
         : 'block'
-    }),on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.closeOnBg && _vm.$emit('update:show', false);}}},[_c('div',{ref:"dialog",class:['uk-modal-dialog', _vm.widthClasses, { 'uk-margin-auto-vertical': _vm.center }]},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-default",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),(_vm.$slots.header)?_c('div',{ref:"header",staticClass:"uk-modal-header"},[_vm._t("header")],2):_vm._e(),_vm._v(" "),_vm._t("dialog",[_c('div',{ref:"body",class:['uk-modal-body', { 'uk-overflow-auto': _vm.overflowAuto }]},[_vm._t("default")],2),_vm._v(" "),(_vm.$slots.footer)?_c('div',{ref:"footer",staticClass:"uk-modal-footer"},[_vm._t("footer")],2):_vm._e()])],2)])])},staticRenderFns: [],
+    }),on:{"click":function($event){if($event.target !== $event.currentTarget){ return null; }_vm.closeOnBg && _vm.$emit('update:show', false);}}},[_c('div',{ref:"dialog",class:['uk-modal-dialog', _vm.widthClasses, { 'uk-margin-auto-vertical': _vm.center }]},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-default",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),(_vm.$slots.header)?_c('div',{ref:"header",staticClass:"uk-modal-header"},[_vm._t("header")],2):_vm._e(),_vm._v(" "),_vm._t("dialog"),_vm._v(" "),(_vm.$slots.body)?_c('div',{ref:"body",class:['uk-modal-body', { 'uk-overflow-auto': _vm.overflowAuto }]},[_vm._t("default")],2):_vm._e(),_vm._v(" "),(_vm.$slots.footer)?_c('div',{ref:"footer",staticClass:"uk-modal-footer"},[_vm._t("footer")],2):_vm._e()],2)]):_vm._e()])},staticRenderFns: [],
   name: 'Modal',
   extends: core,
   components: {
@@ -1927,7 +1923,7 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     // determines if close button should be displayed
     closeBtn: {
       type: [Boolean, String],
-      default: true,
+      default: false,
       validator: function (val) { return !val || includes([true, 'outside'], val); }
     },
     // determines if the modal should auto
@@ -1936,14 +1932,17 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       type: Boolean,
       default: false
     },
+    // expands the modal dialog to the default Container width
     container: {
       type: Boolean,
       default: false
     },
+    // vertically centers the modal dialog
     center: {
       type: Boolean,
       default: false
     },
+    // allows setting the dialog with using the uk-width-* classes
     width: {
       type: String,
       default: ''
@@ -1974,6 +1973,10 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   mounted: function mounted () {
     var this$1 = this;
 
+    // place the el at dom root
+    document.body.appendChild(this.$el);
+
+    // init global events
     on(window, 'resize', debounce(function () {
       if (!this$1.show) {
         return
@@ -1985,9 +1988,9 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
   beforeDestroy: function beforeDestroy () {
     off(window, 'resize', this._uid);
   }
-};
+}
 
-var modalFull = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-modal uk-modal-full",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-modal-dialog uk-flex uk-flex-center uk-flex-middle",staticStyle:{"box-sizing":"border-box","min-height":"100vh","height":"100vh"}},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-full",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),_vm._t("default")],2)])])},staticRenderFns: [],
+var modalFull = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('modal-transition',[(_vm.show)?_c('div',{staticClass:"uk-modal uk-modal-full",staticStyle:{"display":"block"}},[_c('div',{staticClass:"uk-modal-dialog uk-flex uk-flex-center uk-flex-middle",staticStyle:{"box-sizing":"border-box","min-height":"100vh","height":"100vh"}},[(_vm.closeBtn)?_c('modal-btn-close',{staticClass:"uk-modal-close-full",attrs:{"type":_vm.closeBtn},on:{"click":function($event){_vm.$emit('update:show', false);}}}):_vm._e(),_vm._v(" "),_vm._t("default")],2)]):_vm._e()])},staticRenderFns: [],
   name: 'ModalFull',
   extends: core,
   components: {
@@ -2002,7 +2005,7 @@ var modalFull = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       validator: function (val) { return !val || includes([true, 'large'], val); }
     }
   }
-};
+}
 
 var nav = {
   functional: true,
@@ -2033,7 +2036,7 @@ var nav = {
     }), children)
 
   }
-};
+}
 
 var navItem = {
   functional: true,
@@ -2071,7 +2074,7 @@ var navItem = {
     ])
 
   }
-};
+}
 
 var navItemHeader = {
   functional: true,
@@ -2093,7 +2096,7 @@ var navItemHeader = {
     ])
 
   }
-};
+}
 
 var navItemParent = {
   functional: true,
@@ -2122,7 +2125,7 @@ var navItemParent = {
     ])
 
   }
-};
+}
 
 var navItemDivider = {
   functional: true,
@@ -2135,7 +2138,7 @@ var navItemDivider = {
     })
 
   }
-};
+}
 
 var LeftSlot = {
   functional: true,
@@ -2207,7 +2210,7 @@ var navbar = {
       ])
     ])
   }
-};
+}
 
 var navbarItem = {
   functional: true,
@@ -2219,7 +2222,7 @@ var navbarItem = {
     return h('div', mergeData(data, { class: 'uk-navbar-item' }), children)
 
   }
-};
+}
 
 // icon-navbar-toggle-icon
 var IconToggle = {
@@ -2249,7 +2252,7 @@ var IconToggle = {
       }
     })
   }
-};
+}
 
 var NavbarToggleIcon = {
   functional: true,
@@ -2286,7 +2289,7 @@ var navbarToggle = {
     ])
 
   }
-};
+}
 
 var navbarNav = {
   functional: true,
@@ -2298,7 +2301,7 @@ var navbarNav = {
     return h('ul', mergeData(data, { class: 'uk-navbar-nav' }), children)
 
   }
-};
+}
 
 var Subtitle = {
   functional: true,
@@ -2348,7 +2351,7 @@ var navbarNavItem = {
     ])
 
   }
-};
+}
 
 var navbarNavDropdown = {
   functional: true,
@@ -2376,7 +2379,7 @@ var navbarNavDropdown = {
     ])
 
   }
-};
+}
 
 var status = [
   'primary',
@@ -2418,7 +2421,7 @@ var NotificationMessage = {
       children
     ])
   }
-};
+}
 
 /*
  * Determines if the value is an integer
@@ -2533,7 +2536,7 @@ var notification = {render: function(){var _vm=this;var _h=_vm.$createElement;va
       document.body.removeChild(this.$el);
     }
   }
-};
+}
 
 function getId (n) {
   var msg = n.message.replace(/ /g, '');
@@ -2552,7 +2555,7 @@ var active$1;
 var activeCount;
 var scrollbarWidth;
 
-var common = function (vm) { return ({
+function common (vm) { return ({
   on: {
     beforeEnter: function beforeEnter (el) {
       scrollbarWidth = width(win$2) - doc$4.offsetWidth;
@@ -2631,7 +2634,7 @@ var common = function (vm) { return ({
       }
     }
   }
-}); };
+}); }
 
 function unsetGlobalEvents () {
   offAll('vk-offcanvas');
@@ -2695,7 +2698,7 @@ var VkOffcanvasTransitionNone = {
 
     return h('transition', mergeData(data, def, common(vm)), children)
   }
-};
+}
 
 var win$3 = window;
 var doc$5 = document.documentElement;
@@ -2736,8 +2739,11 @@ var VkOffcanvasTransitionPush = {
           removeClass(vm.$refs.content, 'uk-offcanvas-content-animation');
         },
         leave: function leave (el, done) {
+          // save the ref before event end
+          // as the vm will be deleted after
+          var bar = vm.$refs.bar;
           // indicate end of transition
-          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+          one(el, transitionend, done, function (e) { return e.target === bar; });
         },
         afterLeave: function afterLeave (el) {
           removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push');
@@ -2747,7 +2753,7 @@ var VkOffcanvasTransitionPush = {
 
     return h('transition', mergeData(data, def, common(vm)), children)
   }
-};
+}
 
 var win$4 = window;
 var doc$6 = document.documentElement;
@@ -2786,8 +2792,11 @@ var VkOffcanvasTransitionSlide = {
           removeClass(el, 'uk-open');
         },
         leave: function leave (el, done) {
+          // save the ref before event end
+          // as the vm will be deleted after
+          var bar = vm.$refs.bar;
           // indicate end of transition
-          one(el, transitionend, done, function (e) { return e.target === vm.$refs.bar; });
+          one(el, transitionend, done, function (e) { return e.target === bar; });
         },
         afterLeave: function afterLeave (el) {
           removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-slide');
@@ -2797,7 +2806,7 @@ var VkOffcanvasTransitionSlide = {
 
     return h('transition', mergeData(data, def, common(vm)), children)
   }
-};
+}
 
 var win$5 = window;
 var doc$7 = document.documentElement;
@@ -2810,6 +2819,7 @@ var VkOffcanvasTransitionReveal = {
     var children = ref.children;
 
     var wrapper = vm.$refs.wrapper;
+    var bar;
 
     var def = {
       props: {
@@ -2842,6 +2852,9 @@ var VkOffcanvasTransitionReveal = {
           one(el, transitionend, done, function (e) { return e.target === wrapper; });
         },
         beforeLeave: function beforeLeave (el) {
+          // set bar, required at afterLeave
+          bar = vm.$refs.bar;
+
           removeClass(el, 'uk-open');
           removeClass(vm.$refs.content, 'uk-offcanvas-content-animation');
         },
@@ -2851,7 +2864,7 @@ var VkOffcanvasTransitionReveal = {
         },
         afterLeave: function afterLeave (el) {
           // remove wrapper
-          el.appendChild(vm.$refs.bar);
+          el.appendChild(bar);
           el.removeChild(wrapper);
         }
       }
@@ -2859,9 +2872,9 @@ var VkOffcanvasTransitionReveal = {
 
     return h('transition', mergeData(data, def, common(vm)), children)
   }
-};
+}
 
-var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(("vk-offcanvas-transition-" + (_vm.transition)),{tag:"component"},[_c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.show),expression:"show"}],staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"bar",staticClass:"uk-offcanvas-bar"},[_vm._t("default")],2)])])},staticRenderFns: [],
+var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c(("vk-offcanvas-transition-" + (_vm.transition)),{tag:"component"},[(_vm.show)?_c('div',{staticClass:"uk-offcanvas",staticStyle:{"display":"block"}},[_c('div',{ref:"bar",staticClass:"uk-offcanvas-bar"},[_vm._t("default")],2)]):_vm._e()])},staticRenderFns: [],
   name: 'Offcanvas',
   components: {
     VkOffcanvasTransitionNone: VkOffcanvasTransitionNone,
@@ -2901,7 +2914,7 @@ var offcanvas = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       this.$destroy();
     }
   }
-};
+}
 
 var offcanvasContent = {
   functional: true,
@@ -2913,7 +2926,7 @@ var offcanvasContent = {
     }, children);
 }
 
-};
+}
 
 var offcanvasClose = {
   functional: true,
@@ -2931,7 +2944,7 @@ var offcanvasClose = {
     ]);
 }
 
-};
+}
 
 // icon-pagination-next
 var IconNext = {
@@ -2961,7 +2974,7 @@ var IconNext = {
       }
     })
   }
-};
+}
 
 var PaginationLast = {
   functional: true,
@@ -2997,7 +3010,7 @@ var PaginationLast = {
       ])
     ])
   }
-};
+}
 
 // icon-pagination-previous
 var IconPrevious = {
@@ -3027,7 +3040,7 @@ var IconPrevious = {
       }
     })
   }
-};
+}
 
 var PaginationPrev = {
   functional: true,
@@ -3063,7 +3076,7 @@ var PaginationPrev = {
       ])
     ])
   }
-};
+}
 
 var PaginationNext = {
   functional: true,
@@ -3099,7 +3112,7 @@ var PaginationNext = {
       ])
     ])
   }
-};
+}
 
 var PaginationFirst = {
   functional: true,
@@ -3135,7 +3148,7 @@ var PaginationFirst = {
       ])
     ])
   }
-};
+}
 
 var PaginationPages = {
   functional: true,
@@ -3164,7 +3177,7 @@ var PaginationPages = {
       ])
     })
   }
-};
+}
 
 /*
  * Generates a range of numbers
@@ -3319,7 +3332,7 @@ var pagination = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
         props: (slot.data && slot.data.attrs) || {}
       }); });
   }
-};
+}
 
 // icon-spinner
 var IconSpinner = {
@@ -3349,7 +3362,7 @@ var IconSpinner = {
       }
     })
   }
-};
+}
 
 var spinner = {
   functional: true,
@@ -3367,7 +3380,7 @@ var spinner = {
       })
     ])
   }
-};
+}
 
 // import { Animation } from '@vuikit/core/utils/helpers/animation'
 // let dir
@@ -3632,7 +3645,7 @@ var sticky = {
       addClass(this.$el, this.clsInactive);
     }
   }
-};
+}
 
 function isVisible$1 (el) {
   if (!el) {
@@ -3694,7 +3707,7 @@ var subnav = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       return item.componentOptions.propsData.alias || this.items.indexOf(item) + 1
     }
   }
-};
+}
 
 var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('li',{class:{ 'uk-active': _vm.active, 'uk-disabled': _vm.disabled }},[_c('a',{on:{"click":function($event){$event.preventDefault();(!_vm.disabled && !_vm.active) && _vm.$parent.$emit('change', _vm.alias);}}},[_vm._t("default",[_vm._v(_vm._s(_vm.label))])],2)])},staticRenderFns: [],
   name: 'SubnavItem',
@@ -3713,7 +3726,7 @@ var subnavItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       default: false
     }
   }
-};
+}
 
 var TabContent = {
   functional: true,
@@ -3772,7 +3785,7 @@ var core$1 = {
       this.triggerTab(this.tabs[0].node.componentOptions.propsData.name);
     }
   }
-};
+}
 
 var UiTab = {
   functional: true,
@@ -3805,7 +3818,7 @@ var UiTab = {
       }]
     }), children)
   }
-};
+}
 
 var UiTabItem = {
   functional: true,
@@ -3841,7 +3854,7 @@ var UiTabItem = {
     ])
 
   }
-};
+}
 
 var tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{ 'uk-flex uk-flex-column-reverse': _vm.bottom }},[_c('ui-tab',{attrs:{"bottom":_vm.bottom,"alignment":_vm.alignment}},_vm._l((_vm.tabs),function(tab){return _c('ui-tab-item',{key:tab.name,attrs:{"active":tab.name === _vm.activeTab,"label":tab.label,"disabled":tab.disabled},on:{"click":function($event){$event.preventDefault();!tab.disabled && _vm.triggerTab(tab.name);}}})})),_vm._v(" "),_c('div',{class:{ 'uk-margin': _vm.bottom }},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)],1)},staticRenderFns: [],
   name: 'Tab',
@@ -3851,7 +3864,7 @@ var tab = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm.
     UiTabItem: UiTabItem
   },
   props: UiTab.props
-};
+}
 
 var tabItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',[_vm._t("default")],2)},staticRenderFns: [],
   name: 'TabItem',
@@ -3869,7 +3882,7 @@ var tabItem = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=
       default: false
     }
   }
-};
+}
 
 var UiTab$1 = {
   functional: true,
@@ -3894,7 +3907,7 @@ var UiTab$1 = {
       }]
     }), children)
   }
-};
+}
 
 var tabVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-grid",class:{ 'uk-flex uk-flex-row-reverse': _vm.alignment === 'right' }},[_c('div',{staticClass:"uk-width-auto"},[_c('ui-tab',{attrs:{"alignment":_vm.alignment}},_vm._l((_vm.tabs),function(tab){return _c('ui-tab-item',{key:tab.name,attrs:{"active":tab.name === _vm.activeTab,"label":tab.label,"disabled":tab.disabled},on:{"click":function($event){$event.preventDefault();!tab.disabled && _vm.triggerTab(tab.name);}}})}))],1),_vm._v(" "),_c('div',{staticClass:"uk-width-expand"},[_c('transition',{attrs:{"name":_vm.transition,"mode":"out-in"}},[_c('keep-alive',[_c('tab-content')],1)],1)],1)])},staticRenderFns: [],
   name: 'TabVertical',
@@ -3904,7 +3917,7 @@ var tabVertical = {render: function(){var _vm=this;var _h=_vm.$createElement;var
     UiTabItem: UiTabItem
   },
   props: UiTab$1.props
-};
+}
 
 var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"uk-placeholder uk-text-center",class:{ 'uk-dragover': _vm.dragged },on:{"dragenter":function($event){$event.stopPropagation();$event.preventDefault();},"dragover":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = true;},"dragleave":function($event){$event.stopPropagation();$event.preventDefault();_vm.dragged = false;},"drop":_vm.dropped}},[_vm._t("default")],2)},staticRenderFns: [],
   name: 'Upload',
@@ -3921,7 +3934,7 @@ var upload = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
       }
     }
   }
-};
+}
 
 
 
@@ -4436,7 +4449,7 @@ var index$1 = {
     hide();
     removeEvents(target);
   }
-};
+}
 
 /**
  * SET / REMOVE events
@@ -4712,7 +4725,7 @@ var index$2 = {
   unbind: function unbind (el, binding, vnode) {
     off(window, 'resize', 'vk-height-viewport');
   }
-};
+}
 
 function update (el, modifiers, value) {
   if ( value === void 0 ) value = {};
