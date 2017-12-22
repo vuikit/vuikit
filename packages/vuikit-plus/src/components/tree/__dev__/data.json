@@ -1,0 +1,30 @@
+{
+  "_1": {
+    "data": {
+      "name": "Category 1"
+    },
+    "childrenCount": 2,
+    "children": {
+      "_1.1": {
+        "data": {
+          "name": "Sub Category 1"
+        }
+      },
+      "_1.2": {
+        "data": {
+          "name": "Sub Category 2"
+        }
+      }
+    }
+  },
+  "_2": {
+    "data": {
+      "name": "Category 2"
+    }
+  },
+  "_3": {
+    "data": {
+      "name": "Category 3"
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@vuikit/plus",
+  "version": "0.5.0",
+  "description": "Additional Vuikit components not part of UIkit collection",
+  "author": "Miljan Aleksic",
+  "license": "MIT",
+  "author": {
+    "name": "Miljan Aleksic",
+    "url": "https://twitter.com/AleksicMiljan"
+  },
+  "homepage": "https://vuikit.js.org/",
+  "bugs": "https://github.com/vuikit/vuikit/issues",
+  "keywords": [
+    "vuikit",
+    "vuejs",
+    "uikit",
+    "ui"
+  ],
+  "main": "dist/vuikit-plus.cjs.js",
+  "module": "dist/vuikit-plus.esm.js",
+  "files": [
+    "dist",
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "yarn run build:lib && yarn run build:dist",
+    "build:lib": "node -r @std/esm scripts/build-lib.js",
+    "build:dist": "node -r @std/esm scripts/build-dist.js"
+  },
+  "devDependencies": {
+    "@lump/argv": "^0.1.0",
+    "@lump/banner": "^0.2.0",
+    "@lump/rollup": "^0.3.5",
+    "@lump/remove": "^0.1.0",
+    "@lump/write": "^0.2.4",
+    "globby": "^7.1.1",
+    "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-vue": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.5.11"
+  }
+}

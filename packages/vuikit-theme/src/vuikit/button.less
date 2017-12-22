@@ -1,0 +1,21 @@
+/*
+* Button
+*/
+
+// Variables
+// ========================================================================
+
+@inverse-button-default-color:                 @inverse-global-color;
+@inverse-button-primary-color:                 @global-primary-background;
+@inverse-button-primary-background:            #fff;
+
+// Hooks
+// ========================================================================
+
+.hook-inverse-button-default() {
+  border-color: @inverse-global-muted-color;
+}
+
+.hook-inverse-button-primary-hover() {
+  box-shadow: 0 10px 40px rgba(30,135,240,1);
+}

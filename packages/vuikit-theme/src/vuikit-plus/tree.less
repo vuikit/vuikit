@@ -1,0 +1,202 @@
+// Name:            VkTree
+// Description:     Defines styles for tree listing
+//
+// Blocks:          `vk-tree`
+//                  `vk-tree-node`
+//
+// Elements:        `vk-tree-node__indent`
+//                  `vk-tree-node__arrow`
+//                  `vk-tree-node__content`
+//                  `vk-tree-node__label`
+//
+// Modifiers:       `vk-tree--divided`
+//                  `vk-tree--striped`
+//                  `vk-tree--hoverable`
+//                  `vk-tree--narrowed`
+//                  `vk-tree-node--active`
+//                  `vk-tree-node__arrow--rotated`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@tree--hoverable_background:                          #ffd;
+
+@tree-node_padding:                                   @global-small-margin;
+@tree-node_padding-horizontal:                        @tree-node_padding * 1.33;
+@tree-node--active_background:                        @tree--hoverable_background;
+
+@tree-node__indent_width:                             25px;
+
+@tree-node__label_font-size:                          @global-font-size;
+
+@tree-node__arrow_width:                              @tree-node__indent_width;
+@tree-node__arrow_color:                              @global-color;
+@tree-node__arrow_icon:                               'assets/tree-node-arrow.svg';
+@tree-node__arrow_icon-width:                         12px;
+@tree-node__arrow_icon-height:                        @tree-node__arrow_icon-width;
+@tree-node__arrow_transition-duration:                200ms;
+@tree-node__arrow_transition-timing-function:         ease-out-expo;
+
+@tree--narrowed__indent_width:                        20px;
+@tree--narrowed__node_padding:                        @tree-node_padding / 2;
+@tree--narrowed__node_padding-horizontal:             @tree--narrowed__node_padding * 1.33;
+@tree--narrowed__arrow_width:                         @tree--narrowed__indent_width;
+
+@tree--striped_background:                            @global-muted-background;
+
+@tree--divided_border:                                @global-border;
+@tree--divided_border-width:                          @global-border-width;
+
+
+
+/* ========================================================================
+   Component: Tree
+ ========================================================================== */
+
+.vk-tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  .hook-tree;
+}
+
+.vk-tree-node {
+  height: 26px;
+  padding: @tree-node_padding @tree-node_padding-horizontal;
+  // disable text selection
+  .vk-noselect();
+  cursor: default;
+
+  .hook-tree-node;
+}
+
+.vk-tree-node--active {
+  background: @tree-node--active_background !important;
+  .hook-tree-node--active;
+}
+
+.vk-tree-node--parent {
+  .hook-tree-node--parent;
+}
+
+/*
+ * Indent
+ */
+
+.vk-tree-node__indent {
+  margin-left: @tree-node__indent_width / 2;
+  margin-right: @tree-node__indent_width / 2;
+  .hook-tree-node__indent;
+}
+
+/*
+ * Content
+ */
+
+.vk-tree-node__content {
+  .hook-tree-node__content;
+}
+
+/*
+ * Label
+ */
+
+.vk-tree-node__label {
+  white-space: nowrap;
+  font-size: @tree-node__label_font-size;
+  .hook-tree-node__label;
+}
+
+/*
+ * Arrow
+ */
+
+.vk-tree-node__arrow {
+  cursor: pointer;
+  width: @tree-node__arrow_width;
+  .hook-tree-node__arrow;
+}
+
+.vk-tree-node__arrow > span {
+  display: inline-block;
+  width: @tree-node__arrow_icon-width;
+  height: @tree-node__arrow_icon-height;
+  // icon as background
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  .vk-svg-fill(@tree-node__arrow_icon, '#000', @tree-node__arrow_color);
+  // transition when rotated
+  transition: transform;
+  transition-duration: @tree-node__arrow_transition-duration;
+  transition-timing-function: @tree-node__arrow_transition-timing-function;
+}
+
+.vk-tree-node__arrow--rotated > span {
+  transform: rotateZ(90deg);
+  .hook-tree-node__arrow--rotated;
+}
+
+
+/* Style modifiers
+ ========================================================================== */
+
+/*
+ * Divided
+ */
+
+.vk-tree--divided .vk-tree-node:nth-child(n+2) {
+  border-top: @tree--divided_border-width solid @tree--divided_border;
+}
+
+/*
+ * Striped
+ */
+
+.vk-tree--striped .vk-tree-node:nth-of-type(odd) {
+  background: @tree--striped_background;
+}
+
+/*
+ * Hoverable
+ */
+
+.vk-tree--hoverable .vk-tree-node:hover {
+  background: @tree--hoverable_background !important;
+}
+
+/*
+ * Narrowed
+ */
+
+.vk-tree--narrowed .vk-tree-node {
+  padding: @tree--narrowed__node_padding @tree--narrowed__node_padding-horizontal;
+}
+
+.vk-tree--narrowed .vk-tree-node__indent {
+  margin-left: @tree--narrowed__indent_width / 2;
+  margin-right: @tree--narrowed__indent_width / 2;
+}
+
+.vk-tree--narrowed .vk-tree-node__arrow {
+  width: @tree--narrowed__arrow_width;
+}
+
+
+// Hooks
+// ========================================================================
+
+.hook-tree() {}
+
+.hook-tree-node() {}
+.hook-tree-node__arrow() {}
+.hook-tree-node__label() {}
+.hook-tree-node--parent() {}
+.hook-tree-node--active() {}
+.hook-tree-node__indent() {}
+.hook-tree-node__content() {}
+.hook-tree-node__arrow--rotated() {}
+
+.hook-tree-misc() {}

@@ -1,0 +1,94 @@
+// Name:            VkTable
+// Description:     Defines styles for the vk-table component
+//                  The underlying HTML table display relies on UIkit table ui
+//
+// Blocks:          `vk-table`
+//                  `vk-table-column`
+//                  `vk-table-column-sort`
+//                  `vk-table-column-select`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@table-column-sort__arrow_color:                            @global-color;
+@table-column-sort__arrow_icon:                             'assets/table-column-arrow.svg';
+@table-column-sort__arrow_icon-width:                       18px;
+@table-column-sort__arrow_icon-height:                      @table-column-sort__arrow_icon-width;
+@table-column-sort__arrow_transition-duration:              200ms;
+@table-column-sort__arrow_transition-timing-function:       ease-out-expo;
+
+
+/* ========================================================================
+   Component: Tree
+ ========================================================================== */
+
+.vk-table {
+  .hook-table;
+}
+
+/*
+ * Column
+ */
+
+.vk-table-column {
+  .hook-table-column;
+}
+
+
+/*
+ * Column Sort
+ */
+
+.vk-table-column-sort {
+  cursor: pointer;
+  .vk-noselect();
+
+  .hook-table-column-sort;
+}
+
+.vk-table-column-sort__arrow {
+  display: inline-block;
+  width: @table-column-sort__arrow_icon-width;
+  height: @table-column-sort__arrow_icon-height;
+  // icon as background
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  .vk-svg-fill(@table-column-sort__arrow_icon, '#000', @table-column-sort__arrow_color);
+  // transition when rotated
+  transition: transform;
+  transition-duration: @table-column-sort__arrow_transition-duration;
+  transition-timing-function: @table-column-sort__arrow_transition-timing-function;
+  .hook-table-column-sort__arrow;
+}
+
+.vk-table-column-sort__arrow--rotated {
+  transform: rotateZ(180deg);
+  .hook-table-column-sort__arrow--rotated;
+}
+
+
+/*
+ * Column Select
+ */
+
+.vk-table-column-select {
+  .vk-noselect();
+  .hook-table-column-select;
+}
+
+
+// Hooks
+// ========================================================================
+
+.hook-table() {}
+
+.hook-table-column() {}
+
+.hook-table-column-sort() {}
+.hook-table-column-sort__arrow() {}
+.hook-table-column-sort__arrow--rotated() {}
+
+.hook-table-column-select() {}

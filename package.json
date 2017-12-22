@@ -1,50 +1,18 @@
 {
-  "name": "@vuikit/vuikit",
-  "version": "0.7.15",
-  "description": "UIkit with all the power of Vue",
-  "license": "MIT",
-  "author": {
-    "name": "Miljan Aleksic",
-    "url": "https://twitter.com/AleksicMiljan"
-  },
-  "keywords": [
-    "library",
-    "vue",
-    "vuejs",
-    "uikit",
-    "vuikit"
+  "private": true,
+  "workspaces": [
+    "packages/*"
   ],
-  "main": "dist/vuikit.common.js",
-  "module": "dist/vuikit.esm.js",
-  "files": [
-    "dist",
-    "src",
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vuikit/vuikit.git"
-  },
-  "bugs": {
-    "url": "https://github.com/vuikit/vuikit/issues"
-  },
-  "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "size": "size-limit",
-    "eslint": "eslint src",
-    "dev": "poi --config _internal/dev/poi.config.js",
-    "prebuild": "rm -rf dist && rm -rf lib",
-    "build": "yarn build:lib && yarn build:dist",
-    "build:dist": "node -r @std/esm _internal/build-dist.js",
-    "build:lib": "node -r @std/esm _internal/build-lib.js"
-  },
-  "dependencies": {
-    "vue": "^2.5.11"
+    "dev": "poi --config dev/poi.config.js",
+    "link:all": "node -r @std/esm scripts/link.js",
+    "unlink:all": "node -r @std/esm scripts/unlink.js"
   },
   "devDependencies": {
     "@lump/argv": "^0.1.0",
     "@lump/banner": "^0.2.0",
-    "@lump/it": "^0.1.1",
+    "@lump/copy-recursive": "^0.2.0",
+    "@lump/less": "^0.3.0",
     "@lump/minify": "^0.2.0",
     "@lump/remove": "^0.1.0",
     "@lump/rollup": "^0.3.5",
@@ -52,9 +20,6 @@
     "@lump/task": "^0.2.0",
     "@lump/write": "^0.2.4",
     "@std/esm": "^0.18.0",
-    "@vuikit/core": "^0.3.2",
-    "@vuikit/icons": "^0.5.0",
-    "@vuikit/theme": "^0.2.0",
     "babel-preset-env": "^1.6.1",
     "css-loader": "^0.28.7",
     "eslint": "^4.13.1",
@@ -64,6 +29,9 @@
     "eslint-plugin-node": "^5.2.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "less-plugin-clean-css": "^1.5.1",
     "lodash": "^4.17.4",
     "poi": "^9.6.1",
     "rollup": "^0.52.2",
@@ -72,6 +40,8 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-vue": "^3.0.0",
+    "uikit": "^3.0.0-beta.32",
+    "vue": "^2.5.11",
     "vue-loader": "^13.6.0",
     "vue-play": "^3.2.1",
     "vue-template-compiler": "^2.5.11"

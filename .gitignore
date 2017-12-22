@@ -1,6 +1,7 @@
 .DS_Store
 yarn-error.log
 npm-debug.log
+lerna-debug.log
 
 .esm-cache/
 node_modules/
