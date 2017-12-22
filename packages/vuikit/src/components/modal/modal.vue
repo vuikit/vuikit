@@ -63,9 +63,7 @@
 
 <script>
 import css from '@vuikit/core/utils/css'
-import { on, off } from '@vuikit/core/utils/event'
 import includes from '@vuikit/core/utils/includes'
-import debounce from '@vuikit/core/utils/debounce'
 import { height } from '@vuikit/core/helpers/position'
 
 import core from './core'
@@ -80,10 +78,6 @@ export default {
     ModalTransition
   },
   props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
     // determines if close button should be displayed
     closeBtn: {
       type: [Boolean, String],
@@ -133,22 +127,6 @@ export default {
       const maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight)
       css(modalBody, 'maxHeight', `${maxHeight}px`)
     }
-  },
-  mounted () {
-    // place the el at dom root
-    document.body.appendChild(this.$el)
-
-    // init global events
-    on(window, 'resize', debounce(() => {
-      if (!this.show) {
-        return
-      }
-
-      this.updateOverflowAuto()
-    }, 30), this._uid)
-  },
-  beforeDestroy () {
-    off(window, 'resize', this._uid)
   }
 }
 </script>

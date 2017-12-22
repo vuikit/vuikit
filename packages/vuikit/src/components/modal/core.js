@@ -1,6 +1,12 @@
-import { on, off } from '@vuikit/core/utils/event'
+import debounce from '@vuikit/core/utils/debounce'
+import { on, off, one } from '@vuikit/core/utils/event'
+import { transitionend } from '@vuikit/core/helpers/env'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 
 const doc = document.documentElement
+
+let active
+let activeModals
 
 export default {
   props: {
@@ -22,7 +28,67 @@ export default {
       default: true
     }
   },
+  methods: {
+    beforeEnter () {
+      addClass(doc, 'uk-modal-page')
+    },
+    enter (el, done) {
+      // redraw workaround, necessary so the browser
+      // doesn't try to apply it all in one step not
+      // giving enough time for the transition to init
+      el.offsetWidth // eslint-disable-line
+
+      addClass(el, 'uk-open')
+
+      // once uk-open transition finished
+      one(el, transitionend, done, e => e.target === el)
+    },
+    afterEnter () {
+      activeModals++
+
+      if (active) {
+        // close any active modal
+        active.$emit('update:show', false)
+      }
+
+      // change current active modal
+      active = this
+    },
+    beforeLeave (el) {
+      removeClass(el, 'uk-open')
+    },
+    leave (el, done) {
+      // once uk-open transition finished
+      one(el, transitionend, done, e => e.target === el)
+    },
+    afterLeave () {
+      activeModals--
+
+      if (!activeModals) {
+        // remove page class if not active modals left
+        removeClass(doc, 'uk-modal-page')
+      }
+
+      // if the closing modal is the active one,
+      // unset it
+      if (active === this) {
+        active = null
+      }
+    }
+  },
   mounted () {
+    // append modal at $root as the styles
+    // could be scoped to the app dom
+    this.$root.$el.appendChild(this.$el)
+
+    // init global events
+    on(window, 'resize', debounce(() => {
+      if (!this.show) {
+        return
+      }
+
+      this.updateOverflowAuto()
+    }, 30), this._uid)
 
     on(doc, 'keyup', e => {
       if (this.closeOnKey && e.keyCode === this.closeOnKey) {
@@ -34,5 +100,12 @@ export default {
   },
   beforeDestroy () {
     off(doc, 'key', this._uid)
+    off(window, 'resize', this._uid)
+
+    // if a page holding a modal is destroyed
+    // there is no time for graceful hiding,
+    // thus we must force it
+    this.$root.$el.removeChild(this.$el)
+    this.afterLeave()
   }
 }

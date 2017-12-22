@@ -90,7 +90,11 @@ function show (ctx) {
   inner.innerHTML = props.content
 
   delayedShow = setTimeout(() => {
-    document.body.appendChild(outer)
+    // append tooltip at $root as the styles
+    // could be scoped to the app dom
+    const $root = ctx.vnode.context.$root.$el
+    $root.appendChild(outer)
+
     const { dir, align } = positionTooltip(ctx)
 
     Animation.in({
