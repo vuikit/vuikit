@@ -18,17 +18,8 @@
   "keywords": [
     "vuikit"
   ],
-  "scripts": {
-    "build": "node -r @std/esm scripts/build.js"
-  },
-  "devDependencies": {
-    "@lump/argv": "^0.1.0",
-    "@lump/rollup": "^0.3.5",
-    "@lump/remove": "^0.1.0",
-    "@lump/write": "^0.2.4",
+  "dependencies": {
     "date-fns": "^1.29.0",
-    "globby": "^7.1.1",
-    "rollup-plugin-buble": "^0.18.0",
     "vue-functional-data-merge": "^2.0.3"
   }
 }

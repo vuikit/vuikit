@@ -1,7 +1,5 @@
 import { play } from 'vue-play'
-import each from '@vuikit/core/utils/each'
-import toCapital from '@vuikit/core/utils/to-capital'
-import toCamelCase from '@vuikit/core/utils/to-camel-case'
+import { each, toCapital, toCamelCase } from '@vuikit/core/util'
 
 // components
 loadStories(require.context('@vuikit/vuikit/src/components', true, /^(.*)\/__dev__\/(.*)\.vue$/))

@@ -1,55 +1,84 @@
-import css from '@vuikit/core/utils/css';
-import { off, on, one } from '@vuikit/core/utils/event';
-import includes from '@vuikit/core/utils/includes';
-import debounce from '@vuikit/core/utils/debounce';
-import { height } from '@vuikit/core/helpers/position';
-import { transitionend } from '@vuikit/core/helpers/env';
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
-import { addClass, removeClass } from '@vuikit/core/utils/class';
+import { debounce, includes } from '@vuikit/core/util';
+import css from '@vuikit/core/helpers/css';
+import { height } from '@vuikit/core/helpers/dom/position';
+import { transitionend } from '@vuikit/core/helpers/dom/env';
+import { off, on, one } from '@vuikit/core/helpers/dom/event';
+import { addClass, removeClass } from '@vuikit/core/helpers/dom/class';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var doc = document.documentElement;
-
+var active;
+var activeModals;
 var core = {
   props: {
     show: {
       type: Boolean,
       default: false
     },
-    // determines if the modal should be closed
-    // when a key is pressed. Accepts a key number,
-    // or false to disable
     closeOnKey: {
       type: [Number, Boolean],
-      default: 27 // esc key
+      default: 27
     },
-    // determines if the modal should be closed
-    // when the background is clicked
     closeOnBg: {
       type: Boolean,
       default: true
     }
   },
+  methods: {
+    beforeEnter: function beforeEnter () {
+      addClass(doc, 'uk-modal-page');
+    },
+    enter: function enter (el, done) {
+      el.offsetWidth;
+      addClass(el, 'uk-open');
+      one(el, transitionend, done, function (e) { return e.target === el; });
+    },
+    afterEnter: function afterEnter () {
+      activeModals++;
+      if (active) {
+        active.$emit('update:show', false);
+      }
+      active = this;
+    },
+    beforeLeave: function beforeLeave (el) {
+      removeClass(el, 'uk-open');
+    },
+    leave: function leave (el, done) {
+      one(el, transitionend, done, function (e) { return e.target === el; });
+    },
+    afterLeave: function afterLeave () {
+      activeModals--;
+      if (!activeModals) {
+        removeClass(doc, 'uk-modal-page');
+      }
+      if (active === this) {
+        active = null;
+      }
+    }
+  },
   mounted: function mounted () {
     var this$1 = this;
-
-
+    this.$root.$el.appendChild(this.$el);
+    on(window, 'resize', debounce(function () {
+      if (!this$1.show) {
+        return
+      }
+      this$1.updateOverflowAuto();
+    }, 30), this._uid);
     on(doc, 'keyup', function (e) {
       if (this$1.closeOnKey && e.keyCode === this$1.closeOnKey) {
         e.preventDefault();
         this$1.$emit('update:show', false);
       }
     }, this._uid);
-
   },
   beforeDestroy: function beforeDestroy () {
     off(doc, 'key', this._uid);
+    off(window, 'resize', this._uid);
+    this.$root.$el.removeChild(this.$el);
+    this.afterLeave();
   }
 }
-
-var doc$1 = document.documentElement;
-
-var active;
-var activeModals;
 
 var ModalTransition = {
   functional: true,
@@ -57,66 +86,23 @@ var ModalTransition = {
     var modal = ref.parent;
     var children = ref.children;
     var data = ref.data;
-
     var def = {
       props: {
         css: false
       },
       on: {
-        beforeEnter: function (el) {
-          addClass(doc$1, 'uk-modal-page');
-        },
-        enter: function (el, done) {
-          // redraw workaround, necessary so the browser
-          // doesn't try to apply it all in one step not
-          // giving enough time for the transition to init
-          el.offsetWidth; // eslint-disable-line
-
-          addClass(el, 'uk-open');
-
-          // once uk-open transition finished
-          one(el, transitionend, done, function (e) { return e.target === el; });
-        },
-        afterEnter: function (el) {
-          activeModals++;
-
-          if (active) {
-            // close any active modal
-            active.$emit('update:show', false);
-          }
-
-          // change current active modal
-          active = modal;
-        },
-        beforeLeave: function beforeLeave (el) {
-          removeClass(el, 'uk-open');
-        },
-        leave: function leave (el, done) {
-          // once uk-open transition finished
-          one(el, transitionend, done, function (e) { return e.target === el; });
-        },
-        afterLeave: function (el) {
-          activeModals--;
-
-          if (!activeModals) {
-            // remove page class if not active modals left
-            removeClass(doc$1, 'uk-modal-page');
-          }
-
-          // if the closing modal is the active one,
-          // unset it
-          if (active === modal) {
-            active = null;
-          }
-        }
+        beforeEnter: modal.beforeEnter,
+        enter: modal.enter,
+        afterEnter: modal.afterEnter,
+        beforeLeave: modal.beforeLeave,
+        leave: modal.leave,
+        afterLeave: modal.afterLeave
       }
     };
-
     return h('transition', mergeData(data, def), children)
   }
 }
 
-// icon-close-icon
 var IconClose = {
   functional: true,
   render: function (h, ctx) {
@@ -125,12 +111,10 @@ var IconClose = {
     var width = props.width || 14;
     var height$$1 = props.height || 14;
     var viewBox = props.viewBox || '0 0 14 14';
-
     if (ratio !== 1) {
       width = width * ratio;
       height$$1 = height$$1 * ratio;
     }
-
     return h('svg', {
       attrs: {
         version: '1.1',
@@ -146,7 +130,6 @@ var IconClose = {
   }
 }
 
-// icon-close-large
 var IconCloseLarge = {
   functional: true,
   render: function (h, ctx) {
@@ -155,12 +138,10 @@ var IconCloseLarge = {
     var width = props.width || 20;
     var height$$1 = props.height || 20;
     var viewBox = props.viewBox || '0 0 20 20';
-
     if (ratio !== 1) {
       width = width * ratio;
       height$$1 = height$$1 * ratio;
     }
-
     return h('svg', {
       attrs: {
         version: '1.1',
@@ -182,11 +163,9 @@ var ModalBtnClose = {
   render: function render (h, ref) {
     var data = ref.data;
     var props = ref.props;
-
     var type = props.type;
     var large = type === 'large';
     var outside = type === 'outside';
-
     var def = {
       class: ['uk-close', 'uk-icon', {
         'uk-modal-close-large': large,
@@ -196,7 +175,6 @@ var ModalBtnClose = {
         type: 'button'
       }
     };
-
     return h('button', mergeData(data, def), [
       large
         ? h(IconCloseLarge)
@@ -217,10 +195,6 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
     ModalTransition: ModalTransition
   },
   props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
     // determines if close button should be displayed
     closeBtn: {
       type: [Boolean, String],
@@ -270,24 +244,6 @@ var modal = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_v
       var maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight);
       css(modalBody, 'maxHeight', (maxHeight + "px"));
     }
-  },
-  mounted: function mounted () {
-    var this$1 = this;
-
-    // place the el at dom root
-    document.body.appendChild(this.$el);
-
-    // init global events
-    on(window, 'resize', debounce(function () {
-      if (!this$1.show) {
-        return
-      }
-
-      this$1.updateOverflowAuto();
-    }, 30), this._uid);
-  },
-  beforeDestroy: function beforeDestroy () {
-    off(window, 'resize', this._uid);
   }
 }
 

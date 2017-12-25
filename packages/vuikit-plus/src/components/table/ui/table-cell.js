@@ -1,7 +1,6 @@
-import get from '@vuikit/core/utils/get'
-import merge from '@vuikit/core/utils/merge'
+import { get, merge } from '@vuikit/core/util'
 import { warn } from '@vuikit/core/helpers/debug'
-import getFnArgs from '@vuikit/core/utils/get-fn-args'
+import getFnArgs from '@vuikit/core/helpers/get-fn-args'
 
 export default {
   functional: true,

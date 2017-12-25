@@ -1,5 +1,4 @@
-import toArray from '@vuikit/core/utils/to-array'
-import includes from '@vuikit/core/utils/includes'
+import { toArray, includes } from '@vuikit/core/util'
 import { warn } from '@vuikit/core/helpers/debug'
 
 export default {

@@ -1,9 +1,6 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 import { warn } from '@vuikit/core/helpers/debug';
-import isObject from '@vuikit/core/utils/is-object';
-import isInteger from '@vuikit/core/utils/is-integer';
-import cloneArray from '@vuikit/core/utils/clone-array';
-import isUndefined from '@vuikit/core/utils/is-undefined';
+import { cloneArray, isInteger, isObject, isUndefined } from '@vuikit/core/util';
 
 var status = [
   'primary',
@@ -11,7 +8,6 @@ var status = [
   'warning',
   'danger'
 ];
-
 var NotificationMessage = {
   functional: true,
   props: {
@@ -30,17 +26,13 @@ var NotificationMessage = {
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
-
     var status = props.status;
-
     var def = {
       class: ['uk-notification-message']
     };
-
     if (status) {
       def.class.push(("uk-notification-message-" + status));
     }
-
     return h('div', mergeData(data, def), [
       children
     ])

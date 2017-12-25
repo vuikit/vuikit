@@ -21,7 +21,7 @@
 <script>
 import orderBy from 'lodash/orderBy'
 import mockData from './data.json'
-import keys from '@vuikit/core/utils/keys'
+import { keys } from '@vuikit/core/util'
 import {
   Table as VkTable,
   TableColumn as VkTableColumn,

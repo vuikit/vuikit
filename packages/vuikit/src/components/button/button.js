@@ -1,4 +1,4 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import mergeData from '@vuikit/core/helpers/vue-data-merge'
 
 const sizes = ['large', 'small']
 const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']

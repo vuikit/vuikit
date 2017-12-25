@@ -29,16 +29,11 @@ async function compile (input) {
       input,
       output: {
         format: 'es'
-      },
-      external: id => id.match(/@vuikit\/core/)
+      }
     }
   }, {
     report: args.report
   })
 
-  // fix the @vuikit/core path which is altered by alias
-  code = code.replace(/from '(.*)node_modules\//g, `from '`)
-
-  // write the component into lib
   await write(`lib/${basename}.js`, code, { log: true })
 }

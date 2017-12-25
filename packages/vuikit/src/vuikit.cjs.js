@@ -1,4 +1,4 @@
-import each from '@vuikit/core/utils/each'
+import { each } from '@vuikit/core/util'
 import * as components from './components/index.js'
 import * as directives from './directives/index.js'
 
@@ -12,7 +12,6 @@ const Vuikit = {
 
   install (Vue) {
     each(components, (def, name) => {
-      def.name = `Vk${def.name}`
       Vue.component(`Vk${name}`, def)
     })
     each(directives, (def, name) => {

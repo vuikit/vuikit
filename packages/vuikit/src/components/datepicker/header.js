@@ -1,13 +1,14 @@
-import diffInCalMonths from 'date-fns/difference_in_calendar_months'
-import isBefore from 'date-fns/is_before'
-import isWithinRange from 'date-fns/is_within_range'
+import { range } from '@vuikit/core/util'
+
 import getYear from 'date-fns/get_year'
+import setYear from 'date-fns/set_year'
+import isBefore from 'date-fns/is_before'
+import setMonth from 'date-fns/set_month'
 import getMonth from 'date-fns/get_month'
 import addYears from 'date-fns/add_years'
 import addMonths from 'date-fns/add_months'
-import setYear from 'date-fns/set_year'
-import setMonth from 'date-fns/set_month'
-import range from '@vuikit/core/utils/range'
+import isWithinRange from 'date-fns/is_within_range'
+import diffInCalMonths from 'date-fns/difference_in_calendar_months'
 
 export default {
   functional: true,

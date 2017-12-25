@@ -1,8 +1,6 @@
-import isInteger from '@vuikit/core/utils/is-integer';
-import isArray from '@vuikit/core/utils/is-array';
-import paginationMatrix from '@vuikit/core/helpers/pagination-matrix';
+import { isArray, isInteger } from '@vuikit/core/util';
+import paginationMatrix from '@vuikit/core/helpers/pagination/matrix';
 
-// icon-pagination-next
 var IconNext = {
   functional: true,
   render: function (h, ctx) {
@@ -11,12 +9,10 @@ var IconNext = {
     var width = props.width || 7;
     var height = props.height || 12;
     var viewBox = props.viewBox || '0 0 7 12';
-
     if (ratio !== 1) {
       width = width * ratio;
       height = height * ratio;
     }
-
     return h('svg', {
       attrs: {
         version: '1.1',
@@ -38,15 +34,11 @@ var PaginationLast = {
   render: function render (h, ref) {
     var props = ref.props;
     var parent = ref.parent;
-
     var label = props.label;
     var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
     if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
       return h('li', { attrs: { label: label, expand: expand } }, 'last')
     }
-
     return h('li', {
       class: {
         'uk-disabled': parent.nextPage > parent.lastPage,
@@ -68,7 +60,6 @@ var PaginationLast = {
   }
 }
 
-// icon-pagination-previous
 var IconPrevious = {
   functional: true,
   render: function (h, ctx) {
@@ -77,12 +68,10 @@ var IconPrevious = {
     var width = props.width || 7;
     var height = props.height || 12;
     var viewBox = props.viewBox || '0 0 7 12';
-
     if (ratio !== 1) {
       width = width * ratio;
       height = height * ratio;
     }
-
     return h('svg', {
       attrs: {
         version: '1.1',
@@ -104,15 +93,11 @@ var PaginationPrev = {
   render: function render (h, ref) {
     var props = ref.props;
     var parent = ref.parent;
-
     var label = props.label;
     var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
     if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
       return h('li', { attrs: { label: label, expand: expand } }, 'prev')
     }
-
     return h('li', {
       class: {
         'uk-disabled': parent.prevPage < 1,
@@ -140,15 +125,11 @@ var PaginationNext = {
   render: function render (h, ref) {
     var props = ref.props;
     var parent = ref.parent;
-
     var label = props.label;
     var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
     if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
       return h('li', { attrs: { label: label, expand: expand } }, 'next')
     }
-
     return h('li', {
       class: {
         'uk-disabled': parent.nextPage > parent.lastPage,
@@ -176,15 +157,11 @@ var PaginationFirst = {
   render: function render (h, ref) {
     var props = ref.props;
     var parent = ref.parent;
-
     var label = props.label;
     var expand = props.expand;
-
-    // if not rendered by VkPagination, return comment to mark the position
     if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
       return h('li', { attrs: { label: label, expand: expand } }, 'first')
     }
-
     return h('li', {
       class: {
         'uk-disabled': parent.prevPage < 1,
@@ -210,18 +187,13 @@ var PaginationPages = {
   functional: true,
   render: function (h, ref) {
     var parent = ref.parent;
-
-    // if not rendered by VkPagination, return comment to mark the position
     if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
       return h('li', 'pages')
     }
-
     var currentPage = parent.page;
-
     return parent.pages.map(function (page) {
       var isPage = isInteger(page);
       var isActive = isPage && currentPage === page;
-
       return h('li', { class: { 'uk-active': isActive } }, [
         isPage
           ? isActive

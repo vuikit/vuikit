@@ -1,45 +1,36 @@
-import includes from '@vuikit/core/utils/includes';
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import { includes } from '@vuikit/core/util';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var padding = ['small', 'large'];
 var types = ['primary', 'secondary', 'blank'];
-
 var Header = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('div', { class: 'uk-card-header' }, children);
 }
 };
-
 var Body = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('div', { class: 'uk-card-body' }, children);
 }
 };
-
 var Footer = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('div', { class: 'uk-card-footer' }, children);
 }
 };
-
 var Badge = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('div', { class: 'uk-card-badge' }, children);
 }
 };
-
 var card = {
   functional: true,
   props: {
@@ -58,7 +49,6 @@ var card = {
   },
   render: function render (h, ref) {
     var obj;
-
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
@@ -67,7 +57,6 @@ var card = {
     var padding = props.padding;
     var hover = props.hover;
     var _slots = slots();
-
     return h('div', mergeData(data, {
       class: ['uk-card', ( obj = {
         'uk-card-default': !includes(types, type),
@@ -79,7 +68,6 @@ var card = {
       _slots.footer && h(Footer, _slots.footer),
       _slots.badge && h(Badge, _slots.badge)
     ])
-
   }
 }
 
@@ -89,10 +77,7 @@ var cardTitle = {
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
-
-
     return h('h3', mergeData(data, { class: 'uk-card-title' }), children)
-
   }
 }
 

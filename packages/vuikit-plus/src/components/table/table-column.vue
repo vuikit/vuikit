@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import get from '@vuikit/core/utils/get'
+import { get } from '@vuikit/core/util'
 import ColumnHead from './ui/column-head'
-import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import mergeData from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
   name: 'TableColumn',

@@ -1,6 +1,5 @@
 import TreeNode from './node'
-import each from '@vuikit/core/utils/each'
-import includes from '@vuikit/core/utils/includes'
+import { each, includes } from '@vuikit/core/util'
 
 export default {
   name: 'Tree',

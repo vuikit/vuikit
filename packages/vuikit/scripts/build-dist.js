@@ -46,7 +46,8 @@ const banner = `/**
     output: {
       name: 'Vuikit',
       format: 'umd'
-    }
+    },
+    external: []
   }, 'dist/vuikit.js')
 
   // add banner to all dist files

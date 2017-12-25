@@ -1,4 +1,4 @@
-import dataMerge from '@vuikit/core/helpers/fn-data-merge'
+import dataMerge from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
   functional: true,

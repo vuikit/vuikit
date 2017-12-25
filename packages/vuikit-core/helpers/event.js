@@ -1,23 +1,19 @@
-import isArray from '@vuikit/core/utils/is-array';
-import toArray from '@vuikit/core/utils/to-array';
-import isString from '@vuikit/core/utils/is-string';
+import { isString, isArray, toArray } from '@vuikit/core/util'
 
-var doc = document;
-var win = window;
+const doc = document
+const win = window
 
-function trigger (target, event, detail) {
-  return toEventTargets(target).reduce(function (notCanceled, target) { return notCanceled && target.dispatchEvent(createEvent(event, true, true, detail)); }
+export function trigger (target, event, detail) {
+  return toEventTargets(target).reduce((notCanceled, target) =>
+    notCanceled && target.dispatchEvent(createEvent(event, true, true, detail))
     , true)
 }
 
-function createEvent (e, bubbles, cancelable, detail) {
-  if ( bubbles === void 0 ) bubbles = true;
-  if ( cancelable === void 0 ) cancelable = false;
-
+export function createEvent (e, bubbles = true, cancelable = false, detail) {
   if (isString(e)) {
-    var event = doc.createEvent('CustomEvent');
-    event.initCustomEvent(e, bubbles, cancelable, detail);
-    e = event;
+    var event = doc.createEvent('CustomEvent')
+    event.initCustomEvent(e, bubbles, cancelable, detail)
+    e = event
   }
 
   return e
@@ -29,12 +25,10 @@ function isEventTarget (target) {
     : 'addEventListener' in target
 }
 
-function toEventTargets (target) {
+export function toEventTargets (target) {
   return isEventTarget(target)
     ? [target]
     : isArray(target)
       ? target.filter(Boolean)
       : toArray(target)
 }
-
-export { trigger, createEvent, toEventTargets };

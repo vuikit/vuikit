@@ -1,11 +1,10 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var iconnav = {
   functional: true,
   render: function (h, ref) {
       var children = ref.children;
       var data = ref.data;
-
       return h('ul', mergeData(data, { class: 'uk-iconnav' }), children);
 }
 }
@@ -26,14 +25,12 @@ var VkIcon = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
       props.name
         ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
-
 }
 
 var VkIconLink = {
@@ -48,7 +45,6 @@ var VkIconLink = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('a', mergeData(data, {
       class: ['uk-icon', {
         'uk-icon-link': props.reset
@@ -59,7 +55,6 @@ var VkIconLink = {
         : children
     ]);
 }
-
 }
 
 var iconnavItem = {
@@ -77,18 +72,13 @@ var iconnavItem = {
   render: function render (h, ref) {
     var props = ref.props;
     var data = ref.data;
-
     var active = props.active;
     var icon = props.icon;
-
     return h('li', { class: { 'uk-active': active } }, [
-
       h(VkIconLink, mergeData(data, {
         props: { name: icon }
       }))
-
     ])
-
   }
 }
 
@@ -97,7 +87,6 @@ var iconnavVertical = {
   render: function (h, ref) {
       var children = ref.children;
       var data = ref.data;
-
       return h('ul', mergeData(data, { class: 'uk-iconnav uk-iconnav-vertical' }), children);
 }
 }

@@ -1,5 +1,5 @@
+import { includes } from '@vuikit/core/util'
 import { warn } from '@vuikit/core/helpers/debug'
-import includes from '@vuikit/core/utils/includes'
 
 export default {
   functional: true,

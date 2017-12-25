@@ -1,4 +1,4 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var VkIcon = {
   functional: true,
@@ -16,14 +16,12 @@ var VkIcon = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
       props.name
         ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
-
 }
 
 var iconLink = {
@@ -38,7 +36,6 @@ var iconLink = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('a', mergeData(data, {
       class: ['uk-icon', {
         'uk-icon-link': props.reset
@@ -49,7 +46,6 @@ var iconLink = {
         : children
     ]);
 }
-
 }
 
 var iconButton = {
@@ -59,14 +55,12 @@ var iconButton = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('a', mergeData(data, { class: 'uk-icon uk-icon-button' }), [
       props.name
         ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
-
 }
 
 export { VkIcon as Icon, iconLink as IconLink, iconButton as IconButton };

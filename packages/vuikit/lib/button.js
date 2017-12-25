@@ -1,11 +1,9 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
-import toArray from '@vuikit/core/utils/to-array';
-import includes from '@vuikit/core/utils/includes';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
+import { includes, toArray } from '@vuikit/core/util';
 import { warn } from '@vuikit/core/helpers/debug';
 
 var sizes = ['large', 'small'];
 var styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link'];
-
 var button = {
   functional: true,
   props: {
@@ -29,7 +27,6 @@ var button = {
   },
   render: function render (h, ref) {
     var obj;
-
     var data = ref.data;
     var props = ref.props;
     var children = ref.children;
@@ -37,7 +34,6 @@ var button = {
     var type = props.type;
     var size = props.size;
     var htmlType = props.htmlType;
-
     var def = {
       attrs: {
         type: htmlType,
@@ -45,7 +41,6 @@ var button = {
       },
       class: ['uk-button', ("uk-button-" + type), ( obj = {}, obj[("uk-button-" + size)] = size, obj)]
     };
-
     return h('button', mergeData(data, def), [
       children
     ])
@@ -59,25 +54,18 @@ var buttonGroupCheckbox = {
     var props = ref.props;
     var children = ref.children;
     var listeners = ref.listeners;
-
     var buttons = children.filter(function (n) { return n.tag; });
-
     if (!validate(data, buttons)) {
       return
     }
-
     var groupValue = toArray(data.model.value);
-
     buttons.forEach(function (btn) {
       var index = buttons.indexOf(btn);
       var value = btn.data.attrs.value;
       var isActive = includes(groupValue, value);
-
       if (isActive) {
         btn.data.class.push('uk-active');
       }
-
-      // on click toggle value
       btn.data.on = {
         click: function () {
           if (isActive) {
@@ -85,12 +73,10 @@ var buttonGroupCheckbox = {
           } else {
             groupValue.splice(index, 0, value);
           }
-
           listeners.input(groupValue);
         }
       };
     });
-
     return h('div', {
       class: ['uk-button-group']
     }, [
@@ -98,21 +84,16 @@ var buttonGroupCheckbox = {
     ])
   }
 }
-
 function validate (data, buttons) {
-  // check group def
   if (!data.model) {
     warn('ButtonGroupCheckbox declaration is missing the v-model directive.');
     return false
   }
-
-  // check buttons def
   var btnValues = buttons.map(function (btn) { return btn.data.attrs.value; });
   if (includes(btnValues, undefined)) {
     warn("Some of the ButtonGroupCheckbox buttons declaration is missing the 'value' prop.");
     return false
   }
-
   return true
 }
 
@@ -123,27 +104,20 @@ var buttonGroupRadio = {
     var props = ref.props;
     var children = ref.children;
     var listeners = ref.listeners;
-
     var buttons = children.filter(function (n) { return n.tag; });
-
     if (!validate$1(data, buttons)) {
       return
     }
-
     var groupValue = data.model.value;
-
     buttons.forEach(function (btn) {
       var value = btn.data.attrs.value;
-
       if (value === groupValue) {
         btn.data.class.push('uk-active');
       }
-
       btn.data.on = {
         click: function () { return listeners.input(value); }
       };
     });
-
     return h('div', {
       class: ['uk-button-group']
     }, [
@@ -151,21 +125,16 @@ var buttonGroupRadio = {
     ])
   }
 }
-
 function validate$1 (data, buttons) {
-  // check group def
   if (!data.model) {
     warn('ButtonGroupRadio declaration is missing the v-model directive.');
     return false
   }
-
-  // check buttons def
   var btnValues = buttons.map(function (btn) { return btn.data.attrs.value; });
   if (includes(btnValues, undefined)) {
     warn("Some of the ButtonGroupRadio buttons declaration is missing the 'value' prop.");
     return false
   }
-
   return true
 }
 

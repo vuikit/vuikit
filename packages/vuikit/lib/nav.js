@@ -1,4 +1,4 @@
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var nav = {
   functional: true,
@@ -16,10 +16,8 @@ var nav = {
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
-
     var center = props.center;
     var primary = props.primary;
-
     return h('ul', mergeData(data, {
       class: ['uk-nav', {
         'uk-nav-center': center,
@@ -27,7 +25,6 @@ var nav = {
         'uk-nav-primary': primary
       }]
     }), children)
-
   }
 }
 
@@ -47,14 +44,12 @@ var VkIcon = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h('span', mergeData(data, { class: ['uk-icon'] }), [
       props.name
         ? h(("icon-" + (props.name)), { props: props })
         : children
     ]);
 }
-
 }
 
 var navItem = {
@@ -75,13 +70,10 @@ var navItem = {
   render: function render (h, ref) {
     var props = ref.props;
     var data = ref.data;
-
     var active = props.active;
     var label = props.label;
     var icon = props.icon;
-
     return h('li', mergeData(data, { class: { 'uk-active': active } }), [
-
       h('a', [
         icon && h(VkIcon, {
           class: 'uk-margin-small-right',
@@ -89,9 +81,7 @@ var navItem = {
         }),
         label
       ])
-
     ])
-
   }
 }
 
@@ -106,14 +96,11 @@ var navItemHeader = {
   render: function render (h, ref) {
     var props = ref.props;
     var children = ref.children;
-
-
     return h('li', {
       class: 'uk-nav-header'
     }, [
       props.label
     ])
-
   }
 }
 
@@ -127,22 +114,16 @@ var navItemParent = {
     var props = ref.props;
     var children = ref.children;
     var data = ref.data;
-
-
     return h('li', mergeData(data, {
       class: 'uk-parent'
     }), [
-
       h('a', [
         props.label
       ]),
-
       h('ul', {
         class: 'uk-nav-sub'
       }, children)
-
     ])
-
   }
 }
 
@@ -150,12 +131,9 @@ var navItemDivider = {
   functional: true,
   render: function render (h, ref) {
     var children = ref.children;
-
-
     return h('li', {
       class: 'uk-nav-divider'
     })
-
   }
 }
 

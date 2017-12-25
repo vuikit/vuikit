@@ -1,5 +1,5 @@
-import includes from '@vuikit/core/utils/includes'
-import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import { includes } from '@vuikit/core/util'
+import mergeData from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
   functional: true,

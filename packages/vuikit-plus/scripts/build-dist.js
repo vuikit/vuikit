@@ -5,7 +5,6 @@ import pkg from '../package.json'
 import rollupConfig from '../rollup.config'
 
 import argv from '@lump/argv'
-
 import write from '@lump/write'
 import remove from '@lump/remove'
 import rollup from '@lump/rollup'
@@ -23,34 +22,47 @@ const banner = `/**
   await remove('dist')
 
   // ES
-  const es = await rollup({
-    ...rollupConfig,
-    ...{
-      input: 'src/vuikit-plus.esm.js',
-      output: {
-        format: 'es'
-      }
+  await build({
+    input: 'src/vuikit-plus.esm.js',
+    output: {
+      format: 'es'
     }
-  }, {
-    report: args.report
-  })
-
-  await write('dist/vuikit-plus.esm.js', es.code, { log: true })
+  }, 'dist/vuikit-plus.esm.js')
 
   // CJS
-  const cjs = await rollup({
-    ...rollupConfig,
-    ...{
-      input: 'src/vuikit-plus.cjs.js',
-      output: {
-        format: 'cjs'
-      }
+  await build({
+    input: 'src/vuikit-plus.cjs.js',
+    output: {
+      format: 'cjs'
     }
-  }, {
+  }, 'dist/vuikit-plus.cjs.js')
+
+  // UMD
+  await build({
+    input: 'src/vuikit-plus.cjs.js',
+    globals: {
+      vue: 'Vue'
+    },
+    output: {
+      name: 'VuikitPlus',
+      format: 'umd'
+    },
+    external: []
+  }, 'dist/vuikit-plus.js')
+
+  // final steps
+  await bannerit('dist/*.js', banner)
+})()
+
+async function build (config, dest) {
+  config = {
+    ...rollupConfig,
+    ...config
+  }
+
+  const { code } = await rollup(config, {
     report: args.report
   })
 
-  await write('dist/vuikit-plus.cjs.js', cjs.code, { log: true })
-
-  await bannerit('dist/*.js', banner)
-})()
+  await write(dest, code, { log: true })
+}

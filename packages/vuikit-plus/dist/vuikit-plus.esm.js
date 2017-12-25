@@ -4,62 +4,31 @@
  * @license MIT
  */
 
-/*
- * Iterate over Object properties
- */
-function each (obj, cb) {
-  for (var key in obj) {
-    if (cb.call(obj[key], obj[key], key) === false) {
-      break
-    }
-  }
-}
-
-/**
-* Flat merge, allows multiple args
-*/
-function merge (host) {
-  var donors = slice(arguments, 1);
-
-  donors.forEach(function (donor) {
-    Object.keys(donor).forEach(function (key) {
-      host[key] = donor[key];
-    });
-  });
-
-  return host
-}
-
-function slice (arr, i) {
-  return Array.prototype.slice.call(arr, i)
-}
+import { cloneArray, each, get, includes, isFunction, isObject, merge, stringify } from '@vuikit/core/util';
+import { warn } from '@vuikit/core/helpers/debug';
+import getFnArgs from '@vuikit/core/helpers/get-fn-args';
+import dataMerge from '@vuikit/core/helpers/vue-data-merge';
 
 var Thead = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('thead', [ h('tr', children) ]);
 }
 };
-
 var Tbody = {
   functional: true,
   render: function (h, ref) {
     var children = ref.children;
-
     return h('tbody', children);
 }
 };
-
 var Table = {
   functional: true,
   render: function render (h, ref) {
     var slots = ref.slots;
     var props = ref.props;
-
     var _slots = slots();
-
     return h('table', {
       class: ['uk-table', {
         'uk-table-small': props.narrowed,
@@ -74,7 +43,6 @@ var Table = {
       _slots.head && h(Thead, _slots.head),
       _slots.body && h(Tbody, _slots.body)
     ])
-
   },
   props: {
     narrowed: {
@@ -108,26 +76,13 @@ var Table = {
   }
 }
 
-/*
- * Determines if the value is a function
- */
-function isFunction (val) {
-  return toString(val) === '[object Function]'
-}
-
-function toString (val) {
-  return Object.prototype.toString.call(val)
-}
-
 var Row = {
   functional: true,
   render: function render (h, ref) {
     var props = ref.props;
     var children = ref.children;
     var table = ref.parent;
-
     var row = props.row;
-
     return h('tr', {
       class: [resolveClass(table.rowClass, row), {
         'uk-active': table.isSelected(row)
@@ -140,148 +95,13 @@ var Row = {
     ])
   }
 }
-
 function targetIsRow (e) {
   return e.target.tagName === 'TR' || e.target.tagName === 'TD'
 }
-
 function resolveClass (c, row) {
   return isFunction(c)
     ? c(row)
     : c
-}
-
-/*
- * Determines if the value is a string
- */
-function isString (val) {
-  return typeof val === 'string'
-}
-
-/*
- * Determines if the value is an object
- */
-function isObject (val) {
-  var type = typeof val;
-  return val !== null && (type === 'object' || type === 'function')
-}
-
-/**
- * Gets the Object value at specific `path`. If the resolved value is
- * `undefined`, the `defVal` is returned in its place.
- */
-function get (obj, path, defVal) {
-  var result = isObject(obj) && isString(path)
-    ? get$1(obj, path)
-    : undefined;
-
-  return result === undefined
-    ? defVal
-    : result
-}
-
-function get$1 (obj, path) {
-  return path.split('.').reduce(function (acc, val) { return acc && acc[val]; }, obj)
-}
-
-/**
- * Perform no operation.
- */
-function noop () {}
-
-var warn = noop;
-if (process.env.NODE_ENV !== 'production') {
-  var hasConsole = typeof console !== 'undefined';
-  var classifyRE = /(?:^|[-_])(\w)/g;
-  var classify = function (str) { return str
-    .replace(classifyRE, function (c) { return c.toUpperCase(); })
-    .replace(/[-_]/g, ''); };
-
-  warn = function (msg, vm) {
-    if (hasConsole) {
-      console.error("[Vuikit warn]: " + msg + (
-        vm ? generateComponentTrace(vm) : ''
-      ));
-    }
-  };
-
-  var formatComponentName = function (vm, includeFile) {
-    if (vm.$root === vm) {
-      return '<Root>'
-    }
-    var name = typeof vm === 'string'
-      ? vm
-      : typeof vm === 'function' && vm.options
-        ? vm.options.name
-        : vm._isVue
-          ? vm.$options.name || vm.$options._componentTag
-          : vm.name;
-
-    var file = vm._isVue && vm.$options.__file;
-    if (!name && file) {
-      var match = file.match(/([^/\\]+)\.vue$/);
-      name = match && match[1];
-    }
-
-    return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
-      (file && includeFile !== false ? (" at " + file) : '')
-    )
-  };
-
-  var repeat = function (str, n) {
-    var res = '';
-    while (n) {
-      if (n % 2 === 1) { res += str; }
-      if (n > 1) { str += str; }
-      n >>= 1;
-    }
-    return res
-  };
-
-  var generateComponentTrace = function (vm) {
-    if (vm._isVue && vm.$parent) {
-      var tree = [];
-      var currentRecursiveSequence = 0;
-      while (vm) {
-        if (tree.length > 0) {
-          var last = tree[tree.length - 1];
-          if (last.constructor === vm.constructor) {
-            currentRecursiveSequence++;
-            vm = vm.$parent;
-            continue
-          } else if (currentRecursiveSequence > 0) {
-            tree[tree.length - 1] = [last, currentRecursiveSequence];
-            currentRecursiveSequence = 0;
-          }
-        }
-        tree.push(vm);
-        vm = vm.$parent;
-      }
-      return '\n\nfound in\n\n' + tree
-        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
-            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
-            : formatComponentName(vm))); })
-        .join('\n')
-    } else {
-      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
-    }
-  };
-}
-
-/**
- * Get the argument names of a function
- */
-function getFnArgs (fn) {
-  // first match everything inside the function argument parens
-  var args = fn.toString().match(/function\s.*?\(([^)]*)\)/)[1];
-
-  // split the arguments string into an array comma delimited
-  return args.split(',')
-    // ensure no inline comments are parsed and trim the whitespace
-    .map(function (arg) { return arg.replace(/\/\*.*\*\//, '').trim(); })
-    // ensure no undefined values are added
-    .filter(function (arg) { return arg; })
 }
 
 var Cell = {
@@ -290,21 +110,15 @@ var Cell = {
     var parent = ref.parent;
     var data = ref.data;
     var props = ref.props;
-
     var col = props.col;
-
     var scopedSlot = get(col, 'data.scopedSlots.default');
     var cellRender = get(col, 'componentOptions.Ctor.options.cellRender');
-
-    // workaround when passing scopedSlot programatically
     if (scopedSlot) {
       var args = getFnArgs(scopedSlot);
-
       if (args[0] === 'h') {
         col.data.scopedSlots.default = scopedSlot.bind(null, h);
       }
     }
-
     if (cellRender) {
       return h({
         functional: true,
@@ -312,18 +126,10 @@ var Cell = {
       }, {
         props: merge({}, props, get(col, 'componentOptions.propsData', {}))
       })
-
     } else {
       warn('The Column component is missing a cellRender definition', parent);
     }
   }
-}
-
-/*
- * Creates a clone of the original array
- */
-function cloneArray (arr) {
-  return arr.slice(0)
 }
 
 var MixinSelect = {
@@ -339,24 +145,20 @@ var MixinSelect = {
         this.updateSelection([row]);
         return
       }
-
       var newSelection = cloneArray(this.selection);
       newSelection.push(row);
-
       this.updateSelection(newSelection);
     },
     doUnselect: function doUnselect (row) {
       var index = this.selection.indexOf(row);
       var newSelection = cloneArray(this.selection);
       newSelection.splice(index, 1);
-
       this.updateSelection(newSelection);
     },
     toggleSelectionAll: function toggleSelectionAll () {
       var newSelection = this.allIsSelected
         ? []
         : cloneArray(this.data);
-
       this.updateSelection(newSelection);
     },
     toggleSelection: function toggleSelection (row) {
@@ -370,9 +172,7 @@ var MixinSelect = {
       if (this.selection.length < this.data.length) {
         return false
       }
-
       var selected = this.data.filter(this.isSelected);
-
       return selected.length === this.data.length
     }
   },
@@ -381,97 +181,6 @@ var MixinSelect = {
       this.$on('click-row', this.toggleSelection);
     }
   }
-}
-
-/**
-* Flat merge, allows multiple args
-*/
-function merge$2 (host) {
-  var donors = slice$1(arguments, 1);
-
-  donors.forEach(function (donor) {
-    Object.keys(donor).forEach(function (key) {
-      host[key] = donor[key];
-    });
-  });
-
-  return host
-}
-
-function slice$1 (arr, i) {
-  return Array.prototype.slice.call(arr, i)
-}
-
-/*
- * Determines if the value is an object
- */
-function isObject$1 (val) {
-  var type = typeof val;
-  return val !== null && (type === 'object' || type === 'function')
-}
-
-/*
- * Determines if the value is a function
- */
-function isFunction$2 (val) {
-  return toString$1(val) === '[object Function]'
-}
-
-function toString$1 (val) {
-  return Object.prototype.toString.call(val)
-}
-
-/*
- * Safely and quickly serialize JavaScript objects
- * https://github.com/davidmarkclements/fast-safe-stringify
- */
-function stringify (obj) {
-  if (isObject$1(obj) && !isFunction$2(obj.toJSON)) {
-    decirc(merge$2({}, obj), '', [], null);
-  }
-
-  return JSON.stringify(obj)
-}
-
-function Circle (val, k, parent) {
-  this.val = val;
-  this.k = k;
-  this.parent = parent;
-  this.count = 1;
-}
-
-Circle.prototype.toJSON = function toJSON () {
-  if (--this.count === 0) {
-    this.parent[this.k] = this.val;
-  }
-  return '[Circular]'
-};
-
-function decirc (val, k, stack, parent) {
-  var keys, len, i;
-  if (typeof val !== 'object' || val === null) {
-    // not an object, nothing to do
-    return
-  } else if (val instanceof Circle) {
-    val.count++;
-    return
-  } else if (typeof val.toJSON === 'function' && !val.toJSON.forceDecirc) {
-    return
-  } else if (parent) {
-    if (~stack.indexOf(val)) {
-      parent[k] = new Circle(val, k, parent);
-      return
-    }
-  }
-  stack.push(val);
-  keys = Object.keys(val);
-  len = keys.length;
-  i = 0;
-  for (; i < len; i++) {
-    k = keys[i];
-    decirc(val[k], k, stack, val);
-  }
-  stack.pop();
 }
 
 var table = {
@@ -530,7 +239,7 @@ var table = {
   },
   computed: {
     columns: {
-      get: function get () {
+      get: function get$$1 () {
         // default slots excluding spaces and comments
         var slots = (this.$slots.default || [])
           .filter(function (node) { return node.tag && !node.isComment && !node.asyncFactory; });
@@ -541,7 +250,7 @@ var table = {
     }
   },
   methods: {
-    stringify: function stringify$1$$1 (obj) {
+    stringify: function stringify$1 (obj) {
       return stringify(obj)
     }
   },
@@ -552,12 +261,6 @@ var table = {
     this.children = this.$children;
   }
 }
-
-function mergeData(){
-var arguments$1 = arguments;
-for(var e,a,s={},t=arguments.length;t--;){ for(var r=0,c=Object.keys(arguments[t]);r<c.length;r++){ switch(e=c[r]){case"class":case"style":case"directives":Array.isArray(s[e])||(s[e]=[]), s[e]=s[e].concat(arguments$1[t][e]);break;case"staticClass":if(!arguments$1[t][e]){ break; }void 0===s[e]&&(s[e]=""), s[e]&&(s[e]+=" "), s[e]+=arguments$1[t][e].trim();break;case"on":case"nativeOn":s[e]||(s[e]={});for(var o=0,n=Object.keys(arguments[t][e]);o<n.length;o++){ a=n[o], s[e][a]?s[e][a]=[].concat(s[e][a],arguments$1[t][e][a]):s[e][a]=arguments$1[t][e][a]; }break;case"attrs":case"props":case"domProps":case"scopedSlots":case"staticStyle":case"hook":case"transition":s[e]||(s[e]={}), s[e]=__assign({},arguments$1[t][e],s[e]);break;case"slot":case"key":case"ref":case"tag":case"show":case"keepAlive":default:s[e]||(s[e]=arguments$1[t][e]);} } }return s}var __assign=Object.assign||function(e){
-var arguments$1 = arguments;
-for(var a,s=1,t=arguments.length;s<t;s++){a=arguments$1[s];for(var r in a){ Object.prototype.hasOwnProperty.call(a,r)&&(e[r]=a[r]); }}return e};
 
 var ColumnHead = {
   functional: true,
@@ -575,14 +278,12 @@ var ColumnHead = {
     var data = ref.data;
     var props = ref.props;
     var children = ref.children;
-
-    var def = mergeData(data, {
+    var def = dataMerge(data, {
       class: {
         'uk-table-shrink': props.shrinked,
         'uk-table-expand': props.expanded
       }
     });
-
     return h('th', def, children)
   }
 }
@@ -592,7 +293,7 @@ var Column = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_
   components: {
     ColumnHead: ColumnHead
   },
-  props: mergeData({}, ColumnHead.props, {
+  props: dataMerge({}, ColumnHead.props, {
     head: {
       type: String
     },
@@ -644,22 +345,12 @@ var Arrow = {
   render: function (h, ref) {
       var data = ref.data;
       var props = ref.props;
-
-      return h('span', mergeData(data, {
+      return h('span', dataMerge(data, {
       class: ['vk-table-column-sort__arrow', {
         'vk-table-column-sort__arrow--rotated': props.rotated
       }]
     }));
 }
-
-}
-
-/*
- * Determines if the value is an object
- */
-function isObject$2 (val) {
-  var type = typeof val;
-  return val !== null && (type === 'object' || type === 'function')
 }
 
 var tableColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('column-head',{class:['vk-table-column-sort uk-visible-hover-inline', _vm.headClass],attrs:{"shrinked":_vm.shrinked,"expanded":_vm.expanded},on:{"click":_vm.emitSortEvent}},[_c('div',{staticClass:"uk-text-nowrap uk-position-relative"},[_vm._t("head",[_vm._v(_vm._s(_vm.head))]),_vm._v(" "),_c('arrow',{class:['uk-position-absolute', { 'uk-invisible': !_vm.order }],attrs:{"rotated":_vm.order === 'asc' || _vm.order === undefined}})],2)])},staticRenderFns: [],
@@ -688,7 +379,7 @@ var tableColumnSort = {render: function(){var _vm=this;var _h=_vm.$createElement
   created: function created () {
     this.$table = this.$parent;
 
-    if (!isObject$2(this.sortedBy)) {
+    if (!isObject(this.sortedBy)) {
       warn("The VkTable 'sortedBy' prop is missing or not a valid object", this.$parent);
     }
   }
@@ -714,7 +405,6 @@ var Checkbox = {
     var data = ref.data;
     var props = ref.props;
     var listeners = ref.listeners;
-
     var def = {
       staticClass: 'uk-checkbox',
       attrs: {
@@ -725,13 +415,11 @@ var Checkbox = {
       },
       on: {
         change: function (e) {
-          // ensures checked state consistency
           e.target.checked = props.checked;
         }
       }
     };
-
-    return h('input', mergeData(data, def))
+    return h('input', dataMerge(data, def))
   }
 }
 
@@ -801,8 +489,7 @@ var UiArrow = {
   render: function (h, ref) {
       var data = ref.data;
       var props = ref.props;
-
-      return h('span', mergeData(data, {
+      return h('span', dataMerge(data, {
       class: ['vk-tree-node__arrow', {
         'vk-tree-node__arrow--rotated': props.rotated
       }]
@@ -817,8 +504,7 @@ var UiLabel = {
   render: function (h, ref) {
       var data = ref.data;
       var children = ref.children;
-
-      return h('span', mergeData(data, { class: 'vk-tree-node__label' }), children);
+      return h('span', dataMerge(data, { class: 'vk-tree-node__label' }), children);
 }
 }
 
@@ -826,8 +512,7 @@ var UiIndent = {
   functional: true,
   render: function (h, ref) {
       var data = ref.data;
-
-      return h('span', mergeData(data, { class: 'vk-tree-node__indent' }));
+      return h('span', dataMerge(data, { class: 'vk-tree-node__indent' }));
 }
 }
 
@@ -836,8 +521,7 @@ var UiContent = {
   render: function (h, ref) {
       var data = ref.data;
       var children = ref.children;
-
-      return h('div', mergeData(data, { class: 'vk-tree-node__content uk-flex-1' }), children);
+      return h('div', dataMerge(data, { class: 'vk-tree-node__content uk-flex-1' }), children);
 }
 }
 
@@ -848,20 +532,15 @@ var TreeNode = {
     var props = ref.props;
     var data = ref.data;
     var parent = ref.parent;
-
     var node = props.node;
-
     var isActive = parent.isActive(node);
     var isExpanded = parent.isExpanded(node);
     var hasChildren = node.childrenCount > 0;
-
-    // prerender indents
     var indents = [];
     for (var i = 0; i < node.level; i++) {
       indents.push(h(UiIndent));
     }
-
-    var def = mergeData(data, {
+    var def = dataMerge(data, {
       class: ['vk-tree-node uk-flex uk-flex-middle', {
         'vk-tree-node--active': isActive,
         'vk-tree-node--parent': hasChildren
@@ -870,11 +549,8 @@ var TreeNode = {
         click: function (e) { return parent.$emit('click-node', node); }
       }
     });
-
-    // set render slot
     var defaultNodeRender = function (node) { return h(UiLabel, get(node, 'data.name', 'Node')); };
     var slot = (data.scopedSlots && data.scopedSlots.default) || defaultNodeRender;
-
     return h('li', def, indents.concat( [hasChildren
         ? h(UiArrow, {
           props: { rotated: isExpanded },
@@ -883,36 +559,11 @@ var TreeNode = {
           }
         })
         : h(UiIndent)],
-
-      // render content
       [h(UiContent, [
         slot(node)
       ])]
     ))
-
   }
-}
-
-/*
- * Determines if the value is a string
- */
-function isString$1 (val) {
-  return typeof val === 'string'
-}
-
-var strPrototype = String.prototype;
-var includesFn = function (search) { return ~this.indexOf(search) };
-var includesStr = strPrototype.includes || includesFn;
-var includesArray = Array.prototype.includes || includesFn;
-
-/**
- * Determines whether an array/string includes a certain element/characters
- */
-function includes (obj, search) {
-  return obj && (isString$1(obj)
-    ? includesStr
-    : includesArray
-  ).call(obj, search)
 }
 
 var tree = {
@@ -968,25 +619,19 @@ var tree = {
       var expandedNodes = [].concat( this.expandedNodes );
       var index = expandedNodes.indexOf(node.id);
       var isExpanded = index !== -1;
-
       isExpanded
         ? expandedNodes.splice(index, 1)
         : expandedNodes.push(node.id);
-
       this.$emit('update:expandedNodes', expandedNodes);
     },
     renderNodes: function renderNodes (nodes, level) {
       var this$1 = this;
       if ( level === void 0 ) level = 0;
-
       var result = [];
       var h = this.$createElement;
-
       each(nodes, function (node, id) {
         node.id = id;
         node.level = level;
-
-        // render node and its children
         result.push(
           h(TreeNode, {
             key: node.id,
@@ -994,13 +639,11 @@ var tree = {
             scopedSlots: this$1.$scopedSlots
           })
         );
-
         if (node.children && this$1.isExpanded(node)) {
           result = result.concat( this$1.renderNodes(node.children, level + 1)
           );
         }
       });
-
       return result
     }
   }
@@ -1016,13 +659,17 @@ var components = Object.freeze({
 	Tree: tree
 });
 
-var VuikitPlus = merge({}, components, {
+each(components, function (def, name) {
+  def.name = "Vk" + (def.name);
+});
+var VuikitPlus = {
+  components: components,
   install: function install (Vue) {
     each(components, function (def, name) {
       Vue.component(("Vk" + name), def);
     });
   }
-});
+};
 
 export { table as Table, Column as TableColumn, tableColumnSort as TableColumnSort, tableColumnSelect as TableColumnSelect, tree as Tree };
 export default VuikitPlus;

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import get from '@vuikit/core/utils/get'
+import { get } from '@vuikit/core/util'
 import Checkbox from './ui/checkbox'
 import ColumnHead from './ui/column-head'
 

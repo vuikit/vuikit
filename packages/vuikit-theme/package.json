@@ -9,6 +9,7 @@
   },
   "homepage": "https://vuikit.js.org/",
   "bugs": "https://github.com/vuikit/vuikit/issues",
+  "main": "index.js",
   "keywords": [
     "theme",
     "uikit",
@@ -21,5 +22,8 @@
   "scripts": {
     "build": "node -r @std/esm scripts/build.js"
   },
-  "main": "index.js"
+  "@std/esm": {
+    "esm": "js",
+    "cjs": true
+  }
 }

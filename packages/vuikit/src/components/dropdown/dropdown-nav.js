@@ -1,5 +1,5 @@
 import Dropdown from './dropdown'
-import mergeData from '@vuikit/core/helpers/fn-data-merge'
+import mergeData from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
   functional: true,

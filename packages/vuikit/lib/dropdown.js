@@ -1,10 +1,8 @@
-import get from '@vuikit/core/utils/get';
-import { off, on } from '@vuikit/core/utils/event';
-import includes from '@vuikit/core/utils/includes';
-import isString from '@vuikit/core/utils/is-string';
+import { get, includes, isString } from '@vuikit/core/util';
+import { off, on } from '@vuikit/core/helpers/dom/event';
 import Position from '@vuikit/core/directives/position';
-import { getPositionAxis } from '@vuikit/core/helpers/position';
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import { getPositionAxis } from '@vuikit/core/helpers/dom/position';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var isRtl = document.documentElement.getAttribute('dir') === 'rtl';
 
@@ -245,12 +243,10 @@ var dropdownNav = {
       var data = ref.data;
       var props = ref.props;
       var children = ref.children;
-
       return h(Dropdown, mergeData(data, { props: props }), [
       h('ul', { class: 'uk-nav uk-dropdown-nav' }, children)
     ]);
 }
-
 }
 
 export { Dropdown, dropdownNav as DropdownNav };

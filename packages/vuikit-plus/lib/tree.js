@@ -1,7 +1,5 @@
-import dataMerge from '@vuikit/core/helpers/fn-data-merge';
-import get from '@vuikit/core/utils/get';
-import each from '@vuikit/core/utils/each';
-import includes from '@vuikit/core/utils/includes';
+import dataMerge from '@vuikit/core/helpers/vue-data-merge';
+import { each, get, includes } from '@vuikit/core/util';
 
 var UiArrow = {
   functional: true,
@@ -9,7 +7,6 @@ var UiArrow = {
   render: function (h, ref) {
       var data = ref.data;
       var props = ref.props;
-
       return h('span', dataMerge(data, {
       class: ['vk-tree-node__arrow', {
         'vk-tree-node__arrow--rotated': props.rotated
@@ -25,7 +22,6 @@ var UiLabel = {
   render: function (h, ref) {
       var data = ref.data;
       var children = ref.children;
-
       return h('span', dataMerge(data, { class: 'vk-tree-node__label' }), children);
 }
 }
@@ -34,7 +30,6 @@ var UiIndent = {
   functional: true,
   render: function (h, ref) {
       var data = ref.data;
-
       return h('span', dataMerge(data, { class: 'vk-tree-node__indent' }));
 }
 }
@@ -44,7 +39,6 @@ var UiContent = {
   render: function (h, ref) {
       var data = ref.data;
       var children = ref.children;
-
       return h('div', dataMerge(data, { class: 'vk-tree-node__content uk-flex-1' }), children);
 }
 }
@@ -56,19 +50,14 @@ var TreeNode = {
     var props = ref.props;
     var data = ref.data;
     var parent = ref.parent;
-
     var node = props.node;
-
     var isActive = parent.isActive(node);
     var isExpanded = parent.isExpanded(node);
     var hasChildren = node.childrenCount > 0;
-
-    // prerender indents
     var indents = [];
     for (var i = 0; i < node.level; i++) {
       indents.push(h(UiIndent));
     }
-
     var def = dataMerge(data, {
       class: ['vk-tree-node uk-flex uk-flex-middle', {
         'vk-tree-node--active': isActive,
@@ -78,11 +67,8 @@ var TreeNode = {
         click: function (e) { return parent.$emit('click-node', node); }
       }
     });
-
-    // set render slot
     var defaultNodeRender = function (node) { return h(UiLabel, get(node, 'data.name', 'Node')); };
     var slot = (data.scopedSlots && data.scopedSlots.default) || defaultNodeRender;
-
     return h('li', def, indents.concat( [hasChildren
         ? h(UiArrow, {
           props: { rotated: isExpanded },
@@ -91,13 +77,10 @@ var TreeNode = {
           }
         })
         : h(UiIndent)],
-
-      // render content
       [h(UiContent, [
         slot(node)
       ])]
     ))
-
   }
 }
 
@@ -154,25 +137,19 @@ var tree = {
       var expandedNodes = [].concat( this.expandedNodes );
       var index = expandedNodes.indexOf(node.id);
       var isExpanded = index !== -1;
-
       isExpanded
         ? expandedNodes.splice(index, 1)
         : expandedNodes.push(node.id);
-
       this.$emit('update:expandedNodes', expandedNodes);
     },
     renderNodes: function renderNodes (nodes, level) {
       var this$1 = this;
       if ( level === void 0 ) level = 0;
-
       var result = [];
       var h = this.$createElement;
-
       each(nodes, function (node, id) {
         node.id = id;
         node.level = level;
-
-        // render node and its children
         result.push(
           h(TreeNode, {
             key: node.id,
@@ -180,13 +157,11 @@ var tree = {
             scopedSlots: this$1.$scopedSlots
           })
         );
-
         if (node.children && this$1.isExpanded(node)) {
           result = result.concat( this$1.renderNodes(node.children, level + 1)
           );
         }
       });
-
       return result
     }
   }

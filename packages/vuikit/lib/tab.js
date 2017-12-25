@@ -1,18 +1,16 @@
 import { warn } from '@vuikit/core/helpers/debug';
-import includes from '@vuikit/core/utils/includes';
-import mergeData from '@vuikit/core/helpers/fn-data-merge';
+import { includes } from '@vuikit/core/util';
+import mergeData from '@vuikit/core/helpers/vue-data-merge';
 
 var TabContent = {
   functional: true,
   render: function (h, ref) {
     var parent = ref.parent;
-
     return parent.tabs
     .filter(function (tab) { return parent.activeTab === tab.name; })
     .map(function (tab) { return tab.node; });
 }
 };
-
 var core = {
   components: {
     TabContent: TabContent
@@ -30,14 +28,11 @@ var core = {
   computed: {
     tabs: {
       get: function get () {
-        // default slots excluding spaces and comments
         var slots = (this.$slots.default || [])
           .filter(function (n) { return n.tag; });
-
         if (!slots.length) {
           warn('At least one vk-tab-item must be set', this);
         }
-
         return slots.map(function (node) { return ({
           node: node,
           name: node.componentOptions.propsData.name,
@@ -54,7 +49,6 @@ var core = {
     }
   },
   created: function created () {
-    // set initial activeTab
     if (!this.activeTab && this.tabs.length) {
       this.triggerTab(this.tabs[0].node.componentOptions.propsData.name);
     }
@@ -69,7 +63,6 @@ var UiTab = {
       default: '',
       validator: function (val) { return !val || includes(['right', 'center', 'justify'], val); }
     },
-    // flips tabs vertically
     bottom: {
       type: Boolean,
       default: false
@@ -79,10 +72,8 @@ var UiTab = {
     var children = ref.children;
     var props = ref.props;
     var data = ref.data;
-
     var alignment = props.alignment;
     var bottom = props.bottom;
-
     return h('ul', mergeData(data, {
       class: ['uk-tab', {
         'uk-tab-bottom': bottom,
@@ -113,20 +104,15 @@ var UiTabItem = {
   render: function render (h, ref) {
     var props = ref.props;
     var data = ref.data;
-
     var active = props.active;
     var disabled = props.disabled;
     var label = props.label;
-
     return h('li', mergeData(data, { class: {
       'uk-active': active && !disabled,
       'uk-disabled': disabled
     } }), [
-
       h('a', label)
-
     ])
-
   }
 }
 
@@ -171,9 +157,7 @@ var UiTab$1 = {
     var children = ref.children;
     var props = ref.props;
     var data = ref.data;
-
     var alignment = props.alignment;
-
     return h('ul', mergeData(data, {
       class: ['uk-tab', {
         'uk-tab-left': alignment === 'left',

@@ -3,8 +3,8 @@ import UiLabel from './ui/node-label'
 import UiIndent from './ui/node-indent'
 import UiContent from './ui/node-content'
 
-import get from '@vuikit/core/utils/get'
-import dataMerge from '@vuikit/core/helpers/fn-data-merge'
+import { get } from '@vuikit/core/util'
+import dataMerge from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
   functional: true,
