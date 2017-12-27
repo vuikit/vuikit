@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { cloneArray, debounce, each, get, includes, isArray, isEmpty, isInteger, isObject, isString, isUndefined, toArray, toInteger } from '@vuikit/core/util';
+import { cloneArray, debounce, each, get, includes, isArray, isEmpty, isInteger, isObject, isString, isUndefined, merge, toArray, toInteger } from '@vuikit/core/util';
 import mergeData from '@vuikit/core/helpers/vue-data-merge';
 import { warn } from '@vuikit/core/helpers/debug';
 import { off, offAll, on, one } from '@vuikit/core/helpers/dom/event';
@@ -14,6 +14,7 @@ import css from '@vuikit/core/helpers/css';
 import { transitionend } from '@vuikit/core/helpers/dom/env';
 import { addClass, removeClass, toggleClass } from '@vuikit/core/helpers/dom/class';
 import paginationMatrix from '@vuikit/core/helpers/pagination/matrix';
+import { attr as attr$1 } from '@vuikit/core/helpers/dom/attr';
 import { Animation as Animation$1 } from '@vuikit/core/helpers/dom/animation';
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
@@ -2545,6 +2546,88 @@ var components = Object.freeze({
 	Upload: upload
 });
 
+var docEl = document.documentElement;
+var isRtl$1 = attr$1(docEl, 'dir') === 'rtl';
+var id = 1;
+var index = {
+  bind: function bind (el, binding) {
+    el.vkmarginid = id++;
+    on(window, 'resize', debounce(function () {
+      update(el, binding);
+    }, 10, true), ("vk-margin-" + (el.vkmarginid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update(el, binding);
+  },
+  unbind: function unbind (el) {
+    off(window, 'resize', ("vk-margin-" + (el.vkmarginid)));
+  }
+}
+function update (el, binding) {
+  var options = merge({
+    margin: 'uk-margin-small-top',
+    firstColumn: 'uk-first-column'
+  }, (binding.value || {}));
+  var items = el.children;
+  if (!items.length || !isVisible$1(el)) {
+    return
+  }
+  var ref = getRows(items);
+  var rows = ref.rows;
+  rows.forEach(function (row, i) { return row.forEach(function (el, j) {
+      removeClass(el, options.margin);
+      removeClass(el, options.firstColumn)
+      ;(i !== 0) && addClass(el, options.margin)
+      ;(j === 0) && addClass(el, options.firstColumn);
+    }); }
+  );
+}
+function getRows (items) {
+  var data = {};
+  var rows = [[]];
+  data.stacks = true;
+  for (var i = 0; i < items.length; i++) {
+    var el = items[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row = rows[j];
+      if (!row[0]) {
+        row.push(el);
+        break
+      }
+      var leftDim = row[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        data.stacks = false;
+        if (dim.left < leftDim.left && !isRtl$1) {
+          row.unshift(el);
+          break
+        }
+        row.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  data.rows = rows;
+  return data
+}
+function isVisible$1 (el) {
+  return el.offsetHeight
+}
+
 var delayedShow;
 var tooltip = {};
 var uid = 'v-tooltip';
@@ -2562,7 +2645,7 @@ var positions$2 = [
   'right',
   'right-center'
 ];
-var index = {
+var index$1 = {
   inserted: function inserted (target, binding, vnode) {
     var ctx = getContext(target, binding, vnode);
     if (ctx) {
@@ -2759,23 +2842,130 @@ function getContext (target, binding, vnode) {
   return ctx
 }
 
+var docEl$1 = document.documentElement;
+var isRtl$2 = attr$1(docEl$1, 'dir') === 'rtl';
+var id$1 = 1;
+var index$2 = {
+  bind: function bind (el, binding) {
+    el.vkheightmatchid = id$1++;
+    on(window, 'resize', debounce(function () {
+      update$1(el, binding);
+    }, 10, true), ("vk-height-match-" + (el.vkheightmatchid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update$1(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update$1(el, binding);
+  },
+  unbind: function unbind (el) {
+    off(window, 'resize', ("vk-height-match-" + (el.vkheightmatchid)));
+  }
+}
+function update$1 (el, binding) {
+  var options = merge({
+    target: ':scope > *',
+    row: true
+  }, (binding.value || {}));
+  var elements = el.querySelectorAll(options.target);
+  elements = [].slice.call(elements);
+  applyHeight(elements, '');
+  var rows = getRows$1(elements, options.row);
+  rows.forEach(function (els) {
+    var ref = match(els);
+    var height$$1 = ref.height;
+    var elements = ref.elements;
+    applyHeight(elements, (height$$1 + "px"));
+  });
+}
+function getRows$1 (elements, row) {
+  if (!row) {
+    return [ elements ]
+  }
+  var rows = [[]];
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row$1 = rows[j];
+      if (!row$1[0]) {
+        row$1.push(el);
+        break
+      }
+      var leftDim = row$1[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        if (dim.left < leftDim.left && !isRtl$2) {
+          row$1.unshift(el);
+          break
+        }
+        row$1.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  return rows
+}
+function match (elements) {
+  if (elements.length < 2) {
+    return {}
+  }
+  var max = 0;
+  var heights = [];
+  elements.forEach(function (el) {
+    var style;
+    var hidden;
+    if (!isVisible$2(el)) {
+      style = attr$1(el, 'style');
+      hidden = attr$1(el, 'hidden');
+      attr$1(el, {
+        style: ((style || '') + ";display:block !important;"),
+        hidden: null
+      });
+    }
+    max = Math.max(max, el.offsetHeight);
+    heights.push(el.offsetHeight);
+    if (!isUndefined(style)) {
+      attr$1(el, {style: style, hidden: hidden});
+    }
+  });
+  elements = elements.filter(function (el, i) { return heights[i] < max; });
+  return { height: max, elements: elements }
+}
+function isVisible$2 (el) {
+  return el.offsetHeight
+}
+function applyHeight (elements, height$$1) {
+  toArray(elements).forEach(function (el) { return css(el, 'minHeight', height$$1); });
+}
+
 function offsetTop$1 (element) {
   return element.getBoundingClientRect().top + window.pageYOffset
 }
-var index$1 = {
+var index$3 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     });
     on(window, 'resize', debounce(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     }, 20), 'vk-height-viewport');
   },
   unbind: function unbind (el, binding, vnode) {
     off(window, 'resize', 'vk-height-viewport');
   }
 }
-function update (el, modifiers, value) {
+function update$2 (el, modifiers, value) {
   if ( value === void 0 ) value = {};
   var viewport = window.innerHeight;
   var offset = 0;
@@ -2809,8 +2999,10 @@ function update (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	Tooltip: index,
-	HeightViewport: index$1
+	Margin: index,
+	Tooltip: index$1,
+	HeightMatch: index$2,
+	HeightViewport: index$3
 });
 
 each(components, function (def, name) {
@@ -2829,5 +3021,5 @@ var Vuikit = {
   }
 };
 
-export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, card as Card, cardTitle as CardTitle, Drop, Dropdown, dropdownNav as DropdownNav, VkIcon as Icon, VkIconLink as IconLink, iconButton as IconButton, iconnav as Iconnav, iconnavItem as IconnavItem, iconnavVertical as IconnavVertical, label as Label, modal as Modal, modalFull as ModalFull, nav as Nav, navItem as NavItem, navItemHeader as NavItemHeader, navItemParent as NavItemParent, navItemDivider as NavItemDivider, navbar as Navbar, navbarItem as NavbarItem, navbarToggle as NavbarToggle, navbarNav as NavbarNav, navbarNavItem as NavbarNavItem, navbarNavDropdown as NavbarNavDropdown, notification as Notification, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, tab as Tab, tabItem as TabItem, tabVertical as TabVertical, upload as Upload, index as Tooltip, index$1 as HeightViewport };
+export { breadcrumb as Breadcrumb, breadcrumbItem as BreadcrumbItem, button as Button, buttonGroupCheckbox as ButtonGroupCheckbox, buttonGroupRadio as ButtonGroupRadio, card as Card, cardTitle as CardTitle, Drop, Dropdown, dropdownNav as DropdownNav, VkIcon as Icon, VkIconLink as IconLink, iconButton as IconButton, iconnav as Iconnav, iconnavItem as IconnavItem, iconnavVertical as IconnavVertical, label as Label, modal as Modal, modalFull as ModalFull, nav as Nav, navItem as NavItem, navItemHeader as NavItemHeader, navItemParent as NavItemParent, navItemDivider as NavItemDivider, navbar as Navbar, navbarItem as NavbarItem, navbarToggle as NavbarToggle, navbarNav as NavbarNav, navbarNavItem as NavbarNavItem, navbarNavDropdown as NavbarNavDropdown, notification as Notification, offcanvas as Offcanvas, offcanvasContent as OffcanvasContent, offcanvasClose as OffcanvasClose, pagination as Pagination, PaginationFirst, PaginationLast, PaginationPrev, PaginationNext, PaginationPages, spinner as Spinner, sticky as Sticky, subnav as Subnav, subnavItem as SubnavItem, tab as Tab, tabItem as TabItem, tabVertical as TabVertical, upload as Upload, index as Margin, index$1 as Tooltip, index$2 as HeightMatch, index$3 as HeightViewport };
 export default Vuikit;

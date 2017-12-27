@@ -139,6 +139,19 @@ function includes (obj, search) {
   ).call(obj, search)
 }
 
+function merge (host) {
+  var donors = slice$1(arguments, 1);
+  donors.forEach(function (donor) {
+    Object.keys(donor).forEach(function (key) {
+      host[key] = donor[key];
+    });
+  });
+  return host
+}
+function slice$1 (arr, i) {
+  return Array.prototype.slice.call(arr, i)
+}
+
 function getRange (start, stop, step) {
   if ( step === void 0 ) step = 1;
   if (typeof stop === 'undefined') {
@@ -3355,6 +3368,118 @@ var components = Object.freeze({
 	Upload: upload
 });
 
+function attr (element, name, value) {
+  if (isObject(name)) {
+    for (var key in name) {
+      attr(element, key, name[key]);
+    }
+    return
+  }
+  if (isUndefined(value)) {
+    return element && element.getAttribute(name)
+  } else {
+    toArray(element).forEach(function (element) {
+      if (isFunction(value)) {
+        value = value.call(element, attr(element, name));
+      }
+      if (value === null) {
+        removeAttr(element, name);
+      } else {
+        element.setAttribute(name, value);
+      }
+    });
+  }
+}
+
+function removeAttr (element, name) {
+  element = toArray(element);
+  name.split(' ').forEach(function (name) { return element.forEach(function (element) { return element.removeAttribute(name); }
+    ); }
+  );
+}
+
+var docEl$2 = document.documentElement;
+var isRtl$1 = attr(docEl$2, 'dir') === 'rtl';
+var id = 1;
+var index = {
+  bind: function bind (el, binding) {
+    el.vkmarginid = id++;
+    on(window, 'resize', debounce(function () {
+      update(el, binding);
+    }, 10, true), ("vk-margin-" + (el.vkmarginid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update(el, binding);
+  },
+  unbind: function unbind (el) {
+    off(window, 'resize', ("vk-margin-" + (el.vkmarginid)));
+  }
+}
+function update (el, binding) {
+  var options = merge({
+    margin: 'uk-margin-small-top',
+    firstColumn: 'uk-first-column'
+  }, (binding.value || {}));
+  var items = el.children;
+  if (!items.length || !isVisible$2(el)) {
+    return
+  }
+  var ref = getRows(items);
+  var rows = ref.rows;
+  rows.forEach(function (row, i) { return row.forEach(function (el, j) {
+      removeClass(el, options.margin);
+      removeClass(el, options.firstColumn)
+      ;(i !== 0) && addClass(el, options.margin)
+      ;(j === 0) && addClass(el, options.firstColumn);
+    }); }
+  );
+}
+function getRows (items) {
+  var data = {};
+  var rows = [[]];
+  data.stacks = true;
+  for (var i = 0; i < items.length; i++) {
+    var el = items[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row = rows[j];
+      if (!row[0]) {
+        row.push(el);
+        break
+      }
+      var leftDim = row[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        data.stacks = false;
+        if (dim.left < leftDim.left && !isRtl$1) {
+          row.unshift(el);
+          break
+        }
+        row.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  data.rows = rows;
+  return data
+}
+function isVisible$2 (el) {
+  return el.offsetHeight
+}
+
 var RESOLVED = 0;
 var REJECTED = 1;
 var PENDING = 2;
@@ -3501,36 +3626,6 @@ p.catch = function (onRejected) {
   return this.then(undefined, onRejected)
 };
 
-function attr (element, name, value) {
-  if (isObject(name)) {
-    for (var key in name) {
-      attr(element, key, name[key]);
-    }
-    return
-  }
-  if (isUndefined(value)) {
-    return element && element.getAttribute(name)
-  } else {
-    toArray(element).forEach(function (element) {
-      if (isFunction(value)) {
-        value = value.call(element, attr(element, name));
-      }
-      if (value === null) {
-        removeAttr(element, name);
-      } else {
-        element.setAttribute(name, value);
-      }
-    });
-  }
-}
-
-function removeAttr (element, name) {
-  element = toArray(element);
-  name.split(' ').forEach(function (name) { return element.forEach(function (element) { return element.removeAttribute(name); }
-    ); }
-  );
-}
-
 var doc$7 = document;
 var win$6 = window;
 function trigger (target, event, detail) {
@@ -3671,7 +3766,7 @@ var positions$3 = [
   'right',
   'right-center'
 ];
-var index = {
+var index$1 = {
   inserted: function inserted (target, binding, vnode) {
     var ctx = getContext$1(target, binding, vnode);
     if (ctx) {
@@ -3868,23 +3963,130 @@ function getContext$1 (target, binding, vnode) {
   return ctx
 }
 
+var docEl$3 = document.documentElement;
+var isRtl$2 = attr(docEl$3, 'dir') === 'rtl';
+var id$1 = 1;
+var index$2 = {
+  bind: function bind (el, binding) {
+    el.vkheightmatchid = id$1++;
+    on(window, 'resize', debounce(function () {
+      update$1(el, binding);
+    }, 10, true), ("vk-height-match-" + (el.vkheightmatchid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update$1(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update$1(el, binding);
+  },
+  unbind: function unbind (el) {
+    off(window, 'resize', ("vk-height-match-" + (el.vkheightmatchid)));
+  }
+}
+function update$1 (el, binding) {
+  var options = merge({
+    target: ':scope > *',
+    row: true
+  }, (binding.value || {}));
+  var elements = el.querySelectorAll(options.target);
+  elements = [].slice.call(elements);
+  applyHeight(elements, '');
+  var rows = getRows$1(elements, options.row);
+  rows.forEach(function (els) {
+    var ref = match(els);
+    var height = ref.height;
+    var elements = ref.elements;
+    applyHeight(elements, (height + "px"));
+  });
+}
+function getRows$1 (elements, row) {
+  if (!row) {
+    return [ elements ]
+  }
+  var rows = [[]];
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row$1 = rows[j];
+      if (!row$1[0]) {
+        row$1.push(el);
+        break
+      }
+      var leftDim = row$1[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        if (dim.left < leftDim.left && !isRtl$2) {
+          row$1.unshift(el);
+          break
+        }
+        row$1.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  return rows
+}
+function match (elements) {
+  if (elements.length < 2) {
+    return {}
+  }
+  var max = 0;
+  var heights = [];
+  elements.forEach(function (el) {
+    var style;
+    var hidden;
+    if (!isVisible$3(el)) {
+      style = attr(el, 'style');
+      hidden = attr(el, 'hidden');
+      attr(el, {
+        style: ((style || '') + ";display:block !important;"),
+        hidden: null
+      });
+    }
+    max = Math.max(max, el.offsetHeight);
+    heights.push(el.offsetHeight);
+    if (!isUndefined(style)) {
+      attr(el, {style: style, hidden: hidden});
+    }
+  });
+  elements = elements.filter(function (el, i) { return heights[i] < max; });
+  return { height: max, elements: elements }
+}
+function isVisible$3 (el) {
+  return el.offsetHeight
+}
+function applyHeight (elements, height) {
+  toArray(elements).forEach(function (el) { return css(el, 'minHeight', height); });
+}
+
 function offsetTop$1 (element) {
   return element.getBoundingClientRect().top + window.pageYOffset
 }
-var index$1 = {
+var index$3 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     });
     on(window, 'resize', debounce(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     }, 20), 'vk-height-viewport');
   },
   unbind: function unbind (el, binding, vnode) {
     off(window, 'resize', 'vk-height-viewport');
   }
 }
-function update (el, modifiers, value) {
+function update$2 (el, modifiers, value) {
   if ( value === void 0 ) value = {};
   var viewport = window.innerHeight;
   var offset = 0;
@@ -3918,8 +4120,10 @@ function update (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	Tooltip: index,
-	HeightViewport: index$1
+	Margin: index,
+	Tooltip: index$1,
+	HeightMatch: index$2,
+	HeightViewport: index$3
 });
 
 each(components, function (def, name) {

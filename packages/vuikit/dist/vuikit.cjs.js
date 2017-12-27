@@ -18,6 +18,7 @@ var css = _interopDefault(require('@vuikit/core/helpers/css'));
 var env = require('@vuikit/core/helpers/dom/env');
 var _class = require('@vuikit/core/helpers/dom/class');
 var paginationMatrix = _interopDefault(require('@vuikit/core/helpers/pagination/matrix'));
+var attr = require('@vuikit/core/helpers/dom/attr');
 var animation = require('@vuikit/core/helpers/dom/animation');
 
 var breadcrumb = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('ul',{staticClass:"uk-breadcrumb"},[_vm._t("default")],2)},staticRenderFns: [],
@@ -2549,6 +2550,88 @@ var components = Object.freeze({
 	Upload: upload
 });
 
+var docEl = document.documentElement;
+var isRtl$1 = attr.attr(docEl, 'dir') === 'rtl';
+var id = 1;
+var index = {
+  bind: function bind (el, binding) {
+    el.vkmarginid = id++;
+    event.on(window, 'resize', util.debounce(function () {
+      update(el, binding);
+    }, 10, true), ("vk-margin-" + (el.vkmarginid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update(el, binding);
+  },
+  unbind: function unbind (el) {
+    event.off(window, 'resize', ("vk-margin-" + (el.vkmarginid)));
+  }
+}
+function update (el, binding) {
+  var options = util.merge({
+    margin: 'uk-margin-small-top',
+    firstColumn: 'uk-first-column'
+  }, (binding.value || {}));
+  var items = el.children;
+  if (!items.length || !isVisible$1(el)) {
+    return
+  }
+  var ref = getRows(items);
+  var rows = ref.rows;
+  rows.forEach(function (row, i) { return row.forEach(function (el, j) {
+      _class.removeClass(el, options.margin);
+      _class.removeClass(el, options.firstColumn)
+      ;(i !== 0) && _class.addClass(el, options.margin)
+      ;(j === 0) && _class.addClass(el, options.firstColumn);
+    }); }
+  );
+}
+function getRows (items) {
+  var data = {};
+  var rows = [[]];
+  data.stacks = true;
+  for (var i = 0; i < items.length; i++) {
+    var el = items[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row = rows[j];
+      if (!row[0]) {
+        row.push(el);
+        break
+      }
+      var leftDim = row[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        data.stacks = false;
+        if (dim.left < leftDim.left && !isRtl$1) {
+          row.unshift(el);
+          break
+        }
+        row.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  data.rows = rows;
+  return data
+}
+function isVisible$1 (el) {
+  return el.offsetHeight
+}
+
 var delayedShow;
 var tooltip = {};
 var uid = 'v-tooltip';
@@ -2566,7 +2649,7 @@ var positions$2 = [
   'right',
   'right-center'
 ];
-var index = {
+var index$1 = {
   inserted: function inserted (target, binding, vnode) {
     var ctx = getContext(target, binding, vnode);
     if (ctx) {
@@ -2763,23 +2846,130 @@ function getContext (target, binding, vnode) {
   return ctx
 }
 
+var docEl$1 = document.documentElement;
+var isRtl$2 = attr.attr(docEl$1, 'dir') === 'rtl';
+var id$1 = 1;
+var index$2 = {
+  bind: function bind (el, binding) {
+    el.vkheightmatchid = id$1++;
+    event.on(window, 'resize', util.debounce(function () {
+      update$1(el, binding);
+    }, 10, true), ("vk-height-match-" + (el.vkheightmatchid)));
+  },
+  inserted: function inserted (el, binding, vnode) {
+    vnode.context.$nextTick(function () { return update$1(el, binding); });
+  },
+  componentUpdated: function componentUpdated (el, binding) {
+    update$1(el, binding);
+  },
+  unbind: function unbind (el) {
+    event.off(window, 'resize', ("vk-height-match-" + (el.vkheightmatchid)));
+  }
+}
+function update$1 (el, binding) {
+  var options = util.merge({
+    target: ':scope > *',
+    row: true
+  }, (binding.value || {}));
+  var elements = el.querySelectorAll(options.target);
+  elements = [].slice.call(elements);
+  applyHeight(elements, '');
+  var rows = getRows$1(elements, options.row);
+  rows.forEach(function (els) {
+    var ref = match(els);
+    var height$$1 = ref.height;
+    var elements = ref.elements;
+    applyHeight(elements, (height$$1 + "px"));
+  });
+}
+function getRows$1 (elements, row) {
+  if (!row) {
+    return [ elements ]
+  }
+  var rows = [[]];
+  for (var i = 0; i < elements.length; i++) {
+    var el = elements[i];
+    var dim = el.getBoundingClientRect();
+    if (!dim.height) {
+      continue
+    }
+    for (var j = rows.length - 1; j >= 0; j--) {
+      var row$1 = rows[j];
+      if (!row$1[0]) {
+        row$1.push(el);
+        break
+      }
+      var leftDim = row$1[0].getBoundingClientRect();
+      if (dim.top >= Math.floor(leftDim.bottom)) {
+        rows.push([el]);
+        break
+      }
+      if (Math.floor(dim.bottom) > leftDim.top) {
+        if (dim.left < leftDim.left && !isRtl$2) {
+          row$1.unshift(el);
+          break
+        }
+        row$1.push(el);
+        break
+      }
+      if (j === 0) {
+        rows.unshift([el]);
+        break
+      }
+    }
+  }
+  return rows
+}
+function match (elements) {
+  if (elements.length < 2) {
+    return {}
+  }
+  var max = 0;
+  var heights = [];
+  elements.forEach(function (el) {
+    var style;
+    var hidden;
+    if (!isVisible$2(el)) {
+      style = attr.attr(el, 'style');
+      hidden = attr.attr(el, 'hidden');
+      attr.attr(el, {
+        style: ((style || '') + ";display:block !important;"),
+        hidden: null
+      });
+    }
+    max = Math.max(max, el.offsetHeight);
+    heights.push(el.offsetHeight);
+    if (!util.isUndefined(style)) {
+      attr.attr(el, {style: style, hidden: hidden});
+    }
+  });
+  elements = elements.filter(function (el, i) { return heights[i] < max; });
+  return { height: max, elements: elements }
+}
+function isVisible$2 (el) {
+  return el.offsetHeight
+}
+function applyHeight (elements, height$$1) {
+  util.toArray(elements).forEach(function (el) { return css(el, 'minHeight', height$$1); });
+}
+
 function offsetTop$1 (element) {
   return element.getBoundingClientRect().top + window.pageYOffset
 }
-var index$1 = {
+var index$3 = {
   inserted: function inserted (el, binding, vnode) {
     vnode.context.$nextTick(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     });
     event.on(window, 'resize', util.debounce(function () {
-      update(el, binding.modifiers, binding.value);
+      update$2(el, binding.modifiers, binding.value);
     }, 20), 'vk-height-viewport');
   },
   unbind: function unbind (el, binding, vnode) {
     event.off(window, 'resize', 'vk-height-viewport');
   }
 }
-function update (el, modifiers, value) {
+function update$2 (el, modifiers, value) {
   if ( value === void 0 ) value = {};
   var viewport = window.innerHeight;
   var offset = 0;
@@ -2813,8 +3003,10 @@ function update (el, modifiers, value) {
 
 
 var directives = Object.freeze({
-	Tooltip: index,
-	HeightViewport: index$1
+	Margin: index,
+	Tooltip: index$1,
+	HeightMatch: index$2,
+	HeightViewport: index$3
 });
 
 util.each(components, function (def, name) {
