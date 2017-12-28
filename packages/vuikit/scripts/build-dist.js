@@ -40,12 +40,12 @@ const banner = `/**
   // UMD
   await build({
     input: 'src/vuikit.cjs.js',
-    globals: {
-      vue: 'Vue'
-    },
     output: {
       name: 'Vuikit',
-      format: 'umd'
+      format: 'umd',
+      globals: {
+        vue: 'Vue'
+      }
     },
     external: []
   }, 'dist/vuikit.js')
