@@ -1,13 +1,29 @@
 <template>
   <div class="uk-padding">
-    <!-- multiple selection -->
+
+    <h2>Single Selection</h2>
+    <vk-table
+      divided
+      middle-aligned
+      single-selectable
+      row-selectable
+      :data="data"
+      :selected-rows.sync="selection1"
+    >
+      <vk-table-column
+        head="Website"
+        cell="website"
+      ></vk-table-column>
+    </vk-table>
+
+    <h2>Multiple Selection</h2>
     <vk-table
       divided
       selectable
       middle-aligned
       row-selectable
-      :data="rows"
-      :selection.sync="selection2"
+      :data="data"
+      :selected-rows.sync="selection2"
     >
       <vk-table-column-select />
       <vk-table-column
@@ -16,33 +32,19 @@
       ></vk-table-column>
     </vk-table>
 
-    <!-- single selection -->
+    <h2>Slot & Row Key Support</h2>
     <vk-table
       divided
       middle-aligned
       single-selectable
       row-selectable
-      :data="rows"
-      :selection.sync="selection"
-    >
-      <vk-table-column
-        head="Website"
-        cell="website"
-      ></vk-table-column>
-    </vk-table>
-
-    <!-- using slots -->
-    <vk-table
-      divided
-      middle-aligned
-      single-selectable
-      row-selectable
-      :data="rows"
-      :selection.sync="selection3"
+      row-key="id"
+      :data="data"
+      :selected-rows.sync="selection3"
     >
       <vk-table-column-select>
         <template slot="head">All</template>
-        <template slot-scope="row">
+        <template slot="cell" slot-scope="row">
           Checkbox
         </template>
       </vk-table-column-select>
@@ -70,10 +72,10 @@ export default {
     VkTableColumnSelect
   },
   data: () => ({
-    selection: [],
+    data,
+    selection1: [],
     selection2: [],
-    selection3: [],
-    rows: [...data].splice(0, 5)
+    selection3: []
   })
 }
 </script>

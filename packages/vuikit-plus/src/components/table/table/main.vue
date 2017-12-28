@@ -1,9 +1,9 @@
 <script>
+import Row from './row'
+import Cell from './row-cell'
 import Table from './ui/table'
-import Row from './ui/table-row'
-import Cell from './ui/table-cell'
 import MixinSelect from './mixin-select'
-import { merge, stringify } from '@vuikit/core/util'
+import { merge, get } from '@vuikit/core/util'
 
 export default {
   name: 'Table',
@@ -15,6 +15,10 @@ export default {
       type: Array,
       required: true
     },
+    rowKey: {
+      type: String,
+      default: 'id'
+    },
     rowClass: {
       type: Function
     },
@@ -23,7 +27,7 @@ export default {
       type: Object
     },
     // required by column-select
-    selection: {
+    selectedRows: {
       type: Array,
       default: () => []
     },
@@ -39,26 +43,17 @@ export default {
   data: () => ({
     children: []
   }),
-  render (h) {
-
-    const rowRender = row =>
-      h(Row, {
-        props: { row },
-        key: stringify(row)
-      }, [
-        this.columns.map((col, i) => h(Cell, {
-          key: i,
-          props: { col, row }
-        }))
-      ])
-
-    return h(Table, { props: this.$props }, [
-      h('template', { slot: 'head' }, this.columns),
-      h('template', { slot: 'body' }, this.data.map(rowRender))
-    ])
-
-  },
   computed: {
+    // maps the data to table rows
+    rows () {
+      return this.data.map((_row, index) => {
+        const row = merge({}, _row)
+
+        row._vk_id = `${row[this.rowKey] || index}`
+        return row
+      })
+    },
+    // returns the columns vnodes
     columns: {
       get () {
         // default slots excluding spaces and comments
@@ -68,17 +63,29 @@ export default {
         return slots
       },
       cache: false
+    },
+    // checks if there is at least one column providing head data
+    isHeadDataProvided () {
+      return this.columns.some(col => get(col, 'componentOptions.propsData.head'))
     }
   },
-  methods: {
-    stringify (obj) {
-      return stringify(obj)
-    }
+  render (h) {
+    const renderRow = (row, index) => h(Row, {
+      key: row._vk_id,
+      props: { row }
+    }, this.columns.map((col, i) => h(Cell, {
+      key: i,
+      props: { col, row }
+    })))
+
+    return h(Table, { props: this.$props }, [
+      this.isHeadDataProvided && h('template', { slot: 'head' }, this.columns),
+      h('template', { slot: 'body' }, this.rows.map(renderRow))
+    ])
   },
   created () {
-    // forces the table to rerender
+    // required, forces rows to rerender
     // when children are available
-    // which is required by some cols
     this.children = this.$children
   }
 }

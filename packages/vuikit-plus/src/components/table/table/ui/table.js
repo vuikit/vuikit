@@ -1,13 +1,3 @@
-const Thead = {
-  functional: true,
-  render: (h, { children }) => h('thead', [ h('tr', children) ])
-}
-
-const Tbody = {
-  functional: true,
-  render: (h, { children }) => h('tbody', children)
-}
-
 export default {
   functional: true,
   render (h, { slots, props }) {
@@ -24,10 +14,9 @@ export default {
         'uk-table-responsive': props.responsive
       }]
     }, [
-      _slots.head && h(Thead, _slots.head),
-      _slots.body && h(Tbody, _slots.body)
+      _slots.head && h('thead', [ h('tr', _slots.head) ]),
+      _slots.body && h('tbody', _slots.body)
     ])
-
   },
   props: {
     narrowed: {

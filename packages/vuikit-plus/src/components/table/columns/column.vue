@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { get } from '@vuikit/core/util'
-import ColumnHead from './ui/column-head'
+import ColumnHead from './ui/head'
+import { get, isUndefined } from '@vuikit/core/util'
 import mergeData from '@vuikit/core/helpers/vue-data-merge'
 
 export default {
@@ -32,23 +32,35 @@ export default {
       type: String
     }
   }),
-  cellRender: (h, { props, data }) => {
+  cellRender: (h, { props, parent, data }) => {
     const { row, col, cell, cellClass } = props
+    const { scopedSlots } = data
 
-    const def = get(row, cell, cell) // cell could be a path
-    const slot = get(col, 'data.scopedSlots.default')
+    const cellValue = get(row, cell)
+
+    // support custom slots, fallback to default fn
+    const cellSlot = scopedSlots.cell || (() => cellValue)
+    const emptySlot = scopedSlots.emptyCell || (() => '')
 
     return h('td', {
       class: cellClass,
       on: {
         click: e => {
+          // at this moment the col instance it is available
           const instance = col.componentInstance
-          const isCell = e => e.target.tagName === 'TD'
-          isCell(e) && instance && instance.$emit('click-cell', row, cell)
+          const isCell = e.target.tagName === 'TD'
+
+          if (!instance || !isCell) {
+            return
+          }
+
+          instance.$emit('click-cell', { cell, row })
         }
       }
     }, [
-      (slot && slot(row)) || def
+      isUndefined(cellValue)
+        ? emptySlot(row)
+        : cellSlot(cellValue, row)
     ])
   }
 }

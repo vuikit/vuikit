@@ -1,25 +1,45 @@
 <template>
   <div class="uk-padding">
-    <vk-table middle-aligned divided
-      :data="rows"
+    <vk-table
+      divided
+      middle-aligned
+      :data="data"
     >
       <vk-table-column
         head="Website"
         cell="website"
       ></vk-table-column>
       <vk-table-column
-        head="Website"
-        headClass="uk-text-right"
-        cellClass="uk-text-right"
+        cell="website"
       >
-        <div slot="head">
-          My custom Head
-        </div>
-        <a slot-scope="row"
-          :href="`http://${row.website}`"
+        <div
+          slot="head"
+          class="uk-text-right"
         >
-          {{ row.website }}
-        </a>
+          Cell Slot
+        </div>
+        <div
+          slot="cell"
+          slot-scope="val"
+          class="uk-text-right"
+        >
+          <a :href="`http://${ val }`">{{ val }}</a>
+        </div>
+      </vk-table-column>
+      <vk-table-column
+        cell="none"
+      >
+        <div
+          slot="head"
+        >
+          Empty Cell Slot
+        </div>
+        <div
+          slot="emptyCell"
+          slot-scope="row"
+        >
+          empty
+        </div>
       </vk-table-column>
     </vk-table>
   </div>
@@ -38,7 +58,7 @@ export default {
     VkTableColumn
   },
   data: () => ({
-    rows: [...data].splice(0, 5)
+    data
   })
 }
 </script>

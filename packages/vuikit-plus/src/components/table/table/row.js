@@ -2,6 +2,7 @@ import { isFunction } from '@vuikit/core/util'
 
 export default {
   functional: true,
+  props: ['row'],
   render (h, { props, children, parent: table }) {
     const { row } = props
 
@@ -10,20 +11,14 @@ export default {
         'uk-active': table.isSelected(row)
       }],
       on: {
-        click: e => targetIsRow(e) && table.$emit('click-row', row)
+        click: e => table.$emit('click-row', row)
       }
-    }, [
-      children
-    ])
+    }, children)
   }
 }
 
-function targetIsRow (e) {
-  return e.target.tagName === 'TR' || e.target.tagName === 'TD'
-}
-
-function resolveClass (c, row) {
-  return isFunction(c)
-    ? c(row)
-    : c
+function resolveClass (rowClass, row) {
+  return isFunction(rowClass)
+    ? rowClass(row)
+    : rowClass
 }

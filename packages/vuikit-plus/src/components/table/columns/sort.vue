@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import Column from './table-column'
-import ColumnHead from './ui/column-head'
-import Arrow from './ui/column-sort-arrow'
+import Column from './column'
+import ColumnHead from './ui/head'
+import Arrow from './ui/sort-arrow'
 
-import { merge, isObject } from '@vuikit/core/util'
 import { warn } from '@vuikit/core/helpers/debug'
+import { merge, isObject } from '@vuikit/core/util'
 
 export default {
   name: 'TableColumnSort',

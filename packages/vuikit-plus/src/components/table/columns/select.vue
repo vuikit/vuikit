@@ -6,7 +6,7 @@
     <slot name="head" v-if="!$parent.singleSelectable">
       <span class="uk-form uk-text-center">
         <checkbox
-          :checked="$parent.allIsSelected"
+          :checked="$parent.allRowsSelected"
           @click="$parent.toggleSelectionAll"
         />
       </span>
@@ -15,9 +15,9 @@
 </template>
 
 <script>
-import { get } from '@vuikit/core/util'
+import ColumnHead from './ui/head'
 import Checkbox from './ui/checkbox'
-import ColumnHead from './ui/column-head'
+import { get } from '@vuikit/core/util'
 
 export default {
   name: 'TableColumnSelect',
@@ -39,9 +39,23 @@ export default {
     }
   },
   cellRender: (h, { props, data, parent }) => {
-    const { row, col, cell, cellClass } = props
+    const { row, col, cellClass } = props
+    const { scopedSlots } = data
 
-    const slot = get(col, 'data.scopedSlots.default')
+    const cellSlot = scopedSlots.cell || (row =>
+      h('span', {
+        class: 'uk-form uk-text-center'
+      }, [
+        h(Checkbox, {
+          props: {
+            checked: parent.isSelected(row)
+          },
+          on: {
+            click: e => parent.toggleSelection(row)
+          }
+        })
+      ])
+    )
 
     return h('td', {
       class: ['uk-table-shrink', cellClass],
@@ -50,24 +64,11 @@ export default {
           const instance = col.componentInstance
           const isCell = e => e.target.tagName === 'TD'
 
-          isCell(e) && instance && instance.$emit('click-cell', row, cell)
+          isCell(e) && instance && instance.$emit('click-cell', { row })
         }
       }
     }, [
-      slot
-        ? slot(row)
-        : h('span', {
-          class: 'uk-form uk-text-center'
-        }, [
-          h(Checkbox, {
-            props: {
-              checked: parent.isSelected(row)
-            },
-            on: {
-              click: e => parent.toggleSelection(row)
-            }
-          })
-        ])
+      cellSlot(row)
     ])
   }
 }
