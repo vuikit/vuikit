@@ -15,7 +15,20 @@
     "author": {
       "name": "Trudie Pearlman",
       "contact": "tpearlman1@nps.gov"
-    }
+    },
+    "children": [
+      {
+        "company": "Sub Company",
+        "children": [
+          {
+            "company": "Sub Company"
+          }
+        ]
+      },
+      {
+        "company": "Sub Company"
+      }
+    ]
   },
   {
     "company": "Tres-Zap",
@@ -24,7 +37,15 @@
     "author": {
       "name": "Kippy Leipold",
       "contact": "kleipold2@slashdot.org"
-    }
+    },
+    "children": [
+      {
+        "company": "Sub Company"
+      },
+      {
+        "company": "Sub Company"
+      }
+    ]
   },
   {
     "company": "Zathin",

@@ -20,9 +20,18 @@
 @table-column-sort__arrow_transition-duration:              200ms;
 @table-column-sort__arrow_transition-timing-function:       ease-out-expo;
 
+@table-column-tree__indent_width:                           @table-cell-padding-horizontal * 2;
+@table-column-tree__arrow_icon-width:                       12px;
+@table-column-tree__arrow_icon-height:                      @table-column-tree__arrow_icon-width;
+@table-column-tree__arrow_color:                            @global-color;
+@table-column-tree__arrow_icon:                             'assets/table-column-tree-arrow.svg';
+@table-column-tree__arrow_transition-duration:              200ms;
+@table-column-tree__arrow_transition-timing-function:       ease-out-expo;
+
+
 
 /* ========================================================================
-   Component: Tree
+  Component
  ========================================================================== */
 
 .vk-table {
@@ -51,8 +60,8 @@
 
 .vk-table-column-sort__arrow {
   display: inline-block;
-  width: @table-column-sort__arrow_icon-width;
-  height: @table-column-sort__arrow_icon-height;
+  width: @table-column-tree__arrow_icon-width;
+  height: @table-column-tree__arrow_icon-height;
   // icon as background
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -80,6 +89,48 @@
 }
 
 
+/* ========================================================================
+  Column Tree
+ ========================================================================== */
+
+/*
+ * Indent
+ */
+
+.vk-table-column-tree__indent {
+  display: inline-block;
+  width: @table-column-tree__indent_width;
+  .hook-table-column-tree__indent;
+}
+
+
+/*
+ * Arrow
+ */
+
+.vk-table-column-tree__arrow {
+  cursor: pointer;
+  display: inline-block;
+  width: @table-column-tree__arrow_icon-width;
+  height: @table-column-tree__arrow_icon-height;
+  // icon as background
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  .vk-svg-fill(@table-column-tree__arrow_icon, '#000', @table-column-tree__arrow_color);
+  // transition when rotated
+  transition: transform;
+  transition-duration: @table-column-tree__arrow_transition-duration;
+  transition-timing-function: @table-column-tree__arrow_transition-timing-function;
+
+  .hook-table-column-tree__arrow;
+}
+
+.vk-table-column-tree__arrow--rotated {
+  transform: rotateZ(90deg);
+  .hook-table-column-tree__arrow--rotated;
+}
+
+
 // Hooks
 // ========================================================================
 
@@ -92,3 +143,6 @@
 .hook-table-column-sort__arrow--rotated() {}
 
 .hook-table-column-select() {}
+.hook-table-column-tree__indent() {}
+.hook-table-column-tree__arrow() {}
+.hook-table-column-tree__arrow--rotated() {}

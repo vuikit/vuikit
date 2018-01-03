@@ -5,10 +5,8 @@ export default {
   props: ['rotated'],
   render: (h, { data, props }) =>
     h('span', dataMerge(data, {
-      class: ['vk-tree-node__arrow', {
-        'vk-tree-node__arrow--rotated': props.rotated
+      class: ['vk-table-column-tree__arrow', {
+        'vk-table-column-tree__arrow--rotated': props.rotated
       }]
-    }), [
-      h('span')
-    ])
+    }))
 }
