@@ -5,7 +5,6 @@
       divided
       single-selectable
       row-selectable
-      row-key="id"
       :data="data"
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"

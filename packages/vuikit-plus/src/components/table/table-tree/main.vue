@@ -3,7 +3,7 @@ import { Table } from '../'
 import { includes, merge } from '@vuikit/core/util'
 
 export default {
-  name: 'TreeTable',
+  name: 'TableTree',
   extends: Table,
   props: {
     expandedRows: {
