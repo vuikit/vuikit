@@ -14,13 +14,13 @@
 // ========================================================================
 
 @table-column-sort__arrow_color:                            @table-header-cell-color;
-@table-column-sort__arrow_icon:                             'assets/table-column-arrow.svg';
+@table-column-sort__arrow_icon:                             'assets/table-column-sort-arrow.svg';
 @table-column-sort__arrow_icon-width:                       18px;
 @table-column-sort__arrow_icon-height:                      @table-column-sort__arrow_icon-width;
 @table-column-sort__arrow_transition-duration:              200ms;
 @table-column-sort__arrow_transition-timing-function:       ease-out-expo;
 
-@table-column-tree__indent_width:                           @table-cell-padding-horizontal * 2;
+@table-column-tree__indent_width:                           24px;
 @table-column-tree__arrow_icon-width:                       12px;
 @table-column-tree__arrow_icon-height:                      @table-column-tree__arrow_icon-width;
 @table-column-tree__arrow_color:                            @global-color;
@@ -28,40 +28,39 @@
 @table-column-tree__arrow_transition-duration:              200ms;
 @table-column-tree__arrow_transition-timing-function:       ease-out-expo;
 
+@table-small-column-tree__indent_width:                     20px;
+@table-small-column-tree__arrow_icon-width:                 10px;
+@table-small-column-tree__arrow_icon-height:                @table-small-column-tree__arrow_icon-width;
 
 
 /* ========================================================================
-  Component
+  Component: Table
  ========================================================================== */
 
-.vk-table {
-  .hook-table;
-}
+// Fixes
+// ========================================================================
 
-/*
- * Column
- */
-
-.vk-table-column {
-  .hook-table-column;
+// when combined with striped, the uk-active gets ignored,
+// a simple temporal fix is to use !important
+.hook-table-row-active() {
+  background: @table-row-active-background !important;
 }
 
 
-/*
- * Column Sort
- */
+// Column Sort
+// ========================================================================
 
 .vk-table-column-sort {
   cursor: pointer;
   .vk-noselect();
 
-  .hook-table-column-sort;
+  .vk-hook-table-column-sort;
 }
 
 .vk-table-column-sort__arrow {
   display: inline-block;
-  width: @table-column-tree__arrow_icon-width;
-  height: @table-column-tree__arrow_icon-height;
+  width: @table-column-sort__arrow_icon-width;
+  height: @table-column-sort__arrow_icon-height;
   // icon as background
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -70,28 +69,26 @@
   transition: transform;
   transition-duration: @table-column-sort__arrow_transition-duration;
   transition-timing-function: @table-column-sort__arrow_transition-timing-function;
-  .hook-table-column-sort__arrow;
+
+  .vk-hook-table-column-sort-arrow;
 }
 
 .vk-table-column-sort__arrow--rotated {
   transform: rotateZ(180deg);
-  .hook-table-column-sort__arrow--rotated;
 }
 
 
-/*
- * Column Select
- */
+// Column Select
+// ========================================================================
 
 .vk-table-column-select {
   .vk-noselect();
-  .hook-table-column-select;
+  .vk-hook-table-column-select;
 }
 
 
-/* ========================================================================
-  Column Tree
- ========================================================================== */
+// Column Tree
+// ========================================================================
 
 /*
  * Indent
@@ -100,7 +97,12 @@
 .vk-table-column-tree__indent {
   display: inline-block;
   width: @table-column-tree__indent_width;
-  .hook-table-column-tree__indent;
+
+  .uk-table-small & {
+    width: @table-small-column-tree__indent_width;
+  }
+
+  .vk-hook-table-tree-column-indent;
 }
 
 
@@ -122,27 +124,33 @@
   transition-duration: @table-column-tree__arrow_transition-duration;
   transition-timing-function: @table-column-tree__arrow_transition-timing-function;
 
-  .hook-table-column-tree__arrow;
+  .uk-table-small & {
+    width: @table-small-column-tree__arrow_icon-width;
+    height: @table-small-column-tree__arrow_icon-height;
+  }
+
+  .vk-hook-table-tree-column-arrow;
 }
 
 .vk-table-column-tree__arrow--rotated {
   transform: rotateZ(90deg);
-  .hook-table-column-tree__arrow--rotated;
 }
 
 
 // Hooks
 // ========================================================================
 
-.hook-table() {}
+.vk-hook-table-misc;
 
-.hook-table-column() {}
+.vk-hook-table() {}
+.vk-hook-table-column() {}
+.vk-hook-table-column-sort() {}
+.vk-hook-table-column-sort-arrow() {}
+.vk-hook-table-column-select() {}
 
-.hook-table-column-sort() {}
-.hook-table-column-sort__arrow() {}
-.hook-table-column-sort__arrow--rotated() {}
+.vk-hook-table-tree() {}
+.vk-hook-table-tree-column() {}
+.vk-hook-table-tree-column-arrow() {}
+.vk-hook-table-tree-column-indent() {}
 
-.hook-table-column-select() {}
-.hook-table-column-tree__indent() {}
-.hook-table-column-tree__arrow() {}
-.hook-table-column-tree__arrow--rotated() {}
+.vk-hook-table-misc() {}

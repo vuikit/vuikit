@@ -4,6 +4,8 @@
     <h2>Single Selection</h2>
     <vk-table
       divided
+      striped
+      narrowed
       middle-aligned
       single-selectable
       row-selectable
@@ -19,6 +21,7 @@
     <h2>Multiple Selection</h2>
     <vk-table
       divided
+      narrowed
       selectable
       middle-aligned
       row-selectable
@@ -35,6 +38,7 @@
     <h2>Slot & Row Key Support</h2>
     <vk-table
       divided
+      narrowed
       middle-aligned
       single-selectable
       row-selectable

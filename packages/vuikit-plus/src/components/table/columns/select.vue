@@ -39,7 +39,7 @@ export default {
     }
   },
   cellRender: (h, { props, data, parent }) => {
-    const { row, col, cellClass } = props
+    const { row, cellClass } = props
     const { scopedSlots } = data
 
     const cellSlot = scopedSlots.cell || (row =>
@@ -58,15 +58,7 @@ export default {
     )
 
     return h('td', {
-      class: ['uk-table-shrink', cellClass],
-      on: {
-        click: e => {
-          const instance = col.componentInstance
-          const isCell = e => e.target.tagName === 'TD'
-
-          isCell(e) && instance && instance.$emit('click-cell', { row })
-        }
-      }
+      class: ['uk-table-shrink', cellClass]
     }, [
       cellSlot(row)
     ])

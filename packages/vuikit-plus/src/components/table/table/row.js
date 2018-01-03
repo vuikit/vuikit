@@ -11,7 +11,16 @@ export default {
         'uk-active': table.isSelected(row)
       }],
       on: {
-        click: e => table.$emit('click-row', row)
+        click: e => {
+          const isPrevented = e._vk_row_click_prevented
+          const isIgnoredTag = e.target.tagName.match(/A|BUTTON/)
+
+          if (isPrevented || isIgnoredTag) {
+            return
+          }
+
+          table.$emit('click-row', row)
+        }
       }
     }, children)
   }

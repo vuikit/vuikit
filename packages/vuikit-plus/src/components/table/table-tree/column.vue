@@ -9,7 +9,7 @@ export default {
   name: 'TableTreeColumn',
   extends: Column,
   cellRender: (h, { data, props, parent }) => {
-    const { row, col, cell, cellClass } = props
+    const { row, cell, cellClass } = props
     const { scopedSlots } = data
 
     const cellValue = get(row, cell)
@@ -26,6 +26,7 @@ export default {
           },
           on: {
             click: e => {
+              e._vk_row_click_prevented = true
               parent.toggleExpand(row)
             }
           }
@@ -37,20 +38,7 @@ export default {
     ])
 
     const def = {
-      class: cellClass,
-      on: {
-        click: e => {
-          // at this moment the col instance it is available
-          const instance = col.componentInstance
-          const isCell = e.target.tagName === 'TD'
-
-          if (!instance || !isCell) {
-            return
-          }
-
-          instance.$emit('click-cell', { cell, row })
-        }
-      }
+      class: cellClass
     }
 
     return h('td', def, cellSlot(cellValue, row))

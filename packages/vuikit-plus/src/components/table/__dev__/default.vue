@@ -42,6 +42,21 @@
         </div>
       </vk-table-column>
     </vk-table>
+
+    <h2>Modifiers</h2>
+    <vk-table
+      divided
+      striped
+      hoverable
+      narrowed
+      middle-aligned
+      :data="data"
+    >
+      <vk-table-column
+        head="Website"
+        cell="website"
+      ></vk-table-column>
+    </vk-table>
   </div>
 </template>
 

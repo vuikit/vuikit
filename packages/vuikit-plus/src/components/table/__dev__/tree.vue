@@ -13,6 +13,28 @@
         head="Custom Header"
         cell="company"
       ></table-tree-column>
+      <table-column
+        head="id"
+        cell="_vk_id"
+      ></table-column>
+    </table-tree>
+
+    <h2>Variations</h2>
+
+    <table-tree
+      divided
+      narrowed
+      striped
+      hoverable
+      single-selectable
+      row-selectable
+      :data="data"
+      :expanded-rows.sync="expanded"
+      :selected-rows.sync="selected"
+    >
+      <table-tree-column
+        cell="company"
+      ></table-tree-column>
     </table-tree>
 
   </div>

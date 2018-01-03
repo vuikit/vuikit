@@ -20,7 +20,7 @@ export default {
       const rows = []
 
       const flatten = (data, parent = {}) => {
-        let idCount = 0
+        let idCount = 1
 
         data.forEach(_row => {
           const row = merge({}, _row)
@@ -31,11 +31,13 @@ export default {
             ? parent._vk_level + 1
             : 0
 
-          rows.push(row)
+          row._vk_id = row[this.rowKey]
+            ? row[this.rowKey]
+            : row._vk_level === 0
+              ? `${idCount++}`
+              : `${parent._vk_id}_${idCount++}`
 
-          row._vk_id = row._vk_level === 0
-            ? `${row[this.rowKey] || idCount++}`
-            : `${parent._vk_id}_${idCount++}`
+          rows.push(row)
 
           if (hasChildren && this.isExpanded(row)) {
             flatten(children, row)

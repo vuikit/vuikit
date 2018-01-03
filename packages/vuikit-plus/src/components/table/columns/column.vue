@@ -33,7 +33,7 @@ export default {
     }
   }),
   cellRender: (h, { props, parent, data }) => {
-    const { row, col, cell, cellClass } = props
+    const { row, cell, cellClass } = props
     const { scopedSlots } = data
 
     const cellValue = get(row, cell)
@@ -43,20 +43,7 @@ export default {
     const emptySlot = scopedSlots.emptyCell || (() => '')
 
     return h('td', {
-      class: cellClass,
-      on: {
-        click: e => {
-          // at this moment the col instance it is available
-          const instance = col.componentInstance
-          const isCell = e.target.tagName === 'TD'
-
-          if (!instance || !isCell) {
-            return
-          }
-
-          instance.$emit('click-cell', { cell, row })
-        }
-      }
+      class: cellClass
     }, [
       isUndefined(cellValue)
         ? emptySlot(row)
