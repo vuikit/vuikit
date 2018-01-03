@@ -1,12 +1,12 @@
 <script>
-import Column from './column'
-import TreeArrow from './ui/tree-arrow'
-import TreeIndent from './ui/tree-indent'
+import Column from '../columns/column'
+import TreeArrow from './ui/column-arrow'
+import TreeIndent from './ui/column-indent'
 
 import { get } from '@vuikit/core/util'
 
 export default {
-  name: 'TableColumnTree',
+  name: 'TableTreeColumn',
   extends: Column,
   cellRender: (h, { data, props, parent }) => {
     const { row, col, cell, cellClass } = props
