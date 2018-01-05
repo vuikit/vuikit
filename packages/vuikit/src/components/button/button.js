@@ -6,6 +6,10 @@ const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']
 export default {
   functional: true,
   props: {
+    active: {
+      type: Boolean,
+      default: false
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -25,7 +29,7 @@ export default {
     }
   },
   render (h, { data, props, children }) {
-    const { disabled, type, size, htmlType } = props
+    const { disabled, type, size, active, htmlType } = props
 
     const def = {
       attrs: {
@@ -33,6 +37,7 @@ export default {
         disabled
       },
       class: ['uk-button', `uk-button-${type}`, {
+        'uk-active': active,
         [`uk-button-${size}`]: size
       }]
     }

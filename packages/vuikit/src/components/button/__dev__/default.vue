@@ -2,6 +2,7 @@
   <div class="uk-padding">
     <h2>Button</h2>
     <vk-button>Default</vk-button>
+    <vk-button active>Active</vk-button>
     <vk-button disabled>Disabled</vk-button>
 
     <h3>Type</h3>
