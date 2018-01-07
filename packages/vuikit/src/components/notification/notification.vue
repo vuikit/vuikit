@@ -46,9 +46,6 @@ export default {
     notifications: {
       type: Array,
       default: () => []
-      // validator: val => {
-      //   const ntfs = val.filter(isObject)
-      // }
     },
     position: {
       type: String,

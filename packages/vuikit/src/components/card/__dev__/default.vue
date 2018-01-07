@@ -1,77 +1,74 @@
 <template>
   <div class="uk-padding">
 
-    <h2>Default</h2>
-
-    <vk-card>
-      <vk-card-title>Title</vk-card-title>
+    <card>
+      <card-title>Title</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
 
     <h2>Styles</h2>
 
-    <vk-card type="primary">
-      <vk-card-title>Primary</vk-card-title>
+    <card>
+      <card-title>Default</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
 
-    <vk-card type="secondary">
-      <vk-card-title>Secondary</vk-card-title>
+    <card type="primary">
+      <card-title>Primary</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
 
-    <vk-card type="blank">
-      <vk-card-title>Blank</vk-card-title>
+    <card type="secondary">
+      <card-title>Secondary</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
+
+    <card type="blank">
+      <card-title>Blank</card-title>
+      Lorem ipsum
+    </card>
 
     <h2>Hover</h2>
 
-    <vk-card hover>
-      <vk-card-title>Hover</vk-card-title>
+    <card hover>
+      <card-title>Hover</card-title>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-    </vk-card>
+    </card>
 
     <h2>Badge</h2>
 
-    <vk-card hover>
+    <card hover>
       <span class="uk-label" slot="badge">Badge</span>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-    </vk-card>
+    </card>
 
     <h2>Padding</h2>
 
-    <vk-card padding="small">
-      <vk-card-title>Small</vk-card-title>
+    <card padding="small">
+      <card-title>Small</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
 
-    <vk-card padding="large">
-      <vk-card-title>Small</vk-card-title>
+    <card padding="large">
+      <card-title>Large</card-title>
       Lorem ipsum
-    </vk-card>
+    </card>
 
     <h2>Header & Footer</h2>
 
-    <vk-card>
+    <card>
       Lorem ipsum
-      <vk-card-title slot="header">Title</vk-card-title>
+      <card-title slot="header">Title</card-title>
       <template slot="footer">Read more</template>
-    </vk-card>
+    </card>
 
   </div>
 </template>
 
 <script>
-import {
-  Card as VkCard,
-  CardTitle as VkCardTitle
-} from '../'
+import * as components from '../'
 
 export default {
-  components: {
-    VkCard,
-    VkCardTitle
-  }
+  components
 }
 </script>

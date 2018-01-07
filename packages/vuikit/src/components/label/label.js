@@ -1,4 +1,3 @@
-import { includes } from 'vuikit/core/util'
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 export default {
@@ -6,16 +5,17 @@ export default {
   props: {
     type: {
       type: String,
-      default: '',
-      validator: val => !val || includes(['success', 'warning', 'danger'], val)
+      validator: val => !val || val.match(/^(success|warning|danger)$/)
     }
   },
-  render: (h, { data, props, children }) =>
+  render: (h, { data, props, children }) => {
+    const { type } = props
 
-    h('span', mergeData(data, {
+    return h('span', mergeData(data, {
       class: ['uk-label', {
-        [`uk-label-${props.type}`]: props.type
+        [`uk-label-${type}`]: type
       }]
     }), children)
 
+  }
 }

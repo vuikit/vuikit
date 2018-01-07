@@ -3,7 +3,7 @@ import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 const NavbarToggleIcon = {
   functional: true,
-  render: (h) => h('span', { class: 'uk-navbar-toggle-icon uk-icon' }, [ h(IconToggle) ])
+  render: h => h('span', { class: 'uk-navbar-toggle-icon uk-icon' }, [ h(IconToggle) ])
 }
 
 const NavbarToggleLabel = {
@@ -19,7 +19,7 @@ export default {
       default: ''
     }
   },
-  render (h, { children, data, props }) {
+  render (h, { props, data, children }) {
     const { label } = props
 
     return h('a', mergeData(data, { class: 'uk-navbar-toggle' }), [

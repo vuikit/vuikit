@@ -30,7 +30,7 @@
 
 <script>
 import { Drop as VkDrop } from '../'
-import { Button as VkButton } from '../../button'
+import { Button as VkButton } from '../..'
 
 const UiCard = {
   functional: true,

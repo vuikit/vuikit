@@ -1,4 +1,3 @@
-import { includes } from 'vuikit/core/util'
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 const LeftSlot = {
@@ -25,7 +24,7 @@ export default {
     },
     container: {
       type: String,
-      validator: val => includes(['expand', 'small', 'large'], val)
+      validator: val => val.match(/^(small|large|expand)$/)
     }
   },
   render (h, { slots, props, data }) {
@@ -45,9 +44,7 @@ export default {
     }), [
       h('div', {
         class: ['uk-container', {
-          'uk-container-small': container === 'small',
-          'uk-container-large': container === 'large',
-          'uk-container-expand': container === 'expand'
+          [`uk-container-${container}`]: container
         }]
       }, [
         h('div', { class: 'uk-navbar' }, content)

@@ -3,7 +3,7 @@ import mergeData from 'vuikit/core/helpers/vue-data-merge'
 export default {
   functional: true,
   props: ['bottom'],
-  render (h, { children, data, props }) {
+  render (h, { props, data, children }) {
     const bottom = props.bottom !== undefined
     const def = {
       class: [data.staticClass, {

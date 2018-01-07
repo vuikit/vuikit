@@ -12,7 +12,7 @@ export default {
       default: false
     }
   },
-  render (h, { props, children, data }) {
+  render (h, { props, data, children }) {
     const { center, primary } = props
 
     return h('ul', mergeData(data, {

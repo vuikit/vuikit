@@ -1,8 +1,5 @@
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
-const sizes = ['large', 'small']
-const styles = ['default', 'primary', 'secondary', 'danger', 'text', 'link']
-
 export default {
   functional: true,
   props: {
@@ -17,11 +14,11 @@ export default {
     type: {
       type: String,
       default: 'default',
-      validator: style => styles.indexOf(style) !== -1
+      validator: val => val.match(/^(default|primary|secondary|danger|text|link)$/)
     },
     size: {
       type: String,
-      validator: size => !size || sizes.indexOf(size) !== -1
+      validator: val => !val || val.match(/^(small|large)$/)
     },
     htmlType: {
       type: String,
@@ -42,8 +39,6 @@ export default {
       }]
     }
 
-    return h('button', mergeData(data, def), [
-      children
-    ])
+    return h('button', mergeData(data, def), children)
   }
 }

@@ -19,8 +19,11 @@
 
 <script>
 import { DropdownNav as VkDropdownNav } from '../'
-import { Button as VkButton } from '../../button'
-import { NavItem as VkNavItem, NavItemHeader as VkNavItemHeader } from '../../nav'
+import {
+  Button as VkButton,
+  NavItem as VkNavItem,
+  NavItemHeader as VkNavItemHeader
+} from '../..'
 
 export default {
   components: {

@@ -8,7 +8,7 @@ export default {
       default: false
     }
   },
-  render (h, { props, children, data }) {
+  render (h, { props, data, children }) {
     const { open } = props
 
     return h('div', mergeData(data, {

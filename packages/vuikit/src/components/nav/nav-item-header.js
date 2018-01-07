@@ -6,7 +6,7 @@ export default {
       required: true
     }
   },
-  render (h, { props, children }) {
+  render (h, { props }) {
 
     return h('li', {
       class: 'uk-nav-header'

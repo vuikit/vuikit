@@ -1,10 +1,5 @@
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
-const Subtitle = {
-  functional: true,
-  render: (h, { children }) => h('div', { class: 'uk-navbar-subtitle' }, children)
-}
-
 export default {
   functional: true,
   props: {
@@ -21,21 +16,19 @@ export default {
       default: ''
     }
   },
-  render (h, { props, children, data }) {
+  render (h, { props, data, children }) {
     const { active, label, subtitle } = props
 
     return h('li', mergeData(data, { class: { 'uk-active': active } }), [
-
       h('a', [
-
         subtitle
-          ? h('div', [ label, h(Subtitle, subtitle) ])
+          ? h('div', [
+            label,
+            h('div', { class: 'uk-navbar-subtitle' }, subtitle)
+          ])
           : label
-
       ]),
       children
-
     ])
-
   }
 }

@@ -1,4 +1,3 @@
-import { includes } from 'vuikit/core/util'
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 export default {
@@ -7,17 +6,14 @@ export default {
     alignment: {
       type: String,
       default: 'left',
-      validator: val => !val || includes(['left', 'right'], val)
+      validator: val => !val || val.match(/^(left|right)$/)
     }
   },
-  render: (h, { children, props, data }) => {
+  render: (h, { props, data, children }) => {
     const { alignment } = props
 
     return h('ul', mergeData(data, {
-      class: ['uk-tab', {
-        'uk-tab-left': alignment === 'left',
-        'uk-tab-right': alignment === 'right'
-      }]
+      class: ['uk-tab', `uk-tab-${alignment}`]
     }), children)
   }
 }

@@ -19,14 +19,15 @@ export default {
   render (h, { props, data }) {
     const { active, disabled, label } = props
 
-    return h('li', mergeData(data, { class: {
-      'uk-active': active && !disabled,
-      'uk-disabled': disabled
-    } }), [
+    const def = {
+      class: {
+        'uk-active': active && !disabled,
+        'uk-disabled': disabled
+      }
+    }
 
+    return h('li', mergeData(data, def), [
       h('a', label)
-
     ])
-
   }
 }

@@ -36,7 +36,7 @@
 
 <script>
 import { Dropdown as VkDropdown } from '../'
-import { Button as VkButton } from '../../button'
+import { Button as VkButton } from '../..'
 
 export default {
   components: {

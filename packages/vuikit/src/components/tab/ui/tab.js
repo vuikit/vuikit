@@ -1,4 +1,3 @@
-import { includes } from 'vuikit/core/util'
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 export default {
@@ -7,7 +6,7 @@ export default {
     alignment: {
       type: String,
       default: '',
-      validator: val => !val || includes(['right', 'center', 'justify'], val)
+      validator: val => !val || val.match(/^(right|center|justify)$/)
     },
     // flips tabs vertically
     bottom: {
@@ -21,9 +20,8 @@ export default {
     return h('ul', mergeData(data, {
       class: ['uk-tab', {
         'uk-tab-bottom': bottom,
-        'uk-flex-right': alignment === 'right',
-        'uk-flex-center': alignment === 'center',
-        'uk-child-width-expand': alignment === 'justify'
+        'uk-child-width-expand': alignment === 'justify',
+        [`uk-flex-${alignment}`]: alignment.match(/^(right|center)$/)
       }]
     }), children)
   }

@@ -52,12 +52,12 @@
 </template>
 
 <script>
+import { Button as VkButton } from '../..'
 import {
   Offcanvas as VkOffcanvas,
   OffcanvasClose as VkOffcanvasClose,
   OffcanvasContent as VkOffcanvasContent
 } from '../'
-import { Button as VkButton } from '../../button'
 
 export default {
   components: {

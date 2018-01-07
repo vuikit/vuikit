@@ -1,16 +1,14 @@
 <template>
   <div class="uk-padding">
-    <vk-spinner></vk-spinner>
-    <vk-spinner ratio="2"></vk-spinner>
+    <spinner></spinner>
+    <spinner ratio="2"></spinner>
   </div>
 </template>
 
 <script>
-import { Spinner as VkSpinner } from '../'
+import * as components from '../'
 
 export default {
-  components: {
-    VkSpinner
-  }
+  components
 }
 </script>

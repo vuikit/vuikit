@@ -1,62 +1,37 @@
-import { includes } from 'vuikit/core/util'
 import mergeData from 'vuikit/core/helpers/vue-data-merge'
-
-const padding = ['small', 'large']
-const types = ['primary', 'secondary', 'blank']
-
-const Header = {
-  functional: true,
-  render: (h, { children }) => h('div', { class: 'uk-card-header' }, children)
-}
-
-const Body = {
-  functional: true,
-  render: (h, { children }) => h('div', { class: 'uk-card-body' }, children)
-}
-
-const Footer = {
-  functional: true,
-  render: (h, { children }) => h('div', { class: 'uk-card-footer' }, children)
-}
-
-const Badge = {
-  functional: true,
-  render: (h, { children }) => h('div', { class: 'uk-card-badge' }, children)
-}
 
 export default {
   functional: true,
   props: {
     type: {
       type: String,
-      validator: val => !val || includes(types, val)
+      default: 'default',
+      validator: val => val.match(/^(default|primary|secondary|blank)$/)
     },
     padding: {
       type: String,
-      validator: val => !val || includes(padding, val)
+      validator: val => !val || val.match(/^(small|large)$/)
     },
     hover: {
       type: Boolean,
       default: false
     }
   },
-  render (h, { props, children, data, slots }) {
+  render (h, { props, data, slots }) {
     const { type, padding, hover } = props
     const _slots = slots()
 
     return h('div', mergeData(data, {
       class: ['uk-card', {
-        'uk-card-default': !includes(types, type),
         'uk-card-hover': hover,
         [`uk-card-${type}`]: type,
         [`uk-card-${padding}`]: padding
       }]
     }), [
-      _slots.header && h(Header, _slots.header),
-      _slots.default && h(Body, _slots.default),
-      _slots.footer && h(Footer, _slots.footer),
-      _slots.badge && h(Badge, _slots.badge)
+      _slots.header && h('div', { class: 'uk-card-header' }, _slots.header),
+      _slots.default && h('div', { class: 'uk-card-body' }, _slots.default),
+      _slots.footer && h('div', { class: 'uk-card-footer' }, _slots.footer),
+      _slots.badge && h('div', { class: 'uk-card-badge' }, _slots.badge)
     ])
-
   }
 }

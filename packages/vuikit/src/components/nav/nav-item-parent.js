@@ -6,7 +6,7 @@ export default {
     type: String,
     required: true
   },
-  render (h, { props, children, data }) {
+  render (h, { props, data, children }) {
 
     return h('li', mergeData(data, {
       class: 'uk-parent'
