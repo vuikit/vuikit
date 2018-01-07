@@ -1,9 +1,9 @@
-import css from '@vuikit/core/helpers/css'
-import { one } from '@vuikit/core/helpers/dom/event'
-import { transitionend } from '@vuikit/core/helpers/dom/env'
-import mergeData from '@vuikit/core/helpers/vue-data-merge'
-import { width, height } from '@vuikit/core/helpers/dom/position'
-import { addClass, removeClass } from '@vuikit/core/helpers/dom/class'
+import css from 'vuikit/core/helpers/css'
+import { one } from 'vuikit/core/helpers/dom/event'
+import { transitionend } from 'vuikit/core/helpers/dom/env'
+import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import { width, height } from 'vuikit/core/helpers/dom/position'
+import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
 
 import common from './_common'
 

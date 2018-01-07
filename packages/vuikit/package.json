@@ -1,6 +1,6 @@
 {
-  "name": "@vuikit/vuikit",
-  "version": "0.7.15",
+  "name": "vuikit",
+  "version": "0.7.0",
   "description": "A Vuejs component library based on UIkit",
   "license": "MIT",
   "author": {
@@ -16,27 +16,16 @@
     "uikit",
     "vuikit"
   ],
-  "main": "dist/vuikit.cjs.js",
-  "module": "dist/vuikit.esm.js",
+  "main": "index.js",
+  "module": "index.mjs",
   "files": [
+    "src",
+    "core",
     "dist",
-    "lib",
-    "src"
+    "*.js",
+    "*.mjs"
   ],
-  "scripts": {
-    "build": "yarn run build:lib && yarn run build:dist",
-    "build:lib": "node -r @std/esm scripts/build-lib.js",
-    "build:dist": "node -r @std/esm scripts/build-dist.js"
-  },
-  "devDependencies": {
-    "@std/esm": "^0.18.0"
-  },
   "peerDependencies": {
-    "@vuikit/core": "^0.3.2",
     "vue": "^2.5.11"
-  },
-  "@std/esm": {
-    "esm": "js",
-    "cjs": true
   }
 }

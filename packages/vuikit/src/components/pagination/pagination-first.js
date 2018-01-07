@@ -1,4 +1,4 @@
-import IconPrevious from '../../icons/pagination-previous'
+import IconPrevious from './assets/icon-prev'
 
 export default {
   functional: true,

@@ -1,7 +1,7 @@
-import { merge, debounce } from '@vuikit/core/util'
-import { attr } from '@vuikit/core/helpers/dom/attr'
-import { on, off } from '@vuikit/core/helpers/dom/event'
-import { addClass, removeClass } from '@vuikit/core/helpers/dom/class'
+import { merge, debounce } from 'vuikit/core/util'
+import { attr } from 'vuikit/core/helpers/dom/attr'
+import { on, off } from 'vuikit/core/helpers/dom/event'
+import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
 
 const docEl = document.documentElement
 const isRtl = attr(docEl, 'dir') === 'rtl'

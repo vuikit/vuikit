@@ -1,14 +1,11 @@
 import { play } from 'vue-play'
-import { each, toCapital, toCamelCase } from '@vuikit/core/util'
+import { each, toCapital, toCamelCase } from 'vuikit/core/util'
 
 // components
-loadStories(require.context('@vuikit/vuikit/src/components', true, /^(.*)\/__dev__\/(.*)\.vue$/))
+loadStories(require.context('vuikit/src/components', true, /^(.*)\/__dev__\/(.*)\.vue$/))
 
 // directives
-loadStories(require.context('@vuikit/vuikit/src/directives', true, /^(.*)\/__dev__\/(.*)\.vue$/))
-
-// vuikit-plus components
-loadStories(require.context('@vuikit/plus/src/components', true, /^(.*)\/__dev__\/(.*)\.vue$/))
+loadStories(require.context('vuikit/src/directives', true, /^(.*)\/__dev__\/(.*)\.vue$/))
 
 /*
  * UTILS

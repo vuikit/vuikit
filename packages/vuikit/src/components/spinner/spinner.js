@@ -1,4 +1,4 @@
-import IconSpinner from '../../icons/spinner' // eslint-disable-line
+import IconSpinner from './assets/icon'
 
 export default {
   functional: true,

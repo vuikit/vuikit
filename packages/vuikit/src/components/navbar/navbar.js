@@ -1,5 +1,5 @@
-import { includes } from '@vuikit/core/util'
-import mergeData from '@vuikit/core/helpers/vue-data-merge'
+import { includes } from 'vuikit/core/util'
+import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 const LeftSlot = {
   functional: true,

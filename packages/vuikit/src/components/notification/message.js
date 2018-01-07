@@ -1,4 +1,4 @@
-import mergeData from '@vuikit/core/helpers/vue-data-merge'
+import mergeData from 'vuikit/core/helpers/vue-data-merge'
 
 const status = [
   'primary',

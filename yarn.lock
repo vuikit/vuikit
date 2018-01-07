@@ -20,6 +20,12 @@
   dependencies:
     recursive-copy "^2.0.6"
 
+"@lump/copy@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@lump/copy/-/copy-0.2.0.tgz#4f04545ec5128f427a55054ae47b1a578f4a624f"
+  dependencies:
+    cpy "^5.1.0"
+
 "@lump/less@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@lump/less/-/less-0.3.0.tgz#b3e0461d974d61d32e4301076287a3f274c2f569"
@@ -1684,6 +1690,25 @@ cosmiconfig@^2.1.0, cosmiconfig@^2.1.1:
     parse-json "^2.2.0"
     require-from-string "^1.1.0"
 
+cp-file@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/cp-file/-/cp-file-4.2.0.tgz#715361663b71ede0b6dddbc3c80e2ba02e725ec3"
+  dependencies:
+    graceful-fs "^4.1.2"
+    make-dir "^1.0.0"
+    nested-error-stacks "^2.0.0"
+    pify "^2.3.0"
+    safe-buffer "^5.0.1"
+
+cpy@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/cpy/-/cpy-5.1.0.tgz#248982bf209b0a4507830e72a45d284d4583a16a"
+  dependencies:
+    arrify "^1.0.1"
+    cp-file "^4.2.0"
+    globby "^6.0.0"
+    nested-error-stacks "^2.0.0"
+
 create-ecdh@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/create-ecdh/-/create-ecdh-4.0.0.tgz#888c723596cdf7612f6498233eebd7a35301737d"
@@ -1892,10 +1917,6 @@ dashdash@^1.12.0:
   resolved "https://registry.yarnpkg.com/dashdash/-/dashdash-1.14.1.tgz#853cfa0f7cbe2fed5de20326b8dd581035f6e2f0"
   dependencies:
     assert-plus "^1.0.0"
-
-date-fns@^1.29.0:
-  version "1.29.0"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-1.29.0.tgz#12e609cdcb935127311d04d33334e2960a2a54e6"
 
 date-now@^0.1.4:
   version "0.1.4"
@@ -2912,7 +2933,7 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-globby@^6.1.0:
+globby@^6.0.0, globby@^6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/globby/-/globby-6.1.0.tgz#f5a6d70e8395e21c858fb0489d64df02424d506c"
   dependencies:
@@ -4162,6 +4183,12 @@ ncname@1.0.x:
 negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
+
+nested-error-stacks@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.0.0.tgz#98b2ffaefb4610fa3936f1e71435d30700de2840"
+  dependencies:
+    inherits "~2.0.1"
 
 no-case@^2.2.0:
   version "2.3.2"
@@ -6642,10 +6669,6 @@ vm-browserify@0.0.4:
 void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-
-vue-functional-data-merge@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/vue-functional-data-merge/-/vue-functional-data-merge-2.0.3.tgz#fe79c9f6fab13e047f1e6dcaa4a0fde63fe15587"
 
 vue-hot-reload-api@^2.2.0:
   version "2.2.4"

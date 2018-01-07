@@ -19,9 +19,6 @@ module.exports = {
   }],
   webpack: {
     resolve: {
-      alias: {
-        '@vuikit/vuikit$': '@vuikit/vuikit/src/index.js'
-      },
       extensions: ['.js', '.json', '.vue'],
       mainFiles: ['index', 'index.vue']
     }

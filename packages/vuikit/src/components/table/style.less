@@ -1,0 +1,180 @@
+// Name:            Table
+// Description:     Defines styles for the vk-table component
+//                  The underlying HTML table display relies on UIkit table ui
+//
+// Blocks:          `vk-table`
+//                  `vk-table-column`
+//                  `vk-table-column-sort`
+//                  `vk-table-column-select`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@table-column-sort__arrow_color:                            @table-header-cell-color;
+@table-column-sort__arrow_icon:                             'assets/table-column-sort-arrow.svg';
+@table-column-sort__arrow_icon-width:                       18px;
+@table-column-sort__arrow_icon-height:                      @table-column-sort__arrow_icon-width;
+@table-column-sort__arrow_transition-duration:              200ms;
+@table-column-sort__arrow_transition-timing-function:       ease-out-expo;
+
+@table-column-tree__indent_width:                           24px;
+@table-column-tree__arrow_icon-width:                       12px;
+@table-column-tree__arrow_icon-height:                      @table-column-tree__arrow_icon-width;
+@table-column-tree__arrow_color:                            @global-color;
+@table-column-tree__arrow_icon:                             'assets/table-column-tree-arrow.svg';
+@table-column-tree__arrow_transition-duration:              200ms;
+@table-column-tree__arrow_transition-timing-function:       ease-out-expo;
+
+@table-small-column-tree__indent_width:                     20px;
+@table-small-column-tree__arrow_icon-width:                 10px;
+@table-small-column-tree__arrow_icon-height:                @table-small-column-tree__arrow_icon-width;
+
+
+/* ========================================================================
+  Component: Table
+ ========================================================================== */
+
+// Fixes
+// ========================================================================
+
+// when combined with striped, the uk-active gets ignored,
+// a simple temporal fix is to use !important
+.hook-table-row-active() {
+  background: @table-row-active-background !important;
+}
+
+
+// Column Sort
+// ========================================================================
+
+.vk-table-column-sort {
+  cursor: pointer;
+  .vk-table-noselect();
+
+  .vk-hook-table-column-sort;
+}
+
+.vk-table-column-sort__arrow {
+  display: inline-block;
+  width: @table-column-sort__arrow_icon-width;
+  height: @table-column-sort__arrow_icon-height;
+  // icon as background
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  .vk-table-svg-fill(@table-column-sort__arrow_icon, '#000', @table-column-sort__arrow_color);
+  // transition when rotated
+  transition: transform;
+  transition-duration: @table-column-sort__arrow_transition-duration;
+  transition-timing-function: @table-column-sort__arrow_transition-timing-function;
+
+  .vk-hook-table-column-sort-arrow;
+}
+
+.vk-table-column-sort__arrow--rotated {
+  transform: rotateZ(180deg);
+}
+
+
+// Column Select
+// ========================================================================
+
+.vk-table-column-select {
+  .vk-table-noselect();
+  .vk-hook-table-column-select;
+}
+
+
+// Column Tree
+// ========================================================================
+
+/*
+ * Indent
+ */
+
+.vk-table-column-tree__indent {
+  display: inline-block;
+  width: @table-column-tree__indent_width;
+
+  .uk-table-small & {
+    width: @table-small-column-tree__indent_width;
+  }
+
+  .vk-hook-table-tree-column-indent;
+}
+
+
+/*
+ * Arrow
+ */
+
+.vk-table-column-tree__arrow {
+  cursor: pointer;
+  display: inline-block;
+  width: @table-column-tree__arrow_icon-width;
+  height: @table-column-tree__arrow_icon-height;
+  // icon as background
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  .vk-table-svg-fill(@table-column-tree__arrow_icon, '#000', @table-column-tree__arrow_color);
+  // transition when rotated
+  transition: transform;
+  transition-duration: @table-column-tree__arrow_transition-duration;
+  transition-timing-function: @table-column-tree__arrow_transition-timing-function;
+
+  .uk-table-small & {
+    width: @table-small-column-tree__arrow_icon-width;
+    height: @table-small-column-tree__arrow_icon-height;
+  }
+
+  .vk-hook-table-tree-column-arrow;
+}
+
+.vk-table-column-tree__arrow--rotated {
+  transform: rotateZ(90deg);
+}
+
+
+// Hooks
+// ========================================================================
+
+.vk-hook-table-misc;
+
+.vk-hook-table() {}
+.vk-hook-table-column() {}
+.vk-hook-table-column-sort() {}
+.vk-hook-table-column-sort-arrow() {}
+.vk-hook-table-column-select() {}
+
+.vk-hook-table-tree() {}
+.vk-hook-table-tree-column() {}
+.vk-hook-table-tree-column-arrow() {}
+.vk-hook-table-tree-column-indent() {}
+
+.vk-hook-table-misc() {}
+
+
+// Mixins
+// ========================================================================
+
+.vk-table-svg-fill (@src, @color-default, @color-new) {
+  @escape-color-default: escape(@color-default);
+  @escape-color-new: escape('@{color-new}');
+
+  @data-uri: data-uri('image/svg+xml;charset=UTF-8', '@{src}');
+  @replace-src: replace('@{data-uri}', '@{escape-color-default}', '@{escape-color-new}', 'g');
+
+  background-image: e(@replace-src);
+}
+
+.vk-table-noselect () {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}

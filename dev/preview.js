@@ -5,7 +5,7 @@ import './stories'
 import Components from './components'
 
 // add vuikit default theme styles
-import '@vuikit/theme/src/theme.less'
+import 'vuikit/src/theme/index.less'
 
 Vue.use(Components)
 

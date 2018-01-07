@@ -1,7 +1,7 @@
-import { debounce } from '@vuikit/core/util'
-import { transitionend } from '@vuikit/core/helpers/dom/env'
-import { on, off, one } from '@vuikit/core/helpers/dom/event'
-import { addClass, removeClass } from '@vuikit/core/helpers/dom/class'
+import { debounce } from 'vuikit/core/util'
+import { transitionend } from 'vuikit/core/helpers/dom/env'
+import { on, off, one } from 'vuikit/core/helpers/dom/event'
+import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
 
 const doc = document.documentElement
 

@@ -1,4 +1,4 @@
-import { range } from '@vuikit/core/util'
+import { range } from 'vuikit/core/util'
 
 import getYear from 'date-fns/get_year'
 import setYear from 'date-fns/set_year'

@@ -5,12 +5,12 @@
   ],
   "scripts": {
     "dev": "poi --config dev/poi.config.js",
-    "link:all": "node -r @std/esm scripts/link.js",
-    "unlink:all": "node -r @std/esm scripts/unlink.js"
+    "build": "node -r @std/esm scripts/build/run.js"
   },
   "devDependencies": {
     "@lump/argv": "^0.1.0",
     "@lump/banner": "^0.2.0",
+    "@lump/copy": "^0.2.0",
     "@lump/copy-recursive": "^0.2.0",
     "@lump/less": "^0.3.0",
     "@lump/minify": "^0.2.0",

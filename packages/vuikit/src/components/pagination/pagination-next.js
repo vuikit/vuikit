@@ -1,4 +1,4 @@
-import IconNext from '../../icons/pagination-next'
+import IconNext from './assets/icon-next'
 
 export default {
   functional: true,

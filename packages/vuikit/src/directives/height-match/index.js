@@ -1,7 +1,7 @@
-import css from '@vuikit/core/helpers/css'
-import { attr } from '@vuikit/core/helpers/dom/attr'
-import { on, off } from '@vuikit/core/helpers/dom/event'
-import { isUndefined, merge, debounce, toArray } from '@vuikit/core/util'
+import css from 'vuikit/core/helpers/css'
+import { attr } from 'vuikit/core/helpers/dom/attr'
+import { on, off } from 'vuikit/core/helpers/dom/event'
+import { isUndefined, merge, debounce, toArray } from 'vuikit/core/util'
 
 const docEl = document.documentElement
 const isRtl = attr(docEl, 'dir') === 'rtl'
