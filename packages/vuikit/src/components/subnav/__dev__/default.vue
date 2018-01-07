@@ -1,48 +1,46 @@
 <template>
   <div class="uk-padding">
-    <div class="uk-child-width-1-4@m" uk-grid>
-      <div class="uk-width-1-2@m">
-        <vk-subnav
-          :activeItem="activeItem"
-          @change="item => { activeItem = item }">
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" disabled />
-        </vk-subnav>
-        <h2>Divider</h2>
-        <vk-subnav divider
-          :activeItem="activeItem"
-          @change="item => { activeItem = item }">
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" disabled />
-        </vk-subnav>
-        <h2>Pill</h2>
-        <vk-subnav pill
-          :activeItem="activeItem"
-          @change="item => { activeItem = item }">
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" />
-          <vk-subnav-item label="Item" disabled />
-        </vk-subnav>
-      </div>
-    </div>
+
+    <subnav v-model="active">
+      <subnav-item title="Item" name="first" />
+      <subnav-item title="Item" name="second" />
+      <subnav-item title="Item" name="third" />
+      <subnav-item title="Disabled" name="fourth" disabled />
+    </subnav>
+
+    Active: {{ active }}
+
+    <hr />
+
+    <p>Using index if name omited</p>
+    <subnav v-model="active">
+      <subnav-item title="Item" />
+      <subnav-item title="Item" />
+      <subnav-item title="Item" />
+      <subnav-item title="Disabled" disabled />
+    </subnav>
+
+    <hr />
+
+    Modifiers supported
+
+    <subnav pilled v-model="active">
+      <subnav-item title="Active" active />
+      <subnav-item title="Item" />
+      <subnav-item title="Item" />
+      <subnav-item title="Disabled" disabled />
+    </subnav>
+
   </div>
 </template>
 
 <script>
-import { Subnav as VkSubnav, SubnavItem as VkSubnavItem } from '../'
+import * as components from '../'
 
 export default {
-  components: {
-    VkSubnav,
-    VkSubnavItem
-  },
+  components,
   data: () => ({
-    activeItem: 1
+    active: 'first'
   })
 }
 </script>
