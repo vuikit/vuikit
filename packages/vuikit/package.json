@@ -16,8 +16,8 @@
     "uikit",
     "vuikit"
   ],
-  "main": "index.js",
-  "module": "index.mjs",
+  "main": "dist/vuikit.cjs.js",
+  "module": "dist/vuikit.esm.js",
   "files": [
     "src",
     "core",

@@ -38,7 +38,7 @@ import { compileSingle, compileCollective, compileLess } from './util'
     output: {
       format: 'es'
     }
-  }, 'build/index.mjs')
+  }, 'build/dist/vuikit.esm.js')
 
   // compile CJS index
   await compileCollective({
@@ -46,7 +46,7 @@ import { compileSingle, compileCollective, compileLess } from './util'
     output: {
       format: 'cjs'
     }
-  }, 'build/index.js')
+  }, 'build/dist/vuikit.cjs.js')
 
   // compile dist as UMD
   await compileCollective({
@@ -58,7 +58,10 @@ import { compileSingle, compileCollective, compileLess } from './util'
     external: []
   }, 'build/dist/vuikit.js')
 
-  await minify('build/dist/vuikit.js', true)
+  await minify('build/dist/vuikit.js', {
+    sourceMap: true,
+    log: true
+  })
 
   // compile theme
   await compileLess({

@@ -28,7 +28,8 @@ export async function compileSingle (paths, dest) {
         input,
         output: {
           format: 'es'
-        }
+        },
+        external: id => id.match(/@?vuikit\/core/)
       }
     }, {
       report: args.report
