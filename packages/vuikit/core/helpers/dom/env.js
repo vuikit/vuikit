@@ -1,5 +1,5 @@
 const win = window
-const doc = document.body
+const doc = document
 const docEl = document.documentElement
 
 export const Observer = win.MutationObserver || win.WebKitMutationObserver
