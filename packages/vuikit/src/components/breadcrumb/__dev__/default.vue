@@ -1,29 +1,24 @@
 <template>
   <div class="uk-padding">
 
-    <breadcrumb
-      :location="location"
-      @change="loc => { location = loc }"
-    >
-      <breadcrumb-item label="Home" path="/" />
-      <breadcrumb-item label="Blog" path="/blog" />
-      <breadcrumb-item label="Category" path="/blog/category" />
-      <breadcrumb-item label="Post" path="/blog/category/post" disabled />
+    <breadcrumb>
+      <breadcrumb-item title="Item" />
+      <breadcrumb-item title="Item" />
+      <breadcrumb-item title="Disabled" disabled />
+      <breadcrumb-item title="Active" active />
     </breadcrumb>
 
   </div>
 </template>
 
 <script>
-import { Breadcrumb, BreadcrumbItem } from '../'
+import Breadcrumb from '../breadcrumb'
+import BreadcrumbItem from '../breadcrumb-item'
 
 export default {
   components: {
     Breadcrumb,
     BreadcrumbItem
-  },
-  data: () => ({
-    location: '/'
-  })
+  }
 }
 </script>
