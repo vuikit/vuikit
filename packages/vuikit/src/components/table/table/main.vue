@@ -10,7 +10,7 @@ export default {
   components: { Row, Cell },
   mixins: [ MixinSelect ],
   inheritAttrs: false,
-  props: merge({}, Table.props, {
+  props: merge({}, Table.props, MixinSelect.props, {
     data: {
       type: Array,
       required: true
@@ -25,19 +25,6 @@ export default {
     // required by column-sort
     sortedBy: {
       type: Object
-    },
-    // required by column-select
-    selectedRows: {
-      type: Array,
-      default: () => []
-    },
-    singleSelectable: {
-      type: Boolean,
-      default: false
-    },
-    rowSelectable: {
-      type: Boolean,
-      default: false
     }
   }),
   data: () => ({

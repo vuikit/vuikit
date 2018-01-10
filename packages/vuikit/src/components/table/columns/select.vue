@@ -6,7 +6,7 @@
     <slot name="head" v-if="!$parent.singleSelectable">
       <span class="uk-form uk-text-center">
         <checkbox
-          :checked="$parent.allRowsSelected"
+          :checked="$parent.allRowsAreSelected"
           @click="$parent.toggleSelectionAll"
         />
       </span>

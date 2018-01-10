@@ -1,6 +1,20 @@
 import { includes } from 'vuikit/core/util'
 
 export default {
+  props: {
+    selectedRows: {
+      type: Array,
+      default: () => []
+    },
+    singleSelectable: {
+      type: Boolean,
+      default: false
+    },
+    rowSelectable: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     select (row) {
       const id = row._vk_id
@@ -31,7 +45,7 @@ export default {
     toggleSelectionAll () {
       let selectedRows = []
 
-      if (!this.allRowsSelected) {
+      if (!this.allRowsAreSelected) {
         selectedRows = this.rows.map(row => row._vk_id)
       }
 
@@ -45,7 +59,7 @@ export default {
     }
   },
   computed: {
-    allRowsSelected () {
+    allRowsAreSelected () {
       if (this.selectedRows.length < this.rows.length) {
         return false
       }
