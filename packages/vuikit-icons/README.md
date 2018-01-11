@@ -1,60 +1,67 @@
-# Vuikit Icons
+<p align="center">
+  <a href="https://vuikit.github.io/vuikit">
+    <img width="150" src="https://cdn.rawgit.com/vuikit/vuikit/master/static/logo-vuikit.svg">
+  </a>
+</p>
 
-> UIkit icons as Vue functional components
+> UIkit with all the power of Vue
 
 Check [UIkit](https://getuikit.com/docs/icon) documentation for the icons preview and its possible output. The functional components will render the raw SVG, to apply the styles wrap them with one of the Vuikit icon components as described in the example below. You can of course do so manually or even use your own styles.
 
-## Usage
+<p align="center">
+  <a href="http://vuikit.js.org">Documentation</a> -
+  <a href="https://twitter.com/vuikit">Twitter</a>
+</p>
 
-Register the icons globally
+---
 
 ```js
+// register the icons globally
 import Vue from 'vue'
 import VuikitIcons from '@vuikit/icons'
 
 Vue.use(VuikitIcons)
+
+// and use in your templates
+<template>
+  <icon-twitter></icon-twitter>
+</template>
 ```
 
-Or locally
-
 ```js
-import { IconPlus } from '@vuikit/icons'
+// if only a few icons are required the final bundle size can be
+// drastically reduced by importing them individually
+import IconGithub from '@vuikit/icons/github'
+import IconTwitter from '@vuikit/icons/twitter'
 
 export default {
   components: {
-    IconPlus
+    IconGithub,
+    IconTwitter
   }
 }
 ```
 
-And use in your templates
-
-```vue
+```html
 <template>
-  // use raw to render the svg as it
-  <icon-plus></icon-plus>
-
-  // customize the ratio for size variations
-  // or use the other props for a more precise rendering
-  <icon-plus
+  // the ratio and other properties can be customized through props
+  <icon-twitter
     ratio="1.5"
     width="50"
     height="50"
     viewBox="0 0 10 10"
-  ></icon-plus>
+  ></icon-twitter>
 
-  // if using Vuikit 0.7.0 you can and should render
-  // the icon with one of the icon components
-  <vk-icon name="plus"></vk-icon>
-  <vk-icon-link name="plus"></vk-icon-link>
-  <vk-icon-button name="plus"></vk-icon-button>
+  // if using Vuikit 0.7.0 use one of the Icon components
+  <vk-icon name="twitter"></vk-icon>
+  <vk-icon-link name="twitter"></vk-icon-link>
+  <vk-icon-button name="twitter"></vk-icon-button>
 
-  // custom icons or registered with a diferent name will
+  // custom icons or registered with a different prefix will
   // not be recognized, but you can wrap them instead
-  <vk-icon name="plus">
+  <vk-icon>
     <my-icon></my-icon>
   </vk-icon>
-
 </template>
 ```
 
