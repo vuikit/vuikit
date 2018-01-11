@@ -6,6 +6,5 @@ lerna-debug.log
 .esm-cache/
 node_modules/
 dist/
-lib/
 
 /build/
