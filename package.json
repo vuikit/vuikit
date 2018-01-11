@@ -5,8 +5,10 @@
   ],
   "scripts": {
     "dev": "poi --config dev/poi.config.js",
-    "build": "yarn run build:vuikit",
-    "build:vuikit": "node -r @std/esm packages/vuikit/scripts/build.js"
+    "build": "yarn run build:vuikit && yarn run build:icons",
+    "build:vuikit": "node -r @std/esm packages/vuikit/scripts/build.js",
+    "build:icons": "node -r @std/esm packages/vuikit-icons/scripts/build.js",
+    "icons": "node -r @std/esm packages/vuikit-icons/scripts/icons.js"
   },
   "devDependencies": {
     "@lump/argv": "^0.1.0",

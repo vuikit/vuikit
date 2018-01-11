@@ -1,0 +1,31 @@
+{
+  "name": "@vuikit/icons",
+  "version": "0.6.0",
+  "description": "UIkit icons as Vue functional components",
+  "license": "MIT",
+  "author": {
+    "name": "Miljan Aleksic",
+    "url": "https://twitter.com/AleksicMiljan"
+  },
+  "keywords": [
+    "icons",
+    "vue",
+    "vuejs",
+    "uikit",
+    "vuikit"
+  ],
+  "main": "dist/vuikit-icons.cjs.js",
+  "module": "dist/vuikit-icons.esm.js",
+  "files": [
+    "dist",
+    "*.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vuikit/vuikit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vuikit/vuikit/issues"
+  },
+  "homepage": "https://github.com/vuikit/vuikit"
+}
