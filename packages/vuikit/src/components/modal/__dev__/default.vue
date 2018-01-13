@@ -45,6 +45,10 @@
       <p>{{ lorem }}</p>
     </vk-modal>
 
+    <vk-modal :show.sync="show.appear">
+      <p>{{ lorem }}</p>
+    </vk-modal>
+
   </div>
 </template>
 
@@ -59,6 +63,7 @@ export default {
   },
   data: () => ({
     show: {
+      appear: true,
       default: false,
       sections: false,
       closeOutside: false

@@ -7,7 +7,8 @@ export default {
 
     const def = {
       props: {
-        css: false
+        css: false,
+        appear: true
       },
       on: {
         beforeEnter,

@@ -34,14 +34,16 @@ export default {
     },
     enter (el, done) {
       // redraw workaround, necessary so the browser
-      // doesn't try to apply it all in one step not
+      // doesn't try to apply it all in one step, not
       // giving enough time for the transition to init
       el.offsetWidth // eslint-disable-line
 
-      addClass(el, 'uk-open')
-
       // once uk-open transition finished
       one(el, transitionend, done, e => e.target === el)
+
+      // fix for appear transition,
+      // force it to be executed right after
+      setTimeout(() => addClass(el, 'uk-open'), 0)
     },
     afterEnter () {
       activeModals++
@@ -96,7 +98,6 @@ export default {
         this.$emit('update:show', false)
       }
     }, this._uid)
-
   },
   beforeDestroy () {
     off(doc, 'key', this._uid)
