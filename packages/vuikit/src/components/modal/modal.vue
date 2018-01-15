@@ -20,6 +20,9 @@
           'uk-margin-auto-vertical': center
         }]"
       >
+        <!-- dialog slot for customizations, for content prefer body slot -->
+        <slot name="dialog"></slot>
+
         <!-- close button -->
         <modal-btn-close
           v-if="closeBtn"
@@ -35,9 +38,6 @@
         >
           <slot name="header"></slot>
         </div>
-
-        <!-- dialog slot allows placing content outside the body -->
-        <slot name="dialog"></slot>
 
         <!-- body -->
         <div ref="body"
