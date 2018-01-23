@@ -32,8 +32,8 @@ export default {
       type: String
     }
   }),
-  cellRender: (h, { props, parent, data }) => {
-    const { row, cell, cellClass } = props
+  cellRender: (h, { props, data, parent }) => {
+    const { row, cell, cellClass, shrinked, expanded } = props
     const { scopedSlots } = data
 
     const cellValue = get(row, cell)
@@ -43,7 +43,10 @@ export default {
     const emptySlot = scopedSlots.emptyCell || (() => '')
 
     return h('td', {
-      class: cellClass
+      class: [cellClass, {
+        'uk-table-shrink': !isUndefined(shrinked),
+        'uk-table-expand': !isUndefined(expanded)
+      }]
     }, [
       isUndefined(cellValue)
         ? emptySlot(row)

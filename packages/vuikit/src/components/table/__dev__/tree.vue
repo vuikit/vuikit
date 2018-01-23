@@ -9,10 +9,10 @@
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <table-tree-column
+      <table-column-tree
         head="Custom Header"
         cell="company"
-      ></table-tree-column>
+      ></table-column-tree>
       <table-column
         head="id"
         cell="_vk_id"
@@ -32,9 +32,9 @@
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <table-tree-column
+      <table-column-tree
         cell="company"
-      ></table-tree-column>
+      ></table-column-tree>
     </table-tree>
 
   </div>
@@ -42,13 +42,13 @@
 
 <script>
 import data from './data.json'
-import { TableTree, TableColumn, TableTreeColumn } from '../'
+import { TableTree, TableColumn, TableColumnTree } from '../'
 
 export default {
   components: {
     TableTree,
     TableColumn,
-    TableTreeColumn
+    TableColumnTree
   },
   data: () => ({
     data,

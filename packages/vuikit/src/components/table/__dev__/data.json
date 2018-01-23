@@ -1,20 +1,20 @@
 [
   {
     "company": "Mat Lam Tam",
-    "version": "0.74",
+    "ranking": "0.74",
     "website": "goodreads.com",
-    "author": {
+    "contact": {
       "name": "Nathanael Decaze",
-      "contact": "ndecaze0@jimdo.com"
+      "email": "ndecaze0@jimdo.com"
     }
   },
   {
     "company": "Y-find",
-    "version": "9.1",
+    "ranking": "9.1",
     "website": "home.pl",
-    "author": {
+    "contact": {
       "name": "Trudie Pearlman",
-      "contact": "tpearlman1@nps.gov"
+      "email": "tpearlman1@nps.gov"
     },
     "children": [
       {
@@ -32,11 +32,11 @@
   },
   {
     "company": "Tres-Zap",
-    "version": "1.65",
+    "ranking": "1.65",
     "website": "printfriendly.com",
-    "author": {
+    "contact": {
       "name": "Kippy Leipold",
-      "contact": "kleipold2@slashdot.org"
+      "email": "kleipold2@slashdot.org"
     },
     "children": [
       {
@@ -49,20 +49,20 @@
   },
   {
     "company": "Zathin",
-    "version": "1.4.8",
+    "ranking": "1.48",
     "website": "nbcnews.com",
-    "author": {
+    "contact": {
       "name": "Kendell Spencock",
-      "contact": "kspencock3@ibm.com"
+      "email": "kspencock3@ibm.com"
     }
   },
   {
     "company": "Bamity",
-    "version": "1.3.4",
+    "ranking": "1.34",
     "website": "howstuffworks.com",
-    "author": {
+    "contact": {
       "name": "Pat Bengoechea",
-      "contact": "pbengoechea4@bravesites.com"
+      "email": "pbengoechea4@bravesites.com"
     }
   }
 ]

@@ -1,5 +1,18 @@
 <template>
   <div class="uk-padding">
+
+    <vk-table divided :data="data">
+      <vk-table-column head="Company" cell="company" expanded />
+      <vk-table-column head="Website" cell="website" shrinked />
+    </vk-table>
+
+    <h2>Headless</h2>
+    <vk-table divided :data="data">
+      <vk-table-column cell="company" expanded />
+      <vk-table-column cell="website" shrinked />
+    </vk-table>
+
+    <h2>Custom Slots</h2>
     <vk-table
       divided
       middle-aligned

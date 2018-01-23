@@ -1,22 +1,20 @@
 <script>
 import Column from '../columns/column'
-import TreeArrow from './ui/column-arrow'
-import TreeIndent from './ui/column-indent'
+import TreeArrow from './ui/tree-arrow'
+import TreeIndent from './ui/tree-indent'
 
-import { get } from 'vuikit/core/util'
+import { get, isUndefined } from 'vuikit/core/util'
 
 export default {
   name: 'TableTreeColumn',
   extends: Column,
   cellRender: (h, { data, props, parent }) => {
-    const { row, cell, cellClass } = props
+    const { row, cell, cellClass, shrinked, expanded } = props
     const { scopedSlots } = data
 
     const cellValue = get(row, cell)
 
-    // support custom slots, fallback to default
-    const cellSlot = scopedSlots.cell || ((cellValue, row) => [
-
+    const defaultSlotRender = () => [
       Array(row._vk_level).fill(h(TreeIndent)),
 
       parent.thereAreSubLevels && h(TreeIndent, [
@@ -34,14 +32,22 @@ export default {
       ]),
 
       h('span', cellValue)
+    ]
 
+    // support custom slots, fallback to default fn
+    const cellSlot = scopedSlots.cell || defaultSlotRender
+    const emptySlot = scopedSlots.emptyCell || (() => '')
+
+    return h('td', {
+      class: [cellClass, {
+        'uk-table-shrink': !isUndefined(shrinked),
+        'uk-table-expand': !isUndefined(expanded)
+      }]
+    }, [
+      isUndefined(cellValue)
+        ? emptySlot(row)
+        : cellSlot(cellValue, row)
     ])
-
-    const def = {
-      class: cellClass
-    }
-
-    return h('td', def, cellSlot(cellValue, row))
   }
 }
 </script>
