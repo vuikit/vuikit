@@ -4,6 +4,7 @@
     <vk-button>Default</vk-button>
     <vk-button active>Active</vk-button>
     <vk-button disabled>Disabled</vk-button>
+    <vk-button-link>Link</vk-button-link>
 
     <h3>Type</h3>
     <vk-button type="primary">Primary</vk-button>
@@ -20,11 +21,12 @@
 </template>
 
 <script>
-import { Button as VkButton } from '../'
+import { Button, ButtonLink } from '../'
 
 export default {
   components: {
-    VkButton
+    VkButton: Button,
+    VkButtonLink: ButtonLink
   }
 }
 </script>
