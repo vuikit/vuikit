@@ -31,6 +31,16 @@
       </navbar>
     </navbar-container>
 
+    <h2>Content Item</h2>
+
+    <navbar-container>
+      <navbar>
+        <navbar-item>Item</navbar-item>
+        <navbar-item slot="center">Item</navbar-item>
+        <navbar-item slot="right">Item</navbar-item>
+      </navbar>
+    </navbar-container>
+
     <h2>Subtitle</h2>
 
     <navbar-container>
