@@ -1,26 +1,34 @@
 import { warn } from 'vuikit/core/helpers/debug'
 
-const TabContent = {
-  functional: true,
-  render: (h, { parent }) => parent.tabs
-    .filter(tab => parent.activeTab === tab.name)
-    .map(tab => tab.node)
-}
+/* Tab component support both local as synced activeTab
+  state, reason why there is a data and a prop activeTab. */
 
 export default {
   components: {
-    TabContent
+    TabContent: {
+      functional: true,
+      render: (h, { parent }) => parent.tabs
+        .filter(tab => parent.state.activeTab === tab.id)
+        .map(tab => tab.node)
+    }
   },
   props: {
-    activeTab: {
-      type: String,
-      required: true
-    },
+    activeTab: {},
     transition: {
       type: String,
       default: ''
     }
   },
+  watch: {
+    activeTab (val) {
+      this.state.activeTab = val
+    }
+  },
+  data: vm => ({
+    state: {
+      activeTab: vm.activeTab
+    }
+  }),
   computed: {
     tabs: {
       get () {
@@ -29,28 +37,32 @@ export default {
           .filter(n => n.tag)
 
         if (!slots.length) {
-          warn('At least one vk-tab-item must be set', this)
+          warn(`At least one 'vk-tab-item' must be set`, this)
         }
 
-        return slots.map(node => ({
-          node,
-          name: node.componentOptions.propsData.name,
-          label: node.componentOptions.propsData.label,
-          disabled: node.componentOptions.propsData.disabled !== undefined
-        }))
+        return slots.map((node, index) => {
+          const props = node.componentOptions.propsData
+
+          const id = props.name || index
+          const label = props.label
+          const disabled = props.disabled !== undefined
+
+          return { node, id, label, disabled }
+        })
       },
       cache: false
     }
   },
   methods: {
-    triggerTab (name) {
-      this.$emit('update:activeTab', name)
+    triggerTab (val) {
+      this.state.activeTab = val
+      this.$emit('update:activeTab', val)
     }
   },
   created () {
     // set initial activeTab
-    if (!this.activeTab && this.tabs.length) {
-      this.triggerTab(this.tabs[0].node.componentOptions.propsData.name)
+    if (!this.state.activeTab && this.tabs.length) {
+      this.triggerTab(this.tabs[0].id)
     }
   }
 }

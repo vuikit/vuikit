@@ -6,10 +6,7 @@
 export default {
   name: 'TabItem',
   props: {
-    name: {
-      type: String,
-      required: true
-    },
+    name: {},
     label: {
       type: String,
       required: true

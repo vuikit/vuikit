@@ -6,12 +6,12 @@
       :bottom="bottom"
       :alignment="alignment"
     >
-      <ui-tab-item v-for="tab in tabs"
-        :active="tab.name === activeTab"
-        :key="tab.name"
+      <ui-tab-item v-for="(tab, index) in tabs"
+        :active="tab.id === state.activeTab"
+        :key="`${tab.id}_${index}`"
         :label="tab.label"
         :disabled="tab.disabled"
-        @click.prevent="!tab.disabled && triggerTab(tab.name)"
+        @click.prevent="!tab.disabled && triggerTab(tab.id)"
       ></ui-tab-item>
     </ui-tab>
     <div :class="{ 'uk-margin': bottom }">
