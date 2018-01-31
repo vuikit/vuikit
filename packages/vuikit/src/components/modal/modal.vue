@@ -125,9 +125,9 @@ export default {
         const modalBody = this.$refs.body
         const modalDialog = this.$refs.dialog
 
-        css(modalBody, 'maxHeight', '150px')
+        css(modalBody, 'maxHeight', 150)
         const maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight)
-        css(modalBody, 'maxHeight', `${maxHeight}px`)
+        css(modalBody, 'maxHeight', maxHeight)
       })
     }
   },

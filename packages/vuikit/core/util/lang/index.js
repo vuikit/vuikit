@@ -9,6 +9,7 @@ export { default as debounce } from './debounce'
 export { default as stringify } from './stringify'
 
 export { default as get } from './get'
+export { default as noop } from './noop'
 export { default as clamp } from './clamp'
 export { default as range } from './range'
 export { default as includes } from './includes'

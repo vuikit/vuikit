@@ -1,4 +1,4 @@
-/* eslint-disable one-var, no-mixed-operators */
+/* eslint-disable one-var, no-mixed-operators, no-useless-call */
 import { fragment } from './dom'
 import { doc, win } from './env'
 import { removeAttr } from './attr'
