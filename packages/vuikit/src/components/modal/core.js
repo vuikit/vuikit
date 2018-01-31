@@ -1,4 +1,3 @@
-import { debounce } from 'vuikit/core/util'
 import { transitionend } from 'vuikit/core/helpers/dom/env'
 import { on, off, one } from 'vuikit/core/helpers/dom/event'
 import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
@@ -82,15 +81,6 @@ export default {
     // append modal at $root as the styles
     // could be scoped to the app dom
     this.$root.$el.appendChild(this.$el)
-
-    // init global events
-    on(window, 'resize', debounce(() => {
-      if (!this.show) {
-        return
-      }
-
-      this.updateOverflowAuto()
-    }, 30), this._uid)
 
     on(doc, 'keyup', e => {
       if (this.closeOnKey && e.keyCode === this.closeOnKey) {

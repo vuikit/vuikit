@@ -62,8 +62,9 @@
 </template>
 
 <script>
-import { includes } from 'vuikit/core/util'
 import css from 'vuikit/core/helpers/css'
+import { on } from 'vuikit/core/helpers/dom/event'
+import { includes, debounce } from 'vuikit/core/util'
 import { height } from 'vuikit/core/helpers/dom/position'
 
 import core from './core'
@@ -119,14 +120,26 @@ export default {
         return
       }
 
-      const modal = this.$el
-      const modalBody = this.$refs.body
-      const modalDialog = this.$refs.dialog
+      this.$nextTick(() => {
+        const modal = this.$el
+        const modalBody = this.$refs.body
+        const modalDialog = this.$refs.dialog
 
-      css(modalBody, 'maxHeight', '150px')
-      const maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight)
-      css(modalBody, 'maxHeight', `${maxHeight}px`)
+        css(modalBody, 'maxHeight', '150px')
+        const maxHeight = Math.max(150, 150 + height(modal) - modalDialog.offsetHeight)
+        css(modalBody, 'maxHeight', `${maxHeight}px`)
+      })
     }
+  },
+  mounted () {
+    // init global events
+    on(window, 'resize', debounce(() => {
+      if (!this.show) {
+        return
+      }
+
+      this.updateOverflowAuto()
+    }, 30), this._uid)
   }
 }
 </script>
