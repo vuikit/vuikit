@@ -8,7 +8,8 @@
     "build": "yarn run build:vuikit && yarn run build:icons",
     "build:vuikit": "node -r @std/esm packages/vuikit/scripts/build.js",
     "build:icons": "node -r @std/esm packages/vuikit-icons/scripts/build.js",
-    "icons": "node -r @std/esm packages/vuikit-icons/scripts/icons.js"
+    "icons": "node -r @std/esm packages/vuikit-icons/scripts/icons.js",
+    "lint": "eslint --fix packages/vuikit"
   },
   "devDependencies": {
     "@lump/argv": "^0.1.0",
