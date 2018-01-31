@@ -1,10 +1,7 @@
-import { merge, debounce } from 'vuikit/core/util'
-import { attr } from 'vuikit/core/helpers/dom/attr'
-import { on, off } from 'vuikit/core/helpers/dom/event'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
-
-const docEl = document.documentElement
-const isRtl = attr(docEl, 'dir') === 'rtl'
+import { isRtl } from 'vuikit/core/util/dom'
+import { merge, debounce } from 'vuikit/core/util/lang'
+import { on, off } from 'vuikit/core/util/dom/event'
+import { addClass, removeClass } from 'vuikit/core/util/class'
 
 let id = 1
 
@@ -84,7 +81,7 @@ function getRows (items) {
       if (Math.floor(dim.bottom) > leftDim.top) {
         data.stacks = false
 
-        if (dim.left < leftDim.left && !isRtl) {
+        if (dim.left < leftDim.left && !isRtl()) {
           row.unshift(el)
           break
         }

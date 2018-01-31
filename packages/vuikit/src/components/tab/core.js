@@ -1,4 +1,4 @@
-import { warn } from 'vuikit/core/helpers/debug'
+import { warn } from 'vuikit/core/util/debug'
 
 /* Tab component support both local as synced activeTab
   state, reason why there is a data and a prop activeTab. */

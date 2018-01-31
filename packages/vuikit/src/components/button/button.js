@@ -1,5 +1,5 @@
 import core from './core'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import mergeData from 'vuikit/core/util/vue-data-merge'
 
 export default mergeData({}, core, {
   props: {

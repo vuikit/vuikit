@@ -1,5 +1,5 @@
 import IconToggle from './assets/icon-toggle'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import mergeData from 'vuikit/core/util/vue-data-merge'
 
 const NavbarToggleIcon = {
   functional: true,

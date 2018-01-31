@@ -17,12 +17,10 @@
 </template>
 
 <script>
-import { get, includes, isString } from 'vuikit/core/util'
-import { on, off } from 'vuikit/core/helpers/dom/event'
+import { isRtl } from 'vuikit/core/util/dom'
+import { on, off } from 'vuikit/core/util/dom/event'
 import Position from 'vuikit/core/directives/position'
-import { getPositionAxis } from 'vuikit/core/helpers/dom/position'
-
-const isRtl = document.documentElement.getAttribute('dir') === 'rtl'
+import { get, includes, isString } from 'vuikit/core/util/lang'
 
 const positions = [
   'top-left',
@@ -70,7 +68,7 @@ export default {
     },
     position: {
       type: String,
-      default: `bottom-${isRtl ? 'right' : 'left'}`,
+      default: `bottom-${isRtl() ? 'right' : 'left'}`,
       validator: pos => includes(positions, pos)
     },
     triggers: {
@@ -229,5 +227,12 @@ export default {
       this.$el.parentNode.removeChild(this.$el)
     }
   }
+}
+
+function getPositionAxis (position) {
+  const [dir] = position.split('-')
+  return dir === 'top' || dir === 'bottom'
+    ? 'y'
+    : 'x'
 }
 </script>

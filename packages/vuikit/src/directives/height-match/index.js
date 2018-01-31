@@ -1,10 +1,8 @@
-import css from 'vuikit/core/helpers/css'
-import { attr } from 'vuikit/core/helpers/dom/attr'
-import { on, off } from 'vuikit/core/helpers/dom/event'
-import { isUndefined, merge, debounce, toArray } from 'vuikit/core/util'
-
-const docEl = document.documentElement
-const isRtl = attr(docEl, 'dir') === 'rtl'
+import { css } from 'vuikit/core/util/style'
+import { attr } from 'vuikit/core/util/attr'
+import { isRtl } from 'vuikit/core/util/dom'
+import { on, off } from 'vuikit/core/util/dom/event'
+import { isUndefined, merge, debounce, toArray } from 'vuikit/core/util/lang'
 
 let id = 1
 
@@ -82,7 +80,7 @@ function getRows (elements, row) {
       }
 
       if (Math.floor(dim.bottom) > leftDim.top) {
-        if (dim.left < leftDim.left && !isRtl) {
+        if (dim.left < leftDim.left && !isRtl()) {
           row.unshift(el)
           break
         }

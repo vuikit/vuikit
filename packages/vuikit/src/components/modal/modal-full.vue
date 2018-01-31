@@ -23,7 +23,7 @@
 
 <script>
 import core from './core'
-import { includes } from 'vuikit/core/util'
+import { includes } from 'vuikit/core/util/lang'
 import ModalTransition from './transition'
 import ModalBtnClose from './ui/button-close'
 

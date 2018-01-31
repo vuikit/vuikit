@@ -1,23 +1,9 @@
-import {
-  get,
-  includes,
-  debounce,
-  isObject,
-  isString,
-  toInteger,
-  isUndefined
-} from 'vuikit/core/util'
-
-import {
-  positionAt,
-  flipPosition,
-  getPositionAxis
-} from 'vuikit/core/helpers/dom/position'
-
-import css from 'vuikit/core/helpers/css'
-import { warn } from 'vuikit/core/helpers/debug'
-import { addClass } from 'vuikit/core/helpers/dom/class'
-import { on, off, offAll } from 'vuikit/core/helpers/dom/event'
+import { css } from 'vuikit/core/util/style'
+import { warn } from 'vuikit/core/util/debug'
+import { addClass } from 'vuikit/core/util/class'
+import { on, off, offAll } from 'vuikit/core/util/dom/event'
+import { positionAt, flipPosition } from 'vuikit/core/util/position'
+import { get, includes, debounce, isObject, isString, toInteger, isUndefined } from 'vuikit/core/util/lang'
 
 let uid = 'v-position'
 
@@ -90,16 +76,17 @@ function position (ctx) {
     ? `${dir === 'left' ? -1 * offset : offset}`
     : ` ${dir === 'top' ? -1 * offset : offset}`
 
-  const { x, y } = positionAt({
-    flip,
+  const targetOffset = null
+  const { x, y } = positionAt(
+    el,
     target,
-    boundary,
     elAttach,
-    elOffset,
-    element: el,
     targetAttach,
-    targetOffset: null
-  }).target
+    elOffset,
+    targetOffset,
+    flip,
+    boundary
+  ).target
 
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
@@ -160,4 +147,11 @@ function getContext (el, binding, vnode) {
   }
 
   return ctx
+}
+
+function getPositionAxis (position) {
+  const [dir] = position.split('-')
+  return dir === 'top' || dir === 'bottom'
+    ? 'y'
+    : 'x'
 }

@@ -22,7 +22,6 @@
 <script>
 import data from './data.json'
 import orderBy from 'lodash/orderBy'
-import { keys } from 'vuikit/core/util'
 
 import {
   Table as VkTable,
@@ -43,7 +42,7 @@ export default {
   }),
   computed: {
     data () {
-      const by = keys(this.sortedBy)[0]
+      const by = Object.keys(this.sortedBy)[0]
       const dir = this.sortedBy[by]
       return orderBy(data, [item => item[by]], dir)
     }

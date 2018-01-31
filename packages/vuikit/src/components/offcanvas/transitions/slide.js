@@ -1,9 +1,8 @@
-import css from 'vuikit/core/helpers/css'
-import { one } from 'vuikit/core/helpers/dom/event'
-import { transitionend } from 'vuikit/core/helpers/dom/env'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
-import { width, height } from 'vuikit/core/helpers/dom/position'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
+import { css } from 'vuikit/core/util/style'
+import { one } from 'vuikit/core/util/dom/event'
+import mergeData from 'vuikit/core/util/vue-data-merge'
+import { width, height } from 'vuikit/core/util/position'
+import { addClass, removeClass } from 'vuikit/core/util/class'
 
 import common from './_common'
 
@@ -34,7 +33,7 @@ export default {
           addClass(el, 'uk-open')
 
           // indicate end of transition
-          one(el, transitionend, done, e => e.target === vm.$refs.bar)
+          one(el, 'transitionend', done, e => e.target === vm.$refs.bar)
         },
         beforeLeave (el) {
           removeClass(el, 'uk-open')
@@ -44,7 +43,7 @@ export default {
           // as the vm will be deleted after
           const bar = vm.$refs.bar
           // indicate end of transition
-          one(el, transitionend, done, e => e.target === bar)
+          one(el, 'transitionend', done, e => e.target === bar)
         },
         afterLeave (el) {
           removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-slide')

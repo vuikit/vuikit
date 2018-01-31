@@ -21,8 +21,8 @@
 
 <script>
 import NotificationMessage from './message'
-import { warn } from 'vuikit/core/helpers/debug'
-import { isObject, isInteger, cloneArray, isUndefined } from 'vuikit/core/util'
+import { warn } from 'vuikit/core/util/debug'
+import { isObject, isInteger, isUndefined } from 'vuikit/core/util/lang'
 
 const timeouts = {}
 const defaultTimeout = 4500
@@ -72,7 +72,7 @@ export default {
       const index = this.notifications.indexOf(n)
 
       if (index !== -1) {
-        const notifications = cloneArray(this.notifications)
+        const notifications = [...this.notifications]
         notifications.splice(index, 1)
 
         this.$emit('update:notifications', notifications)

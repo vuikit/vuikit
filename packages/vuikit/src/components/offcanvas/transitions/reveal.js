@@ -1,9 +1,8 @@
-import css from 'vuikit/core/helpers/css'
-import { one } from 'vuikit/core/helpers/dom/event'
-import { transitionend } from 'vuikit/core/helpers/dom/env'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
-import { width, height } from 'vuikit/core/helpers/dom/position'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
+import { css } from 'vuikit/core/util/style'
+import { one } from 'vuikit/core/util/dom/event'
+import mergeData from 'vuikit/core/util/vue-data-merge'
+import { width, height } from 'vuikit/core/util/position'
+import { addClass, removeClass } from 'vuikit/core/util/class'
 
 import common from './_common'
 
@@ -44,7 +43,7 @@ export default {
           addClass(vm.$refs.content, 'uk-offcanvas-content-animation')
 
           // indicate end of transition
-          one(el, transitionend, done, e => e.target === wrapper)
+          one(el, 'transitionend', done, e => e.target === wrapper)
         },
         beforeLeave (el) {
           // set bar, required at afterLeave
@@ -55,7 +54,7 @@ export default {
         },
         leave (el, done) {
           // indicate end of transition
-          one(el, transitionend, done, e => e.target === wrapper)
+          one(el, 'transitionend', done, e => e.target === wrapper)
         },
         afterLeave (el) {
           // remove wrapper

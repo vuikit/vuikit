@@ -1,7 +1,7 @@
-import css from 'vuikit/core/helpers/css'
-import { on, offAll } from 'vuikit/core/helpers/dom/event'
-import { width, height } from 'vuikit/core/helpers/dom/position'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
+import { css } from 'vuikit/core/util/style'
+import { on, offAll } from 'vuikit/core/util/dom/event'
+import { width, height } from 'vuikit/core/util/position'
+import { addClass, removeClass } from 'vuikit/core/util/class'
 
 const win = window
 const body = document.body

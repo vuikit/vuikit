@@ -1,5 +1,5 @@
 import UiBreadcrumbItem from './ui/breadcrumb-item'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import mergeData from 'vuikit/core/util/vue-data-merge'
 
 export default {
   functional: true,

@@ -1,5 +1,4 @@
 import { play } from 'vue-play'
-import { each, toCapital, toCamelCase } from 'vuikit/core/util'
 
 // components
 loadStories(require.context('vuikit/src/components', true, /^(.*)\/__dev__\/(.*)\.vue$/))
@@ -32,14 +31,35 @@ function load (req) {
   return req.keys().reduce((result, key) => {
     // create namespace
     let namespace = key.match(/\.\/([a-z-]*)\//)[1]
-    namespace = toCapital(toCamelCase(namespace))
+    namespace = formatName(namespace)
     result[namespace] = result[namespace] || {}
 
     // add resolved module
     let name = key.match(/\/([a-z]*)\.vue/)[1]
-    name = toCapital(toCamelCase(name))
+    name = formatName(name)
     result[namespace][name] = req(key).default
 
     return result
   }, {})
+}
+
+function each (obj, cb) {
+  for (var key in obj) {
+    if (cb.call(obj[key], obj[key], key) === false) {
+      break
+    }
+  }
+}
+
+function formatName (name) {
+  function toUpper (_, c) {
+    return c ? c.toUpperCase() : ''
+  }
+
+  // to capital
+  name = name.charAt(0).toUpperCase() + name.slice(1)
+  // to camelCase
+  name = name.replace(/-(\w)/g, toUpper)
+
+  return name
 }

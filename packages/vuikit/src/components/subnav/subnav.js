@@ -1,6 +1,6 @@
 import UiSubnav from './ui/subnav'
-import { warn } from 'vuikit/core/helpers/debug'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import { warn } from 'vuikit/core/util/debug'
+import mergeData from 'vuikit/core/util/vue-data-merge'
 
 export default {
   functional: true,

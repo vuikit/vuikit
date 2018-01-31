@@ -1,4 +1,4 @@
-import each from 'vuikit/core/util/each.js'
+import { each } from 'vuikit/core/util/lang/object.js'
 import * as Icons from './lib/_import.js'
 
 const VuikitIcons = {

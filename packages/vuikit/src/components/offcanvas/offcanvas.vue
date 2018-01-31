@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { warn } from 'vuikit/core/helpers/debug'
+import { warn } from 'vuikit/core/util/debug'
 
 import VkOffcanvasTransitionNone from './transitions/none'
 import VkOffcanvasTransitionPush from './transitions/push'

@@ -1,6 +1,6 @@
 <script>
 import { Table } from '../'
-import { includes, merge } from 'vuikit/core/util'
+import { includes, merge } from 'vuikit/core/util/lang'
 
 export default {
   name: 'TableTree',

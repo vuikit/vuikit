@@ -58,8 +58,8 @@ import startOfMonth from 'date-fns/start_of_month'
 import isWithinRange from 'date-fns/is_within_range'
 import areRangesOverlapping from 'date-fns/are_ranges_overlapping'
 
-import { range, isInteger } from 'vuikit/core/util'
-import dateMatrix from 'vuikit/core/helpers/date/matrix'
+import { range, isInteger } from 'vuikit/core/util/lang'
+import dateMatrix from 'vuikit/core/util/date/matrix'
 
 import PickerHeader from './header'
 

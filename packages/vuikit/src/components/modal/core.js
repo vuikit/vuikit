@@ -1,6 +1,5 @@
-import { transitionend } from 'vuikit/core/helpers/dom/env'
-import { on, off, one } from 'vuikit/core/helpers/dom/event'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
+import { on, off, one } from 'vuikit/core/util/dom/event'
+import { addClass, removeClass } from 'vuikit/core/util/class'
 
 const doc = document.documentElement
 
@@ -38,7 +37,7 @@ export default {
       el.offsetWidth // eslint-disable-line
 
       // once uk-open transition finished
-      one(el, transitionend, done, e => e.target === el)
+      one(el, 'transitionend', done, e => e.target === el)
 
       // fix for appear transition,
       // force it to be executed right after
@@ -60,7 +59,7 @@ export default {
     },
     leave (el, done) {
       // once uk-open transition finished
-      one(el, transitionend, done, e => e.target === el)
+      one(el, 'transitionend', done, e => e.target === el)
     },
     afterLeave () {
       activeModals--

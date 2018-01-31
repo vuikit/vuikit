@@ -1,10 +1,10 @@
-import css from 'vuikit/core/helpers/css'
-import { warn } from 'vuikit/core/helpers/debug'
-import { on, off } from 'vuikit/core/helpers/dom/event'
-import { Animation } from 'vuikit/core/helpers/dom/animation'
-import { addClass, removeClass } from 'vuikit/core/helpers/dom/class'
-import { get, isEmpty, includes, isObject, toInteger } from 'vuikit/core/util'
-import { positionAt, flipPosition, getPositionAxis } from 'vuikit/core/helpers/dom/position'
+import { css } from 'vuikit/core/util/style'
+import { warn } from 'vuikit/core/util/debug'
+import { Animation } from 'vuikit/core/util/dom'
+import { on, off } from 'vuikit/core/util/dom/event'
+import { addClass, removeClass } from 'vuikit/core/util/class'
+import { positionAt, flipPosition } from 'vuikit/core/util/position'
+import { get, isEmpty, includes, isObject, toInteger } from 'vuikit/core/util/lang'
 
 let delayedShow
 let tooltip = {}
@@ -93,12 +93,12 @@ function show (ctx) {
 
     const { dir, align } = positionTooltip(ctx)
 
-    Animation.in({
-      element: outer,
-      duration: props.duration,
-      origin: `${dir}-${align}`,
-      animation: props.animationIn
-    })
+    Animation.in(
+      outer,
+      props.animationIn,
+      props.duration,
+      `${dir}-${align}`
+    )
 
   }, props.delay)
 }
@@ -173,16 +173,17 @@ function positionTooltip (ctx) {
     ? `${dir === 'left' ? -1 * offset : offset}`
     : `${dir === 'top' ? -1 * offset : offset}`
 
-  const { x, y } = positionAt({
-    flip,
+  const targetOffset = null
+  const { x, y } = positionAt(
+    tooltip,
     target,
-    boundary,
     elAttach,
-    elOffset,
-    element: tooltip,
     targetAttach,
-    targetOffset: null
-  }).target
+    elOffset,
+    targetOffset,
+    flip,
+    boundary
+  ).target
 
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
@@ -289,4 +290,11 @@ function getContext (target, binding, vnode) {
   }
 
   return ctx
+}
+
+function getPositionAxis (position) {
+  const [dir] = position.split('-')
+  return dir === 'top' || dir === 'bottom'
+    ? 'y'
+    : 'x'
 }

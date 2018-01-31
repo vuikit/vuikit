@@ -22,8 +22,8 @@ import Column from './column'
 import ColumnHead from './ui/head'
 import Arrow from './ui/sort-arrow'
 
-import { warn } from 'vuikit/core/helpers/debug'
-import { merge, isObject } from 'vuikit/core/util'
+import { warn } from 'vuikit/core/util/debug'
+import { merge, isObject } from 'vuikit/core/util/lang'
 
 export default {
   name: 'TableColumnSort',

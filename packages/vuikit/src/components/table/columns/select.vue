@@ -17,7 +17,7 @@
 <script>
 import ColumnHead from './ui/head'
 import Checkbox from './ui/checkbox'
-import { get } from 'vuikit/core/util'
+import { get } from 'vuikit/core/util/lang'
 
 export default {
   name: 'TableColumnSelect',

@@ -10,8 +10,8 @@
 
 <script>
 import ColumnHead from './ui/head'
-import { get, isUndefined } from 'vuikit/core/util'
-import mergeData from 'vuikit/core/helpers/vue-data-merge'
+import { get, isUndefined } from 'vuikit/core/util/lang'
+import mergeData from 'vuikit/core/util/vue-data-merge'
 
 export default {
   name: 'TableColumn',

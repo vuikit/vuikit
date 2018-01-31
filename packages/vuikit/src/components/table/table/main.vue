@@ -3,7 +3,7 @@ import Row from './row'
 import Cell from './row-cell'
 import Table from './ui/table'
 import MixinSelect from './mixin-select'
-import { merge, get } from 'vuikit/core/util'
+import { merge, get } from 'vuikit/core/util/lang'
 
 export default {
   name: 'Table',
