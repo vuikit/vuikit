@@ -15,7 +15,7 @@ export default mergeData({}, core, {
       attrs: {
         type: htmlType
       },
-      class: ['uk-button', `uk-button-${type}`, {
+      class: ['uk-button', `uk-button-${type || 'default'}`, {
         'uk-active': active,
         [`uk-button-${size}`]: size
       }]

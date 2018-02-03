@@ -6,7 +6,7 @@ export default mergeData({}, core, {
     const { type, size, active } = props
 
     return h('a', mergeData(data, {
-      class: ['uk-button', `uk-button-${type}`, {
+      class: ['uk-button', `uk-button-${type || 'default'}`, {
         'uk-active': active,
         [`uk-button-${size}`]: size
       }]

@@ -11,8 +11,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'default',
-      validator: val => val.match(/^(default|primary|secondary|danger|text|link)$/)
+      validator: val => !val || val.match(/^(primary|secondary|danger|text|link)$/)
     }
   }
 }
