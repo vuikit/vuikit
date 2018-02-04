@@ -27,5 +27,22 @@
   "bugs": {
     "url": "https://github.com/vuikit/vuikit/issues"
   },
-  "homepage": "https://github.com/vuikit/vuikit"
+  "homepage": "https://github.com/vuikit/vuikit",
+  "scripts": {
+    "build": "node -r @std/esm scripts/build.js",
+    "icons": "node -r @std/esm scripts/icons.js"
+  },
+  "devDependencies": {
+    "@miljan/build": "^0.4.1",
+    "@std/esm": "^0.20.0",
+    "uikit": "^3.0.0-beta.39",
+    "rollup": "^0.55.1",
+    "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-cleanup": "^2.0.0",
+    "rollup-plugin-node-resolve": "^3.0.2"
+  },
+  "@std/esm": {
+    "esm": "js",
+    "cjs": true
+  }
 }

@@ -22,7 +22,7 @@ export default {
         viewBox: viewBox
       },
       domProps: {
-        innerHTML: '<rect x="9" y="1" width="1" height="17"></rect><rect x="1" y="9" width="17" height="1"></rect>'
+        innerHTML: '<rect x="9" y="1" width="1" height="17" /><rect x="1" y="9" width="17" height="1" />'
       }
     })
   }

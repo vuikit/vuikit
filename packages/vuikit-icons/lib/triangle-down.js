@@ -22,7 +22,7 @@ export default {
         viewBox: viewBox
       },
       domProps: {
-        innerHTML: '<polygon points="5 7 15 7 10 12"></polygon>'
+        innerHTML: '<polygon points="5 7 15 7 10 12" />'
       }
     })
   }

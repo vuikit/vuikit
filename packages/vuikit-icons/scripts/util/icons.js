@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import globby from 'globby'
 
-import write from '@lump/write'
+import { write } from '@miljan/build'
 
 export async function compile ({ src, dest, tmpl }) {
   const srcIcons = await readIcons(src)

@@ -1,10 +1,5 @@
-import copy from '@lump/copy'
-import write from '@lump/write'
-import rollup from '@lump/rollup'
-import minify from '@lump/minify'
-import remove from '@lump/remove'
-import bannerize from '@lump/banner'
-import copyRecursive from '@lump/copy-recursive'
+import rollup from './util/rollup'
+import { remove, run, task, write, copy, copyRecursive, banner as bannerize, minifyJS } from '@miljan/build'
 
 import pkg from '../package.json'
 import rollupConfig from '../rollup.config'
@@ -15,48 +10,54 @@ const banner = `/**
  * @license ${pkg.license}
  */`
 
-;(async () => {
-  await remove('build/vuikit-icons')
+run(async () => {
+  await remove('dist')
 
-  await Promise.all([
-    copy('packages/vuikit-icons/*.{md,json}', 'build/vuikit-icons'),
-    copyRecursive('packages/vuikit-icons/lib', 'build/vuikit-icons', [
+  await task('Copy Files', () => Promise.all([
+    copy('*.{md,json}', 'dist'),
+    copyRecursive('lib', 'dist', [
       '!**/_import.js'
     ])
-  ])
+  ]))
 
   // compile ESM dist
-  await compile({
-    input: 'packages/vuikit-icons/dist.esm.js',
-    output: {
-      format: 'es'
-    }
-  }, 'build/vuikit-icons/dist/vuikit-icons.esm.js')
+  await task('Compile', async () => {
 
-  // compile CJS dist
-  await compile({
-    input: 'packages/vuikit-icons/dist.cjs.js',
-    output: {
-      format: 'cjs'
-    }
-  }, 'build/vuikit-icons/dist/vuikit-icons.cjs.js')
+    await compile({
+      input: 'build/dist.esm.js',
+      output: {
+        format: 'es'
+      }
+    }, 'dist/dist/vuikit-icons.esm.js')
 
-  // compile UMD dist
-  await compile({
-    input: 'packages/vuikit-icons/dist.cjs.js',
-    output: {
-      name: 'VuikitIcons',
-      format: 'umd'
-    }
-  }, 'build/vuikit-icons/dist/vuikit-icons.js')
+    // compile CJS dist
+    await compile({
+      input: 'build/dist.cjs.js',
+      output: {
+        format: 'cjs'
+      }
+    }, 'dist/dist/vuikit-icons.cjs.js')
 
-  await minify('build/vuikit-icons/dist/vuikit-icons.js', {
-    sourceMap: true,
-    log: true
+    // compile UMD dist
+    await compile({
+      input: 'build/dist.cjs.js',
+      output: {
+        name: 'VuikitIcons',
+        format: 'umd'
+      }
+    }, 'dist/dist/vuikit-icons.js')
+
+    await minifyJS({
+      src: 'dist/dist/vuikit-icons.js',
+      dest: 'dist/dist/vuikit-icons.mins.js',
+      options: {
+        sourceMap: true
+      }
+    })
   })
 
-  await bannerize('build/vuikit-icons/**/*.js', banner)
-})()
+  await bannerize('dist/**/*.js', banner)
+})
 
 async function compile (config, dest) {
   config = {

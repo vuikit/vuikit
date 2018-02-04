@@ -29,7 +29,7 @@ module.exports = {
       .use('less-loader')
       .options({
         paths: [
-          path.resolve(__dirname, '../node_modules')
+          path.resolve(__dirname, '../../../node_modules')
         ]
       })
   }

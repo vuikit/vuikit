@@ -1,5 +1,5 @@
 import { each } from 'vuikit/core/util/lang/object.js'
-import * as Icons from './lib/_import.js'
+import * as Icons from '../lib/_import.js'
 
 const VuikitIcons = {
   install (Vue) {

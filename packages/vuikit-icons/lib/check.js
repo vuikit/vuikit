@@ -22,7 +22,7 @@ export default {
         viewBox: viewBox
       },
       domProps: {
-        innerHTML: '<polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4"></polyline>'
+        innerHTML: '<polyline fill="none" stroke="#000" stroke-width="1.1" points="4,10 8,15 17,4" />'
       }
     })
   }

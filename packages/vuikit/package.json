@@ -9,6 +9,8 @@
   },
   "homepage": "https://vuikit.js.org/",
   "bugs": "https://github.com/vuikit/vuikit/issues",
+  "main": "dist/vuikit.cjs.js",
+  "module": "dist/vuikit.esm.js",
   "keywords": [
     "library",
     "vue",
@@ -16,15 +18,48 @@
     "uikit",
     "vuikit"
   ],
-  "main": "dist/vuikit.cjs.js",
-  "module": "dist/vuikit.esm.js",
   "files": [
     "src",
     "core",
     "dist",
     "*.js"
   ],
+  "scripts": {
+    "dev": "poi --config dev/poi.config.js",
+    "build": "node -r @std/esm scripts/build.js",
+    "lint": "eslint packages/vuikit"
+  },
+  "devDependencies": {
+    "@miljan/build": "^0.4.1",
+    "@std/esm": "^0.20.0",
+    "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.9",
+    "globby": "^7.1.1",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
+    "less-plugin-clean-css": "^1.5.1",
+    "lodash": "^4.17.4",
+    "poi": "^9.6.13",
+    "rollup": "^0.55.1",
+    "rollup-analyzer": "^1.1.0",
+    "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-buble": "^0.18.0",
+    "rollup-plugin-cleanup": "^2.0.0",
+    "rollup-plugin-commonjs": "^8.3.0",
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-vue": "^3.0.0",
+    "uikit": "^3.0.0-beta.38",
+    "vue": "^2.5.13",
+    "vue-loader": "^14.1.1",
+    "vue-play": "^3.2.1",
+    "vue-template-compiler": "^2.5.13"
+  },
   "peerDependencies": {
     "vue": "^2.5.11"
+  },
+  "@std/esm": {
+    "esm": "js",
+    "cjs": true
   }
 }
