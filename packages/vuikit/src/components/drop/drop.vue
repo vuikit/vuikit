@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import { isRtl } from 'vuikit/core/util/dom'
-import { on, off } from 'vuikit/core/util/dom/event'
-import Position from 'vuikit/core/directives/position'
-import { get, includes, isString } from 'vuikit/core/util/lang'
+import { isRtl } from 'vuikit/src/util/dom'
+import { on, off } from 'vuikit/src/util/dom/event'
+import Position from 'vuikit/src/core/v-position'
+import { get, includes, isString } from 'vuikit/src/util/lang'
 
 const positions = [
   'top-left',

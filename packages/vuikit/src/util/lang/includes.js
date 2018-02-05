@@ -1,4 +1,4 @@
-import { isString } from 'vuikit/core/util/lang'
+import { isString } from 'vuikit/src/util/lang'
 
 const strPrototype = String.prototype
 const includesFn = function (search) { return ~this.indexOf(search) }

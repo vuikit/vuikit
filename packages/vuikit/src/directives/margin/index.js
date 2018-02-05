@@ -1,7 +1,7 @@
-import { isRtl } from 'vuikit/core/util/dom'
-import { merge, debounce } from 'vuikit/core/util/lang'
-import { on, off } from 'vuikit/core/util/dom/event'
-import { addClass, removeClass } from 'vuikit/core/util/class'
+import { isRtl } from 'vuikit/src/util/dom'
+import { merge, debounce } from 'vuikit/src/util/lang'
+import { on, off } from 'vuikit/src/util/dom/event'
+import { addClass, removeClass } from 'vuikit/src/util/class'
 
 let id = 1
 

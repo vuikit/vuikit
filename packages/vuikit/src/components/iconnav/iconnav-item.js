@@ -1,5 +1,5 @@
 import VkIconLink from '../icon/icon-link'
-import mergeData from 'vuikit/core/util/vue-data-merge'
+import mergeData from 'vuikit/src/util/vue-data-merge'
 
 export default {
   functional: true,

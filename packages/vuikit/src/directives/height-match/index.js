@@ -1,8 +1,8 @@
-import { css } from 'vuikit/core/util/style'
-import { attr } from 'vuikit/core/util/attr'
-import { isRtl } from 'vuikit/core/util/dom'
-import { on, off } from 'vuikit/core/util/dom/event'
-import { isUndefined, merge, debounce, toArray } from 'vuikit/core/util/lang'
+import { css } from 'vuikit/src/util/style'
+import { attr } from 'vuikit/src/util/attr'
+import { isRtl } from 'vuikit/src/util/dom'
+import { on, off } from 'vuikit/src/util/dom/event'
+import { isUndefined, merge, debounce, toArray } from 'vuikit/src/util/lang'
 
 let id = 1
 

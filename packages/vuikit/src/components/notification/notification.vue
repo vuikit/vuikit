@@ -21,8 +21,8 @@
 
 <script>
 import NotificationMessage from './message'
-import { warn } from 'vuikit/core/util/debug'
-import { isObject, isInteger, isUndefined } from 'vuikit/core/util/lang'
+import { warn } from 'vuikit/src/util/debug'
+import { isObject, isInteger, isUndefined } from 'vuikit/src/util/lang'
 
 const timeouts = {}
 const defaultTimeout = 4500

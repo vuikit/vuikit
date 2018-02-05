@@ -1,7 +1,7 @@
-import { css } from 'vuikit/core/util/style'
-import { width } from 'vuikit/core/util/position'
-import mergeData from 'vuikit/core/util/vue-data-merge'
-import { addClass, removeClass } from 'vuikit/core/util/class'
+import { css } from 'vuikit/src/util/style'
+import { width } from 'vuikit/src/util/position'
+import mergeData from 'vuikit/src/util/vue-data-merge'
+import { addClass, removeClass } from 'vuikit/src/util/class'
 
 import common from './_common'
 

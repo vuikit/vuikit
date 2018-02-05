@@ -1,29 +1,11 @@
-import { css } from 'vuikit/core/util/style'
-import { warn } from 'vuikit/core/util/debug'
-import { addClass } from 'vuikit/core/util/class'
-import { on, off, offAll } from 'vuikit/core/util/dom/event'
-import { positionAt, flipPosition } from 'vuikit/core/util/position'
-import { get, includes, debounce, isObject, isString, toInteger, isUndefined } from 'vuikit/core/util/lang'
+import { css } from 'vuikit/src/util/style'
+import { warn } from 'vuikit/src/util/debug'
+import { addClass } from 'vuikit/src/util/class'
+import { on, off, offAll } from 'vuikit/src/util/dom/event'
+import { positionAt, flipPosition } from 'vuikit/src/util/position'
+import { get, includes, debounce, isObject, isString, toInteger, isUndefined } from 'vuikit/src/util/lang'
 
 let uid = 'v-position'
-
-const positions = [
-  'top-left',
-  'top-center',
-  'top-right',
-
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
-
-  'left-top',
-  'left-center',
-  'left-bottom',
-
-  'right-top',
-  'right-center',
-  'right-bottom'
-]
 
 export default {
   inserted (el, binding, vnode) {
@@ -49,8 +31,13 @@ function position (ctx) {
   const { el, props, vnode } = ctx
   const { target, position, offset, boundary, flip, classPrefix } = props
 
-  if (!includes(positions, position)) {
-    warn('Invalid v-position position', vnode)
+  if (!position.match(/^((top|bottom)-(left|center|right))|((left|right)-(top|center|bottom))$/)) {
+    warn(`'${position}' is not a valid v-position position`, vnode)
+  }
+
+  if (!target || !target.tagName) {
+    warn(`Provided value is not a valid v-position target`, vnode)
+    return
   }
 
   let [dir, align] = position.split('-')

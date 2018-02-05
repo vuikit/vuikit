@@ -1,4 +1,4 @@
-import { merge, isObject, isFunction } from 'vuikit/core/util/lang'
+import { merge, isObject, isFunction } from 'vuikit/src/util/lang'
 
 /*
  * Safely and quickly serialize JavaScript objects

@@ -1,4 +1,4 @@
-import { isUndefined } from 'vuikit/core/util/lang'
+import { isUndefined } from 'vuikit/src/util/lang'
 
 /**
  * Get or Set an element style property

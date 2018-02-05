@@ -1,5 +1,5 @@
-import { on, off, one } from 'vuikit/core/util/dom/event'
-import { addClass, removeClass } from 'vuikit/core/util/class'
+import { on, off, one } from 'vuikit/src/util/dom/event'
+import { addClass, removeClass } from 'vuikit/src/util/class'
 
 const doc = document.documentElement
 

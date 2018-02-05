@@ -1,4 +1,4 @@
-import { includes } from 'vuikit/core/util/lang'
+import { includes } from 'vuikit/src/util/lang'
 
 export default {
   props: {

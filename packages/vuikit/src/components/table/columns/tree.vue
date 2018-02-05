@@ -3,7 +3,7 @@ import Column from '../columns/column'
 import TreeArrow from './ui/tree-arrow'
 import TreeIndent from './ui/tree-indent'
 
-import { get, isUndefined } from 'vuikit/core/util/lang'
+import { get, isUndefined } from 'vuikit/src/util/lang'
 
 export default {
   name: 'TableTreeColumn',

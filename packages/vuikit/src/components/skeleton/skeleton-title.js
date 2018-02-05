@@ -1,5 +1,5 @@
 import Skeleton from './ui/skeleton'
-import dataMerge from 'vuikit/core/util/vue-data-merge'
+import dataMerge from 'vuikit/src/util/vue-data-merge'
 
 export default {
   functional: true,

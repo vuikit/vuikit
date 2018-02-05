@@ -1,6 +1,6 @@
-import { css } from 'vuikit/core/util/style'
-import { debounce, isInteger } from 'vuikit/core/util/lang'
-import { on, off } from 'vuikit/core/util/dom/event'
+import { css } from 'vuikit/src/util/style'
+import { debounce, isInteger } from 'vuikit/src/util/lang'
+import { on, off } from 'vuikit/src/util/dom/event'
 
 function offsetTop (element) {
   return element.getBoundingClientRect().top + window.pageYOffset

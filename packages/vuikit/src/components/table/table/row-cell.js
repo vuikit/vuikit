@@ -1,5 +1,5 @@
-import { get, merge } from 'vuikit/core/util/lang'
-import { warn } from 'vuikit/core/util/debug'
+import { get, merge } from 'vuikit/src/util/lang'
+import { warn } from 'vuikit/src/util/debug'
 
 export default {
   functional: true,
