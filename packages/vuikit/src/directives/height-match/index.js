@@ -4,7 +4,7 @@ import { css } from 'vuikit/src/util/style'
 import { attr } from 'vuikit/src/util/attr'
 import { warn } from 'vuikit/src/util/debug'
 import { isVisible } from 'vuikit/src/util/filter'
-import { isUndefined, isObject, get } from 'vuikit/src/util/lang'
+import { isUndefined, isObject, assign } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
@@ -105,8 +105,10 @@ function getOptions (ctx) {
     warn('v-vk-height-match -> Object expected as configuration', ctx.vnode.context)
   }
 
-  return {
-    target: get(value, 'target', '> *'),
-    row: get(value, 'row', true)
-  }
+  const options = assign({
+    target: '> *',
+    row: true
+  }, value)
+
+  return options
 }

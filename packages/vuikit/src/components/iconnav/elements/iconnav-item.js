@@ -3,8 +3,8 @@ import mergeData from 'vuikit/src/util/vue-data-merge'
 export default {
   functional: true,
   props: {
-    href: true,
-    target: true,
+    href: String,
+    target: String,
     active: {
       type: Boolean,
       default: false

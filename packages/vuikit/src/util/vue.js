@@ -60,3 +60,24 @@ export function resolveSlots (children) {
     return slots
   }, {})
 }
+
+// execute a function on instance
+// and its children resursively
+export function apply (instance, fn) {
+  if (!instance || !instance._isVue) {
+    return
+  }
+
+  fn(instance)
+  instance.$children.forEach(child => apply(child, fn))
+}
+
+// filter out text nodes (possible whitespaces)
+export function filterOutTextNodes (nodes) {
+  return nodes.filter(n => n.tag || isAsyncPlaceholder(n))
+}
+
+// misc
+export function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
+}

@@ -3,7 +3,7 @@ import { warn } from 'vuikit/src/util/debug'
 import { escape } from 'vuikit/src/util/selector'
 import { on, trigger } from 'vuikit/src/util/event'
 import { height, offset } from 'vuikit/src/util/dimensions'
-import { clamp, isObject, get } from 'vuikit/src/util/lang'
+import { clamp, isObject, assign } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
@@ -71,11 +71,13 @@ function getOptions (ctx) {
   const { value } = ctx.binding
 
   if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-magin -> Object expected as configuration', ctx.vnode.context)
+    warn('v-vk-scroll -> Object expected as configuration', ctx.vnode.context)
   }
 
-  return {
-    offset: get(value, 'offset', 0),
-    duration: get(value, 'duration', 1000)
-  }
+  const options = assign({
+    offset: 0,
+    duration: 1000
+  }, value)
+
+  return options
 }

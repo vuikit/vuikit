@@ -3,7 +3,7 @@ import { warn } from 'vuikit/src/util/debug'
 import { isRtl } from 'vuikit/src/util/env'
 import { isVisible } from 'vuikit/src/util/filter'
 import { toggleClass } from 'vuikit/src/util/class'
-import { isObject, noop, get } from 'vuikit/src/util/lang'
+import { isObject, noop, assign } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
@@ -103,9 +103,11 @@ function getOptions (ctx) {
     warn('v-vk-magin -> Object expected as configuration', ctx.vnode.context)
   }
 
-  return {
-    onUpdate: get(value, 'onUpdate', noop),
-    margin: get(value, 'margin', 'uk-margin-small-top'),
-    firstColumn: get(value, 'firstColumn', 'uk-first-column')
-  }
+  const options = assign({
+    onUpdate: noop,
+    margin: 'uk-margin-small-top',
+    firstColumn: 'uk-first-column'
+  }, value)
+
+  return options
 }

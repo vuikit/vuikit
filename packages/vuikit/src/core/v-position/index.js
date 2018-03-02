@@ -3,7 +3,7 @@ import { warn } from 'vuikit/src/util/debug'
 import { toggleClass } from 'vuikit/src/util/class'
 import { trigger } from 'vuikit/src/util/event'
 import { positionAt, flipPosition } from 'vuikit/src/util/dimensions'
-import { get, isObject, isUndefined } from 'vuikit/src/util/lang'
+import { assign, isObject, isUndefined } from 'vuikit/src/util/lang'
 import { positionBefore, positionAfter } from './events'
 
 export default {
@@ -84,24 +84,24 @@ function position (ctx) {
 /**
  * Get the directive props
 **/
-function getProps (ctx) {
+function getOptions (ctx) {
   const { vnode } = ctx
   const { value } = ctx.binding
 
   if (process.env.NODE_ENV !== 'production' && (isUndefined(value) || !isObject(value))) {
-    warn('v-position configuration is missing or is not an Object', vnode.context)
+    warn('v-position -> configuration is missing or is not an Object', vnode.context)
   }
 
-  const props = {
-    target: get(value, 'target'),
-    position: get(value, 'position', 'top-center'),
-    boundary: get(value, 'boundary', window),
-    flip: get(value, 'flip', true),
-    offset: get(value, 'offset', false),
-    mainClass: get(value, 'mainClass')
-  }
+  const options = assign({
+    target: null,
+    position: 'top-center',
+    boundary: window,
+    flip: true,
+    offset: false,
+    mainClass: ''
+  }, value)
 
-  return props
+  return options
 }
 
 /**
@@ -109,7 +109,7 @@ function getProps (ctx) {
 **/
 function getContext (el, binding, vnode) {
   const ctx = { el, binding, vnode }
-  ctx.props = getProps(ctx)
+  ctx.props = getOptions(ctx)
 
   if (!ctx.props) {
     binding.def.unbind(el, binding)

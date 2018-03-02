@@ -3,7 +3,7 @@ import { css } from 'vuikit/src/util/style'
 import { warn } from 'vuikit/src/util/debug'
 import { query } from 'vuikit/src/util/selector'
 import { height, offset } from 'vuikit/src/util/dimensions'
-import { isObject, isNumeric, isString, toFloat, get, endsWith } from 'vuikit/src/util/lang'
+import { isObject, isNumeric, isString, toFloat, assign, endsWith } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
@@ -96,12 +96,14 @@ function getOptions (ctx) {
     warn('v-vk-height-viewport -> Object expected as configuration', ctx.vnode.context)
   }
 
-  return {
-    expand: get(modifiers, 'expand', false),
-    offsetTop: get(value, 'offsetTop', false),
-    offsetBottom: get(value, 'offsetBottom', false),
-    minHeight: get(value, 'minHeight', 0)
-  }
+  const options = assign({
+    expand: false,
+    offsetTop: false,
+    offsetBottom: false,
+    minHeight: 0
+  }, value, modifiers)
+
+  return options
 }
 
 function offsetHeight (el) {
