@@ -1,116 +1,104 @@
+import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
-import { on, offAll } from 'vuikit/src/util/dom/event'
-import { width, height } from 'vuikit/src/util/position'
+import { width, height } from 'vuikit/src/util/dimensions'
 import { addClass, removeClass } from 'vuikit/src/util/class'
+import { SHOWN, HIDDEN, TOGGLE, KEYUP } from '../events'
 
-const win = window
-const body = document.body
-const doc = document.documentElement
+export let active
+export let scrollbarWidth
+export const win = window
+export const body = document.body
+export const doc = document.documentElement
 
 let scroll
-let active
-let activeCount
-let scrollbarWidth
 
-export default (vm) => ({
-  on: {
-    beforeEnter (el) {
-      scrollbarWidth = width(win) - doc.offsetWidth
+export const getScrollbarWidth = () => width(win) - doc.offsetWidth
 
-      scroll = scroll || { x: win.pageXOffset, y: win.pageYOffset }
+export const events = {
+  beforeEnter: el => {
+    const { $refs, $props } = el.__vkOffcanvas
 
-      addClass(doc, 'uk-offcanvas-page')
-      addClass(body, 'uk-offcanvas-container')
+    scrollbarWidth = getScrollbarWidth()
+    scroll = scroll || { x: win.pageXOffset, y: win.pageYOffset }
 
-      if (vm.flip) {
-        addClass(body, 'uk-offcanvas-flip')
-        addClass(vm.$refs.bar, 'uk-offcanvas-bar-flip')
-      }
+    addClass(doc, 'uk-offcanvas-page')
+    addClass(body, 'uk-offcanvas-container')
 
-      if (vm.overlay) {
-        addClass(el, 'uk-offcanvas-overlay')
-        addClass(body, 'uk-offcanvas-overlay')
-      }
-    },
-    afterEnter (el) {
-      if (vm.overlay) {
-        width(vm.$refs.content, width(win) - scrollbarWidth)
-        height(vm.$refs.content, height(win))
+    if ($props.flipped) {
+      addClass($refs.bar, 'uk-offcanvas-bar-flip')
+      // the flip class must be added to the content parent
+      // https://github.com/uikit/uikit/issues/2714
+      addClass($refs.content.parentNode, 'uk-offcanvas-flip')
+    }
 
-        if (scroll) {
-          vm.$refs.content.scrollTop = scroll.y
-        }
-      }
+    if ($props.overlay) {
+      addClass(body, 'uk-offcanvas-overlay')
+    }
+  },
+  afterEnter (el) {
+    const { $refs, $props } = el.__vkOffcanvas
 
-      if (!activeCount) {
-        setGlobalEvents()
-      }
+    if ($props.overlay) {
+      width($refs.content, width(win) - scrollbarWidth)
+      height($refs.content, height(win))
 
-      active = vm
-      activeCount++
-    },
-    afterLeave (el) {
-
-      if (!vm.overlay) {
-        scroll = { x: win.pageXOffset, y: win.pageYOffset }
-      } else if (!scroll) {
-        const { scrollLeft: x, scrollTop: y } = vm.$refs.content
-        scroll = { x, y }
-      }
-
-      removeClass(body, 'uk-offcanvas-flip')
-      removeClass(vm.$refs.bar, 'uk-offcanvas-bar-flip')
-
-      removeClass(doc, 'uk-offcanvas-page')
-      removeClass(body, 'uk-offcanvas-container')
-
-      removeClass(el, 'uk-offcanvas-overlay')
-      removeClass(body, 'uk-offcanvas-overlay')
-
-      body.scrollTop = scroll.y
-      css(body, 'overflowY', '')
-      css(doc, 'overflowY', '')
-
-      width(vm.$refs.content, '')
-      height(vm.$refs.content, '')
-
-      win.scrollTo(scroll.x, scroll.y)
-
-      scroll = null
-
-      activeCount--
-
-      if (!activeCount) {
-        unsetGlobalEvents()
-      }
-
-      if (active === vm) {
-        active = null
+      if (scroll) {
+        $refs.content.scrollTop = scroll.y
       }
     }
+
+    active = el.__vkOffcanvas
+    active.$emit(SHOWN)
+  },
+  afterLeave (el) {
+    const { $refs, $props } = el.__vkOffcanvas
+
+    if (!$props.overlay) {
+      scroll = { x: win.pageXOffset, y: win.pageYOffset }
+    } else if (!scroll) {
+      const { scrollLeft: x, scrollTop: y } = $refs.content
+      scroll = { x, y }
+    }
+
+    removeClass($refs.bar, 'uk-offcanvas-bar-flip')
+    removeClass($refs.content.parentNode, 'uk-offcanvas-flip')
+
+    removeClass(doc, 'uk-offcanvas-page')
+    removeClass(body, 'uk-offcanvas-container')
+    removeClass(body, 'uk-offcanvas-overlay')
+
+    body.scrollTop = scroll.y
+    css(body, 'overflowY', '')
+    css(doc, 'overflowY', '')
+
+    width($refs.content, '')
+    height($refs.content, '')
+
+    win.scrollTo(scroll.x, scroll.y)
+
+    scroll = null
+
+    if (active === el.__vkOffcanvas) {
+      active = null
+    }
+
+    el.__vkOffcanvas.$emit(HIDDEN)
+  }
+}
+
+on(doc, 'click', e => {
+  if (!active) {
+    return
+  }
+
+  const { $refs, $props } = active
+  const clickedOut = !$refs.bar.contains(e.target)
+
+  if (clickedOut && !$props.stucked) {
+    active.$emit(TOGGLE, false)
   }
 })
 
-function unsetGlobalEvents () {
-  offAll('vk-offcanvas')
-}
-
-function setGlobalEvents () {
-  // hide on click out
-  on(doc, 'click', e => {
-    const clickOut = !active.$el.contains(e.target)
-    const clickOnOverlay = e.target === active.$el && active.overlay
-
-    if (clickOut || clickOnOverlay) {
-      active.hide()
-    }
-  }, 'vk-offcanvas')
-
-  // hide on key-esc
-  on(doc, 'keyup', e => {
-    if (e.keyCode === 27 && active) {
-      e.preventDefault()
-      active.hide()
-    }
-  }, 'vk-offcanvas')
-}
+on(doc, 'keyup', e => {
+  active && active.$emit(KEYUP, e)
+})

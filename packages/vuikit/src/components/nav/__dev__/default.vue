@@ -1,82 +1,39 @@
 <template>
   <div class="uk-padding">
 
-    <h2>Default</h2>
+    <h1>Nav</h1>
 
-    <vk-nav>
-      <vk-nav-item label="Active" active />
-      <vk-nav-item-parent label="Parent">
-        <vk-nav-item label="Sub item" />
-        <vk-nav-item label="Sub item" />
-      </vk-nav-item-parent>
-      <vk-nav-item-header label="Header" />
-      <vk-nav-item label="Item" icon="table" />
-      <vk-nav-item label="Item" icon="thumbnails" />
-      <vk-nav-item-divider />
-      <vk-nav-item label="Item" icon="trash" />
-    </vk-nav>
+    <vk-grid class="uk-child-width-1-4@m">
+      <div>
+        <h2>Default</h2>
+        <nav-demo />
+      </div>
 
-    <h2>Nested Navs</h2>
+      <div>
+        <h2>Primary</h2>
+        <nav-demo type="primary" />
+      </div>
 
-    <vk-nav>
-      <vk-nav-item label="Active" active />
-      <vk-nav-item-parent label="Parent">
-        <vk-nav-item label="Sub item" />
-        <vk-nav-item-parent label="Sub item">
-          <vk-nav-item label="Sub item" />
-          <vk-nav-item label="Sub item" />
-        </vk-nav-item-parent>
-      </vk-nav-item-parent>
-    </vk-nav>
+      <div>
+        <h2>No style</h2>
+        <nav-demo :type="false" />
+      </div>
 
-    <!-- <h2>Accordion</h2>
-
-    NOTE: requires JS integration
-
-    <vk-nav>
-      <vk-nav-item label="Active" active />
-      <vk-nav-item-parent label="Parent">
-        <vk-nav-item label="Sub item" />
-        <vk-nav-item-parent label="Sub Item">
-          <vk-nav-item label="Sub item" />
-          <vk-nav-item label="Sub item" />
-        </vk-nav-item-parent>
-      </vk-nav-item-parent>
-      <vk-nav-item-parent label="Parent">
-        <vk-nav-item label="Sub item" />
-        <vk-nav-item label="Sub Item" />
-      </vk-nav-item-parent>
-    </vk-nav> -->
-
-    <h2>Center</h2>
-
-    <div class="uk-card uk-card-default uk-card-body uk-width-1-2@s">
-      <vk-nav center>
-        <vk-nav-item label="Active" active />
-        <vk-nav-item label="Item" />
-        <vk-nav-item label="Item" />
-      </vk-nav>
-    </div>
+      <div>
+        <h2>Center</h2>
+        <nav-demo center />
+      </div>
+    </vk-grid>
 
   </div>
 </template>
 
 <script>
-import {
-  Nav as VkNav,
-  NavItem as VkNavItem,
-  NavItemHeader as VkNavItemHeader,
-  NavItemParent as VkNavItemParent,
-  NavItemDivider as VkNavItemDivider
-} from '../../nav'
+import NavDemo from './_nav'
 
 export default {
   components: {
-    VkNav,
-    VkNavItem,
-    VkNavItemHeader,
-    VkNavItemParent,
-    VkNavItemDivider
+    NavDemo
   }
 }
 </script>

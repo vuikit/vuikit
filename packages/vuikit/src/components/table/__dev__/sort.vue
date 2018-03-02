@@ -1,21 +1,22 @@
 <template>
   <div class="uk-padding">
+
+    <h1>Table With Sort</h1>
+
     <vk-table
       divided
       middle-aligned
       :data="data"
       :sortedBy.sync="sortedBy"
     >
-      <vk-table-column-sort head="Company" cell="company" />
-      <vk-table-column-sort
-        cell="version"
-      >
-        <template slot="head">Slots</template>
-        <template slot="cell" slot-scope="val">
+      <vk-table-column-sort title="Company" cell="company" />
+      <vk-table-column-sort title="Slots" cell="ranking">
+        <div slot="cell" slot-scope="val">
           {{ val }}
-        </template>
+        </div>
       </vk-table-column-sort>
     </vk-table>
+
   </div>
 </template>
 
@@ -23,21 +24,10 @@
 import data from './data.json'
 import orderBy from 'lodash/orderBy'
 
-import {
-  Table as VkTable,
-  TableColumn as VkTableColumn,
-  TableColumnSort as VkTableColumnSort
-} from '../'
-
 export default {
-  components: {
-    VkTable,
-    VkTableColumn,
-    VkTableColumnSort
-  },
   data: () => ({
     sortedBy: {
-      id: 'asc'
+      company: 'asc'
     }
   }),
   computed: {

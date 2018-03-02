@@ -1,7 +1,7 @@
 <template>
   <div class="uk-padding">
 
-    <div class="uk-grid uk-child-width-1-2@m" v-vk-margin>
+    <vk-grid class="uk-child-width-1-2@m">
       <div v-vk-margin>
         <button class="uk-button uk-button-default">Button</button>
         <button class="uk-button uk-button-default">Button</button>
@@ -36,17 +36,7 @@
         <button class="uk-button uk-button-default">Button</button>
         <button class="uk-button uk-button-default">Button</button>
       </div>
-    </div>
+    </vk-grid>
 
   </div>
 </template>
-
-<script>
-import VkMargin from '../'
-
-export default {
-  directives: {
-    VkMargin
-  }
-}
-</script>

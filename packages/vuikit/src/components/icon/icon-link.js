@@ -1,24 +1,14 @@
 import VkIcon from './icon'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/icon-link'
+import { assign } from 'vuikit/src/util/lang'
 
 export default {
+  name: 'VkIconLink',
   functional: true,
-  props: mergeData(VkIcon.props, {
-    reset: {
-      type: Boolean,
-      default: false
-    }
-  }),
-  render: (h, { data, props, children }) =>
-
-    h('a', mergeData(data, {
-      class: ['uk-icon', {
-        'uk-icon-link': props.reset
-      }]
-    }), [
-      props.name
-        ? h(`icon-${props.name}`, { props })
-        : children
+  props: assign({}, VkIcon.props, Element.props),
+  render (h, { data, props, children }) {
+    return h(Element, assign(data, { props }), [
+      h(`icon-${props.icon}`, { props })
     ])
-
+  }
 }

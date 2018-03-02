@@ -4,7 +4,8 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "node -r @std/esm scripts/build.js"
+    "build": "node -r @std/esm scripts/build.js",
+    "lint": "eslint"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.1",

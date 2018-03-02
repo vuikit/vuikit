@@ -1,26 +1,8 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/nav-item-parent'
 
 export default {
+  name: 'VkNavItemParent',
   functional: true,
-  label: {
-    type: String,
-    required: true
-  },
-  render (h, { props, data, children }) {
-
-    return h('li', mergeData(data, {
-      class: 'uk-parent'
-    }), [
-
-      h('a', [
-        props.label
-      ]),
-
-      h('ul', {
-        class: 'uk-nav-sub'
-      }, children)
-
-    ])
-
-  }
+  props: Element.props,
+  render: Element.render
 }

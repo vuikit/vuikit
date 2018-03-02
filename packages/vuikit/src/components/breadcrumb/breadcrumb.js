@@ -1,8 +1,8 @@
-import UiBreadcrumb from './ui/breadcrumb'
+import Element from './elements/breadcrumb'
 
 export default {
+  name: 'VkBreadcrumb',
   functional: true,
-  render (h, { data, children }) {
-    return h(UiBreadcrumb, data, children)
-  }
+  props: Element.props,
+  render: Element.render
 }

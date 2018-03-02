@@ -1,21 +1,8 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/label'
 
 export default {
+  name: 'VkLabel',
   functional: true,
-  props: {
-    type: {
-      type: String,
-      validator: val => !val || val.match(/^(success|warning|danger)$/)
-    }
-  },
-  render: (h, { data, props, children }) => {
-    const { type } = props
-
-    return h('span', mergeData(data, {
-      class: ['uk-label', {
-        [`uk-label-${type}`]: type
-      }]
-    }), children)
-
-  }
+  props: Element.props,
+  render: Element.render
 }

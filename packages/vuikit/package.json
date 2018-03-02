@@ -25,19 +25,23 @@
     "*.js"
   ],
   "scripts": {
-    "dev": "start-storybook -p 6006",
+    "dev": "start-storybook -s ./.storybook/static -p 6006",
     "build": "node -r @std/esm scripts/build.js",
-    "lint": "eslint packages/vuikit"
+    "test": "jest"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.1",
     "@std/esm": "^0.20.0",
     "@storybook/vue": "^3.3.12",
+    "@vue/test-utils": "^1.0.0-beta.12",
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-vue": "^2.0.1",
     "css-loader": "^0.28.9",
     "globby": "^7.1.1",
+    "jest": "^22.4.2",
+    "jest-serializer-vue": "^0.3.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
     "less-plugin-clean-css": "^1.5.1",
@@ -53,7 +57,9 @@
     "rollup-plugin-vue": "^3.0.0",
     "uikit": "^3.0.0-beta.38",
     "vue": "^2.5.13",
+    "vue-jest": "^2.1.0",
     "vue-loader": "^14.1.1",
+    "vue-server-renderer": "^2.5.13",
     "vue-template-compiler": "^2.5.13"
   },
   "peerDependencies": {
@@ -62,5 +68,34 @@
   "@std/esm": {
     "esm": "js",
     "cjs": true
+  },
+  "eslintConfig": {
+    "globals": {
+      "ENV": true
+    },
+    "env": {
+      "jest": true
+    }
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "modulePaths": [
+      "<rootDir>/../../node_modules",
+      "<rootDir>/../../packages"
+    ],
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist"
+    ],
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    },
+    "snapshotSerializers": [
+      "jest-serializer-vue"
+    ]
   }
 }

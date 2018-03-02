@@ -1,16 +1,9 @@
 import { range as getRange } from 'vuikit/src/util/lang'
 
-const def = { total: 200, page: 1, perPage: 10, range: 3 }
-
 /**
  * Returns an array with represented ranges pages
  */
-export default function ({
-  total = def.total,
-  page = def.page,
-  perPage = def.perPage,
-  range = def.range
-} = def) {
+export default function ({ total = 200, page = 1, perPage = 10, range = 3 } = {}) {
   const matrix = []
   const totalPages = Math.ceil(total / perPage)
   // return early if no more than 1 page

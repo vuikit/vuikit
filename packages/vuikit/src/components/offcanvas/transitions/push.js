@@ -1,58 +1,72 @@
 import { css } from 'vuikit/src/util/style'
-import { one } from 'vuikit/src/util/dom/event'
-import mergeData from 'vuikit/src/util/vue-data-merge'
-import { width, height } from 'vuikit/src/util/position'
+import { once } from 'vuikit/src/util/event'
+import { height } from 'vuikit/src/util/dimensions'
 import { addClass, removeClass } from 'vuikit/src/util/class'
+import mergeData from 'vuikit/src/util/vue-data-merge'
 
-import common from './_common'
-
-const win = window
-const doc = document.documentElement
+import { events, scrollbarWidth, doc } from './_common'
 
 export default {
   functional: true,
-  render (h, { parent: vm, data, children }) {
-
+  render (h, { data, children }) {
     const def = {
       props: {
         css: false
       },
       on: {
         beforeEnter (el) {
-          const scrollbarWidth = width(win) - doc.offsetWidth
+          const { $refs, $props } = el.__vkOffcanvas
 
-          css(doc, 'overflowY', vm.flip && scrollbarWidth && vm.overlay
+          // run common transition actions
+          events.beforeEnter(el)
+
+          css(doc, 'overflowY', $props.flipped && scrollbarWidth && $props.overlay
             ? 'scroll'
             : ''
           )
 
-          addClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push')
+          addClass($refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push')
         },
         enter (el, done) {
+          const { $refs } = el.__vkOffcanvas
+
           height(el) // force reflow
           addClass(el, 'uk-open')
-          addClass(vm.$refs.content, 'uk-offcanvas-content-animation')
+          addClass($refs.content, 'uk-offcanvas-content-animation')
 
           // indicate end of transition
-          one(el, 'transitionend', done, e => e.target === vm.$refs.bar)
+          once(el, 'transitionend', done, false, e => e.target === $refs.bar)
+        },
+        afterEnter (el) {
+          // run common transition actions
+          events.afterEnter(el)
         },
         beforeLeave (el) {
+          const { $refs } = el.__vkOffcanvas
+
           removeClass(el, 'uk-open')
-          removeClass(vm.$refs.content, 'uk-offcanvas-content-animation')
+          removeClass($refs.content, 'uk-offcanvas-content-animation')
         },
         leave (el, done) {
+          const { $refs } = el.__vkOffcanvas
+
           // save the ref before event end
           // as the vm will be deleted after
-          const bar = vm.$refs.bar
+          const bar = $refs.bar
           // indicate end of transition
-          one(el, 'transitionend', done, e => e.target === bar)
+          once(el, 'transitionend', done, false, e => e.target === bar)
         },
         afterLeave (el) {
-          removeClass(vm.$refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push')
+          const { $refs } = el.__vkOffcanvas
+
+          removeClass($refs.bar, 'uk-offcanvas-bar-animation uk-offcanvas-push')
+
+          // run common transition actions
+          events.afterLeave(el)
         }
       }
     }
 
-    return h('transition', mergeData(data, def, common(vm)), children)
+    return h('transition', mergeData(def, data), children)
   }
 }

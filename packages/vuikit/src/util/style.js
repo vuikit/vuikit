@@ -1,11 +1,9 @@
 /* eslint-disable one-var, no-mixed-operators, no-useless-call */
-import { append } from './dom'
-import { addClass } from './class'
-import { doc, docEl } from './env'
-import { toNode, toNodes } from './selector'
-import { each, hyphenate, isArray, isNumeric, isObject, isString, isUndefined } from './lang'
+import {append} from './dom'
+import {addClass} from './class'
+import {each, hyphenate, isArray, isNumeric, isObject, isString, isUndefined, toNode, toNodes} from './lang'
 
-var cssNumber = {
+const cssNumber = {
   'animation-iteration-count': true,
   'column-count': true,
   'fill-opacity': true,
@@ -39,7 +37,7 @@ export function css (element, property, value) {
 
     } else if (isArray(property)) {
 
-      var styles = getStyles(element)
+      const styles = getStyles(element)
 
       return property.reduce((props, property) => {
         props[property] = styles[propName(property)]
@@ -65,7 +63,7 @@ export function getStyle (element, property, pseudoElt) {
   return getStyles(element, pseudoElt)[property]
 }
 
-var vars = {}
+const vars = {}
 
 export function getCssVar (name) {
 
@@ -73,7 +71,7 @@ export function getCssVar (name) {
 
     /* usage in css: .var-name:before { content:"xyz" } */
 
-    var element = append(docEl, doc.createElement('div'))
+    const element = append(document.documentElement, document.createElement('div'))
 
     addClass(element, `var-${name}`)
 
@@ -84,7 +82,7 @@ export function getCssVar (name) {
 
     } catch (e) {}
 
-    docEl.removeChild(element)
+    document.documentElement.removeChild(element)
 
   }
 
@@ -92,19 +90,19 @@ export function getCssVar (name) {
 
 }
 
-var cssProps = {}
+const cssProps = {}
 
 export function propName (name) {
 
-  var ret = cssProps[name]
+  let ret = cssProps[name]
   if (!ret) {
     ret = cssProps[name] = vendorPropName(name) || name
   }
   return ret
 }
 
-var cssPrefixes = ['webkit', 'moz', 'ms'],
-  style = doc.createElement('_').style
+const cssPrefixes = ['webkit', 'moz', 'ms']
+const {style} = document.createElement('_')
 
 function vendorPropName (name) {
 
@@ -114,7 +112,7 @@ function vendorPropName (name) {
     return name
   }
 
-  var i = cssPrefixes.length, prefixedName
+  let i = cssPrefixes.length, prefixedName
 
   while (i--) {
     prefixedName = `-${cssPrefixes[i]}-${name}`

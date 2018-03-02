@@ -2,10 +2,6 @@ import { each } from 'vuikit/src/util/lang'
 import * as components from './components/index.js'
 import * as directives from './directives/index.js'
 
-each(components, (def, name) => {
-  def.name = `Vk${def.name}`
-})
-
 const Vuikit = {
   components,
   directives,

@@ -1,30 +1,33 @@
 import { isInteger } from 'vuikit/src/util/lang'
+import ElementPage from './elements/pagination-page'
 
 export default {
   functional: true,
-  render: (h, { parent }) => {
-    // if not rendered by VkPagination, return comment to mark the position
-    if (!(parent.$options && parent.$options._componentTag === 'vk-pagination')) {
-      return h('li', 'pages')
+  render: (h, { data, props, parent }) => {
+    // related to vk-pagination node rerendering,
+    // abort until the context is the right one
+    if (!data.rerendering) {
+      return h('li', {
+        rerender: true
+      })
     }
 
     const { page: currentPage } = parent
 
     return parent.pages.map(page => {
       const isPage = isInteger(page)
-      const isActive = isPage && currentPage === page
 
-      return h('li', { class: { 'uk-active': isActive } }, [
-        isPage
-          ? isActive
-            ? h('span', page)
-            : h('a', {
-              on: { click: e => {
-                parent.$emit('update:page', page)
-              }}
-            }, page)
-          : h('span', '...')
-      ])
+      return isPage
+        ? h(ElementPage, {
+          props: {
+            label: page,
+            active: currentPage === page
+          },
+          on: {
+            click: e => parent.$emit('update:page', page)
+          }
+        })
+        : h('li', [ h('span', '...') ])
     })
   }
 }

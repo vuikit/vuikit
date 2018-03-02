@@ -1,6 +1,5 @@
-import Default from './default.vue'
 import { storiesOf } from '@storybook/vue'
 
-storiesOf('Directives', module)
-  .add('HeighViewport', () => Default)
-  .add('HeighViewport Expand', () => require('./expand.vue').default)
+storiesOf('Directives/HeighViewport', module)
+  .add('Default', () => require('./default').default)
+  .add('Expand', () => require('./expand').default)

@@ -1,5 +1,4 @@
-import Default from './default.vue'
 import { storiesOf } from '@storybook/vue'
 
-storiesOf('Directives', module)
-  .add('Margin', () => Default)
+storiesOf('Directives/Margin', module)
+  .add('Default', () => require('./default').default)

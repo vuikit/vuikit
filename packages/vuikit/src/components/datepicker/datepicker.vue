@@ -64,7 +64,7 @@ import dateMatrix from 'vuikit/src/util/date/matrix'
 import PickerHeader from './header'
 
 export default {
-  name: 'Datepicker',
+  name: 'VkDatepicker',
   components: {
     PickerHeader
   },

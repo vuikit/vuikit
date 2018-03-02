@@ -4,110 +4,96 @@
     <vk-pagination
       align="left"
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-first />
-      <vk-pagination-prev />
+      <vk-pagination-page-first />
+      <vk-pagination-page-prev />
       <vk-pagination-pages />
-      <vk-pagination-next />
-      <vk-pagination-last />
+      <vk-pagination-page-next />
+      <vk-pagination-page-last />
     </vk-pagination>
 
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-first />
-      <vk-pagination-prev />
+      <vk-pagination-page-first />
+      <vk-pagination-page-prev />
       <vk-pagination-pages />
-      <vk-pagination-next />
-      <vk-pagination-last />
+      <vk-pagination-page-next />
+      <vk-pagination-page-last />
     </vk-pagination>
+
     <vk-pagination
       align="right"
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-first />
-      <vk-pagination-prev />
+      <vk-pagination-page-first />
+      <vk-pagination-page-prev />
       <vk-pagination-pages />
-      <vk-pagination-next />
-      <vk-pagination-last />
+      <vk-pagination-page-next />
+      <vk-pagination-page-last />
     </vk-pagination>
 
     <h2>Layout</h2>
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-first />
-      <vk-pagination-prev />
-      <vk-pagination-next />
-      <vk-pagination-last />
+      <vk-pagination-page-first />
+      <vk-pagination-page-prev />
+      <vk-pagination-page-next />
+      <vk-pagination-page-last />
     </vk-pagination>
+
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
       <vk-pagination-pages />
     </vk-pagination>
+
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-prev />
+      <vk-pagination-page-prev />
       <vk-pagination-pages />
-      <vk-pagination-next />
+      <vk-pagination-page-next />
     </vk-pagination>
+
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-prev label="Previous" expand />
-      <vk-pagination-next label="Next" expand />
+      <vk-pagination-page-prev label="Previous" expanded />
+      <vk-pagination-page-next label="Next" expanded />
     </vk-pagination>
+
     <vk-pagination
       :page.sync="page"
-      :total="total"
-      :perPage="perPage"
+      :total="200"
+      :perPage="10"
     >
-      <vk-pagination-first label="First" expand />
-      <vk-pagination-last label="Last" expand />
+      <vk-pagination-page-first label="First" expanded />
+      <vk-pagination-page-last label="Last" expanded />
     </vk-pagination>
 
   </div>
 </template>
 
 <script>
-import {
-  Pagination as VkPagination,
-  PaginationPrev as VkPaginationPrev,
-  PaginationNext as VkPaginationNext,
-  PaginationFirst as VkPaginationFirst,
-  PaginationLast as VkPaginationLast,
-  PaginationPages as VkPaginationPages
-} from '../'
-
 export default {
-  components: {
-    VkPagination,
-    VkPaginationPrev,
-    VkPaginationNext,
-    VkPaginationFirst,
-    VkPaginationLast,
-    VkPaginationPages
-  },
   data: () => ({
-    total: 200,
-    page: 7,
-    perPage: 10
+    page: 7
   })
 }
 </script>

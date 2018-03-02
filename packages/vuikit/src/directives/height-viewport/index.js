@@ -1,78 +1,109 @@
+import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
-import { debounce, isInteger } from 'vuikit/src/util/lang'
-import { on, off } from 'vuikit/src/util/dom/event'
-
-function offsetTop (element) {
-  return element.getBoundingClientRect().top + window.pageYOffset
-}
+import { warn } from 'vuikit/src/util/debug'
+import { query } from 'vuikit/src/util/selector'
+import { height, offset } from 'vuikit/src/util/dimensions'
+import { isObject, isNumeric, isString, toFloat, get, endsWith } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
-    vnode.context.$nextTick(() => {
-      update(el, binding.modifiers, binding.value)
-    })
-
-    on(window, 'resize', debounce(() => {
-      update(el, binding.modifiers, binding.value)
-    }, 20), 'vk-height-viewport')
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+    el.__vkHeightViewportOff = on(window, 'resize', () =>
+      update(el, { binding, vnode })
+    )
   },
-  unbind (el, binding, vnode) {
-    off(window, 'resize', 'vk-height-viewport')
+  componentUpdated (el, binding, vnode) {
+    update(el, { binding, vnode })
+  },
+  unbind (el) {
+    el.__vkHeightViewportOff()
   }
 }
 
-function update (el, modifiers, value = {}) {
-  const viewport = window.innerHeight
-  let offset = 0
-  let height
+function update (el, ctx) {
+  const opts = getOptions(ctx)
 
   css(el, 'boxSizing', 'border-box')
 
-  if (modifiers.expand) {
-    css(el, 'height', '')
-    css(el, 'minHeight', '')
+  const viewport = height(window)
+  let minHeight
+  let offsetTop = 0
 
-    const diff = viewport - document.documentElement.offsetHeight
+  if (opts.expand) {
 
-    height = `${el.offsetHeight + diff}px`
-    css(el, 'minHeight', height)
+    css(el, {height: '', minHeight: ''})
+
+    const diff = viewport - offsetHeight(document.documentElement)
+
+    if (diff > 0) {
+      minHeight = offsetHeight(el) + diff
+    }
+
   } else {
-    const top = offsetTop(el)
 
-    if (top < viewport / 2 && value.offsetTop) {
-      offset += top
+    const { top } = offset(el)
+
+    if (top < viewport / 2 && opts.offsetTop) {
+      offsetTop += top
     }
 
-    if (value.offsetBottom === true) {
-      // offset += this.$el.next().outerHeight() || 0
-      offset += el.nextElementSibling.offsetHeight || 0
-    } else if (isInteger(value.offsetBottom)) {
-      offset += (viewport / 100) * value.offsetBottom
-    } else if (value.offsetBottom && value.offsetBottom.substr(-2) === 'px') {
-      offset += parseFloat(value.offsetBottom)
+    if (opts.offsetBottom === true) {
+
+      offsetTop += offsetHeight(el.nextElementSibling)
+
+    } else if (isNumeric(opts.offsetBottom)) {
+
+      offsetTop += (viewport / 100) * opts.offsetBottom
+
+    } else if (opts.offsetBottom && endsWith(opts.offsetBottom, 'px')) {
+
+      offsetTop += toFloat(opts.offsetBottom)
+
+    } else if (isString(opts.offsetBottom)) {
+
+      offsetTop += offsetHeight(query(opts.offsetBottom, el))
+
     }
 
-    // TODO: support Vue el ref instead of query?
-    // else if (isString(value.offsetBottom)) {
-    //   var el = query(value.offsetBottom, el)
-    //   offset += el && el.offsetHeight || 0
-    // }
+    // on mobile devices (iOS and Android) window.innerHeight !== 100vh
+    minHeight = offsetTop ? `calc(100vh - ${offsetTop}px)` : '100vh'
 
-    height = offset
-      ? `calc(100vh - ${offset}px)`
-      : '100vh'
-
-    css(el, 'min-height', height)
   }
 
-  // This fix is present in UIkit but is not a good fix.
-  // The component content can be updated after applying a fixed height
-  // forcing the height to be lower than the page. Until better
-  // approach keep this fix disabled.
+  if (!minHeight) {
+    return
+  }
 
-  // IE 10-11 fix (min-height on a flex container won't apply to its flex items)
-  // css(el, 'height', '')
-  // if (height && viewport - offset >= el.offsetHeight) {
-  //   css(el, 'height', height)
-  // }
+  css(el, { height: '', minHeight })
+
+  const elHeight = el.offsetHeight
+  if (opts.minHeight && opts.minHeight > elHeight) {
+    css(el, 'minHeight', opts.minHeight)
+  }
+
+  // IE 11 fix (min-height on a flex container won't apply to its flex items)
+  if (viewport - offsetTop >= elHeight) {
+    css(el, 'height', minHeight)
+  }
+}
+
+function getOptions (ctx) {
+  const { value, modifiers } = ctx.binding
+
+  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
+    warn('v-vk-height-viewport -> Object expected as configuration', ctx.vnode.context)
+  }
+
+  return {
+    expand: get(modifiers, 'expand', false),
+    offsetTop: get(value, 'offsetTop', false),
+    offsetBottom: get(value, 'offsetBottom', false),
+    minHeight: get(value, 'minHeight', 0)
+  }
+}
+
+function offsetHeight (el) {
+  return el && (el.offsetHeight || 0)
 }

@@ -1,8 +1,5 @@
-/* eslint-disable one-var, no-mixed-operators, no-useless-call */
-import { supports } from './env'
-import { filterAttr } from './attr'
-import { toNodes } from './selector'
-import { includes, isString, isUndefined } from './lang'
+import {filterAttr} from './attr'
+import {includes, isString, isUndefined, toNodes} from './lang'
 
 export function addClass (element, ...args) {
   apply(element, args, 'add')
@@ -22,23 +19,23 @@ export function replaceClass (element, ...args) {
 }
 
 export function hasClass (element, cls) {
-  return supports.ClassList && toNodes(element).some(element => element.classList.contains(cls))
+  return toNodes(element).some(element => element.classList.contains(cls))
 }
 
 export function toggleClass (element, ...args) {
 
-  if (!supports.ClassList || !args.length) {
+  if (!args.length) {
     return
   }
 
   args = getArgs(args)
 
-  var force = !isString(args[args.length - 1]) ? args.pop() : [] // in iOS 9.3 force === undefined evaluates to false
+  const force = !isString(args[args.length - 1]) ? args.pop() : [] // in iOS 9.3 force === undefined evaluates to false
 
   args = args.filter(Boolean)
 
   toNodes(element).forEach(({classList}) => {
-    for (var i = 0; i < args.length; i++) {
+    for (let i = 0; i < args.length; i++) {
       supports.Force
         ? classList.toggle(...[args[i]].concat(force))
         : (classList[(!isUndefined(force) ? force : !classList.contains(args[i])) ? 'add' : 'remove'](args[i]))
@@ -50,7 +47,7 @@ export function toggleClass (element, ...args) {
 function apply (element, args, fn) {
   args = getArgs(args).filter(Boolean)
 
-  supports.ClassList && args.length && toNodes(element).forEach(({classList}) => {
+  args.length && toNodes(element).forEach(({classList}) => {
     supports.Multiple
       ? classList[fn].apply(classList, args)
       : args.forEach(cls => classList[fn](cls))
@@ -62,3 +59,19 @@ function getArgs (args) {
     args.concat.call(args, isString(arg) && includes(arg, ' ') ? arg.trim().split(' ') : arg)
     , [])
 }
+
+const supports = {};
+
+// IE 11
+(function () {
+
+  let list = document.createElement('_').classList
+  if (list) {
+    list.add('a', 'b')
+    list.toggle('c', false)
+    supports.Multiple = list.contains('b')
+    supports.Force = !list.contains('c')
+  }
+  list = null
+
+})()

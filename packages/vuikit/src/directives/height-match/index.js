@@ -1,51 +1,43 @@
+import { $$ } from 'vuikit/src/util/core'
+import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
 import { attr } from 'vuikit/src/util/attr'
-import { isRtl } from 'vuikit/src/util/dom'
-import { on, off } from 'vuikit/src/util/dom/event'
-import { isUndefined, merge, debounce, toArray } from 'vuikit/src/util/lang'
-
-let id = 1
+import { warn } from 'vuikit/src/util/debug'
+import { isVisible } from 'vuikit/src/util/filter'
+import { isUndefined, isObject, get } from 'vuikit/src/util/lang'
 
 export default {
-  bind (el, binding) {
-    el.vkheightmatchid = id++
-
-    on(window, 'resize', debounce(() => {
-      update(el, binding)
-    }, 10, true), `vk-height-match-${el.vkheightmatchid}`)
-  },
   inserted (el, binding, vnode) {
-    vnode.context.$nextTick(() => update(el, binding))
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+    el.__vkHeightMatchOff = on(window, 'resize', () =>
+      update(el, { binding, vnode })
+    )
   },
-  componentUpdated (el, binding) {
-    update(el, binding)
+  componentUpdated (el, binding, vnode) {
+    update(el, { binding, vnode })
   },
   unbind (el) {
-    off(window, 'resize', `vk-height-match-${el.vkheightmatchid}`)
+    el.__vkHeightMatchOff()
   }
 }
 
-function update (el, binding) {
-  const options = merge({
-    target: ':scope > *',
-    row: true
-  }, (binding.value || {}))
+function update (el, ctx) {
 
-  let elements = el.querySelectorAll(options.target)
+  const opts = getOptions(ctx)
 
-  // convert node list to pure array
-  elements = [].slice.call(elements)
+  let elements = $$(opts.target, el)
 
-  // reset
-  applyHeight(elements, '')
+  css(elements, 'minHeight', '')
 
   // get rows that should be adjusted
-  const rows = getRows(elements, options.row)
+  const rows = getRows(elements, opts.row)
 
   // apply height
   rows.forEach(els => {
     const { height, elements } = match(els)
-    applyHeight(elements, `${height}px`)
+    css(elements, 'minHeight', height)
   })
 }
 
@@ -54,49 +46,21 @@ function getRows (elements, row) {
     return [ elements ]
   }
 
-  const rows = [[]]
+  let lastOffset = false
 
-  for (var i = 0; i < elements.length; i++) {
-    const el = elements[i]
-    const dim = el.getBoundingClientRect()
+  return elements.reduce((rows, el) => {
 
-    if (!dim.height) {
-      continue
+    if (lastOffset !== el.offsetTop) {
+      rows.push([el])
+    } else {
+      rows[rows.length - 1].push(el)
     }
 
-    for (var j = rows.length - 1; j >= 0; j--) {
-      const row = rows[j]
+    lastOffset = el.offsetTop
 
-      if (!row[0]) {
-        row.push(el)
-        break
-      }
+    return rows
 
-      var leftDim = row[0].getBoundingClientRect()
-
-      if (dim.top >= Math.floor(leftDim.bottom)) {
-        rows.push([el])
-        break
-      }
-
-      if (Math.floor(dim.bottom) > leftDim.top) {
-        if (dim.left < leftDim.left && !isRtl()) {
-          row.unshift(el)
-          break
-        }
-
-        row.push(el)
-        break
-      }
-
-      if (j === 0) {
-        rows.unshift([el])
-        break
-      }
-    }
-  }
-
-  return rows
+  }, [])
 }
 
 function match (elements) {
@@ -134,10 +98,15 @@ function match (elements) {
   return { height: max, elements }
 }
 
-function isVisible (el) {
-  return el.offsetHeight
-}
+function getOptions (ctx) {
+  const { value } = ctx.binding
 
-function applyHeight (elements, height) {
-  toArray(elements).forEach(el => css(el, 'minHeight', height))
+  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
+    warn('v-vk-height-match -> Object expected as configuration', ctx.vnode.context)
+  }
+
+  return {
+    target: get(value, 'target', '> *'),
+    row: get(value, 'row', true)
+  }
 }

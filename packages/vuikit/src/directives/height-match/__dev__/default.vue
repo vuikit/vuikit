@@ -1,87 +1,47 @@
 <template>
   <div class="uk-padding">
 
-    <div class="uk-grid uk-child-width-1-2@s">
+    <vk-grid class="uk-child-width-1-2@s">
       <div>
 
         <h3>Each Row</h3>
 
-        <div
-          class="uk-grid uk-child-width-1-2@m"
-          v-vk-margin
-          v-vk-height-match="{ target: ':scope > div > .uk-panel > .uk-panel-title' }"
-        >
-          <div>
-            <div class="uk-panel">
-              <div class="uk-panel-title">1-2-M<br>...<br>...</div>
-            </div>
-          </div>
-          <div>
-            <div class="uk-panel">
-              <div class="uk-panel-title">1-2-M</div>
-            </div>
-          </div>
-          <div>
-            <div class="uk-panel">
-              <div class="uk-panel-title">1-2-M<br>...</div>
-            </div>
-          </div>
-          <div>
-            <div class="uk-panel">
-              <div class="uk-panel-title">1-2-M</div>
-            </div>
-          </div>
-        </div>
+        <vk-grid class="uk-child-width-1-2@m" v-vk-height-match="{ target: '> div > .uk-panel' }">
+          <div><div class="uk-panel">1-2-M<br>...<br>...</div></div>
+          <div><div class="uk-panel">1-2-M</div></div>
+          <div><div class="uk-panel">1-2-M<br>...</div></div>
+          <div><div class="uk-panel">1-2-M</div></div>
+        </vk-grid>
 
       </div>
       <div>
 
         <h3>All Rows</h3>
 
-        <div
-          class="uk-grid uk-child-width-1-2@m"
-          v-vk-margin
-          v-vk-height-match="{ target: ':scope > div > .uk-panel', row: false }"
-        >
+        <vk-grid class="uk-child-width-1-2@m" v-vk-height-match="{ target: ' > div > .uk-panel', row: false }">
           <div><div class="uk-panel">1-2-M<br>...<br>...</div></div>
           <div><div class="uk-panel">1-2-M</div></div>
           <div><div class="uk-panel">1-2-M<br>...</div></div>
           <div><div class="uk-panel">1-2-M</div></div>
-        </div>
+        </vk-grid>
 
       </div>
       <div>
 
         <h3>Hidden Panels</h3>
 
-        <div
-          class="uk-grid uk-child-width-1-2@m"
-          v-vk-margin
-          v-vk-height-match="{ target: ':scope > div > .uk-panel', row: false }"
-        >
+        <vk-grid class="uk-child-width-1-2@m" v-vk-height-match="{ target: ' > div > .uk-panel', row: false }">
           <div><div class="uk-panel" style="display: none;">1-2-M<br>...<br>...</div></div>
           <div><div class="uk-panel">1-2-M<br>...</div></div>
-        </div>
+        </vk-grid>
 
       </div>
-    </div>
+    </vk-grid>
 
   </div>
 </template>
 
-<script>
-import VkHeightMatch from '../'
-import VkMargin from '../../margin'
-
-export default {
-  directives: {
-    VkMargin,
-    VkHeightMatch
-  }
-}
-</script>
-
-<style>
+<style scoped>
   .uk-grid > div > .uk-panel {
     padding: 10px;
     text-align: center;

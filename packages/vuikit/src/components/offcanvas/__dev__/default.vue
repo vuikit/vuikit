@@ -2,45 +2,74 @@
   <vk-offcanvas-content>
     <div class="uk-padding">
 
-      <h2>Default</h2>
-      <div class="uk-grid uk-grid-small uk-child-width-auto uk-flex-between">
-        <div>
-          <vk-button @click="transition = 'none'; flip = false; overlay = false; show = true">None</vk-button>
-          <vk-button @click="transition = 'slide'; flip = false; overlay = false; show = true">Slide</vk-button>
-          <vk-button @click="transition = 'push'; flip = false; overlay = false; show = true">Push</vk-button>
-          <vk-button @click="transition = 'reveal'; flip = false; overlay = false; show = true">Reveal</vk-button>
-        </div>
-        <div>
-          <vk-button @click="transition = 'none'; flip = true; overlay = false; show = true">None</vk-button>
-          <vk-button @click="transition = 'slide'; flip = true; overlay = false; show = true">Slide</vk-button>
-          <vk-button @click="transition = 'push'; flip = true; overlay = false; show = true">Push</vk-button>
-          <vk-button @click="transition = 'reveal'; flip = true; overlay = false; show = true">Reveal</vk-button>
-        </div>
+      <h1>Offcanvas</h1>
+
+      <div v-vk-margin>
+        <vk-button @click="slide = true">Slide</vk-button>
+        <vk-button @click="push = true">Push</vk-button>
+        <vk-button @click="reveal = true">Reveal</vk-button>
+        <vk-button @click="none = true">None</vk-button>
       </div>
 
-      <h2>Overlay</h2>
-      <div class="uk-grid uk-grid-small uk-child-width-auto uk-flex-between">
-        <div>
-          <vk-button @click="transition = 'none'; flip = false; overlay = true; show = true">None</vk-button>
-          <vk-button @click="transition = 'slide'; flip = false; overlay = true; show = true">Slide</vk-button>
-          <vk-button @click="transition = 'push'; flip = false; overlay = true; show = true">Push</vk-button>
-          <vk-button @click="transition = 'reveal'; flip = false; overlay = true; show = true">Reveal</vk-button>
-        </div>
-        <div>
-          <vk-button @click="transition = 'none'; flip = true; overlay = true; show = true">None</vk-button>
-          <vk-button @click="transition = 'slide'; flip = true; overlay = true; show = true">Slide</vk-button>
-          <vk-button @click="transition = 'push'; flip = true; overlay = true; show = true">Push</vk-button>
-          <vk-button @click="transition = 'reveal'; flip = true; overlay = true; show = true">Reveal</vk-button>
-        </div>
-      </div>
+      <h2>Options</h2>
+
+      <vk-button @click="flipped = !flipped">Flipped ({{ flipped }})</vk-button>
+      <vk-button @click="overlay = !overlay">Overlay ({{ overlay }})</vk-button>
 
       <vk-offcanvas
-        :show.sync="show"
-        :flip="flip"
+        mode="none"
+        :flipped="flipped"
         :overlay="overlay"
-        :transition="transition"
+        :show.sync="none"
+        @keyup.esc="none = false"
       >
-        <vk-offcanvas-close @click="show = false" />
+        <vk-offcanvas-bar class="uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close large @click="none = false" />
+          <demo-nav />
+          <demo-icons />
+        </vk-offcanvas-bar>
+      </vk-offcanvas>
+
+      <vk-offcanvas
+        mode="reveal"
+        :flipped="flipped"
+        :overlay="overlay"
+        :show.sync="reveal"
+        @keyup.esc="reveal = false"
+      >
+        <vk-offcanvas-bar class="uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close large @click="reveal = false" />
+          <demo-nav />
+          <demo-icons />
+        </vk-offcanvas-bar>
+      </vk-offcanvas>
+
+      <vk-offcanvas
+        mode="push"
+        :flipped="flipped"
+        :overlay="overlay"
+        :show.sync="push"
+        @keyup.esc="push = false"
+      >
+        <vk-offcanvas-bar class="uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close large @click="push = false" />
+          <demo-nav />
+          <demo-icons />
+        </vk-offcanvas-bar>
+      </vk-offcanvas>
+
+      <vk-offcanvas
+        mode="slide"
+        :flipped="flipped"
+        :overlay="overlay"
+        :show.sync="slide"
+        @keyup.esc="slide = false"
+      >
+        <vk-offcanvas-bar class="uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close large @click="slide = false" />
+          <demo-nav />
+          <demo-icons />
+        </vk-offcanvas-bar>
       </vk-offcanvas>
 
       <p v-for="n in 10">
@@ -52,25 +81,21 @@
 </template>
 
 <script>
-import { Button as VkButton } from '../..'
-import {
-  Offcanvas as VkOffcanvas,
-  OffcanvasClose as VkOffcanvasClose,
-  OffcanvasContent as VkOffcanvasContent
-} from '../'
+import DemoNav from './_nav'
+import DemoIcons from './_icons'
 
 export default {
   components: {
-    VkButton,
-    VkOffcanvas,
-    VkOffcanvasClose,
-    VkOffcanvasContent
+    DemoNav,
+    DemoIcons
   },
   data: () => ({
-    show: false,
-    flip: false,
-    overlay: false,
-    transition: 'none'
+    none: false,
+    push: false,
+    reveal: false,
+    slide: false,
+    flipped: false,
+    overlay: true
   })
 }
 </script>

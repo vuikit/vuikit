@@ -1,5 +1,7 @@
+import Element from './elements/offcanvas-content'
+
 export default {
+  name: 'VkOffcanvasContent',
   functional: true,
-  render: (h, { children }) =>
-    h('div', { class: 'uk-offcanvas-content' }, children)
+  render: Element.render
 }

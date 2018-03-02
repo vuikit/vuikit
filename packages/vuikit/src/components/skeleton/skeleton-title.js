@@ -1,14 +1,8 @@
-import Skeleton from './ui/skeleton'
-import dataMerge from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/skeleton-title'
 
 export default {
+  name: 'VkSkeletonTitle',
   functional: true,
-  props: Skeleton.props,
-  render: (h, { data, props }) =>
-
-    h(Skeleton, dataMerge(data, {
-      class: 'vk-skeleton-title',
-      props
-    }))
-
+  props: Element.props,
+  render: Element.render
 }

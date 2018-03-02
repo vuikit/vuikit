@@ -1,55 +1,47 @@
 <template>
   <div class="uk-padding">
 
-    <table-tree
+    <h1>TableTree</h1>
+
+    <vk-table-tree
       divided
-      single-selectable
-      row-selectable
+      single-row-selectable
       :data="data"
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <table-column-tree
-        head="Custom Header"
+      <vk-table-column-tree
+        title="Tree"
         cell="company"
-      ></table-column-tree>
-      <table-column
-        head="id"
-        cell="_vk_id"
-      ></table-column>
-    </table-tree>
+      ></vk-table-column-tree>
+      <vk-table-column
+        title="id"
+        cell="__vkTable_rowId"
+      ></vk-table-column>
+    </vk-table-tree>
 
     <h2>Variations</h2>
 
-    <table-tree
+    <vk-table-tree
       divided
       narrowed
       striped
       hoverable
-      single-selectable
-      row-selectable
+      single-row-selectable
       :data="data"
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <table-column-tree
-        cell="company"
-      ></table-column-tree>
-    </table-tree>
+      <vk-table-column-tree cell="company"></vk-table-column-tree>
+    </vk-table-tree>
 
   </div>
 </template>
 
 <script>
 import data from './data.json'
-import { TableTree, TableColumn, TableColumnTree } from '../'
 
 export default {
-  components: {
-    TableTree,
-    TableColumn,
-    TableColumnTree
-  },
   data: () => ({
     data,
     expanded: [],

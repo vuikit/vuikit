@@ -1,18 +1,8 @@
-import IconSpinner from './assets/icon'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/spinner'
 
 export default {
+  name: 'VkSpinner',
   functional: true,
-  props: {
-    ratio: {
-      type: [String, Number]
-    }
-  },
-  render (h, { props, data }) {
-    return h('div', mergeData(data, {
-      class: ['uk-icon', 'uk-spinner']
-    }), [
-      h(IconSpinner, { props })
-    ])
-  }
+  props: Element.props,
+  render: Element.render
 }

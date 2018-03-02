@@ -4,9 +4,9 @@ export * from './rect'
 export * from './object'
 export * from './string'
 
-export { default as Promise } from './promise'
 export { default as debounce } from './debounce'
 export { default as stringify } from './stringify'
+export { default as dimensions } from './dimensions'
 
 export { default as get } from './get'
 export { default as noop } from './noop'

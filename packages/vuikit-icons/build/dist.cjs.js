@@ -1,4 +1,3 @@
-import { each } from 'vuikit/core/util/lang/object.js'
 import * as Icons from '../lib/_import.js'
 
 const VuikitIcons = {
@@ -19,3 +18,11 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export default VuikitIcons
+
+function each (obj, cb) {
+  for (var key in obj) {
+    if (cb.call(obj[key], obj[key], key) === false) {
+      break
+    }
+  }
+}

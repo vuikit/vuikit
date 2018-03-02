@@ -1,4 +1,4 @@
-import { isArray, isUndefined } from './'
+import { isArray, isUndefined, isNode, isNodeCollection, isJQuery, isWindow, isDocument } from './'
 
 export function toArray (val) {
   if (val === null || isUndefined(val)) {
@@ -60,6 +60,30 @@ export function toHyphenCase (str) {
     .toLowerCase()
 }
 
+export function toNode (element) {
+  return isNode(element) || isWindow(element) || isDocument(element)
+    ? element
+    : isNodeCollection(element) || isJQuery(element)
+      ? element[0]
+      : isArray(element)
+        ? toNode(element[0])
+        : null
+}
+
+const arrayProto = Array.prototype
+export function toNodes (element) {
+  return isNode(element)
+    ? [element]
+    : isNodeCollection(element)
+      ? arrayProto.slice.call(element)
+      : isArray(element)
+        ? element.map(toNode).filter(Boolean)
+        : isJQuery(element)
+          ? element.toArray()
+          : []
+}
+
 // alias
 export { toHyphenCase as hyphenate }
 export { toCapital as ucfirst }
+export { toString as toStr }

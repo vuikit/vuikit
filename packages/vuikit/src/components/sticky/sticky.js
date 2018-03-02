@@ -1,35 +1,43 @@
-// import { Animation } from 'vuikit/src/util/dom'
-import { css } from 'vuikit/src/util/style'
-import { warn } from 'vuikit/src/util/debug'
-import { isString, isInteger } from 'vuikit/src/util/lang'
+/* eslint-disable no-mixed-operators */
+import { $ } from 'vuikit/src/util/core'
 import { on } from 'vuikit/src/util/dom/event'
-import { addClass, removeClass, toggleClass } from 'vuikit/src/util/class'
+import { attr } from 'vuikit/src/util/attr'
+import { warn } from 'vuikit/src/util/debug'
+import { query } from 'vuikit/src/util/selector'
+import { fastdom } from 'vuikit/src/util/fastdom'
+import { Animation } from 'vuikit/src/util/animation'
+import { after, remove } from 'vuikit/src/util/dom'
+import { css, getCssVar } from 'vuikit/src/util/style'
+import { within, isVisible } from 'vuikit/src/util/filter'
+import { offset as offsetOf, height } from 'vuikit/src/util/dimensions'
+import { assign, isNumeric, isString, toFloat, noop } from 'vuikit/src/util/lang'
+import { hasClass, addClass, removeClass, toggleClass, replaceClass } from 'vuikit/src/util/class'
 
-// let dir
+import { ACTIVE, INACTIVE } from './constants'
+import MixinEvents from 'vuikit/src/mixins/events'
+
+let scrollDir
 let scroll = 0
 
 on(window, 'scroll', () => {
-  // dir = scroll < window.pageYOffset
-  //   ? 'down'
-  //   : 'up'
+  scrollDir = scroll < window.pageYOffset
+    ? 'down'
+    : 'up'
   scroll = window.pageYOffset
 })
 
-function offsetTop (element) {
-  return element.getBoundingClientRect().top + window.pageYOffset
-}
-
 export default {
-  name: 'Sticky',
+  name: 'VkSticky',
   abstract: true,
+  mixins: [MixinEvents],
   props: {
     top: {
       type: [Number, String],
       default: 0
     },
     bottom: {
-      type: [Number, String],
-      default: 0
+      type: [Boolean, String],
+      default: false
     },
     offset: {
       type: Number,
@@ -46,238 +54,293 @@ export default {
     showOnUp: {
       type: Boolean,
       default: false
+    },
+    media: {
+      type: [Number, String]
+    },
+    selTarget: {
+      type: String
+    },
+    // Initially make sure that the Sticky is not
+    // over a targeted element via location hash
+    target: {
+      type: [Number, Boolean],
+      default: false
     }
   },
-  data: () => ({
-    isActive: false,
-    topOffset: 0,
-    outerHeight: 0,
+  classMapping: {
     clsFixed: 'uk-sticky-fixed',
     clsBelow: 'uk-sticky-below',
     clsActive: 'uk-active',
     clsInactive: ''
-  }),
-  render (h) {
-    let children = this.$options._renderChildren
-
-    if (!children) {
-      return
-    }
-
-    // filter out possible whitespaces
-    children = children.filter(n => n.tag)
-
-    if (!children.length) {
-      return
-    }
-
-    // warn multiple elements
-    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
-      warn('<vk-sticky> can only be used on a single element.', this.$parent)
-    }
-
-    const rawChild = children[0]
-
-    on(window, 'scroll', () => {
-      this.offsetTop = offsetTop(this.$el)
-      this.visible = isVisible(this.$el)
-      this.onScroll()
-    }, this._uid)
-
-    return rawChild
   },
+  data: () => ({
+    isActive: false
+  }),
   computed: {
-    stickyStartPoint () {
-      let top = this.top
-
-      if (isInteger(top) && this.topOffset) {
-        top = this.topOffset + parseFloat(top)
-      } else if (isString(top) && top.match(/^-?\d+vh$/)) {
-        top = getViewportHeightOffset(top)
-      } else {
-        top = this.getElementOffset(top)
-      }
-
-      return Math.max(parseFloat(top), this.topOffset) - this.offset
+    outerHeight () {
+      return (this.isActive ? this.$refs.placeholder : this.$el).offsetHeight
     },
-    stickyEndPoint () {
-      let bottom = this.bottom
-
-      // get element
-      bottom = this.getElementOffset(bottom === true
-        ? this.$el.parent()
-        : bottom
-      )
-
-      return bottom && bottom - this.outerHeight
-    },
-    inactive () {
-      return this.media && !window.matchMedia(this.media).matches
-    },
-    $widthElement () {
-      return this.widthElement || this.$el
-    },
-    bottomOffset () {
-      return this.topOffset + this.outerHeight
+    $selTarget () {
+      return this.selTarget
+        ? $(this.selTarget, this.$el)
+        : this.$el
     }
   },
   methods: {
     show () {
       this.isActive = true
       this.update()
-      this.placeholder.removeAttribute('hidden')
+      attr(this.$refs.placeholder, 'hidden', null)
     },
     hide () {
-      addClass(this.$el, this.clsInactive)
-      removeClass(this.$el, `${this.clsFixed} ${this.clsActive} ${this.clsBelow}`)
-      css(this.$el, 'position', '')
-      css(this.$el, 'width', '')
-      css(this.$el, 'top', '')
-      this.placeholder.setAttribute('hidden', 'hidden')
-    },
-    update () {
-      let top = Math.max(0, this.offset)
-      const active = scroll > this.stickyStartPoint
+      const { clsFixed, clsBelow, clsActive } = this.$options.classMapping
 
-      if (this.stickyEndPoint && scroll > this.stickyEndPoint - this.offset) {
-        top = this.stickyEndPoint - scroll
+      if (!this.isActive || hasClass(this.$selTarget, clsActive)) {
+        this.$emit(INACTIVE)
       }
 
-      addClass(this.$el, this.clsFixed)
-      css(this.$el, 'width', `${this.$widthElement.offsetWidth}px`)
-      css(this.$el, 'position', 'fixed')
-      css(this.$el, 'top', `${top}px`)
-
-      toggleClass(this.$el, this.clsActive, active)
-      toggleClass(this.$el, this.clsInactive, !active)
-      toggleClass(this.$el, this.clsBelow, scroll > this.bottomOffset)
+      removeClass(this.$el, clsFixed, clsBelow)
+      css(this.$el, { position: '', top: '', width: '' })
+      attr(this.$refs.placeholder, 'hidden', '')
     },
-    // ready () {
-    //   if (!(this.target && window.location.hash && window.pageYOffset > 0)) {
-    //     return
-    //   }
-    //
-    //   var target = query(window.location.hash)
-    //
-    //   if (target) {
-    //     window.requestAnimationFrame(() => {
-    //       var top = offsetTop(target)
-    //       var elTop = offsetTop(this.$el)
-    //       var elHeight = this.$el[0].offsetHeight
-    //
-    //       if (elTop + elHeight >= top && elTop <= top + target[0].offsetHeight) {
-    //         window.scrollTo(0, top - elHeight - this.target - this.offset)
-    //       }
-    //     })
-    //   }
-    // },
+    updateOnLoadAndResize () {
+      this.updatePlaceholder()
+      this.updateWidthElement()
+
+      this.topOffset = offsetOf(this.isActive ? this.$refs.placeholder : this.$el).top
+      this.bottomOffset = this.topOffset + this.outerHeight
+
+      const top = parseProp('top', this)
+      const bottom = parseProp('bottom', this)
+
+      this.stickAt = Math.max(toFloat(top), this.topOffset) - this.offset
+      this.stickUntil = bottom && bottom - this.outerHeight
+      this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
+
+      if (this.isActive) {
+        this.update()
+      }
+    },
+    ready () {
+      if (!(this.target && location.hash && window.pageYOffset > 0)) {
+        return
+      }
+
+      const target = $(location.hash)
+
+      if (target) {
+        fastdom.read(() => {
+          const { top } = offsetOf(target)
+          const elTop = offsetOf(this.$el).top
+          const elHeight = this.$el.offsetHeight
+
+          if (elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
+            window.scrollTo(0, top - elHeight - this.target - this.offset)
+          }
+        })
+      }
+    },
     onScroll () {
-      // if (scroll < 0 || !this.visible || this.disabled || (this.showOnUp && !dir)) {
-      //   return
-      // }
+      const visible = isVisible(this.$el)
 
-      const scrollNotReachedStartPoint = scroll < this.stickyStartPoint
-      // const scrollIsBehindStartPoint = scroll <= this.stickyStartPoint
-      // const scrollNotReachedEndPoint = scroll <= this.bottomOffset
-      // const uikitComplexEval = scrollIsBehindStartPoint || dir === 'down' || (dir === 'up' && !this.isActive && scrollNotReachedEndPoint)
+      // place the logic into descriptive variables
+      const isHidden = !visible
+      const {bottomOffset, topOffset, stickAt} = this
+      const {showOnUp, disabled, isActive, inactive, animation} = this
 
-      if (this.inactive || scrollNotReachedStartPoint) {
-        if (!this.isActive) {
+      // this one os confusing, in what situation
+      // a scroll could be less than 0?
+      const noScroll = scroll < 0
+
+      if (noScroll || isHidden || disabled || (showOnUp && !scrollDir)) {
+        return
+      }
+
+      const scrollingUp = scrollDir === 'up'
+      const scrollingDown = scrollDir === 'down'
+      const stickAtReached = scroll <= stickAt
+      const stickAtNotReached = scroll < stickAt
+      const bottomOffsetReached = scroll <= bottomOffset
+
+      // the condition is still long and
+      // the entire logic could be refactored
+      if (inactive || stickAtNotReached || showOnUp &&
+        (stickAtReached || scrollingDown ||
+          (scrollingUp && !isActive && bottomOffsetReached)
+        )
+      ) {
+        if (!isActive) {
           return
         }
 
         this.isActive = false
 
-        if (this.animation && scroll > this.topOffset) {
-          Animation.cancel(this.$el).then(() =>
-            Animation.out(this.$el, this.animation).then(() => this.hide())
-          )
+        if (animation && scroll > topOffset) {
+          Animation.cancel(this.$el)
+          Animation.out(this.$el, `uk-animation-${animation}`).then(() => this.hide(), noop)
         } else {
           this.hide()
         }
-      } else if (this.isActive) {
+      } else if (isActive) {
         this.update()
-      } else if (this.animation) {
-        Animation.cancel(this.$el).then(() => {
-          this.show()
-          Animation.in(this.$el, this.animation)
-        })
+      } else if (animation) {
+        Animation.cancel(this.$el)
+        this.show()
+        Animation.in(this.$el, `uk-animation-${animation}`).catch(noop)
       } else {
         this.show()
       }
     },
-    createPlaceholder () {
-      this.placeholder = document.createElement('div')
-      addClass(this.placeholder, 'uk-sticky-placeholder')
-      this.placeholder.setAttribute('hidden', 'hidden')
-      if (!this.$el.parentNode.contains(this.placeholder)) {
-        this.$el.parentNode.appendChild(this.placeholder)
+    update () {
+      const { clsFixed, clsBelow, clsActive } = this.$options.classMapping
+
+      let top = Math.max(0, this.offset)
+      const active = this.stickAt !== 0 || scroll > this.stickAt
+
+      if (this.stickUntil && scroll > this.stickUntil - this.offset) {
+        top = this.stickUntil - scroll
       }
+
+      css(this.$el, {
+        position: 'fixed',
+        top: `${top}px`,
+        width: this.width
+      })
+
+      if (hasClass(this.$selTarget, clsActive)) {
+
+        if (!active) {
+          this.$emit(INACTIVE)
+        }
+
+      } else if (active) {
+        this.$emit(ACTIVE)
+      }
+
+      toggleClass(this.$el, clsBelow, scroll > this.bottomOffset)
+      addClass(this.$el, clsFixed)
     },
     updatePlaceholder () {
-      css(this.placeholder, 'height', `${this.outerHeight}px`)
-      css(this.placeholder, 'marginTop', css(this.$el, 'marginTop'))
-      css(this.placeholder, 'marginBottom', css(this.$el, 'marginBottom'))
-      css(this.placeholder, 'marginLeft', css(this.$el, 'marginLeft'))
-      css(this.placeholder, 'marginRight', css(this.$el, 'marginRight'))
-    },
-    getElementOffset (el) {
-      el = isString(el)
-        ? this.$vnode.context.$refs[el]
-        : el
+      css(this.$refs.placeholder, assign(
+        { height: css(this.$el, 'position') !== 'absolute' ? this.outerHeight : '' },
+        css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
+      ))
 
-      if (el) {
-        return offsetTop(el) + el.offsetHeight
+      if (!within(this.$refs.placeholder, window.document)) {
+        after(this.$el, this.$refs.placeholder)
+        attr(this.$refs.placeholder, 'hidden', '')
       }
+    },
+    updateWidthElement () {
+      attr(this.$refs.widthElement, 'hidden', null)
+      this.width = this.$refs.widthElement.offsetWidth
+      attr(this.$refs.widthElement, 'hidden', this.isActive ? null : '')
     }
   },
+  created () {
+    const { clsActive, clsInactive } = this.$options.classMapping
+
+    this.$on(ACTIVE, () => replaceClass(this.$selTarget, clsInactive, clsActive))
+    this.$on(INACTIVE, () => replaceClass(this.$selTarget, clsActive, clsInactive))
+  },
   mounted () {
-    // add sticky class
     addClass(this.$el, 'uk-sticky')
 
-    // calculate offset on load and resize
-    // this.topOffset = this.isActive
-    //   ? offsetTop(this.placeholder)
-    //   : offsetTop(this.$el)
+    this.$refs.placeholder = $('<div class="uk-sticky-placeholder"></div>')
+    this.$refs.widthElement = (this.widthElement && query(this.widthElement)) || this.$refs.placeholder
 
-    this.topOffset = offsetTop(this.$el)
+    if (!this.isActive) {
+      this.hide()
+    }
 
-    // calculate outerHeight
-    // const outerElement = active
-    //   ? this.placeholder
-    //   : this.$el
-    // this.outerHeight = css(this.$el, 'position') !== 'absolute'
-    //   ? outerElement.offsetHeight
-    //   : ''
+    // delay execution with setTimeout as
+    // to wait for possible directives execution
+    this.$nextTick(() => setTimeout(() => {
+      this.ready()
+      this.updateOnLoadAndResize()
+      this.onScroll()
+    }, 0))
 
-    this.outerHeight = this.$el.offsetHeight
+    this.on(window, 'scroll', this.onScroll)
+    this.on(window, 'resize', this.updateOnLoadAndResize)
+  },
+  beforeDestroy () {
+    const { clsInactive } = this.$options.classMapping
 
-    this.createPlaceholder()
-    this.updatePlaceholder()
+    if (this.isActive) {
+      this.isActive = false
+      this.hide()
+      removeClass(this.$selTarget, clsInactive)
+    }
 
-    const active = scroll > this.stickyStartPoint
+    remove(this.$refs.placeholder)
+    this.$refs.placeholder = null
+    this.$refs.widthElement = null
+  },
+  render (h) {
+    let children = this.$slots.default
 
-    if (active) {
-      this.isActive = true
-      this.update()
-    } else {
-      addClass(this.$el, this.clsInactive)
+    if (!children) {
+      return
+    }
+
+    // filter out text nodes (possible whitespaces)
+    children = children.filter(n => n.tag || isAsyncPlaceholder(n))
+
+    if (!children.length) {
+      return
+    }
+
+    // warn if using multiple elements
+    if (process.env.NODE_ENV !== 'production' && children.length > 1) {
+      warn('vk-sticky can only be used on a single element', this.$parent)
+    }
+
+    return children[0]
+  }
+}
+
+function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
+
+  const value = $props[prop]
+
+  if (!value) {
+    return
+  }
+
+  if (isNumeric(value)) {
+
+    return propOffset + toFloat(value)
+
+  } else if (isString(value) && /^-?\d+vh$/.test(value)) {
+
+    return height(window) * toFloat(value) / 100
+
+  } else {
+
+    const el = value === true ? $el.parentNode : query(value, $el)
+
+    if (el) {
+      return offsetOf(el).top + el.offsetHeight
+    }
+
+  }
+}
+
+export function isAsyncPlaceholder (node) {
+  return node.isComment && node.asyncFactory
+}
+
+function toMedia (value) {
+  if (isString(value)) {
+    if (value[0] === '@') {
+      const name = `media-${value.substr(1)}`
+      value = toFloat(getCssVar(name))
+    } else if (isNaN(value)) {
+      return value
     }
   }
-}
 
-function isVisible (el) {
-  if (!el) {
-    return false
-  }
-
-  const elemTop = el.getBoundingClientRect().top
-  const elemBottom = el.getBoundingClientRect().bottom
-  const isVisible = (elemTop >= 0) && (elemBottom <= window.innerHeight)
-
-  return isVisible
-}
-
-function getViewportHeightOffset (height) {
-  return window.innerHeight * parseFloat(height) / 100
+  return value && !isNaN(value) ? `(min-width: ${value}px)` : false
 }

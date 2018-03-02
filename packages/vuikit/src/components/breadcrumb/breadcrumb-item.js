@@ -1,10 +1,8 @@
-import UiBreadcrumbItem from './ui/breadcrumb-item'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/breadcrumb-item'
 
 export default {
+  name: 'VkBreadcrumbItem',
   functional: true,
-  props: UiBreadcrumbItem.props,
-  render (h, { data, props, children, parent }) {
-    return h(UiBreadcrumbItem, mergeData(data, { props }), children)
-  }
+  props: Element.props,
+  render: Element.render
 }

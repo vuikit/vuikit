@@ -1,17 +1,12 @@
 import { css } from 'vuikit/src/util/style'
-import { width } from 'vuikit/src/util/position'
-import mergeData from 'vuikit/src/util/vue-data-merge'
 import { addClass, removeClass } from 'vuikit/src/util/class'
+import mergeData from 'vuikit/src/util/vue-data-merge'
 
-import common from './_common'
-
-const win = window
-const doc = document.documentElement
+import { events, scrollbarWidth, doc } from './_common'
 
 export default {
   functional: true,
-  render (h, { parent: vm, data, children }) {
-
+  render (h, { data, children }) {
     const def = {
       props: {
         css: false
@@ -20,23 +15,35 @@ export default {
         enter: (el, done) => done(),
         leave: (el, done) => done(),
         beforeEnter (el) {
-          const scrollbarWidth = width(win) - doc.offsetWidth
+          const { $refs, $props } = el.__vkOffcanvas
 
-          css(doc, 'overflowY', scrollbarWidth && vm.overlay
+          // run common transition actions
+          events.beforeEnter(el)
+
+          css(doc, 'overflowY', scrollbarWidth && $props.overlay
             ? 'scroll'
             : ''
           )
 
           addClass(el, 'uk-open')
-          addClass(vm.$refs.bar, 'uk-offcanvas-none')
+          addClass($refs.bar, 'uk-offcanvas-none')
+        },
+        afterEnter (el) {
+          // run common transition actions
+          events.afterEnter(el)
         },
         afterLeave (el) {
+          const { $refs } = el.__vkOffcanvas
+
           removeClass(el, 'uk-open')
-          removeClass(vm.$refs.bar, 'uk-offcanvas-none')
+          removeClass($refs.bar, 'uk-offcanvas-none')
+
+          // run common transition actions
+          events.afterLeave(el)
         }
       }
     }
 
-    return h('transition', mergeData(data, def, common(vm)), children)
+    return h('transition', mergeData(def, data), children)
   }
 }

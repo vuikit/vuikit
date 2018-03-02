@@ -14,13 +14,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import VkHeightViewport from '../'
-
-export default {
-  directives: {
-    VkHeightViewport
-  }
-}
-</script>

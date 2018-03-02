@@ -1,14 +1,29 @@
-import UiSubnavItem from './ui/subnav-item'
+import Element from './elements/subnav-item'
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import { assign } from 'vuikit/src/util/lang'
 
 export default {
+  name: 'VkSubnavItem',
   functional: true,
-  props: mergeData(UiSubnavItem.props, {
+  props: assign({}, Element.props, {
     name: {
-      type: String
+      type: [Number, String]
     }
   }),
-  render (h, { data, props, children }) {
-    return h(UiSubnavItem, mergeData(data, { props }), children)
+  render (h, { props, data, parent }) {
+
+    if (data.rerendering) {
+      delete data.class
+    }
+
+    return h(Element, mergeData(data, { props }, {
+      rerender: true,
+      on: {
+        click: e => {
+          e.preventDefault()
+          parent.triggerUpdate(data.key)
+        }
+      }
+    }))
   }
 }

@@ -27,8 +27,10 @@
         <div class="uk-clearfix uk-margin">
           <div class="uk-button-group uk-float-left">
             <pos-button position="left-center" />
+            <pos-button position="left-justify" v-if="withJustifyPosition" />
           </div>
           <div class="uk-button-group uk-float-right">
+            <pos-button position="right-justify" v-if="withJustifyPosition" />
             <pos-button position="right-center" />
           </div>
         </div>
@@ -121,7 +123,7 @@ const PosButton = {
         'uk-active': this.$parent.position === this.position
       }],
       on: {
-        mouseenter: e => {
+        click: e => {
           this.$parent.position = this.position
           this.$parent.triggerChange()
         }
@@ -153,7 +155,8 @@ export default {
       this.$emit('change', {
         flip: this.flip,
         position: this.position,
-        target: this.targetElement
+        target: this.targetElement,
+        boundary: this.boundaryElement
       })
       this.$forceUpdate()
     }

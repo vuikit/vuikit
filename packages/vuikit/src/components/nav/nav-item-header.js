@@ -1,18 +1,8 @@
+import Element from './elements/nav-item-header'
+
 export default {
+  name: 'VkNavItemHeader',
   functional: true,
-  props: {
-    label: {
-      type: String,
-      required: true
-    }
-  },
-  render (h, { props }) {
-
-    return h('li', {
-      class: 'uk-nav-header'
-    }, [
-      props.label
-    ])
-
-  }
+  props: Element.props,
+  render: Element.render
 }

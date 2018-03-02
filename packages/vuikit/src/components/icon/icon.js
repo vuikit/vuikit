@@ -1,23 +1,21 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/icon'
 
 export default {
+  name: 'VkIcon',
   functional: true,
   props: {
-    name: {
+    icon: {
       type: String,
-      default: ''
+      required: true
     },
     viewBox: String,
     ratio: [String, Number],
     width: [String, Number],
     height: [String, Number]
   },
-  render: (h, { data, props, children }) =>
-
-    h('span', mergeData(data, { class: ['uk-icon'] }), [
-      props.name
-        ? h(`icon-${props.name}`, { props })
-        : children
+  render (h, { data, props, children }) {
+    return h(Element, data, [
+      h(`icon-${props.icon}`, { props })
     ])
-
+  }
 }

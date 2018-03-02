@@ -1,11 +1,10 @@
 import { css } from 'vuikit/src/util/style'
 import { warn } from 'vuikit/src/util/debug'
-import { addClass } from 'vuikit/src/util/class'
-import { on, off, offAll } from 'vuikit/src/util/dom/event'
-import { positionAt, flipPosition } from 'vuikit/src/util/position'
-import { get, includes, debounce, isObject, isString, toInteger, isUndefined } from 'vuikit/src/util/lang'
-
-let uid = 'v-position'
+import { toggleClass } from 'vuikit/src/util/class'
+import { trigger } from 'vuikit/src/util/event'
+import { positionAt, flipPosition } from 'vuikit/src/util/dimensions'
+import { get, isObject, isUndefined } from 'vuikit/src/util/lang'
+import { positionBefore, positionAfter } from './events'
 
 export default {
   inserted (el, binding, vnode) {
@@ -21,29 +20,27 @@ export default {
     if (ctx) {
       position(ctx)
     }
-  },
-  unbind (el, binding, vnode) {
-    offAll(uid)
   }
 }
 
 function position (ctx) {
   const { el, props, vnode } = ctx
-  const { target, position, offset, boundary, flip, classPrefix } = props
+  const { target, position, offset, boundary, flip, mainClass } = props
 
-  if (!position.match(/^((top|bottom)-(left|center|right))|((left|right)-(top|center|bottom))$/)) {
-    warn(`'${position}' is not a valid v-position position`, vnode)
+  if (process.env.NODE_ENV !== 'production' && !position.match(/^((top|bottom)-(left|center|right))|((left|right)-(top|center|bottom))$/)) {
+    warn(`v-position -> '${position}' -> no valid position`, vnode)
   }
 
-  if (!target || !target.tagName) {
-    warn(`Provided value is not a valid v-position target`, vnode)
-    return
+  if (process.env.NODE_ENV !== 'production' && (!target || !target.tagName)) {
+    warn(`v-position -> no valid target`, vnode)
   }
 
   let [dir, align] = position.split('-')
 
+  trigger(el, positionBefore)
+
   // remove any position class
-  const classesRx = new RegExp(`${classPrefix}-(top|bottom|left|right)(-[a-z]+)?`)
+  const classesRx = new RegExp(`${mainClass}-(top|bottom|left|right)(-[a-z]+)?`)
   el.className = el.className.replace(classesRx, '')
 
   // reset pos
@@ -78,13 +75,10 @@ function position (ctx) {
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
 
-  // add on resize events
-  setResizeEvent(ctx)
-
   // add position class
-  if (classPrefix) {
-    addClass(el, `${classPrefix}-${dir}-${align}`)
-  }
+  toggleClass(el, `${mainClass}-${dir}-${align}`, offset === false)
+
+  trigger(el, positionAfter)
 }
 
 /**
@@ -94,31 +88,20 @@ function getProps (ctx) {
   const { vnode } = ctx
   const { value } = ctx.binding
 
-  if (isUndefined(value) || !isObject(value)) {
+  if (process.env.NODE_ENV !== 'production' && (isUndefined(value) || !isObject(value))) {
     warn('v-position configuration is missing or is not an Object', vnode.context)
-    return false
   }
 
-  let target = value.target || null
-  const delay = get(value, 'delay', 0)
-  const flip = get(value, 'flip', true)
-  const classPrefix = get(value, 'classPrefix', 'v-position')
-  const boundary = value.boundary || window
-  const offset = toInteger(value.offset) || 0
-  const position = value.position || 'top-center'
-
-  if (isString(target)) {
-    target = vnode.context.$refs[target]
+  const props = {
+    target: get(value, 'target'),
+    position: get(value, 'position', 'top-center'),
+    boundary: get(value, 'boundary', window),
+    flip: get(value, 'flip', true),
+    offset: get(value, 'offset', false),
+    mainClass: get(value, 'mainClass')
   }
 
-  return { target, delay, offset, flip, position, boundary, classPrefix }
-}
-
-function setResizeEvent (ctx) {
-  off(window, 'resize', uid)
-  on(window, 'resize', debounce(() => {
-    position(ctx)
-  }, 50), uid)
+  return props
 }
 
 /**

@@ -1,133 +1,133 @@
-export { default as Icon500px } from './500px.js'
-export { default as IconAlbum } from './album.js'
-export { default as IconArrowDown } from './arrow-down.js'
-export { default as IconArrowLeft } from './arrow-left.js'
-export { default as IconArrowRight } from './arrow-right.js'
-export { default as IconArrowUp } from './arrow-up.js'
-export { default as IconBan } from './ban.js'
-export { default as IconBehance } from './behance.js'
-export { default as IconBell } from './bell.js'
-export { default as IconBold } from './bold.js'
-export { default as IconBolt } from './bolt.js'
-export { default as IconBookmark } from './bookmark.js'
-export { default as IconCalendar } from './calendar.js'
-export { default as IconCamera } from './camera.js'
-export { default as IconCart } from './cart.js'
-export { default as IconCheck } from './check.js'
-export { default as IconChevronDown } from './chevron-down.js'
-export { default as IconChevronLeft } from './chevron-left.js'
-export { default as IconChevronRight } from './chevron-right.js'
-export { default as IconChevronUp } from './chevron-up.js'
-export { default as IconClock } from './clock.js'
-export { default as IconClose } from './close.js'
-export { default as IconCloudDownload } from './cloud-download.js'
-export { default as IconCloudUpload } from './cloud-upload.js'
-export { default as IconCode } from './code.js'
-export { default as IconCog } from './cog.js'
-export { default as IconComment } from './comment.js'
-export { default as IconCommenting } from './commenting.js'
-export { default as IconComments } from './comments.js'
-export { default as IconCopy } from './copy.js'
-export { default as IconCreditCard } from './credit-card.js'
-export { default as IconDatabase } from './database.js'
-export { default as IconDesktop } from './desktop.js'
-export { default as IconDownload } from './download.js'
-export { default as IconDribbble } from './dribbble.js'
-export { default as IconExpand } from './expand.js'
-export { default as IconFacebook } from './facebook.js'
-export { default as IconFileEdit } from './file-edit.js'
-export { default as IconFile } from './file.js'
-export { default as IconFlickr } from './flickr.js'
-export { default as IconFolder } from './folder.js'
-export { default as IconForward } from './forward.js'
-export { default as IconFoursquare } from './foursquare.js'
-export { default as IconFuture } from './future.js'
-export { default as IconGitBranch } from './git-branch.js'
-export { default as IconGitFork } from './git-fork.js'
-export { default as IconGithubAlt } from './github-alt.js'
-export { default as IconGithub } from './github.js'
-export { default as IconGitter } from './gitter.js'
-export { default as IconGooglePlus } from './google-plus.js'
-export { default as IconGoogle } from './google.js'
-export { default as IconGrid } from './grid.js'
-export { default as IconHappy } from './happy.js'
-export { default as IconHashtag } from './hashtag.js'
-export { default as IconHeart } from './heart.js'
-export { default as IconHistory } from './history.js'
-export { default as IconHome } from './home.js'
-export { default as IconImage } from './image.js'
-export { default as IconInfo } from './info.js'
-export { default as IconInstagram } from './instagram.js'
-export { default as IconItalic } from './italic.js'
-export { default as IconJoomla } from './joomla.js'
-export { default as IconLaptop } from './laptop.js'
-export { default as IconLifesaver } from './lifesaver.js'
-export { default as IconLink } from './link.js'
-export { default as IconLinkedin } from './linkedin.js'
-export { default as IconList } from './list.js'
-export { default as IconLocation } from './location.js'
-export { default as IconLock } from './lock.js'
-export { default as IconMail } from './mail.js'
-export { default as IconMenu } from './menu.js'
-export { default as IconMinusCircle } from './minus-circle.js'
-export { default as IconMinus } from './minus.js'
-export { default as IconMoreVertical } from './more-vertical.js'
-export { default as IconMore } from './more.js'
-export { default as IconMove } from './move.js'
-export { default as IconNut } from './nut.js'
-export { default as IconPagekit } from './pagekit.js'
-export { default as IconPaintBucket } from './paint-bucket.js'
-export { default as IconPencil } from './pencil.js'
-export { default as IconPhoneLandscape } from './phone-landscape.js'
-export { default as IconPhone } from './phone.js'
-export { default as IconPinterest } from './pinterest.js'
-export { default as IconPlayCircle } from './play-circle.js'
-export { default as IconPlay } from './play.js'
-export { default as IconPlusCircle } from './plus-circle.js'
-export { default as IconPlus } from './plus.js'
-export { default as IconPull } from './pull.js'
-export { default as IconPush } from './push.js'
-export { default as IconQuestion } from './question.js'
-export { default as IconQuoteRight } from './quote-right.js'
-export { default as IconReceiver } from './receiver.js'
-export { default as IconRefresh } from './refresh.js'
-export { default as IconReply } from './reply.js'
-export { default as IconRss } from './rss.js'
-export { default as IconSearch } from './search.js'
-export { default as IconServer } from './server.js'
-export { default as IconSettings } from './settings.js'
-export { default as IconShrink } from './shrink.js'
-export { default as IconSignIn } from './sign-in.js'
-export { default as IconSignOut } from './sign-out.js'
-export { default as IconSocial } from './social.js'
-export { default as IconSoundcloud } from './soundcloud.js'
-export { default as IconStar } from './star.js'
-export { default as IconStrikethrough } from './strikethrough.js'
-export { default as IconTable } from './table.js'
-export { default as IconTabletLandscape } from './tablet-landscape.js'
-export { default as IconTablet } from './tablet.js'
-export { default as IconTag } from './tag.js'
-export { default as IconThumbnails } from './thumbnails.js'
-export { default as IconTrash } from './trash.js'
-export { default as IconTriangleDown } from './triangle-down.js'
-export { default as IconTriangleLeft } from './triangle-left.js'
-export { default as IconTriangleRight } from './triangle-right.js'
-export { default as IconTriangleUp } from './triangle-up.js'
-export { default as IconTripadvisor } from './tripadvisor.js'
-export { default as IconTumblr } from './tumblr.js'
-export { default as IconTv } from './tv.js'
-export { default as IconTwitter } from './twitter.js'
-export { default as IconUikit } from './uikit.js'
-export { default as IconUnlock } from './unlock.js'
-export { default as IconUpload } from './upload.js'
-export { default as IconUser } from './user.js'
-export { default as IconUsers } from './users.js'
-export { default as IconVideoCamera } from './video-camera.js'
-export { default as IconVimeo } from './vimeo.js'
-export { default as IconWarning } from './warning.js'
-export { default as IconWhatsapp } from './whatsapp.js'
-export { default as IconWordpress } from './wordpress.js'
-export { default as IconWorld } from './world.js'
-export { default as IconXing } from './xing.js'
-export { default as IconYelp } from './yelp.js'
-export { default as IconYoutube } from './youtube.js'
+exports['Icon500px'] = require('./500px.js')
+exports['IconAlbum'] = require('./album.js')
+exports['IconArrowDown'] = require('./arrow-down.js')
+exports['IconArrowLeft'] = require('./arrow-left.js')
+exports['IconArrowRight'] = require('./arrow-right.js')
+exports['IconArrowUp'] = require('./arrow-up.js')
+exports['IconBan'] = require('./ban.js')
+exports['IconBehance'] = require('./behance.js')
+exports['IconBell'] = require('./bell.js')
+exports['IconBold'] = require('./bold.js')
+exports['IconBolt'] = require('./bolt.js')
+exports['IconBookmark'] = require('./bookmark.js')
+exports['IconCalendar'] = require('./calendar.js')
+exports['IconCamera'] = require('./camera.js')
+exports['IconCart'] = require('./cart.js')
+exports['IconCheck'] = require('./check.js')
+exports['IconChevronDown'] = require('./chevron-down.js')
+exports['IconChevronLeft'] = require('./chevron-left.js')
+exports['IconChevronRight'] = require('./chevron-right.js')
+exports['IconChevronUp'] = require('./chevron-up.js')
+exports['IconClock'] = require('./clock.js')
+exports['IconClose'] = require('./close.js')
+exports['IconCloudDownload'] = require('./cloud-download.js')
+exports['IconCloudUpload'] = require('./cloud-upload.js')
+exports['IconCode'] = require('./code.js')
+exports['IconCog'] = require('./cog.js')
+exports['IconComment'] = require('./comment.js')
+exports['IconCommenting'] = require('./commenting.js')
+exports['IconComments'] = require('./comments.js')
+exports['IconCopy'] = require('./copy.js')
+exports['IconCreditCard'] = require('./credit-card.js')
+exports['IconDatabase'] = require('./database.js')
+exports['IconDesktop'] = require('./desktop.js')
+exports['IconDownload'] = require('./download.js')
+exports['IconDribbble'] = require('./dribbble.js')
+exports['IconExpand'] = require('./expand.js')
+exports['IconFacebook'] = require('./facebook.js')
+exports['IconFileEdit'] = require('./file-edit.js')
+exports['IconFile'] = require('./file.js')
+exports['IconFlickr'] = require('./flickr.js')
+exports['IconFolder'] = require('./folder.js')
+exports['IconForward'] = require('./forward.js')
+exports['IconFoursquare'] = require('./foursquare.js')
+exports['IconFuture'] = require('./future.js')
+exports['IconGitBranch'] = require('./git-branch.js')
+exports['IconGitFork'] = require('./git-fork.js')
+exports['IconGithubAlt'] = require('./github-alt.js')
+exports['IconGithub'] = require('./github.js')
+exports['IconGitter'] = require('./gitter.js')
+exports['IconGooglePlus'] = require('./google-plus.js')
+exports['IconGoogle'] = require('./google.js')
+exports['IconGrid'] = require('./grid.js')
+exports['IconHappy'] = require('./happy.js')
+exports['IconHashtag'] = require('./hashtag.js')
+exports['IconHeart'] = require('./heart.js')
+exports['IconHistory'] = require('./history.js')
+exports['IconHome'] = require('./home.js')
+exports['IconImage'] = require('./image.js')
+exports['IconInfo'] = require('./info.js')
+exports['IconInstagram'] = require('./instagram.js')
+exports['IconItalic'] = require('./italic.js')
+exports['IconJoomla'] = require('./joomla.js')
+exports['IconLaptop'] = require('./laptop.js')
+exports['IconLifesaver'] = require('./lifesaver.js')
+exports['IconLink'] = require('./link.js')
+exports['IconLinkedin'] = require('./linkedin.js')
+exports['IconList'] = require('./list.js')
+exports['IconLocation'] = require('./location.js')
+exports['IconLock'] = require('./lock.js')
+exports['IconMail'] = require('./mail.js')
+exports['IconMenu'] = require('./menu.js')
+exports['IconMinusCircle'] = require('./minus-circle.js')
+exports['IconMinus'] = require('./minus.js')
+exports['IconMoreVertical'] = require('./more-vertical.js')
+exports['IconMore'] = require('./more.js')
+exports['IconMove'] = require('./move.js')
+exports['IconNut'] = require('./nut.js')
+exports['IconPagekit'] = require('./pagekit.js')
+exports['IconPaintBucket'] = require('./paint-bucket.js')
+exports['IconPencil'] = require('./pencil.js')
+exports['IconPhoneLandscape'] = require('./phone-landscape.js')
+exports['IconPhone'] = require('./phone.js')
+exports['IconPinterest'] = require('./pinterest.js')
+exports['IconPlayCircle'] = require('./play-circle.js')
+exports['IconPlay'] = require('./play.js')
+exports['IconPlusCircle'] = require('./plus-circle.js')
+exports['IconPlus'] = require('./plus.js')
+exports['IconPull'] = require('./pull.js')
+exports['IconPush'] = require('./push.js')
+exports['IconQuestion'] = require('./question.js')
+exports['IconQuoteRight'] = require('./quote-right.js')
+exports['IconReceiver'] = require('./receiver.js')
+exports['IconRefresh'] = require('./refresh.js')
+exports['IconReply'] = require('./reply.js')
+exports['IconRss'] = require('./rss.js')
+exports['IconSearch'] = require('./search.js')
+exports['IconServer'] = require('./server.js')
+exports['IconSettings'] = require('./settings.js')
+exports['IconShrink'] = require('./shrink.js')
+exports['IconSignIn'] = require('./sign-in.js')
+exports['IconSignOut'] = require('./sign-out.js')
+exports['IconSocial'] = require('./social.js')
+exports['IconSoundcloud'] = require('./soundcloud.js')
+exports['IconStar'] = require('./star.js')
+exports['IconStrikethrough'] = require('./strikethrough.js')
+exports['IconTable'] = require('./table.js')
+exports['IconTabletLandscape'] = require('./tablet-landscape.js')
+exports['IconTablet'] = require('./tablet.js')
+exports['IconTag'] = require('./tag.js')
+exports['IconThumbnails'] = require('./thumbnails.js')
+exports['IconTrash'] = require('./trash.js')
+exports['IconTriangleDown'] = require('./triangle-down.js')
+exports['IconTriangleLeft'] = require('./triangle-left.js')
+exports['IconTriangleRight'] = require('./triangle-right.js')
+exports['IconTriangleUp'] = require('./triangle-up.js')
+exports['IconTripadvisor'] = require('./tripadvisor.js')
+exports['IconTumblr'] = require('./tumblr.js')
+exports['IconTv'] = require('./tv.js')
+exports['IconTwitter'] = require('./twitter.js')
+exports['IconUikit'] = require('./uikit.js')
+exports['IconUnlock'] = require('./unlock.js')
+exports['IconUpload'] = require('./upload.js')
+exports['IconUser'] = require('./user.js')
+exports['IconUsers'] = require('./users.js')
+exports['IconVideoCamera'] = require('./video-camera.js')
+exports['IconVimeo'] = require('./vimeo.js')
+exports['IconWarning'] = require('./warning.js')
+exports['IconWhatsapp'] = require('./whatsapp.js')
+exports['IconWordpress'] = require('./wordpress.js')
+exports['IconWorld'] = require('./world.js')
+exports['IconXing'] = require('./xing.js')
+exports['IconYelp'] = require('./yelp.js')
+exports['IconYoutube'] = require('./youtube.js')

@@ -1,4 +1,7 @@
+import Element from './elements/nav-item-divider'
+
 export default {
+  name: 'VkNavItemDivider',
   functional: true,
-  render: h => h('li', { class: 'uk-nav-divider' })
+  render: Element.render
 }

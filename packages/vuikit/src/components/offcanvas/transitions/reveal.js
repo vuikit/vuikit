@@ -1,69 +1,65 @@
 import { css } from 'vuikit/src/util/style'
-import { one } from 'vuikit/src/util/dom/event'
-import mergeData from 'vuikit/src/util/vue-data-merge'
-import { width, height } from 'vuikit/src/util/position'
+import { once } from 'vuikit/src/util/event'
+import { width, height } from 'vuikit/src/util/dimensions'
 import { addClass, removeClass } from 'vuikit/src/util/class'
+import mergeData from 'vuikit/src/util/vue-data-merge'
 
-import common from './_common'
-
-const win = window
-const doc = document.documentElement
+import { events, scrollbarWidth, doc, win } from './_common'
 
 export default {
   functional: true,
-  render (h, { parent: vm, data, children }) {
-    let wrapper = vm.$refs.wrapper
-    let bar
-
+  render (h, { data, children }) {
     const def = {
       props: {
         css: false
       },
       on: {
         beforeEnter (el) {
-          const scrollbarWidth = width(win) - doc.offsetWidth
+          const { $refs, $props } = el.__vkOffcanvas
 
-          width(vm.$refs.content, width(win) - scrollbarWidth)
+          // run common transition actions
+          events.beforeEnter(el)
 
-          css(doc, 'overflowY', vm.flip && scrollbarWidth && vm.overlay
+          width($refs.content, width(win) - scrollbarWidth)
+
+          css(doc, 'overflowY', $props.flipped && scrollbarWidth && $props.overlay
             ? 'scroll'
             : ''
           )
-
-          // wrap bar, required for this animation
-          wrapper = document.createElement('div')
-          addClass(wrapper, 'uk-offcanvas-reveal')
-          el.appendChild(wrapper)
-          wrapper.appendChild(vm.$refs.bar)
-          vm.$refs.wrapper = wrapper // save ref
         },
         enter (el, done) {
+          const { $refs } = el.__vkOffcanvas
+
           height(el) // force reflow
           addClass(el, 'uk-open')
-          addClass(vm.$refs.content, 'uk-offcanvas-content-animation')
+          addClass($refs.content, 'uk-offcanvas-content-animation')
 
           // indicate end of transition
-          one(el, 'transitionend', done, e => e.target === wrapper)
+          once(el, 'transitionend', done, false, e => e.target === $refs.reveal)
+        },
+        afterEnter (el) {
+          // run common transition actions
+          events.afterEnter(el)
         },
         beforeLeave (el) {
-          // set bar, required at afterLeave
-          bar = vm.$refs.bar
+          const { $refs } = el.__vkOffcanvas
 
           removeClass(el, 'uk-open')
-          removeClass(vm.$refs.content, 'uk-offcanvas-content-animation')
+          removeClass($refs.content, 'uk-offcanvas-content-animation')
         },
         leave (el, done) {
+          const { $refs } = el.__vkOffcanvas
+
           // indicate end of transition
-          one(el, 'transitionend', done, e => e.target === wrapper)
+          once(el, 'transitionend', done, false, e => e.target === $refs.reveal)
         },
         afterLeave (el) {
-          // remove wrapper
-          el.appendChild(bar)
-          el.removeChild(wrapper)
+          // run common transition actions
+          events.afterLeave(el)
         }
       }
     }
 
-    return h('transition', mergeData(data, def, common(vm)), children)
+    return h('transition', mergeData(def, data), children)
   }
 }

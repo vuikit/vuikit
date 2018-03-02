@@ -69,7 +69,7 @@ export async function buildExportIndex ({ src, dest }) {
     const name = getIconName(iconPath)
     const importPath = path.basename(iconPath)
 
-    index.push(`export { default as ${name} } from './${importPath}'`)
+    index.push(`exports['${name}'] = require('./${importPath}')`)
   })
 
   await write(dest, index.join('\n') + '\n')

@@ -1,5 +1,5 @@
 // icon-chevron-up
-export default {
+module.exports = {
   functional: true,
   render: function (h, ctx) {
     var props = ctx.props

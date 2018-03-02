@@ -1,10 +1,7 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/navbar-nav'
 
 export default {
+  name: 'VkNavbarNav',
   functional: true,
-  render (h, { data, children }) {
-
-    return h('ul', mergeData(data, { class: 'uk-navbar-nav' }), children)
-
-  }
+  render: Element.render
 }

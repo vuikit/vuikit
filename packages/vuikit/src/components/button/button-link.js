@@ -1,15 +1,8 @@
-import core from './core'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/button-link'
 
-export default mergeData({}, core, {
-  render (h, { props, data, children }) {
-    const { type, size, active } = props
-
-    return h('a', mergeData(data, {
-      class: ['uk-button', `uk-button-${type || 'default'}`, {
-        'uk-active': active,
-        [`uk-button-${size}`]: size
-      }]
-    }), children)
-  }
-})
+export default {
+  name: 'VkButtonLink',
+  functional: true,
+  props: Element.props,
+  render: Element.render
+}

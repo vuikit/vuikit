@@ -1,24 +1,12 @@
 <template>
   <div class="uk-padding">
 
-    <breadcrumb>
-      <breadcrumb-item title="Item" />
-      <breadcrumb-item title="Item" />
-      <breadcrumb-item title="Disabled" disabled />
-      <breadcrumb-item title="Active" active />
-    </breadcrumb>
+    <vk-breadcrumb>
+      <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
+      <vk-breadcrumb-item href="#">Item</vk-breadcrumb-item>
+      <vk-breadcrumb-item disabled>Disabled</vk-breadcrumb-item>
+      <vk-breadcrumb-item href="#">Active</vk-breadcrumb-item>
+    </vk-breadcrumb>
 
   </div>
 </template>
-
-<script>
-import Breadcrumb from '../breadcrumb'
-import BreadcrumbItem from '../breadcrumb-item'
-
-export default {
-  components: {
-    Breadcrumb,
-    BreadcrumbItem
-  }
-}
-</script>

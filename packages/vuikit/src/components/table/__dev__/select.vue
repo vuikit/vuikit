@@ -1,24 +1,27 @@
 <template>
   <div class="uk-padding">
 
+    <h1>Table With Select</h1>
+
     <h2>Single Selection</h2>
+
     <vk-table
       divided
       striped
       narrowed
       middle-aligned
-      single-selectable
-      row-selectable
+      single-row-selectable
       :data="data"
-      :selected-rows.sync="selection1"
+      :selected-rows.sync="singleSelection"
     >
       <vk-table-column
-        head="Website"
+        title="Website"
         cell="website"
       ></vk-table-column>
     </vk-table>
 
     <h2>Multiple Selection</h2>
+
     <vk-table
       divided
       narrowed
@@ -26,34 +29,11 @@
       middle-aligned
       row-selectable
       :data="data"
-      :selected-rows.sync="selection2"
+      :selected-rows.sync="selection"
     >
       <vk-table-column-select />
       <vk-table-column
-        head="Website"
-        cell="website"
-      ></vk-table-column>
-    </vk-table>
-
-    <h2>Slot & Row Key Support</h2>
-    <vk-table
-      divided
-      narrowed
-      middle-aligned
-      single-selectable
-      row-selectable
-      row-key="id"
-      :data="data"
-      :selected-rows.sync="selection3"
-    >
-      <vk-table-column-select>
-        <template slot="head">All</template>
-        <template slot="cell" slot-scope="row">
-          Checkbox
-        </template>
-      </vk-table-column-select>
-      <vk-table-column
-        head="Website"
+        title="Website"
         cell="website"
       ></vk-table-column>
     </vk-table>
@@ -63,23 +43,12 @@
 
 <script>
 import data from './data.json'
-import {
-  Table as VkTable,
-  TableColumn as VkTableColumn,
-  TableColumnSelect as VkTableColumnSelect
-} from '../'
 
 export default {
-  components: {
-    VkTable,
-    VkTableColumn,
-    VkTableColumnSelect
-  },
   data: () => ({
     data,
-    selection1: [],
-    selection2: [],
-    selection3: []
+    selection: [],
+    singleSelection: []
   })
 }
 </script>

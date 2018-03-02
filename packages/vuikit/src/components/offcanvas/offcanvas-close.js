@@ -1,17 +1,8 @@
-import IconClose from '../../icons/close-icon'
+import Element from './elements/offcanvas-close'
 
 export default {
+  name: 'VkOffcanvasClose',
   functional: true,
-  render: (h, { data }) =>
-
-    h('button', {
-      class: 'uk-offcanvas-close uk-close uk-icon',
-      attrs: {
-        type: 'button'
-      },
-      on: data.on
-    }, [
-      h(IconClose)
-    ])
-
+  props: Element.props,
+  render: Element.render
 }

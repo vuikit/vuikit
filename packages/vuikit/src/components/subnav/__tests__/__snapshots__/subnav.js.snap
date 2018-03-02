@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VkSubnav matches snapshot 1`] = `
+<div class="uk-padding">
+    <h1>Subnav</h1>
+    <div class="uk-child-width-1-2@m uk-grid">
+        <div>
+            <ul class="uk-subnav">
+                <li class="uk-active">
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li class="uk-disabled"><span>Disabled</span></li>
+            </ul>
+            <h2>Divider</h2>
+            <ul class="uk-subnav uk-subnav-divider">
+                <li class="uk-active">
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li class="uk-disabled"><span>Disabled</span></li>
+            </ul>
+            <h2>Pill</h2>
+            <ul class="uk-subnav uk-subnav-pill">
+                <li class="uk-active">
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li class="uk-disabled"><span>Disabled</span></li>
+            </ul>
+        </div>
+        <div>
+            <h2>Dropdown</h2>
+            <ul class="uk-subnav uk-subnav-pill">
+                <li>
+                    <a class="uk-icon">Click
+                        <svg version="1.1" meta="icon-triangle-down ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                            <polygon points="5 7 15 7 10 12" />
+                        </svg>
+                    </a>
+                    <!---->
+                </li>
+                <li>
+                    <a class="uk-icon">Hover
+                        <svg version="1.1" meta="icon-triangle-down ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                            <polygon points="5 7 15 7 10 12" />
+                        </svg>
+                    </a>
+                    <!---->
+                </li>
+                <li class="uk-disabled"><span>Disabled</span></li>
+            </ul>
+            <h2>Sync Active Item</h2>
+            <ul class="uk-subnav">
+                <li>
+                    <a>Item</a>
+                </li>
+                <li>
+                    <a>Item</a>
+                </li>
+                <li class="uk-active">
+                    <a>Item</a>
+                </li>
+                <li class="uk-disabled"><span>Disabled</span></li>
+            </ul>
+            <p>Active: third</p>
+            <button type="button" class="uk-button uk-button-default uk-button-small">Set First</button>
+        </div>
+    </div>
+</div>
+`;

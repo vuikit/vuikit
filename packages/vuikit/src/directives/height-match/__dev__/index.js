@@ -1,5 +1,4 @@
-import Default from './default.vue'
 import { storiesOf } from '@storybook/vue'
 
-storiesOf('Directives', module)
-  .add('HeightMatch', () => Default)
+storiesOf('Directives/HeightMatch', module)
+  .add('Default', () => require('./default').default)

@@ -1,165 +1,151 @@
+import { $ } from 'vuikit/src/util/core'
+import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
 import { warn } from 'vuikit/src/util/debug'
-import { Animation } from 'vuikit/src/util/dom'
-import { on, off } from 'vuikit/src/util/dom/event'
-import { addClass, removeClass } from 'vuikit/src/util/class'
-import { positionAt, flipPosition } from 'vuikit/src/util/position'
-import { get, isEmpty, includes, isObject, toInteger } from 'vuikit/src/util/lang'
+import { isTouch } from 'vuikit/src/util/touch'
+import { matches } from 'vuikit/src/util/selector'
+import { Animation } from 'vuikit/src/util/animation'
+import { hasAttr, attr } from 'vuikit/src/util/attr'
+import { append, remove } from 'vuikit/src/util/dom'
+import { within, isVisible } from 'vuikit/src/util/filter'
+import { pointerEnter, pointerDown, pointerLeave } from 'vuikit/src/util/env'
+import { positionAt, flipPosition, offset as getOffset } from 'vuikit/src/util/dimensions'
+import { includes, isObject, isNumeric, assign, isString } from 'vuikit/src/util/lang'
+import { addClass, toggleClass, removeClasses, removeClass } from 'vuikit/src/util/class'
 
-let delayedShow
-let tooltip = {}
-const uid = 'v-tooltip'
-
-const positions = [
-  'top',
-  'top-left',
-  'top-center',
-  'top-right',
-
-  'bottom',
-  'bottom-left',
-  'bottom-center',
-  'bottom-right',
-
-  'left',
-  'left-center',
-  'right',
-  'right-center'
-]
+const actives = []
 
 export default {
-  inserted (target, binding, vnode) {
-    const ctx = getContext(target, binding, vnode)
-
-    if (ctx) {
-      setEvents(ctx)
+  bind (el, binding, vnode) {
+    el.__vkTooltip = {
+      options: getOptions({ binding }),
+      _hasTitle: hasAttr(el, 'title')
     }
-  },
-  componentUpdated (target, binding, vnode) {
-    const ctx = getContext(target, binding, vnode)
 
-    if (ctx) {
-      setEvents(ctx)
-      updateVisibles(ctx)
+    attr(el, { title: '' })
+
+    setEvents(el, { binding, vnode })
+  },
+  componentUpdated (el, binding, vnode) {
+    el.__vkTooltip.options = getOptions({ binding })
+  },
+  unbind (el, binding, vnode) {
+    hide(el)
+    attr(el, {
+      title: el.__vkTooltip._hasTitle
+        ? el.__vkTooltip.title
+        : null
+    })
+  }
+}
+
+function setEvents (el, ctx) {
+  on(el, `focus ${pointerEnter} ${pointerDown}`, e => {
+    if (e.type !== pointerDown || !isTouch(e)) {
+      show(el, ctx)
     }
-  },
-  unbind (target, binding) {
-    hide()
-    removeEvents(target)
-  }
+  })
+
+  on(el, 'blur', () => hide(el))
+
+  on(el, pointerLeave, e => {
+    if (!isTouch(e)) {
+      hide(el)
+    }
+  })
 }
 
-/**
- * SET / REMOVE events
-**/
-function setEvents (ctx) {
-  const { triggers } = ctx.props
+function show (el, ctx) {
 
-  removeEvents(ctx)
-
-  if (triggers.match(/click/)) {
-    on(ctx.target, 'click', () => toggle(ctx), uid)
-  }
-
-  if (triggers.match(/hover/)) {
-    on(ctx.target, 'mouseenter', () => show(ctx), uid)
-    on(ctx.target, 'mouseleave', () => hide(ctx), uid)
-  }
-
-  if (triggers.match(/focus/)) {
-    on(ctx.target, 'focusin', () => show(ctx), uid)
-    on(ctx.target, 'focusout', () => hide(ctx), uid)
-  }
-}
-
-function removeEvents (ctx) {
-  off(ctx.target, 'click mouseenter mouseleave focusin focusout', uid)
-}
-
-/**
- * SHOW / HIDE the tooltip
-**/
-function show (ctx) {
-  const { props } = ctx
-  const { outer, inner } = getTooltip()
-
-  inner.innerHTML = props.content
-
-  delayedShow = setTimeout(() => {
-    // append tooltip at $root as the styles
-    // could be scoped to the app dom
-    const $root = ctx.vnode.context.$root.$el
-    $root.appendChild(outer)
-
-    const { dir, align } = positionTooltip(ctx)
-
-    Animation.in(
-      outer,
-      props.animationIn,
-      props.duration,
-      `${dir}-${align}`
-    )
-
-  }, props.delay)
-}
-
-function hide (ctx) {
-  const { outer } = getTooltip()
-
-  clearTimeout(delayedShow)
-
-  removeClass(outer, 'uk-active')
-
-  // remove from dom
-  if (outer.parentNode) {
-    outer.parentNode.removeChild(outer)
-  }
-
-  // force recreating tooltip each time as in
-  // edge situations redrawing doesn't work well
-  tooltip = {}
-}
-
-function toggle (ctx) {
-  isEmpty(tooltip)
-    ? show(ctx)
-    : hide(ctx)
-}
-
-/**
- * Update visible tooltips
-**/
-function updateVisibles (ctx) {
-  // abort if no tooltip to update
-  if (isEmpty(tooltip)) {
+  if (includes(actives, el)) {
     return
   }
 
-  const props = getProps(ctx)
-  const { inner } = getTooltip()
+  const { clsPos, title, position, delay } = el.__vkTooltip.options
+  const [dir, align] = position
 
-  inner.innerHTML = props.content
-  positionTooltip(ctx)
+  actives.forEach(active => hide(active))
+  actives.push(el)
+
+  el.__vkTooltip._unbind = on(document, 'click', e => !within(e.target, el) && hide(el))
+
+  clearTimeout(el.__vkTooltip.showTimer)
+
+  el.__vkTooltip.tooltip = append(getContainer(el, ctx), `<div class="${clsPos}" aria-hidden><div class="${clsPos}-inner">${title}</div></div>`)
+
+  positionTooltip(el)
+
+  el.__vkTooltip.origin = getAxis(position) === 'y' ? `${flipPosition(dir)}-${align}` : `${align}-${flipPosition(dir)}`
+
+  el.__vkTooltip.showTimer = setTimeout(() => {
+
+    _toggleAnimation(el, true)
+
+    el.__vkTooltip.hideTimer = setInterval(() => {
+
+      if (!isVisible(el)) {
+        hide(el)
+      }
+
+    }, 150)
+
+  }, delay)
 }
 
-/**
- * Position tooltip
-**/
-function positionTooltip (ctx) {
-  const { target, props } = ctx
-  const { outer: tooltip } = getTooltip()
-  const { position, offset, boundary, flip } = props
+function _toggleAnimation (el, show) {
+  const { origin, tooltip } = el.__vkTooltip
+  const { animation, duration, cls } = el.__vkTooltip.options
 
+  Animation.cancel(tooltip)
+
+  if (show) {
+    addClass(tooltip, cls)
+    return Animation.in(tooltip, animation[0], duration, origin)
+      .catch(() => {}) // ignore the ocasional errors, seems animation related
+  }
+
+  return Animation.out(tooltip, animation[1] || animation[0], duration, origin)
+    .then(() => removeClass(tooltip, cls))
+}
+
+function hide (el) {
+  const { tooltip, showTimer, hideTimer } = el.__vkTooltip
+  const index = actives.indexOf(el)
+
+  if (!~index || (matches(el, 'input') && el === document.activeElement)) {
+    return
+  }
+
+  actives.splice(index, 1)
+
+  clearTimeout(showTimer)
+  clearInterval(hideTimer)
+  attr(el, 'aria-expanded', false)
+  _toggleAnimation(el, false)
+  tooltip && remove(tooltip)
+  el.__vkTooltip.tooltip = false
+  el.__vkTooltip._unbind()
+}
+
+function positionTooltip (el) {
+  const target = el
+  const { tooltip } = el.__vkTooltip
+  const { clsPos, position } = el.__vkTooltip.options
+  let { offset } = el.__vkTooltip.options
+
+  let node
   let [dir, align = 'center'] = position.split('-')
 
-  // remove any position class
-  const classesRx = new RegExp(`uk-tooltip-(top|bottom|left|right)(-[a-z]+)?`)
-  tooltip.className = tooltip.className.replace(classesRx, '')
-
-  // reset pos
+  removeClasses(tooltip, `${clsPos}-(top|bottom|left|right)(-[a-z]+)?`)
   css(tooltip, { top: '', left: '' })
 
-  const axis = getPositionAxis(position)
+  const axis = getAxis(position)
+
+  offset = isNumeric(offset)
+    ? offset
+    : (node = $(offset))
+      ? getOffset(node)[axis === 'x' ? 'left' : 'top'] - getOffset(target)[axis === 'x' ? 'right' : 'bottom']
+      : 0
 
   const elAttach = axis === 'x'
     ? `${flipPosition(dir)} ${align}`
@@ -181,14 +167,13 @@ function positionTooltip (ctx) {
     targetAttach,
     elOffset,
     targetOffset,
-    flip,
-    boundary
+    true
   ).target
 
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
 
-  addClass(tooltip, `uk-tooltip-${dir}-${align} uk-active`)
+  toggleClass(tooltip, `${clsPos}-${dir}-${align}`, el.__vkTooltip.options.offset === false)
 
   return {
     dir,
@@ -196,105 +181,47 @@ function positionTooltip (ctx) {
   }
 }
 
-/**
- * Get tooltip props
-**/
-function getProps (ctx) {
-  const { arg, value, vnode } = ctx.binding
+function getOptions (ctx) {
+  const { value } = ctx.binding
 
-  let delay = 1
-  let offset = 0
-  let flip = true
-  let content = null
-  let duration = 100
-  let position = 'top'
-  let boundary = window
-  let animation = 'scale-up'
-  let triggers = 'hover focus'
+  let options = {
+    delay: 0,
+    title: '',
+    offset: false,
+    duration: 100,
+    position: 'top',
+    container: true,
+    cls: 'uk-active',
+    clsPos: 'uk-tooltip',
+    animation: ['uk-animation-scale-up', 'uk-animation-scale-up']
+  }
 
   if (isObject(value)) {
-    content = value.content
-    flip = get(value, 'flip', flip)
-    delay = get(value, 'delay', delay)
-    offset = toInteger(offset) || offset
-    boundary = value.boundary || boundary
-    duration = get(value, 'duration', duration)
-    triggers = get(value, 'triggers', triggers)
-    position = value.position || arg || position
-    animation = get(value, 'animation', animation)
-  } else {
-    content = value
-    position = arg || position
+    options = assign(options, value)
+  } else if (isString(value)) {
+    options.title = value
   }
 
-  if (!includes(positions, position)) {
-    warn('Invalid v-tooltip position', vnode)
-    return false
+  if (process.env.NODE_ENV !== 'production' && !(
+    /^(top|bottom)-(left|right)$/.test(options.position) ||
+    /^(top|bottom|left|right)$/.test(options.position)
+  )) {
+    warn('v-vk-tooltip -> invalid position', ctx.vnode)
   }
 
-  if (!content) {
-    warn('Invalid v-tooltip content', vnode)
-    return false
+  if (process.env.NODE_ENV !== 'production' && !options.title) {
+    warn('v-vk-tooltip -> invalid title', ctx.vnode)
   }
 
-  // decompose animation
-  const animations = animation.split(',')
-  const animationIn = prefixAnimations(animations[0])
-
-  return { delay, offset, flip, content, position, boundary, animationIn, duration, triggers }
+  return options
 }
 
-/**
- * Prefix all animations (separated by space) with `uk-animation-`
-**/
-function prefixAnimations (str) {
-  if (!str.trim()) {
-    return ''
-  }
-
-  return str.match(/[\w-]+/g).map(v => `uk-animation-${v}`).join(' ')
-}
-
-/**
- * Get or create the tooltip element
-**/
-function getTooltip () {
-  if (!isEmpty(tooltip)) {
-    return tooltip
-  }
-
-  const outer = document.createElement('div')
-  const inner = document.createElement('div')
-
-  addClass(outer, 'uk-tooltip')
-  addClass(inner, 'uk-tooltip-inner')
-
-  outer.appendChild(inner)
-
-  tooltip.outer = outer
-  tooltip.inner = inner
-
-  return tooltip
-}
-
-/**
- * Get the context used across
-**/
-function getContext (target, binding, vnode) {
-  const ctx = { target, binding, vnode }
-  ctx.props = getProps(ctx)
-
-  if (!ctx.props) {
-    binding.def.unbind(target, binding)
-    return
-  }
-
-  return ctx
-}
-
-function getPositionAxis (position) {
+function getAxis (position) {
   const [dir] = position.split('-')
-  return dir === 'top' || dir === 'bottom'
-    ? 'y'
-    : 'x'
+  return dir === 'top' || dir === 'bottom' ? 'y' : 'x'
+}
+
+function getContainer (el, { vnode }) {
+  const { container } = el.__vkTooltip.options
+  return (container === true && vnode.context.$root.$el) || (container && $(container))
 }

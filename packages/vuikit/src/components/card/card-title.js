@@ -1,7 +1,8 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import Element from './elements/card-title'
 
 export default {
+  name: 'VkCardTitle',
   functional: true,
-  render: (h, { data, children }) =>
-    h('h3', mergeData(data, { class: 'uk-card-title' }), children)
+  props: Element.props,
+  render: Element.render
 }

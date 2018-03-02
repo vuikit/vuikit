@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VkIcon matches snapshot 1`] = `
+<div class="uk-padding">
+    <div class="uk-child-width-1-2 uk-child-width-1-4@m uk-grid">
+        <div>
+            <h3>Icon</h3> <span class="uk-icon"><svg version="1.1" meta="icon-home ratio-1" width="20" height="20" viewBox="0 0 20 20"><polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" /><polygon points="15 4 18 4 18 7 17 7 17 5 15 5" /><polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" /></svg></span>            <span class="uk-icon"><svg version="1.1" meta="icon-home ratio-2" width="40" height="40" viewBox="0 0 20 20"><polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" /><polygon points="15 4 18 4 18 7 17 7 17 5 15 5" /><polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" /></svg></span>            <span class="uk-icon"><svg version="1.1" meta="icon-home ratio-1" width="16" height="16" viewBox="0 0 20 20"><polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" /><polygon points="15 4 18 4 18 7 17 7 17 5 15 5" /><polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" /></svg></span>            <span class="uk-icon"><svg version="1.1" meta="icon-home ratio-1" width="20" height="20" viewBox="6 6 16 16"><polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" /><polygon points="15 4 18 4 18 7 17 7 17 5 15 5" /><polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" /></svg></span></div>
+        <div>
+            <h3>IconLink</h3>
+            <a href="#" class="uk-icon">
+                <svg version="1.1" meta="icon-home ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                    <polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" />
+                    <polygon points="15 4 18 4 18 7 17 7 17 5 15 5" />
+                    <polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" />
+                </svg>
+            </a>
+            <a href="#" class="uk-icon uk-icon-link">
+                <svg version="1.1" meta="icon-home ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                    <polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" />
+                    <polygon points="15 4 18 4 18 7 17 7 17 5 15 5" />
+                    <polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" />
+                </svg>
+            </a>
+        </div>
+        <div>
+            <h3>IconButton</h3>
+            <a class="uk-icon uk-icon-button">
+                <svg version="1.1" meta="icon-home ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                    <polygon points="18.65 11.35 10 2.71 1.35 11.35 0.65 10.65 10 1.29 19.35 10.65" />
+                    <polygon points="15 4 18 4 18 7 17 7 17 5 15 5" />
+                    <polygon points="3 11 4 11 4 18 7 18 7 12 12 12 12 18 16 18 16 11 17 11 17 19 11 19 11 13 8 13 8 19 3 19" />
+                </svg>
+            </a>
+        </div>
+        <div>
+            <h3>IconImage</h3> <span class="uk-icon uk-icon-image" style="background-image:url(/avatar.jpg);"></span></div>
+    </div>
+</div>
+`;

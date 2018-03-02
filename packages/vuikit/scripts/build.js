@@ -1,10 +1,16 @@
 import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
+
+import vue from 'rollup-plugin-vue'
+import buble from 'rollup-plugin-buble'
+import replace from 'rollup-plugin-replace'
+import cleanup from 'rollup-plugin-cleanup'
+import nodeResolve from 'rollup-plugin-node-resolve'
+
 import { run, remove, write, copy, copyRecursive, task, banner, less, minifyJS, minifyCSS } from '@miljan/build'
 
 import pkg from '../package.json'
-import rollupConfig from '../rollup.config'
 
 const bannerText = `/**
  * Vuikit ${pkg.version}
@@ -17,10 +23,6 @@ run(async () => {
 
   await task('Copy Files', () => Promise.all([
     copy('*.{md,json}', 'dist'),
-    copyRecursive('core', 'dist/core', [
-      '!**/__*__/*',
-      '!**/__*__'
-    ]),
     copyRecursive('src', 'dist/src', [
       '!**/__*__/*',
       '!**/__*__'
@@ -38,7 +40,8 @@ run(async () => {
       input: 'src/vuikit.esm.js',
       output: {
         format: 'es'
-      }
+      },
+      env: 'development'
     }, 'dist/dist/vuikit.esm.js')
 
     // compile CJS index
@@ -46,7 +49,8 @@ run(async () => {
       input: 'src/vuikit.cjs.js',
       output: {
         format: 'cjs'
-      }
+      },
+      env: 'development'
     }, 'dist/dist/vuikit.cjs.js')
 
     // compile dist as UMD
@@ -56,14 +60,29 @@ run(async () => {
         name: 'Vuikit',
         format: 'umd'
       },
-      external: []
+      env: 'development'
     }, 'dist/dist/vuikit.js')
 
+    // compile dist as UMD for production
+    await compile({
+      input: 'src/vuikit.cjs.js',
+      output: {
+        name: 'Vuikit',
+        format: 'umd'
+      },
+      env: 'production'
+    }, 'dist/dist/vuikit.min.js')
+
     await minifyJS({
-      src: 'dist/dist/vuikit.js',
-      dest: 'dist/dist/vuikit.min.js',
+      src: 'dist/dist/vuikit.min.js',
       options: {
-        sourceMap: true
+        sourceMap: true,
+        output: {
+          ascii_only: true
+        },
+        compress: {
+          pure_funcs: ['makeMap']
+        }
       }
     })
   })
@@ -110,15 +129,35 @@ async function compileIndividual (paths, dest) {
       output: {
         format: 'es'
       },
+      env: 'production',
       external: id => id.match(/@?vuikit\/core/)
     }, `${dest}/${basename}.js`)
   }
 }
 
-async function compile (config, dest) {
-  config = {
-    ...rollupConfig,
-    ...config
+async function compile (opts, dest) {
+  const config = {
+    input: opts.input,
+    output: opts.output,
+    format: opts.format,
+    external: opts.external,
+    plugins: [
+      nodeResolve({
+        extensions: [ '.js', '.json', '.vue' ]
+      }),
+      vue({
+        compileTemplate: true
+      }),
+      buble(),
+      cleanup()
+    ]
+  }
+
+  if (opts.env) {
+    config.plugins.push(replace({
+      exclude: 'node_modules/**',
+      ENV: JSON.stringify(opts.env)
+    }))
   }
 
   const { code } = await rollup(config)

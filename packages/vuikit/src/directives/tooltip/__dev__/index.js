@@ -1,5 +1,4 @@
-import Default from './default.vue'
 import { storiesOf } from '@storybook/vue'
 
-storiesOf('Directives', module)
-  .add('Tooltip', () => Default)
+storiesOf('Directives/Tooltip', module)
+  .add('Default', () => require('./default').default)

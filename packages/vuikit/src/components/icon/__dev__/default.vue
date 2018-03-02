@@ -1,51 +1,31 @@
 <template>
   <div class="uk-padding">
 
-    <h2>Default</h2>
-    <vk-icon name="check" />
+    <vk-grid class="uk-child-width-1-2 uk-child-width-1-4@m">
+      <div>
+        <h3>Icon</h3>
+        <vk-icon icon="home" />
+        <vk-icon icon="home" ratio="2" />
+        <vk-icon icon="home" width="16" height="16" />
+        <vk-icon icon="home" viewBox="6 6 16 16" />
+      </div>
 
-    <h2>Link</h2>
-    <vk-icon-link name="check" />
+      <div>
+        <h3>IconLink</h3>
+        <vk-icon-link href="#" icon="home" />
+        <vk-icon-link href="#" icon="home" reset />
+      </div>
 
-    <h2>Link Reset</h2>
-    <vk-icon-link name="check" reset />
+      <div>
+        <h3>IconButton</h3>
+        <vk-icon-button icon="home" />
+      </div>
 
-    <h2>Button</h2>
-    <vk-icon-button name="check" />
-
-    <h2>Custom Icon</h2>
-    <vk-icon>
-      <icon-check></icon-check>
-    </vk-icon>
-
-    <h2>Icon Options</h2>
-
-    <h3>Ratio</h3>
-    <vk-icon name="check" ratio="2" />
-
-    <h3>Width/Height</h3>
-    <vk-icon name="check" width="16" height="16" />
-
-    <h3>ViewBox</h3>
-    <vk-icon name="check" viewBox="6 6 16 16" />
+      <div>
+        <h3>IconImage</h3>
+        <vk-icon-image src="/avatar.jpg" />
+      </div>
+    </vk-grid>
 
   </div>
 </template>
-
-<script>
-import {
-  Icon as VkIcon,
-  IconLink as VkIconLink,
-  IconButton as VkIconButton
-} from '../'
-import IconCheck from './icon-check'
-
-export default {
-  components: {
-    VkIcon,
-    VkIconLink,
-    VkIconButton,
-    IconCheck
-  }
-}
-</script>
