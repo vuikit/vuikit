@@ -5,7 +5,6 @@
 
     <div id="viewport" class="uk-margin">
       <vk-grid class="uk-child-width-1-6" v-vk-height-viewport="{ offsetTop: true }">
-
         <div>
           <vk-sticky bottom="#viewport" :offset="50">
             <div class="uk-card uk-card-primary uk-card-body uk-margin">

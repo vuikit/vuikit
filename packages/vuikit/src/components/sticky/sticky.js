@@ -1,6 +1,5 @@
 /* eslint-disable no-mixed-operators */
 import { $ } from 'vuikit/src/util/core'
-import { on } from 'vuikit/src/util/event'
 import { attr } from 'vuikit/src/util/attr'
 import { warn } from 'vuikit/src/util/debug'
 import { query } from 'vuikit/src/util/selector'
@@ -10,27 +9,19 @@ import { after, remove } from 'vuikit/src/util/dom'
 import { css, getCssVar } from 'vuikit/src/util/style'
 import { within, isVisible } from 'vuikit/src/util/filter'
 import { filterOutTextNodes } from 'vuikit/src/util/vue'
-import { offset as offsetOf, height } from 'vuikit/src/util/dimensions'
+import { offset, height } from 'vuikit/src/util/dimensions'
 import { assign, isNumeric, isString, toFloat, noop } from 'vuikit/src/util/lang'
 import { hasClass, addClass, removeClass, toggleClass, replaceClass } from 'vuikit/src/util/class'
 
-import { ACTIVE, INACTIVE } from './constants'
 import MixinEvents from 'vuikit/src/mixins/events'
+import MixinFastdom from 'vuikit/src/mixins/fastdom'
 
-let scrollDir
-let scroll = 0
-
-on(window, 'scroll', () => {
-  scrollDir = scroll < window.pageYOffset
-    ? 'down'
-    : 'up'
-  scroll = window.pageYOffset
-})
+import { ACTIVE, INACTIVE } from './constants'
 
 export default {
   name: 'VkSticky',
   abstract: true,
-  mixins: [MixinEvents],
+  mixins: [MixinEvents, MixinFastdom],
   props: {
     top: {
       type: [Number, String],
@@ -88,6 +79,94 @@ export default {
         : this.$el
     }
   },
+  fastdom: [
+    {
+      write () {
+
+        const { placeholder, widthElement } = this.$refs
+        const outerHeight = (this.isActive ? placeholder : this.$el).offsetHeight
+
+        css(placeholder, assign(
+          {height: css(this.$el, 'position') !== 'absolute' ? outerHeight : ''},
+          css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
+        ))
+
+        if (!within(placeholder, document)) {
+          after(this.$el, placeholder)
+          attr(placeholder, 'hidden', '')
+        }
+
+        attr(widthElement, 'hidden', null)
+        this.width = widthElement.offsetWidth
+        attr(widthElement, 'hidden', this.isActive ? null : '')
+
+        this.topOffset = offset(this.isActive ? placeholder : this.$el).top
+        this.bottomOffset = this.topOffset + outerHeight
+
+        const bottom = parseProp('bottom', this)
+
+        this.stickAt = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset
+        this.stickUntil = bottom && bottom - outerHeight
+        this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
+
+        if (this.isActive) {
+          this.update()
+        }
+      },
+
+      events: ['load', 'resize']
+    },
+    {
+      read (_, { scrollY = window.pageYOffset }) {
+        this.scroll = scrollY
+
+        return {
+          scroll: scrollY,
+          visible: isVisible(this.$el)
+        }
+      },
+      write ({visible, scroll}, {dir} = {}) {
+
+        if (scroll < 0 || !visible || this.disabled || this.showOnUp && !dir) {
+          return
+        }
+
+        if (this.inactive ||
+          scroll < this.stickAt ||
+          this.showOnUp && (scroll <= this.stickAt || dir === 'down' || dir === 'up' && !this.isActive && scroll <= this.bottomOffset)
+        ) {
+
+          if (!this.isActive) {
+            return
+          }
+
+          this.isActive = false
+
+          if (this.animation && scroll > this.topOffset) {
+            Animation.cancel(this.$el)
+            Animation.out(this.$el, `uk-animation-${this.animation}`).then(() => this.hide(), noop)
+          } else {
+            this.hide()
+          }
+
+        } else if (this.isActive) {
+
+          this.update()
+
+        } else if (this.animation) {
+
+          Animation.cancel(this.$el)
+          this.show()
+          Animation.in(this.$el, `uk-animation-${this.animation}`).catch(noop)
+
+        } else {
+          this.show()
+        }
+      },
+
+      events: ['scroll']
+    }
+  ],
   methods: {
     show () {
       this.isActive = true
@@ -105,102 +184,14 @@ export default {
       css(this.$el, { position: '', top: '', width: '' })
       attr(this.$refs.placeholder, 'hidden', '')
     },
-    updateOnLoadAndResize () {
-      this.updatePlaceholder()
-      this.updateWidthElement()
-
-      this.topOffset = offsetOf(this.isActive ? this.$refs.placeholder : this.$el).top
-      this.bottomOffset = this.topOffset + this.outerHeight
-
-      const top = parseProp('top', this)
-      const bottom = parseProp('bottom', this)
-
-      this.stickAt = Math.max(toFloat(top), this.topOffset) - this.offset
-      this.stickUntil = bottom && bottom - this.outerHeight
-      this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
-
-      if (this.isActive) {
-        this.update()
-      }
-    },
-    ready () {
-      if (!(this.target && location.hash && window.pageYOffset > 0)) {
-        return
-      }
-
-      const target = $(location.hash)
-
-      if (target) {
-        fastdom.read(() => {
-          const { top } = offsetOf(target)
-          const elTop = offsetOf(this.$el).top
-          const elHeight = this.$el.offsetHeight
-
-          if (elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
-            window.scrollTo(0, top - elHeight - this.target - this.offset)
-          }
-        })
-      }
-    },
-    onScroll () {
-      const visible = isVisible(this.$el)
-
-      // place the logic into descriptive variables
-      const isHidden = !visible
-      const {bottomOffset, topOffset, stickAt} = this
-      const {showOnUp, disabled, isActive, inactive, animation} = this
-
-      // this one os confusing, in what situation
-      // a scroll could be less than 0?
-      const noScroll = scroll < 0
-
-      if (noScroll || isHidden || disabled || (showOnUp && !scrollDir)) {
-        return
-      }
-
-      const scrollingUp = scrollDir === 'up'
-      const scrollingDown = scrollDir === 'down'
-      const stickAtReached = scroll <= stickAt
-      const stickAtNotReached = scroll < stickAt
-      const bottomOffsetReached = scroll <= bottomOffset
-
-      // the condition is still long and
-      // the entire logic could be refactored
-      if (inactive || stickAtNotReached || showOnUp &&
-        (stickAtReached || scrollingDown ||
-          (scrollingUp && !isActive && bottomOffsetReached)
-        )
-      ) {
-        if (!isActive) {
-          return
-        }
-
-        this.isActive = false
-
-        if (animation && scroll > topOffset) {
-          Animation.cancel(this.$el)
-          Animation.out(this.$el, `uk-animation-${animation}`).then(() => this.hide(), noop)
-        } else {
-          this.hide()
-        }
-      } else if (isActive) {
-        this.update()
-      } else if (animation) {
-        Animation.cancel(this.$el)
-        this.show()
-        Animation.in(this.$el, `uk-animation-${animation}`).catch(noop)
-      } else {
-        this.show()
-      }
-    },
     update () {
       const { clsFixed, clsBelow, clsActive } = this.$options.classMapping
 
+      const active = this.stickAt !== 0 || this.scroll > this.stickAt
       let top = Math.max(0, this.offset)
-      const active = this.stickAt !== 0 || scroll > this.stickAt
 
-      if (this.stickUntil && scroll > this.stickUntil - this.offset) {
-        top = this.stickUntil - scroll
+      if (this.stickUntil && this.scroll > this.stickUntil - this.offset) {
+        top = this.stickUntil - this.scroll
       }
 
       css(this.$el, {
@@ -219,24 +210,8 @@ export default {
         this.$emit(ACTIVE)
       }
 
-      toggleClass(this.$el, clsBelow, scroll > this.bottomOffset)
+      toggleClass(this.$el, clsBelow, this.scroll > this.bottomOffset)
       addClass(this.$el, clsFixed)
-    },
-    updatePlaceholder () {
-      css(this.$refs.placeholder, assign(
-        { height: css(this.$el, 'position') !== 'absolute' ? this.outerHeight : '' },
-        css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
-      ))
-
-      if (!within(this.$refs.placeholder, window.document)) {
-        after(this.$el, this.$refs.placeholder)
-        attr(this.$refs.placeholder, 'hidden', '')
-      }
-    },
-    updateWidthElement () {
-      attr(this.$refs.widthElement, 'hidden', null)
-      this.width = this.$refs.widthElement.offsetWidth
-      attr(this.$refs.widthElement, 'hidden', this.isActive ? null : '')
     }
   },
   created () {
@@ -254,17 +229,25 @@ export default {
     if (!this.isActive) {
       this.hide()
     }
+  },
+  domReady () {
+    if (!(this.target && location.hash && window.pageYOffset > 0)) {
+      return
+    }
 
-    // delay execution with setTimeout as
-    // to wait for possible directives execution
-    this.$nextTick(() => setTimeout(() => {
-      this.ready()
-      this.updateOnLoadAndResize()
-      this.onScroll()
-    }, 0))
+    const target = $(location.hash)
 
-    this.on(window, 'scroll', this.onScroll)
-    this.on(window, 'resize', this.updateOnLoadAndResize)
+    if (target) {
+      fastdom.read(() => {
+        const { top } = offset(target)
+        const elTop = offset(this.$el).top
+        const elHeight = this.$el.offsetHeight
+
+        if (elTop + elHeight >= top && elTop <= top + target.offsetHeight) {
+          window.scrollTo(0, top - elHeight - this.target - this.offset)
+        }
+      })
+    }
   },
   beforeDestroy () {
     const { clsInactive } = this.$options.classMapping
@@ -322,7 +305,7 @@ function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
     const el = value === true ? $el.parentNode : query(value, $el)
 
     if (el) {
-      return offsetOf(el).top + el.offsetHeight
+      return offset(el).top + el.offsetHeight
     }
 
   }
