@@ -5,26 +5,39 @@ import { on, trigger } from 'vuikit/src/util/event'
 import { height, offset } from 'vuikit/src/util/dimensions'
 import { clamp, isObject, assign } from 'vuikit/src/util/lang'
 
-export default {
-  inserted (el, binding, vnode) {
-    el.__vkScroll = {}
-    el.__vkScroll.options = getOptions({ binding, vnode })
+const NAMESPACE = '__vkScroll'
 
-    el.__vkScroll.unbind = on(el, 'click', e => {
+export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+    el[NAMESPACE].options = getOptions({ binding, vnode })
+  },
+  inserted (el, binding, vnode) {
+    const anchor = el.nodeName === 'A'
+      ? el
+      : $('a', el)
+
+    if (!anchor) {
+      warn('v-vk-scroll -> Anchor not found', vnode.context)
+      return
+    }
+
+    el[NAMESPACE].unbind = on(anchor, 'click', e => {
       if (e.defaultPrevented) {
         return
       }
 
       e.preventDefault()
-      scrollTo(el, escape(el.hash).substr(1), el.__vkScroll.options)
+
+      scrollTo(anchor, escape(anchor.hash).substr(1), el[NAMESPACE].options)
     })
   },
   componentUpdated (el, binding, vnode) {
-    el.__vkScroll.options = getOptions({ binding, vnode })
+    el[NAMESPACE].options = getOptions({ binding, vnode })
   },
   unbind (el) {
-    el.__vkScroll.unbind()
-    delete el.__vkScroll
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
   }
 }
 

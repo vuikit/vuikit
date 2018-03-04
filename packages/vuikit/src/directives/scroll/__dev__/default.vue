@@ -11,6 +11,12 @@
       Go Down with callback
     </vk-button-link>
 
+    <span v-vk-scroll>
+      <vk-button-link href="#bottom" v-vk-scroll>
+        Anchor as child
+      </vk-button-link>
+    </span>
+
     <div style="height: 2000px;"></div>
 
     <vk-button-link id="bottom" href="#" v-vk-scroll="{ duration: 2000, offset: -300 }">
