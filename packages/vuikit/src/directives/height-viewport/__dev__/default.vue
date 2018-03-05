@@ -5,120 +5,137 @@
 
     <vk-grid class="uk-child-width-1-6@m uk-light">
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center uk-height-viewport">
+        <demo-section class="uk-height-viewport">
           <h1>CSS</h1>
-        </div>
+        </demo-section>
       </div>
 
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport>
+        <demo-section v-vk-height-viewport>
           <h1>JS</h1>
-        </div>
+        </demo-section>
       </div>
 
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true }">
+        <demo-section v-vk-height-viewport.offsetTop>
           <div>
             <h1>JS</h1>
             <div>top: true</div>
           </div>
-        </div>
+        </demo-section>
       </div>
 
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: true }">
+        <demo-section v-vk-height-viewport.offsetTop.offsetBottom>
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: true</div>
           </div>
-        </div>
+        </demo-section>
 
         <div class="uk-padding uk-background-secondary">Lorem ipsum dolor sit amet.</div>
       </div>
 
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: 10 }">
+        <demo-section v-vk-height-viewport.offsetTop="{ offsetBottom: 10 }">
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: 10%</div>
           </div>
-        </div>
+        </demo-section>
       </div>
 
       <div>
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: '50px' }">
+        <demo-section v-vk-height-viewport.offsetTop="{ offsetBottom: '50px' }">
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: 50px</div>
           </div>
-        </div>
+        </demo-section>
       </div>
     </vk-grid>
 
     <vk-grid class="uk-child-width-1-6@m uk-light">
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center uk-height-viewport">
+        <demo-section class="uk-height-viewport">
           <h1>CSS</h1>
-        </div>
+        </demo-section>
 
       </div>
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport>
+        <demo-section v-vk-height-viewport>
           <h1>JS</h1>
-        </div>
+        </demo-section>
 
       </div>
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true }">
+        <demo-section v-vk-height-viewport.offsetTop>
           <div>
             <h1>JS</h1>
             <div>top: true</div>
           </div>
-        </div>
+        </demo-section>
 
       </div>
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: true }">
+        <demo-section v-vk-height-viewport.offsetTop.offsetBottom>
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: true</div>
           </div>
-        </div>
+        </demo-section>
 
         <div class="uk-padding uk-background-secondary">Lorem ipsum dolor sit amet.</div>
 
       </div>
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: 10 }">
+        <demo-section v-vk-height-viewport.offsetTop="{ offsetBottom: 10 }">
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: 10%</div>
           </div>
-        </div>
+        </demo-section>
 
       </div>
       <div>
 
-        <div class="uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center" v-vk-height-viewport="{ offsetTop: true, offsetBottom: '50px' }">
+        <demo-section v-vk-height-viewport.offsetTop="{ offsetBottom: '50px' }">
           <div>
             <h1>JS</h1>
             <div>top: true</div>
             <div>bottom: 50px</div>
           </div>
-        </div>
+        </demo-section>
 
       </div>
     </vk-grid>
 
   </div>
 </template>
+
+<script>
+import merge from 'vuikit/src/util/vue-data-merge'
+
+export default {
+  components: {
+    DemoSection: {
+      functional: true,
+      render (h, { data, children }) {
+        return h('div', merge(data, {
+          class: 'uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center'
+        }), children)
+      }
+    }
+  }
+}
+</script>

@@ -97,11 +97,11 @@ function getOptions (ctx) {
   }
 
   const options = assign({
+    minHeight: 0,
     expand: false,
     offsetTop: false,
-    offsetBottom: false,
-    minHeight: 0
-  }, value, modifiers)
+    offsetBottom: false
+  }, modifiers, value)
 
   return options
 }
