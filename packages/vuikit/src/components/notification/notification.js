@@ -16,7 +16,7 @@ export default {
   props: assign({}, ElementNotification.props, {
     timeout: {
       type: Number,
-      default: 1000
+      default: 5000
     },
     messages: {
       type: Array,
