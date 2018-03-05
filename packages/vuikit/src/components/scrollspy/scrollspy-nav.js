@@ -33,15 +33,11 @@ export default {
       default: 0
     }
   },
-  computed: {
-    links () {
-      return $$('a[href^="#"]', this.$el).filter(el => el.hash)
-    },
-    elements () {
-      return this.closest ? closest(this.links, this.closest) : this.links
-    },
-    targets () {
-      return $$(this.links.map(el => el.hash).join(','))
+  methods: {
+    setComputed () {
+      this.links = $$('a[href^="#"]', this.$el).filter(el => el.hash)
+      this.elements = this.closest ? closest(this.links, this.closest) : this.links
+      this.targets = $$(this.links.map(el => el.hash).join(','))
     }
   },
   fastdom: [
@@ -75,7 +71,6 @@ export default {
           }
 
           return !(data.active = $(filter(this.links, `[href="#${el.id}"]`)))
-
         })
       },
       write ({ active }) {
@@ -90,6 +85,15 @@ export default {
       events: ['scroll', 'load', 'resize']
     }
   ],
+  mounted () {
+    this.setComputed()
+  },
+  updated () {
+    this.$nextTick(() => {
+      this.setComputed()
+      this.fastdomUpdate()
+    })
+  },
   render (h) {
     let children = this.$slots.default
 

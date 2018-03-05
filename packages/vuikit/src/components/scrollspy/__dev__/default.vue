@@ -1,26 +1,6 @@
 <template>
   <div class="uk-padding">
 
-    <div class="uk-card uk-card-default uk-card-body test-fixed">
-      <vk-card-title>Scrollspy Nav</vk-card-title>
-      <vk-scrollspy-nav closest="li">
-        <ul class="uk-nav uk-nav-default">
-          <li><a href="#animation-repeat">Single</a></li>
-          <li><a href="#animation-delay">Group</a></li>
-          <li><a href="#animation-fade">Fade</a></li>
-          <li><a href="#animation-scale-up">Scale Up</a></li>
-          <li><a href="#animation-scale-down">Scale Down</a></li>
-          <li><a href="#animation-slide-left">Slide Left</a></li>
-          <li><a href="#animation-slide-right">Slide Right</a></li>
-          <li><a href="#animation-slide-top">Slide Top</a></li>
-          <li><a href="#animation-slide-bottom">Slide Bottom</a></li>
-          <li><a href="#animation-different">Different Animations</a></li>
-          <li><a href="#adjacent1">Adjacent 1</a></li>
-          <li><a href="#adjacent2">Adjacent 2</a></li>
-        </ul>
-      </vk-scrollspy-nav>
-    </div>
-
     <div class="uk-container">
 
       <h1>Scrollspy</h1>
@@ -435,12 +415,3 @@
 
   </div>
 </template>
-
-<style scoped>
-.test-fixed {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 1;
-}
-</style>
