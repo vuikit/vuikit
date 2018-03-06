@@ -1,43 +1,61 @@
-import { $ } from 'vuikit/src/util/core'
+import { $, $$ } from 'vuikit/src/util/core'
 import { warn } from 'vuikit/src/util/debug'
 import { escape } from 'vuikit/src/util/selector'
 import { on, trigger } from 'vuikit/src/util/event'
 import { height, offset } from 'vuikit/src/util/dimensions'
-import { clamp, isObject, assign } from 'vuikit/src/util/lang'
+import { clamp, isObject, assign, noop } from 'vuikit/src/util/lang'
 
 const NAMESPACE = '__vkScroll'
 
 export default {
   bind (el, binding, vnode) {
     el[NAMESPACE] = {}
+    el[NAMESPACE].unbind = noop
     el[NAMESPACE].options = getOptions({ binding, vnode })
   },
   inserted (el, binding, vnode) {
-    const anchor = el.nodeName === 'A'
-      ? el
-      : $('a', el)
+    vnode.context.$nextTick(() => {
+      apply(el, { binding, vnode })
+    })
+  },
+  componentUpdated (el, binding, vnode) {
+    el[NAMESPACE].unbind()
+    el[NAMESPACE].options = getOptions({ binding, vnode })
+    vnode.context.$nextTick(() => {
+      apply(el, { binding, vnode })
+    })
+  },
+  unbind (el) {
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
+  }
+}
 
-    if (!anchor) {
-      warn('v-vk-scroll -> Anchor not found', vnode.context)
-      return
-    }
+function apply (el, { vnode }) {
+  const opts = el[NAMESPACE].options
+  const isAnchor = el => el.nodeName === 'A'
 
-    el[NAMESPACE].unbind = on(anchor, 'click', e => {
+  let anchors = opts.target
+    ? $$(opts.target, el)
+    : [el]
+
+  if (process.env.NODE_ENV !== 'production' && (!anchors.length || !anchors.every(isAnchor))) {
+    warn('v-vk-scroll -> anchors not detected', vnode.context)
+  }
+
+  const unbinds = anchors.map(anchor => {
+    return on(anchor, 'click', e => {
       if (e.defaultPrevented) {
         return
       }
 
       e.preventDefault()
-
-      scrollTo(anchor, escape(anchor.hash).substr(1), el[NAMESPACE].options)
+      scrollTo(anchor, escape(anchor.hash).substr(1), opts)
     })
-  },
-  componentUpdated (el, binding, vnode) {
-    el[NAMESPACE].options = getOptions({ binding, vnode })
-  },
-  unbind (el) {
-    el[NAMESPACE].unbind()
-    delete el[NAMESPACE]
+  })
+
+  el[NAMESPACE].unbind = () => {
+    unbinds.forEach(fn => fn())
   }
 }
 
@@ -89,6 +107,7 @@ function getOptions (ctx) {
 
   const options = assign({
     offset: 0,
+    target: '',
     duration: 1000
   }, value)
 
