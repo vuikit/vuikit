@@ -19,5 +19,12 @@
     <vk-button size="large">Large</vk-button>
     <vk-button>Default</vk-button>
     <vk-button size="small">Small</vk-button>
+
+    <h3>Group</h3>
+    <vk-button-group>
+      <vk-button>Button</vk-button>
+      <vk-button>Button</vk-button>
+      <vk-button>Button</vk-button>
+    </vk-button-group>
   </div>
 </template>

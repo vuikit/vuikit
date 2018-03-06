@@ -18,5 +18,11 @@ exports[`VkButton matches snapshot 1`] = `
     <button type="button" class="uk-button uk-button-default uk-button-large">Large</button>
     <button type="button" class="uk-button uk-button-default">Default</button>
     <button type="button" class="uk-button uk-button-default uk-button-small">Small</button>
+    <h3>Group</h3>
+    <div class="uk-button-group">
+        <button type="button" class="uk-button uk-button-default">Button</button>
+        <button type="button" class="uk-button uk-button-default">Button</button>
+        <button type="button" class="uk-button uk-button-default">Button</button>
+    </div>
 </div>
 `;
