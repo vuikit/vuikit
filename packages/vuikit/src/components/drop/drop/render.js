@@ -9,7 +9,7 @@ import { addClass, removeClass } from 'vuikit/src/util/class'
 export default {
   mounted () {
     // evaluate target and boundary elements
-    this.$refs.target = this.$el.previousElementSibling
+    this.$refs.target = this.queryElement(this.target) || this.$el.previousElementSibling
     this.$refs.boundary = this.queryElement(this.boundary)
     // must force a rerended after
     this.$forceUpdate()

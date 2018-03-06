@@ -1,6 +1,7 @@
 import { isRtl } from 'vuikit/src/util/env'
 
 export default {
+  target: {},
   boundary: {
     default: () => window
   },

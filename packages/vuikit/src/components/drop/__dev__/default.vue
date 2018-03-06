@@ -60,6 +60,16 @@
       </vk-drop>
     </div>
 
+    <div class="uk-inline">
+      <vk-button ref="target">Target</vk-button>
+      <span></span>
+      <vk-drop mode="hover" target="target">
+        <vk-card>
+          <lorem-ipsum />
+        </vk-card>
+      </vk-drop>
+    </div>
+
   </div>
 </template>
 
