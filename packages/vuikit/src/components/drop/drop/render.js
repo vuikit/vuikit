@@ -7,11 +7,21 @@ import { offset as getOffset } from 'vuikit/src/util/dimensions'
 import { addClass, removeClass } from 'vuikit/src/util/class'
 
 export default {
+  mounted () {
+    // evaluate target and boundary elements
+    this.$refs.target = this.$el.previousElementSibling
+    this.$refs.boundary = this.queryElement(this.boundary)
+    // must force a rerended after
+    this.$forceUpdate()
+  },
   render (h) {
     let { position } = this
     let { boundary, target } = this.$refs
     const [, align] = position.split('-')
     const { boundaryAlign, animation, duration, mainClass, flip, offset } = this
+
+    // delay until elements are evaluated
+    if (!target || !boundary) return
 
     // justify is a drop specific position,
     // it must be maped for v-position
@@ -19,10 +29,6 @@ export default {
 
     // set final target
     target = boundaryAlign ? boundary : target
-
-    // delay render until target
-    // is evaluated
-    if (!target) return
 
     const def = {
       on: {
@@ -75,14 +81,6 @@ export default {
     }, [
       h(elDrop, def, this.$slots.default)
     ])
-  },
-  mounted () {
-    // evaluate target and boundary elements
-    this.$refs.target = this.$el.previousElementSibling
-    this.$refs.boundary = this.queryElement(this.boundary)
-
-    // must force a rerended after
-    this.$forceUpdate()
   }
 }
 

@@ -1,4 +1,4 @@
-import { eventShow, eventHide } from './events'
+import { SHOW, HIDE } from './constants'
 
 import { on } from 'vuikit/src/util/event'
 import { within } from 'vuikit/src/util/filter'
@@ -52,7 +52,7 @@ export default {
       this.tracker.init()
 
       active = this
-      this.$emit(eventShow)
+      this.$emit(SHOW)
     },
     hide () {
       const hoverIdle = 200
@@ -74,7 +74,7 @@ export default {
         const parent = findParent(active)
         active = parent || null
       }
-      this.$emit(eventHide)
+      this.$emit(HIDE)
     },
     toggle () {
       this.shown ? this._hide() : this.show()
@@ -90,7 +90,6 @@ export default {
     const { on, show, hide, toggle, mode, clearTimers } = this
 
     this.$nextTick(() => {
-
       if (/click/.test(mode)) {
         on(this.$refs.target, pointerDown, toggle)
       }
@@ -101,7 +100,6 @@ export default {
         on(this.$el, pointerLeave, hide)
         on(this.$el, pointerEnter, clearTimers)
       }
-
     })
   }
 }

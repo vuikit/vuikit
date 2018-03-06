@@ -2,10 +2,10 @@ import VkRoot from 'vuikit/src/core/v-root'
 import VkPosition from 'vuikit/src/core/v-position'
 import EventsMixin from 'vuikit/src/mixins/events'
 
-import { query } from 'vuikit/src/util/selector'
+import { $ } from 'vuikit/src/util/core'
 import { MouseTracker } from 'vuikit/src/util/mouse'
-import { get, includes } from 'vuikit/src/util/lang'
 import { findParents } from 'vuikit/src/util/vue'
+import { get, includes, isNode, isString } from 'vuikit/src/util/lang'
 
 import props from './props'
 import render from './render'
@@ -28,8 +28,12 @@ export default {
       const parents = findParents(this)
       return includes(parents, instance)
     },
-    queryElement (str) {
-      return query(str, this.$el) || get(this.$vnode.context.$refs, str)
+    queryElement (el) {
+      return isNode(el)
+        ? el
+        : isString(el)
+          ? (get(this.$vnode.context.$refs, el) || $(el, this.$el))
+          : el
     }
   },
   created () {
