@@ -4,9 +4,9 @@ export default {
   functional: true,
   props: {
     type: {
-      type: [Boolean, String],
+      type: String,
       default: 'default',
-      validator: val => val === false || /^(default|primary|secondary)$/.test(val)
+      validator: val => /^(default|primary|secondary|blank)$/.test(val)
     },
     padding: {
       type: String,

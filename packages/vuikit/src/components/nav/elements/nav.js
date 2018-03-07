@@ -8,9 +8,9 @@ export default {
       default: false
     },
     type: {
-      type: [Boolean, String],
+      type: String,
       default: 'default',
-      validator: val => !val || /^(default|primary)$/.test(val)
+      validator: val => /^(default|primary|blank)$/.test(val)
     }
   },
   render (h, { props, data, children }) {

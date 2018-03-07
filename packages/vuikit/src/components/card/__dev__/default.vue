@@ -54,7 +54,7 @@
           </div>
           <div>
 
-            <vk-card hover :type="false">
+            <vk-card hover type="blank">
               <template slot="badge">Hot</template>
               <div>
                 <vk-card-title>Blank</vk-card-title>

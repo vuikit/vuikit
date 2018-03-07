@@ -122,7 +122,7 @@ exports[`VkNav matches snapshot 1`] = `
         </div>
         <div>
             <h2>No style</h2>
-            <ul class="uk-nav uk-nav-default">
+            <ul type="blank" class="uk-nav uk-nav-default">
                 <li class="uk-active">
                     <a href="#">Active</a>
                 </li>

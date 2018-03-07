@@ -15,8 +15,8 @@
       </div>
 
       <div>
-        <h2>No style</h2>
-        <nav-demo :type="false" />
+        <h2>Blank</h2>
+        <nav-demo type="blank" />
       </div>
 
       <div>
