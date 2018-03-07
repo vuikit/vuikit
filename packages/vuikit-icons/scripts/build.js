@@ -1,3 +1,5 @@
+import path from 'path'
+import globby from 'globby'
 import rollup from './util/rollup'
 import { remove, run, task, write, copy, copyRecursive, banner as bannerize, minifyJS } from '@miljan/build'
 
@@ -12,44 +14,60 @@ const banner = `/**
 
 run(async () => {
   await remove('dist')
+  await remove('lib')
 
-  await task('Copy Files', () => Promise.all([
-    copy('*.{md,json}', 'dist'),
-    copyRecursive('lib', 'dist', [
-      '!**/_import.js'
-    ])
-  ]))
+  const icons = await globby('src/uikit/*')
+
+  await Promise.all(icons.map(async icon => {
+    const basename = path.basename(icon)
+    // const basename = dirname.split('/').pop()
+
+    return compile({
+      input: icon,
+      output: {
+        format: 'cjs'
+      }
+    }, `lib/${basename}`)
+  }))
+
+  // compile CJS dist
+  await compile({
+    input: 'src/vuikit-icons.cjs.js',
+    output: {
+      format: 'cjs'
+    }
+  }, 'dist/vuikit-icons.cjs.js')
 
   // compile ESM dist
   await task('Compile', async () => {
 
     await compile({
-      input: 'build/dist.esm.js',
+      input: 'src/vuikit-icons.esm.js',
       output: {
         format: 'es'
       }
-    }, 'dist/dist/vuikit-icons.esm.js')
+    }, 'dist/vuikit-icons.esm.js')
 
     // compile CJS dist
     await compile({
-      input: 'build/dist.cjs.js',
+      input: 'src/vuikit-icons.cjs.js',
       output: {
         format: 'cjs'
       }
-    }, 'dist/dist/vuikit-icons.cjs.js')
+    }, 'dist/vuikit-icons.cjs.js')
 
     // compile UMD dist
     await compile({
-      input: 'build/dist.cjs.js',
+      input: 'src/vuikit-icons.cjs.js',
       output: {
         name: 'VuikitIcons',
         format: 'umd'
       }
-    }, 'dist/dist/vuikit-icons.js')
+    }, 'dist/vuikit-icons.js')
 
     await minifyJS({
-      src: 'dist/dist/vuikit-icons.js',
-      dest: 'dist/dist/vuikit-icons.mins.js',
+      src: 'dist/vuikit-icons.js',
+      dest: 'dist/vuikit-icons.mins.js',
       options: {
         sourceMap: true
       }

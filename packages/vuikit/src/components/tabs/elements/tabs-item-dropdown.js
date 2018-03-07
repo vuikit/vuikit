@@ -1,6 +1,6 @@
+import IconMore from 'vuikit/src/icons/more'
+import IconTriangeDown from 'vuikit/src/icons/triangle-down'
 import mergeData from 'vuikit/src/util/vue-data-merge'
-import IconTriangeDown from '@vuikit/icons/lib/triangle-down'
-import IconMore from '@vuikit/icons/lib/more'
 
 import { ElementIcon } from 'vuikit/src/components/icon'
 

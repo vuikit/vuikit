@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuikit from 'vuikit/src/vuikit.esm'
-import VuikitIcons from '@vuikit/icons/build/dist.esm.js'
+import VuikitIcons from '@vuikit/icons'
 import { configure } from '@storybook/vue'
 import { each } from 'vuikit/src/util/lang'
 

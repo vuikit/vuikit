@@ -2,7 +2,7 @@ import { run, read, remove } from '@miljan/build'
 import { compile, buildExportIndex } from './util/icons'
 
 run(async () => {
-  const tmpl = await read('build/icon.tmpl')
+  const tmpl = await read('build/file.tmpl')
   await remove('lib')
 
   // compile uikit icons

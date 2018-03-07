@@ -1,22 +1,16 @@
-// icon-bold
-module.exports = {
+'use strict';
+
+var bold = {
   functional: true,
-  render: function (h, ctx) {
-    var props = ctx.props
-    var ratio = props.ratio || 1
-    var width = props.width || 20
-    var height = props.height || 20
-    var viewBox = props.viewBox || '0 0 20 20'
-
-    if (ratio !== 1) {
-      width = width * ratio
-      height = height * ratio
-    }
-
+  render: function (h, ref) {
+    var props = ref.props;
+    var width = props.width || 20;
+    var height = props.height || 20;
+    var viewBox = props.viewBox || '0 0 20 20';
     return h('svg', {
       attrs: {
         version: '1.1',
-        meta: 'icon-bold ratio-' + ratio,
+        meta: 'vk-icons-bold',
         width: width,
         height: height,
         viewBox: viewBox
@@ -27,3 +21,5 @@ module.exports = {
     })
   }
 }
+
+module.exports = bold;

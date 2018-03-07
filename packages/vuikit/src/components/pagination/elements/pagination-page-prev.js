@@ -1,5 +1,6 @@
 import Icon from './assets/icon-prev'
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import ElementIcon from 'vuikit/src/components/icon/elements/icon'
 
 export default {
   functional: true,
@@ -29,8 +30,8 @@ export default {
       }
     }), [
       h('a', { on: listeners }, [
-        h('span', {
-          class: ['uk-icon uk-pagination-prev', {
+        h(ElementIcon, {
+          class: ['uk-pagination-prev', {
             'uk-margin-small-right': label
           }]
         }, [ h(Icon) ]),

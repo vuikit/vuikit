@@ -1,5 +1,5 @@
-import VkDropdown from '../dropdown/dropdown'
-import IconTriangeDown from '@vuikit/icons/lib/triangle-down'
+import VkDropdown from 'vuikit/src/components/dropdown/dropdown'
+import IconTriangeDown from 'vuikit/src/icons/triangle-down'
 
 import Element from './elements/subnav-item-dropdown'
 import mergeData from 'vuikit/src/util/vue-data-merge'

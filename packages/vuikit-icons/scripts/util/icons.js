@@ -61,7 +61,7 @@ function compileTmpl (content, data) {
   })
 }
 
-export async function buildExportIndex ({ src, dest }) {
+export async function buildIndex ({ src, dest }) {
   const icons = await globby.sync(src)
   const index = []
 
@@ -69,7 +69,7 @@ export async function buildExportIndex ({ src, dest }) {
     const name = getIconName(iconPath)
     const importPath = path.basename(iconPath)
 
-    index.push(`exports['${name}'] = require('./${importPath}')`)
+    index.push(`export { default as ${name} } from './uikit/${importPath}'`)
   })
 
   await write(dest, index.join('\n') + '\n')

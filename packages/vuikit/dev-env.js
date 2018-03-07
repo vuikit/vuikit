@@ -1,17 +1,6 @@
 import Vue from 'vue'
 import Vuikit from 'vuikit/src/vuikit.esm'
-import * as Icons from '@vuikit/icons/lib/_import.js'
+import VuikitIcons from '@vuikit/icons'
 
 Vue.use(Vuikit)
-
-each(Icons, (def, name) => {
-  Vue.component(name, def)
-})
-
-function each (obj, cb) {
-  for (var key in obj) {
-    if (cb.call(obj[key], obj[key], key) === false) {
-      break
-    }
-  }
-}
+Vue.use(VuikitIcons)

@@ -1,9 +1,9 @@
-import * as Icons from '../lib/_import.js'
+import * as Icons from './'
 
 const VuikitIcons = {
   install (Vue) {
     each(Icons, (def, name) => {
-      Vue.component(name, def)
+      Vue.component(name.replace(/^Icon/, 'VkIcons'), def)
     })
   }
 }

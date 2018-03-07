@@ -1,8 +1,10 @@
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import ElementIcon from 'vuikit/src/components/icon/elements/icon'
 
 export default {
   functional: true,
   props: {
+    icon: {},
     href: String,
     target: String,
     title: {
@@ -14,17 +16,14 @@ export default {
     active: {
       type: Boolean,
       default: false
-    },
-    icon: {
-      type: String
     }
   },
   render (h, { props, data, children }) {
     const { active, title, subtitle, icon, href, target } = props
 
-    const Icon = icon && h('span', {
-      class: 'uk-icon uk-margin-small-right'
-    }, [ h(`icon-${icon}`) ])
+    const Icon = icon && h(ElementIcon, {
+      class: 'uk-margin-small-right'
+    }, [ icon ])
 
     const Subtitle = subtitle && h('div', [ title, h('div', {
       class: 'uk-navbar-subtitle'

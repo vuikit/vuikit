@@ -1,8 +1,10 @@
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import ElementIcon from 'vuikit/src/components/icon/elements/icon'
 
 export default {
   functional: true,
   props: {
+    icon: {},
     title: {
       type: String,
       required: true
@@ -14,8 +16,7 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
-    icon: {}
+    }
   },
   render (h, { props, data, listeners, children }) {
     const { active, disabled, title, icon } = props
@@ -30,8 +31,8 @@ export default {
     }), [
       h('a', { on: listeners }, [
         title,
-        icon && h('span', {
-          class: 'uk-icon uk-margin-small-left'
+        icon && h(ElementIcon, {
+          class: 'uk-margin-small-left'
         }, [ icon ])
       ]),
       children

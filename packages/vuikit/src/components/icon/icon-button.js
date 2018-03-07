@@ -1,13 +1,14 @@
-import VkIcon from './icon'
+import core from './core'
 import Element from './elements/icon-button'
+import mergeData from 'vuikit/src/util/vue-data-merge'
 
 export default {
   name: 'VkIconButton',
   functional: true,
-  props: VkIcon.props,
-  render (h, { data, props, children }) {
+  props: core.props,
+  render (h, { data, props }) {
     return h(Element, data, [
-      h(`icon-${props.icon}`, { props })
+      h(core, mergeData(data, { props }))
     ])
   }
 }

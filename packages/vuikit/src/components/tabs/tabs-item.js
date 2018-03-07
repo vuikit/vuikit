@@ -10,10 +10,10 @@ export default {
     return h('div', this.$slots.default)
   },
   tabRender (h, { data, props, children, parent }) {
+    props.icon = props.icon && h(`vk-icons-${props.icon}`)
+
     return h(Element, mergeData(data, {
-      props: {
-        icon: props.icon && h(`icon-${props.icon}`)
-      },
+      props,
       on: {
         click: e => {
           e.preventDefault()

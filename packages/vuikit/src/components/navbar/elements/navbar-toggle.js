@@ -1,5 +1,6 @@
 import IconToggle from './assets/icon-toggle'
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import ElementIcon from 'vuikit/src/components/icon/elements/icon'
 
 export default {
   functional: true,
@@ -16,8 +17,8 @@ export default {
   render (h, { props, data, children }) {
     const { icon, title } = props
 
-    const Icon = icon && h('span', {
-      class: 'uk-navbar-toggle-icon uk-icon'
+    const Icon = icon && h(ElementIcon, {
+      class: 'uk-navbar-toggle-icon'
     }, [ h(IconToggle) ])
 
     return h('a', mergeData(data, {

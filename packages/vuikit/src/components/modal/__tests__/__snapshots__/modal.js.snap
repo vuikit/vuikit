@@ -38,7 +38,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -56,7 +56,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-outside">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -77,7 +77,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -96,7 +96,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -130,7 +130,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -167,7 +167,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog uk-width-container">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -198,7 +198,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog uk-width-3-4@m uk-width-2-3@l uk-width-1-2@xl">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -229,7 +229,7 @@ exports[`VkModal matches snapshot 1`] = `
             <div class="uk-modal-dialog uk-margin-auto-vertical">
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -241,7 +241,7 @@ exports[`VkModal matches snapshot 1`] = `
         <div class="uk-modal uk-modal-full" style="display:block;">
             <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle">
                 <button type="button" class="uk-close uk-icon uk-modal-close-full uk-close-large">
-                    <svg version="1.1" meta="icon-close-large ratio-1" width="20" height="20" viewBox="0 0 20 20">
+                    <svg version="1.1" width="20" height="20" viewBox="0 0 20 20">
                         <path fill="none" stroke="#000" stroke-width="1.4" d="M1 1l18 18M19 1L1 19" />
                     </svg>
                 </button>
@@ -255,7 +255,7 @@ exports[`VkModal matches snapshot 1`] = `
         <div class="uk-modal uk-modal-full" style="display:block;">
             <div class="uk-modal-dialog uk-flex uk-flex-center uk-flex-middle">
                 <button type="button" class="uk-close uk-icon uk-modal-close-full">
-                    <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                    <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                         <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                     </svg>
                 </button>
@@ -276,7 +276,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -298,7 +298,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -320,7 +320,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
@@ -342,7 +342,7 @@ exports[`VkModal matches snapshot 1`] = `
                 </div>
                 <div class="uk-modal-body">
                     <button type="button" class="uk-close uk-icon uk-modal-close-default">
-                        <svg version="1.1" meta="icon-close-icon ratio-1" width="14" height="14" viewBox="0 0 14 14">
+                        <svg version="1.1" width="14" height="14" viewBox="0 0 14 14">
                             <path fill="none" stroke="#000" stroke-width="1.1" d="M1 1l12 12M13 1L1 13" />
                         </svg>
                     </button>
