@@ -15,14 +15,11 @@ export default {
     firstColumn: {
       type: String,
       default: 'uk-first-column'
-    },
-    clsStack: {
-      type: String,
-      default: 'uk-grid-stack'
     }
   }),
   render (h) {
-    const { margin, firstColumn, clsStack } = this
+    const clsStack = 'uk-grid-stack'
+    const { margin, firstColumn } = this
 
     return h(Element, {
       props: this.$props,
