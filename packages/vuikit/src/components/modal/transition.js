@@ -84,7 +84,7 @@ on(doc, 'click', e => {
 
   const clickedOut = e.target === active.$el
 
-  if (clickedOut && !active.stucked) {
+  if (clickedOut && !active.stuck) {
     active.$emit(TOGGLE, false)
   }
 })

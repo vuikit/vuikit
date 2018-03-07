@@ -15,9 +15,9 @@ export default {
     VkModalOverflowAuto
   },
   props: {
-    // determines if the modal should be closed
-    // when the background is clicked
-    stucked: {
+    // determines if the modal should be kept
+    // open when the background was clicked
+    stuck: {
       type: Boolean,
       default: false
     },
