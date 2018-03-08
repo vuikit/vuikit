@@ -1,11 +1,16 @@
 import Element from './elements/tabs-item'
 import mergeData from 'vuikit/src/util/vue-data-merge'
+import { assign } from 'vuikit/src/util/lang'
 
 import { TAB_ID } from './constants'
 
 export default {
   name: 'VkTabsItem',
-  props: Element.props,
+  props: assign({}, Element.props, {
+    icon: {
+      type: String
+    }
+  }),
   render (h) {
     return h('div', this.$slots.default)
   },

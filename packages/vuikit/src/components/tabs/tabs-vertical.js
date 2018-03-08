@@ -11,7 +11,7 @@ export default {
   extends: core,
   props: ElementTabsVertical.props,
   render (h) {
-    const { alignment, animation, keepAlive, $props } = this
+    const { align, animation, keepAlive, $props } = this
 
     const Tabs = this.getTabs().map((node, index) => {
       const Tab = {
@@ -29,7 +29,7 @@ export default {
 
     return h('div', {
       class: ['uk-grid', {
-        'uk-flex uk-flex-row-reverse': alignment === 'right'
+        'uk-flex uk-flex-row-reverse': align === 'right'
       }]
     }, [
       // tabs

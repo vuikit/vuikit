@@ -114,7 +114,7 @@
       </div>
     </vk-grid>
 
-    <h2>Grouping</h2>
+    <h2>Grouping (experimental)</h2>
 
     <vk-tabs group>
       <vk-tabs-item title="Item">
