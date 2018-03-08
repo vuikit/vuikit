@@ -1,16 +1,16 @@
 /* eslint-disable no-mixed-operators */
 import { $ } from 'vuikit/src/util/core'
+import { css } from 'vuikit/src/util/style'
 import { attr } from 'vuikit/src/util/attr'
 import { warn } from 'vuikit/src/util/debug'
 import { query } from 'vuikit/src/util/selector'
 import { fastdom } from 'vuikit/src/util/fastdom'
 import { Animation } from 'vuikit/src/util/animation'
 import { after, remove } from 'vuikit/src/util/dom'
-import { css, getCssVar } from 'vuikit/src/util/style'
 import { within, isVisible } from 'vuikit/src/util/filter'
 import { filterOutTextNodes } from 'vuikit/src/util/vue'
 import { offset, height } from 'vuikit/src/util/dimensions'
-import { assign, isNumeric, isString, toFloat, noop } from 'vuikit/src/util/lang'
+import { toMedia, assign, isNumeric, isString, toFloat, noop } from 'vuikit/src/util/lang'
 import { hasClass, addClass, removeClass, toggleClass, replaceClass } from 'vuikit/src/util/class'
 
 import MixinEvents from 'vuikit/src/mixins/events'
@@ -314,17 +314,4 @@ function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
     }
 
   }
-}
-
-function toMedia (value) {
-  if (isString(value)) {
-    if (value[0] === '@') {
-      const name = `media-${value.substr(1)}`
-      value = toFloat(getCssVar(name))
-    } else if (isNaN(value)) {
-      return value
-    }
-  }
-
-  return value && !isNaN(value) ? `(min-width: ${value}px)` : false
 }
