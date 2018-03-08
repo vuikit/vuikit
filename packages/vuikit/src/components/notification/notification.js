@@ -45,11 +45,29 @@ export default {
     }
   },
   methods: {
-    triggerRemove (index) {
-      const messages = [...this.$messages]
-      messages.splice(index, 1)
+    // similar to debounce this fn will delay it execution
+    // every time is invoked. A workaround for edge situtions
+    // where triggers are invoked on the same time
+    triggerRemove (msg) {
+      this.closeQueue = this.closeQueue || []
+      this.closeQueue.push(msg)
 
-      this.$emit('update:messages', messages)
+      clearTimeout(this.timer)
+
+      this.timer = setTimeout(() => {
+        const queue = [...this.closeQueue]
+        const messages = [...this.$messages]
+
+        // allow for new triggers to get in queue
+        this.closeQueue = []
+
+        queue.forEach(msg => {
+          const index = messages.findIndex(m => m === msg)
+          messages.splice(index, 1)
+        })
+
+        this.$emit('update:messages', messages)
+      })
     },
     removeDuplicates (values) {
       const messages = []
@@ -96,7 +114,7 @@ export default {
               value: msg
             }],
             on: {
-              close: () => this.triggerRemove(index)
+              close: () => this.triggerRemove(msg)
             }
           }, [
             MessageSlot(msg),
