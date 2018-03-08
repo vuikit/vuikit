@@ -28,7 +28,7 @@ export default {
       type: Boolean,
       default: false
     },
-    stucked: {
+    stuck: {
       type: Boolean,
       default: false
     },

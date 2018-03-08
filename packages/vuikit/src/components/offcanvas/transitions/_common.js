@@ -94,7 +94,7 @@ on(doc, 'click', e => {
   const { $refs, $props } = active
   const clickedOut = !$refs.bar.contains(e.target)
 
-  if (clickedOut && !$props.stucked) {
+  if (clickedOut && !$props.stuck) {
     active.$emit(TOGGLE, false)
   }
 })
