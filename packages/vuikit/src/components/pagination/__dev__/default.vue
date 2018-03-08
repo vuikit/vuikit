@@ -2,7 +2,6 @@
   <div class="uk-padding">
 
     <vk-pagination
-      align="left"
       :page.sync="page"
       :total="200"
       :perPage="10"
@@ -15,6 +14,7 @@
     </vk-pagination>
 
     <vk-pagination
+      align="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
@@ -41,6 +41,7 @@
 
     <h2>Layout</h2>
     <vk-pagination
+      align="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
@@ -52,6 +53,7 @@
     </vk-pagination>
 
     <vk-pagination
+      align="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
@@ -60,6 +62,7 @@
     </vk-pagination>
 
     <vk-pagination
+      align="center"
       :page.sync="page"
       :total="200"
       :perPage="10"

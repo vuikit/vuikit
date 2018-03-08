@@ -5,7 +5,7 @@ export default {
   props: {
     align: {
       type: String,
-      default: 'center',
+      default: 'left',
       validator: val => /^(left|center|right)$/.test(val)
     }
   },
