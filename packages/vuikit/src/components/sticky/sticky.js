@@ -286,7 +286,12 @@ export default {
 
 function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
 
-  const value = $props[prop]
+  let value = $props[prop]
+
+  // required coerce as the value can be both String and Boolean
+  value = isString(value) && value === ''
+    ? true
+    : value
 
   if (!value) {
     return
