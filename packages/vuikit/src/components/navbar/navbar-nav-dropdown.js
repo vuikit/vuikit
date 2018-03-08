@@ -1,12 +1,12 @@
-import VkDrop from '../drop/drop'
-import { Grid as VkGrid } from '../'
+import VkDrop from 'vuikit/src/components/drop/drop'
+import VkGrid from 'vuikit/src/components/grid/grid'
 
 import { query } from 'vuikit/src/util/selector'
 import { get, assign } from 'vuikit/src/util/lang'
 import { isRtl, pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
 
 export default {
-  name: 'VkNavbarDropdown',
+  name: 'VkNavbarNavDropdown',
   props: {
     title: {
       type: String,

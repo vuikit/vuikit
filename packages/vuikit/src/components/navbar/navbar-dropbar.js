@@ -1,5 +1,5 @@
 import { Transition } from 'vuikit/src/util/animation'
-import { active as activeDrop } from '../drop/drop/toggle'
+import { active as activeDrop } from 'vuikit/src/components/drop/drop/toggle'
 
 import { css } from 'vuikit/src/util/style'
 import { height } from 'vuikit/src/util/dimensions'
@@ -13,7 +13,8 @@ export default {
   props: {
     mode: {
       type: String,
-      default: 'slide'
+      default: 'slide',
+      validator: val => /^(slide|push)$/.test(val)
     },
     duration: {
       type: Number,
@@ -68,7 +69,7 @@ export default {
   },
   mounted () {
     const dropdowns = this.$children
-      .filter(child => /NavbarDropdown/.test(child.$options.name))
+      .filter(child => /NavbarNavDropdown/.test(child.$options.name))
 
     dropdowns.forEach(dropdown => {
       dropdown.$refs.drop.$on('show', () => {

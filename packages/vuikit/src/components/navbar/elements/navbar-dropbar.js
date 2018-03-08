@@ -11,7 +11,7 @@ export default {
   render (h, { data, props }) {
     const { slide } = props
 
-    h('div', mergeData(data, {
+    return h('div', mergeData(data, {
       class: ['uk-navbar-dropbar', {
         'uk-navbar-dropbar-slide': slide
       }]

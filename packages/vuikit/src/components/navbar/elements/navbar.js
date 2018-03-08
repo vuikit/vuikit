@@ -6,7 +6,7 @@ export default {
   props: {
     container: {
       type: Boolean,
-      default: false
+      default: true
     },
     transparent: {
       type: Boolean,
@@ -19,7 +19,6 @@ export default {
   },
   render (h, { props, data, children }) {
     const { container, transparent, tag } = props
-
     const slots = resolveSlots(children)
 
     return h(tag, mergeData(data, {

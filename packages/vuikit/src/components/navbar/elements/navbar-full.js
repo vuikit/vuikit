@@ -21,7 +21,10 @@ export default {
         }]
       }, [
         h(Element, {
-          props: { tag: 'div' }
+          props: {
+            tag: 'div',
+            container: false
+          }
         }, children)
       ])
     ])

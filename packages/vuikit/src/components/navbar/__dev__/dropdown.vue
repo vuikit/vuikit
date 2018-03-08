@@ -3,159 +3,161 @@
 
     <h1>Dropdown</h1>
 
-    <vk-navbar container class="uk-margin">
-      <vk-navbar-nav slot="left">
-        <vk-navbar-dropdown title="Click" mode="click">
-          <vk-navbar-dropdown-nav>
+    <vk-navbar class="uk-margin">
+      <vk-navbar-nav>
+        <vk-navbar-nav-dropdown title="Click" mode="click">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="Hover">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Hover">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="2 Columns">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="2 Columns">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="3 Columns">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="3 Columns">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <lorem-ipsum />
           </div>
-        </vk-navbar-dropdown>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="Center" align="center">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Center" align="center">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="Justify" justified>
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Justify" justified>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <lorem-ipsum />
           </div>
-        </vk-navbar-dropdown>
+        </vk-navbar-nav-dropdown>
 
       </vk-navbar-nav>
 
       <vk-navbar-nav slot="right">
-        <vk-navbar-dropdown title="Right">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Right">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
       </vk-navbar-nav>
 
     </vk-navbar>
 
     <h3>Boundary</h3>
 
-    <vk-navbar container class="uk-margin">
-      <vk-navbar-nav slot="left">
+    <vk-navbar class="uk-margin">
+      <vk-navbar-nav>
 
-        <vk-navbar-dropdown title="Center" navbarAligned align="center">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Center" navbar-aligned align="center">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="2 Columns" navbarAligned align="center">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="2 Columns" navbar-aligned align="center">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="3 Columns" navbarAligned align="center">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="3 Columns" navbar-aligned align="center">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <lorem-ipsum />
           </div>
-        </vk-navbar-dropdown>
+        </vk-navbar-nav-dropdown>
 
       </vk-navbar-nav>
 
       <vk-navbar-nav slot="right">
-        <vk-navbar-dropdown title="Right" navbarAligned align="center">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Right" navbar-aligned align="center">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
       </vk-navbar-nav>
 
     </vk-navbar>
 
-    <vk-navbar container class="uk-margin">
-      <vk-navbar-nav slot="left">
+    <vk-navbar class="uk-margin">
+      <vk-navbar-nav>
 
-        <vk-navbar-dropdown title="Left" navbarAligned align="left">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Left" navbar-aligned align="left">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="2 Columns" navbarAligned align="left">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="2 Columns" navbar-aligned align="left">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
 
-        <vk-navbar-dropdown title="3 Columns" navbarAligned align="left">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="3 Columns" navbar-aligned align="left">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-          <vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
+          </vk-navbar-nav-dropdown-nav>
           <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            <lorem-ipsum />
           </div>
-        </vk-navbar-dropdown>
+        </vk-navbar-nav-dropdown>
 
       </vk-navbar-nav>
 
       <vk-navbar-nav slot="right">
-        <vk-navbar-dropdown title="Right" navbarAligned align="left">
-          <vk-navbar-dropdown-nav>
+        <vk-navbar-nav-dropdown title="Right" navbar-aligned align="left">
+          <vk-navbar-nav-dropdown-nav>
             <nav-items-demo />
-          </vk-navbar-dropdown-nav>
-        </vk-navbar-dropdown>
+          </vk-navbar-nav-dropdown-nav>
+        </vk-navbar-nav-dropdown>
       </vk-navbar-nav>
 
     </vk-navbar>
+
+    <div style="height: 200px"></div>
 
   </div>
 </template>
@@ -163,6 +165,12 @@
 <script>
 export default {
   components: {
+    LoremIpsum: {
+      functional: true,
+      render (h) {
+        return h('span', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.')
+      }
+    },
     NavItemsDemo: {
       functional: true,
       render: h => {
