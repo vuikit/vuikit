@@ -47,7 +47,7 @@ export function findChilds (instance) {
  * Resolve childrens as slots
  */
 export function resolveSlots (children) {
-  return children.reduce((slots, n) => {
+  return filterOutTextNodes(children).reduce((slots, n) => {
     const name = get(n, 'data.slot', 'default')
     slots[name] = slots[name] || []
 
