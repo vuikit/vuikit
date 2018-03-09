@@ -6,7 +6,7 @@
 
         <h3>Each Row</h3>
 
-        <vk-grid class="uk-child-width-1-2@m" v-vk-height-match="{ target: '> div > .uk-panel' }">
+        <vk-grid class="uk-child-width-1-2@m" v-vk-height-match="'> div > .uk-panel'">
           <div><div class="uk-panel">1-2-M<br>...<br>...</div></div>
           <div><div class="uk-panel">1-2-M</div></div>
           <div><div class="uk-panel">1-2-M<br>...</div></div>

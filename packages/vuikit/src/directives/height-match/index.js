@@ -2,9 +2,8 @@ import { $$ } from 'vuikit/src/util/core'
 import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
 import { attr } from 'vuikit/src/util/attr'
-import { warn } from 'vuikit/src/util/debug'
 import { isVisible } from 'vuikit/src/util/filter'
-import { isUndefined, isObject, assign } from 'vuikit/src/util/lang'
+import { isUndefined, isString, assign } from 'vuikit/src/util/lang'
 
 export default {
   inserted (el, binding, vnode) {
@@ -99,16 +98,14 @@ function match (elements) {
 }
 
 function getOptions (ctx) {
-  const { value } = ctx.binding
+  let { value } = ctx.binding
 
-  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-height-match -> Object expected as configuration', ctx.vnode.context)
+  if (isString(value)) {
+    value = { target: value }
   }
 
-  const options = assign({
+  return assign({
     target: '> *',
     row: true
   }, value)
-
-  return options
 }

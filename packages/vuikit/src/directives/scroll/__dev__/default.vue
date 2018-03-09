@@ -8,14 +8,18 @@
         Go Down!
       </vk-button-link>
 
-      <vk-button-link @scrolled="scrolled" href="#bottom" v-vk-scroll>
+      <vk-button-link @afterScroll="scrolled" href="#bottom" v-vk-scroll>
         Go Down with callback
       </vk-button-link>
     </p>
 
-    <h2>Target links</h2>
+    <h2>Match anchors</h2>
 
-    <p v-vk-scroll="{ target: '> span > a'}">
+    <p v-vk-scroll>
+      <span><a href="#bottom">Should be targeted</a></span> <br />
+    </p>
+
+    <p v-vk-scroll="'> span > a'">
       <span><a href="#bottom">Should be targeted</a></span> <br />
       <a href="#bottom">Should not be targeted</a>
     </p>

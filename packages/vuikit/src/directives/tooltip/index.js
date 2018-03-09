@@ -1,137 +1,194 @@
 import { $ } from 'vuikit/src/util/core'
-import { on } from 'vuikit/src/util/event'
 import { css } from 'vuikit/src/util/style'
 import { warn } from 'vuikit/src/util/debug'
 import { isTouch } from 'vuikit/src/util/touch'
+import { Promise } from 'vuikit/src/util/promise'
 import { matches } from 'vuikit/src/util/selector'
 import { Animation } from 'vuikit/src/util/animation'
+import { isVisible } from 'vuikit/src/util/filter'
+import { on, trigger } from 'vuikit/src/util/event'
 import { hasAttr, attr } from 'vuikit/src/util/attr'
 import { append, remove } from 'vuikit/src/util/dom'
-import { within, isVisible } from 'vuikit/src/util/filter'
 import { pointerEnter, pointerDown, pointerLeave } from 'vuikit/src/util/env'
+import { isNumeric, assign, isString, toHyphenCase } from 'vuikit/src/util/lang'
 import { positionAt, flipPosition, offset as getOffset } from 'vuikit/src/util/dimensions'
-import { includes, isObject, isNumeric, assign, isString } from 'vuikit/src/util/lang'
 import { addClass, toggleClass, removeClasses, removeClass } from 'vuikit/src/util/class'
 
-const actives = []
+const NAMESPACE = '__vkTooltip'
 
 export default {
   bind (el, binding, vnode) {
-    el.__vkTooltip = {
+    el[NAMESPACE] = {
+      vnode,
+      state: null, // in, out, active
       options: getOptions({ binding }),
       _hasTitle: hasAttr(el, 'title')
     }
 
     attr(el, { title: '' })
-
-    setEvents(el, { binding, vnode })
+  },
+  inserted (el, binding, vnode) {
+    bindEvents(el)
   },
   componentUpdated (el, binding, vnode) {
-    el.__vkTooltip.options = getOptions({ binding })
+    el[NAMESPACE].options = getOptions({ binding })
   },
   unbind (el, binding, vnode) {
     hide(el)
     attr(el, {
-      title: el.__vkTooltip._hasTitle
-        ? el.__vkTooltip.title
+      title: el[NAMESPACE]._hasTitle
+        ? el[NAMESPACE].title
         : null
     })
+    el[NAMESPACE].unbindEvents()
+    delete el[NAMESPACE]
   }
 }
 
-function setEvents (el, ctx) {
-  on(el, `focus ${pointerEnter} ${pointerDown}`, e => {
-    if (e.type !== pointerDown || !isTouch(e)) {
-      show(el, ctx)
-    }
-  })
+function bindEvents (el) {
+  const events = [
+    on(el, `focus ${pointerEnter} ${pointerDown}`, e => {
+      if (e.type !== pointerDown || !isTouch(e)) {
+        show(el)
+      }
+    }),
+    on(el, 'blur', e => hide(el)),
+    on(el, pointerLeave, e => {
+      if (!isTouch(e)) {
+        hide(el)
+      }
+    })
+  ]
 
-  on(el, 'blur', () => hide(el))
-
-  on(el, pointerLeave, e => {
-    if (!isTouch(e)) {
-      hide(el)
-    }
-  })
+  el[NAMESPACE].unbindEvents = () => events.forEach(unbind => unbind())
 }
 
-function show (el, ctx) {
+function toggleIn (el) {
+  const { cls, position, animation, duration } = el[NAMESPACE].options
 
-  if (includes(actives, el)) {
+  // allow canceling the toggle
+  if (!trigger(el, 'beforeShow')) {
+    return Promise.reject() // eslint-disable-line
+  }
+
+  const origin = el[NAMESPACE].origin = getOrigin(position)
+  const tooltip = el[NAMESPACE].tooltip = createTooltip(el)
+
+  positionTooltip(el)
+  addClass(tooltip, cls)
+
+  // watchout if the element loose visibility
+  // and hide the tooltip if does
+  el[NAMESPACE].hideTimer = setInterval(() => {
+    if (!isVisible(el)) {
+      hide(el)
+    }
+  }, 150)
+
+  // indicate animation is in progress
+  el[NAMESPACE].state = 'in'
+  trigger(el, 'show')
+
+  return Animation
+    .in(tooltip, `uk-animation-${animation[0]}`, duration, origin)
+    .then(() => {
+      el[NAMESPACE].state = 'active'
+      trigger(el, 'shown')
+    })
+    // ignore the ocasional errors, seems animation related
+    .catch(() => {})
+}
+
+function toggleOut (el) {
+  const { tooltip } = el[NAMESPACE]
+  const { animation, duration } = el[NAMESPACE].options
+
+  // allow canceling the toggle
+  if (!trigger(el, 'beforeHide')) {
+    return Promise.reject() // eslint-disable-line
+  }
+
+  // cancel any current animation
+  Animation.cancel(tooltip)
+
+  // indicate animation is in progress
+  el[NAMESPACE].state = 'out'
+  trigger(el, 'hide')
+
+  // if no animation return immediately
+  if (!animation[1]) {
+    return Promise.resolve().then(() => _hide(el))
+  }
+
+  return Animation
+    .out(tooltip, `uk-animation-${animation[1]}`, duration, origin)
+    .then(() => _hide(el))
+    // ignore the ocasional errors, seems animation related
+    .catch(() => {})
+}
+
+function show (el) {
+  const { state } = el[NAMESPACE]
+  const { delay } = el[NAMESPACE].options
+
+  // cancel if already active or show delayed
+  if (state === 'active' || el[NAMESPACE].showTimer) {
     return
   }
 
-  const { clsPos, title, position, delay } = el.__vkTooltip.options
-  const [dir, align] = position
-
-  actives.forEach(active => hide(active))
-  actives.push(el)
-
-  el.__vkTooltip._unbind = on(document, 'click', e => !within(e.target, el) && hide(el))
-
-  clearTimeout(el.__vkTooltip.showTimer)
-
-  el.__vkTooltip.tooltip = append(getContainer(el, ctx), `<div class="${clsPos}" aria-hidden><div class="${clsPos}-inner">${title}</div></div>`)
-
-  positionTooltip(el)
-
-  el.__vkTooltip.origin = getAxis(position) === 'y' ? `${flipPosition(dir)}-${align}` : `${align}-${flipPosition(dir)}`
-
-  el.__vkTooltip.showTimer = setTimeout(() => {
-
-    _toggleAnimation(el, true)
-
-    el.__vkTooltip.hideTimer = setInterval(() => {
-
-      if (!isVisible(el)) {
-        hide(el)
-      }
-
-    }, 150)
-
-  }, delay)
-}
-
-function _toggleAnimation (el, show) {
-  const { origin, tooltip } = el.__vkTooltip
-  const { animation, duration, cls } = el.__vkTooltip.options
-
-  Animation.cancel(tooltip)
-
-  if (show) {
-    addClass(tooltip, cls)
-    return Animation.in(tooltip, animation[0], duration, origin)
-      .catch(() => {}) // ignore the ocasional errors, seems animation related
+  if (state === 'out') {
+    Animation.cancel(el)
+    _hide(el) // hide immediately
   }
 
-  return Animation.out(tooltip, animation[1] || animation[0], duration, origin)
-    .then(() => removeClass(tooltip, cls))
+  el[NAMESPACE].showTimer = setTimeout(() => toggleIn(el), delay)
 }
 
 function hide (el) {
-  const { tooltip, showTimer, hideTimer } = el.__vkTooltip
-  const index = actives.indexOf(el)
+  const { state } = el[NAMESPACE]
 
-  if (!~index || (matches(el, 'input') && el === document.activeElement)) {
+  // clear timers in order
+  // to cancel any delayed show
+  clearAllTimers(el)
+
+  // cancel hiding if is already being hidden or
+  // tooltip is attached to a focused input
+  if (state === 'out' || (matches(el, 'input') && isFocused(el))) {
     return
   }
 
-  actives.splice(index, 1)
+  toggleOut(el)
+}
 
-  clearTimeout(showTimer)
-  clearInterval(hideTimer)
+function _hide (el) {
+  if (!el[NAMESPACE]) {
+    return
+  }
+
+  const { tooltip } = el[NAMESPACE]
+  const { cls } = el[NAMESPACE].options
+
   attr(el, 'aria-expanded', false)
-  _toggleAnimation(el, false)
+  removeClass(tooltip, cls)
   tooltip && remove(tooltip)
-  el.__vkTooltip.tooltip = false
-  el.__vkTooltip._unbind()
+  el[NAMESPACE].state = null
+  el[NAMESPACE].tooltip = null
+
+  trigger(el, 'hidden')
+}
+
+function clearAllTimers (el) {
+  clearTimeout(el[NAMESPACE].showTimer)
+  clearTimeout(el[NAMESPACE].hideTimer)
+  el[NAMESPACE].showTimer = null
+  el[NAMESPACE].hideTimer = null
 }
 
 function positionTooltip (el) {
   const target = el
-  const { tooltip } = el.__vkTooltip
-  const { clsPos, position } = el.__vkTooltip.options
-  let { offset } = el.__vkTooltip.options
+  const { tooltip } = el[NAMESPACE]
+  const { clsPos, position } = el[NAMESPACE].options
+  let { offset } = el[NAMESPACE].options
 
   let node
   let [dir, align = 'center'] = position.split('-')
@@ -173,7 +230,7 @@ function positionTooltip (el) {
   dir = axis === 'x' ? x : y
   align = axis === 'x' ? y : x
 
-  toggleClass(tooltip, `${clsPos}-${dir}-${align}`, el.__vkTooltip.options.offset === false)
+  toggleClass(tooltip, `${clsPos}-${dir}-${align}`, el[NAMESPACE].options.offset === false)
 
   return {
     dir,
@@ -182,9 +239,18 @@ function positionTooltip (el) {
 }
 
 function getOptions (ctx) {
-  const { value } = ctx.binding
+  let { value, modifiers } = ctx.binding
 
-  let options = {
+  if (isString(value)) {
+    value = { title: value }
+  }
+
+  if (Object.keys(modifiers).length) {
+    const firstKey = Object.keys(modifiers)[0]
+    modifiers = { position: firstKey }
+  }
+
+  const options = assign({
     delay: 0,
     title: '',
     offset: false,
@@ -193,24 +259,24 @@ function getOptions (ctx) {
     container: true,
     cls: 'uk-active',
     clsPos: 'uk-tooltip',
-    animation: ['uk-animation-scale-up', 'uk-animation-scale-up']
-  }
+    animation: 'scale-up'
+  }, modifiers, value)
 
-  if (isObject(value)) {
-    options = assign(options, value)
-  } else if (isString(value)) {
-    options.title = value
-  }
+  // coerce
+  options.position = toHyphenCase(options.position)
+  options.animation = options.animation.split(' ')
 
-  if (process.env.NODE_ENV !== 'production' && !(
-    /^(top|bottom)-(left|right)$/.test(options.position) ||
-    /^(top|bottom|left|right)$/.test(options.position)
-  )) {
-    warn('v-vk-tooltip -> invalid position', ctx.vnode)
-  }
+  // check
+  if (process.env.NODE_ENV !== 'production') {
+    const { position: pos, title } = options
 
-  if (process.env.NODE_ENV !== 'production' && !options.title) {
-    warn('v-vk-tooltip -> invalid title', ctx.vnode)
+    if (!title) {
+      warn('v-vk-tooltip -> title is missing or is not valid', ctx.vnode)
+    }
+
+    if (!(/^(top|bottom)-(left|right)$/.test(pos) || /^(top|bottom|left|right)$/.test(pos))) {
+      warn(`v-vk-tooltip -> '${pos}' is not a valid position value`, ctx.vnode)
+    }
   }
 
   return options
@@ -221,7 +287,28 @@ function getAxis (position) {
   return dir === 'top' || dir === 'bottom' ? 'y' : 'x'
 }
 
-function getContainer (el, { vnode }) {
-  const { container } = el.__vkTooltip.options
+function getContainer (el) {
+  const { vnode } = el[NAMESPACE]
+  const { container } = el[NAMESPACE].options
   return (container === true && vnode.context.$root.$el) || (container && $(container))
+}
+
+function createTooltip (el) {
+  const { clsPos, title } = el[NAMESPACE].options
+
+  return append(getContainer(el), `<div class="${clsPos}" aria-hidden>
+    <div class="${clsPos}-inner">${title}</div>
+  </div>`)
+}
+
+function getOrigin (position) {
+  const [dir, align] = position
+
+  return getAxis(position) === 'y'
+    ? `${flipPosition(dir)}-${align}`
+    : `${align}-${flipPosition(dir)}`
+}
+
+function isFocused (el) {
+  return el === document.activeElement
 }

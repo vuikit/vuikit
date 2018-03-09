@@ -3,7 +3,7 @@ import { warn } from 'vuikit/src/util/debug'
 import { escape } from 'vuikit/src/util/selector'
 import { on, trigger } from 'vuikit/src/util/event'
 import { height, offset } from 'vuikit/src/util/dimensions'
-import { clamp, isObject, assign, noop } from 'vuikit/src/util/lang'
+import { clamp, isString, assign, noop } from 'vuikit/src/util/lang'
 
 const NAMESPACE = '__vkScroll'
 
@@ -35,12 +35,12 @@ function apply (el, { vnode }) {
   const opts = el[NAMESPACE].options
   const isAnchor = el => el.nodeName === 'A'
 
-  let anchors = opts.target
-    ? $$(opts.target, el)
-    : [el]
+  let anchors = isAnchor(el)
+    ? [el]
+    : $$(opts.target, el)
 
   if (process.env.NODE_ENV !== 'production' && (!anchors.length || !anchors.every(isAnchor))) {
-    warn('v-vk-scroll -> anchors not detected', vnode.context)
+    warn('v-vk-scroll -> no anchors were matched', vnode.context)
   }
 
   const unbinds = anchors.map(anchor => {
@@ -70,7 +70,7 @@ function scrollTo (fromEl, toEl, options) {
     target = docHeight - winHeight
   }
 
-  if (!trigger(fromEl, 'beforescroll', [fromEl])) {
+  if (!trigger(fromEl, 'beforeScroll', [fromEl])) {
     return
   }
 
@@ -87,7 +87,7 @@ function scrollTo (fromEl, toEl, options) {
     if (currentY !== target) {
       requestAnimationFrame(step)
     } else {
-      trigger(fromEl, 'scrolled', [fromEl])
+      trigger(fromEl, 'afterScroll', [fromEl])
     }
   }
 
@@ -99,17 +99,15 @@ function ease (k) {
 }
 
 function getOptions (ctx) {
-  const { value } = ctx.binding
+  let { value } = ctx.binding
 
-  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-scroll -> Object expected as configuration', ctx.vnode.context)
+  if (isString(value)) {
+    value = { target: value }
   }
 
-  const options = assign({
+  return assign({
     offset: 0,
-    target: '',
+    target: 'a',
     duration: 1000
   }, value)
-
-  return options
 }
