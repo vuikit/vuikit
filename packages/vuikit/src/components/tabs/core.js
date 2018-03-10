@@ -1,10 +1,11 @@
 import { warn } from 'vuikit/src/util/debug'
 import { toStr, get } from 'vuikit/src/util/lang'
+import { TAB_ID } from './constants'
 
 /* This component supports both local as synced
   activeTab state, reason for a data and a prop. */
 
-import { TAB_ID } from './constants'
+const isNotProd = process.env.NODE_ENV !== 'production'
 
 export default {
   props: {
@@ -41,7 +42,7 @@ export default {
       return filterTabs(this)
         .filter((node, index) => {
           if (!node.componentOptions) {
-            warn(`vk-tabs -> failed to process '${node.tag}', seems is not a stateful component`, this)
+            isNotProd && warn(`vk-tabs -> failed to process '${node.tag}', seems is not a stateful component`, this)
             return false
           }
 

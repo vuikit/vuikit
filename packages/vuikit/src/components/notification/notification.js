@@ -8,6 +8,8 @@ import ElementNotificationClose from './elements/notification-close'
 import { warn, tip } from 'vuikit/src/util/debug'
 import { isObject, isString, assign, get } from 'vuikit/src/util/lang'
 
+const isNotProd = process.env.NODE_ENV !== 'production'
+
 export default {
   name: 'VkNotification',
   directives: {
@@ -23,7 +25,7 @@ export default {
       default: () => [],
       validator: val => {
         if (!val.every(m => isObject(m) || isString(m))) {
-          warn('vk-notification -> each message is expected as Object or String')
+          isNotProd && warn('vk-notification -> each message is expected as Object or String')
           return false
         }
 
@@ -78,7 +80,7 @@ export default {
 
       for (let i = 0; i < values.length; i++) {
         if (isDuplicated(values[i])) {
-          tip('vk-notification -> duplicate messages are filtered out, consider adding a unique `key` to those.')
+          isNotProd && tip('vk-notification -> duplicate messages are filtered out, consider adding a unique `key` to those.')
           continue
         }
 
