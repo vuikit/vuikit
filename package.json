@@ -20,7 +20,7 @@
     "eslint-plugin-standard": "^3.0.1"
   },
   "@std/esm": {
-    "esm": "js",
+    "mode": "js",
     "cjs": true
   }
 }
