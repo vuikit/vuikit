@@ -1,4 +1,4 @@
-import { isObject, isString } from 'vuikit/src/util/lang'
+import { isObject, isString } from 'vuikit/src/util/lang/is'
 
 /**
  * Gets the Object value at specific `path`. If the resolved value is

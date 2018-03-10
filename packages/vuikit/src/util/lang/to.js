@@ -1,5 +1,4 @@
-import { isString, isArray, isUndefined, isNode, isNodeCollection, isJQuery, isWindow, isDocument } from './'
-import { getCssVar } from '../style'
+import { isArray, isUndefined, isNode, isNodeCollection, isJQuery, isWindow, isDocument } from './is'
 
 export function toArray (val) {
   if (val === null || isUndefined(val)) {
@@ -82,19 +81,6 @@ export function toNodes (element) {
         : isJQuery(element)
           ? element.toArray()
           : []
-}
-
-export function toMedia (value) {
-  if (isString(value)) {
-    if (value[0] === '@') {
-      const name = `media-${value.substr(1)}`
-      value = toFloat(getCssVar(name))
-    } else if (isNaN(value)) {
-      return value
-    }
-  }
-
-  return value && !isNaN(value) ? `(min-width: ${value}px)` : false
 }
 
 // alias

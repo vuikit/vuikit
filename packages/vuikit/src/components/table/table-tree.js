@@ -1,6 +1,6 @@
 import Table from './table'
 import Render from './render'
-import { toStr, merge } from 'vuikit/src/util/lang'
+import { toStr, assign } from 'vuikit/src/util/lang'
 
 import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from './constants'
 
@@ -25,7 +25,7 @@ export default {
         let idCount = 0
 
         data.forEach(_row => {
-          const row = merge({}, _row)
+          const row = assign({}, _row)
           const children = row[this.childrenKey]
           const hasChildren = children && children.length
 

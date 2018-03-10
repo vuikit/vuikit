@@ -1,4 +1,5 @@
-import { merge, isObject, isFunction } from 'vuikit/src/util/lang'
+import { assign } from 'vuikit/src/util/lang/object'
+import { isObject, isFunction } from 'vuikit/src/util/lang/is'
 
 /*
  * Safely and quickly serialize JavaScript objects
@@ -6,7 +7,7 @@ import { merge, isObject, isFunction } from 'vuikit/src/util/lang'
  */
 export default function (obj) {
   if (isObject(obj) && !isFunction(obj.toJSON)) {
-    decirc(merge({}, obj), '', [], null)
+    decirc(assign({}, obj), '', [], null)
   }
 
   return JSON.stringify(obj)

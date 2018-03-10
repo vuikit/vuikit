@@ -1,4 +1,4 @@
-import { assign, each } from './'
+import { assign, each } from './object'
 
 export default {
 
