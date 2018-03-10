@@ -4,17 +4,12 @@
     <h1>Table With Sort</h1>
 
     <vk-table
-      divided
-      middle-aligned
+      cells-middle
       :data="data"
       :sortedBy.sync="sortedBy"
     >
       <vk-table-column-sort title="Company" cell="company" />
-      <vk-table-column-sort title="Slots" cell="ranking">
-        <div slot="cell" slot-scope="val">
-          {{ val }}
-        </div>
-      </vk-table-column-sort>
+      <vk-table-column-sort title="Slots" cell="ranking" />
     </vk-table>
 
   </div>

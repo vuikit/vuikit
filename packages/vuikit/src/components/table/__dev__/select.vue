@@ -1,16 +1,15 @@
 <template>
   <div class="uk-padding">
 
-    <h1>Table With Select</h1>
+    <h1>Selectable rows</h1>
 
     <h2>Single Selection</h2>
 
     <vk-table
-      divided
       striped
       narrowed
-      middle-aligned
-      single-row-selectable
+      cells-middle
+      row-selectable
       :data="data"
       :selected-rows.sync="singleSelection"
     >
@@ -23,15 +22,14 @@
     <h2>Multiple Selection</h2>
 
     <vk-table
-      divided
       narrowed
-      selectable
-      middle-aligned
-      row-selectable
+      cells-middle
+      rows-selectable
       :data="data"
       :selected-rows.sync="selection"
     >
       <vk-table-column-select />
+      <vk-table-column-select headless />
       <vk-table-column
         title="Website"
         cell="website"

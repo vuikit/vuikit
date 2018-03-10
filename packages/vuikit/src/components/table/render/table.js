@@ -1,10 +1,10 @@
-import ElementTr from './elements/table-tr'
-import ElementTable from './elements/table'
+import ElementTr from '../elements/table-tr'
+import ElementTable from '../elements/table'
 
 import { warn } from 'vuikit/src/util/debug'
 import { isFunction, get } from 'vuikit/src/util/lang'
 
-import { ON_CLICK_ROW, ROW_CLICK_PREVENTED } from './constants'
+import { ON_CLICK_ROW, ROW_CLICK_PREVENTED } from '../constants'
 
 const Row = {
   functional: true,
@@ -33,21 +33,40 @@ const Row = {
 }
 
 export default function (h, { rows, props, columns, table }) {
+  // filter out invalid columns
+  columns = columns.filter(node => {
+    const isValid = node.fnOptions && node.fnOptions.headRender && node.fnOptions.cellRender
+
+    if (process.env.NODE_ENV !== 'production' && !isValid) {
+      warn('vk-table -> some of the columns were filtered out because they were missing a head or cell render.')
+    }
+
+    return isValid
+  })
+
   const isHeadless = !columns.some(
-    node => node.children || get(node, 'data.domProps.textContent')
+    node => node.children || get(node, 'data.props.title') || get(node, 'data.props.head')
   )
 
   return h(ElementTable, { props }, [
     isHeadless || h('thead', [
-      h(ElementTr, columns.map(node =>
-        // rerender the column so Table become it parent
-        h(node.fnOptions, node.data)
-      ))
+      // rerender the column so Table become it parent
+      h(ElementTr, columns.map(node => {
+        const fnOptions = node.fnOptions
+
+        // workaround to avoid duplicate classes
+        delete node.data.class
+
+        return h({
+          functional: true,
+          render: fnOptions.headRender
+        }, node.data)
+      }))
     ]),
     h('tbody', rows.map(($row, index) => {
       return h(Row, { $row },
         columns.map(node => {
-          const data = node.data
+          const { props, slots, scopedSlots } = node.data
           const fnOptions = node.fnOptions
 
           if (process.env.NODE_ENV !== 'production' && !fnOptions) {
@@ -58,12 +77,10 @@ export default function (h, { rows, props, columns, table }) {
             warn('vk-table -> column definition is missing cellRender', table)
           }
 
-          const Cell = {
+          return h({
             functional: true,
             render: fnOptions.cellRender
-          }
-
-          return h(Cell, { $row, props: data.props, scopedSlots: data.scopedSlots })
+          }, { $row, props, slots, scopedSlots })
         })
       )
     }))

@@ -1,11 +1,11 @@
 import MixinSort from './mixins/sort'
 import MixinSelect from './mixins/select'
 
-import Render from './render'
+import TableRender from './render/table'
 import ElementTable from './elements/table'
 
 import { ROW_ID } from './constants'
-import { assign } from 'vuikit/src/util/lang'
+import { assign, get } from 'vuikit/src/util/lang'
 
 export default {
   name: 'VkTable',
@@ -36,9 +36,9 @@ export default {
     }
   },
   render (h) {
-    const columns = this.$slots.default.filter(n => n.tag)
+    const columns = get(this, '$slots.default', []).filter(n => n.tag)
 
-    return Render(h, {
+    return TableRender(h, {
       columns,
       table: this,
       rows: this.rows,

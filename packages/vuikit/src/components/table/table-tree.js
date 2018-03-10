@@ -1,5 +1,5 @@
 import Table from './table'
-import Render from './render'
+import Render from './render/table'
 import { toStr, assign } from 'vuikit/src/util/lang'
 
 import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from './constants'

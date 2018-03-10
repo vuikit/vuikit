@@ -1,50 +1,31 @@
 import ElementTh from './elements/table-th'
 import ElementTd from './elements/table-td'
+import RenderCell from './render/cell'
 import mergeData from 'vuikit/src/util/vue-data-merge'
-import { get, isUndef, assign } from 'vuikit/src/util/lang'
+
+import { assign } from 'vuikit/src/util/lang'
 
 export default {
   name: 'VkTableColumn',
   functional: true,
-  props: assign({}, ElementTh.props, {
-    title: {
-      type: String
-    },
-    cell: {
-      type: String
-    },
-    cellClass: {
-      type: String
-    }
+  props: assign({}, ElementTh.props, ElementTd.props, {
+    cell: String,
+    title: String,
+    cellClass: String
   }),
-  render (h, { data, props, children }) {
-
-    // workarount to avoid duplicate classes
-    // during the rerendering done by the table
-    delete data.class
-
-    return h(ElementTh, mergeData(data, {
+  render (h, { data, props, slots }) {
+    // IMPORTANT: don't remove or change, is the
+    // initial dummy render to pick up data
+    data.slots = slots()
+    return h('div', mergeData({}, data, { props }))
+  },
+  headRender (h, { data, props }) {
+    return h(ElementTh, mergeData({}, data, {
       props,
       class: 'vk-table-column'
-    }), props.title || children)
+    }), props.title)
   },
-  cellRender (h, { data, props }) {
-    const { $row } = data
-    const { cell, cellClass } = props
-
-    const cellValue = get($row, cell)
-
-    // support custom slots with fallback
-    const cellSlot = get(data, 'scopedSlots.cell', () => cellValue)
-    const emptySlot = get(data, 'scopedSlots.emptyCell', () => '')
-
-    return h(ElementTd, {
-      props,
-      class: cellClass
-    }, [
-      isUndef(cellValue)
-        ? emptySlot($row)
-        : cellSlot(cellValue, $row)
-    ])
+  cellRender (h, ctx) {
+    return RenderCell(h, ctx, ({ cell }) => cell)
   }
 }

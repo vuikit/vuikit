@@ -4,8 +4,7 @@
     <h1>TableTree</h1>
 
     <vk-table-tree
-      divided
-      single-row-selectable
+      row-selectable
       :data="data"
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
@@ -23,11 +22,10 @@
     <h2>Variations</h2>
 
     <vk-table-tree
-      divided
       narrowed
       striped
       hoverable
-      single-row-selectable
+      row-selectable
       :data="data"
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"

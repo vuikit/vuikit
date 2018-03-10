@@ -1,25 +1,34 @@
 import Column from './table-column'
 import ElementThSort from './elements/table-th-sort'
 import mergeData from 'vuikit/src/util/vue-data-merge'
-import { assign } from 'vuikit/src/util/lang'
+import { warn } from 'vuikit/src/util/debug'
+import { assign, get } from 'vuikit/src/util/lang'
 
 import { UPDATE_SORTEDBY } from './constants'
 
 export default {
   name: 'VkTableColumnSort',
   functional: true,
-  props: assign({}, Column.props, ElementThSort),
+  props: assign({}, Column.props, ElementThSort, {
+    // for a sort column we make cell prop required
+    // as the is no way to order otherwise
+    cell: {
+      type: String,
+      required: true
+    }
+  }),
+  render: Column.render,
   cellRender: Column.cellRender,
-  render (h, { data, props, children, parent }) {
+  headRender (h, { data, props, children, parent }) {
     const { title } = props
 
-    // workarount to avoid duplicate classes
-    // during the rerendering done by the table
-    delete data.class
+    if (process.env.NODE_ENV !== 'production' && !parent.sortedBy) {
+      warn(`vk-table-column-sort -> the table 'sortedBy' prop is required when using this column.`, parent)
+    }
 
-    return h(ElementThSort, {
-      props: mergeData(data, {
-        order: parent.sortedBy[props.cell]
+    return h(ElementThSort, mergeData(data, {
+      props: assign({
+        order: get(parent, `sortedBy.${props.cell}`)
       }, props),
       on: {
         click: e => {
@@ -27,7 +36,7 @@ export default {
           parent.$emit(UPDATE_SORTEDBY, sortedBy)
         }
       }
-    }, title || children)
+    }), title || children)
   }
 }
 

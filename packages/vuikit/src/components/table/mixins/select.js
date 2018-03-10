@@ -7,11 +7,11 @@ export default {
       type: Array,
       default: () => []
     },
-    singleRowSelectable: {
+    rowSelectable: {
       type: Boolean,
       default: false
     },
-    rowSelectable: {
+    rowsSelectable: {
       type: Boolean,
       default: false
     }
@@ -20,7 +20,7 @@ export default {
     selectRow (row) {
       const id = row[ROW_ID]
 
-      if (this.singleRowSelectable) {
+      if (this.rowSelectable) {
         this.updateRowSelection([id])
         return
       }
@@ -67,12 +67,11 @@ export default {
       }
 
       const selected = this.rows.filter(this.isRowSelected)
-
       return selected.length === this.rows.length
     }
   },
   created () {
-    if (this.rowSelectable || this.singleRowSelectable) {
+    if (this.rowsSelectable || this.rowSelectable) {
       this.$on(ON_CLICK_ROW, this.toggleRowSelection)
     }
   }

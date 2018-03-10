@@ -3,15 +3,15 @@ import mergeData from 'vuikit/src/util/vue-data-merge'
 export default {
   functional: true,
   props: {
+    divided: {
+      type: Boolean,
+      default: true
+    },
     narrowed: {
       type: Boolean,
       default: false
     },
-    middleAligned: {
-      type: Boolean,
-      default: false
-    },
-    divided: {
+    cellMiddle: {
       type: Boolean,
       default: false
     },
@@ -37,10 +37,10 @@ export default {
       class: ['uk-table', {
         'uk-table-small': props.narrowed,
         'uk-table-hover': props.hoverable,
+        'uk-table-middle': props.cellMiddle,
         'uk-table-divider': props.divided,
         'uk-table-striped': props.striped,
         'uk-table-justify': props.justified,
-        'uk-table-middle': props.middleAligned,
         'uk-table-responsive': props.responsive
       }]
     }), children)
