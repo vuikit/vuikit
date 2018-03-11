@@ -34,6 +34,10 @@ export default {
     el[NAMESPACE].options = getOptions({ binding })
   },
   unbind (el, binding, vnode) {
+    if (!el[NAMESPACE]) {
+      return
+    }
+
     hide(el)
     attr(el, {
       title: el[NAMESPACE]._hasTitle

@@ -5,20 +5,32 @@ import { query } from 'vuikit/src/util/selector'
 import { height, offset } from 'vuikit/src/util/dimensions'
 import { isObject, isNumeric, isString, toFloat, assign, endsWith } from 'vuikit/src/util/lang'
 
+const NAMESPACE = '__vkHeightViewport'
+
 export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+  },
   inserted (el, binding, vnode) {
     vnode.context.$nextTick(() =>
       update(el, { binding, vnode })
     )
-    el.__vkHeightViewportOff = on(window, 'resize', () =>
+    el[NAMESPACE].unbind = on(window, 'resize', () =>
       update(el, { binding, vnode })
     )
   },
   componentUpdated (el, binding, vnode) {
-    update(el, { binding, vnode })
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
   },
   unbind (el) {
-    el.__vkHeightViewportOff()
+    if (!el[NAMESPACE]) {
+      return
+    }
+
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
   }
 }
 

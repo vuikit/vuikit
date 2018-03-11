@@ -5,20 +5,32 @@ import { attr } from 'vuikit/src/util/attr'
 import { isVisible } from 'vuikit/src/util/filter'
 import { isUndefined, isString, assign } from 'vuikit/src/util/lang'
 
+const NAMESPACE = '__vkHeightMatch'
+
 export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+  },
   inserted (el, binding, vnode) {
     vnode.context.$nextTick(() =>
       update(el, { binding, vnode })
     )
-    el.__vkHeightMatchOff = on(window, 'resize', () =>
+    el[NAMESPACE].unbind = on(window, 'resize', () =>
       update(el, { binding, vnode })
     )
   },
   componentUpdated (el, binding, vnode) {
-    update(el, { binding, vnode })
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
   },
   unbind (el) {
-    el.__vkHeightMatchOff()
+    if (!el[NAMESPACE]) {
+      return
+    }
+
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
   }
 }
 

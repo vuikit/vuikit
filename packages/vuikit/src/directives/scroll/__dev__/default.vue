@@ -19,7 +19,7 @@
       <span><a href="#bottom">Should be targeted</a></span> <br />
     </p>
 
-    <p v-vk-scroll="'> span > a'">
+    <p v-vk-scroll="'span > a'">
       <span><a href="#bottom">Should be targeted</a></span> <br />
       <a href="#bottom">Should not be targeted</a>
     </p>

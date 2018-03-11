@@ -5,20 +5,32 @@ import { isVisible } from 'vuikit/src/util/filter'
 import { toggleClass } from 'vuikit/src/util/class'
 import { isObject, noop, assign } from 'vuikit/src/util/lang'
 
+const NAMESPACE = '__vkMargin'
+
 export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+  },
   inserted (el, binding, vnode) {
     vnode.context.$nextTick(() =>
       update(el, { binding, vnode })
     )
-    el.__vkMarginOff = on(window, 'resize', () =>
+    el[NAMESPACE].unbind = on(window, 'resize', () =>
       update(el, { binding, vnode })
     )
   },
   componentUpdated (el, binding, vnode) {
-    update(el, { binding, vnode })
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
   },
   unbind (el) {
-    el.__vkMarginOff()
+    if (!el[NAMESPACE]) {
+      return
+    }
+
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
   }
 }
 

@@ -29,6 +29,10 @@ export default {
     })
   },
   unbind (el) {
+    if (!el[NAMESPACE]) {
+      return
+    }
+
     clearTimeout(el[NAMESPACE].timer)
     delete el[NAMESPACE]
   }
