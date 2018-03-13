@@ -1,5 +1,5 @@
-import { $ } from 'vuikit/src/util/core'
-import { escape, matches } from 'vuikit/src/util/selector'
+import { $, $$ } from 'vuikit/src/util/core'
+import { escape } from 'vuikit/src/util/selector'
 import { on, trigger } from 'vuikit/src/util/event'
 import { height, offset } from 'vuikit/src/util/dimensions'
 import { clamp, isString, assign } from 'vuikit/src/util/lang'
@@ -15,11 +15,13 @@ export default {
 
     el[NAMESPACE].unbind = on(el, 'click', e => {
       const opts = el[NAMESPACE].options
-      if (e.defaultPrevented && !opts.force) {
+      const isAnchor = e.target.nodeName === 'A'
+
+      if (!isAnchor || (e.defaultPrevented && !opts.force)) {
         return
       }
 
-      if (matches(e.target, opts.target)) {
+      if (e.target === el || matches(el, e.target, opts.target)) {
         e.preventDefault()
         scrollTo(el, e.target, escape(e.target.hash).substr(1), opts)
       }
@@ -90,4 +92,13 @@ function getOptions (ctx) {
     force: false,
     duration: 1000
   }, modifiers, value)
+}
+
+function matches (el, target, selector) {
+  const matches = $$(`${selector}`, el)
+
+  let i = matches.length
+  while (--i >= 0 && matches[i] !== target) {}
+
+  return i > -1
 }

@@ -19,12 +19,16 @@
       <span><a href="#bottom">Should be targeted</a></span> <br />
     </p>
 
-    <p v-vk-scroll="'span > a'">
-      <span><a href="#bottom">Should be targeted</a></span> <br />
+    <div v-vk-scroll="'> div > a'">
+      <div><a href="#bottom">Should be targeted</a></div> <br />
       <a href="#bottom">Should not be targeted</a>
-    </p>
+    </div>
 
     <div style="height: 2000px;"></div>
+
+    <vk-button-link id="bottom" href="#" v-vk-scroll>
+      Go Up
+    </vk-button-link>
 
     <vk-button-link id="bottom" href="#" v-vk-scroll="{ duration: 2000, offset: -300 }">
       Go Up Slowely With Offset
