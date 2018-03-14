@@ -21,11 +21,13 @@ export default {
     el[NAMESPACE] = {
       vnode,
       state: null, // in, out, active
-      options: getOptions({ binding }),
-      _hasTitle: hasAttr(el, 'title')
+      options: getOptions({ binding })
     }
 
-    attr(el, { title: '' })
+    if (hasAttr(el, 'title')) {
+      el[NAMESPACE].prevTitle = attr(el, 'title')
+      attr(el, { title: '' })
+    }
   },
   inserted (el, binding, vnode) {
     bindEvents(el)
@@ -39,11 +41,7 @@ export default {
     }
 
     hide(el)
-    attr(el, {
-      title: el[NAMESPACE]._hasTitle
-        ? el[NAMESPACE].title
-        : null
-    })
+    attr(el, { title: el[NAMESPACE].prevTitle || null })
     el[NAMESPACE].unbindEvents()
     delete el[NAMESPACE]
   }
@@ -272,11 +270,7 @@ function getOptions (ctx) {
 
   // check
   if (process.env.NODE_ENV !== 'production') {
-    const { position: pos, title } = options
-
-    if (!title) {
-      warn('v-vk-tooltip -> title is missing or is not valid', ctx.vnode)
-    }
+    const { position: pos } = options
 
     if (!(/^(top|bottom)-(left|right)$/.test(pos) || /^(top|bottom|left|right)$/.test(pos))) {
       warn(`v-vk-tooltip -> '${pos}' is not a valid position value`, ctx.vnode)
@@ -299,9 +293,10 @@ function getContainer (el) {
 
 function createTooltip (el) {
   const { clsPos, title } = el[NAMESPACE].options
+  const content = el[NAMESPACE].prevTitle || title
 
   return append(getContainer(el), `<div class="${clsPos}" aria-hidden>
-    <div class="${clsPos}-inner">${title}</div>
+    <div class="${clsPos}-inner">${content}</div>
   </div>`)
 }
 

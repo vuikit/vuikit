@@ -55,6 +55,7 @@
           animation: 'scale-up scale-up',
           duration: 100
         }">Animations</vk-button>
+        <vk-button-link title="Hello!" v-vk-tooltip>With title attr</vk-button-link>
 
       </form>
     </vk-grid>
