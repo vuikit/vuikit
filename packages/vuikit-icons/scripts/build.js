@@ -1,7 +1,7 @@
 import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
-import { remove, run, task, write, copy, copyRecursive, banner as bannerize, minifyJS } from '@miljan/build'
+import { remove, run, task, write, banner as bannerize, minifyJS } from '@miljan/build'
 
 import pkg from '../package.json'
 import rollupConfig from '../rollup.config'
@@ -67,7 +67,7 @@ run(async () => {
 
     await minifyJS({
       src: 'dist/vuikit-icons.js',
-      dest: 'dist/vuikit-icons.mins.js',
+      dest: 'dist/vuikit-icons.min.js',
       options: {
         sourceMap: true
       }

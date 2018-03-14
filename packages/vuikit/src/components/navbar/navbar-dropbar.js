@@ -1,5 +1,4 @@
 import { Transition } from 'vuikit/src/util/animation'
-import { active as activeDrop } from 'vuikit/src/components/drop/drop/toggle'
 
 import { css } from 'vuikit/src/util/style'
 import { height } from 'vuikit/src/util/dimensions'
@@ -38,7 +37,7 @@ export default {
   },
   methods: {
     getActiveDrop () {
-      const active = activeDrop
+      const active = window.vuikitDropActive
       return active && includes(active.mode, 'hover') && within(active.$refs.target, this.$el) && active
     },
     transitionDropbar (dropdownEl) {

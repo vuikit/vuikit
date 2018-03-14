@@ -8,6 +8,8 @@ import { pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
 
 export let active
 
+window.vuikitDropActive = active
+
 on(window, 'resize', ({ defaultPrevented }) => {
   const justified = active && /justify/.test(active.position)
 

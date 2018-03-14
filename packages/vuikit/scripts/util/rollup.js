@@ -3,10 +3,6 @@ const rollupAnalyzer = require('rollup-analyzer')
 const commonjs = require('rollup-plugin-commonjs')
 const nodeResolve = require('rollup-plugin-node-resolve')
 
-const defaults = {
-  report: false
-}
-
 /*
  * Rollup bundler wrapper
  */
@@ -20,7 +16,10 @@ module.exports = async (_config, options) => {
   ]
 
   const config = {..._config}
-  const opts = { ...defaults, ...options }
+  const opts = {
+    report: false,
+    ...options
+  }
 
   config.plugins = config.plugins
     ? config.plugins.concat(plugins) // config plugins should resolve first

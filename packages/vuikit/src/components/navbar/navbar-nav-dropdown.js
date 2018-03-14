@@ -1,5 +1,5 @@
-import VkDrop from 'vuikit/src/components/drop/drop'
-import VkGrid from 'vuikit/src/components/grid/grid'
+import { Drop } from 'vuikit/src/components/drop'
+import { Grid } from 'vuikit/src/components/grid'
 
 import { get } from 'vuikit/src/util/misc'
 import { query } from 'vuikit/src/util/selector'
@@ -29,12 +29,12 @@ export default {
       type: Boolean,
       default: false
     },
-    mode: VkDrop.props.mode,
-    offset: VkDrop.props.offset,
-    animation: VkDrop.props.animation,
-    duration: VkDrop.props.duration,
-    delayShow: VkDrop.props.delayShow,
-    delayHide: VkDrop.props.delayHide
+    mode: Drop.props.mode,
+    offset: Drop.props.offset,
+    animation: Drop.props.animation,
+    duration: Drop.props.duration,
+    delayShow: Drop.props.delayShow,
+    delayHide: Drop.props.delayHide
   },
   computed: {
     navbar () {
@@ -74,7 +74,7 @@ export default {
       class: 'uk-navbar-subtitle'
     }, subtitle) ])
 
-    const grid = () => h(VkGrid, {
+    const grid = () => h(Grid, {
       class: [
         'uk-navbar-dropdown-grid',
         `uk-child-width-1-${colCount}${colCount > 2 ? '@m' : ''}`
@@ -85,7 +85,7 @@ export default {
 
     return h('li', [
       h('a', [Subtitle || title]),
-      h(VkDrop, {
+      h(Drop, {
         nativeOn: {
           [pointerEnter]: e => {
             this.$refs.drop.clearTimers()

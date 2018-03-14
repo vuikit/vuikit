@@ -1,5 +1,4 @@
 import path from 'path'
-import globby from 'globby'
 import rollup from './util/rollup'
 
 import vue from 'rollup-plugin-vue'
@@ -8,7 +7,7 @@ import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
-import { run, remove, write, copy, copyRecursive, task, banner, less, minifyJS, minifyCSS } from '@miljan/build'
+import { run, remove, write, task, banner, less, minifyJS, minifyCSS } from '@miljan/build'
 
 import pkg from '../package.json'
 
@@ -21,20 +20,7 @@ const bannerText = `/**
 run(async () => {
   await remove('dist')
 
-  await task('Copy Files', () => Promise.all([
-    copy('*.{md,json}', 'dist'),
-    copyRecursive('src', 'dist/src', [
-      '!**/__*__/*',
-      '!**/__*__'
-    ])
-  ]))
-
   await task('Compile JS', async () => {
-    await compileIndividual([
-      'src/*/*/index.js',
-      '!src/*/datepicker/index.js'
-    ], 'dist')
-
     // compile ES index
     await compile({
       input: 'src/vuikit.esm.js',
@@ -42,7 +28,7 @@ run(async () => {
         format: 'es'
       },
       env: 'development'
-    }, 'dist/dist/vuikit.esm.js')
+    }, 'dist/vuikit.esm.js')
 
     // compile CJS index
     await compile({
@@ -51,7 +37,7 @@ run(async () => {
         format: 'cjs'
       },
       env: 'development'
-    }, 'dist/dist/vuikit.cjs.js')
+    }, 'dist/vuikit.cjs.js')
 
     // compile dist as UMD
     await compile({
@@ -61,7 +47,7 @@ run(async () => {
         format: 'umd'
       },
       env: 'development'
-    }, 'dist/dist/vuikit.js')
+    }, 'dist/vuikit.js')
 
     // compile dist as UMD for production
     await compile({
@@ -71,10 +57,10 @@ run(async () => {
         format: 'umd'
       },
       env: 'production'
-    }, 'dist/dist/vuikit.min.js')
+    }, 'dist/vuikit.min.js')
 
     await minifyJS({
-      src: 'dist/dist/vuikit.min.js',
+      src: 'dist/vuikit.min.js',
       options: {
         sourceMap: true,
         output: {
@@ -90,7 +76,7 @@ run(async () => {
   await task('Compile CSS', async () => {
     await less({
       src: 'src/theme/index.less',
-      dest: 'dist/dist/vuikit.css',
+      dest: 'dist/vuikit.css',
       options: {
         relativeUrls: true,
         paths: [
@@ -101,8 +87,8 @@ run(async () => {
     })
 
     await minifyCSS({
-      src: 'dist/dist/vuikit.css',
-      dest: 'dist/dist/vuikit.min.css',
+      src: 'dist/vuikit.css',
+      dest: 'dist/vuikit.min.css',
       options: {
         sourceMap: true
       }
@@ -111,29 +97,9 @@ run(async () => {
 
   await banner([
     'dist/*.js',
-    'dist/dist/*.{js,css}'
+    'dist/*.{js,css}'
   ], bannerText)
 })
-
-async function compileIndividual (paths, dest) {
-  const resources = await globby(paths)
-
-  await Promise.all(resources.map(_compile))
-
-  async function _compile (input) {
-    const dirname = path.dirname(input)
-    const basename = dirname.split('/').pop()
-
-    await compile({
-      input,
-      output: {
-        format: 'es'
-      },
-      env: 'production',
-      external: id => id.match(/@?vuikit\/core/)
-    }, `${dest}/${basename}.js`)
-  }
-}
 
 async function compile (opts, dest) {
   const config = {
@@ -156,7 +122,7 @@ async function compile (opts, dest) {
   if (opts.env) {
     config.plugins.push(replace({
       exclude: 'node_modules/**',
-      ENV: JSON.stringify(opts.env)
+      'process.env.NODE_ENV': JSON.stringify(opts.env)
     }))
   }
 

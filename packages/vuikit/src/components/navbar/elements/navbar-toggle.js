@@ -1,6 +1,6 @@
 import IconToggle from './assets/icon-toggle'
 import { mergeData } from 'vuikit/src/util/vue'
-import ElementIcon from 'vuikit/src/components/icon/elements/icon'
+import { ElementIcon } from 'vuikit/src/components/icon'
 
 export default {
   functional: true,

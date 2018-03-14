@@ -1,4 +1,4 @@
-import Drop from '../drop/drop'
+import { Drop } from 'vuikit/src/components/drop'
 
 export default {
   name: 'VkDropdown',
