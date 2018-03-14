@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "cd packages/vuikit && yarn dev",
     "build": "node -r @std/esm scripts/build.js",
+    "release": "node -r @std/esm scripts/release.js",
     "lint": "eslint"
   },
   "devDependencies": {
