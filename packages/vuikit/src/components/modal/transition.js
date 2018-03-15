@@ -63,6 +63,10 @@ export default {
     }
 
     function doEnter (el, done) {
+      // append modal at $root as the styles
+      // could be scoped to the app dom
+      // re-append every time entering so it appears on top
+      modal.$root.$el.appendChild(el)
       // redraw workaround, necessary so the browser
       // doesn't try to apply it all in one step, not
       // giving enough time for the transition to init
