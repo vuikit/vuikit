@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 /* eslint-disable one-var, no-return-assign, no-mixed-operators */
 /*
     Based on:

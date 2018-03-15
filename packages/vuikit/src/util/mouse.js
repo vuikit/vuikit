@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 import {on} from './event'
 import {offset} from './dimensions'
 

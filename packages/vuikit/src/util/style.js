@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 /* eslint-disable one-var, no-mixed-operators, no-useless-call */
 import {append} from './dom'
 import {addClass} from './class'

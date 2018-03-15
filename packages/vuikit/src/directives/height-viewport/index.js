@@ -34,6 +34,26 @@ export default {
   }
 }
 
+function getOptions (ctx) {
+  const { value, modifiers } = ctx.binding
+
+  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
+    warn('v-vk-height-viewport -> Object expected as configuration', ctx.vnode.context)
+  }
+
+  const options = assign({
+    minHeight: 0,
+    expand: false,
+    offsetTop: false,
+    offsetBottom: false
+  }, modifiers, value)
+
+  return options
+}
+
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
 function update (el, ctx) {
   const opts = getOptions(ctx)
 
@@ -99,23 +119,6 @@ function update (el, ctx) {
   if (viewport - offsetTop >= elHeight) {
     css(el, 'height', minHeight)
   }
-}
-
-function getOptions (ctx) {
-  const { value, modifiers } = ctx.binding
-
-  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-height-viewport -> Object expected as configuration', ctx.vnode.context)
-  }
-
-  const options = assign({
-    minHeight: 0,
-    expand: false,
-    offsetTop: false,
-    offsetBottom: false
-  }, modifiers, value)
-
-  return options
 }
 
 function offsetHeight (el) {

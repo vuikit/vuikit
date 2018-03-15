@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 /* eslint-disable prefer-promise-reject-errors */
 import {attr} from './attr'
 import {Promise} from './promise'

@@ -82,4 +82,4 @@ yarn run icons
 
 [MIT](LICENSE) &copy; [Miljan Aleksic](https://twitter.com/AleksicMiljan)
 
-Note: the icons itself could be subjected to a different license. Please refer to [UIkit](https://github.com/uikit/uikit) for more information about it.
+The icons source code are subjected to Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com

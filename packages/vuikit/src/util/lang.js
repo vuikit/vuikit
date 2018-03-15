@@ -1,5 +1,8 @@
-/* eslint-disable no-mixed-operators, no-return-assign */
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
 
+/* eslint-disable no-mixed-operators, no-return-assign */
 export function bind (fn, context) {
   return function (a) {
     const l = arguments.length

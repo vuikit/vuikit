@@ -4,9 +4,7 @@
   </a>
 </p>
 
-> UIkit with all the power of Vue
-
-While it is possible to use UIkit by its own when building Vue components, you may find yourself relying on too many dependencies and building a wrapper to fill the missing logic gap. Vuikit solves all that by removing UIkit js dependency and rebuilding the logic with Vue natively.
+Vuikit is a [MIT](https://github.com/vuikit/vuikit/blob/develop/LICENSE) licensed [Vue](https://vuejs.org/) UI library based on [UIkit](https://getuikit.com/). In other words, Vuikit fulfills the necessity of a consistent and responsive framework for web site interfaces.
 
 ## Monorepo
 
@@ -26,3 +24,5 @@ Special thanks to ZOOlanders for supporting the Vuikit project from the very beg
 Vuikit is open source and released under the [MIT License](LICENSE).
 
 [MIT](LICENSE) &copy; [Miljan Aleksic](https://twitter.com/AleksicMiljan)
+
+Substantial part of the code is adapted from UIkit - to Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com

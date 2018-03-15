@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 import {fragment} from './dom'
 import {find, findAll} from './selector'
 import {isString, toNode, toNodes} from './lang'

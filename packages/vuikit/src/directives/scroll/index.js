@@ -40,6 +40,9 @@ export default {
   }
 }
 
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
 function scrollTo (el, fromEl, toEl, options) {
   toEl = (toEl && $(toEl)) || document.body
 

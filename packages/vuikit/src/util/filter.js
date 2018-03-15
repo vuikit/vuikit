@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 import {closest, matches} from './selector'
 import {isDocument, isString, toNode, toNodes} from './lang'
 

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 import {isFunction, isObject, isUndefined, toNode, toNodes} from './lang'
 
 export function attr (element, name, value) {

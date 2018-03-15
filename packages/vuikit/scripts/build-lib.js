@@ -9,13 +9,7 @@ import cleanup from 'rollup-plugin-cleanup'
 
 import { run, task, remove, write, banner } from '@miljan/build'
 
-import pkg from '../package.json'
-
-const bannerText = `/**
- * Vuikit ${pkg.version}
- * (c) 2018 Miljan Aleksic
- * @license ${pkg.license}
- */`
+import Copyright from './_copyright'
 
 run(async () => {
   await remove('lib')
@@ -95,7 +89,7 @@ run(async () => {
     to: '.'
   })
 
-  await banner('lib/*.js', bannerText)
+  await banner('lib/*.js', Copyright)
 })
 
 async function compile (input, dest, opts = {}) {

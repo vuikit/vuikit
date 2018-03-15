@@ -52,6 +52,22 @@ function update (el, ctx) {
   })
 }
 
+function getOptions (ctx) {
+  let { value } = ctx.binding
+
+  if (isString(value)) {
+    value = { target: value }
+  }
+
+  return assign({
+    target: '> *',
+    row: true
+  }, value)
+}
+
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
 function getRows (elements, row) {
   if (!row) {
     return [ elements ]
@@ -107,17 +123,4 @@ function match (elements) {
   elements = elements.filter((el, i) => heights[i] < max)
 
   return { height: max, elements }
-}
-
-function getOptions (ctx) {
-  let { value } = ctx.binding
-
-  if (isString(value)) {
-    value = { target: value }
-  }
-
-  return assign({
-    target: '> *',
-    row: true
-  }, value)
 }

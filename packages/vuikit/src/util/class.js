@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 import {filterAttr} from './attr'
 import {includes, isString, isUndefined, toNodes} from './lang'
 

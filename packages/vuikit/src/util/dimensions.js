@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 /* eslint-disable no-mixed-operators */
 import {css} from './style'
 import {isVisible} from './filter'

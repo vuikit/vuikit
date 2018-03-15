@@ -55,6 +55,25 @@ function update (el, ctx) {
   opts.onUpdate(el, data)
 }
 
+function getOptions (ctx) {
+  const { value } = ctx.binding
+
+  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
+    warn('v-vk-magin -> Object expected as configuration', ctx.vnode.context)
+  }
+
+  const options = assign({
+    onUpdate: noop,
+    margin: 'uk-margin-small-top',
+    firstColumn: 'uk-first-column'
+  }, value)
+
+  return options
+}
+
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
 function getRows (items) {
   const data = {}
   const rows = [[]]
@@ -106,20 +125,4 @@ function getRows (items) {
   data.rows = rows
 
   return data
-}
-
-function getOptions (ctx) {
-  const { value } = ctx.binding
-
-  if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-magin -> Object expected as configuration', ctx.vnode.context)
-  }
-
-  const options = assign({
-    onUpdate: noop,
-    margin: 'uk-margin-small-top',
-    firstColumn: 'uk-first-column'
-  }, value)
-
-  return options
 }

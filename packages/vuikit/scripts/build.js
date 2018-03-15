@@ -9,13 +9,7 @@ import nodeResolve from 'rollup-plugin-node-resolve'
 
 import { run, remove, write, task, banner, less, minifyJS, minifyCSS } from '@miljan/build'
 
-import pkg from '../package.json'
-
-const bannerText = `/**
- * Vuikit ${pkg.version}
- * (c) 2018 Miljan Aleksic
- * @license ${pkg.license}
- */`
+import Copyright from './_copyright'
 
 run(async () => {
   await remove('dist')
@@ -95,10 +89,7 @@ run(async () => {
     })
   })
 
-  await banner([
-    'dist/*.js',
-    'dist/*.{js,css}'
-  ], bannerText)
+  await banner('dist/*.{js,css}', Copyright)
 })
 
 async function compile (opts, dest) {

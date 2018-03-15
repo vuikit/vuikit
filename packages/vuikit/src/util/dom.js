@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
+ */
+
 /* eslint-disable one-var, no-mixed-operators, no-useless-call, prefer-promise-reject-errors, no-cond-assign, no-return-assign */
 import {on} from './event'
 import {clamp, isNumeric, isString, isUndefined, toNode, toNodes, toNumber} from './lang'
