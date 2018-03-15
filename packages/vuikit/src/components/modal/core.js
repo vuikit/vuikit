@@ -19,6 +19,11 @@ export default {
       this.$emit(TOGGLE, false)
     }
   },
+  mounted () {
+    // append modal at $root as the styles
+    // could be scoped to the app dom
+    this.$nextTick(() => this.$root.$el.appendChild(this.$el))
+  },
   beforeDestroy () {
     // if a modal is destroyed before being closed
     if (this.$el.parentNode) {
