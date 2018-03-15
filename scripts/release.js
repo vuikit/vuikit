@@ -8,12 +8,12 @@ run(async () => {
 
   await Promise.all([
     // vuikit
-    copy('packages/vuikit/dist/dist/vuikit.js', 'dist/tmp'),
-    copy('packages/vuikit/dist/dist/vuikit.min.js', 'dist/tmp'),
-    copy('packages/vuikit/dist/dist/vuikit.min.js.map', 'dist/tmp'),
-    copy('packages/vuikit/dist/dist/vuikit.css', 'dist/tmp'),
-    copy('packages/vuikit/dist/dist/vuikit.min.css', 'dist/tmp'),
-    copy('packages/vuikit/dist/dist/vuikit.min.css.map', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.js', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.min.js', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.min.js.map', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.css', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.min.css', 'dist/tmp'),
+    copy('packages/vuikit/dist/vuikit.min.css.map', 'dist/tmp'),
 
     // vuikit-icons
     copy('packages/vuikit-icons/dist/vuikit-icons.js', 'dist/tmp'),
