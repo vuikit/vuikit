@@ -4,9 +4,7 @@
   </a>
 </p>
 
-> UIkit with all the power of Vue
-
-Vuikit is a collection of, functional first, Vue.js components outputting UIkit layout.
+Vuikit is a [MIT](https://github.com/vuikit/vuikit/blob/develop/LICENSE) licensed [Vue](https://vuejs.org/) UI library based on [UIkit](https://getuikit.com/). In other words, Vuikit fulfills the necessity of a consistent and responsive framework for web site interfaces.
 
 <p align="center">
   <a href="http://vuikit.js.org">Documentation</a> -
@@ -31,8 +29,8 @@ Vue.use(Vuikit)
 ```js
 // if only a few components are required the final bundle size can be
 // drastically reduced by importing only the individual components
-import { Button as VkButton } from 'vuikit/button'
-import { Label as VkLabel } from 'vuikit/label'
+import { Button as VkButton } from 'vuikit/lib/button'
+import { Label as VkLabel } from 'vuikit/lib/label'
 
 export default {
   components: {

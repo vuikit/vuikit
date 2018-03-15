@@ -1,7 +1,7 @@
 {
   "name": "vuikit",
   "version": "0.7.0",
-  "description": "A Vuejs component library based on UIkit",
+  "description": "A Vue UI library based on UIkit",
   "license": "MIT",
   "author": {
     "name": "Miljan Aleksic",
@@ -19,10 +19,9 @@
     "vuikit"
   ],
   "files": [
-    "src",
-    "core",
     "dist",
-    "*.js"
+    "lib",
+    "src"
   ],
   "scripts": {
     "dev": "start-storybook -s ./.storybook/static -p 6006",
@@ -32,10 +31,10 @@
     "test": "jest"
   },
   "dependencies": {
-    "vue": "^2.5.14"
+    "vue": "^2.5.16"
   },
   "devDependencies": {
-    "@miljan/build": "^0.4.1",
+    "@miljan/build": "^0.4.2",
     "@std/esm": "^0.25.2",
     "@storybook/vue": "^3.3.15",
     "@vue/test-utils": "^1.0.0-beta.12",
@@ -57,20 +56,20 @@
     "less-plugin-clean-css": "^1.5.1",
     "lodash": "^4.17.4",
     "replace-in-file": "^3.2.0",
-    "rollup": "^0.56.5",
+    "rollup": "^0.57.0",
     "rollup-analyzer": "^1.1.0",
     "rollup-plugin-alias": "^1.4.0",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^2.0.0",
-    "rollup-plugin-commonjs": "^9.0.0",
+    "rollup-plugin-commonjs": "^9.1.0",
     "rollup-plugin-node-resolve": "^3.2.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-vue": "^3.0.0",
     "uikit": "^3.0.0-beta.40",
     "vue-jest": "^2.1.1",
     "vue-loader": "^14.2.1",
-    "vue-server-renderer": "^2.5.14",
-    "vue-template-compiler": "^2.5.14"
+    "vue-server-renderer": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
   },
   "@std/esm": {
     "mode": "js",

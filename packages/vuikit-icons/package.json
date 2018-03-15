@@ -34,10 +34,10 @@
     "custom": "node -r @std/esm scripts/custom.js"
   },
   "devDependencies": {
-    "@miljan/build": "^0.4.1",
+    "@miljan/build": "^0.4.2",
     "@std/esm": "^0.25.2",
     "globby": "^8.0.1",
-    "rollup": "^0.56.5",
+    "rollup": "^0.57.0",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.2.0",

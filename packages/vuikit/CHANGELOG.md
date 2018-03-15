@@ -1,17 +1,3 @@
-## [Unreleased]
-<details>
-  <summary>
-    Changes that have landed in master but are not yet released.
-    Click to see more.
-  </summary>
-
-* A major project restructuration
-* UIkit 3 compatibility
-* Added `vuikit-core`, `vuikit-icons` and `vuikit-plus`
-
-</details>
-
-
 ## 0.6.0 (October 2, 2016)
 
 * Raised `vue` minimum version to 2.0
