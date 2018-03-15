@@ -1,7 +1,6 @@
 import path from 'path'
 import rollup from './util/rollup'
 
-import vue from 'rollup-plugin-vue'
 import buble from 'rollup-plugin-buble'
 import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
@@ -100,10 +99,7 @@ async function compile (opts, dest) {
     external: opts.external,
     plugins: [
       nodeResolve({
-        extensions: [ '.js', '.json', '.vue' ]
-      }),
-      vue({
-        compileTemplate: true
+        extensions: [ '.js', '.json' ]
       }),
       buble(),
       cleanup()
