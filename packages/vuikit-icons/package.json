@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/icons",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "description": "UIkit icons as Vue functional components",
   "license": "MIT",
   "author": {
@@ -18,7 +18,7 @@
   "module": "dist/vuikit-icons.esm.js",
   "files": [
     "dist",
-    "*.js"
+    "lib"
   ],
   "repository": {
     "type": "git",
