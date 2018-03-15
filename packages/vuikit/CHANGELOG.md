@@ -1,3 +1,7 @@
+## 0.8.0 (April 15, 2018)
+
+* A complete refactor with UIkit 3 compatibility
+
 ## 0.6.0 (October 2, 2016)
 
 * Raised `vue` minimum version to 2.0
