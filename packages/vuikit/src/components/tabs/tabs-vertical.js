@@ -1,6 +1,6 @@
 import core from './core'
 import { assign } from 'vuikit/src/util/lang'
-import { Transition } from 'vuikit/src/components/transition'
+import { Transition } from 'vuikit/src/core/transition'
 
 import ElementTabsVertical from './elements/tabs-vertical'
 

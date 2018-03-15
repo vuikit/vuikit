@@ -1,5 +1,5 @@
 import elDrop from '../elements/drop'
-import { Transition } from 'vuikit/src/components/transition'
+import { Transition } from 'vuikit/src/core/transition'
 import { positionBefore } from 'vuikit/src/core/v-position/events'
 
 import { css } from 'vuikit/src/util/style'

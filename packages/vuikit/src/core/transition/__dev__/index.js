@@ -1,4 +1,4 @@
 import { storiesOf } from '@storybook/vue'
 
-storiesOf('Components/Transition', module)
+storiesOf('Core/Transition', module)
   .add('Default', () => require('./default').default)

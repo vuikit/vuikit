@@ -4,7 +4,7 @@ import core from './core'
 import ElementTabs from './elements/tabs'
 
 import EventsMixin from 'vuikit/src/mixins/events'
-import { Transition } from 'vuikit/src/components/transition'
+import { Transition } from 'vuikit/src/core/transition'
 
 import { TAB_ID } from './constants'
 
