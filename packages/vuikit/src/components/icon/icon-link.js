@@ -1,6 +1,6 @@
 import core from './core'
 import Element from './elements/icon-link'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 import { assign } from 'vuikit/src/util/lang'
 
 export default {

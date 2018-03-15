@@ -3,9 +3,10 @@ import VkPosition from 'vuikit/src/core/v-position'
 import EventsMixin from 'vuikit/src/mixins/events'
 
 import { $ } from 'vuikit/src/util/core'
-import { MouseTracker } from 'vuikit/src/util/mouse'
+import { get } from 'vuikit/src/util/misc'
 import { findParents } from 'vuikit/src/util/vue'
-import { get, includes, isNode, isString } from 'vuikit/src/util/lang'
+import { MouseTracker } from 'vuikit/src/util/mouse'
+import { includes, isNode, isString } from 'vuikit/src/util/lang'
 
 import props from './props'
 import render from './render'

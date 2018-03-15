@@ -1,5 +1,5 @@
 import ElementTabDropdown from './elements/tabs-item-dropdown'
-import { isDef, assign } from 'vuikit/src/util/lang'
+import { isUndefined, assign } from 'vuikit/src/util/lang'
 
 import { Dropdown } from 'vuikit/src/components/dropdown'
 import { ElementNavDropdown, ElementNavItem } from 'vuikit/src/components/nav'
@@ -16,7 +16,7 @@ export default {
           active: this.$parent.isActive(node.data[TAB_ID])
         }),
         class: {
-          'uk-disabled': isDef(props.disabled)
+          'uk-disabled': !isUndefined(props.disabled)
         },
         on: {
           click: e => {

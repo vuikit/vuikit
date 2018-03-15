@@ -1,4 +1,4 @@
-import { isInteger } from 'vuikit/src/util/lang'
+import { isNumber } from 'vuikit/src/util/lang'
 import ElementPage from './elements/pagination-page'
 
 export default {
@@ -15,7 +15,7 @@ export default {
     const { page: currentPage } = parent
 
     return parent.pages.map(page => {
-      const isPage = isInteger(page)
+      const isPage = isNumber(page)
 
       return isPage
         ? h(ElementPage, {

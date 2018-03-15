@@ -10,7 +10,7 @@ import { on, trigger } from 'vuikit/src/util/event'
 import { hasAttr, attr } from 'vuikit/src/util/attr'
 import { append, remove } from 'vuikit/src/util/dom'
 import { pointerEnter, pointerDown, pointerLeave } from 'vuikit/src/util/env'
-import { isNumeric, assign, isString, toHyphenCase } from 'vuikit/src/util/lang'
+import { isNumeric, assign, isString, hyphenate } from 'vuikit/src/util/lang'
 import { positionAt, flipPosition, offset as getOffset } from 'vuikit/src/util/dimensions'
 import { addClass, toggleClass, removeClasses, removeClass } from 'vuikit/src/util/class'
 
@@ -265,7 +265,7 @@ function getOptions (ctx) {
   }, modifiers, value)
 
   // coerce
-  options.position = toHyphenCase(options.position)
+  options.position = hyphenate(options.position)
   options.animation = options.animation.split(' ')
 
   // check

@@ -1,4 +1,4 @@
-import { range as getRange } from 'vuikit/src/util/lang'
+import { range as getRange } from 'vuikit/src/util/misc'
 
 /**
  * Returns an array with represented ranges pages

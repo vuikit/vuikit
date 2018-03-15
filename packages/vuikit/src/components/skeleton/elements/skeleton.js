@@ -1,4 +1,4 @@
-import dataMerge from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   functional: true,
@@ -19,7 +19,7 @@ export default {
   render: (h, { data, props, children }) => {
     const { animated, width, height } = props
 
-    return h('div', dataMerge({
+    return h('div', mergeData({
       class: {
         'vk-skeleton--animated': animated
       },

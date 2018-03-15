@@ -1,7 +1,7 @@
 import ElementTh from './elements/table-th'
 import ElementTd from './elements/table-td'
 import RenderCell from './render/cell'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 import { assign } from 'vuikit/src/util/lang'
 

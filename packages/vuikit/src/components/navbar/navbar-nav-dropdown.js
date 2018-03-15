@@ -1,8 +1,9 @@
 import VkDrop from 'vuikit/src/components/drop/drop'
 import VkGrid from 'vuikit/src/components/grid/grid'
 
+import { get } from 'vuikit/src/util/misc'
 import { query } from 'vuikit/src/util/selector'
-import { get, assign } from 'vuikit/src/util/lang'
+import { assign } from 'vuikit/src/util/lang'
 import { isRtl, pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
 
 export default {

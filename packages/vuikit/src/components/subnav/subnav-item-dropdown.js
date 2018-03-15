@@ -2,7 +2,7 @@ import VkDropdown from 'vuikit/src/components/dropdown/dropdown'
 import IconTriangeDown from 'vuikit/src/icons/triangle-down'
 
 import Element from './elements/subnav-item-dropdown'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   name: 'VkSubnavItemDropdown',

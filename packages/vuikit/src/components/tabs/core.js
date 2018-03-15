@@ -1,5 +1,5 @@
+import { get } from 'vuikit/src/util/misc'
 import { warn } from 'vuikit/src/util/debug'
-import { toStr, get } from 'vuikit/src/util/lang'
 import { TAB_ID } from './constants'
 
 /* This component supports both local as synced
@@ -57,7 +57,7 @@ export default {
       this.$emit('update:activeTab', id)
     },
     isActive (id) {
-      return toStr(this.state.activeTab) === toStr(id)
+      return JSON.stringify(this.state.activeTab) === JSON.stringify(id)
     }
   }
 }

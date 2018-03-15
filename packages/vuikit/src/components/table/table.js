@@ -5,7 +5,8 @@ import TableRender from './render/table'
 import ElementTable from './elements/table'
 
 import { ROW_ID } from './constants'
-import { assign, get } from 'vuikit/src/util/lang'
+import { get } from 'vuikit/src/util/misc'
+import { assign } from 'vuikit/src/util/lang'
 
 export default {
   name: 'VkTable',

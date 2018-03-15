@@ -1,6 +1,5 @@
 import { warn } from 'vuikit/src/util/debug'
 import { query } from 'vuikit/src/util/selector'
-import { toArray } from 'vuikit/src/util/lang'
 
 import { events } from './transitions/_common'
 import ElementOffcanvas from './elements/offcanvas'
@@ -59,7 +58,7 @@ export default {
   },
   render (h) {
     // bar could be provided from the outside
-    const customBar = findBar(this.$slots.default)
+    const customBar = findBar(this.$slots.default || [])
     const bar = customBar || h(ElementOffcanvasBar, this.$slots.default)
 
     const content = h(ElementOffcanvas, {
@@ -85,11 +84,11 @@ export default {
 }
 
 function findBar (nodes) {
-  return toArray(nodes)
+  return nodes
     .filter(n => n.tag && n.data)
     .find(n => /offcanvas-bar/.test(getNodeClass(n)))
 }
 
 function getNodeClass (node) {
-  return [...toArray(node.data.class), node.data.staticClass].join(' ')
+  return [...(node.data.class || []), node.data.staticClass].join(' ')
 }

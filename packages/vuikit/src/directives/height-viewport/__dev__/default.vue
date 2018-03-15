@@ -124,14 +124,14 @@
 </template>
 
 <script>
-import dataMerge from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   components: {
     DemoSection: {
       functional: true,
       render (h, { data, children }) {
-        return h('div', dataMerge(data, {
+        return h('div', mergeData(data, {
           class: 'uk-section uk-section-primary uk-flex uk-flex-center uk-flex-middle uk-text-center'
         }), children)
       }

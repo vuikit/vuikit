@@ -1,6 +1,6 @@
 import Table from './table'
 import Render from './render/table'
-import { toStr, assign } from 'vuikit/src/util/lang'
+import { assign } from 'vuikit/src/util/lang'
 
 import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from './constants'
 
@@ -63,7 +63,7 @@ export default {
   methods: {
     isExpanded (row) {
       return this.expandedRows
-        .find(id => toStr(id) === toStr(row[ROW_ID])) !== undefined
+        .find(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])) !== undefined
     },
     toggleExpand (row) {
       const id = row[ROW_ID]

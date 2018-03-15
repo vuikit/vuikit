@@ -2,7 +2,7 @@ import { css } from 'vuikit/src/util/style'
 import { toFloat } from 'vuikit/src/util/lang'
 import { Transition } from 'vuikit/src/util/animation'
 
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   functional: true,

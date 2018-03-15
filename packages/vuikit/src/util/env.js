@@ -1,4 +1,4 @@
-/* eslint-disable one-var, no-mixed-operators */
+/* eslint-disable no-mixed-operators */
 /* global DocumentTouch */
 import {attr} from './attr'
 

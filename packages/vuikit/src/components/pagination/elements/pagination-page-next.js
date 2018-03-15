@@ -1,5 +1,5 @@
 import Icon from './assets/icon-next'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 import ElementIcon from 'vuikit/src/components/icon/elements/icon'
 
 export default {

@@ -6,7 +6,8 @@ import ElementNotification from './elements/notification'
 import ElementNotificationClose from './elements/notification-close'
 
 import { warn, tip } from 'vuikit/src/util/debug'
-import { isObject, isString, assign, get } from 'vuikit/src/util/lang'
+import { get } from 'vuikit/src/util/misc'
+import { isObject, isString, assign } from 'vuikit/src/util/lang'
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 

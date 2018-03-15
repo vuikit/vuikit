@@ -1,11 +1,11 @@
 import ElementSkeleton from './skeleton'
-import dataMerge from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   functional: true,
   props: ElementSkeleton.props,
   render (h, { data, props }) {
-    return h(ElementSkeleton, dataMerge(data, {
+    return h(ElementSkeleton, mergeData(data, {
       class: 'vk-skeleton-text',
       props
     }))

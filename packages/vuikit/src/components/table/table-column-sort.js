@@ -1,8 +1,9 @@
 import Column from './table-column'
 import ElementThSort from './elements/table-th-sort'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
+import { get } from 'vuikit/src/util/misc'
 import { warn } from 'vuikit/src/util/debug'
-import { assign, get } from 'vuikit/src/util/lang'
+import { assign } from 'vuikit/src/util/lang'
 
 import { UPDATE_SORTEDBY } from './constants'
 

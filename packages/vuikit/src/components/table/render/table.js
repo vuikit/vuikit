@@ -1,8 +1,9 @@
 import ElementTr from '../elements/table-tr'
 import ElementTable from '../elements/table'
 
+import { get } from 'vuikit/src/util/misc'
 import { warn } from 'vuikit/src/util/debug'
-import { isFunction, get } from 'vuikit/src/util/lang'
+import { isFunction } from 'vuikit/src/util/lang'
 
 import { ON_CLICK_ROW, ROW_CLICK_PREVENTED } from '../constants'
 

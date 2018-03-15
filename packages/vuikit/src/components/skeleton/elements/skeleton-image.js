@@ -1,5 +1,5 @@
 import ElementSkeleton from './skeleton'
-import dataMerge from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 import { assign } from 'vuikit/src/util/lang'
 
 export default {
@@ -15,7 +15,7 @@ export default {
     }
   }),
   render (h, { data, props }) {
-    return h(ElementSkeleton, dataMerge(data, {
+    return h(ElementSkeleton, mergeData(data, {
       class: 'vk-skeleton-image',
       props
     }))

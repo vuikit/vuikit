@@ -1,5 +1,5 @@
 import Element from './elements/subnav-item'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   name: 'VkSubnavItem',

@@ -1,5 +1,5 @@
-import { isUndef } from 'vuikit/src/util/lang'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
+import { isUndefined } from 'vuikit/src/util/lang'
 
 export default {
   functional: true,
@@ -19,7 +19,7 @@ export default {
         'uk-disabled': disabled
       }
     }), [
-      (isUndef(href) || disabled)
+      (isUndefined(href) || disabled)
         ? h('span', children)
         : h('a', { attrs: { href, target } }, children)
     ])

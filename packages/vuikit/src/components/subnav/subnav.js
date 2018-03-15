@@ -1,7 +1,8 @@
 import Element from './elements/subnav'
+import { get } from 'vuikit/src/util/misc'
 import { warn } from 'vuikit/src/util/debug'
-import { assign, get, toStr } from 'vuikit/src/util/lang'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { assign } from 'vuikit/src/util/lang'
+import { mergeData } from 'vuikit/src/util/vue'
 
 /* This component supports both local as synced
   activeItem state, reason for a data and a prop. */
@@ -49,7 +50,7 @@ export default {
           key,
           rerendering: true,
           props: {
-            active: toStr(key) === toStr(this.state.activeItem)
+            active: JSON.stringify(key) === JSON.stringify(this.state.activeItem)
           }
         }), node.children)
         : node

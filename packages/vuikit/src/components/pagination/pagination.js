@@ -1,9 +1,9 @@
 import Element from './elements/pagination'
-import Matrix from 'vuikit/src/util/pagination/matrix'
+import Matrix from 'vuikit/src/util/pagination-matrix'
 
 import { warn } from 'vuikit/src/util/debug'
 import { assign } from 'vuikit/src/util/lang'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   name: 'Pagination',

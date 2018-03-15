@@ -1,4 +1,3 @@
-import { toStr } from 'vuikit/src/util/lang'
 import { ROW_ID, ON_CLICK_ROW, UPDATE_SELECTEDROWS } from '../constants'
 
 export default {
@@ -54,7 +53,7 @@ export default {
     },
     isRowSelected (row) {
       return this.selectedRows
-        .find(id => toStr(id) === toStr(row[ROW_ID])) !== undefined
+        .find(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])) !== undefined
     },
     updateRowSelection (selectedRows) {
       this.$emit(UPDATE_SELECTEDROWS, selectedRows)

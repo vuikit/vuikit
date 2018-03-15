@@ -1,7 +1,7 @@
 import Column from './table-column'
 import ElementTh from './elements/table-th'
 import ElementCheckbox from './elements/checkbox'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 import RenderCell from './render/cell'
 import { assign } from 'vuikit/src/util/lang'

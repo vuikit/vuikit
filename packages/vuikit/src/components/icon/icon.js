@@ -1,6 +1,6 @@
 import core from './core'
 import Element from './elements/icon'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   name: 'VkIcon',

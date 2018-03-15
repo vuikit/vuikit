@@ -1,4 +1,4 @@
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 import { assign } from 'vuikit/src/util/lang'
 import { props, def } from './_common.js'
 

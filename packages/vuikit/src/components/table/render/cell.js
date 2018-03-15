@@ -1,13 +1,14 @@
 import ElementTd from '../elements/table-td'
 
-import { get, isDef, isUndef } from 'vuikit/src/util/lang'
+import { get } from 'vuikit/src/util/misc'
+import { isUndefined } from 'vuikit/src/util/lang'
 
 export default function (h, ctx, defaultContent) {
   const { props, data } = ctx
   const { $row } = data
   const { cell, cellClass } = props
   const cellValue = get($row, cell)
-  const isEmpty = isDef(cell) && isUndef(cellValue)
+  const isEmpty = !isUndefined(cell) && isUndefined(cellValue)
 
   const scope = getCellScope(ctx)
   const slots = getCellSlots(ctx)

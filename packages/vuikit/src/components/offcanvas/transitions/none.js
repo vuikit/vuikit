@@ -1,6 +1,6 @@
 import { css } from 'vuikit/src/util/style'
 import { addClass, removeClass } from 'vuikit/src/util/class'
-import mergeData from 'vuikit/src/util/vue-data-merge'
+import { mergeData } from 'vuikit/src/util/vue'
 
 import { events, scrollbarWidth, doc } from './_common'
 

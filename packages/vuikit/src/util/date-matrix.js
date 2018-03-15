@@ -1,4 +1,4 @@
-import { range } from 'vuikit/src/util/lang'
+import { range } from 'vuikit/src/util/misc'
 
 import getDate from 'date-fns/get_date'
 import addDays from 'date-fns/add_days'

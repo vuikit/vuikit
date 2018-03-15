@@ -118,4 +118,6 @@ export function preventClick () {
 
   }, true))
 
+  trigger(document, 'touchcancel')
+
 }
