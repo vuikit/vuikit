@@ -24,7 +24,7 @@ export default {
           const prev = active !== modal && active
 
           // if active modal exist, first close it
-          if (prev && !modal.stacked) {
+          if (prev && !modal.stack) {
             prev.hide()
 
             // once prev modal is closed open the current one
