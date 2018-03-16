@@ -24,7 +24,7 @@ export default {
           const prev = active !== modal && active
 
           // if active modal exist, first close it
-          if (prev && !modal.stacked) {
+          if (prev && !modal.stack) {
             prev.hide()
 
             // once prev modal is closed open the current one
@@ -63,6 +63,10 @@ export default {
     }
 
     function doEnter (el, done) {
+      // append modal at $root as the styles
+      // could be scoped to the app dom
+      // re-append every time entering so it appears on top
+      modal.$root.$el.appendChild(el)
       // redraw workaround, necessary so the browser
       // doesn't try to apply it all in one step, not
       // giving enough time for the transition to init
