@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://vuikit.github.io/vuikit">
-    <img width="150" src="https://cdn.rawgit.com/vuikit/vuikit/master/static/logo-vuikit.svg">
+    <img width="150" src="https://cdn.rawgit.com/vuikit/vuikit/develop/static/logo-vuikit.svg">
   </a>
 </p>
 
