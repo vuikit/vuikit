@@ -1,7 +1,7 @@
 {
   "name": "vuikit",
   "version": "0.8.0",
-  "description": "A Vue UI library based on UIkit",
+  "description": "A responsive Vue UI library for web site interfaces based on UIkit",
   "license": "MIT",
   "author": {
     "name": "Miljan Aleksic",
