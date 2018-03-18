@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VkSpinner matches snapshot 1`] = `
+<div class="uk-padding">
+  <div class="uk-icon uk-spinner">
+    <svg version="1.1" width="30" height="30" viewBox="0 0 30 30">
+      <circle fill="none" stroke="#000" cx="15" cy="15" r="14" />
+    </svg>
+  </div>
+  <div class="uk-icon uk-spinner">
+    <svg version="1.1" width="60" height="60" viewBox="0 0 30 30">
+      <circle fill="none" stroke="#000" cx="15" cy="15" r="14" />
+    </svg>
+  </div>
+</div>
+`;

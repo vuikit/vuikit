@@ -15,13 +15,11 @@ Vue.use(VuikitIcons)
 
 // automatically import all stories.js file in __dev__ folders
 const core = require.context('../src/core', true, /__dev__\/index.js$/)
-const components = require.context('../src/components', true, /__dev__\/index.js$/)
-const directives = require.context('../src/directives', true, /__dev__\/index.js$/)
+const library = require.context('../src/library', true, /__dev__\/index.js$/)
 
 function loadStories() {
   core.keys().forEach(filename => core(filename))
-  components.keys().forEach(filename => components(filename))
-  directives.keys().forEach(filename => directives(filename))
+  library.keys().forEach(filename => library(filename))
 }
 
 configure(loadStories, module)

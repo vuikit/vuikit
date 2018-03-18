@@ -1,3 +1,7 @@
+## WIP
+
+ - Export components constants for easier integration with other components
+
 ## 0.8.0 (April 15, 2018)
 
 * A complete refactor with UIkit 3 compatibility

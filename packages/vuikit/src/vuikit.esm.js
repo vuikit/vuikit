@@ -1,9 +1,9 @@
 import { each } from 'vuikit/src/util/lang'
-import * as components from './components/index.js'
-import * as directives from './directives/index.js'
+import * as components from './library/components.js'
+import * as directives from './library/directives.js'
 
-export * from './components/index.js'
-export * from './directives/index.js'
+export * from './library/components.js'
+export * from './library/directives.js'
 
 const Vuikit = {
   components,

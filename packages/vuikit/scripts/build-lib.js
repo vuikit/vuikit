@@ -14,17 +14,8 @@ import Copyright from './_copyright'
 run(async () => {
   await remove('lib')
 
-  await task('Compile Components', async () => {
-    let resources = await globby('src/components/*/index.js')
-
-    return Promise.all(resources.map(async input => {
-      const basename = path.dirname(input).split('/').pop()
-      return compile(input, `lib/${basename}.js`)
-    }))
-  })
-
-  await task('Compile Directives', async () => {
-    let resources = await globby('src/directives/*/index.js')
+  await task('Compile Library', async () => {
+    let resources = await globby('src/library/*/index.js')
 
     return Promise.all(resources.map(async input => {
       const basename = path.dirname(input).split('/').pop()
@@ -82,8 +73,7 @@ run(async () => {
   await replaceInFile({
     files: 'lib/*.js',
     from: [
-      /vuikit\/src\/components/g,
-      /vuikit\/src\/directives/g,
+      /vuikit\/src\/library/g,
       /vuikit\/src/g
     ],
     to: '.'
