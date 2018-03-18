@@ -10,20 +10,20 @@ exports[`VkNavbar elements match snapshots 4`] = `<a class="uk-navbar-toggle"><s
 
 exports[`VkNavbar elements match snapshots 5`] = `
 <li class="uk-active">
-    <a>
-        <div>Title
-            <div class="uk-navbar-subtitle">Subtitle</div>
-        </div>
-    </a>
+  <a>
+    <div>Title
+      <div class="uk-navbar-subtitle">Subtitle</div>
+    </div>
+  </a>
 </li>
 `;
 
-exports[`VkNavbar matches snapshots 1`] = `<nav class="uk-navbar"></nav>`;
+exports[`VkNavbar matches snapshots 1`] = `<nav class="uk-navbar uk-navbar-container"></nav>`;
 
 exports[`VkNavbar matches snapshots 2`] = `
 <nav class="uk-navbar-container">
-    <div class="uk-container">
-        <div class="uk-navbar"></div>
-    </div>
+  <div class="uk-container">
+    <div class="uk-navbar"></div>
+  </div>
 </nav>
 `;

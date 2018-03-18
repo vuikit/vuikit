@@ -2,223 +2,223 @@
 
 exports[`VkPagination matches snapshot 1`] = `
 <div class="uk-padding">
-    <ul class="uk-pagination">
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a>1</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>4</a>
-        </li>
-        <li>
-            <a>5</a>
-        </li>
-        <li>
-            <a>6</a>
-        </li>
-        <li class="uk-active"><span>7</span></li>
-        <li>
-            <a>8</a>
-        </li>
-        <li>
-            <a>9</a>
-        </li>
-        <li>
-            <a>10</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>20</a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-center">
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a>1</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>4</a>
-        </li>
-        <li>
-            <a>5</a>
-        </li>
-        <li>
-            <a>6</a>
-        </li>
-        <li class="uk-active"><span>7</span></li>
-        <li>
-            <a>8</a>
-        </li>
-        <li>
-            <a>9</a>
-        </li>
-        <li>
-            <a>10</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>20</a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-right">
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a>1</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>4</a>
-        </li>
-        <li>
-            <a>5</a>
-        </li>
-        <li>
-            <a>6</a>
-        </li>
-        <li class="uk-active"><span>7</span></li>
-        <li>
-            <a>8</a>
-        </li>
-        <li>
-            <a>9</a>
-        </li>
-        <li>
-            <a>10</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>20</a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <h2>Layout</h2>
-    <ul class="uk-pagination uk-flex-center">
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-center">
-        <li>
-            <a>1</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>4</a>
-        </li>
-        <li>
-            <a>5</a>
-        </li>
-        <li>
-            <a>6</a>
-        </li>
-        <li class="uk-active"><span>7</span></li>
-        <li>
-            <a>8</a>
-        </li>
-        <li>
-            <a>9</a>
-        </li>
-        <li>
-            <a>10</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>20</a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-center">
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
-        </li>
-        <li>
-            <a>1</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>4</a>
-        </li>
-        <li>
-            <a>5</a>
-        </li>
-        <li>
-            <a>6</a>
-        </li>
-        <li class="uk-active"><span>7</span></li>
-        <li>
-            <a>8</a>
-        </li>
-        <li>
-            <a>9</a>
-        </li>
-        <li>
-            <a>10</a>
-        </li>
-        <li><span>...</span></li>
-        <li>
-            <a>20</a>
-        </li>
-        <li>
-            <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-center">
-        <li class="uk-margin-auto-right">
-            <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>Previous</a>
-        </li>
-        <li class="uk-margin-auto-left">
-            <a>Next<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
-    <ul class="uk-pagination uk-flex-center">
-        <li class="uk-margin-auto-right">
-            <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>First</a>
-        </li>
-        <li class="uk-margin-auto-left">
-            <a>Last<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
-        </li>
-    </ul>
+  <ul class="uk-pagination">
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a>1</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>4</a>
+    </li>
+    <li>
+      <a>5</a>
+    </li>
+    <li>
+      <a>6</a>
+    </li>
+    <li class="uk-active"><span>7</span></li>
+    <li>
+      <a>8</a>
+    </li>
+    <li>
+      <a>9</a>
+    </li>
+    <li>
+      <a>10</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>20</a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <ul class="uk-pagination uk-flex-center">
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a>1</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>4</a>
+    </li>
+    <li>
+      <a>5</a>
+    </li>
+    <li>
+      <a>6</a>
+    </li>
+    <li class="uk-active"><span>7</span></li>
+    <li>
+      <a>8</a>
+    </li>
+    <li>
+      <a>9</a>
+    </li>
+    <li>
+      <a>10</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>20</a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <ul class="uk-pagination uk-flex-right">
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a>1</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>4</a>
+    </li>
+    <li>
+      <a>5</a>
+    </li>
+    <li>
+      <a>6</a>
+    </li>
+    <li class="uk-active"><span>7</span></li>
+    <li>
+      <a>8</a>
+    </li>
+    <li>
+      <a>9</a>
+    </li>
+    <li>
+      <a>10</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>20</a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <h2>Layout</h2>
+  <ul class="uk-pagination uk-flex-center">
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <ul class="uk-pagination uk-flex-center">
+    <li>
+      <a>1</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>4</a>
+    </li>
+    <li>
+      <a>5</a>
+    </li>
+    <li>
+      <a>6</a>
+    </li>
+    <li class="uk-active"><span>7</span></li>
+    <li>
+      <a>8</a>
+    </li>
+    <li>
+      <a>9</a>
+    </li>
+    <li>
+      <a>10</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>20</a>
+    </li>
+  </ul>
+  <ul class="uk-pagination uk-flex-center">
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+    </li>
+    <li>
+      <a>1</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>4</a>
+    </li>
+    <li>
+      <a>5</a>
+    </li>
+    <li>
+      <a>6</a>
+    </li>
+    <li class="uk-active"><span>7</span></li>
+    <li>
+      <a>8</a>
+    </li>
+    <li>
+      <a>9</a>
+    </li>
+    <li>
+      <a>10</a>
+    </li>
+    <li><span>...</span></li>
+    <li>
+      <a>20</a>
+    </li>
+    <li>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <ul class="uk-pagination">
+    <li class="uk-margin-auto-right">
+      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>Previous</a>
+    </li>
+    <li class="uk-margin-auto-left">
+      <a>Next<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
+  <ul class="uk-pagination">
+    <li class="uk-margin-auto-right">
+      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>First</a>
+    </li>
+    <li class="uk-margin-auto-left">
+      <a>Last<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
+    </li>
+  </ul>
 </div>
 `;

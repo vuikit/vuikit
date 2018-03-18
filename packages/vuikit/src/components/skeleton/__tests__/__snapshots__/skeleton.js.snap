@@ -2,56 +2,56 @@
 
 exports[`VkSkeleton matches snapshot 1`] = `
 <div class="uk-padding">
-    <div>
-        <div class="vk-skeleton-text" style="width:150px;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
+  <div>
+    <div class="vk-skeleton-text" style="width:150px;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
-    <div>
-        <div class="vk-skeleton-text" style="width:350px;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
+  </div>
+  <div>
+    <div class="vk-skeleton-text" style="width:350px;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
-    <div>
-        <div class="vk-skeleton-text vk-skeleton--animated" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
+  </div>
+  <div>
+    <div class="vk-skeleton-text vk-skeleton--animated" style="width:falsepx;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
-    <h2>Title</h2>
-    <div class="vk-skeleton-title" style="width:falsepx;height:falsepx;">
-        <div class="vk-skeleton-content"></div>
+  </div>
+  <h2>Title</h2>
+  <div class="vk-skeleton-title" style="width:falsepx;height:falsepx;">
+    <div class="vk-skeleton-content"></div>
+  </div>
+  <h2>Title &amp; Subtitle (text)</h2>
+  <div class="vk-skeleton-title" style="width:falsepx;height:falsepx;">
+    <div class="vk-skeleton-content"></div>
+  </div>
+  <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
+    <div class="vk-skeleton-content"></div>
+  </div>
+  <h2>Text</h2>
+  <p>
+    <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
-    <h2>Title &amp; Subtitle (text)</h2>
-    <div class="vk-skeleton-title" style="width:falsepx;height:falsepx;">
-        <div class="vk-skeleton-content"></div>
+  </p>
+  <h2>Multiline Text</h2>
+  <p>
+    <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
     <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-        <div class="vk-skeleton-content"></div>
+      <div class="vk-skeleton-content"></div>
     </div>
-    <h2>Text</h2>
-    <p>
-        <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
-    </p>
-    <h2>Multiline Text</h2>
-    <p>
-        <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
-        <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
-        <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
-        <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
-            <div class="vk-skeleton-content"></div>
-        </div>
-    </p>
-    <h2>Image</h2>
-    <div class="vk-skeleton-image" style="width:150px;height:120px;">
-        <div class="vk-skeleton-content"></div>
+    <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
     </div>
+    <div class="vk-skeleton-text" style="width:falsepx;height:falsepx;">
+      <div class="vk-skeleton-content"></div>
+    </div>
+  </p>
+  <h2>Image</h2>
+  <div class="vk-skeleton-image" style="width:150px;height:120px;">
+    <div class="vk-skeleton-content"></div>
+  </div>
 </div>
 `;

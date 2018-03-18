@@ -2,17 +2,17 @@
 
 exports[`VkBreadcrumb matches snapshot 1`] = `
 <div class="uk-padding">
-    <ul class="uk-breadcrumb">
-        <li>
-            <a href="#">Item</a>
-        </li>
-        <li>
-            <a href="#">Item</a>
-        </li>
-        <li class="uk-disabled"><span>Disabled</span></li>
-        <li>
-            <a href="#">Active</a>
-        </li>
-    </ul>
+  <ul class="uk-breadcrumb">
+    <li>
+      <a href="#">Item</a>
+    </li>
+    <li>
+      <a href="#">Item</a>
+    </li>
+    <li class="uk-disabled"><span>Disabled</span></li>
+    <li>
+      <a href="#">Active</a>
+    </li>
+  </ul>
 </div>
 `;

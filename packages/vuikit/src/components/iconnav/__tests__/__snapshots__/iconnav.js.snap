@@ -2,83 +2,83 @@
 
 exports[`VkIconnav matches snapshot 1`] = `
 <div class="uk-padding">
-    <h2>Horizontal</h2>
-    <div class="uk-margin">
-        <ul class="uk-iconnav">
-            <li class="uk-active">
-                <a href="#" class="uk-icon">
-                    <svg version="1.1" meta="vk-icons-plus" width="20" height="20" viewBox="0 0 20 20">
-                        <rect x="9" y="1" width="1" height="17" />
-                        <rect x="1" y="9" width="17" height="1" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a class="uk-icon">
-                    <svg version="1.1" meta="vk-icons-pencil" width="20" height="20" viewBox="0 0 20 20">
-                        <path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z" />
-                        <path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a class="uk-icon">
-                    <svg version="1.1" meta="vk-icons-copy" width="20" height="20" viewBox="0 0 20 20">
-                        <rect fill="none" stroke="#000" x="3.5" y="2.5" width="12" height="16" />
-                        <polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17" />
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a class="uk-icon">
-                    <svg version="1.1" meta="vk-icons-trash" width="20" height="20" viewBox="0 0 20 20">
-                        <polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" />
-                        <polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" />
-                        <rect x="8" y="7" width="1" height="9" />
-                        <rect x="11" y="7" width="1" height="9" />
-                        <rect x="2" y="3" width="16" height="1" />
-                    </svg>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <h2>Vertical</h2>
-    <ul class="uk-iconnav uk-iconnav-vertical">
-        <li class="uk-active">
-            <a href="#" class="uk-icon">
-                <svg version="1.1" meta="vk-icons-plus" width="20" height="20" viewBox="0 0 20 20">
-                    <rect x="9" y="1" width="1" height="17" />
-                    <rect x="1" y="9" width="17" height="1" />
-                </svg>
-            </a>
-        </li>
-        <li>
-            <a class="uk-icon">
-                <svg version="1.1" meta="vk-icons-pencil" width="20" height="20" viewBox="0 0 20 20">
-                    <path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z" />
-                    <path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148" />
-                </svg>
-            </a>
-        </li>
-        <li>
-            <a class="uk-icon">
-                <svg version="1.1" meta="vk-icons-copy" width="20" height="20" viewBox="0 0 20 20">
-                    <rect fill="none" stroke="#000" x="3.5" y="2.5" width="12" height="16" />
-                    <polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17" />
-                </svg>
-            </a>
-        </li>
-        <li>
-            <a class="uk-icon">
-                <svg version="1.1" meta="vk-icons-trash" width="20" height="20" viewBox="0 0 20 20">
-                    <polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" />
-                    <polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" />
-                    <rect x="8" y="7" width="1" height="9" />
-                    <rect x="11" y="7" width="1" height="9" />
-                    <rect x="2" y="3" width="16" height="1" />
-                </svg>
-            </a>
-        </li>
+  <h2>Horizontal</h2>
+  <div class="uk-margin">
+    <ul class="uk-iconnav">
+      <li class="uk-active">
+        <a href="#" class="uk-icon">
+          <svg version="1.1" meta="vk-icons-plus" width="20" height="20" viewBox="0 0 20 20">
+            <rect x="9" y="1" width="1" height="17" />
+            <rect x="1" y="9" width="17" height="1" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a class="uk-icon">
+          <svg version="1.1" meta="vk-icons-pencil" width="20" height="20" viewBox="0 0 20 20">
+            <path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z" />
+            <path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a class="uk-icon">
+          <svg version="1.1" meta="vk-icons-copy" width="20" height="20" viewBox="0 0 20 20">
+            <rect fill="none" stroke="#000" x="3.5" y="2.5" width="12" height="16" />
+            <polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17" />
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a class="uk-icon">
+          <svg version="1.1" meta="vk-icons-trash" width="20" height="20" viewBox="0 0 20 20">
+            <polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" />
+            <polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" />
+            <rect x="8" y="7" width="1" height="9" />
+            <rect x="11" y="7" width="1" height="9" />
+            <rect x="2" y="3" width="16" height="1" />
+          </svg>
+        </a>
+      </li>
     </ul>
+  </div>
+  <h2>Vertical</h2>
+  <ul class="uk-iconnav uk-iconnav-vertical">
+    <li class="uk-active">
+      <a href="#" class="uk-icon">
+        <svg version="1.1" meta="vk-icons-plus" width="20" height="20" viewBox="0 0 20 20">
+          <rect x="9" y="1" width="1" height="17" />
+          <rect x="1" y="9" width="17" height="1" />
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a class="uk-icon">
+        <svg version="1.1" meta="vk-icons-pencil" width="20" height="20" viewBox="0 0 20 20">
+          <path fill="none" stroke="#000" d="M17.25,6.01 L7.12,16.1 L3.82,17.2 L5.02,13.9 L15.12,3.88 C15.71,3.29 16.66,3.29 17.25,3.88 C17.83,4.47 17.83,5.42 17.25,6.01 L17.25,6.01 Z" />
+          <path fill="none" stroke="#000" d="M15.98,7.268 L13.851,5.148" />
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a class="uk-icon">
+        <svg version="1.1" meta="vk-icons-copy" width="20" height="20" viewBox="0 0 20 20">
+          <rect fill="none" stroke="#000" x="3.5" y="2.5" width="12" height="16" />
+          <polyline fill="none" stroke="#000" points="5 0.5 17.5 0.5 17.5 17" />
+        </svg>
+      </a>
+    </li>
+    <li>
+      <a class="uk-icon">
+        <svg version="1.1" meta="vk-icons-trash" width="20" height="20" viewBox="0 0 20 20">
+          <polyline fill="none" stroke="#000" points="6.5 3 6.5 1.5 13.5 1.5 13.5 3" />
+          <polyline fill="none" stroke="#000" points="4.5 4 4.5 18.5 15.5 18.5 15.5 4" />
+          <rect x="8" y="7" width="1" height="9" />
+          <rect x="11" y="7" width="1" height="9" />
+          <rect x="2" y="3" width="16" height="1" />
+        </svg>
+      </a>
+    </li>
+  </ul>
 </div>
 `;
