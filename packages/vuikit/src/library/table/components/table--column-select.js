@@ -13,6 +13,9 @@ export default {
     cellClass: {
       type: String
     },
+    titleClass: {
+      type: String
+    },
     headless: {
       type: Boolean,
       default: false
@@ -39,7 +42,10 @@ export default {
 
     return h(ElementTableTh, mergeData(data, {
       props: { shrinked: true },
-      class: 'vk-table-column-select'
+      class: [
+        'vk-table-column-select',
+        props.titleClass
+      ]
     }), [ content ])
   },
   cellRender (h, ctx) {
