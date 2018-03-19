@@ -12,7 +12,7 @@ export default {
   },
   render (h, { data, props }) {
     const { icon, ratio } = props
-    const { width, height, viewBox } = data.attrs
+    const { width, height, viewBox } = data.attrs || {}
 
     const Icon = h(`vk-icons-${icon}`, {
       attrs: { width, height, viewBox }
