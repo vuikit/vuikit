@@ -10,7 +10,8 @@ export default {
   props: assign({}, ElementTableTh.props, ElementTableTd.props, {
     cell: String,
     title: String,
-    cellClass: String
+    cellClass: String,
+    titleClass: String
   }),
   render (h, { data, props, slots }) {
     // IMPORTANT: don't remove or change, is the
@@ -21,7 +22,10 @@ export default {
   headRender (h, { data, props }) {
     return h(ElementTableTh, mergeData({}, data, {
       props,
-      class: 'vk-table-column'
+      class: [
+        'vk-table-column',
+        props.titleClass
+      ]
     }), props.title)
   },
   cellRender (h, ctx) {
