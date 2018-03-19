@@ -1,6 +1,7 @@
 ## WIP
 
  - Export components constants for easier integration with other components
+ - Refactor VkNavbar and fix JS errors when combined with `vk-navbar-dropbar`.
 
 ## 0.8.0 (April 15, 2018)
 

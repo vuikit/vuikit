@@ -114,7 +114,8 @@
       </vk-navbar>
     </vk-navbar-dropbar>
 
-    <div style="height: 200px"></div>
+    <lorem-ipsum />
+    <div style="height: 400px"></div>
 
   </div>
 </template>

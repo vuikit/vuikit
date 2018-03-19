@@ -1,10 +1,12 @@
-import { Drop } from 'vuikit/src/library/drop'
 import { Grid } from 'vuikit/src/library/grid'
+import { Drop, constants } from 'vuikit/src/library/drop'
 
 import { get } from 'vuikit/src/util/misc'
 import { query } from 'vuikit/src/util/selector'
 import { assign } from 'vuikit/src/util/lang'
 import { isRtl, pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
+
+const { SHOW } = constants
 
 export default {
   name: 'VkNavbarNavDropdown',
@@ -67,25 +69,23 @@ export default {
   },
   render (h) {
     const { title, justified, mode, align, navbarAligned, subtitle } = this
-    const childrenNodes = this.$slots.default.filter(n => n.tag)
+
+    const defaultSlots = this.$slots.default || []
+    const childrenNodes = defaultSlots.filter(n => n.tag)
     const colCount = childrenNodes.length
 
     const Subtitle = subtitle && h('div', [ title, h('div', {
       class: 'uk-navbar-subtitle'
     }, subtitle) ])
 
-    const grid = () => h(Grid, {
-      class: [
-        'uk-navbar-dropdown-grid',
-        `uk-child-width-1-${colCount}${colCount > 2 ? '@m' : ''}`
-      ]
-    }, childrenNodes.map(child =>
-      h('div', [ child ])
-    ))
-
     return h('li', [
       h('a', [Subtitle || title]),
       h(Drop, {
+        on: {
+          [SHOW]: (e) => {
+            this.$forceUpdate()
+          }
+        },
         nativeOn: {
           [pointerEnter]: e => {
             this.$refs.drop.clearTimers()
@@ -102,7 +102,7 @@ export default {
         },
         ref: 'drop',
         class: {
-          'uk-navbar-dropdown-dropbar': this.dropbar,
+          'uk-navbar-dropdown-dropbar': Boolean(this.dropbar),
           'uk-navbar-dropdown-boundary': justified || navbarAligned,
           [`uk-navbar-dropdown-width-${colCount}`]: colCount > 1 && !justified
         },
@@ -120,8 +120,15 @@ export default {
         })
       }, [
         colCount >= 2
-          ? grid()
-          : this.$slots.default
+          ? h(Grid, {
+            class: [
+              'uk-navbar-dropdown-grid',
+              `uk-child-width-1-${colCount}${colCount > 2 ? '@m' : ''}`
+            ]
+          }, childrenNodes.map(child =>
+            h('div', [ child ])
+          ))
+          : defaultSlots
       ])
     ])
   }

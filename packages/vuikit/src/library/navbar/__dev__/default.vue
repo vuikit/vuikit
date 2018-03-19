@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="uk-padding">
+    <div class="uk-padding uk-container">
 
       <h1>Navbar</h1>
 

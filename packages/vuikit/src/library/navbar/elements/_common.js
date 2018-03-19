@@ -1,7 +1,9 @@
-export const content = (h, slots) => {
+export function renderSlots (h, slots) {
   return [
-    // left slot
-    slots.left && h('div', { class: 'uk-navbar-left' }, slots.left),
+    // left slot (default)
+    (slots.left || slots.default) && h('div', { class: 'uk-navbar-left' }, [
+      slots.left, slots.default
+    ]),
 
     (slots.center || slots['center-left'] || slots['center-right']) && h('div', {
       class: 'uk-navbar-center'

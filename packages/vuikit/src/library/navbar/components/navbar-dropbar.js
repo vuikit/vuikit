@@ -1,11 +1,14 @@
-import { Transition } from 'vuikit/src/util/animation'
-
 import { css } from 'vuikit/src/util/style'
+import { get } from 'vuikit/src/util/misc'
 import { height } from 'vuikit/src/util/dimensions'
+import { Transition } from 'vuikit/src/util/animation'
+import { noop, toFloat } from 'vuikit/src/util/lang'
 import { isVisible, within } from 'vuikit/src/util/filter'
-import { noop, toFloat, includes } from 'vuikit/src/util/lang'
 
 import { ElementNavbarDropbar } from '../elements'
+
+import { active as activeDrop, constants } from 'vuikit/src/library/drop'
+const { SHOW, HIDE } = constants
 
 export default {
   name: 'VkNavbarDropbar',
@@ -20,26 +23,7 @@ export default {
       default: 200
     }
   },
-  render (h) {
-    const { mode } = this
-
-    return h('div', {
-      class: 'uk-position-relative'
-    }, [
-      this.$slots.default,
-      h(ElementNavbarDropbar, {
-        ref: 'dropbar',
-        props: {
-          slide: mode === 'slide'
-        }
-      })
-    ])
-  },
   methods: {
-    getActiveDrop () {
-      const active = window.vuikitDropActive
-      return active && includes(active.mode, 'hover') && within(active.$refs.target, this.$el) && active
-    },
     transitionDropbar (dropdownEl) {
       const el = dropdownEl
 
@@ -67,23 +51,41 @@ export default {
     }
   },
   mounted () {
-    const dropdowns = this.$children
+    const dropdowns = get(this, '$children', [])
       .filter(child => /NavbarNavDropdown/.test(child.$options.name))
+      .map(c => c.$children[0])
 
-    dropdowns.forEach(dropdown => {
-      dropdown.$refs.drop.$on('show', () => {
+    dropdowns.forEach(drop => {
+      drop.$vnode.data.class['uk-navbar-dropdown-dropbar'] = true
+
+      drop.$on(SHOW, () => {
         this.$nextTick(() => {
-          this.transitionDropbar(dropdown.$refs.drop.$el)
+          this.transitionDropbar(drop.$el)
         })
       })
-      dropdown.$refs.drop.$on('hide', () => {
+
+      drop.$on(HIDE, () => {
         this.$nextTick(() => {
-          const active = this.getActiveDrop()
-          if (!active) {
-            this.transitionDropbar(dropdown.$refs.drop.$el)
+          const thereAreActiveDrops = activeDrop && within(activeDrop.$el, this.$el)
+
+          if (!thereAreActiveDrops) {
+            this.transitionDropbar(drop.$el)
           }
         })
       })
     })
+  },
+  render (h) {
+    return h('div', {
+      class: 'uk-position-relative'
+    }, [
+      this.$slots.default,
+      h(ElementNavbarDropbar, {
+        ref: 'dropbar',
+        props: {
+          slide: this.mode === 'slide'
+        }
+      })
+    ])
   }
 }
