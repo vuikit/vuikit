@@ -5,13 +5,13 @@ export default {
       type: Boolean,
       default: false
     },
-    label: {
+    title: {
       type: [String, Number],
       default: ''
     }
   },
   render: (h, { props, data }) => {
-    const { active, label } = props
+    const { active, title } = props
 
     return h('li', {
       class: {
@@ -19,8 +19,8 @@ export default {
       }
     }, [
       active
-        ? h('span', label)
-        : h('a', { on: data.on }, label)
+        ? h('span', title)
+        : h('a', { on: data.on }, title)
     ])
   }
 }

@@ -77,8 +77,8 @@
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-prev label="Previous" expanded />
-      <vk-pagination-page-next label="Next" expanded />
+      <vk-pagination-page-prev title="Previous" expanded />
+      <vk-pagination-page-next title="Next" expanded />
     </vk-pagination>
 
     <vk-pagination
@@ -86,8 +86,8 @@
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first label="First" expanded />
-      <vk-pagination-page-last label="Last" expanded />
+      <vk-pagination-page-first title="First" expanded />
+      <vk-pagination-page-last title="Last" expanded />
     </vk-pagination>
 
   </div>

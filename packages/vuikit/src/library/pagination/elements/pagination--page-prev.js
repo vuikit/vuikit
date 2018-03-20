@@ -5,7 +5,7 @@ import { ElementIcon } from 'vuikit/src/library/icon'
 export default {
   functional: true,
   props: {
-    label: {
+    title: {
       type: String,
       default: ''
     },
@@ -19,7 +19,7 @@ export default {
     }
   },
   render (h, { props, data, listeners }) {
-    const { label, expanded, disabled } = props
+    const { title, expanded, disabled } = props
 
     delete data.on
 
@@ -32,10 +32,10 @@ export default {
       h('a', { on: listeners }, [
         h(ElementIcon, {
           class: ['uk-pagination-prev', {
-            'uk-margin-small-right': label
+            'uk-margin-small-right': title
           }]
         }, [ h(Icon) ]),
-        label && label
+        title
       ])
     ])
   }

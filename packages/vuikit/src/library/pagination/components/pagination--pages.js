@@ -20,7 +20,7 @@ export default {
       return isPage
         ? h(ElementPaginationPage, {
           props: {
-            label: page,
+            title: page,
             active: currentPage === page
           },
           on: {

@@ -5,7 +5,7 @@ export default {
   functional: true,
   props: ElementPaginationPageNext.props,
   render (h, { data, props, parent }) {
-    const { label, expanded } = props
+    const { title, expanded } = props
 
     // related to vk-pagination node rerendering,
     // abort until the context is the right one
@@ -18,7 +18,7 @@ export default {
 
     return h(ElementPaginationPageNext, {
       props: {
-        label,
+        title,
         expanded,
         disabled: parent.nextPage > parent.lastPage
       },
