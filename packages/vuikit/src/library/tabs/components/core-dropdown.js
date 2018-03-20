@@ -8,7 +8,9 @@ import { ElementTabItemDropdown } from '../elements'
 
 export default {
   render (h) {
-    const NavItems = this.$slots.default.map(node => {
+    const nodes = this.$slots.default || []
+
+    const NavItems = nodes.map(node => {
       const props = node.componentOptions.propsData
 
       return h(ElementNavItem, {
@@ -29,7 +31,7 @@ export default {
 
     return h(ElementTabItemDropdown, {
       props: {
-        active: this.$slots.default.some(node => this.$parent.isActive(node.data[TAB_ID]))
+        active: nodes.some(node => this.$parent.isActive(node.data[TAB_ID]))
       }
     }, [
       h(Dropdown, {

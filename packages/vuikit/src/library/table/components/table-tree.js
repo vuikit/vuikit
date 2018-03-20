@@ -79,7 +79,7 @@ export default {
     }
   },
   render (h) {
-    const columns = this.$slots.default.filter(n => n.tag)
+    const columns = (this.$slots.default || []).filter(n => n.tag)
 
     return Render(h, {
       columns,

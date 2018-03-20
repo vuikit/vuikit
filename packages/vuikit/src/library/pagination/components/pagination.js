@@ -49,10 +49,11 @@ export default {
     }
   },
   render (h) {
+    const nodes = (this.$slots.default || []).filter(node => node.tag)
+
     return h(ElementPagination, {
       props: this.$props
-    }, this.$slots.default.filter(node => node.tag).map(node => {
-
+    }, nodes.map(node => {
       if (!node.fnOptions) {
         process.env.NODE_ENV !== 'production' &&
           warn(`vk-pagination -> ${node.tag} component is not functional`, this)

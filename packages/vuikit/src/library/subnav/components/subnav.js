@@ -19,7 +19,7 @@ export default {
   }),
   computed: {
     items () {
-      return this.$slots.default.filter(n => n.tag)
+      return (this.$slots.default || []).filter(n => n.tag)
     }
   },
   watch: {

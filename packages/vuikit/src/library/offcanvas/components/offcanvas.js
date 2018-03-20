@@ -56,9 +56,11 @@ export default {
     }
   },
   render (h) {
+    const nodes = this.$slots.default || []
+
     // bar could be provided from the outside
-    const customBar = findBar(this.$slots.default || [])
-    const bar = customBar || h(ElementOffcanvasBar, this.$slots.default)
+    const customBar = findBar(nodes)
+    const bar = customBar || h(ElementOffcanvasBar, nodes)
 
     const content = h(ElementOffcanvas, {
       key: this.mode,
