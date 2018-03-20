@@ -1,4 +1,5 @@
 import { get } from './misc'
+import { assign } from './lang'
 
 /*
  * Returns the closest parent of same type
@@ -80,6 +81,30 @@ export function filterOutTextNodes (nodes) {
 // misc
 export function isAsyncPlaceholder (node) {
   return node.isComment && node.asyncFactory
+}
+
+// extract all props going through mixins and extends properties
+export function extractProps (...args) {
+  const props = {}
+
+  for (let i = 0; i < args.length; i++) {
+    const def = args[i]
+
+    if (def !== null) {
+      def.mixins && def.mixins.forEach(mixin => {
+        assign(props, mixin.props || {})
+      })
+
+      // the extending component could have it own
+      // mixins and extendings, loop it
+      def.extends && assign(props, extractProps(def.extends))
+
+      // finally set raw props
+      def.props && assign(props, def.props)
+    }
+  }
+
+  return props
 }
 
 /* eslint-disable */
