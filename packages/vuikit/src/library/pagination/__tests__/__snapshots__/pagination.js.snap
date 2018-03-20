@@ -4,10 +4,10 @@ exports[`VkPagination matches snapshot 1`] = `
 <div class="uk-padding">
   <ul class="uk-pagination">
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
       <a>1</a>
@@ -45,10 +45,10 @@ exports[`VkPagination matches snapshot 1`] = `
   </ul>
   <ul class="uk-pagination uk-flex-center">
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
       <a>1</a>
@@ -86,10 +86,10 @@ exports[`VkPagination matches snapshot 1`] = `
   </ul>
   <ul class="uk-pagination uk-flex-right">
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
       <a>1</a>
@@ -128,10 +128,10 @@ exports[`VkPagination matches snapshot 1`] = `
   <h2>Layout</h2>
   <ul class="uk-pagination uk-flex-center">
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
       <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
@@ -171,7 +171,7 @@ exports[`VkPagination matches snapshot 1`] = `
   </ul>
   <ul class="uk-pagination uk-flex-center">
     <li>
-      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
+      <a><span class="uk-icon uk-pagination-prev"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span></a>
     </li>
     <li>
       <a>1</a>
@@ -206,7 +206,7 @@ exports[`VkPagination matches snapshot 1`] = `
   </ul>
   <ul class="uk-pagination">
     <li class="uk-margin-auto-right">
-      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>Previous</a>
+      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>Previous</a>
     </li>
     <li class="uk-margin-auto-left">
       <a>Next<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>
@@ -214,7 +214,7 @@ exports[`VkPagination matches snapshot 1`] = `
   </ul>
   <ul class="uk-pagination">
     <li class="uk-margin-auto-right">
-      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-previous ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>First</a>
+      <a><span class="uk-icon uk-pagination-prev uk-margin-small-right"><svg version="1.1" meta="icon-pagination-prev ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M6 1L1 6l5 5"/></svg></span>First</a>
     </li>
     <li class="uk-margin-auto-left">
       <a>Last<span class="uk-icon uk-pagination-prev uk-margin-small-left"><svg version="1.1" meta="icon-pagination-next ratio-1" width="7" height="12" viewBox="0 0 7 12"><path fill="none" stroke="#000" stroke-width="1.2" d="M1 1l5 5-5 5"/></svg></span></a>

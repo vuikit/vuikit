@@ -1,4 +1,3 @@
-// icon-pagination-previous
 export default {
   functional: true,
   render: function (h, ctx) {
@@ -16,7 +15,7 @@ export default {
     return h('svg', {
       attrs: {
         version: '1.1',
-        meta: 'icon-pagination-previous ratio-' + ratio,
+        meta: 'icon-pagination-prev ratio-' + ratio,
         width: width,
         height: height,
         viewBox: viewBox

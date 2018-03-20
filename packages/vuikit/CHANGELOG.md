@@ -4,6 +4,7 @@
  - Refactor VkNavbar and fix JS errors when combined with `vk-navbar-dropbar`.
  - Fixed an edge issue affecting `vk-icon` components.
  - Rename `vk-pagination-page-*` prop `label` to `title`.
+ - Expose `vk-pagination` icons as elements.
 
 ## 0.8.0 (April 15, 2018)
 

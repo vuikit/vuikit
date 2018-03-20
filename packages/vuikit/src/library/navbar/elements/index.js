@@ -5,6 +5,7 @@ export { default as ElementNavbarDropbar } from './navbar-dropbar'
 export { default as ElementNavbarItem } from './navbar--item'
 export { default as ElementNavbarLogo } from './navbar--logo'
 export { default as ElementNavbarToggle } from './navbar--toggle'
+export { default as ElementNavbarToggleIcon } from './navbar--toggle--icon'
 
 export { default as ElementNavbarNav } from './navbar--nav'
 export { default as ElementNavbarNavItem } from './navbar--nav--item'

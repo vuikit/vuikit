@@ -1,4 +1,3 @@
-// icon-pagination-next
 export default {
   functional: true,
   render: function (h, ctx) {

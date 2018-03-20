@@ -1,4 +1,4 @@
-import Icon from '../assets/icon-next'
+import Icon from './pagination--icon-next'
 import { mergeData } from 'vuikit/src/util/vue'
 import { ElementIcon } from 'vuikit/src/library/icon'
 
