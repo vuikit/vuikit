@@ -1,0 +1,36 @@
+{
+  "name": "@vuikit/theme",
+  "version": "0.8.0",
+  "description": "Vuikit default theme based on UIkit",
+  "license": "MIT",
+  "author": {
+    "name": "Miljan Aleksic",
+    "url": "https://twitter.com/AleksicMiljan"
+  },
+  "homepage": "https://vuikit.js.org/",
+  "bugs": "https://github.com/vuikit/vuikit/issues",
+  "main": "dist/vuikit.min.css",
+  "keywords": [
+    "vue",
+    "uikit",
+    "vuikit"
+  ],
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "node -r @std/esm scripts/build.js"
+  },
+  "devDependencies": {
+    "@miljan/build": "^0.4.2",
+    "@std/esm": "^0.25.2",
+    "less": "^3.0.1",
+    "less-plugin-clean-css": "^1.5.1",
+    "uikit": "^3.0.0-beta.40"
+  },
+  "@std/esm": {
+    "mode": "js",
+    "cjs": true
+  }
+}

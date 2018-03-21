@@ -4,7 +4,7 @@ import VuikitIcons from '@vuikit/icons'
 import { configure } from '@storybook/vue'
 import { each } from 'vuikit/src/util/lang'
 
-import 'vuikit/src/theme/index.less'
+import '@vuikit/theme/src/index.less'
 
 // register Story components
 Vue.component('StoryPositions', require('./components/story-positions').default)

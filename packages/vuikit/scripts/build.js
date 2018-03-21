@@ -1,4 +1,3 @@
-import path from 'path'
 import rollup from './util/rollup'
 
 import buble from 'rollup-plugin-buble'
@@ -6,7 +5,7 @@ import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
-import { run, remove, write, task, banner, less, minifyJS, minifyCSS } from '@miljan/build'
+import { run, remove, write, task, banner, minifyJS } from '@miljan/build'
 
 import Copyright from './_copyright'
 
@@ -66,29 +65,7 @@ run(async () => {
     })
   })
 
-  await task('Compile CSS', async () => {
-    await less({
-      src: 'src/theme/index.less',
-      dest: 'dist/vuikit.css',
-      options: {
-        relativeUrls: true,
-        paths: [
-          path.resolve(__dirname, '../src/theme'),
-          path.resolve(__dirname, '../../../node_modules')
-        ]
-      }
-    })
-
-    await minifyCSS({
-      src: 'dist/vuikit.css',
-      dest: 'dist/vuikit.min.css',
-      options: {
-        sourceMap: true
-      }
-    })
-  })
-
-  await banner('dist/*.{js,css}', Copyright)
+  await banner('dist/*.js', Copyright)
 })
 
 async function compile (opts, dest) {

@@ -7,12 +7,17 @@ run(async () => {
     await exec('yarn build', { cwd: 'packages/vuikit' })
   })
 
+  await task('Build Vuikit Theme', async spinner => {
+    await exec('yarn build', { cwd: 'packages/vuikit-theme' })
+  })
+
   await task('Build VuikitIcons', async spinner => {
     await exec('yarn build', { cwd: 'packages/vuikit-icons' })
   })
 
   await Promise.all([
     copyRecursive('packages/vuikit/dist', 'dist/vuikit'),
+    copyRecursive('packages/vuikit-theme/dist', 'dist/vuikit-theme'),
     copyRecursive('packages/vuikit-icons/dist', 'dist/vuikit-icons')
   ])
 })

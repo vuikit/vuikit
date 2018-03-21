@@ -11,9 +11,11 @@ run(async () => {
     copy('packages/vuikit/dist/vuikit.js', 'dist/tmp'),
     copy('packages/vuikit/dist/vuikit.min.js', 'dist/tmp'),
     copy('packages/vuikit/dist/vuikit.min.js.map', 'dist/tmp'),
-    copy('packages/vuikit/dist/vuikit.css', 'dist/tmp'),
-    copy('packages/vuikit/dist/vuikit.min.css', 'dist/tmp'),
-    copy('packages/vuikit/dist/vuikit.min.css.map', 'dist/tmp'),
+
+    // vuikit-theme
+    copy('packages/vuikit-theme/dist/vuikit.css', 'dist/tmp'),
+    copy('packages/vuikit-theme/dist/vuikit.min.css', 'dist/tmp'),
+    copy('packages/vuikit-theme/dist/vuikit.min.css.map', 'dist/tmp'),
 
     // vuikit-icons
     copy('packages/vuikit-icons/dist/vuikit-icons.js', 'dist/tmp'),
