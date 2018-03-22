@@ -93,7 +93,7 @@ export default {
         this.$slots.header && h(ElementModalHeader, this.$slots.header),
 
         // body
-        h(ElementModalBody, {
+        this.$slots.default && h(ElementModalBody, {
           directives: this.overflowAuto
             ? [{ name: 'vk-modal-overflow-auto' }]
             : []
