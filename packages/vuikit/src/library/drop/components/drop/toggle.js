@@ -1,10 +1,11 @@
 import { SHOW, HIDE } from '../../constants'
 
-import { on } from 'vuikit/src/util/event'
+import { on, once } from 'vuikit/src/util/event'
 import { within } from 'vuikit/src/util/filter'
+import { isTouch } from 'vuikit/src/util/touch'
 import { findParent } from 'vuikit/src/util/vue'
 
-import { pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
+import { pointerEnter, pointerLeave, pointerDown, hasTouch } from 'vuikit/src/util/env'
 
 export let active
 
@@ -76,9 +77,6 @@ export default {
       }
       this.$emit(HIDE)
     },
-    toggle () {
-      this.shown ? this._hide() : this.show()
-    },
     clearTimers () {
       clearTimeout(this.showTimer)
       clearTimeout(this.hideTimer)
@@ -87,16 +85,34 @@ export default {
     }
   },
   mounted () {
-    const { on, show, hide, toggle, mode, clearTimers } = this
+    const { on, show, hide, mode, clearTimers } = this
 
     this.$nextTick(() => {
-      if (/click/.test(mode)) {
-        on(this.$refs.target, pointerDown, toggle)
+      if (/click/.test(mode) || hasTouch) {
+        on(this.$refs.target, 'click', e => {
+          this.shown
+            ? this._hide()
+            : this.show()
+        })
       }
 
       if (/hover/.test(mode)) {
-        on(this.$refs.target, pointerEnter, show)
-        on(this.$refs.target, pointerLeave, hide)
+        on(this.$refs.target, pointerEnter, e => {
+          if (isTouch(e)) {
+            return
+          }
+
+          e.preventDefault()
+          show()
+        })
+        on(this.$refs.target, pointerLeave, e => {
+          if (isTouch(e)) {
+            return
+          }
+
+          e.preventDefault()
+          hide()
+        })
         on(this.$el, pointerLeave, hide)
         on(this.$el, pointerEnter, clearTimers)
       }

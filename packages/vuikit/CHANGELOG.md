@@ -5,6 +5,7 @@
  - Fixed an edge issue affecting `vk-icon` components.
  - Rename `vk-pagination-page-*` prop `label` to `title`.
  - Expose `vk-pagination` icons as elements.
+ - Fixed `vk-drop` touch events.
 
 ## 0.8.0 (April 15, 2018)
 
