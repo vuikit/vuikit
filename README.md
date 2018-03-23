@@ -2,52 +2,37 @@
 
 # Vuikit
 
-A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on the [UIkit](https://getuikit.com/) framework.
+A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on [UIkit](https://getuikit.com/) framework.
 
-## Usage
-
-To start right away register the assets globally.
-
-```js
+```vue
+<script>
 import Vue from 'vue'
 import Vuikit from 'vuikit'
 import VuikitIcons from '@vuikit/icons'
 
 Vue.use(Vuikit)
 Vue.use(VuikitIcons)
+</script>
 
 <template>
   <vk-button>MyButton</vk-button>
-  <vk-icon name="check"></vk-icon>
+  <vk-icon icon="heart"></vk-icon>
 </template>
 ```
 
-In order to reduce the final bundle size cherry pick the desired assets and register them globally or locally.
+## Packages
 
-```js
-// components
-import { Button as VkButton } from 'vuikit/lib/button'
-// directives
-import { Tooltip as VkTooltip } from 'vuikit/lib/tooltip'
-// icons
-import VkIconsCheck from '@vuikit/icon/lib'
+`vuikit` repository is a [monorepo](https://danluu.com/monorepo/) managed by [Yarn Workspaces](https://yarnpkg.com/lang/en/docs/workspaces/). Click on package name to see specific docs.
 
-// register globally
-Vue.component('VkButton', VkButton)
-Vue.directive('VkTooltip', VkTooltip)
-Vue.component('VkIconsCheck', VkIconsCheck)
+| Package | Version | Description |
+|---|---|---|
+| [`vuikit`](packages/vuikit) | [![NPM version](https://img.shields.io/npm/v/vuikit.svg?style=flat-square)](https://npmjs.org/package/vuikit) | The main package |
+| [`vuikit-icons`](packages/vuikit-icons) | [![NPM version](https://img.shields.io/npm/v/@vuikit/icons.svg?style=flat-square)](https://npmjs.org/package/@vuikit/icons) | Icons collection |
+| [`vuikit-theme`](packages/vuikit-theme) | [![NPM version](https://img.shields.io/npm/v/@vuikit/theme.svg?style=flat-square)](https://npmjs.org/package/@vuikit/theme) | Default theme |
 
-// or locally
-export default {
-  components: {
-    VkButton,
-    VkIconsCheck
-  },
-  directives: {
-    VkTooltip
-  }
-}
-```
+## Semver
+
+Until a v1.0.0 is reached, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 would have the same API and it's safe to update, but 0.5.0 would have breaking changes and the integration may require a review.
 
 ## Sponsors
 
@@ -55,12 +40,10 @@ export default {
 
 Special thanks to ZOOlanders for supporting the project from the very beginning.
 
-## Semver
+## License
 
-Until a v1.0.0 is reached, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 would have the same API and it's safe to update, but 0.5.0 would have breaking changes and the integration may require a review.
+[MIT](./LICENSE) © [Miljan Aleksic](https://github.com/miljan-aleksic)
 
-## Author
+## Acknowledgments
 
-**Vuikit** © [Miljan Aleksic](https://github.com/miljan-aleksic). Released under the [MIT](./LICENSE) License.<br>
-
-Substantial part of the code was adapted from [UIkit](https://github.com/uikit/uikit) © 2013-2018 YOOtheme GmbH, getuikit.com
+Substantial part of the code is adapted from [UIkit](https://github.com/uikit/uikit) © 2013-2018 YOOtheme GmbH, getuikit.com.
