@@ -5,7 +5,7 @@
   ],
   "scripts": {
     "dev": "cd packages/vuikit && yarn dev",
-    "package": "node -r @std/esm scripts/package.js"
+    "build": "node -r @std/esm scripts/build.js"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
