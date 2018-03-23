@@ -1,4 +1,4 @@
-## WIP
+## 0.8.2
 
  - Fixed regression affecting `vk-navbar` dropdowns.
 
