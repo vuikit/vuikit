@@ -20,7 +20,8 @@
     "src"
   ],
   "scripts": {
-    "build": "node -r @std/esm scripts/build.js"
+    "build": "node -r @std/esm scripts/build.js",
+    "postbuild": "node -r @std/esm scripts/copyright.js"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",

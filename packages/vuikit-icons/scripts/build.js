@@ -1,16 +1,9 @@
 import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
-import { remove, run, task, write, banner as bannerize, minifyJS } from '@miljan/build'
+import { remove, run, task, write, minifyJS } from '@miljan/build'
 
-import pkg from '../package.json'
 import rollupConfig from '../rollup.config'
-
-const banner = `/**
- * Vuikit Icons ${pkg.version}
- * (c) 2018 Miljan Aleksic
- * @license ${pkg.license}
- */`
 
 run(async () => {
   await remove('dist')
@@ -73,8 +66,6 @@ run(async () => {
       }
     })
   })
-
-  await bannerize('dist/**/*.js', banner)
 })
 
 async function compile (config, dest) {

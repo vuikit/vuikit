@@ -1,15 +1,5 @@
 import path from 'path'
-import pkg from '../package.json'
-import { run, remove, task, banner, less, minifyCSS } from '@miljan/build'
-
-const Copyright = `/**
- * Vuikit Theme ${pkg.version}
- * (c) 2018 Miljan Aleksic
- * @license ${pkg.license}
-**/
-
-/* Substantial part of this code is adapted from UIkit,
-  Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com */`
+import { run, remove, task, less, minifyCSS } from '@miljan/build'
 
 run(async () => {
   await remove('dist')
@@ -35,6 +25,4 @@ run(async () => {
       }
     })
   })
-
-  await banner('dist/*.css', Copyright)
 })

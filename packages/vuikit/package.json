@@ -28,6 +28,7 @@
     "build:dist": "node -r @std/esm scripts/build.js",
     "build:lib": "node -r @std/esm scripts/build-lib.js",
     "build": "npm run build:lib && npm run build:dist",
+    "postbuild": "node -r @std/esm scripts/copyright.js",
     "test": "jest"
   },
   "dependencies": {

@@ -1,15 +1,12 @@
 import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
-import replaceInFile from 'replace-in-file'
-
 import buble from 'rollup-plugin-buble'
 import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
+import replaceInFile from 'replace-in-file'
 
-import { run, task, remove, write, banner } from '@miljan/build'
-
-import Copyright from './_copyright'
+import { run, task, remove, write } from '@miljan/build'
 
 run(async () => {
   await remove('lib')
@@ -78,8 +75,6 @@ run(async () => {
     ],
     to: '.'
   })
-
-  await banner('lib/*.js', Copyright)
 })
 
 async function compile (input, dest, opts = {}) {

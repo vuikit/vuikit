@@ -1,13 +1,10 @@
 import rollup from './util/rollup'
-
 import buble from 'rollup-plugin-buble'
 import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
-import { run, remove, write, task, banner, minifyJS } from '@miljan/build'
-
-import Copyright from './_copyright'
+import { run, remove, write, task, minifyJS } from '@miljan/build'
 
 run(async () => {
   await remove('dist')
@@ -64,8 +61,6 @@ run(async () => {
       }
     })
   })
-
-  await banner('dist/*.js', Copyright)
 })
 
 async function compile (opts, dest) {
