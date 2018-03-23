@@ -1,10 +1,10 @@
-## WIP
+## 0.8.1
 
- - Export components constants for easier integration with other components.
- - Refactor VkNavbar and fix JS errors when combined with `vk-navbar-dropbar`.
- - Fixed an edge issue affecting `vk-icon` components.
- - Rename `vk-pagination-page-*` prop `label` to `title`.
- - Expose `vk-pagination` icons as elements.
+ - Components constants are now exported for easier integration with other components.
+ - Refactored VkNavbar and fixed JS errors when combined with `vk-navbar-dropbar`.
+ - Renamed `vk-pagination-page-*` prop `label` as `title`.
+ - Exposed `vk-pagination` icons as elements.
+ - Fixed `vk-icon-*` edge issue.
  - Fixed `vk-drop` touch events.
 
 ## 0.8.0 (April 15, 2018)
