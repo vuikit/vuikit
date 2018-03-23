@@ -82,18 +82,17 @@ export default {
       clearTimeout(this.hideTimer)
       this.showTimer = null
       this.hideTimer = null
+    },
+    toggle () {
+      this.shown ? this._hide() : this.show()
     }
   },
   mounted () {
-    const { on, show, hide, mode, clearTimers } = this
+    const { on, show, hide, toggle, mode, clearTimers } = this
 
     this.$nextTick(() => {
       if (/click/.test(mode) || hasTouch) {
-        on(this.$refs.target, 'click', e => {
-          this.shown
-            ? this._hide()
-            : this.show()
-        })
+        on(this.$refs.target, 'click', toggle)
       }
 
       if (/hover/.test(mode)) {

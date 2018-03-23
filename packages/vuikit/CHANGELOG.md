@@ -1,3 +1,7 @@
+## WIP
+
+ - Fixed regression affecting `vk-navbar` dropdowns.
+
 ## 0.8.1
 
  - Components constants are now exported for easier integration with other components.

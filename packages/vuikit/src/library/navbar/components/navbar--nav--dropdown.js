@@ -4,7 +4,8 @@ import { Drop, constants } from 'vuikit/src/library/drop'
 import { get } from 'vuikit/src/util/misc'
 import { query } from 'vuikit/src/util/selector'
 import { assign } from 'vuikit/src/util/lang'
-import { isRtl, pointerEnter, pointerLeave, pointerDown } from 'vuikit/src/util/env'
+import { isTouch } from 'vuikit/src/util/touch'
+import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/util/env'
 
 const { SHOW } = constants
 
@@ -53,18 +54,28 @@ export default {
     const { on, toggle, show, hide } = this.$refs.drop
     const target = this.$refs.drop.$refs.target
 
-    if (/click/.test(mode)) {
-      on(target, pointerDown, toggle)
+    if (/click/.test(mode) || hasTouch) {
+      on(target, 'click', toggle)
     }
 
     if (/hover/.test(mode)) {
-      on(target, pointerEnter, show)
+      on(target, pointerEnter, e => {
+        if (isTouch(e)) {
+          return
+        }
 
-      if (this.dropbar) {
-        on(this.dropbar.$el, pointerLeave, hide)
-      } else {
-        on(target, pointerLeave, hide)
-      }
+        e.preventDefault()
+        show()
+      })
+
+      on(this.dropbar ? this.dropbar.$el : target, pointerLeave, e => {
+        if (isTouch(e)) {
+          return
+        }
+
+        e.preventDefault()
+        hide()
+      })
     }
   },
   render (h) {
