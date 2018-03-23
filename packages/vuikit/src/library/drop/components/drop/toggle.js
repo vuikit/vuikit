@@ -1,11 +1,11 @@
 import { SHOW, HIDE } from '../../constants'
 
-import { on, once } from 'vuikit/src/util/event'
+import { on } from 'vuikit/src/util/event'
 import { within } from 'vuikit/src/util/filter'
 import { isTouch } from 'vuikit/src/util/touch'
 import { findParent } from 'vuikit/src/util/vue'
 
-import { pointerEnter, pointerLeave, pointerDown, hasTouch } from 'vuikit/src/util/env'
+import { pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/util/env'
 
 export let active
 
