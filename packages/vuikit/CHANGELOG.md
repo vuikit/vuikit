@@ -2,6 +2,7 @@
 
  - Added ElementNavbarNavigation and ElementNavbarLogoLink elements.
  - Changed ElementNavbarLogo tag to `span`.
+ - Fixed `vk-navbar-full` transparent modifier.
 
 ## 0.8.2
 

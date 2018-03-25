@@ -17,7 +17,9 @@ export default {
     const { expanded, transparent } = props
 
     return h('nav', mergeData(data, {
-      class: 'uk-navbar-container'
+      class: ['uk-navbar-container', {
+        'uk-navbar-transparent': transparent
+      }]
     }), [
       h('div', {
         class: ['uk-container', {
@@ -25,9 +27,7 @@ export default {
         }]
       }, [
         h('div', {
-          class: ['uk-navbar', {
-            'uk-navbar-transparent': transparent
-          }]
+          class: 'uk-navbar'
         }, renderSlots(h, slots()))
       ])
     ])
