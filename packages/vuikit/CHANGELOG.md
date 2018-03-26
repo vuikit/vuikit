@@ -1,3 +1,8 @@
+## WIP
+
+ - Added ElementNavbarNavigation and ElementNavbarLogoLink elements.
+ - Changed ElementNavbarLogo tag to `span`.
+
 ## 0.8.2
 
  - Fixed regression affecting `vk-navbar` dropdowns.
