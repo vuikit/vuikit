@@ -1,6 +1,6 @@
 import { ElementDrop } from '../../elements'
 import { Transition } from 'vuikit/src/core/transition'
-import { positionBefore } from 'vuikit/src/core/v-position/events'
+import { BEFORE_POSITION } from 'vuikit/src/core/v-position'
 
 import { css } from 'vuikit/src/util/style'
 import { offset as getOffset } from 'vuikit/src/util/dimensions'
@@ -32,7 +32,7 @@ export default {
 
     const def = {
       on: {
-        [positionBefore]: e => {
+        [BEFORE_POSITION]: e => {
           const { $el } = this
           const alignTo = getOffset(target)
           const boundaryOffset = getOffset(boundary)
