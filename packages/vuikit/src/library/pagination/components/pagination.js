@@ -1,5 +1,6 @@
 import { ElementPagination } from '../elements'
 import Matrix from 'vuikit/src/util/pagination-matrix'
+import VkMargin from 'vuikit/src/library/margin'
 
 import { warn } from 'vuikit/src/util/debug'
 import { assign } from 'vuikit/src/util/lang'
@@ -7,6 +8,7 @@ import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   name: 'Pagination',
+  directives: { VkMargin },
   props: assign({}, ElementPagination.props, {
     // the active page
     page: {
@@ -52,7 +54,10 @@ export default {
     const nodes = (this.$slots.default || []).filter(node => node.tag)
 
     return h(ElementPagination, {
-      props: this.$props
+      props: this.$props,
+      directives: [{
+        name: 'vk-margin'
+      }]
     }, nodes.map(node => {
       if (!node.fnOptions) {
         process.env.NODE_ENV !== 'production' &&

@@ -4,6 +4,7 @@
  - Changed ElementNavbarLogo tag to `span`.
  - Fixed `vk-navbar-full` transparent modifier.
  - Fixed and changed `v-position` constants export.
+ - Improved `vk-pagination` responsivnes by applying `vk-margin` directive.
 
 ## 0.8.2
 
