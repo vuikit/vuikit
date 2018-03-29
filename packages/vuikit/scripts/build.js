@@ -15,8 +15,7 @@ run(async () => {
       input: 'src/vuikit.esm.js',
       output: {
         format: 'es'
-      },
-      env: 'development'
+      }
     }, 'dist/vuikit.esm.js')
 
     // compile CJS index
@@ -24,8 +23,7 @@ run(async () => {
       input: 'src/vuikit.cjs.js',
       output: {
         format: 'cjs'
-      },
-      env: 'development'
+      }
     }, 'dist/vuikit.cjs.js')
 
     // compile dist as UMD

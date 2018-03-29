@@ -2,7 +2,6 @@ import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
 import buble from 'rollup-plugin-buble'
-import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
 import replaceInFile from 'replace-in-file'
 
@@ -83,7 +82,6 @@ async function compile (input, dest, opts = {}) {
     output: {
       format: 'es'
     },
-    // external: ['vuikit/src/util'],
     external: opts.external || (id => {
       const isRelative = /\.\//
 
@@ -101,11 +99,6 @@ async function compile (input, dest, opts = {}) {
       cleanup()
     ]
   }
-
-  config.plugins.push(replace({
-    exclude: 'node_modules/**',
-    'process.env.NODE_ENV': JSON.stringify('development')
-  }))
 
   const { code } = await rollup(config)
   await write(dest, code, { log: true })
