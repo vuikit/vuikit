@@ -6,6 +6,7 @@
  - Fixed and changed `v-position` constants export.
  - Improved `vk-pagination` responsivnes by applying `vk-margin` directive.
  - Fixed env issue affecting ES and CJS builds
+ - Enhance `vk-modal-close`, close on click event is now programatically attached.
 
 ## 0.8.2
 

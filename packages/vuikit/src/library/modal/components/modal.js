@@ -2,6 +2,9 @@ import core from './core'
 import Transition from '../transition'
 import VkModalOverflowAuto from '../directives/overflow-auto'
 
+import { each, assign } from 'vuikit/src/util/lang'
+import { TOGGLE } from '../constants'
+
 import {
   ElementModal,
   ElementModalBody,
@@ -78,6 +81,14 @@ export default {
         // }
       }
     }
+
+    Object.keys(this.$slots).forEach(slot => each(this.$slots[slot], node => {
+      if (node.fnOptions && node.fnOptions.name === 'VkModalClose') {
+        assign(node.data, {
+          on: { click: e => this.$emit(TOGGLE, false) }
+        })
+      }
+    }))
 
     const modal = h(ElementModal, def, [
       h(ElementModalDialog, {

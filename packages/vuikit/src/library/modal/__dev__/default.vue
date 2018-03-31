@@ -43,7 +43,7 @@
         :show.sync="show"
         @keyup.esc="show = false"
       >
-        <vk-modal-close @click="show = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title>Headline</vk-modal-title>
         <p>{{ lorem }}</p>
         <div class="uk-text-right">
@@ -56,7 +56,7 @@
         :show.sync="outside"
         @keyup.esc="outside = false"
       >
-        <vk-modal-close outside @click="outside = false"></vk-modal-close>
+        <vk-modal-close outside></vk-modal-close>
         <vk-modal-title>Headline</vk-modal-title>
         <p>{{ lorem }}</p>
         <div class="uk-text-right">
@@ -69,7 +69,7 @@
         :show.sync="sections"
         @keyup.esc="sections = false"
       >
-        <vk-modal-close @click="sections = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline</vk-modal-title>
         <p>{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
@@ -82,7 +82,7 @@
         :show.sync="scrollbar"
         @keyup.esc="scrollbar = false"
       >
-        <vk-modal-close @click="scrollbar = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <p v-for="n in 10">{{ lorem }}</p>
       </vk-modal>
 
@@ -91,7 +91,7 @@
         :show.sync="overflowAuto"
         @keyup.esc="overflowAuto = false"
       >
-        <vk-modal-close @click="overflowAuto = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline</vk-modal-title>
         <p v-for="n in 10">{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
@@ -105,7 +105,7 @@
         :show.sync="container"
         @keyup.esc="container = false"
       >
-        <vk-modal-close @click="container = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <p v-for="n in 10">{{ lorem }}</p>
       </vk-modal>
 
@@ -114,7 +114,7 @@
         :show.sync="width"
         @keyup.esc="width = false"
       >
-        <vk-modal-close @click="width = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <p v-for="n in 10">{{ lorem }}</p>
       </vk-modal>
 
@@ -123,7 +123,7 @@
         :show.sync="center"
         @keyup.esc="center = false"
       >
-        <vk-modal-close @click="center = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <p>{{ lorem }}</p>
       </vk-modal>
 
@@ -131,7 +131,7 @@
         :show.sync="full"
         @keyup.esc="full = false"
       >
-        <vk-modal-full-close large @click="full = false"></vk-modal-full-close>
+        <vk-modal-full-close large></vk-modal-full-close>
         <div class="uk-width-xxlarge uk-padding-large">
           <h1>Headline</h1>
           <p>{{ lorem }}</p>
@@ -142,7 +142,7 @@
         :show.sync="fullSplit"
         @keyup.esc="fullSplit = false"
       >
-        <vk-modal-full-close @click="fullSplit = false"></vk-modal-full-close>
+        <vk-modal-full-close></vk-modal-full-close>
         <vk-grid class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle">
           <div class="uk-background-cover" style="background-image: url('/photo.jpg');" v-vk-height-viewport></div>
           <div class="uk-padding-large">
@@ -156,7 +156,7 @@
         :show.sync="group1"
         @keyup.esc="group1 = false"
       >
-        <vk-modal-close @click="group1 = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline 1</vk-modal-title>
         <p>{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
@@ -169,7 +169,7 @@
         :show.sync="group2"
         @keyup.esc="group2 = false"
       >
-        <vk-modal-close @click="group2 = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline 2</vk-modal-title>
         <p>{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
@@ -182,7 +182,7 @@
         :show.sync="stack1"
         @keyup.esc="stack1 = false"
       >
-        <vk-modal-close @click="stack1 = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline 1</vk-modal-title>
         <p>{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
@@ -196,7 +196,7 @@
         :show.sync="stack2"
         @keyup.esc="stack2 = false"
       >
-        <vk-modal-close @click="stack2 = false"></vk-modal-close>
+        <vk-modal-close></vk-modal-close>
         <vk-modal-title slot="header">Headline 2</vk-modal-title>
         <p>{{ lorem }}</p>
         <div slot="footer" class="uk-text-right">
