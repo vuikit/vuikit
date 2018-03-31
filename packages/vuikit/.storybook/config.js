@@ -4,7 +4,10 @@ import VuikitIcons from '@vuikit/icons'
 import { configure } from '@storybook/vue'
 import { each } from 'vuikit/src/util/lang'
 
-import '@storybook/addon-console';
+// disabled by default, use with caution
+// as it creates loops in some scenarios
+// import '@storybook/addon-console';
+
 import '@vuikit/theme/src/index.less'
 
 // register Story components
