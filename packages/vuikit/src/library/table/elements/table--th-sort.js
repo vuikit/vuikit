@@ -1,9 +1,10 @@
 import ElementTh from './table--th'
+import { assign } from 'vuikit/src/util/lang'
 import { mergeData } from 'vuikit/src/util/vue'
 
 export default {
   functional: true,
-  props: mergeData({}, ElementTh.props, {
+  props: assign({}, ElementTh.props, {
     order: {
       type: String
     }
