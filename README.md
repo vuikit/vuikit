@@ -2,7 +2,7 @@
 
 # Vuikit
 
-A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on [UIkit](https://getuikit.com/) framework.
+A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on the [UIkit](https://getuikit.com/) framework.
 
 ```vue
 <script>
@@ -34,16 +34,13 @@ Vue.use(VuikitIcons)
 
 Until a v1.0.0 is reached, breaking changes will be released with a new minor version. For example 0.4.0 and 0.4.1 would have the same API and it's safe to update, but 0.5.0 would have breaking changes and the integration may require a review.
 
-## Sponsors
+## Acknowledgments
 
-[![ZOOlanders](https://user-images.githubusercontent.com/513275/37552836-79db359c-29f7-11e8-9c24-d46f4625b9f1.png)](http://zoolanders.com/)
+A special thanks goes to:
 
-Special thanks to ZOOlanders for supporting the project from the very beginning.
+ - [ZOOlanders]((http://zoolanders.com/) for sponsoring Vuikit.
+ - [YOOtheme]((http://zoolanders.com/) for creating and open sourcing UIkit.
 
 ## License
 
 [MIT](./LICENSE) © [Miljan Aleksic](https://github.com/miljan-aleksic)
-
-## Acknowledgments
-
-Substantial part of the code is adapted from [UIkit](https://github.com/uikit/uikit) © 2013-2018 YOOtheme GmbH, getuikit.com.

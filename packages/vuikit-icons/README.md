@@ -79,7 +79,3 @@ npm run custom
 ## License
 
 [MIT](./LICENSE) © [Miljan Aleksic](https://github.com/miljan-aleksic)
-
-## Acknowledgments
-
-The icons source code is copyrighted by [UIkit](https://github.com/uikit/uikit) © 2013-2018 YOOtheme GmbH, getuikit.com.

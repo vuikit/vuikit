@@ -49,7 +49,3 @@ export default {
 ## License
 
 [MIT](./LICENSE) © [Miljan Aleksic](https://github.com/miljan-aleksic)
-
-## Acknowledgments
-
-Substantial part of the code is adapted from [UIkit](https://github.com/uikit/uikit) © 2013-2018 YOOtheme GmbH, getuikit.com.
