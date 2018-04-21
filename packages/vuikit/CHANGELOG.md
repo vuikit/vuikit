@@ -1,18 +1,21 @@
+# Changelog
+
 ## WIP
 
- - Added ElementNavbarNavigation and ElementNavbarLogoLink elements.
- - Changed ElementNavbarLogo tag to `span`.
+ - Fixed Server Side Rendering.
  - Fixed `vk-navbar-full` transparent modifier.
  - Fixed and changed `v-position` constants export.
- - Improved `vk-pagination` responsivnes by applying `vk-margin` directive.
- - Fixed env issue affecting ES and CJS builds
- - Enhance `vk-modal-close`, close on click event is now programatically attached.
+ - Fixed env issue affecting ES and CJS builds.
+ - Enhanced `vk-pagination` responsivnes by applying `vk-margin` directive.
+ - Enhanced `vk-modal-close`, close on click event is now programmatically attached.
+ - Changed ElementNavbarLogo tag to `span`.
+ - Added ElementNavbarNavigation and ElementNavbarLogoLink elements.
 
-## 0.8.2
+## 0.8.2 (March 23, 2018)
 
  - Fixed regression affecting `vk-navbar` dropdowns.
 
-## 0.8.1
+## 0.8.1 (March 23, 2018)
 
  - Components constants are now exported for easier integration with other components.
  - Refactored VkNavbar and fixed JS errors when combined with `vk-navbar-dropbar`.
