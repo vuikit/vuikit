@@ -7,7 +7,7 @@ import {on} from './event'
 import {clamp, isNumeric, isString, isUndefined, toNode, toNodes, toNumber} from './lang'
 
 export function isReady () {
-  return document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll
+  return global.document && global.document.readyState === 'complete' || global.document && global.document.readyState !== 'loading' && !global.document.documentElement.doScroll
 }
 
 export function ready (fn) {
@@ -22,8 +22,8 @@ export function ready (fn) {
     unbind2()
     fn()
   }
-  const unbind1 = on(document, 'DOMContentLoaded', handle)
-  const unbind2 = on(window, 'load', handle)
+  const unbind1 = on(global.document, 'DOMContentLoaded', handle)
+  const unbind2 = on(global.window, 'load', handle)
 }
 
 export function index (element, ref) {

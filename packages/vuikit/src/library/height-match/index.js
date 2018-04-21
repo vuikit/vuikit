@@ -15,7 +15,7 @@ export default {
     vnode.context.$nextTick(() =>
       update(el, { binding, vnode })
     )
-    el[NAMESPACE].unbind = on(window, 'resize', () =>
+    el[NAMESPACE].unbind = on(global.window, 'resize', () =>
       update(el, { binding, vnode })
     )
   },

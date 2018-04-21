@@ -2,7 +2,7 @@ import { once, on } from 'vuikit/src/util/event'
 import { addClass, removeClass } from 'vuikit/src/util/class'
 import { SHOWN, HIDDEN, TOGGLE, KEYUP } from './constants'
 
-const doc = document.documentElement
+const doc = global.document && document.documentElement
 
 export let active
 export let activeModals

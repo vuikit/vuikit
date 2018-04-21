@@ -10,7 +10,7 @@ export default {
   mounted () {
     // evaluate target and boundary elements
     this.$refs.target = this.queryElement(this.target) || this.$el.previousElementSibling
-    this.$refs.boundary = this.queryElement(this.boundary)
+    this.$refs.boundary = this.queryElement(this.boundary) || window
     // must force a rerended after
     this.$forceUpdate()
   },

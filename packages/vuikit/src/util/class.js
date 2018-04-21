@@ -2,6 +2,8 @@
  * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
  */
 
+/* eslint-disable no-useless-call */
+
 import {filterAttr} from './attr'
 import {includes, isString, isUndefined, toNodes} from './lang'
 
@@ -64,18 +66,16 @@ function getArgs (args) {
     , [])
 }
 
-const supports = {};
+let supports = {};
 
 // IE 11
 (function () {
-
-  let list = document.createElement('_').classList
-  if (list) {
+  if (global.document && document.createElement('_').classList) {
+    let list = document.createElement('_').classList
     list.add('a', 'b')
     list.toggle('c', false)
     supports.Multiple = list.contains('b')
     supports.Force = !list.contains('c')
+    list = null
   }
-  list = null
-
 })()

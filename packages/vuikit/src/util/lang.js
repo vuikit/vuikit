@@ -86,11 +86,11 @@ export function isJQuery (obj) {
 }
 
 export function isNode (element) {
-  return element instanceof Node || isObject(element) && element.nodeType === 1
+  return global.Node && element instanceof Node || isObject(element) && element.nodeType === 1
 }
 
 export function isNodeCollection (element) {
-  return element instanceof NodeList || element instanceof HTMLCollection
+  return global.NodeList && element instanceof NodeList || global.HTMLCollection && element instanceof HTMLCollection
 }
 
 export function isBoolean (value) {

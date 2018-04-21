@@ -6,7 +6,7 @@
 /* global setImmediate */
 import {isFunction, isObject} from './lang'
 
-export const Promise = 'Promise' in window ? window.Promise : PromiseFn
+export const Promise = global.window && 'Promise' in global.window ? global.window.Promise : PromiseFn
 
 export class Deferred {
   constructor () {
@@ -25,7 +25,7 @@ const RESOLVED = 0
 const REJECTED = 1
 const PENDING = 2
 
-const async = 'setImmediate' in window ? setImmediate : setTimeout
+const async = global.window && 'setImmediate' in window ? global.setImmediate : global.setTimeout
 
 function PromiseFn (executor) {
 

@@ -9,28 +9,30 @@ import { pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/util/env'
 
 export let active
 
-on(window, 'resize', ({ defaultPrevented }) => {
-  const justified = active && /justify/.test(active.position)
+if (global.window && global.document) {
+  on(window, 'resize', ({ defaultPrevented }) => {
+    const justified = active && /justify/.test(active.position)
 
-  if (!defaultPrevented && justified) {
-    active.$forceUpdate()
-  }
-})
+    if (!defaultPrevented && justified) {
+      active.$forceUpdate()
+    }
+  })
 
-on(document.documentElement, 'click', ({ target, defaultPrevented }) => {
-  if (defaultPrevented || !active) {
-    return
-  }
+  on(document.documentElement, 'click', ({ target, defaultPrevented }) => {
+    if (defaultPrevented || !active) {
+      return
+    }
 
-  const clickedInside = drop => within(target, drop.$el)
-  const clickedTarget = drop => within(target, drop.$refs.target)
+    const clickedInside = drop => within(target, drop.$el)
+    const clickedTarget = drop => within(target, drop.$refs.target)
 
-  while (active && !clickedInside(active) && !clickedTarget(active)) {
-    const parent = findParent(active)
-    active._hide()
-    active = parent
-  }
-})
+    while (active && !clickedInside(active) && !clickedTarget(active)) {
+      const parent = findParent(active)
+      active._hide()
+      active = parent
+    }
+  })
+}
 
 export default {
   data: () => ({

@@ -91,28 +91,28 @@ function isContextSelector (selector) {
   return isString(selector) && selector.match(contextSelectorRe)
 }
 
-const elProto = Element.prototype
-const matchesFn = elProto.matches || elProto.webkitMatchesSelector || elProto.msMatchesSelector
-
 export function matches (element, selector) {
+  const elProto = window.Element.prototype
+  const matchesFn = elProto.matches || elProto.webkitMatchesSelector || elProto.msMatchesSelector
   return toNodes(element).some(element => matchesFn.call(element, selector))
 }
 
-const closestFn = elProto.closest || function (selector) {
-  let ancestor = this
-
-  do {
-
-    if (matches(ancestor, selector)) {
-      return ancestor
-    }
-
-    ancestor = ancestor.parentNode
-
-  } while (ancestor && ancestor.nodeType === 1)
-}
-
 export function closest (element, selector) {
+  const elProto = window.Element.prototype
+
+  const closestFn = elProto.closest || function (selector) {
+    let ancestor = this
+
+    do {
+
+      if (matches(ancestor, selector)) {
+        return ancestor
+      }
+
+      ancestor = ancestor.parentNode
+
+    } while (ancestor && ancestor.nodeType === 1)
+  }
 
   if (startsWith(selector, '>')) {
     selector = selector.slice(1)
@@ -139,7 +139,7 @@ export function parents (element, selector) {
   return elements
 }
 
-const escapeFn = window.CSS && CSS.escape || function (css) { return css.replace(/([^\x7f-\uFFFF\w-])/g, match => `\\${match}`) }
 export function escape (css) {
+  const escapeFn = window.CSS && CSS.escape || function (css) { return css.replace(/([^\x7f-\uFFFF\w-])/g, match => `\\${match}`) }
   return isString(css) ? escapeFn.call(null, css) : ''
 }

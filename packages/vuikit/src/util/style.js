@@ -106,9 +106,9 @@ export function propName (name) {
 }
 
 const cssPrefixes = ['webkit', 'moz', 'ms']
-const {style} = document.createElement('_')
 
 function vendorPropName (name) {
+  const {style} = document.createElement('_')
 
   name = hyphenate(name)
 

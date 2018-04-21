@@ -10,10 +10,10 @@ const FRAMES = '_vk_fastdom_frames'
 let scroll = 0
 const instances = []
 
-on(window, 'load resize', () =>
+on(global.window, 'load resize', () =>
   instances.forEach(i => i.fastdomUpdate())
 )
-on(window, 'scroll', e => {
+on(global.window, 'scroll', e => {
   e.dir = scroll <= window.pageYOffset ? 'down' : 'up'
   e.scrollY = scroll = window.pageYOffset
   instances.forEach(inst => inst.fastdomUpdate(e))

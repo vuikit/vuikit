@@ -6,13 +6,15 @@
 /* global DocumentTouch */
 import {attr} from './attr'
 
-export const isRtl = attr(document.documentElement, 'dir') === 'rtl'
+export const isRtl = global.document && attr(document.documentElement, 'dir') === 'rtl'
 
-const hasTouchEvents = 'ontouchstart' in window
-const hasPointerEvents = window.PointerEvent
+const hasTouchEvents = global.window && 'ontouchstart' in window
+
+const hasPointerEvents = global.window && window.PointerEvent
+
 export const hasTouch = hasTouchEvents ||
-    window.DocumentTouch && document instanceof DocumentTouch ||
-    navigator.maxTouchPoints // IE >=11
+  global.window && global.document && window.DocumentTouch && document instanceof DocumentTouch ||
+  global.navigator && navigator.maxTouchPoints // IE >=11
 
 export const pointerDown = !hasTouch ? 'mousedown' : `mousedown ${hasTouchEvents ? 'touchstart' : 'pointerdown'}`
 export const pointerMove = !hasTouch ? 'mousemove' : `mousemove ${hasTouchEvents ? 'touchmove' : 'pointermove'}`
