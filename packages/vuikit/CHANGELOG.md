@@ -1,6 +1,6 @@
 # Changelog
 
-## WIP
+## 0.8.3 (April 21, 2018)
 
  - Fixed Server Side Rendering.
  - Fixed `vk-navbar-full` transparent modifier.
