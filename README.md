@@ -38,8 +38,8 @@ Until a v1.0.0 is reached, breaking changes will be released with a new minor ve
 
 A special thanks goes to:
 
- - [ZOOlanders]((http://zoolanders.com/) for sponsoring Vuikit.
- - [YOOtheme]((http://zoolanders.com/) for creating and open sourcing UIkit.
+ - [ZOOlanders](http://zoolanders.com/) for sponsoring Vuikit.
+ - [YOOtheme](http://zoolanders.com/) for creating and open sourcing UIkit.
 
 ## License
 
