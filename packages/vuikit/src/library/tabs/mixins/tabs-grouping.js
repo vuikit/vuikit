@@ -39,7 +39,7 @@ export default {
     this.$nextTick(() => {
       this.calculateTabGrouping()
     })
-    this.on(global.window, 'resize', debounce(() =>
+    this.on(window, 'resize', debounce(() =>
       this.$nextTick(this.calculateTabGrouping), 20, true)
     )
   }

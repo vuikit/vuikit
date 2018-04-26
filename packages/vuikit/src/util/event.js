@@ -7,6 +7,8 @@ import {within} from './filter'
 import {closest, find, findAll} from './selector'
 import {isArray, isFunction, isString, toNode, toNodes} from './lang'
 
+export const win = typeof window !== 'undefined' && window
+
 export function on (...args) {
 
   let [target, type, selector, listener, useCapture] = getArgs(args)
@@ -94,8 +96,8 @@ function detail (listener) {
 }
 
 function isEventTarget (target) {
-  return global.window && 'EventTarget' in global.window
-    ? target instanceof global.window.EventTarget
+  return typeof window !== 'undefined' && 'EventTarget' in window
+    ? target instanceof window.EventTarget
     : target && 'addEventListener' in target
 }
 

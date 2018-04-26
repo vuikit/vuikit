@@ -3,18 +3,21 @@
  */
 
 /* eslint-disable no-mixed-operators */
-/* global DocumentTouch */
 import {attr} from './attr'
 
-export const isRtl = global.document && attr(document.documentElement, 'dir') === 'rtl'
+const doc = typeof document !== 'undefined' && document
+const win = typeof window !== 'undefined' && window
+const nav = typeof navigator !== 'undefined' && navigator
 
-const hasTouchEvents = global.window && 'ontouchstart' in window
+export const isRtl = doc && attr(document.documentElement, 'dir') === 'rtl'
 
-const hasPointerEvents = global.window && window.PointerEvent
+const hasTouchEvents = win && 'ontouchstart' in window
+
+const hasPointerEvents = win && window.PointerEvent
 
 export const hasTouch = hasTouchEvents ||
-  global.window && global.document && window.DocumentTouch && document instanceof DocumentTouch ||
-  global.navigator && navigator.maxTouchPoints // IE >=11
+  (win && window.DocumentTouch) && (doc && document instanceof window.DocumentTouch) ||
+  nav && navigator.maxTouchPoints // IE >=11
 
 export const pointerDown = !hasTouch ? 'mousedown' : `mousedown ${hasTouchEvents ? 'touchstart' : 'pointerdown'}`
 export const pointerMove = !hasTouch ? 'mousemove' : `mousemove ${hasTouchEvents ? 'touchmove' : 'pointermove'}`

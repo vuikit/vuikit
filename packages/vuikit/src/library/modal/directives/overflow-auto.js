@@ -6,7 +6,7 @@ import { addClass } from 'vuikit/src/util/class'
 
 export default {
   bind (el, binding) {
-    el.vkModalOverflowAutoOff = on(global.window, 'resize', () => update(el, binding))
+    el.vkModalOverflowAutoOff = on(window, 'resize', () => update(el, binding))
     addClass(el, 'uk-overflow-auto')
   },
   inserted (el, binding, vnode) {

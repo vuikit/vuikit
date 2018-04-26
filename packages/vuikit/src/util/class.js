@@ -70,7 +70,7 @@ let supports = {};
 
 // IE 11
 (function () {
-  if (global.document && document.createElement('_').classList) {
+  if (typeof document !== 'undefined' && document.createElement('_').classList) {
     let list = document.createElement('_').classList
     list.add('a', 'b')
     list.toggle('c', false)

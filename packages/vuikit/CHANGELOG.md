@@ -1,5 +1,9 @@
 # Changelog
 
+## WIP
+
+ - Fixed regression from 0.8.3
+
 ## 0.8.3 (April 21, 2018)
 
  - Fixed Server Side Rendering.

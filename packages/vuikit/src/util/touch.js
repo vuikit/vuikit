@@ -29,9 +29,9 @@ function cancelAll () {
 
 ready(() => {
 
-  on(global.document, 'click', () => clicked = true, true)
+  on(document, 'click', () => clicked = true, true)
 
-  on(global.document, pointerDown, e => {
+  on(document, pointerDown, e => {
 
     const {target} = e
     const {x, y} = getPos(e)
@@ -60,7 +60,7 @@ ready(() => {
 
   })
 
-  on(global.document, pointerMove, e => {
+  on(document, pointerMove, e => {
 
     if (e.defaultPrevented) {
       return
@@ -73,7 +73,7 @@ ready(() => {
 
   })
 
-  on(global.document, pointerUp, ({type, target}) => {
+  on(document, pointerUp, ({type, target}) => {
 
     if (touch.type !== getType(type)) {
       return
@@ -112,15 +112,18 @@ ready(() => {
 
   })
 
-  on(global.document, 'touchcancel', cancelAll)
-  on(global.window, 'scroll', cancelAll)
+  on(document, 'touchcancel', cancelAll)
+  on(window, 'scroll', cancelAll)
 
 })
 
 let touching = false
-on(global.document, 'touchstart', () => touching = true, true)
-on(global.document, 'click', () => { touching = false })
-on(global.document, 'touchcancel', () => touching = false, true)
+
+if (typeof document !== 'undefined') {
+  on(document, 'touchstart', () => touching = true, true)
+  on(document, 'click', () => { touching = false })
+  on(document, 'touchcancel', () => touching = false, true)
+}
 
 export function isTouch (e) {
   return touching || e.pointerType === 'touch'

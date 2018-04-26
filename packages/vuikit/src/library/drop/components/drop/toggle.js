@@ -9,7 +9,7 @@ import { pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/util/env'
 
 export let active
 
-if (global.window && global.document) {
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
   on(window, 'resize', ({ defaultPrevented }) => {
     const justified = active && /justify/.test(active.position)
 

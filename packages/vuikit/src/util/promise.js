@@ -3,10 +3,12 @@
  */
 
 /* eslint-disable one-var, no-useless-call */
-/* global setImmediate */
+/* setImmediate */
 import {isFunction, isObject} from './lang'
 
-export const Promise = global.window && 'Promise' in global.window ? global.window.Promise : PromiseFn
+export const win = typeof window !== 'undefined' && window
+
+export const Promise = win && 'Promise' in window ? window.Promise : PromiseFn
 
 export class Deferred {
   constructor () {
@@ -25,7 +27,7 @@ const RESOLVED = 0
 const REJECTED = 1
 const PENDING = 2
 
-const async = global.window && 'setImmediate' in window ? global.setImmediate : global.setTimeout
+const async = win && 'setImmediate' in window ? setImmediate : setTimeout
 
 function PromiseFn (executor) {
 

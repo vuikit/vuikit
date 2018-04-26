@@ -4,7 +4,7 @@ import EventsMixin from 'vuikit/src/mixins/events'
 
 import { TOGGLE } from '../constants'
 
-const doc = global.document && document.documentElement
+const doc = typeof document !== 'undefined' && document.documentElement
 
 export default {
   mixins: [EventsMixin],

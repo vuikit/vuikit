@@ -6,9 +6,9 @@ import { SHOWN, HIDDEN, TOGGLE, KEYUP } from '../constants'
 
 export let active
 export let scrollbarWidth
-export const win = global.window && window
-export const body = global.document && document.body
-export const doc = global.document && document.documentElement
+export const win = typeof window !== 'undefined' && window
+export const body = typeof document !== 'undefined' && document.body
+export const doc = typeof document !== 'undefined' && document.documentElement
 
 let scroll
 
