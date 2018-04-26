@@ -1,6 +1,6 @@
 # Changelog
 
-## WIP
+## 0.8.4 (April 26, 2018)
 
  - Fixed regression from 0.8.3
 
