@@ -27,6 +27,16 @@
           <vk-button v-vk-tooltip.right="'Hello World'">Right</vk-button>
         </p>
 
+        <h2>Misc</h2>
+
+        <p v-vk-margin>
+          <vk-button
+            v-if="visible"
+            v-vk-tooltip="'Hello World'"
+            @click="visible = false"
+          >I dissapear on click</vk-button>
+        </p>
+
       </div>
       <form>
 
@@ -62,3 +72,11 @@
 
   </div>
 </template>
+
+<script>
+export default {
+  data: () => ({
+    visible: true
+  })
+}
+</script>

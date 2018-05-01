@@ -40,7 +40,7 @@ export default {
       return
     }
 
-    hide(el)
+    _hide(el)
     attr(el, { title: el[NAMESPACE].prevTitle || null })
     el[NAMESPACE].unbindEvents()
     delete el[NAMESPACE]
@@ -147,6 +147,10 @@ function show (el) {
 }
 
 function hide (el) {
+  if (!el[NAMESPACE]) {
+    return
+  }
+
   const { state } = el[NAMESPACE]
 
   // clear timers in order
