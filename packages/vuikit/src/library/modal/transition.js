@@ -32,7 +32,9 @@ export default {
             return
           }
 
-          doEnter(el, done)
+          // using setTimeout as a workaround for appear and for edge
+          // situations when the wrapper component hasn't been rendered yet
+          setTimeout(() => doEnter(el, done), 0)
         },
         afterEnter (el) {
           activeModals++
@@ -73,8 +75,7 @@ export default {
       el.offsetWidth // eslint-disable-line
       once(el, 'transitionend', done, false, e => e.target === el)
 
-      // using setTimeout as a workaround for appear
-      setTimeout(() => addClass(el, 'uk-open'), 0)
+      addClass(el, 'uk-open')
     }
 
     return h('transition', def, children)

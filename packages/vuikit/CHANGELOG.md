@@ -3,6 +3,7 @@
 ## WIP
 
  - Fixed `vk-tooltip` unbind.
+ - Fixed `vk-modal` display on appear.
 
 ## 0.8.4 (April 26, 2018)
 
