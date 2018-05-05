@@ -7,8 +7,7 @@ const Copyright = `/**
  * @license ${pkg.license}
 **/
 
-/* Substantial part of the code is adapted from UIkit,
-  Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com */`
+/* UIkit theme core - Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com */`
 
 run(async () => {
   await banner('dist/**/*.css', Copyright)

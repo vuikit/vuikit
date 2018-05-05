@@ -54,7 +54,7 @@ Vue.use(VuikitIcons)
 Installing the entire library is useful for prototyping and testing but for production is recommended to cherry pick the desired icons and register them manually.
 
 ```js
-import VkIconsHeart from '@vuikit/icons/lib/heart'
+import VkIconsHeart from '@vuikit/icons/heart'
 
 // globally
 Vue.component('VkIconsHeart', VkIconsHeart)

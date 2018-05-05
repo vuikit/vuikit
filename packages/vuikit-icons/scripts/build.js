@@ -1,80 +1,77 @@
 import path from 'path'
 import globby from 'globby'
-import rollup from './util/rollup'
-import { remove, run, task, write, minifyJS } from '@miljan/build'
-
-import rollupConfig from '../rollup.config'
+import rollup from 'rollup'
+import buble from 'rollup-plugin-buble'
+import cleanup from 'rollup-plugin-cleanup'
+import { remove, run, write, minifyJS } from '@miljan/build'
 
 run(async () => {
   await remove('dist')
-  await remove('lib')
 
-  const icons = await globby('src/uikit/*')
+  // Compile Lib
+  const resources = await globby('src/uikit/*')
 
-  await Promise.all(icons.map(async icon => {
+  await Promise.all(resources.map(async icon => {
     const basename = path.basename(icon)
-    // const basename = dirname.split('/').pop()
 
-    return compile({
-      input: icon,
+    return compile(icon, basename, {
       output: {
         format: 'cjs'
       }
-    }, `lib/${basename}`)
+    })
   }))
 
-  // compile CJS dist
-  await compile({
-    input: 'src/vuikit-icons.cjs.js',
-    output: {
-      format: 'cjs'
-    }
-  }, 'dist/vuikit-icons.cjs.js')
-
-  // compile ESM dist
-  await task('Compile', async () => {
-
-    await compile({
-      input: 'src/vuikit-icons.esm.js',
+  // Compile ESM
+  await compile(
+    'src/esm.js',
+    'dist/vuikit-icons.esm.js',
+    {
       output: {
         format: 'es'
       }
-    }, 'dist/vuikit-icons.esm.js')
+    }
+  )
 
-    // compile CJS dist
-    await compile({
-      input: 'src/vuikit-icons.cjs.js',
+  // Compile CJS
+  await compile(
+    'src/cjs.js',
+    'dist/vuikit-icons.cjs.js',
+    {
       output: {
         format: 'cjs'
       }
-    }, 'dist/vuikit-icons.cjs.js')
+    }
+  )
 
-    // compile UMD dist
-    await compile({
-      input: 'src/vuikit-icons.cjs.js',
-      output: {
-        name: 'VuikitIcons',
-        format: 'umd'
-      }
-    }, 'dist/vuikit-icons.js')
+  // Compile UMD
+  await compile('src/cjs.js', 'dist/vuikit-icons.js', {
+    output: {
+      name: 'VuikitIcons',
+      format: 'umd'
+    }
+  })
 
-    await minifyJS({
-      src: 'dist/vuikit-icons.js',
-      dest: 'dist/vuikit-icons.min.js',
-      options: {
-        sourceMap: true
-      }
-    })
+  await minifyJS({
+    src: 'dist/vuikit-icons.js',
+    dest: 'dist/vuikit-icons.min.js',
+    options: {
+      sourceMap: true
+    }
   })
 })
 
-async function compile (config, dest) {
-  config = {
-    ...rollupConfig,
-    ...config
+async function compile (input, dest, opts = {}) {
+  const config = {
+    input,
+    output: opts.output,
+    plugins: [
+      buble(),
+      cleanup()
+    ]
   }
 
-  const { code } = await rollup(config)
+  const bundle = await rollup.rollup(config)
+  const { code } = await bundle.generate(config.output)
 
-  await write(`${dest}`, code, { log: true })
+  await write(dest, code, { log: true })
 }

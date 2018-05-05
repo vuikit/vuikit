@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/icons",
-  "version": "0.8.1",
+  "version": "0.9.0",
   "description": "UIkit icons as Vue functional components",
   "license": "MIT",
   "author": {
@@ -17,8 +17,7 @@
   "main": "dist/vuikit-icons.cjs.js",
   "module": "dist/vuikit-icons.esm.js",
   "files": [
-    "dist",
-    "lib"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -36,13 +35,13 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.25.2",
+    "@std/esm": "^0.26.0",
     "globby": "^8.0.1",
-    "rollup": "^0.57.0",
+    "rollup": "^0.58.2",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.2.0",
-    "uikit": "^3.0.0-beta.40"
+    "uikit": "^3.0.0-beta.42"
   },
   "@std/esm": {
     "mode": "js",

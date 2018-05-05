@@ -1,0 +1,6 @@
+export { default as ElPagination } from './pagination'
+export { default as ElPaginationPage } from './pagination--page'
+export { default as ElPaginationPageNext } from './pagination--page-next'
+export { default as ElPaginationPagePrev } from './pagination--page-prev'
+export { default as ElPaginationIconNext } from './pagination--icon-next'
+export { default as ElPaginationIconPrev } from './pagination--icon-prev'

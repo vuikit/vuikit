@@ -1,6 +1,0 @@
-export { default as ElementPagination } from './pagination'
-export { default as ElementPaginationPage } from './pagination--page'
-export { default as ElementPaginationPageNext } from './pagination--page-next'
-export { default as ElementPaginationPagePrev } from './pagination--page-prev'
-export { default as ElementPaginationIconNext } from './pagination--icon-next'
-export { default as ElementPaginationIconPrev } from './pagination--icon-prev'

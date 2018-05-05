@@ -1,0 +1,40 @@
+{
+  "name": "@vuikit/core",
+  "version": "0.9.0",
+  "description": "Vuikit core resources",
+  "license": "MIT",
+  "author": {
+    "name": "Miljan Aleksic",
+    "url": "https://twitter.com/AleksicMiljan"
+  },
+  "homepage": "https://vuikit.js.org/",
+  "bugs": "https://github.com/vuikit/vuikit/issues",
+  "main": "index.js",
+  "keywords": [
+    "vue",
+    "uikit",
+    "vuikit"
+  ],
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "start-storybook -p 6006",
+    "build": "node -r @std/esm scripts/build.js",
+    "postbuild": "node -r @std/esm scripts/copyright.js"
+  },
+  "devDependencies": {
+    "@miljan/build": "^0.4.2",
+    "@std/esm": "^0.26.0",
+    "@storybook/vue": "^3.3.15",
+    "@vuikit/utils": "^0.9.0",
+    "globby": "^8.0.1",
+    "rollup": "^0.58.2",
+    "rollup-plugin-buble": "^0.19.2",
+    "rollup-plugin-cleanup": "^3.0.0-beta.1"
+  },
+  "@std/esm": {
+    "mode": "js",
+    "cjs": true
+  }
+}

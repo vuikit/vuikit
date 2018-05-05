@@ -28,8 +28,8 @@ Vue.use(Vuikit)
 Installing the entire library is useful for prototyping and testing but for production is recommended to cherry pick the desired resources and register them manually.
 
 ```js
-import { Button as VkButton } from 'vuikit/lib/button'
-import { Tooltip as VkTooltip } from 'vuikit/lib/tooltip'
+import { Button as VkButton } from 'vuikit/button'
+import { Tooltip as VkTooltip } from 'vuikit/tooltip'
 
 // globally
 Vue.component('VkButton', VkButton)

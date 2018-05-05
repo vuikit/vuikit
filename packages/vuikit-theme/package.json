@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.25.2",
+    "@std/esm": "^0.26.0",
     "less": "^3.0.1",
     "less-plugin-clean-css": "^1.5.1",
     "uikit": "^3.0.0-beta.40"

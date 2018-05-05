@@ -1,0 +1,4 @@
+/assets/*.js
+/components/*.js
+/directives/*.js
+/mixins/*.js

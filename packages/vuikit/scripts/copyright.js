@@ -11,5 +11,5 @@ const Copyright = `/**
   Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com */`
 
 run(async () => {
-  await banner('{dist,lib}/**/*.js', Copyright)
+  await banner(['*.js', 'dist/*.js'], Copyright)
 })

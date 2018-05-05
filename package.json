@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.25.2",
+    "@std/esm": "^0.26.0",
     "eslint": "^4.18.2",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-html": "^4.0.2",

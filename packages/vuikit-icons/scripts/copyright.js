@@ -7,9 +7,9 @@ const Copyright = `/**
  * @license ${pkg.license}
 **/
 
-/* The icons source code is part of UIkit icons library,
+/* Icons source code is part of the UIkit icons collection,
   Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com */`
 
 run(async () => {
-  await banner('{dist,lib}/**/*.js', Copyright)
+  await banner(['dist/*.js', '*.js'], Copyright)
 })

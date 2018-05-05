@@ -1,0 +1,20 @@
+import { assign } from '@vuikit/utils/lang'
+import { mergeData } from '@vuikit/utils/vue'
+
+import { ElIconnavItem } from '../elements'
+
+export default {
+  name: 'VkIconnavItem',
+  functional: true,
+  props: assign({
+    icon: {
+      type: String,
+      required: true
+    }
+  }, ElIconnavItem.props),
+  render (h, { data, props }) {
+    return h(ElIconnavItem, mergeData(data, { props }), [
+      h(`vk-icons-${props.icon}`)
+    ])
+  }
+}
