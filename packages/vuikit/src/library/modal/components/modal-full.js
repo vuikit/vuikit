@@ -1,7 +1,9 @@
 import core from './core'
 import Transition from '../transition'
+import { TOGGLE } from '../constants'
 import { ElementModalFull, ElementModalDialog } from '../elements'
 
+import { each, assign } from 'vuikit/src/util/lang'
 import VkHeightViewport from 'vuikit/src/library/height-viewport'
 
 export default {
@@ -20,6 +22,14 @@ export default {
         value: this.show
       }]
     }
+
+    Object.keys(this.$slots).forEach(slot => each(this.$slots[slot], node => {
+      if (node.fnOptions && node.fnOptions.name === 'VkModalFullClose') {
+        assign(node.data, {
+          on: { click: e => this.$emit(TOGGLE, false) }
+        })
+      }
+    }))
 
     const modal = h(ElementModalFull, def, [
       h(ElementModalDialog, {
