@@ -5,7 +5,7 @@ run(async () => {
   await remove('dist')
 
   await less({
-    src: 'src/index.less',
+    src: 'src/theme.less',
     dest: 'dist/vuikit.css',
     options: {
       relativeUrls: true,

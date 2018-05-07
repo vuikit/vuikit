@@ -1,0 +1,148 @@
+// Name:            Skeleton
+//
+// Blocks:          `vk-skeleton-content`
+//                  `vk-skeleton-title`
+//                  `vk-skeleton-text`
+//
+// ========================================================================
+
+
+// Variables
+// ========================================================================
+
+@skeleton-height:                                            8px;
+@skeleton-spacing:                                           @global-small-margin;
+@skeleton-line-height:                                       @global-line-height;
+
+@skeleton-title-background:                                  darken(@global-muted-background, 10%);
+@skeleton-content-background:                                darken(@global-muted-background, 3%);
+
+@skeleton-animation-duration:                                1.5s;
+@skeleton-animation-background:                              lighten(@skeleton-content-background, 3%);
+
+@skeleton-border:                                            @global-border;
+@skeleton-border-width:                                      @global-border-width;
+@skeleton-border-radius:                                     3px;
+
+
+/* ========================================================================
+  Component
+ ========================================================================== */
+
+.vk-skeleton-content {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-width: 10px;
+  height: @skeleton-height;
+  background: @skeleton-content-background;
+  border-radius: @skeleton-border-radius;
+  .vk-hook-skeleton-content;
+}
+
+.vk-skeleton--animated .vk-skeleton-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  max-width: 1000px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    @skeleton-animation-background 15%,
+    transparent 30%
+  );
+  animation-duration: @skeleton-animation-duration;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: vkSkeletonAnimation;
+  animation-timing-function: linear;
+  .vk-hook-skeleton-content-animated;
+}
+
+/*
+ * Animation
+ */
+
+@keyframes vkSkeletonAnimation {
+  0% { transform: translate3d(-30%, 0, 0); }
+  100% { transform: translate3d(100%, 0, 0); }
+}
+
+// Text
+// ========================================================================
+
+.vk-skeleton-text {
+  display: inline-block;
+
+  [class^="vk-skeleton-"] + & {
+    margin-top: 2 * @skeleton-spacing;
+  }
+
+  &:nth-of-type(4n + 1) {
+    width: 80%;
+  }
+
+  &:nth-of-type(4n + 2) {
+    width: 100%;
+  }
+
+  &:nth-of-type(4n + 3) {
+    width: 70%;
+  }
+
+  &:nth-of-type(4n + 4) {
+    width: 85%;
+  }
+
+  &:only-of-type {
+    width: 100%
+  }
+  .vk-hook-skeleton-text;
+}
+
+// Title & Subtitle
+// ========================================================================
+
+.vk-skeleton-title {
+  width: 85%;
+  display: inline-block;
+  margin-bottom: @skeleton-spacing;
+
+  .vk-skeleton-content {
+    background: @skeleton-title-background;
+  }
+  .vk-hook-skeleton-title;
+}
+
+.vk-skeleton-title + .vk-skeleton-text {
+  width: 90%;
+  margin-top: 0;
+}
+
+
+// Image
+// ========================================================================
+
+.vk-skeleton-image {
+  .vk-skeleton-content {
+    height: 100%;
+  }
+  .vk-hook-skeleton-image;
+}
+
+
+// Hooks
+// ========================================================================
+
+.vk-hook-skeleton-misc;
+
+.vk-hook-skeleton-content() {}
+.vk-hook-skeleton-content-animated() {}
+.vk-hook-skeleton-text() {}
+.vk-hook-skeleton-image() {}
+.vk-hook-skeleton-title() {}
+
+.vk-hook-skeleton-misc() {}
