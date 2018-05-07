@@ -69,7 +69,7 @@ export async function buildIndex ({ src, dest }) {
     const name = getIconName(iconPath)
     const importPath = path.basename(iconPath)
 
-    index.push(`export { default as ${name} } from './uikit/${importPath}'`)
+    index.push(`export { default as ${name} } from './${importPath}'`)
   })
 
   await write(dest, index.join('\n') + '\n')

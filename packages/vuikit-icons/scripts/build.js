@@ -9,7 +9,7 @@ run(async () => {
   await remove('dist')
 
   // Compile Lib
-  const resources = await globby('src/uikit/*')
+  const resources = await globby(['src/icons/*', '!index.js'])
 
   await Promise.all(resources.map(async icon => {
     const basename = path.basename(icon)

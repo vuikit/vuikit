@@ -1,4 +1,4 @@
-import * as Icons from './index.js'
+import * as Icons from './icons/index.js'
 
 const VuikitIcons = {
   install (Vue) {
@@ -8,7 +8,7 @@ const VuikitIcons = {
   }
 }
 
-export * from './index.js'
+export * from './icons/index.js'
 export default VuikitIcons
 
 function each (obj, cb) {

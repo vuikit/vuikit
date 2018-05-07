@@ -30,7 +30,7 @@
   "scripts": {
     "build": "node -r @std/esm scripts/build.js",
     "postbuild": "node -r @std/esm scripts/copyright.js",
-    "pull": "node -r @std/esm scripts/pull-icons.js",
+    "pull": "node -r @std/esm scripts/pull.js",
     "custom": "node -r @std/esm scripts/custom.js"
   },
   "devDependencies": {

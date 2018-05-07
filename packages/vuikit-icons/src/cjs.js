@@ -1,4 +1,4 @@
-import * as Icons from './index.js'
+import * as Icons from './icons/index.js'
 
 const VuikitIcons = {
   install (Vue) {

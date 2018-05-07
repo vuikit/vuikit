@@ -1,0 +1,37 @@
+// icon-#{name}
+export default {
+  functional: true,
+  props: {
+    ratio: {
+      type: [Number, String],
+      default: 1
+    }
+  },
+  render: function (h, { props, data }) {
+    const { ratio } = props
+    let {
+      width = #{width},
+      height = #{height},
+      viewBox = '0 0 #{width} #{height}'
+    } = (data.attrs || {})
+
+    if (ratio !== 1) {
+      width *= ratio
+      height *= ratio
+    }
+
+    return h('svg', {
+      attrs: {
+        version: '1.1',
+        meta: 'vk-icons-#{name}',
+        width,
+        height,
+        viewBox,
+        ratio
+      },
+      domProps: {
+        innerHTML: '#{data}'
+      }
+    })
+  }
+}
