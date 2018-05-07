@@ -11,7 +11,7 @@ export default {
       type: Boolean,
       default: false
     },
-    cellMiddle: {
+    enlarged: {
       type: Boolean,
       default: false
     },
@@ -27,6 +27,10 @@ export default {
       type: Boolean,
       default: false
     },
+    middleAligned: {
+      type: Boolean,
+      default: false
+    },
     responsive: {
       type: Boolean,
       default: false
@@ -35,13 +39,14 @@ export default {
   render (h, { data, props, children }) {
     return h('table', mergeData(data, {
       class: ['uk-table', {
-        'uk-table-small': props.narrowed,
         'uk-table-hover': props.hoverable,
-        'uk-table-middle': props.cellMiddle,
         'uk-table-divider': props.divided,
         'uk-table-striped': props.striped,
         'uk-table-justify': props.justified,
-        'uk-table-responsive': props.responsive
+        'uk-table-middle': props.middleAligned,
+        'uk-table-responsive': props.responsive,
+        'uk-table-small': props.narrowed && !props.enlarged,
+        'uk-table-large': props.enlarged && !props.narrowed
       }]
     }), children)
   }

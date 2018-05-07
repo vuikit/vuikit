@@ -9,14 +9,8 @@
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <vk-table-column-tree
-        title="Tree"
-        cell="company"
-      ></vk-table-column-tree>
-      <vk-table-column
-        title="id"
-        cell="__vkTable_rowId"
-      ></vk-table-column>
+      <vk-table-column-tree title="Tree" cell="name"/>
+      <vk-table-column title="id" cell="__vkTable_rowId"/>
     </vk-table-tree>
 
     <h2>Variations</h2>
@@ -30,7 +24,7 @@
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <vk-table-column-tree cell="company"></vk-table-column-tree>
+      <vk-table-column-tree cell="name"/>
     </vk-table-tree>
 
   </div>

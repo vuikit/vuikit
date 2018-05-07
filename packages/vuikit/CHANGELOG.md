@@ -5,6 +5,7 @@
  - Fixed `vk-tooltip` unbind.
  - Fixed `vk-modal` display on appear.
  - Fixed `vk-modal-full` close button trigger listener.
+ - Added `vk-table-filter` and `vk-table-pagination`, `vk-table-column-date`, `vk-table-column-text` and `vk-table-column-toggle`.
 
 ## 0.8.4 (April 26, 2018)
 

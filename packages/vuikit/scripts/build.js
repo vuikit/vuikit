@@ -25,8 +25,9 @@ run(async () => {
       },
       external: id => {
         const isRelative = /\.\//
+        const isDateFns = /date-fns/
 
-        if (id === input || isRelative.test(id)) {
+        if (id === input || isRelative.test(id) || isDateFns.test(id)) {
           return false
         }
 

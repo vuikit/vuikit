@@ -6,30 +6,55 @@ exports[`VkTable matches snapshot 1`] = `
   <table class="uk-table uk-table-divider">
     <thead>
       <tr>
-        <th class="uk-table-expand vk-table-column">Company</th>
-        <th class="uk-table-shrink vk-table-column">Website</th>
+        <th>name</th>
+        <th>Website</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td class="uk-table-expand">Mat Lam Tam</td>
-        <td class="uk-table-shrink">goodreads.com</td>
+        <td>Mat Lam Tam</td>
+        <td>goodreads.com</td>
       </tr>
       <tr>
-        <td class="uk-table-expand">Y-find</td>
-        <td class="uk-table-shrink">home.pl</td>
+        <td>Y-find</td>
+        <td>home.pl</td>
       </tr>
       <tr>
-        <td class="uk-table-expand">Tres-Zap</td>
-        <td class="uk-table-shrink">printfriendly.com</td>
+        <td>Tres-Zap</td>
+        <td>printfriendly.com</td>
       </tr>
       <tr>
-        <td class="uk-table-expand">Zathin</td>
-        <td class="uk-table-shrink">nbcnews.com</td>
+        <td>Zathin</td>
+        <td>nbcnews.com</td>
       </tr>
       <tr>
-        <td class="uk-table-expand">Bamity</td>
-        <td class="uk-table-shrink">howstuffworks.com</td>
+        <td>Bamity</td>
+        <td>howstuffworks.com</td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>Selectable</h2>
+  <table class="uk-table uk-table-divider">
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mat Lam Tam</td>
+      </tr>
+      <tr>
+        <td>Y-find</td>
+      </tr>
+      <tr>
+        <td>Tres-Zap</td>
+      </tr>
+      <tr>
+        <td>Zathin</td>
+      </tr>
+      <tr>
+        <td>Bamity</td>
       </tr>
     </tbody>
   </table>
@@ -37,68 +62,24 @@ exports[`VkTable matches snapshot 1`] = `
   <table class="uk-table uk-table-divider">
     <tbody>
       <tr>
-        <td class="uk-table-shrink"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
+        <td class="uk-table-shrink"><span class="uk-form"><input type="checkbox" class="uk-checkbox"></span></td>
         <td class="uk-table-expand">Mat Lam Tam</td>
-        <td class="uk-table-shrink">goodreads.com</td>
       </tr>
       <tr>
-        <td class="uk-table-shrink"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
+        <td class="uk-table-shrink"><span class="uk-form"><input type="checkbox" class="uk-checkbox"></span></td>
         <td class="uk-table-expand">Y-find</td>
-        <td class="uk-table-shrink">home.pl</td>
       </tr>
       <tr>
-        <td class="uk-table-shrink"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
+        <td class="uk-table-shrink"><span class="uk-form"><input type="checkbox" class="uk-checkbox"></span></td>
         <td class="uk-table-expand">Tres-Zap</td>
-        <td class="uk-table-shrink">printfriendly.com</td>
       </tr>
       <tr>
-        <td class="uk-table-shrink"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
+        <td class="uk-table-shrink"><span class="uk-form"><input type="checkbox" class="uk-checkbox"></span></td>
         <td class="uk-table-expand">Zathin</td>
-        <td class="uk-table-shrink">nbcnews.com</td>
       </tr>
       <tr>
-        <td class="uk-table-shrink"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
+        <td class="uk-table-shrink"><span class="uk-form"><input type="checkbox" class="uk-checkbox"></span></td>
         <td class="uk-table-expand">Bamity</td>
-        <td class="uk-table-shrink">howstuffworks.com</td>
-      </tr>
-    </tbody>
-  </table>
-  <h2>Custom classes</h2>
-  <table class="uk-table uk-table-divider">
-    <thead>
-      <tr>
-        <th class="custom-class uk-table-shrink vk-table-column-select"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></th>
-        <th class="uk-text-right vk-table-column">Custom Class</th>
-        <th class="uk-text-center vk-table-column-sort uk-visible-hover-inline">
-          <div class="uk-text-nowrap uk-position-relative">Custom Class<span class="uk-text-center vk-table-column-sort__arrow uk-position-absolute uk-invisible vk-table-column-sort__arrow--rotated"></span></div>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="uk-table-shrink custom-class"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
-        <td class="uk-text-right">goodreads.com</td>
-        <td class="uk-text-center">goodreads.com</td>
-      </tr>
-      <tr>
-        <td class="uk-table-shrink custom-class"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
-        <td class="uk-text-right">home.pl</td>
-        <td class="uk-text-center">home.pl</td>
-      </tr>
-      <tr>
-        <td class="uk-table-shrink custom-class"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
-        <td class="uk-text-right">printfriendly.com</td>
-        <td class="uk-text-center">printfriendly.com</td>
-      </tr>
-      <tr>
-        <td class="uk-table-shrink custom-class"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
-        <td class="uk-text-right">nbcnews.com</td>
-        <td class="uk-text-center">nbcnews.com</td>
-      </tr>
-      <tr>
-        <td class="uk-table-shrink custom-class"><span class="uk-form uk-text-center"><input type="checkbox" class="uk-checkbox"></span></td>
-        <td class="uk-text-right">howstuffworks.com</td>
-        <td class="uk-text-center">howstuffworks.com</td>
       </tr>
     </tbody>
   </table>
@@ -106,8 +87,8 @@ exports[`VkTable matches snapshot 1`] = `
   <table class="uk-table uk-table-divider">
     <thead>
       <tr>
-        <th class="vk-table-column">company</th>
-        <th class="vk-table-column">website</th>
+        <th>name</th>
+        <th>website</th>
       </tr>
     </thead>
     <tbody>
@@ -135,5 +116,66 @@ exports[`VkTable matches snapshot 1`] = `
   </table>
   <button type="button" class="uk-button uk-button-default">Change Order</button>
   <button type="button" class="uk-button uk-button-default">Reset</button>
+  <h2>Responsive</h2>
+  <div class="uk-overflow-auto">
+    <table class="uk-table uk-table-divider">
+      <thead>
+        <tr>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+          <th>Table Heading</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+        </tr>
+        <tr>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+        </tr>
+        <tr>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+          <td><span>Table Heading</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;

@@ -1,68 +1,84 @@
 [
   {
-    "company": "Mat Lam Tam",
-    "ranking": "0.74",
+    "id": 1,
+    "status": 0,
+    "date": "2016-10-24T00:00:00.000Z",
+    "name": "Mat Lam Tam",
+    "version": "0.74",
     "website": "goodreads.com",
-    "contact": {
+    "author": {
       "name": "Nathanael Decaze",
-      "email": "ndecaze0@jimdo.com"
-    }
+      "contact": "ndecaze0@jimdo.com"
+    },
+    "_": "Not empty"
   },
   {
-    "company": "Y-find",
-    "ranking": "9.1",
+    "id": 2,
+    "status": 1,
+    "date": "2016-10-24T00:00:00.000Z",
+    "name": "Y-find",
+    "version": "9.1",
     "website": "home.pl",
-    "contact": {
+    "author": {
       "name": "Trudie Pearlman",
-      "email": "tpearlman1@nps.gov"
+      "contact": "tpearlman1@nps.gov"
     },
     "children": [
       {
-        "company": "Sub Company",
+        "name": "Sub Row",
         "children": [
           {
-            "company": "Sub Company"
+            "name": "Sub Row"
           }
         ]
       },
       {
-        "company": "Sub Company"
+        "name": "Sub Row"
       }
     ]
   },
   {
-    "company": "Tres-Zap",
-    "ranking": "1.65",
+    "id": 3,
+    "status": 0,
+    "date": "2016-10-24T00:00:00.000Z",
+    "name": "Tres-Zap",
+    "version": "1.65",
     "website": "printfriendly.com",
-    "contact": {
+    "author": {
       "name": "Kippy Leipold",
-      "email": "kleipold2@slashdot.org"
+      "contact": "kleipold2@slashdot.org"
     },
     "children": [
       {
-        "company": "Sub Company"
+        "name": "Sub Row"
       },
       {
-        "company": "Sub Company"
+        "name": "Sub Row"
       }
     ]
   },
   {
-    "company": "Zathin",
-    "ranking": "1.48",
+    "id": 4,
+    "status": 1,
+    "date": "2016-10-24T00:00:00.000Z",
+    "name": "Zathin",
+    "version": "1.4.8",
     "website": "nbcnews.com",
-    "contact": {
+    "author": {
       "name": "Kendell Spencock",
-      "email": "kspencock3@ibm.com"
+      "contact": "kspencock3@ibm.com"
     }
   },
   {
-    "company": "Bamity",
-    "ranking": "1.34",
+    "id": 5,
+    "status": 1,
+    "date": "2016-10-24T00:00:00.000Z",
+    "name": "Bamity",
+    "version": "1.3.4",
     "website": "howstuffworks.com",
-    "contact": {
+    "author": {
       "name": "Pat Bengoechea",
-      "email": "pbengoechea4@bravesites.com"
+      "contact": "pbengoechea4@bravesites.com"
     }
   }
 ]

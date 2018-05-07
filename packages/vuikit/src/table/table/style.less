@@ -1,0 +1,9 @@
+// VkTable
+// ========================================================================
+
+// https://github.com/uikit/uikit/issues/3351
+// when a table is striped the uk-active row gets ignored
+// a simple temporal fix is to use !important
+.hook-table-row-active() {
+  background: @table-row-active-background !important;
+}
