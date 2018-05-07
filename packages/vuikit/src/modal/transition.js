@@ -1,11 +1,10 @@
-import { once, on } from '@vuikit/utils/event'
+import { once } from '@vuikit/utils/event'
 import { addClass, removeClass } from '@vuikit/utils/class'
-import { SHOWN, HIDDEN, TOGGLE, KEYUP } from './constants'
+
+import { SHOW, SHOWN, HIDE, HIDDEN } from './constants'
+import { setAsActive, setAsInactive, active, activeCount } from './active'
 
 const doc = typeof document !== 'undefined' && document.documentElement
-
-export let active
-export let activeModals
 
 export default {
   functional: true,
@@ -18,13 +17,14 @@ export default {
       },
       on: {
         beforeEnter () {
+          modal.$emit(SHOW)
           addClass(doc, 'uk-modal-page')
         },
         enter (el, done) {
           const prev = active !== modal && active
 
-          // if active modal exist, first close it
-          if (prev && !modal.stack) {
+          // close any active modal first
+          if (prev) {
             prev.hide()
 
             // once prev modal is closed open the current one
@@ -37,26 +37,21 @@ export default {
           setTimeout(() => doEnter(el, done), 0)
         },
         afterEnter (el) {
-          activeModals++
-          active = modal
-
-          active.$emit(SHOWN)
+          setAsActive(modal)
+          modal.$emit(SHOWN)
         },
         beforeLeave (el) {
+          modal.$emit(HIDE)
           removeClass(el, 'uk-open')
         },
         leave (el, done) {
           once(el, 'transitionend', done, false, e => e.target === el)
         },
         afterLeave (el) {
-          activeModals--
+          setAsInactive(modal)
 
-          if (!activeModals) {
+          if (!activeCount) {
             removeClass(doc, 'uk-modal-page')
-          }
-
-          if (active === modal) {
-            active = null
           }
 
           modal.$emit(HIDDEN)
@@ -69,6 +64,7 @@ export default {
       // could be scoped to the app dom
       // re-append every time entering so it appears on top
       modal.$root.$el.appendChild(el)
+
       // redraw workaround, necessary so the browser
       // doesn't try to apply it all in one step, not
       // giving enough time for the transition to init
@@ -81,19 +77,3 @@ export default {
     return h('transition', def, children)
   }
 }
-
-on(doc, 'click', e => {
-  if (!active) {
-    return
-  }
-
-  const clickedOut = e.target === active.$el
-
-  if (clickedOut && !active.stuck) {
-    active.$emit(TOGGLE, false)
-  }
-})
-
-on(doc, 'keyup', e => {
-  active && active.$emit(KEYUP, e)
-})

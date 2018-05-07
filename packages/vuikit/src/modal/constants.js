@@ -1,4 +1,5 @@
+export const SHOW = 'show'
 export const SHOWN = 'shown'
+export const HIDE = 'hide'
 export const HIDDEN = 'hidden'
-export const TOGGLE = 'update:show'
-export const KEYUP = 'keyup'
+export const CLOSE_KEY = 27 // ESC

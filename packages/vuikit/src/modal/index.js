@@ -1,5 +1,5 @@
 import * as constants from './constants'
-import { active } from './transition'
+import { active } from './active'
 
 export { constants, active }
 export * from './elements'

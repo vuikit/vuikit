@@ -3,11 +3,13 @@
 
     <h1>Modal Full</h1>
 
+    <vk-button @click="full = true">Full</vk-button>
+    <vk-button @click="fullSplit = true">Full Split</vk-button>
+
     <vk-modal-full
       :show.sync="full"
-      @keyup.esc="full = false"
     >
-      <vk-modal-full-close large></vk-modal-full-close>
+      <vk-modal-close large @click="full = false"/>
       <div class="uk-width-xxlarge uk-padding-large">
         <h1>Headline</h1>
         <p>{{ lorem }}</p>
@@ -16,9 +18,8 @@
 
     <vk-modal-full
       :show.sync="fullSplit"
-      @keyup.esc="fullSplit = false"
     >
-      <vk-modal-full-close></vk-modal-full-close>
+      <vk-modal-close large @click="fullSplit = false"/>
       <vk-grid class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle">
         <div class="uk-background-cover" style="background-image: url('/photo.jpg');" v-vk-height-viewport></div>
         <div class="uk-padding-large">

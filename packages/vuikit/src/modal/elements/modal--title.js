@@ -2,6 +2,7 @@ import { mergeData } from '@vuikit/utils/vue'
 
 export default {
   functional: true,
+  name: 'ElModalTitle',
   props: {
     tag: {
       type: String,

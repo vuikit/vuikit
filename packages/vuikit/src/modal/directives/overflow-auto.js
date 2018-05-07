@@ -1,39 +1,41 @@
+import { $ } from '@vuikit/utils/core'
 import { on } from '@vuikit/utils/event'
 import { css } from '@vuikit/utils/style'
 import { height } from '@vuikit/utils/dimensions'
-import { closest } from '@vuikit/utils/selector'
 import { addClass } from '@vuikit/utils/class'
 
 export default {
-  bind (el, binding) {
-    el.vkModalOverflowAutoOff = on(window, 'resize', () => update(el, binding))
-    addClass(el, 'uk-overflow-auto')
+  bind (el, binding, vnode) {
+    el.vkModalOverflowAutoOff = on(window, 'resize', () =>
+      update(el, binding, vnode)
+    )
   },
-  inserted (el, binding, vnode) {
-    vnode.context.$nextTick(() => update(el, binding))
-  },
-  componentUpdated (el, binding) {
-    update(el, binding)
+  componentUpdated (el, binding, vnode) {
+    vnode.context.$nextTick(() =>
+      update(el, binding, vnode)
+    )
   },
   unbind (el) {
     el.vkModalOverflowAutoOff()
   }
 }
 
-function update (el, binding) {
-  const modal = closest(el, '.uk-modal')
-  const panel = closest(el, '.uk-modal-dialog')
+function update (modal, binding, vnode) {
+  const dialog = $('.uk-modal-dialog', modal)
+  const body = $('.uk-modal-body', modal)
 
-  if (!panel || !modal) {
+  addClass(body, 'uk-overflow-auto')
+
+  if (!dialog || !modal) {
     return
   }
 
-  const current = css(el, 'maxHeight')
+  const current = css(body, 'maxHeight')
 
-  css(el, 'maxHeight', 150)
-  css(el, 'maxHeight', Math.max(150, 150 + height(modal) - panel.offsetHeight))
+  css(body, 'maxHeight', 150)
+  css(body, 'maxHeight', Math.max(150, 150 + height(modal) - dialog.offsetHeight))
 
-  if (current !== css(el, 'maxHeight')) {
-    update(el, binding)
+  if (current !== css(body, 'maxHeight')) {
+    update(modal, binding, vnode)
   }
 }

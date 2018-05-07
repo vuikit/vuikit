@@ -4,24 +4,19 @@ import { mergeData } from '@vuikit/utils/vue'
 
 export default {
   functional: true,
+  name: 'ElModalClose',
   props: {
     large: {
-      type: Boolean,
-      default: false
-    },
-    outside: {
       type: Boolean,
       default: false
     }
   },
   render (h, { data, props }) {
-    const { large, outside } = props
+    const { large } = props
 
     const def = {
-      class: ['uk-close uk-icon', {
-        'uk-close-large': large,
-        [`uk-modal-close-outside`]: outside,
-        [`uk-modal-close-default`]: !outside
+      class: [`uk-close uk-icon`, {
+        'uk-close-large': large
       }],
       attrs: {
         type: 'button'
@@ -29,7 +24,10 @@ export default {
     }
 
     return h('button', mergeData(data, def), [
-      h(large ? IconCloseLarge : IconClose)
+      h(large
+        ? IconCloseLarge
+        : IconClose
+      )
     ])
   }
 }

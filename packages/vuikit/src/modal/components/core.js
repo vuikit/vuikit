@@ -1,9 +1,9 @@
+import { on } from '@vuikit/utils/event'
 import { removeClass } from '@vuikit/utils/class'
-import { activeModals } from '../transition'
+import { activeCount } from '../active'
 import EventsMixin from '@vuikit/core/mixins/events'
 
-import { TOGGLE } from '../constants'
-
+import { SHOW, HIDE, CLOSE_KEY } from '../constants'
 const doc = typeof document !== 'undefined' && document.documentElement
 
 export default {
@@ -16,8 +16,31 @@ export default {
   },
   methods: {
     hide () {
-      this.$emit(TOGGLE, false)
+      this.$emit('update:show', false)
     }
+  },
+  created () {
+    let keyCloseOff
+    let bgCloseOff
+
+    this.$on(SHOW, () => {
+      if (this.persistent) {
+        return
+      }
+
+      keyCloseOff = on(doc, 'keyup', e => {
+        e.keyCode === CLOSE_KEY && this.hide()
+      })
+
+      bgCloseOff = on(doc, 'click', e => {
+        const clickedBg = e.target === this.$el
+        clickedBg && this.hide()
+      })
+    })
+    this.$on(HIDE, () => {
+      keyCloseOff()
+      bgCloseOff()
+    })
   },
   beforeDestroy () {
     // if a modal is destroyed before being closed
@@ -25,7 +48,7 @@ export default {
       this.$el.parentNode.removeChild(this.$el)
     }
 
-    if (!activeModals) {
+    if (!activeCount) {
       removeClass(doc, 'uk-modal-page')
     }
   }
