@@ -1,4 +1,4 @@
-import { get } from '@vuikit/utils/misc'
+import { get } from '@vuikit/core/utils/misc'
 
 export function getCellScope ({ data, props, parent }) {
   const { $row } = data

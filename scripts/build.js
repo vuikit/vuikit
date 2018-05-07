@@ -5,7 +5,6 @@ run(async () => {
 
   // build
   await task('Build core', () => exec('yarn build', { cwd: 'packages/vuikit-core' }))
-  await task('Build utils', () => exec('yarn build', { cwd: 'packages/vuikit-utils' }))
   await task('Build Vuikit', () => exec('yarn build', { cwd: 'packages/vuikit' }))
   await task('Build Icons', () => exec('yarn build', { cwd: 'packages/vuikit-icons' }))
   await task('Build Theme', () => exec('yarn build', { cwd: 'packages/vuikit-theme' }))

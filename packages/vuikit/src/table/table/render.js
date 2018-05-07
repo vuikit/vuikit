@@ -1,5 +1,5 @@
-import { warn } from '@vuikit/utils/debug'
-import { isFunction } from '@vuikit/utils/lang'
+import { warn } from '@vuikit/core/utils/debug'
+import { isFunction } from '@vuikit/core/utils/lang'
 
 import { ElTable, ElTableTr } from '../elements'
 import { ON_CLICK_ROW, ROW_CLICK_PREVENTED } from '../constants'

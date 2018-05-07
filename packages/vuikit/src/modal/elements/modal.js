@@ -1,5 +1,5 @@
 import ElModalDialog from './modal--dialog'
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

@@ -1,8 +1,8 @@
-import { css } from '@vuikit/utils/style'
-import { toFloat } from '@vuikit/utils/lang'
-import { Transition } from '@vuikit/utils/animation'
+import { css } from '@vuikit/core/utils/style'
+import { toFloat } from '@vuikit/core/utils/lang'
+import { Transition } from '@vuikit/core/utils/animation'
 
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

@@ -1,5 +1,5 @@
-import { isString } from '@vuikit/utils/lang'
-import { Animation } from '@vuikit/utils/animation'
+import { isString } from '@vuikit/core/src/utils/lang'
+import { Animation } from '@vuikit/core/src/utils/animation'
 
 export default {
   name: 'VkTransition',

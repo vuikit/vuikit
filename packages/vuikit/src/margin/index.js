@@ -1,9 +1,9 @@
-import { on } from '@vuikit/utils/event'
-import { warn } from '@vuikit/utils/debug'
-import { isRtl } from '@vuikit/utils/env'
-import { isVisible } from '@vuikit/utils/filter'
-import { toggleClass } from '@vuikit/utils/class'
-import { isObject, noop, assign } from '@vuikit/utils/lang'
+import { on } from '@vuikit/core/utils/event'
+import { warn } from '@vuikit/core/utils/debug'
+import { isRtl } from '@vuikit/core/utils/env'
+import { isVisible } from '@vuikit/core/utils/filter'
+import { toggleClass } from '@vuikit/core/utils/class'
+import { isObject, noop, assign } from '@vuikit/core/utils/lang'
 
 const NAMESPACE = '__vkMargin'
 

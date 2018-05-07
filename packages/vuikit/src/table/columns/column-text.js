@@ -1,6 +1,6 @@
 import Column from './column'
 import { ElTableTd } from '../elements'
-import { assign } from '@vuikit/utils/lang'
+import { assign } from '@vuikit/core/utils/lang'
 
 export default {
   functional: true,

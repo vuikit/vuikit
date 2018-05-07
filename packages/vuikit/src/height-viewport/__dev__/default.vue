@@ -124,7 +124,7 @@
 </template>
 
 <script>
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   components: {

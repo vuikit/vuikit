@@ -1,5 +1,5 @@
-import { warn } from '@vuikit/utils/debug'
-import { query } from '@vuikit/utils/selector'
+import { warn } from '@vuikit/core/utils/debug'
+import { query } from '@vuikit/core/utils/selector'
 
 import { events } from './transitions/_common'
 import { ElOffcanvas, ElOffcanvasBar } from './elements'

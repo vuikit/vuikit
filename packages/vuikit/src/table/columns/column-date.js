@@ -1,5 +1,5 @@
 import formatDate from 'date-fns/format'
-import { assign } from '@vuikit/utils/lang'
+import { assign } from '@vuikit/core/utils/lang'
 
 import Column from './column'
 import { ElTableTd } from '../elements'

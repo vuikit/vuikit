@@ -1,4 +1,4 @@
-import { on, off } from '@vuikit/utils/event'
+import { on, off } from '@vuikit/core/src/utils/event'
 
 // A mixin that maps on/off events methods saving the
 // off reference for a cleanup on destroy

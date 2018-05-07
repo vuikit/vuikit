@@ -1,5 +1,5 @@
-import { toggleClass } from '@vuikit/utils/class'
-import { assign } from '@vuikit/utils/lang'
+import { toggleClass } from '@vuikit/core/utils/class'
+import { assign } from '@vuikit/core/utils/lang'
 
 import { ElGrid } from './elements'
 import VkMargin from 'vuikit/src/margin'

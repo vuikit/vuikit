@@ -1,6 +1,6 @@
-import { width } from '@vuikit/utils/dimensions'
-import { findAll } from '@vuikit/utils/selector'
-import { debounce } from '@vuikit/utils/misc'
+import { width } from '@vuikit/core/utils/dimensions'
+import { findAll } from '@vuikit/core/utils/selector'
+import { debounce } from '@vuikit/core/utils/misc'
 
 export default {
   props: {

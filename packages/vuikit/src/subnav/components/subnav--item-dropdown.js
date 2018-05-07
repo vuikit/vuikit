@@ -1,5 +1,5 @@
 import IconTriangeDown from '@vuikit/icons/triangle-down'
-import { assign } from '@vuikit/utils/lang'
+import { assign } from '@vuikit/core/utils/lang'
 
 import { Dropdown } from 'vuikit/src/dropdown'
 import { ElSubnavItemDropdown } from '../elements'

@@ -1,4 +1,4 @@
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 import { props, def } from './_common.js'
 
 export default {

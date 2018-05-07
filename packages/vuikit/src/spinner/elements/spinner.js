@@ -1,5 +1,5 @@
 import Icon from './spinner--icon'
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

@@ -1,7 +1,7 @@
-import { get } from '@vuikit/utils/misc'
-import { warn } from '@vuikit/utils/debug'
-import { assign } from '@vuikit/utils/lang'
-import { mergeData } from '@vuikit/utils/vue'
+import { get } from '@vuikit/core/utils/misc'
+import { warn } from '@vuikit/core/utils/debug'
+import { assign } from '@vuikit/core/utils/lang'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 import Column from './column'
 import { ElTableThSort } from '../elements'

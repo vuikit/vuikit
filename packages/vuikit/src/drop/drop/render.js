@@ -2,9 +2,9 @@ import { ElDrop } from '../elements'
 import { Transition } from '@vuikit/core/components/transition'
 import { BEFORE_POSITION } from '@vuikit/core/directives/position'
 
-import { css } from '@vuikit/utils/style'
-import { offset as getOffset } from '@vuikit/utils/dimensions'
-import { addClass, removeClass } from '@vuikit/utils/class'
+import { css } from '@vuikit/core/utils/style'
+import { offset as getOffset } from '@vuikit/core/utils/dimensions'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
 
 export default {
   mounted () {

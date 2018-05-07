@@ -1,4 +1,4 @@
-import { isRtl } from '@vuikit/utils/env'
+import { isRtl } from '@vuikit/core/utils/env'
 
 export default {
   target: {},

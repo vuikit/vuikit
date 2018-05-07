@@ -7,9 +7,9 @@ import {
   ElNotificationClose
 } from './elements'
 
-import { warn, tip } from '@vuikit/utils/debug'
-import { get } from '@vuikit/utils/misc'
-import { isObject, isString, assign } from '@vuikit/utils/lang'
+import { warn, tip } from '@vuikit/core/utils/debug'
+import { get } from '@vuikit/core/utils/misc'
+import { isObject, isString, assign } from '@vuikit/core/utils/lang'
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 

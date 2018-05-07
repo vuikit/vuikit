@@ -1,6 +1,6 @@
 import ElTh from './table-th'
-import { assign } from '@vuikit/utils/lang'
-import { mergeData } from '@vuikit/utils/vue'
+import { assign } from '@vuikit/core/utils/lang'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

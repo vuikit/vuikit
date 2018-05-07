@@ -1,4 +1,4 @@
-import { assign } from '@vuikit/utils/lang'
+import { assign } from '@vuikit/core/utils/lang'
 
 import EventsMixin from '@vuikit/core/mixins/events'
 import { Transition } from '@vuikit/core/components/transition'

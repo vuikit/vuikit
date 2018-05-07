@@ -1,9 +1,9 @@
-import { on } from '@vuikit/utils/event'
-import { css } from '@vuikit/utils/style'
-import { warn } from '@vuikit/utils/debug'
-import { query } from '@vuikit/utils/selector'
-import { height, offset } from '@vuikit/utils/dimensions'
-import { isObject, isNumeric, isString, toFloat, assign, endsWith } from '@vuikit/utils/lang'
+import { on } from '@vuikit/core/utils/event'
+import { css } from '@vuikit/core/utils/style'
+import { warn } from '@vuikit/core/utils/debug'
+import { query } from '@vuikit/core/utils/selector'
+import { height, offset } from '@vuikit/core/utils/dimensions'
+import { isObject, isNumeric, isString, toFloat, assign, endsWith } from '@vuikit/core/utils/lang'
 
 const NAMESPACE = '__vkHeightViewport'
 

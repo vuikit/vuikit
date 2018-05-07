@@ -1,11 +1,11 @@
 import { Grid } from 'vuikit/src/grid'
 import { Drop, constants } from 'vuikit/src/drop'
 
-import { get } from '@vuikit/utils/misc'
-import { query } from '@vuikit/utils/selector'
-import { assign } from '@vuikit/utils/lang'
-import { isTouch } from '@vuikit/utils/touch'
-import { isRtl, pointerEnter, pointerLeave, hasTouch } from '@vuikit/utils/env'
+import { get } from '@vuikit/core/utils/misc'
+import { query } from '@vuikit/core/utils/selector'
+import { assign } from '@vuikit/core/utils/lang'
+import { isTouch } from '@vuikit/core/utils/touch'
+import { isRtl, pointerEnter, pointerLeave, hasTouch } from '@vuikit/core/utils/env'
 
 const { SHOW } = constants
 

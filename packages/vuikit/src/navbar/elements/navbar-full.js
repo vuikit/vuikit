@@ -1,4 +1,4 @@
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 import { renderSlots } from './_common'
 
 export default {

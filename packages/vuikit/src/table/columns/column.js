@@ -1,6 +1,6 @@
-import { get } from '@vuikit/utils/misc'
-import { mergeData } from '@vuikit/utils/vue'
-import { assign, isUndefined } from '@vuikit/utils/lang'
+import { get } from '@vuikit/core/utils/misc'
+import { mergeData } from '@vuikit/core/utils/vue'
+import { assign, isUndefined } from '@vuikit/core/utils/lang'
 import { getCellScope, getCellSlots } from './util'
 
 import { ElTableTd, ElTableTh } from '../elements'

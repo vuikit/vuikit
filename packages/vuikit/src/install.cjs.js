@@ -1,4 +1,4 @@
-import { each } from '@vuikit/utils/lang'
+import { each } from '@vuikit/core/utils/lang'
 import * as components from './components.js'
 import * as directives from './directives.js'
 

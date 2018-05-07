@@ -1,5 +1,5 @@
 import ElSkeleton from './skeleton'
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

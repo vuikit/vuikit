@@ -1,6 +1,6 @@
 import IconMore from '@vuikit/icons/more'
 import IconTriangeDown from '@vuikit/icons/triangle-down'
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 import { ElIcon } from 'vuikit/src/icon'
 

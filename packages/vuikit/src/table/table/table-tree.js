@@ -1,4 +1,4 @@
-import { assign } from '@vuikit/utils/lang'
+import { assign } from '@vuikit/core/utils/lang'
 
 import Table from './table'
 import Render from './render'

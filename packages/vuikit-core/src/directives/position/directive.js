@@ -1,9 +1,9 @@
-import { css } from '@vuikit/utils/style'
-import { warn } from '@vuikit/utils/debug'
-import { toggleClass } from '@vuikit/utils/class'
-import { trigger } from '@vuikit/utils/event'
-import { positionAt, flipPosition } from '@vuikit/utils/dimensions'
-import { assign, isObject, isUndefined } from '@vuikit/utils/lang'
+import { css } from '@vuikit/core/src/utils/style'
+import { warn } from '@vuikit/core/src/utils/debug'
+import { toggleClass } from '@vuikit/core/src/utils/class'
+import { trigger } from '@vuikit/core/src/utils/event'
+import { positionAt, flipPosition } from '@vuikit/core/src/utils/dimensions'
+import { assign, isObject, isUndefined } from '@vuikit/core/src/utils/lang'
 import { BEFORE_POSITION, AFTER_POSITION } from './constants'
 
 export default {

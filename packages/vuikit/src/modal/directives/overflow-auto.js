@@ -1,8 +1,8 @@
-import { $ } from '@vuikit/utils/core'
-import { on } from '@vuikit/utils/event'
-import { css } from '@vuikit/utils/style'
-import { height } from '@vuikit/utils/dimensions'
-import { addClass } from '@vuikit/utils/class'
+import { $ } from '@vuikit/core/utils/core'
+import { on } from '@vuikit/core/utils/event'
+import { css } from '@vuikit/core/utils/style'
+import { height } from '@vuikit/core/utils/dimensions'
+import { addClass } from '@vuikit/core/utils/class'
 
 export default {
   bind (el, binding, vnode) {

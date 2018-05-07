@@ -1,6 +1,6 @@
 import IconClose from '@vuikit/core/assets/icon-close'
 import IconCloseLarge from '@vuikit/core/assets/icon-close-large'
-import { mergeData } from '@vuikit/utils/vue'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 export default {
   functional: true,

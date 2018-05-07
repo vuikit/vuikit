@@ -1,6 +1,6 @@
 import ElSkeleton from './skeleton'
-import { mergeData } from '@vuikit/utils/vue'
-import { assign } from '@vuikit/utils/lang'
+import { mergeData } from '@vuikit/core/utils/vue'
+import { assign } from '@vuikit/core/utils/lang'
 
 export default {
   functional: true,

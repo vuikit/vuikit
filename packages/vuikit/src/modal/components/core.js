@@ -1,5 +1,5 @@
-import { on } from '@vuikit/utils/event'
-import { removeClass } from '@vuikit/utils/class'
+import { on } from '@vuikit/core/utils/event'
+import { removeClass } from '@vuikit/core/utils/class'
 import { activeCount } from '../active'
 import EventsMixin from '@vuikit/core/mixins/events'
 

@@ -1,5 +1,5 @@
-import { get } from '@vuikit/utils/misc'
-import { warn } from '@vuikit/utils/debug'
+import { get } from '@vuikit/core/utils/misc'
+import { warn } from '@vuikit/core/utils/debug'
 import { TAB_ID } from '../constants'
 
 /* This component supports both local as synced

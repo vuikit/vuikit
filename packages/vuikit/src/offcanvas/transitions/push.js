@@ -1,8 +1,8 @@
-import { css } from '@vuikit/utils/style'
-import { once } from '@vuikit/utils/event'
-import { height } from '@vuikit/utils/dimensions'
-import { addClass, removeClass } from '@vuikit/utils/class'
-import { mergeData } from '@vuikit/utils/vue'
+import { css } from '@vuikit/core/utils/style'
+import { once } from '@vuikit/core/utils/event'
+import { height } from '@vuikit/core/utils/dimensions'
+import { addClass, removeClass } from '@vuikit/core/utils/class'
+import { mergeData } from '@vuikit/core/utils/vue'
 
 import { events, scrollbarWidth, doc } from './_common'
 

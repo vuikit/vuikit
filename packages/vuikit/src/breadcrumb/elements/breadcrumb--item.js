@@ -1,5 +1,5 @@
-import { mergeData } from '@vuikit/utils/vue'
-import { isUndefined } from '@vuikit/utils/lang'
+import { mergeData } from '@vuikit/core/utils/vue'
+import { isUndefined } from '@vuikit/core/utils/lang'
 
 export default {
   functional: true,
