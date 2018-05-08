@@ -38,7 +38,7 @@ Until a v1.0.0 is reached, breaking changes will be released with a new minor ve
 
 A special thanks goes to:
 
- - [ZOOlanders](http://zoolanders.com/) for sponsoring Vuikit.
+ - [ZOOlanders](https://zoolanders.com/) for sponsoring Vuikit.
  - [YOOtheme](https://yootheme.com/) for creating and open sourcing UIkit.
 
 ## License
