@@ -5,7 +5,7 @@
 
     <vk-table :data="data">
       <vk-table-column title="name" cell="name"/>
-      <vk-table-column title="Website" cell="website" />
+      <vk-table-column title="Website" :cell="row => row.website"/>
     </vk-table>
 
     <h2>Selectable</h2>
