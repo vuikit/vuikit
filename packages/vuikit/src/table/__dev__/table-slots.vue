@@ -6,16 +6,16 @@
     <vk-table
       :data="data"
     >
-      <vk-table-column title="Slot">
+      <vk-table-column head="Slot">
         <div>Static</div>
       </vk-table-column>
-      <vk-table-column title="Slot with Scope" cell="website">
+      <vk-table-column head="Slot with Scope" cell="website">
         <div slot-scope="{ cell, row }">
           {{ row.name }},
           <a :href="`http://${ cell }`">{{ cell }}</a>
         </div>
       </vk-table-column>
-      <vk-table-column title="Empty Slot" cell="_">
+      <vk-table-column head="Empty Slot" cell="_">
         <div>
           Is NOT empty
         </div>
@@ -23,7 +23,7 @@
           Is empty
         </div>
       </vk-table-column>
-      <vk-table-column title="Empty Slot with Scope" cell="_">
+      <vk-table-column head="Empty Slot with Scope" cell="_">
         <div slot="empty" slot-scope="{ row }">
           {{ row.name }} cell is Empty
         </div>

@@ -9,7 +9,7 @@
       narrowed
       :data="data"
     >
-      <vk-table-column title="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
     <h2>Enlarged</h2>
@@ -18,22 +18,22 @@
       enlarged
       :data="data"
     >
-      <vk-table-column title="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
     <h2>Columns Size</h2>
 
     <vk-table :data="data">
-      <vk-table-column title="Shrinked" cell="name" size="shrinked"/>
-      <vk-table-column title="Expanded" cell="name" size="expanded"/>
-      <vk-table-column title="Shrinked" cell="name" size="shrinked"/>
+      <vk-table-column head="Shrinked" cell="name" size="shrinked"/>
+      <vk-table-column head="Expanded" cell="name" size="expanded"/>
+      <vk-table-column head="Shrinked" cell="name" size="shrinked"/>
     </vk-table>
 
     <vk-table :data="data">
-      <vk-table-column title="Small" cell="name" size="small"/>
-      <vk-table-column title="Medium" cell="name" size="medium"/>
-      <vk-table-column title="Large" cell="name" size="large"/>
-      <vk-table-column-text title="Text" cell="name"/>
+      <vk-table-column head="Small" cell="name" size="small"/>
+      <vk-table-column head="Medium" cell="name" size="medium"/>
+      <vk-table-column head="Large" cell="name" size="large"/>
+      <vk-table-column-text head="Text" cell="name"/>
     </vk-table>
 
   </div>

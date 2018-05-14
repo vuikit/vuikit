@@ -9,8 +9,8 @@
       :expanded-rows.sync="expanded"
       :selected-rows.sync="selected"
     >
-      <vk-table-column-tree title="Tree" cell="name"/>
-      <vk-table-column title="id" cell="__vkTable_rowId"/>
+      <vk-table-column-tree head="Tree" cell="name"/>
+      <vk-table-column head="id" cell="__vkTable_rowId"/>
     </vk-table-tree>
 
     <h2>Variations</h2>

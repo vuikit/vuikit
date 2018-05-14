@@ -8,11 +8,11 @@
       :sortedBy.sync="sortedBy"
     >
       <vk-table-column-toggle
-        title="Toggle"
+        head="Toggle"
         cell="status"
       ></vk-table-column-toggle>
       <vk-table-column-toggle-sort
-        title="Toggle"
+        head="Toggle"
         cell="status"
       ></vk-table-column-toggle-sort>
       <vk-table-column size="expanded"/>

@@ -4,8 +4,8 @@
     <h1>Table</h1>
 
     <vk-table :data="data">
-      <vk-table-column title="name" cell="name"/>
-      <vk-table-column title="Website" :cell="row => row.website"/>
+      <vk-table-column head="name" cell="name"/>
+      <vk-table-column head="Website" :cell="row => row.website"/>
     </vk-table>
 
     <h2>Selectable</h2>
@@ -15,7 +15,7 @@
       :data="data"
       :selected-rows.sync="selection"
     >
-      <vk-table-column title="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
     <h2>Headless</h2>
@@ -32,7 +32,7 @@
         v-for="col in columns"
         :key="col"
         :cell="col"
-        :title="col"
+        :head="col"
       ></vk-table-column>
     </vk-table>
 
@@ -43,37 +43,37 @@
 
     <div class="uk-overflow-auto">
       <vk-table :data="[{}, {}, {}]">
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
-        <vk-table-column title="Table Heading">
+        <vk-table-column head="Table Heading">
           <span>Table Heading</span>
         </vk-table-column>
       </vk-table>

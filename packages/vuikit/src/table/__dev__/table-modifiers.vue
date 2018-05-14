@@ -11,7 +11,7 @@
       narrowed
       :data="data"
     >
-      <vk-table-column title="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
     <h2>Divided disabled</h2>
@@ -29,15 +29,15 @@
       :data="[{}, {}]"
       justified
     >
-      <vk-table-column class="uk-width-small" title="TABLE HEAD">
+      <vk-table-column class="uk-width-small" head="TABLE HEAD">
         <div>TABLE DATA</div>
       </vk-table-column>
-      <vk-table-column title="TABLE HEAD">
+      <vk-table-column head="TABLE HEAD">
         <div>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </div>
       </vk-table-column>
-      <vk-table-column title="TABLE HEAD">
+      <vk-table-column head="TABLE HEAD">
         <vk-button>BUTTON</vk-button>
       </vk-table-column>
     </vk-table>

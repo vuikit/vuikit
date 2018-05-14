@@ -8,11 +8,11 @@
       :sortedBy.sync="sortedBy"
     >
       <vk-table-column-text
-        title="Text"
+        head="Text"
         cell="name"
       ></vk-table-column-text>
       <vk-table-column-text-sort
-        title="Text"
+        head="Text"
         cell="name"
       ></vk-table-column-text-sort>
       <vk-table-column size="expanded"/>

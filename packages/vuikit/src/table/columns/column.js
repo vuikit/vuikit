@@ -8,8 +8,8 @@ export default {
   functional: true,
   name: 'VkTableColumn',
   props: assign({}, ElTableTh.props, ElTableTd.props, {
+    head: String,
     cell: [String, Function],
-    title: String,
     cellClass: String
   }),
   render (h, { data, props, slots }) {
@@ -21,7 +21,7 @@ export default {
   headRender (h, { data, props }) {
     return h(ElTableTh, mergeData({}, data, {
       props
-    }), props.title)
+    }), props.head)
   },
   cellRender (h, ctx) {
     const { props, data } = ctx

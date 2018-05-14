@@ -7,7 +7,7 @@
       :data="data"
       :sortedBy.sync="sortedBy"
     >
-      <vk-table-column-sort title="Name" cell="name"/>
+      <vk-table-column-sort head="Name" cell="name"/>
     </vk-table>
 
   </div>

@@ -9,7 +9,7 @@
       :selected-rows.sync="selection"
     >
       <vk-table-column-select/>
-      <vk-table-column title="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
   </div>

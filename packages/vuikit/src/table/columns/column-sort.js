@@ -11,8 +11,8 @@ export default {
   functional: true,
   name: 'VkTableColumnSort',
   props: assign({}, Column.props, ElTableThSort, {
-    // title and cell are required
-    title: {
+    // head and cell are required
+    head: {
       type: String,
       required: true
     },
@@ -24,7 +24,7 @@ export default {
   render: Column.render,
   cellRender: Column.cellRender,
   headRender (h, { data, props, children, parent }) {
-    const { title } = props
+    const { head } = props
 
     if (process.env.NODE_ENV !== 'production' && !parent.sortedBy) {
       warn(`vk-table-column-sort -> the table 'sortedBy' prop is required when using this column.`, parent)
@@ -40,7 +40,7 @@ export default {
           parent.$emit(UPDATE_SORTEDBY, sortedBy)
         }
       }
-    }), title || children)
+    }), head || children)
   }
 }
 

@@ -8,11 +8,11 @@
       :sortedBy.sync="sortedBy"
     >
       <vk-table-column-date
-        title="Date"
+        head="Date"
         cell="date"
       ></vk-table-column-date>
       <vk-table-column-date-sort
-        title="Date"
+        head="Date"
         cell="date"
       ></vk-table-column-date-sort>
       <vk-table-column size="expanded"/>
