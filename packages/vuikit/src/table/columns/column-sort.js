@@ -41,7 +41,8 @@ export default {
         }
       }
     }), head || children)
-  }
+  },
+  getNewSortOrder
 }
 
 function getNewSortOrder (currentSort, by, multi) {
