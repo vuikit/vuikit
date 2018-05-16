@@ -4,7 +4,6 @@ import { ElIcon } from 'vuikit/src/icon'
 export default {
   functional: true,
   props: {
-    icon: {},
     href: String,
     target: String,
     title: {
@@ -16,16 +15,17 @@ export default {
       default: false
     }
   },
-  render (h, { props, data }) {
-    const { active, icon, title, href, target } = props
+  render (h, { props, data, slots }) {
+    const _slots = slots()
+    const { active, title, href, target } = props
 
     let content = title
 
-    if (icon) {
+    if (_slots.icon) {
       content = [
         h(ElIcon, {
           class: 'uk-margin-small-right'
-        }, [ icon ]),
+        }, [ _slots.icon ]),
         h('span', {
           class: 'uk-text-middle'
         }, title)

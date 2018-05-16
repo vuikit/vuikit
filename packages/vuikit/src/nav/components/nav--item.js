@@ -12,8 +12,8 @@ export default {
     }
   }),
   render (h, { data, props }) {
-    props.icon = props.icon && h(`vk-icons-${props.icon}`)
-
-    return h(ElNavItem, mergeData(data, { props }))
+    return h(ElNavItem, mergeData(data, { props }), [
+      props.icon && h(`vk-icons-${props.icon}`, { slot: 'icon' })
+    ])
   }
 }
