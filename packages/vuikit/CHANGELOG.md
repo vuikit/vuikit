@@ -8,6 +8,10 @@
  - Added `vk-table-filter` and `vk-table-pagination`, `vk-table-column-date`, `vk-table-column-text` and `vk-table-column-toggle`.
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
+ - Refactored `vk-drop` and `vk-dropdown`.
+    - Added `vk-dropdown-nav`.
+    - Added `vk-subnav-item-dropdown-nav`.
+    - Removed `vk-nav-dropdown`.
 
 ## 0.8.4 (April 26, 2018)
 

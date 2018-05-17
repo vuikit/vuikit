@@ -1,4 +1,5 @@
 import { mergeData } from '@vuikit/core/utils/vue'
+import IconTriangeDown from '@vuikit/icons/triangle-down'
 
 export default {
   functional: true,
@@ -21,8 +22,14 @@ export default {
       }
     }), [
       disabled
-        ? h('span', title)
-        : children
+        ? [ h('span', title) ]
+        : [
+          h('a', { class: 'uk-icon' }, [
+            title + ' ',
+            h(IconTriangeDown)
+          ]),
+          children
+        ]
     ])
   }
 }

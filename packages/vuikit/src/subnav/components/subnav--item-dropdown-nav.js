@@ -1,12 +1,12 @@
 import { assign } from '@vuikit/core/utils/lang'
 
-import { Dropdown } from 'vuikit/src/dropdown'
+import { DropdownNav } from 'vuikit/src/dropdown'
 import { ElSubnavItemDropdown } from '../elements'
 
 export default {
   functional: true,
   name: 'VkSubnavItemDropdown',
-  props: assign({}, ElSubnavItemDropdown.props, Dropdown.props, {
+  props: assign({}, ElSubnavItemDropdown.props, DropdownNav.props, {
     mode: {
       type: String,
       default: 'click'
@@ -14,7 +14,7 @@ export default {
   }),
   render (h, { props, children }) {
     return h(ElSubnavItemDropdown, { props }, [
-      h(Dropdown, { props }, children)
+      h(DropdownNav, { props }, children)
     ])
   }
 }

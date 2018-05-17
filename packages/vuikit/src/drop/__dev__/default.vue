@@ -52,7 +52,7 @@
     </div>
 
     <div class="uk-inline">
-      <vk-button>Hover Only</vk-button>
+      <vk-button>Hover No Delay</vk-button>
       <vk-drop mode="hover" :delay-hide="0">
         <vk-card>
           <lorem-ipsum />

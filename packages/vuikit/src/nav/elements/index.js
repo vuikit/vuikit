@@ -1,5 +1,4 @@
 export { default as ElNav } from './nav'
-export { default as ElNavDropdown } from './nav-dropdown'
 
 export { default as ElNavItem } from './nav--item'
 export { default as ElNavItemDivider } from './nav--item-divider'

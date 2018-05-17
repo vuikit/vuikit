@@ -34,41 +34,29 @@
       </div>
       <div>
 
-        <h2>Dropdown</h2>
+        <h2>Dropdown / Dropdown Nav</h2>
 
         <vk-subnav pill v-vk-margin>
-          <vk-subnav-item-dropdown title="Click">
-            <vk-nav-dropdown>
-              <vk-nav-item href="#" title="Active" active></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-header title="Header"></vk-nav-item-header>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-divider></vk-nav-item-divider>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-            </vk-nav-dropdown>
-          </vk-subnav-item-dropdown>
           <vk-subnav-item-dropdown title="Hover" mode="hover">
-            <vk-nav-dropdown>
-              <vk-nav-item href="#" title="Active" active></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-header title="Header"></vk-nav-item-header>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-divider></vk-nav-item-divider>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-            </vk-nav-dropdown>
+            Content
           </vk-subnav-item-dropdown>
+          <vk-subnav-item-dropdown-nav title="Nav Click">
+            <vk-nav-item href="#" title="Active" active></vk-nav-item>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item-header title="Header"></vk-nav-item-header>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item-divider></vk-nav-item-divider>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+          </vk-subnav-item-dropdown-nav>
           <vk-subnav-item-dropdown title="Disabled" disabled>
-            <vk-nav-dropdown>
-              <vk-nav-item href="#" title="Active" active></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-header title="Header"></vk-nav-item-header>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-              <vk-nav-item-divider></vk-nav-item-divider>
-              <vk-nav-item href="#" title="Item"></vk-nav-item>
-            </vk-nav-dropdown>
+            <vk-nav-item href="#" title="Active" active></vk-nav-item>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item-header title="Header"></vk-nav-item-header>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
+            <vk-nav-item-divider></vk-nav-item-divider>
+            <vk-nav-item href="#" title="Item"></vk-nav-item>
           </vk-subnav-item-dropdown>
         </vk-subnav>
 

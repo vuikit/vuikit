@@ -12,7 +12,7 @@ export default {
     const { show } = props
 
     return h('div', mergeData(data, {
-      class: ['uk-drop', {
+      class: ['uk-dropdown', {
         'uk-open': show
       }],
       style: {

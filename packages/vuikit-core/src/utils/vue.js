@@ -2,23 +2,16 @@ import { get } from './misc'
 import { assign } from './lang'
 
 /*
- * Returns the closest parent of same type
+ * Returns a filtered array of all ascendents
  */
-export function findParent (instance) {
-  return findParents(instance).pop()
-}
-
-/*
- * Returns closest parents of same type
- */
-export function findParents (instance) {
+export function findParents (instance, filter) {
   const parents = []
-  const name = instance.$options.name
-
   let parent = instance.$parent
 
   while (parent) {
-    if (parent.$options.name === name) {
+    const itPassFilters = !filter || runFilter(parent, filter)
+
+    if (itPassFilters) {
       parents.unshift(parent)
     }
 
@@ -29,19 +22,26 @@ export function findParents (instance) {
 }
 
 /*
- * Returns all descendant childs of same type
+ * Returns a filtered array of all descendents
  */
-export function findChilds (instance) {
-  const name = instance.$options.name
+export function findChildren ($root, filter) {
+  let matched = []
 
-  let childs = instance.$children
-    .filter(child => child.$options.name === name)
+  $root.$children.forEach(child => {
+    const itPassFilters = !filter || runFilter(child, filter)
 
-  childs.forEach(child => {
-    childs = [...childs, ...findChilds(child)]
+    if (itPassFilters) {
+      matched.push(child)
+    }
+
+    matched = [...matched, ...findChildren(child, filter)]
   })
 
-  return childs
+  return matched
+}
+
+function runFilter (instance, filter) {
+  return Object.keys(filter).every(key => get(instance, key) === filter[key])
 }
 
 /*
