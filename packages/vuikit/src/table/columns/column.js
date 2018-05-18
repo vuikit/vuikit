@@ -13,8 +13,8 @@ export default {
     cellClass: String
   }),
   render (h, { data, props, slots }) {
-    // IMPORTANT: the render is not used for rendering, but is required by Vue.
-    // As a workaround we are rendering an empty element just to pick up data
+    // IMPORTANT: this render is not used directly,
+    // is a workaround to retrieve the slots and data
     data.slots = slots()
     return h('div', mergeData({}, data, { props }))
   },
@@ -24,10 +24,9 @@ export default {
     }), props.head)
   },
   cellRender (h, ctx) {
-    const { props, data } = ctx
-    const { $row } = data
+    const { props, row } = ctx
     const { cell, cellClass } = props
-    const cellValue = getCellValue($row, cell)
+    const cellValue = getCellValue(row, cell)
     const isEmpty = !isUndefined(cell) && isUndefined(cellValue)
 
     const scope = getCellScope(ctx)
@@ -49,32 +48,33 @@ export default {
   getCellSlots
 }
 
-function getCellValue ($row, cell) {
+function getCellValue (row, cell) {
   if (isFunction(cell)) {
-    return cell($row)
+    return cell(row)
   }
 
-  return get($row, cell)
+  return get(row, cell)
 }
 
-export function getCellScope ({ data, props, parent }) {
-  const { $row } = data
+export function getCellScope ({ data, props, parent, row }) {
   const { cell } = props
-  const cellValue = getCellValue($row, cell)
+  const cellValue = getCellValue(row, cell)
 
-  const isSelected = parent.isRowSelected($row)
+  const isSelected = parent.isRowSelected(row)
   const isAllSelected = parent.allRowsSelected
 
-  return { cell: cellValue, row: $row, isSelected, isAllSelected }
+  return { cell: cellValue, row: row, isSelected, isAllSelected }
 }
 
-export function getCellSlots ({ data }) {
-  const defaultSlot = get(data, 'slots.default')
-    ? () => get(data, 'slots.default')
+export function getCellSlots ({ slots, data }) {
+  const _slots = slots()
+
+  const defaultSlot = get(_slots, 'default')
+    ? () => get(_slots, 'default')
     : get(data, 'scopedSlots.default')
 
-  const emptySlot = get(data, 'slots.empty')
-    ? () => get(data, 'slots.empty')
+  const emptySlot = get(_slots, 'empty')
+    ? () => get(_slots, 'empty')
     : get(data, 'scopedSlots.empty')
 
   return {

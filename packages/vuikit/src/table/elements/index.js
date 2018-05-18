@@ -10,5 +10,4 @@ export { default as ElTableFilterIcon } from './table-filter-icon'
 
 export { default as ElTablePaginationOption } from './table-pagination-option'
 
-export { default as ElTableCellToggle } from './table-cell-toggle'
 export { default as ElTableCellCheckbox } from './table-cell-checkbox'

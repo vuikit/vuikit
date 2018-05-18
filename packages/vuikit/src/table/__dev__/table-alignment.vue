@@ -16,7 +16,7 @@
     <vk-table
       :data="[{}]"
     >
-      <vk-table-column size="small" head="Middle" align="middle">
+      <vk-table-column width="small" head="Middle" align-vertical="middle">
         <div>TABLE DATA</div>
       </vk-table-column>
       <vk-table-column head="TABLE HEAD">
@@ -25,7 +25,7 @@
         </div>
       </vk-table-column>
       <vk-table-column head="TABLE HEAD">
-        <vk-button size="small">BUTTON</vk-button>
+        <vk-button width="small">BUTTON</vk-button>
       </vk-table-column>
     </vk-table>
 
@@ -34,7 +34,7 @@
       :data="[{}]"
       middle-aligned
     >
-      <vk-table-column size="small" head="Middle">
+      <vk-table-column width="small" head="Middle">
         <div>TABLE DATA</div>
       </vk-table-column>
       <vk-table-column head="Middle">
@@ -43,7 +43,7 @@
         </div>
       </vk-table-column>
       <vk-table-column head="Middle">
-        <vk-button size="small">BUTTON</vk-button>
+        <vk-button width="small">BUTTON</vk-button>
       </vk-table-column>
     </vk-table>
 

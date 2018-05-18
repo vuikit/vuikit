@@ -6,43 +6,34 @@ export default {
     align: {
       type: String,
       default: 'left',
-      validator: val => /(left|right|center|middle)/.test(val)
+      validator: val => /(left|center|right)/.test(val)
     },
-    size: {
+    alignVertical: {
+      type: String,
+      default: '',
+      validator: val => !val || /(middle)/.test(val)
+    },
+    width: {
       type: String,
       default: '',
       validator: val => !val || /(shrinked|expanded|small|medium|large)/.test(val)
     },
-    width: {
-      type: String,
-      default: ''
-    },
     linked: {
-      type: Boolean,
-      default: false
-    },
-    truncated: {
-      type: Boolean,
-      default: false
-    },
-    unwrapped: {
       type: Boolean,
       default: false
     }
   },
   render (h, { data, props, children }) {
-    const { size, linked, truncated, unwrapped, align } = props
+    const { width, linked, align, alignVertical } = props
 
     return h('td', mergeData(data, {
       class: {
         'uk-table-link': linked,
-        'uk-table-middle': align === 'middle',
-        'uk-table-shrink': size === 'shrinked',
-        'uk-table-expand': size === 'expanded',
-        'uk-text-nowrap': unwrapped,
-        'uk-text-truncate': truncated,
+        'uk-table-shrink': width === 'shrinked',
+        'uk-table-expand': width === 'expanded',
+        'uk-table-middle': alignVertical === 'middle',
         [`uk-text-${align}`]: /(right|center)/.test(align),
-        [`uk-width-${size}`]: /(small|medium|large)/.test(size)
+        [`uk-width-${width}`]: /(small|medium|large)/.test(width)
       }
     }), children)
   }

@@ -37,9 +37,7 @@ export default {
       class: 'vk-table-column-select'
     }), [ content ])
   },
-  cellRender (h, { parent, data, props }) {
-    const { $row } = data
-
+  cellRender (h, { parent, data, props, row }) {
     return h(ElTableTd, {
       props,
       class: props.cellClass
@@ -49,10 +47,10 @@ export default {
       }, [
         h(ElTableCellCheckbox, {
           props: {
-            checked: parent.isRowSelected($row)
+            checked: parent.isRowSelected(row)
           },
           on: {
-            click: e => parent.toggleRowSelection($row)
+            click: e => parent.toggleRowSelection(row)
           }
         })
       ])

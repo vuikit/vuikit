@@ -22,7 +22,7 @@
 
     <vk-table :data="data" headless>
       <vk-table-column-select />
-      <vk-table-column cell="name" size="expanded" head="Name"/>
+      <vk-table-column cell="name" width="expanded" head="Name"/>
     </vk-table>
 
     <h2>Dynamic Columns</h2>

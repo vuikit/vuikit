@@ -6,24 +6,24 @@ export default {
     align: {
       type: String,
       default: 'left',
-      validator: val => /(left|right|center|middle)/.test(val)
+      validator: val => /(left|center|right)/.test(val)
     },
-    size: {
+    width: {
       type: String,
       default: '',
       validator: val => !val || /(shrinked|expanded|small|medium|large)/.test(val)
     }
   },
   render (h, { data, props, children }) {
-    const { size, align } = props
+    const { width, align } = props
 
     return h('th', mergeData(data, {
-      class: {
-        'uk-table-shrink': size === 'shrinked',
-        'uk-table-expand': size === 'expanded',
+      class: ['uk-text-nowrap', {
+        'uk-table-shrink': width === 'shrinked',
+        'uk-table-expand': width === 'expanded',
         [`uk-text-${align}`]: /(right|center)/.test(align),
-        [`uk-width-${size}`]: /(small|medium|large)/.test(size)
-      }
+        [`uk-width-${width}`]: /(small|medium|large)/.test(width)
+      }]
     }), children)
   }
 }

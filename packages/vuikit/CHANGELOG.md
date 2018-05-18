@@ -5,7 +5,7 @@
  - Fixed `vk-tooltip` unbind.
  - Fixed `vk-modal` display on appear.
  - Fixed `vk-modal-full` close button trigger listener.
- - Added `vk-table-filter` and `vk-table-pagination`, `vk-table-column-date`, `vk-table-column-text` and `vk-table-column-toggle`.
+ - Added `vk-table-filter` and `vk-table-pagination` components.
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
  - Refactored `vk-drop` and `vk-dropdown`.

@@ -1,7 +1,6 @@
 import { assign } from '@vuikit/core/utils/lang'
 
 import Table from './table'
-import Render from './render'
 import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from '../constants'
 
 export default {
@@ -77,15 +76,5 @@ export default {
 
       this.$emit(UPDATE_EXPANDEDROWS, expandedRows)
     }
-  },
-  render (h) {
-    const columns = (this.$slots.default || []).filter(n => n.tag)
-
-    return Render(h, {
-      columns,
-      table: this,
-      rows: this.rows,
-      props: this.$props
-    })
   }
 }
