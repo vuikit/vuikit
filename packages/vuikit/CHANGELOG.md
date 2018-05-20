@@ -2,6 +2,7 @@
 
 ## WIP
 
+ - Added `vk-form`.
  - Fixed `vk-tooltip` unbind.
  - Fixed `vk-modal` display on appear.
  - Fixed `vk-modal-full` close button trigger listener.
