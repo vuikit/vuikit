@@ -24,6 +24,7 @@
     "src"
   ],
   "scripts": {
+    "serve": "vue-cli-service serve",
     "dev": "start-storybook -s ./.storybook/static -p 6006",
     "build": "node -r @std/esm scripts/build.js",
     "postbuild": "node -r @std/esm scripts/copyright.js",
@@ -36,6 +37,8 @@
     "@miljan/build": "^0.4.2",
     "@std/esm": "^0.26.0",
     "@storybook/vue": "^3.3.15",
+    "@vue/cli-plugin-babel": "^3.0.0-beta.11",
+    "@vue/cli-service": "^3.0.0-beta.11",
     "@vue/test-utils": "^1.0.0-beta.12",
     "date-fns": "^1.29.0",
     "globby": "^8.0.1",
