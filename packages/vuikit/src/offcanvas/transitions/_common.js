@@ -34,6 +34,8 @@ export const events = {
     if ($props.overlay) {
       addClass(body, 'uk-offcanvas-overlay')
     }
+
+    height(el) // force reflow
   },
   afterEnter (el) {
     const { $refs, $props } = el.__vkOffcanvas

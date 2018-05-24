@@ -1,18 +1,22 @@
 # Changelog
 
-## WIP
+## NEXT
 
  - Added `vk-form`.
- - Fixed `vk-tooltip` unbind.
- - Fixed `vk-modal` display on appear.
- - Fixed `vk-modal-full` close button trigger listener.
  - Added `vk-table-filter` and `vk-table-pagination` components.
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
  - Refactored `vk-drop` and `vk-dropdown`.
-    - Added `vk-dropdown-nav`.
-    - Added `vk-subnav-item-dropdown-nav`.
-    - Removed `vk-nav-dropdown`.
+   - Added `vk-dropdown-nav`.
+   - Added `vk-subnav-item-dropdown-nav`.
+   - Removed `vk-nav-dropdown`.
+
+## WIP
+
+ - Fixed `vk-tooltip` unbind.
+ - Fixed `vk-modal` display on appear.
+ - Fixed `vk-modal-full` close button trigger listener.
+ - Fixed `vk-offcanvas` flipped display.
 
 ## 0.8.4 (April 26, 2018)
 
