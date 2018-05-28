@@ -67,7 +67,7 @@ export default {
         this.closeQueue = []
 
         queue.forEach(msg => {
-          const index = messages.findIndex(m => m === msg)
+          const index = messages.indexOf(messages.filter(m => m === msg)[0])
           messages.splice(index, 1)
         })
 
@@ -77,9 +77,9 @@ export default {
     removeDuplicates (values) {
       const messages = []
 
-      const isDuplicated = msg => messages.find(m => {
-        return this.getMessageId(m) === this.getMessageId(msg)
-      })
+      const isDuplicated = msg => messages.filter(m =>
+        this.getMessageId(m) === this.getMessageId(msg)
+      ).length
 
       for (let i = 0; i < values.length; i++) {
         if (isDuplicated(values[i])) {
@@ -96,7 +96,7 @@ export default {
       const validKeys = ['message', 'status', 'key', 'timeout']
 
       return Object.keys(msg)
-        .filter(k => validKeys.find(k => k))
+        .filter(k => validKeys.filter(k => k)[0])
         .map(k => msg[k])
         .join(':')
     }

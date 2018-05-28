@@ -61,8 +61,8 @@ export default {
   },
   methods: {
     isExpanded (row) {
-      return this.expandedRows
-        .find(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])) !== undefined
+      return Boolean(this.expandedRows
+        .filter(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])).length)
     },
     toggleExpand (row) {
       const id = row[ROW_ID]
