@@ -11,11 +11,77 @@ import replaceInFile from 'replace-in-file'
 import { run, remove, write, minifyJS } from '@miljan/build'
 
 run(async () => {
-  await remove('*.js')
-  await remove('dist')
+  await BuildCore()
+  await BuildLibrary()
+  await BuildDist()
+})
 
-  // compile lib
+async function BuildCore () {
+  let resources
+
+  await remove('core')
+
+  // COMPONENTS / DIRECTIVES
+  resources = await globby('src/_core/{components,directives}/*/index.js')
+  await Promise.all(resources.map(async input => {
+    const dirname = path.dirname(input).replace('src/', '')
+    const [, folder, name] = dirname.split('/')
+
+    return compile(input, `core/${folder}/${name}.js`, {
+      output: {
+        format: 'es'
+      },
+      external: id => /vuikit\/src\/_core\/utils/.test(id)
+    })
+  }))
+
+  // ASSETS / MIXINS
+  resources = await globby('src/_core/{assets,mixins}/*.js')
+  await Promise.all(resources.map(async input => {
+    const name = path.basename(input, '.js')
+    const folder = path.dirname(input).replace('src/_core/', '')
+
+    return compile(input, `core/${folder}/${name}.js`, {
+      output: {
+        format: 'es'
+      },
+      external: id => /vuikit\/src\/_core\/utils/.test(id)
+    })
+  }))
+
+  // UTILS
+  resources = await globby('src/_core/utils/*.js')
+  await Promise.all(resources.map(async input => {
+    const basename = path.basename(input)
+    return compile(input, `core/utils/${basename}`, {
+      output: {
+        format: 'es'
+      },
+      external (id) {
+        const isRelative = /\.\//
+        const isDateFns = /date-fns/
+
+        if (id === input || isDateFns.test(id)) {
+          return false
+        }
+
+        // consider all relative as external
+        return !isRelative.test(id)
+      }
+    })
+  }))
+
+  await replaceInFile({
+    files: 'core/**/*.js',
+    from: /vuikit\/src\/_core/g,
+    to: 'vuikit/core'
+  })
+}
+
+async function BuildLibrary () {
   let resources = await globby('src/*/index.js')
+
+  await remove('*.js')
 
   await Promise.all(resources.map(async input => {
     const basename = path.dirname(input).split('/').pop()
@@ -44,6 +110,10 @@ run(async () => {
     from: /vuikit\/src/g,
     to: 'vuikit'
   })
+}
+
+async function BuildDist () {
+  await remove('dist')
 
   // compile ES bundle
   await compile('src/install.esm.js', 'dist/vuikit.esm.js', {
@@ -86,8 +156,7 @@ run(async () => {
       }
     }
   })
-
-})
+}
 
 async function compile (input, dest, opts = {}, env) {
   const config = {

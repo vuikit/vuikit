@@ -1,4 +1,4 @@
-import { assign } from '@vuikit/core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/lang'
 
 import Table from './table'
 import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from '../constants'

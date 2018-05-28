@@ -1,6 +1,6 @@
 import IconClose from '@vuikit/icons/close'
 import IconSearch from '@vuikit/icons/search'
-import { mergeData } from '@vuikit/core/utils/vue'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,

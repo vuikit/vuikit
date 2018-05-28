@@ -1,6 +1,6 @@
 import core from './core'
 import Transition from '../transition'
-import { assign, each } from '@vuikit/core/utils/lang'
+import { assign, each } from 'vuikit/src/_core/utils/lang'
 import VkModalOverflowAuto from '../directives/overflow-auto'
 
 import {

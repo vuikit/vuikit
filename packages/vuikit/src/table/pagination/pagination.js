@@ -1,4 +1,4 @@
-import { extractProps } from '@vuikit/core/utils/vue'
+import { extractProps } from 'vuikit/src/_core/utils/vue'
 import { ElPagination, Pagination, PaginationPages } from 'vuikit/src/pagination'
 
 import PaginationState from './states/state'

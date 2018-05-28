@@ -1,4 +1,4 @@
-import { isNumber } from '@vuikit/core/utils/lang'
+import { isNumber } from 'vuikit/src/_core/utils/lang'
 import { ElPaginationPage } from '../elements'
 
 export default {

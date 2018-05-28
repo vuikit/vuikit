@@ -1,5 +1,5 @@
 import field from './_field'
-import { mergeData } from '@vuikit/core/utils/vue'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,

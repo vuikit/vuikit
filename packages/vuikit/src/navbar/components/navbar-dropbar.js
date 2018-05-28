@@ -1,9 +1,9 @@
-import { css } from '@vuikit/core/utils/style'
-import { get } from '@vuikit/core/utils/misc'
-import { height } from '@vuikit/core/utils/dimensions'
-import { Transition } from '@vuikit/core/utils/animation'
-import { noop, toFloat } from '@vuikit/core/utils/lang'
-import { isVisible, within } from '@vuikit/core/utils/filter'
+import { css } from 'vuikit/src/_core/utils/style'
+import { get } from 'vuikit/src/_core/utils/misc'
+import { height } from 'vuikit/src/_core/utils/dimensions'
+import { Transition } from 'vuikit/src/_core/utils/animation'
+import { noop, toFloat } from 'vuikit/src/_core/utils/lang'
+import { isVisible, within } from 'vuikit/src/_core/utils/filter'
 
 import { ElNavbarDropbar } from '../elements'
 

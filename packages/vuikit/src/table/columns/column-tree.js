@@ -1,5 +1,5 @@
-import { get } from '@vuikit/core/utils/misc'
-import { assign } from '@vuikit/core/utils/lang'
+import { get } from 'vuikit/src/_core/utils/misc'
+import { assign } from 'vuikit/src/_core/utils/lang'
 
 import Column from './column'
 import { ElTableTd } from '../elements'

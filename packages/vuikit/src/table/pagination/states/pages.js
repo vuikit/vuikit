@@ -1,4 +1,4 @@
-import { extractProps } from '@vuikit/core/utils/vue'
+import { extractProps } from 'vuikit/src/_core/utils/vue'
 import { Pagination, PaginationPages } from 'vuikit/src/library/pagination'
 
 export default {

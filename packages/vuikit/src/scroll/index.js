@@ -1,8 +1,8 @@
-import { $, $$ } from '@vuikit/core/utils/core'
-import { escape } from '@vuikit/core/utils/selector'
-import { on, trigger } from '@vuikit/core/utils/event'
-import { height, offset } from '@vuikit/core/utils/dimensions'
-import { clamp, isString, assign } from '@vuikit/core/utils/lang'
+import { $, $$ } from 'vuikit/src/_core/utils/core'
+import { escape } from 'vuikit/src/_core/utils/selector'
+import { on, trigger } from 'vuikit/src/_core/utils/event'
+import { height, offset } from 'vuikit/src/_core/utils/dimensions'
+import { clamp, isString, assign } from 'vuikit/src/_core/utils/lang'
 
 const NAMESPACE = '__vkScroll'
 

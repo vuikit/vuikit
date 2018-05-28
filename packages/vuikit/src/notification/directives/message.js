@@ -1,5 +1,5 @@
-import { on, trigger } from '@vuikit/core/utils/event'
-import { pointerEnter, pointerLeave } from '@vuikit/core/utils/env'
+import { on, trigger } from 'vuikit/src/_core/utils/event'
+import { pointerEnter, pointerLeave } from 'vuikit/src/_core/utils/env'
 
 const NAMESPACE = '__vkNotification'
 

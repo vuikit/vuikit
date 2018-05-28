@@ -1,10 +1,10 @@
 import { ElPagination } from '../elements'
-import Matrix from '@vuikit/core/utils/pagination-matrix'
+import Matrix from 'vuikit/src/_core/utils/pagination-matrix'
 import VkMargin from 'vuikit/src/margin'
 
-import { warn } from '@vuikit/core/utils/debug'
-import { assign } from '@vuikit/core/utils/lang'
-import { mergeData } from '@vuikit/core/utils/vue'
+import { warn } from 'vuikit/src/_core/utils/debug'
+import { assign } from 'vuikit/src/_core/utils/lang'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   name: 'Pagination',

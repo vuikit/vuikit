@@ -1,4 +1,4 @@
-import { mergeData } from '@vuikit/core/utils/vue'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { ElIcon } from 'vuikit/src/icon'
 import IconChevronDown from '@vuikit/icons/chevron-down'
 

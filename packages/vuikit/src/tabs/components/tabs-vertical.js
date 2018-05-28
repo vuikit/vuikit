@@ -1,6 +1,6 @@
 import core from './core'
-import { assign } from '@vuikit/core/utils/lang'
-import { Transition } from '@vuikit/core/components/transition'
+import { assign } from 'vuikit/src/_core/utils/lang'
+import { Transition } from 'vuikit/src/_core/components/transition'
 
 import { TAB_ID } from '../constants'
 import { ElTabsVertical } from '../elements'

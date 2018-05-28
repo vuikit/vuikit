@@ -1,16 +1,16 @@
 /* eslint-disable no-mixed-operators */
-import { $$ } from '@vuikit/core/utils/core'
-import { css } from '@vuikit/core/utils/style'
-import { data } from '@vuikit/core/utils/attr'
-import { warn } from '@vuikit/core/utils/debug'
-import { filter } from '@vuikit/core/utils/filter'
-import { trigger } from '@vuikit/core/utils/event'
-import { isInView } from '@vuikit/core/utils/dimensions'
-import { filterOutTextNodes } from '@vuikit/core/utils/vue'
-import { addClass, removeClass, toggleClass } from '@vuikit/core/utils/class'
+import { $$ } from 'vuikit/src/_core/utils/core'
+import { css } from 'vuikit/src/_core/utils/style'
+import { data } from 'vuikit/src/_core/utils/attr'
+import { warn } from 'vuikit/src/_core/utils/debug'
+import { filter } from 'vuikit/src/_core/utils/filter'
+import { trigger } from 'vuikit/src/_core/utils/event'
+import { isInView } from 'vuikit/src/_core/utils/dimensions'
+import { filterOutTextNodes } from 'vuikit/src/_core/utils/vue'
+import { addClass, removeClass, toggleClass } from 'vuikit/src/_core/utils/class'
 
-import MixinEvents from '@vuikit/core/mixins/events'
-import MixinFastdom from '@vuikit/core/mixins/fastdom'
+import MixinEvents from 'vuikit/src/_core/mixins/events'
+import MixinFastdom from 'vuikit/src/_core/mixins/fastdom'
 
 export default {
   name: 'VkScrollspy',

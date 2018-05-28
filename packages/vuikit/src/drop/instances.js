@@ -1,7 +1,7 @@
-import { on } from '@vuikit/core/utils/event'
-import { within } from '@vuikit/core/utils/filter'
-import { includes } from '@vuikit/core/utils/lang'
-import { findParents, findChildren } from '@vuikit/core/utils/vue'
+import { on } from 'vuikit/src/_core/utils/event'
+import { within } from 'vuikit/src/_core/utils/filter'
+import { includes } from 'vuikit/src/_core/utils/lang'
+import { findParents, findChildren } from 'vuikit/src/_core/utils/vue'
 
 const win = typeof window !== 'undefined' && window
 const doc = typeof document !== 'undefined' && document.documentElement

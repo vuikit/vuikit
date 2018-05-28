@@ -2,7 +2,7 @@ import core from './core'
 import Transition from '../transition'
 import { ElModalFull } from '../elements'
 
-import { each } from '@vuikit/core/utils/lang'
+import { each } from 'vuikit/src/_core/utils/lang'
 import VkHeightViewport from 'vuikit/src/height-viewport'
 
 export default {

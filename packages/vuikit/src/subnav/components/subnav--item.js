@@ -1,4 +1,4 @@
-import { mergeData } from '@vuikit/core/utils/vue'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { ElSubnavItem } from '../elements'
 
 export default {

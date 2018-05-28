@@ -1,6 +1,6 @@
-import { get } from '@vuikit/core/utils/misc'
-import { warn } from '@vuikit/core/utils/debug'
-import { assign, isFunction } from '@vuikit/core/utils/lang'
+import { get } from 'vuikit/src/_core/utils/misc'
+import { warn } from 'vuikit/src/_core/utils/debug'
+import { assign, isFunction } from 'vuikit/src/_core/utils/lang'
 
 import MixinSort from './mixins/sort'
 import MixinSelect from './mixins/select'

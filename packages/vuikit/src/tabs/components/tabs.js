@@ -1,7 +1,7 @@
-import { assign } from '@vuikit/core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/lang'
 
-import EventsMixin from '@vuikit/core/mixins/events'
-import { Transition } from '@vuikit/core/components/transition'
+import EventsMixin from 'vuikit/src/_core/mixins/events'
+import { Transition } from 'vuikit/src/_core/components/transition'
 
 import core from './core'
 import { ElTabs } from '../elements'

@@ -1,7 +1,7 @@
 import { ElRadio } from '../elements'
 
-import { get } from '@vuikit/core/utils/misc'
-import { assign } from '@vuikit/core/utils/lang'
+import { get } from 'vuikit/src/_core/utils/misc'
+import { assign } from 'vuikit/src/_core/utils/lang'
 
 export default assign({}, ElRadio, {
   name: 'VkFormRadio',

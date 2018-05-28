@@ -1,5 +1,5 @@
-import { once } from '@vuikit/core/utils/event'
-import { addClass, removeClass } from '@vuikit/core/utils/class'
+import { once } from 'vuikit/src/_core/utils/event'
+import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 
 import { SHOW, SHOWN, HIDE, HIDDEN } from './constants'
 import { setAsActive, setAsInactive, active, activeCount } from './active'

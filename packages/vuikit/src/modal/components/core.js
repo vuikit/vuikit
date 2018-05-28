@@ -1,7 +1,7 @@
-import { on } from '@vuikit/core/utils/event'
-import { removeClass } from '@vuikit/core/utils/class'
+import { on } from 'vuikit/src/_core/utils/event'
+import { removeClass } from 'vuikit/src/_core/utils/class'
 import { activeCount } from '../active'
-import EventsMixin from '@vuikit/core/mixins/events'
+import EventsMixin from 'vuikit/src/_core/mixins/events'
 
 import { SHOW, HIDE, CLOSE_KEY } from '../constants'
 const doc = typeof document !== 'undefined' && document.documentElement

@@ -1,7 +1,7 @@
-import { on } from '@vuikit/core/utils/event'
-import { css } from '@vuikit/core/utils/style'
-import { width, height } from '@vuikit/core/utils/dimensions'
-import { addClass, removeClass } from '@vuikit/core/utils/class'
+import { on } from 'vuikit/src/_core/utils/event'
+import { css } from 'vuikit/src/_core/utils/style'
+import { width, height } from 'vuikit/src/_core/utils/dimensions'
+import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 import { SHOWN, HIDDEN, TOGGLE, KEYUP } from '../constants'
 
 export let active

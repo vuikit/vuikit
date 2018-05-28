@@ -1,15 +1,15 @@
 /* eslint-disable no-mixed-operators */
-import { warn } from '@vuikit/core/utils/debug'
-import { $, $$ } from '@vuikit/core/utils/core'
-import { filter } from '@vuikit/core/utils/filter'
-import { trigger } from '@vuikit/core/utils/event'
-import { closest } from '@vuikit/core/utils/selector'
-import { addClass, removeClass } from '@vuikit/core/utils/class'
-import { filterOutTextNodes } from '@vuikit/core/utils/vue'
-import { isInView, height, offset } from '@vuikit/core/utils/dimensions'
+import { warn } from 'vuikit/src/_core/utils/debug'
+import { $, $$ } from 'vuikit/src/_core/utils/core'
+import { filter } from 'vuikit/src/_core/utils/filter'
+import { trigger } from 'vuikit/src/_core/utils/event'
+import { closest } from 'vuikit/src/_core/utils/selector'
+import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
+import { filterOutTextNodes } from 'vuikit/src/_core/utils/vue'
+import { isInView, height, offset } from 'vuikit/src/_core/utils/dimensions'
 
-import MixinEvents from '@vuikit/core/mixins/events'
-import MixinFastdom from '@vuikit/core/mixins/fastdom'
+import MixinEvents from 'vuikit/src/_core/mixins/events'
+import MixinFastdom from 'vuikit/src/_core/mixins/fastdom'
 
 export default {
   name: 'VkScrollspyNav',

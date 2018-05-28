@@ -141,7 +141,7 @@
 </template>
 
 <script>
-import { assign } from '@vuikit/core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/lang'
 
 let count = 0
 
