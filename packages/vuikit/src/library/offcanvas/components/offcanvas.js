@@ -86,8 +86,7 @@ export default {
 
 function findBar (nodes) {
   return nodes
-    .filter(n => n.tag && n.data)
-    .find(n => /offcanvas-bar/.test(getNodeClass(n)))
+    .filter(n => n.tag && n.data && /offcanvas-bar/.test(getNodeClass(n)))[0]
 }
 
 function getNodeClass (node) {

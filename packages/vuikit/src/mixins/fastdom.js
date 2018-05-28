@@ -105,6 +105,7 @@ export default {
   },
   beforeDestroy () {
     // remove from active instances
-    instances.splice(instances.findIndex(inst => inst === this), 1)
+    const index = instances.indexOf(instances.filter(inst => inst === this)[0])
+    instances.splice(index, 1)
   }
 }

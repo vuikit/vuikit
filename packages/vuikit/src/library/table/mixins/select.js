@@ -52,8 +52,8 @@ export default {
       this.updateRowSelection(selectedRows)
     },
     isRowSelected (row) {
-      return this.selectedRows
-        .find(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])) !== undefined
+      return Boolean(this.selectedRows
+        .filter(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])).length)
     },
     updateRowSelection (selectedRows) {
       this.$emit(UPDATE_SELECTEDROWS, selectedRows)

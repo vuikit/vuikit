@@ -32,7 +32,8 @@ export default {
   computed: {
     activeTabContent: {
       get () {
-        return filterTabs(this).find(node => this.isActive(node.data[TAB_ID]))
+        return filterTabs(this)
+          .filter(node => this.isActive(node.data[TAB_ID]))[0]
       },
       cache: false
     }
