@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import Vuikit from 'vuikit'
+import Vuikit from 'vuikit/src/install.esm'
 import VuikitIcons from '@vuikit/icons'
-import Default from './default.vue'
+import Demo from './default.vue'
 
 import '@vuikit/theme'
 
@@ -9,4 +9,4 @@ Vue.use(Vuikit)
 Vue.use(VuikitIcons)
 
 /* eslint-disable no-new */
-new Vue(Default).$mount('#app')
+new Vue(Demo).$mount('#app')

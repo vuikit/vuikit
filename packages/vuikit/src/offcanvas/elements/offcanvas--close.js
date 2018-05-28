@@ -5,17 +5,17 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 export default {
   functional: true,
   props: {
-    large: {
+    enlarged: {
       type: Boolean,
       default: false
     }
   },
   render (h, { data, props }) {
-    const { large } = props
+    const { enlarged } = props
 
     const def = {
       class: ['uk-offcanvas-close uk-close uk-icon', {
-        'uk-close-large': large
+        'uk-close-large': enlarged
       }],
       attrs: {
         type: 'button'
@@ -23,7 +23,7 @@ export default {
     }
 
     return h('button', mergeData(data, def), [
-      h(large ? IconCloseLarge : IconClose)
+      h(enlarged ? IconCloseLarge : IconClose)
     ])
   }
 }

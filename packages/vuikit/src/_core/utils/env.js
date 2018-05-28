@@ -5,9 +5,11 @@
 /* eslint-disable no-mixed-operators */
 import {attr} from './attr'
 
-const doc = typeof document !== 'undefined' && document
-const win = typeof window !== 'undefined' && window
-const nav = typeof navigator !== 'undefined' && navigator
+export const doc = typeof document !== 'undefined' && document
+export const docEl = typeof document !== 'undefined' && document.documentElement
+export const body = typeof document !== 'undefined' && document.body
+export const win = typeof window !== 'undefined' && window
+export const nav = typeof navigator !== 'undefined' && navigator
 
 export const isRtl = doc && attr(document.documentElement, 'dir') === 'rtl'
 

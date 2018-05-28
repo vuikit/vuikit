@@ -1,5 +1,5 @@
 import * as constants from './constants'
-import { active } from './transitions/_common'
+import { active } from './mixins/active'
 
 export { constants, active }
 export * from './elements'
