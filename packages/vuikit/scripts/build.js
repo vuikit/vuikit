@@ -107,6 +107,12 @@ async function BuildLibrary () {
 
   await replaceInFile({
     files: '*.js',
+    from: /vuikit\/src\/_core/g,
+    to: 'vuikit/core'
+  })
+
+  await replaceInFile({
+    files: '*.js',
     from: /vuikit\/src/g,
     to: 'vuikit'
   })
