@@ -25,9 +25,11 @@ export default {
     }
 
     if (hasAttr(el, 'title')) {
-      el[NAMESPACE].prevTitle = attr(el, 'title')
+      el[NAMESPACE].attrTitle = attr(el, 'title')
       attr(el, { title: '' })
     }
+
+    el[NAMESPACE].title = el[NAMESPACE].options.title || el[NAMESPACE].attrTitle
   },
   inserted (el, binding, vnode) {
     bindEvents(el)
@@ -41,7 +43,7 @@ export default {
     }
 
     _hide(el)
-    attr(el, { title: el[NAMESPACE].prevTitle || null })
+    attr(el, { title: el[NAMESPACE].attrTitle || null })
     el[NAMESPACE].unbindEvents()
     delete el[NAMESPACE]
   }
@@ -130,11 +132,11 @@ function toggleOut (el) {
 }
 
 function show (el) {
-  const { state } = el[NAMESPACE]
   const { delay } = el[NAMESPACE].options
+  const { state, title } = el[NAMESPACE]
 
-  // cancel if already active or show delayed
-  if (state === 'active' || el[NAMESPACE].showTimer) {
+  // cancel if no title, already active or show delayed
+  if (!title || state === 'active' || el[NAMESPACE].showTimer) {
     return
   }
 
@@ -296,11 +298,11 @@ function getContainer (el) {
 }
 
 function createTooltip (el) {
-  const { clsPos, title } = el[NAMESPACE].options
-  const content = el[NAMESPACE].prevTitle || title
+  const { title } = el[NAMESPACE]
+  const { clsPos } = el[NAMESPACE].options
 
   return append(getContainer(el), `<div class="${clsPos}" aria-hidden>
-    <div class="${clsPos}-inner">${content}</div>
+    <div class="${clsPos}-inner">${title}</div>
   </div>`)
 }
 
