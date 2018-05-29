@@ -19,9 +19,8 @@
     "vuikit"
   ],
   "files": [
-    "dist",
-    "lib",
-    "src"
+    "lib/**/*.js",
+    "dist/*.js"
   ],
   "scripts": {
     "dev": "start-storybook -s ./.storybook/static -p 6006",
