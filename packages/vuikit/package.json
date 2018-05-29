@@ -19,9 +19,8 @@
     "vuikit"
   ],
   "files": [
-    "dist",
-    "lib",
-    "src"
+    "dist/*.js",
+    "lib/**/*.js"
   ],
   "scripts": {
     "serve": "vue-cli-service serve",

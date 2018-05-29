@@ -11,9 +11,10 @@
    - Added `vk-subnav-item-dropdown-nav`.
    - Removed `vk-nav-dropdown`.
 
-## WIP
+## 0.8.5 (May 29, 2018)
 
  - Fixed `vk-tooltip` unbind.
+ - Fixed `vk-tooltip` display when title is empty.
  - Fixed `vk-modal` display on appear.
  - Fixed `vk-modal-full` close button trigger listener.
  - Fixed `vk-offcanvas` flipped display.
