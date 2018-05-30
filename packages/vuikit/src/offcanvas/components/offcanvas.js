@@ -13,10 +13,6 @@ export default {
   render (h) {
     const instance = this
 
-    // null the inherit class, use it on the bar el instead
-    const inheritClass = this.$vnode.data.staticClass
-    delete this.$vnode.data.staticClass
-
     const content = h(ElOffcanvas, {
       props: this.$props,
       class: {
@@ -28,10 +24,10 @@ export default {
       }]
     }, [
       h(ElOffcanvasBar, {
-        class: [inheritClass, {
+        ref: 'bar',
+        class: {
           'uk-offcanvas-none': this.show
-        }],
-        ref: 'bar'
+        }
       }, this.$slots.default)
     ])
 

@@ -12,15 +12,17 @@ import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 export default {
   name: 'VkOffcanvasPush',
   extends: Core,
+  data: () => ({
+    open: false
+  }),
   render (h) {
     const instance = this
 
-    // null the inherit class, use it on the bar el instead
-    const inheritClass = this.$vnode.data.staticClass
-    delete this.$vnode.data.staticClass
-
     const content = h(ElOffcanvas, {
       props: this.$props,
+      class: {
+        'uk-open': this.open
+      },
       directives: [{
         name: 'show',
         value: this.show
@@ -29,7 +31,7 @@ export default {
       h(ElOffcanvasBar, {
         ref: 'bar',
         props: { animated: true },
-        class: [inheritClass, 'uk-offcanvas-push']
+        class: 'uk-offcanvas-push'
       }, this.$slots.default)
     ])
 
@@ -47,7 +49,7 @@ export default {
         },
         enter (el, done) {
           height(el) // force reflow
-          addClass(el, 'uk-open')
+          instance.open = true
           addClass(instance.$refs.content, 'uk-offcanvas-content-animation')
 
           // indicate end of transition
@@ -58,7 +60,7 @@ export default {
         },
         beforeLeave (el) {
           instance.$emit(HIDE)
-          removeClass(el, 'uk-open')
+          instance.open = false
           removeClass(instance.$refs.content, 'uk-offcanvas-content-animation')
         },
         leave (el, done) {

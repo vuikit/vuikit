@@ -2,7 +2,6 @@ import { once } from 'vuikit/src/_core/utils/event'
 import { css } from 'vuikit/src/_core/utils/style'
 import { win, docEl } from 'vuikit/src/_core/utils/env'
 import { width, height } from 'vuikit/src/_core/utils/dimensions'
-import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 
 import Core from '../core'
 import { ElOffcanvas, ElOffcanvasBar } from '../elements'
@@ -12,6 +11,9 @@ import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 export default {
   name: 'VkOffcanvasSlide',
   extends: Core,
+  data: () => ({
+    open: false
+  }),
   render (h) {
     const instance = this
 
@@ -21,6 +23,9 @@ export default {
 
     const content = h(ElOffcanvas, {
       props: this.$props,
+      class: {
+        'uk-open': this.open
+      },
       directives: [{
         name: 'show',
         value: this.show
@@ -47,7 +52,7 @@ export default {
         },
         enter (el, done) {
           height(el) // force reflow
-          addClass(el, 'uk-open')
+          instance.open = true
 
           // indicate end of transition
           once(el, 'transitionend', done, false, e => e.target === instance.$refs.bar)
@@ -57,7 +62,7 @@ export default {
         },
         beforeLeave (el) {
           instance.$emit(HIDE)
-          removeClass(el, 'uk-open')
+          instance.open = false
         },
         leave (el, done) {
           // indicate end of transition

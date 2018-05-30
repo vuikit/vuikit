@@ -44,11 +44,12 @@
         :flipped="flipped"
         :overlay="overlay"
         :show.sync="show"
-        class="uk-flex uk-flex-column uk-text-center"
       >
-        <vk-offcanvas-close enlarged @click="show = false" />
-        <demo-nav />
-        <demo-icons />
+        <div class="uk-height-1-1 uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close enlarged @click="show = false" />
+          <demo-nav />
+          <demo-icons />
+        </div>
       </vk-offcanvas>
 
       <vk-offcanvas-reveal
@@ -56,11 +57,12 @@
         :flipped="flipped"
         :overlay="overlay"
         :show.sync="reveal"
-        class="uk-flex uk-flex-column uk-text-center"
       >
-        <vk-offcanvas-close enlarged @click="reveal = false" />
-        <demo-nav />
-        <demo-icons />
+        <div class="uk-height-1-1 uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close enlarged @click="reveal = false" />
+          <demo-nav />
+          <demo-icons />
+        </div>
       </vk-offcanvas-reveal>
 
       <vk-offcanvas-push
@@ -68,11 +70,12 @@
         :flipped="flipped"
         :overlay="overlay"
         :show.sync="push"
-        class="uk-flex uk-flex-column uk-text-center"
       >
-        <vk-offcanvas-close enlarged @click="push = false" />
-        <demo-nav />
-        <demo-icons />
+        <div class="uk-height-1-1 uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close enlarged @click="push = false" />
+          <demo-nav />
+          <demo-icons />
+        </div>
       </vk-offcanvas-push>
 
       <vk-offcanvas-slide
@@ -80,11 +83,12 @@
         :flipped="flipped"
         :overlay="overlay"
         :show.sync="slide"
-        class="uk-flex uk-flex-column uk-text-center"
       >
-        <vk-offcanvas-close enlarged @click="slide = false" />
-        <demo-nav />
-        <demo-icons />
+        <div class="uk-height-1-1 uk-flex uk-flex-column uk-text-center">
+          <vk-offcanvas-close enlarged @click="slide = false" />
+          <demo-nav />
+          <demo-icons />
+        </div>
       </vk-offcanvas-slide>
 
       <p v-for="n in 10">

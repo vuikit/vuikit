@@ -12,6 +12,9 @@ import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 export default {
   name: 'VkOffcanvasReveal',
   extends: Core,
+  data: () => ({
+    open: false
+  }),
   render (h) {
     const instance = this
 
@@ -21,6 +24,9 @@ export default {
 
     const content = h(ElOffcanvas, {
       props: this.$props,
+      class: {
+        'uk-open': this.open
+      },
       directives: [{
         name: 'show',
         value: this.show
@@ -52,7 +58,7 @@ export default {
         },
         enter (el, done) {
           height(el) // force reflow
-          addClass(el, 'uk-open')
+          instance.open = true
           addClass(instance.$refs.content, 'uk-offcanvas-content-animation')
 
           // indicate end of transition
@@ -63,7 +69,7 @@ export default {
         },
         beforeLeave (el) {
           instance.$emit(HIDE)
-          removeClass(el, 'uk-open')
+          instance.open = false
           removeClass(instance.$refs.content, 'uk-offcanvas-content-animation')
         },
         leave (el, done) {
