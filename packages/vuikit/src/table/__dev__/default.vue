@@ -1,13 +1,25 @@
 <template>
   <div class="uk-padding">
 
-    <h1>Column Sort</h1>
+    <h1>Table</h1>
 
     <vk-table
+      selectable
       :data="data"
       :sortedBy.sync="sortedBy"
+      :selected-rows.sync="selection"
     >
-      <vk-table-column-sort head="Name" cell="name"/>
+      <vk-table-column-select/>
+      <vk-table-column head="Name" cell="name"/>
+      <vk-table-column head="Name" cell="name" sortable/>
+    </vk-table>
+
+    <vk-table
+      selectable="single"
+      :data="data"
+      :selected-rows.sync="selectionSingle"
+    >
+      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
   </div>
@@ -21,7 +33,9 @@ export default {
   data: () => ({
     sortedBy: {
       name: 'asc'
-    }
+    },
+    selection: [],
+    selectionSingle: []
   }),
   computed: {
     data () {

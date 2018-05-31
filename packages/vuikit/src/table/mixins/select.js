@@ -1,25 +1,30 @@
-import { ROW_ID, ON_CLICK_ROW, UPDATE_SELECTEDROWS } from '../../constants'
+import { UPDATE_SELECTEDROWS } from '../constants'
 
 export default {
   props: {
+    rowKey: {
+      type: String,
+      default: 'id'
+    },
     selectedRows: {
       type: Array,
       default: () => []
     },
-    rowSelectable: {
-      type: Boolean,
-      default: false
-    },
-    rowsSelectable: {
-      type: Boolean,
-      default: false
+    selectable: {
+      type: [Boolean, String],
+      default: false,
+      validator: v => !v || /single/.test(v) || v === true
     }
   },
   methods: {
     selectRow (row) {
-      const id = row[ROW_ID]
+      const id = row[this.rowKey]
 
-      if (this.rowSelectable) {
+      if (!this.selectable) {
+        return
+      }
+
+      if (this.selectable === 'single') {
         this.updateRowSelection([id])
         return
       }
@@ -30,7 +35,7 @@ export default {
       this.updateRowSelection(selectedRows)
     },
     unselectRow (row) {
-      const id = row[ROW_ID]
+      const id = row[this.rowKey]
       const index = this.selectedRows.indexOf(id)
       const selectedRows = [...this.selectedRows]
 
@@ -46,14 +51,14 @@ export default {
       let selectedRows = []
 
       if (!this.allRowsSelected) {
-        selectedRows = this.rows.map(row => row[ROW_ID])
+        selectedRows = this.data.map(row => row[this.rowKey])
       }
 
       this.updateRowSelection(selectedRows)
     },
     isRowSelected (row) {
       return Boolean(this.selectedRows
-        .filter(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])).length)
+        .filter(id => JSON.stringify(id) === JSON.stringify(row[this.rowKey])).length)
     },
     updateRowSelection (selectedRows) {
       this.$emit(UPDATE_SELECTEDROWS, selectedRows)
@@ -61,17 +66,12 @@ export default {
   },
   computed: {
     allRowsSelected () {
-      if (this.selectedRows && this.selectedRows.length < this.rows.length) {
+      if (this.selectedRows && this.selectedRows.length < this.data.length) {
         return false
       }
 
-      const selected = this.rows.filter(this.isRowSelected)
-      return selected.length === this.rows.length
-    }
-  },
-  created () {
-    if (this.rowsSelectable || this.rowSelectable) {
-      this.$on(ON_CLICK_ROW, this.toggleRowSelection)
+      const selected = this.data.filter(this.isRowSelected)
+      return selected.length === this.data.length
     }
   }
 }

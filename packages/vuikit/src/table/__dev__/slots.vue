@@ -3,9 +3,7 @@
 
     <h1>Slots</h1>
 
-    <vk-table
-      :data="data"
-    >
+    <vk-table :data="data">
       <vk-table-column head="Slot">
         <div>Static</div>
       </vk-table-column>

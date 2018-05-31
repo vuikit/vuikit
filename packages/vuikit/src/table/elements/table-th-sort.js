@@ -1,22 +1,23 @@
-import ElTh from './table-th'
+import ElTableTh from './table-th'
 import { assign } from 'vuikit/src/_core/utils/lang'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,
-  props: assign({}, ElTh.props, {
+  props: assign({}, ElTableTh.props, {
     order: {
-      type: String
+      type: String,
+      validator: val => !val || /(asc|desc)/.test(val)
     }
   }),
   render (h, { data, props, children }) {
     const { order } = props
 
-    return h(ElTh, mergeData(data, {
+    return h(ElTableTh, mergeData(data, {
       class: 'vk-table-column-sort uk-visible-hover-inline'
     }), [
-      h('div', {
-        class: 'uk-text-nowrap uk-position-relative'
+      h('span', {
+        class: 'uk-position-relative'
       }, [
         children,
         h('span', mergeData(data, {

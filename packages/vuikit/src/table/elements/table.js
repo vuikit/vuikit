@@ -3,10 +3,6 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 export default {
   functional: true,
   props: {
-    divided: {
-      type: Boolean,
-      default: true
-    },
     narrowed: {
       type: Boolean,
       default: false
@@ -20,6 +16,10 @@ export default {
       default: false
     },
     hoverable: {
+      type: Boolean,
+      default: false
+    },
+    divided: {
       type: Boolean,
       default: false
     },

@@ -13,7 +13,7 @@ export default {
       type: Boolean,
       default: false
     },
-    size: {
+    width: {
       default: 'shrinked'
     }
   }),

@@ -1,7 +1,7 @@
 import { assign } from 'vuikit/src/_core/utils/lang'
 
 import Table from './table'
-import { UPDATE_EXPANDEDROWS, ROW_ID, ROW_LEVEL, ROW_CHILDREN_COUNT } from '../constants'
+import { UPDATE_EXPANDEDROWS, ROW_LEVEL, ROW_CHILDREN_COUNT } from '../constants'
 
 export default {
   name: 'VkTableTree',
@@ -32,11 +32,11 @@ export default {
             ? parent[ROW_LEVEL] + 1
             : 0
 
-          row[ROW_ID] = row[this.rowKey]
+          row[this.rowId] = row[this.rowKey]
             ? row[this.rowKey]
             : row[ROW_LEVEL] === 0
               ? `${idCount++}`
-              : `${parent[ROW_ID]}_${idCount++}`
+              : `${parent[this.rowId]}_${idCount++}`
 
           rows.push(row)
 
@@ -62,10 +62,10 @@ export default {
   methods: {
     isExpanded (row) {
       return Boolean(this.expandedRows
-        .filter(id => JSON.stringify(id) === JSON.stringify(row[ROW_ID])).length)
+        .filter(id => JSON.stringify(id) === JSON.stringify(row[this.rowId])).length)
     },
     toggleExpand (row) {
-      const id = row[ROW_ID]
+      const id = row[this.rowId]
       const expandedRows = [...this.expandedRows]
       const index = expandedRows.indexOf(id)
       const isExpanded = index !== -1

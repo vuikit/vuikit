@@ -1,16 +1,22 @@
 import { get } from 'vuikit/src/_core/utils/misc'
+import { warn } from 'vuikit/src/_core/utils/debug'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import { ElTableTd, ElTableTh } from '../elements'
+import { UPDATE_SORTEDBY } from '../constants'
+import { ElTableTd, ElTableTh, ElTableThSort } from '../elements'
 
 export default {
   functional: true,
   name: 'VkTableColumn',
-  props: assign({}, ElTableTh.props, ElTableTd.props, {
+  props: assign({}, ElTableTh.props, ElTableThSort.props, ElTableTd.props, {
     head: String,
     cell: [String, Function],
-    cellClass: String
+    cellClass: String,
+    sortable: {
+      type: Boolean,
+      default: false
+    }
   }),
   render (h, { data, props, slots }) {
     // IMPORTANT: this render is not used directly,
@@ -18,10 +24,35 @@ export default {
     data.slots = slots()
     return h('div', mergeData({}, data, { props }))
   },
-  headRender (h, { data, props }) {
-    return h(ElTableTh, mergeData({}, data, {
-      props
-    }), props.head)
+  headRender (h, { data, props, parent }) {
+
+    if (process.env.NODE_ENV !== 'production' && props.sortable) {
+      if (!parent.sortedBy) {
+        warn(`vk-table -> 'sortedBy' prop undefined.`, parent)
+      }
+
+      if (!props.head || !props.cell) {
+        warn(`vk-table-column -> 'head' and 'cell' props are required on sortable columns.`, parent)
+      }
+    }
+
+    // sortable
+    if (props.sortable) {
+      return h(ElTableThSort, mergeData(data, {
+        props: assign({}, props, {
+          order: get(parent, `sortedBy.${props.cell}`)
+        }),
+        on: {
+          click: e => {
+            const sortedBy = getNewSortOrder(parent.sortedBy, props.cell, e.shiftKey)
+            parent.$emit(UPDATE_SORTEDBY, sortedBy)
+          }
+        }
+      }), props.head)
+    }
+
+    // default
+    return h(ElTableTh, mergeData(data, { props }), props.head)
   },
   cellRender (h, ctx) {
     const { props, row } = ctx
@@ -42,10 +73,7 @@ export default {
     }, [
       slot(scope)
     ])
-  },
-  getCellValue,
-  getCellScope,
-  getCellSlots
+  }
 }
 
 function getCellValue (row, cell) {
@@ -81,4 +109,17 @@ export function getCellSlots ({ slots, data }) {
     default: defaultSlot,
     empty: emptySlot
   }
+}
+
+function getNewSortOrder (currentSort, by, multi) {
+  const sort = {}
+  const order = currentSort[by] === 'asc'
+    ? 'desc'
+    : 'asc'
+
+  sort[by] = order
+
+  return multi
+    ? assign({}, currentSort, sort)
+    : sort
 }
