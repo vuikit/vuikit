@@ -3,14 +3,14 @@ import { css } from 'vuikit/src/_core/utils/style'
 import { win, docEl } from 'vuikit/src/_core/utils/env'
 import { width, height } from 'vuikit/src/_core/utils/dimensions'
 
-import Core from '../core'
+import Offcanvas from './offcanvas'
 import { ElOffcanvas, ElOffcanvasBar } from '../elements'
 
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
   name: 'VkOffcanvasSlide',
-  extends: Core,
+  extends: Offcanvas,
   data: () => ({
     open: false
   }),

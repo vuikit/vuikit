@@ -4,14 +4,14 @@ import { win, docEl } from 'vuikit/src/_core/utils/env'
 import { width, height } from 'vuikit/src/_core/utils/dimensions'
 import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 
-import Core from '../core'
+import Offcanvas from './offcanvas'
 import { ElOffcanvas, ElOffcanvasBar } from '../elements'
 
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
   name: 'VkOffcanvasReveal',
-  extends: Core,
+  extends: Offcanvas,
   data: () => ({
     open: false
   }),

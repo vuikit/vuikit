@@ -4,12 +4,16 @@ import { win, docEl } from 'vuikit/src/_core/utils/env'
 
 import Core from '../core'
 import { ElOffcanvas, ElOffcanvasBar } from '../elements'
-
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
+
+import PageMixin from '../mixins/page'
+import ActiveMixin from '../mixins/active'
+import EventsMixin from 'vuikit/src/_core/mixins/events'
 
 export default {
   name: 'VkOffcanvas',
   extends: Core,
+  mixins: [EventsMixin, ActiveMixin, PageMixin],
   render (h) {
     const instance = this
 
