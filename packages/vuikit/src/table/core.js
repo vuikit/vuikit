@@ -1,32 +1,32 @@
-import { get } from 'vuikit/src/_core/utils/misc'
 import { assign, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import TableRender from './render'
+import MixinSort from './mixins/sort'
+import MixinSelect from './mixins/select'
+
 import { ElTable, ElTableTr } from './elements'
 
 export default {
-  inheritAttrs: false,
+  mixins: [ MixinSelect, MixinSort ],
   props: assign({}, ElTable.props, {
-    data: TableRender.props.data,
-    headless: TableRender.props.headless,
+    data: {
+      type: Array, // [{ ...row }, ]
+      required: true
+    },
+    columns: {
+      type: Array, // [{ headRender, cellRender, context }, ]
+      required: true
+    },
+    divided: {
+      default: true
+    },
     rowClass: {
       type: Function
+    },
+    headless: {
+      type: Boolean,
+      default: false
     }
   }),
-  computed: {
-    columns: {
-      get () {
-        return get(this, '$slots.default', [])
-          .filter(n => n.tag)
-          .map(n => ({
-            headRender: n.fnOptions.headRender,
-            cellRender: n.fnOptions.cellRender,
-            context: { data: n.data, parent: this }
-          }))
-      },
-      cache: false
-    }
-  },
   methods: {
     resolveRowClass (row) {
       return isFunction(this.rowClass)
@@ -35,16 +35,39 @@ export default {
     }
   },
   render (h) {
-    return h(TableRender, {
-      attrs: this.$attrs,
-      props: assign({}, this.$props, {
-        columns: this.columns,
-        row (h, { data, children, parent }) {
-          return h(ElTableTr, {
-            class: parent.resolveRowClass(data.row)
-          }, children)
-        }
-      })
-    })
+    const instance = this
+    const { data } = this.$props
+    const isIgnoredTag = tag => /^(A|BUTTON)$/.test(tag)
+
+    return h(ElTable, { props: this.$props }, [
+
+      // HEAD
+      this.$props.headless || h('thead', [
+        h(ElTableTr, [
+          this.columns.map(col => col.headRender(h, col.context))
+        ])
+      ]),
+
+      // BODY
+      h('tbody', [
+        data.map(row =>
+          h(ElTableTr, {
+            props: {
+              active: instance.isRowSelected(row)
+            },
+            class: instance.resolveRowClass(row),
+            on: {
+              click: e => {
+                if (!isIgnoredTag(e.target.tagName)) {
+                  instance.toggleRowSelection(row)
+                }
+              }
+            }
+          }, [
+            this.columns.map(col => col.cellRender(h, assign({ row }, col.context)))
+          ])
+        )
+      ])
+    ])
   }
 }

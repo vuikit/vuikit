@@ -3,7 +3,6 @@ import { warn } from 'vuikit/src/_core/utils/debug'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import { UPDATE_SORTEDBY } from '../constants'
 import { ElTableTd, ElTableTh, ElTableThSort } from '../elements'
 
 export default {
@@ -44,8 +43,7 @@ export default {
         }),
         on: {
           click: e => {
-            const sortedBy = getNewSortOrder(parent.sortedBy, props.cell, e.shiftKey)
-            parent.$emit(UPDATE_SORTEDBY, sortedBy)
+            parent.sortBy(props.cell, e.shiftKey)
           }
         }
       }), props.head)
@@ -77,21 +75,16 @@ export default {
 }
 
 function getCellValue (row, cell) {
-  if (isFunction(cell)) {
-    return cell(row)
-  }
-
-  return get(row, cell)
+  return isFunction(cell)
+    ? cell(row)
+    : get(row, cell)
 }
 
 export function getCellScope ({ data, props, parent, row }) {
   const { cell } = props
   const cellValue = getCellValue(row, cell)
 
-  const isSelected = parent.isRowSelected(row)
-  const isAllSelected = parent.allRowsSelected
-
-  return { cell: cellValue, row: row, isSelected, isAllSelected }
+  return { cell: cellValue, row: row }
 }
 
 export function getCellSlots ({ slots, data }) {
@@ -109,17 +102,4 @@ export function getCellSlots ({ slots, data }) {
     default: defaultSlot,
     empty: emptySlot
   }
-}
-
-function getNewSortOrder (currentSort, by, multi) {
-  const sort = {}
-  const order = currentSort[by] === 'asc'
-    ? 'desc'
-    : 'asc'
-
-  sort[by] = order
-
-  return multi
-    ? assign({}, currentSort, sort)
-    : sort
 }

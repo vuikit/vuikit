@@ -1,5 +1,3 @@
-import { UPDATE_SELECTEDROWS } from '../constants'
-
 export default {
   props: {
     rowKey: {
@@ -61,7 +59,7 @@ export default {
         .filter(id => JSON.stringify(id) === JSON.stringify(row[this.rowKey])).length)
     },
     updateRowSelection (selectedRows) {
-      this.$emit(UPDATE_SELECTEDROWS, selectedRows)
+      this.$emit('update:selectedRows', selectedRows)
     }
   },
   computed: {
