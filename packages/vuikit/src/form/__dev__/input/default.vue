@@ -11,7 +11,7 @@
     <vk-input placeholder="danger" vk-state="danger"/>
 
     <h2>HTML Types</h2>
-    <vk-input type="number" v-model="value"/>
+    <vk-input type="number" v-model="numberValue"/>
 
     <h2>icon</h2>
     <div class="uk-margin">
@@ -55,7 +55,8 @@ export default {
     VkIconsLink
   },
   data: () => ({
-    value: 'value'
+    value: 'value',
+    numberValue: 22
   })
 }
 </script>

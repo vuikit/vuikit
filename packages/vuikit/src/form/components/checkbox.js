@@ -2,6 +2,7 @@ import { ElCheckbox } from '../elements'
 
 import { get } from 'vuikit/src/_core/utils/misc'
 import { assign } from 'vuikit/src/_core/utils/lang'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default assign({}, ElCheckbox, {
   name: 'VkFormCheckbox',
@@ -12,32 +13,34 @@ export default assign({}, ElCheckbox, {
     const { label } = props
     const { attrs = {} } = data
 
-    data.domProps = {
-      checked: attrs.checked
-    }
+    const def = mergeData({}, data, {
+      domProps: {
+        checked: attrs.checked
+      }
+    })
 
     // workaround for v-model/@input support
-    if (get(data, 'on.input')) {
-      const callback = data.on.input
-      delete data.on.input
+    if (get(def, 'on.input')) {
+      const callback = def.on.input
+      delete def.on.input
 
       const trueValue = get(attrs, 'true-value', true)
       const falseValue = get(attrs, 'false-value', false)
 
-      data.on.change = e => {
+      def.on.change = e => {
         callback()
       }
 
-      if (data.model) {
-        let toggle = data.model.value
+      if (def.model) {
+        let toggle = def.model.value
 
-        data.domProps = {
+        def.domProps = {
           checked: Array.isArray(toggle)
             ? looseIndexOf(toggle, null) > -1
             : looseEqual(toggle, trueValue)
         }
 
-        data.on.change = $event => {
+        def.on.change = $event => {
           const $$a = toggle
           const $$el = $event.target
           const $$c = $$el.checked ? trueValue : falseValue
@@ -60,7 +63,7 @@ export default assign({}, ElCheckbox, {
       }
     }
 
-    const checkbox = h(ElCheckbox, data)
+    const checkbox = h(ElCheckbox, def)
 
     if (label) {
       return h('label', [

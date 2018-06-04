@@ -9,22 +9,24 @@ export default assign({}, ElInput, {
   props: ['value'],
   render (h, { props, data }) {
 
+    const def = mergeData({}, data, {
+      props,
+      domProps: {
+        value: props.value
+      }
+    })
+
     // workaround for v-model/@input support
-    if (get(data, 'on.input')) {
-      const callback = data.on.input
+    if (get(def, 'on.input')) {
+      const callback = def.on.input
 
       // override input
-      data.on.input = e => {
+      def.on.input = e => {
         if (e.target.composing) return
         callback(e.target.value)
       }
     }
 
-    return h(ElInput, mergeData(data, {
-      props,
-      domProps: {
-        value: props.value
-      }
-    }))
+    return h(ElInput, def)
   }
 })

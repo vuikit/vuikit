@@ -9,12 +9,23 @@ export default assign({}, ElSelect, {
   props: ['value'],
   render (h, { props, data, children }) {
 
-    // workaround for v-model/@input support
-    if (get(data, 'on.input')) {
-      const callback = data.on.input
+    const def = mergeData({}, data, {
+      props,
+      // using v-model as it does some magic
+      // to set the options selection properly
+      directives: [{
+        name: 'model',
+        rawName: 'v-model',
+        value: props.value
+      }]
+    })
 
-      delete data.on.input
-      data.on.change = e => {
+    // workaround for v-model/@input support
+    if (get(def, 'on.input')) {
+      const callback = def.on.input
+
+      delete def.on.input
+      def.on.change = e => {
         const selectedVal = Array.prototype.filter
           .call(e.target.options, opt => opt.selected)
           .map(opt => '_value' in opt ? opt._value : opt.value)
@@ -27,15 +38,6 @@ export default assign({}, ElSelect, {
       }
     }
 
-    return h(ElSelect, mergeData(data, {
-      props,
-      // using v-model as it does some magic
-      // to set the options selection properly
-      directives: [{
-        name: 'model',
-        rawName: 'v-model',
-        value: props.value
-      }]
-    }), children)
+    return h(ElSelect, def, children)
   }
 })

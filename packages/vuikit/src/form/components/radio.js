@@ -2,6 +2,7 @@ import { ElRadio } from '../elements'
 
 import { get } from 'vuikit/src/_core/utils/misc'
 import { assign } from 'vuikit/src/_core/utils/lang'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default assign({}, ElRadio, {
   name: 'VkFormRadio',
@@ -12,25 +13,27 @@ export default assign({}, ElRadio, {
     const { label } = props
     const { attrs = {} } = data
 
-    data.domProps = {
-      checked: attrs.checked
-    }
+    const def = mergeData({}, data, {
+      domProps: {
+        checked: attrs.checked
+      }
+    })
 
     // workaround for v-model/@input support
-    if (get(data, 'on.input')) {
-      const callback = data.on.input
+    if (get(def, 'on.input')) {
+      const callback = def.on.input
 
       // override input
-      data.on.input = e => {
+      def.on.input = e => {
         callback(e.target.value)
       }
 
-      if (data.model) {
-        data.domProps.checked = looseEqual(data.model.value, attrs.value)
+      if (def.model) {
+        def.domProps.checked = looseEqual(def.model.value, attrs.value)
       }
     }
 
-    const radio = h(ElRadio, data)
+    const radio = h(ElRadio, def)
 
     if (label) {
       return h('label', [
