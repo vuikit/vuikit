@@ -1,5 +1,9 @@
 # Changelog
 
+## WIP
+
+ - Fixed `vk-modal-close` events binding.
+
 ## 0.8.5 (May 29, 2018)
 
  - Fixed `vk-tooltip` unbind.
