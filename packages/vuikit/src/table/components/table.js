@@ -1,14 +1,11 @@
 import { assign, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import mixinCore from '../mixins/core'
-import mixinSort from '../mixins/sort'
-import mixinSelect from '../mixins/select'
-
 import { ElTable, ElTableTr } from '../elements'
+import { mixinCore, mixinSelect, mixinSort } from '../mixins'
 
 export default {
   name: 'VkTable',
-  mixins: [ mixinCore, mixinSelect, mixinSort ],
+  mixins: [mixinCore, mixinSelect, mixinSort],
   props: {
     divided: {
       default: true
