@@ -1,6 +1,6 @@
 import VkRoot from 'vuikit/src/_core/directives/root'
 import VkPosition, { BEFORE_POSITION } from 'vuikit/src/_core/directives/position'
-import EventsMixin from 'vuikit/src/_core/mixins/events'
+import mixinEvents from 'vuikit/src/_core/mixins/events'
 
 import { $ } from 'vuikit/src/_core/utils/core'
 import { get } from 'vuikit/src/_core/utils/misc'
@@ -13,14 +13,14 @@ import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
 
 import { ElDrop } from '../elements'
+import { mixinTree } from '../mixins'
 import { Transition } from 'vuikit/src/_core/components/transition'
 
 import { SHOW, HIDE } from '../constants'
-import { setAsActive, setAsInactive } from '../instances'
 
 export default {
   name: 'VkDrop',
-  mixins: [EventsMixin],
+  mixins: [ mixinEvents, mixinTree ],
   directives: {
     VkRoot,
     VkPosition
@@ -156,7 +156,7 @@ export default {
       this.shown = true
       this.tracker.init()
 
-      setAsActive(this)
+      this.setAsActive()
       this.$emit(SHOW)
     },
     hide () {
@@ -175,7 +175,7 @@ export default {
       this.shown = false
       this.tracker.cancel()
 
-      setAsInactive(this)
+      this.setAsInactive()
       this.$emit(HIDE)
     },
     clearTimers () {

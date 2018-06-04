@@ -1,14 +1,13 @@
 import { css } from 'vuikit/src/_core/utils/style'
 import { get } from 'vuikit/src/_core/utils/misc'
 import { height } from 'vuikit/src/_core/utils/dimensions'
+import { isVisible } from 'vuikit/src/_core/utils/filter'
 import { Transition } from 'vuikit/src/_core/utils/animation'
 import { noop, toFloat } from 'vuikit/src/_core/utils/lang'
-import { isVisible, within } from 'vuikit/src/_core/utils/filter'
 
 import { ElNavbarDropbar } from '../elements'
 
-import { active as activeDrop, constants } from 'vuikit/src/drop'
-const { SHOW, HIDE } = constants
+let activeDrops
 
 export default {
   name: 'VkNavbarDropbar',
@@ -58,17 +57,17 @@ export default {
     dropdowns.forEach(drop => {
       drop.$vnode.data.class['uk-navbar-dropdown-dropbar'] = true
 
-      drop.$on(SHOW, () => {
+      drop.$on('show', () => {
+        activeDrops++
         this.$nextTick(() => {
           this.transitionDropbar(drop.$el)
         })
       })
 
-      drop.$on(HIDE, () => {
+      drop.$on('hide', () => {
+        activeDrops--
         this.$nextTick(() => {
-          const thereAreActiveDrops = activeDrop && within(activeDrop.$el, this.$el)
-
-          if (!thereAreActiveDrops) {
+          if (!activeDrops) {
             this.transitionDropbar(drop.$el)
           }
         })

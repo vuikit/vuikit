@@ -1,13 +1,11 @@
 import { Grid } from 'vuikit/src/grid'
-import { Drop, constants } from 'vuikit/src/drop'
+import { Drop } from 'vuikit/src/drop'
 
 import { get } from 'vuikit/src/_core/utils/misc'
 import { query } from 'vuikit/src/_core/utils/selector'
 import { assign } from 'vuikit/src/_core/utils/lang'
 import { isTouch } from 'vuikit/src/_core/utils/touch'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
-
-const { SHOW } = constants
 
 export default {
   name: 'VkNavbarNavDropdown',
@@ -93,7 +91,7 @@ export default {
       h('a', [Subtitle || title]),
       h(Drop, {
         on: {
-          [SHOW]: (e) => {
+          show: (e) => {
             this.$forceUpdate()
           }
         },
