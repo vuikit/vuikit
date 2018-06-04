@@ -6,6 +6,7 @@
  - Added `vk-table-filter` and `vk-table-pagination` components.
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
+ - Removed `vk-table-tree`.
  - Refactored `vk-drop` and `vk-dropdown`.
    - Added `vk-dropdown-nav`.
    - Added `vk-subnav-item-dropdown-nav`.
