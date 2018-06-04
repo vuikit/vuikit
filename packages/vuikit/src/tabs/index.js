@@ -1,5 +1,4 @@
-import * as constants from './constants'
+import * as elements from './elements'
 
-export { constants }
-export * from './elements'
+export { elements }
 export * from './components'

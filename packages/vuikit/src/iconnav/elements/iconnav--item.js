@@ -1,5 +1,7 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { ElIconLink } from 'vuikit/src/icon'
+import { elements as IconElements } from 'vuikit/src/icon'
+
+const { ElIconLink } = IconElements
 
 export default {
   functional: true,

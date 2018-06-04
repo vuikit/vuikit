@@ -11,23 +11,22 @@ import replaceInFile from 'replace-in-file'
 import { run, remove, write, minifyJS } from '@miljan/build'
 
 run(async () => {
-  await BuildCore()
   await BuildLibrary()
   await BuildDist()
 })
 
-async function BuildCore () {
+async function BuildLibrary () {
   let resources
 
-  await remove('core')
+  await remove('lib')
 
-  // COMPONENTS / DIRECTIVES
+  // CORE
   resources = await globby('src/_core/{components,directives}/*/index.js')
   await Promise.all(resources.map(async input => {
     const dirname = path.dirname(input).replace('src/', '')
     const [, folder, name] = dirname.split('/')
 
-    return compile(input, `core/${folder}/${name}.js`, {
+    return compile(input, `lib/core/${folder}/${name}.js`, {
       output: {
         format: 'es'
       },
@@ -35,13 +34,12 @@ async function BuildCore () {
     })
   }))
 
-  // ASSETS / MIXINS
   resources = await globby('src/_core/{assets,mixins}/*.js')
   await Promise.all(resources.map(async input => {
     const name = path.basename(input, '.js')
     const folder = path.dirname(input).replace('src/_core/', '')
 
-    return compile(input, `core/${folder}/${name}.js`, {
+    return compile(input, `lib/core/${folder}/${name}.js`, {
       output: {
         format: 'es'
       },
@@ -49,11 +47,10 @@ async function BuildCore () {
     })
   }))
 
-  // UTILS
   resources = await globby('src/_core/utils/*.js')
   await Promise.all(resources.map(async input => {
     const basename = path.basename(input)
-    return compile(input, `core/utils/${basename}`, {
+    return compile(input, `lib/core/utils/${basename}`, {
       output: {
         format: 'es'
       },
@@ -71,50 +68,23 @@ async function BuildCore () {
     })
   }))
 
-  await replaceInFile({
-    files: 'core/**/*.js',
-    from: /vuikit\/src\/_core/g,
-    to: 'vuikit/core'
-  })
-}
-
-async function BuildLibrary () {
-  let resources = await globby('src/*/index.js')
-
-  await remove('*.js')
-
+  // LIBRARY
+  resources = await globby('src/*/index.js')
   await Promise.all(resources.map(async input => {
-    const basename = path.dirname(input).split('/').pop()
-    return compile(input, `${basename}.js`, {
+    const [, component] = path.dirname(input).split('/')
+
+    await compile(input, `lib/${component}.js`, {
       output: {
         format: 'es'
       },
-      external: id => {
-        const isRelative = /\.\//
-        const isDateFns = /date-fns/
-
-        if (id === input || isRelative.test(id) || isDateFns.test(id)) {
-          return false
-        }
-
-        const dirname = path.dirname(input)
-        const isInternal = RegExp(`${dirname}/`)
-
-        return !isInternal.test(id) // eslint-disable-line
-      }
+      external: id => /vuikit\/src\/_core/.test(id)
     })
   }))
 
   await replaceInFile({
-    files: '*.js',
+    files: 'lib/**/*.js',
     from: /vuikit\/src\/_core/g,
-    to: 'vuikit/core'
-  })
-
-  await replaceInFile({
-    files: '*.js',
-    from: /vuikit\/src/g,
-    to: 'vuikit'
+    to: 'vuikit/lib/core'
   })
 }
 

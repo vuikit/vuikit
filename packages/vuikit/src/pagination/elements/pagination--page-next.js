@@ -1,6 +1,8 @@
 import Icon from './pagination--icon-next'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { ElIcon } from 'vuikit/src/icon'
+import { elements as IconElements } from 'vuikit/src/icon'
+
+const { ElIcon } = IconElements
 
 export default {
   functional: true,
