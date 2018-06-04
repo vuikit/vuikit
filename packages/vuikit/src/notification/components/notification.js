@@ -1,23 +1,17 @@
-import MessageDirective from './directives/message'
-import MessageTransition from './transition'
-
-import {
-  ElNotification,
-  ElNotificationMessage,
-  ElNotificationClose
-} from './elements'
-
-import { warn, tip } from 'vuikit/src/_core/utils/debug'
 import { get } from 'vuikit/src/_core/utils/misc'
+import { warn, tip } from 'vuikit/src/_core/utils/debug'
 import { isObject, isString, assign } from 'vuikit/src/_core/utils/lang'
+
+import MessageDirective from '../directives/message'
+import MessageTransition from '../transition'
+
+import { ElNotification, ElNotificationMessage, ElNotificationClose } from '../elements'
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
 export default {
   name: 'VkNotification',
-  directives: {
-    MessageDirective
-  },
+  directives: { MessageDirective },
   props: assign({}, ElNotification.props, {
     timeout: {
       type: Number,

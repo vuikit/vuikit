@@ -17,7 +17,7 @@ import { hasClass, addClass, removeClass, toggleClass, replaceClass } from 'vuik
 import MixinEvents from 'vuikit/src/_core/mixins/events'
 import MixinFastdom from 'vuikit/src/_core/mixins/fastdom'
 
-import { ACTIVE, INACTIVE } from './constants'
+import { ACTIVE, INACTIVE } from '../constants'
 
 export default {
   name: 'VkSticky',
