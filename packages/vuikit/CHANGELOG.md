@@ -7,6 +7,7 @@
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
  - Removed `vk-table-tree`.
+ - Removed `vk-skeleton`.
  - Refactored `vk-drop` and `vk-dropdown`.
    - Added `vk-dropdown-nav`.
    - Added `vk-subnav-item-dropdown-nav`.
