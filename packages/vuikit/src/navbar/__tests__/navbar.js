@@ -1,8 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { createRenderer } from 'vue-server-renderer'
 
-import 'vuikit/src/dev-env'
-
 import {
   Navbar,
   NavbarFull,
@@ -21,17 +19,17 @@ describe('VkNavbar', () => {
   })
 
   it('elements match snapshots', async () => {
-    expect(await render(ElementNavbarNav)).toMatchSnapshot()
-    expect(await render(ElementNavbarItem)).toMatchSnapshot()
-    expect(await render(ElementNavbarLogo)).toMatchSnapshot()
-    expect(await render(ElementNavbarToggle, {
+    expect(await render(ElNavbarNav)).toMatchSnapshot()
+    expect(await render(ElNavbarItem)).toMatchSnapshot()
+    expect(await render(ElNavbarLogo)).toMatchSnapshot()
+    expect(await render(ElNavbarToggle, {
       context: {
         props: {
           title: 'Title'
         }
       }
     })).toMatchSnapshot()
-    expect(await render(ElementNavbarNavItem, {
+    expect(await render(ElNavbarNavItem, {
       context: {
         props: {
           active: true,

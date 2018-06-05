@@ -1,7 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { createRenderer } from 'vue-server-renderer'
 
-import 'vuikit/src/dev-env'
 import Test from '../__dev__/default.vue'
 
 describe('VkTabs', () => {

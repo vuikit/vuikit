@@ -1,4 +1,3 @@
-import 'vuikit/src/dev-env'
 import { createLocalVue, mount } from '@vue/test-utils'
 import { createRenderer } from 'vue-server-renderer'
 
