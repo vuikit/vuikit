@@ -1,20 +1,9 @@
-import { warn } from 'vuikit/src/_core/utils/debug'
 import { query } from 'vuikit/src/_core/utils/selector'
-
-import { HIDDEN } from './constants'
+import { warn, tip } from 'vuikit/src/_core/utils/debug'
 
 export default {
-  inheritAttrs: false,
   props: {
     show: {
-      type: Boolean,
-      default: false
-    },
-    flipped: {
-      type: Boolean,
-      default: false
-    },
-    overlay: {
       type: Boolean,
       default: false
     }
@@ -25,13 +14,15 @@ export default {
     }
   },
   mounted () {
-    this.$refs.content = query('body > .uk-offcanvas-content')
+    this.$refs.content = query('body .uk-offcanvas-content')
+    const isBody = n => n.nodeName === 'BODY'
 
-    if (process.env.NODE_ENV !== 'production' && !this.$refs.content) {
-      warn('vk-offcanas -> The `div.uk-offcanvas-content` element was not detected as a direct child of the body.', this)
+    if (process.env.NODE_ENV !== 'production') {
+      if (!this.$refs.content) {
+        warn('vk-offcanas -> The `div.uk-offcanvas-content` element was not detected.', this)
+      } else if (!isBody(this.$refs.content.parentNode)) {
+        tip('vk-offcanas -> The `div.uk-offcanvas-content` element should be placed as a direct child of the body.', this)
+      }
     }
-  },
-  beforeDestroy () {
-    this.$emit(HIDDEN)
   }
 }

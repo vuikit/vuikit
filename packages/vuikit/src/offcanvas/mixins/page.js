@@ -8,6 +8,16 @@ let scroll
 let scrollbarWidth
 
 export default {
+  props: {
+    flipped: {
+      type: Boolean,
+      default: false
+    },
+    overlay: {
+      type: Boolean,
+      default: false
+    }
+  },
   methods: {
     setPage () {
       const contentEl = queryContentEl()

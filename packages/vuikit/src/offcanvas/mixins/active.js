@@ -1,9 +1,9 @@
 import { on } from 'vuikit/src/_core/utils/event'
 import { docEl } from 'vuikit/src/_core/utils/env'
-import { CLOSE_KEY, HIDDEN, SHOW, SHOWN } from '../constants'
 
-export let active
-export let activeCount
+import { CLOSE_KEY } from '../constants'
+
+let active
 
 export default {
   props: {
@@ -13,19 +13,16 @@ export default {
     }
   },
   methods: {
+    isActive () {
+      return this === active
+    },
     setAsActive () {
       active = this
-      activeCount++
     },
     setAsInactive () {
-      activeCount--
-
       if (active === this) {
         active = null
       }
-    },
-    isActive () {
-      return this === active
     }
   },
   created () {
@@ -40,19 +37,6 @@ export default {
       if (clickedCloseKey || clickedOut) {
         this.hide()
       }
-    })
-
-    this.$on(SHOW, () => {
-      this.setPage()
-    })
-
-    this.$on(SHOWN, () => {
-      this.setAsActive()
-    })
-
-    this.$on(HIDDEN, () => {
-      this.resetPage()
-      this.setAsInactive()
     })
   },
   beforeDestroy () {

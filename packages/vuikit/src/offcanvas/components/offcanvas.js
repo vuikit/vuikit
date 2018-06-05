@@ -2,18 +2,33 @@ import { css } from 'vuikit/src/_core/utils/style'
 import { width } from 'vuikit/src/_core/utils/dimensions'
 import { win, docEl } from 'vuikit/src/_core/utils/env'
 
-import Core from '../core'
+import core from '../core'
+import { mixinPage, mixinActive } from '../mixins'
 import { ElOffcanvas, ElOffcanvasBar } from '../elements'
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
-import PageMixin from '../mixins/page'
-import ActiveMixin from '../mixins/active'
-import EventsMixin from 'vuikit/src/_core/mixins/events'
-
 export default {
+  inheritAttrs: false,
   name: 'VkOffcanvas',
-  extends: Core,
-  mixins: [EventsMixin, ActiveMixin, PageMixin],
+  extends: core,
+  mixins: [ mixinPage, mixinActive ],
+  created () {
+    this.$on(SHOW, () => {
+      this.setPage()
+    })
+
+    this.$on(SHOWN, () => {
+      this.setAsActive()
+    })
+
+    this.$on(HIDDEN, () => {
+      this.resetPage()
+      this.setAsInactive()
+    })
+  },
+  beforeDestroy () {
+    this.$emit(HIDDEN)
+  },
   render (h) {
     const instance = this
 
