@@ -1,47 +1,43 @@
-import core from './core'
+import { get } from 'vuikit/src/_core/utils/misc'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
+
 import Transition from '../transition'
-import { assign, each } from 'vuikit/src/_core/utils/lang'
 import VkModalOverflowAuto from '../directives/overflow-auto'
 
-import {
-  ElModal,
-  ElModalBody,
-  ElModalHeader,
-  ElModalFooter
-} from '../elements'
+import core from '../core'
+import { mixinActive, mixinPage } from '../mixins'
+import { ElModal, ElModalBody, ElModalHeader, ElModalFooter } from '../elements'
+
+import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
   name: 'VkModal',
   extends: core,
-  directives: {
-    VkModalOverflowAuto
-  },
-  props: assign({}, ElModal.props, {
+  mixins: [ mixinActive, mixinPage ],
+  directives: { VkModalOverflowAuto },
+  props: {
     // lazy: {}, TODO: Conditionally renders content on mounted. Will only render content if activated
     // enables the auto-overflow feature
     scrollable: {
       type: Boolean,
       default: false
-    },
-    // clicking outside will not dismiss the dialog
-    persistent: {
-      type: Boolean,
-      default: false
-    },
-    // close button display
-    closeBtn: {
-      type: Boolean,
-      default: true
     }
+  },
+  data: () => ({
+    open: false
   }),
   render (h) {
-    Object.keys(this.$slots).forEach(slot => each(this.$slots[slot], node => {
-      if (node.fnOptions && node.fnOptions.name === 'ElModalClose') {
-        node.data.staticClass = 'uk-modal-close-default'
+    // workaround to add a default modifier class to the close button
+    this.$slots.default.forEach(node => {
+      if (get(node, 'fnOptions.name') === 'ElModalClose') {
+        node.data = mergeData(node.data, { class: 'uk-modal-close-default' })
       }
-    }))
+    })
 
     const modal = h(ElModal, {
+      class: {
+        'uk-open': this.open
+      },
       props: {
         centered: this.centered,
         expanded: this.expanded
@@ -57,6 +53,30 @@ export default {
       this.$slots.footer && h(ElModalFooter, this.$slots.footer)
     ])
 
-    return h(Transition, [ modal ])
+    return h(Transition, {
+      props: { appear: true },
+      on: {
+        beforeEnter: () => {
+          this.$emit(SHOW)
+          this.setPage()
+        },
+        enter: () => {
+          this.open = true
+        },
+        afterEnter: () => {
+          this.setAsActive()
+          this.$emit(SHOWN)
+        },
+        beforeLeave: () => {
+          this.$emit(HIDE)
+          this.open = false
+        },
+        afterLeave: () => {
+          this.setAsInactive()
+          this.$emit(HIDDEN)
+          this.resetPage()
+        }
+      }
+    }, [ modal ])
   }
 }
