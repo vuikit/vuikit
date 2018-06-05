@@ -3,12 +3,12 @@ import { warn } from 'vuikit/src/_core/utils/debug'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import { ElTableTd, ElTableTh, ElTableThSort } from '../elements'
+import { ElTableTd, ElTableTh } from '../elements'
 
 export default {
   functional: true,
   name: 'VkTableColumn',
-  props: assign({}, ElTableTh.props, ElTableThSort.props, ElTableTd.props, {
+  props: assign({}, ElTableTh.props, ElTableTd.props, {
     head: String,
     cell: [String, Function],
     cellClass: String,
@@ -35,22 +35,16 @@ export default {
       }
     }
 
-    // sortable
-    if (props.sortable) {
-      return h(ElTableThSort, mergeData(data, {
-        props: assign({}, props, {
-          order: get(parent, `sortedBy.${props.cell}`)
-        }),
-        on: {
-          click: e => {
+    return h(ElTableTh, mergeData(data, {
+      props,
+      on: {
+        click: e => {
+          if (props.sortable) {
             parent.sortBy(props.cell, e.shiftKey)
           }
         }
-      }), props.head)
-    }
-
-    // default
-    return h(ElTableTh, mergeData(data, { props }), props.head)
+      }
+    }), props.head)
   },
   cellRender (h, ctx) {
     const { props, row } = ctx

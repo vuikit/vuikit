@@ -11,7 +11,7 @@
     >
       <vk-table-column-select/>
       <vk-table-column head="Name" cell="name"/>
-      <vk-table-column head="Name" cell="name" sortable/>
+      <vk-table-column head="Name Sortable" cell="name" sortable/>
     </vk-table>
 
     <vk-table

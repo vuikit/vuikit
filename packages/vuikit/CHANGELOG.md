@@ -8,6 +8,7 @@
  - Renamed `vk-table-column` `title` prop as `head`.
  - Removed `vk-table-tree`.
  - Removed `vk-skeleton`.
+ - Removed `vk-table-column-sort` and other not UIkit native features.
  - Refactored `vk-drop` and `vk-dropdown`.
    - Added `vk-dropdown-nav`.
    - Added `vk-subnav-item-dropdown-nav`.
