@@ -1,4 +1,4 @@
-import { ElTable } from '../elements'
+import { ElTable } from './elements'
 import { assign } from 'vuikit/src/_core/utils/lang'
 
 export default {
