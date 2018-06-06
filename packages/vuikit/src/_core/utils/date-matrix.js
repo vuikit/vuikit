@@ -1,11 +1,5 @@
 import { range } from './misc'
-
-import getDate from 'date-fns/get_date'
-import addDays from 'date-fns/add_days'
-import getYear from 'date-fns/get_year'
-import getMonth from 'date-fns/get_month'
-import isSameMonth from 'date-fns/is_same_month'
-import startOfWeek from 'date-fns/start_of_week'
+import { getDate, addDays, getYear, getMonth, isSameMonth, startOfWeek } from './date'
 
 const rows = range(6)
 const cols = range(7)
