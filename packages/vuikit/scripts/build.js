@@ -12,7 +12,7 @@ import { run, remove, write, minifyJS } from '@miljan/build'
 
 run(async () => {
   await BuildLibrary()
-  await BuildDist()
+  // await BuildDist()
 })
 
 async function BuildLibrary () {
@@ -55,15 +55,9 @@ async function BuildLibrary () {
         format: 'es'
       },
       external (id) {
-        const isRelative = /\.\//
-        const isDateFns = /date-fns/
-
-        if (id === input || isDateFns.test(id)) {
-          return false
-        }
-
-        // consider all relative as external
-        return !isRelative.test(id)
+        const isInput = input === id
+        const isRelative = /^\.\//.test(id) || /_core\/util/.test(id)
+        return !isInput && isRelative
       }
     })
   }))
@@ -77,7 +71,10 @@ async function BuildLibrary () {
       output: {
         format: 'es'
       },
-      external: id => /vuikit\/src\/_core/.test(id)
+      external: id => {
+        const isInternal = RegExp(`vuikit/src/${component}`).test(id) || /^(\.|\.\.)\//.test(id)
+        return input !== id && !isInternal
+      }
     })
   }))
 
@@ -85,6 +82,12 @@ async function BuildLibrary () {
     files: 'lib/**/*.js',
     from: /vuikit\/src\/_core/g,
     to: 'vuikit/lib/core'
+  })
+
+  await replaceInFile({
+    files: 'lib/**/*.js',
+    from: /vuikit\/src/g,
+    to: 'vuikit/lib'
   })
 }
 
