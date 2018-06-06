@@ -1,5 +1,5 @@
 import { ElTable } from './elements'
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 
 export default {
   props: assign({}, ElTable.props, {

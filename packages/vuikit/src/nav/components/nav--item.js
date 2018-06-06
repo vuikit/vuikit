@@ -1,5 +1,5 @@
+import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { assign } from 'vuikit/src/_core/utils/lang'
 
 import { ElNavItem } from '../elements'
 

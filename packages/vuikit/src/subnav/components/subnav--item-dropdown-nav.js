@@ -1,4 +1,4 @@
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 
 import { DropdownNav } from 'vuikit/src/dropdown'
 import { ElSubnavItemDropdown } from '../elements'

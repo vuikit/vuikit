@@ -1,4 +1,4 @@
-import { get } from 'vuikit/src/_core/utils/misc'
+import { get } from 'vuikit/src/_core/utils/object'
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { TAB_ID } from '../constants'
 

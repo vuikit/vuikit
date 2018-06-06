@@ -1,5 +1,5 @@
 import { Drop } from 'vuikit/src/drop'
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 import { ElDropdownNav } from '../elements'

@@ -80,7 +80,7 @@
 
 <script>
 import * as elements from '../../elements'
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 
 import VkIconsUser from '@vuikit/icons/user'
 import VkIconsLink from '@vuikit/icons/link'

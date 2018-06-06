@@ -1,3 +1,5 @@
+import { assign, each } from './object'
+
 /**
  * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
  */
@@ -8,12 +10,6 @@ export function bind (fn, context) {
     const l = arguments.length
     return l ? l > 1 ? fn.apply(context, arguments) : fn.call(context, a) : fn.call(context)
   }
-}
-
-const {hasOwnProperty} = Object.prototype
-
-export function hasOwn (obj, key) {
-  return hasOwnProperty.call(obj, key)
 }
 
 const hyphenateRe = /([a-z\d])([A-Z])/g
@@ -178,29 +174,6 @@ export function swap (value, a, b) {
   return value.replace(new RegExp(`${a}|${b}`, 'mg'), match => {
     return match === a ? b : a
   })
-}
-
-export const assign = Object.assign || function (target, ...args) {
-  target = Object(target)
-  for (let i = 0; i < args.length; i++) {
-    const source = args[i]
-    if (source !== null) {
-      for (const key in source) {
-        if (hasOwn(source, key)) {
-          target[key] = source[key]
-        }
-      }
-    }
-  }
-  return target
-}
-
-export function each (obj, cb) {
-  for (const key in obj) {
-    if (cb.call(obj[key], obj[key], key) === false) {
-      break
-    }
-  }
 }
 
 // Compare by numbers only

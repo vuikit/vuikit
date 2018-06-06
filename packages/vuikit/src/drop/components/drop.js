@@ -3,7 +3,7 @@ import VkPosition, { BEFORE_POSITION } from 'vuikit/src/_core/directives/positio
 import mixinEvents from 'vuikit/src/_core/mixins/events'
 
 import { $ } from 'vuikit/src/_core/utils/core'
-import { get } from 'vuikit/src/_core/utils/misc'
+import { get } from 'vuikit/src/_core/utils/object'
 import { css } from 'vuikit/src/_core/utils/style'
 import { isTouch } from 'vuikit/src/_core/utils/touch'
 import { MouseTracker } from 'vuikit/src/_core/utils/mouse'

@@ -4,8 +4,9 @@
 
 /* eslint-disable no-mixed-operators */
 import {css} from './style'
+import {each} from './object'
 import {isVisible} from './filter'
-import {clamp, each, endsWith, includes, intersectRect, isDocument, isUndefined, isWindow, toFloat, toNode, ucfirst} from './lang'
+import {clamp, endsWith, includes, intersectRect, isDocument, isUndefined, isWindow, toFloat, toNode, ucfirst} from './lang'
 
 const dirs = {
   width: ['x', 'left', 'right'],

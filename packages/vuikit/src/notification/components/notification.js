@@ -1,6 +1,6 @@
-import { get } from 'vuikit/src/_core/utils/misc'
 import { warn, tip } from 'vuikit/src/_core/utils/debug'
-import { isObject, isString, assign } from 'vuikit/src/_core/utils/lang'
+import { assign, get } from 'vuikit/src/_core/utils/object'
+import { isObject, isString } from 'vuikit/src/_core/utils/lang'
 
 import MessageDirective from '../directives/message'
 import MessageTransition from '../transition'

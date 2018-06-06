@@ -3,9 +3,10 @@
  */
 
 /* eslint-disable one-var, no-mixed-operators, no-useless-call */
+import {each} from './object'
 import {append} from './dom'
 import {addClass} from './class'
-import {each, hyphenate, isArray, isNumeric, isObject, isString, isUndefined, toNode, toNodes} from './lang'
+import {hyphenate, isArray, isNumeric, isObject, isString, isUndefined, toNode, toNodes} from './lang'
 
 const cssNumber = {
   'animation-iteration-count': true,

@@ -1,7 +1,7 @@
-import { get } from 'vuikit/src/_core/utils/misc'
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { assign, isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
+import { assign, get } from 'vuikit/src/_core/utils/object'
+import { isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
 
 import { ElTableTd, ElTableTh } from '../elements'
 

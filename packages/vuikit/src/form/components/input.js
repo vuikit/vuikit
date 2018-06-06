@@ -1,8 +1,7 @@
 import { ElInput } from '../elements'
 
-import { get } from 'vuikit/src/_core/utils/misc'
-import { assign } from 'vuikit/src/_core/utils/lang'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
+import { assign, get } from 'vuikit/src/_core/utils/object'
 
 export default assign({}, ElInput, {
   name: 'VkFormInput',

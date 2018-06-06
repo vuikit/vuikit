@@ -1,5 +1,5 @@
 import { css } from 'vuikit/src/_core/utils/style'
-import { get } from 'vuikit/src/_core/utils/misc'
+import { get } from 'vuikit/src/_core/utils/object'
 import { height } from 'vuikit/src/_core/utils/dimensions'
 import { isVisible } from 'vuikit/src/_core/utils/filter'
 import { Transition } from 'vuikit/src/_core/utils/animation'

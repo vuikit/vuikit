@@ -1,9 +1,10 @@
 import { css } from 'vuikit/src/_core/utils/style'
 import { warn } from 'vuikit/src/_core/utils/debug'
-import { toggleClass } from 'vuikit/src/_core/utils/class'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { trigger } from 'vuikit/src/_core/utils/event'
+import { toggleClass } from 'vuikit/src/_core/utils/class'
 import { positionAt, flipPosition } from 'vuikit/src/_core/utils/dimensions'
-import { assign, isObject, isUndefined } from 'vuikit/src/_core/utils/lang'
+import { isObject, isUndefined } from 'vuikit/src/_core/utils/lang'
 import { BEFORE_POSITION, AFTER_POSITION } from './constants'
 
 export default {

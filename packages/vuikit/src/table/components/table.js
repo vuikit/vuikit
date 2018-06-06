@@ -1,4 +1,5 @@
-import { assign, isFunction } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
+import { isFunction } from 'vuikit/src/_core/utils/lang'
 
 import core from '../core'
 import { ElTable, ElTableTr } from '../elements'

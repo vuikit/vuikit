@@ -1,8 +1,9 @@
 import { apply } from 'vuikit/src/_core/utils/vue'
 import { ready } from 'vuikit/src/_core/utils/dom'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { fastdom } from 'vuikit/src/_core/utils/fastdom'
 import { on, createEvent } from 'vuikit/src/_core/utils/event'
-import { includes, assign, isPlainObject } from 'vuikit/src/_core/utils/lang'
+import { includes, isPlainObject } from 'vuikit/src/_core/utils/lang'
 
 const DATA = '_vk_fastdom_data'
 const FRAMES = '_vk_fastdom_frames'

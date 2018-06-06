@@ -3,7 +3,7 @@ import Matrix from 'vuikit/src/_core/utils/pagination-matrix'
 import VkMargin from 'vuikit/src/margin'
 
 import { warn } from 'vuikit/src/_core/utils/debug'
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {

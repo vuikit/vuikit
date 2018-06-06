@@ -1,4 +1,5 @@
-import { isUndefined, assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
+import { isUndefined } from 'vuikit/src/_core/utils/lang'
 
 import { Dropdown } from 'vuikit/src/dropdown'
 import { ElNavDropdown, ElNavItem } from 'vuikit/src/nav'

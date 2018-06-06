@@ -1,5 +1,5 @@
 import { getCssVar } from './style'
-import { isObject, isString, toFloat } from './lang'
+import { isString, toFloat } from './lang'
 
 export function toMedia (value) {
   if (isString(value)) {
@@ -39,24 +39,6 @@ export function debounce (fn, wait, immediate) {
       fn.apply(context, args)
     }
   }
-}
-
-/**
- * Gets the Object value at specific `path`. If the resolved value is
- * `undefined`, the `defVal` is returned in its place.
- */
-export function get (obj, path, defVal) {
-  var result = isObject(obj) && isString(path)
-    ? _get(obj, path)
-    : undefined
-
-  return result === undefined
-    ? defVal
-    : result
-}
-
-function _get (obj, path) {
-  return path.split('.').reduce((acc, val) => acc && acc[val], obj)
 }
 
 /*

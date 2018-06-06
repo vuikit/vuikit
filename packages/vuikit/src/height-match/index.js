@@ -2,8 +2,9 @@ import { $$ } from 'vuikit/src/_core/utils/core'
 import { on } from 'vuikit/src/_core/utils/event'
 import { css } from 'vuikit/src/_core/utils/style'
 import { attr } from 'vuikit/src/_core/utils/attr'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { isVisible } from 'vuikit/src/_core/utils/filter'
-import { isUndefined, isString, assign } from 'vuikit/src/_core/utils/lang'
+import { isUndefined, isString } from 'vuikit/src/_core/utils/lang'
 
 const NAMESPACE = '__vkHeightMatch'
 

@@ -1,8 +1,7 @@
 import { ElSubnav } from '../elements'
-import { get } from 'vuikit/src/_core/utils/misc'
 import { warn } from 'vuikit/src/_core/utils/debug'
-import { assign } from 'vuikit/src/_core/utils/lang'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
+import { get, assign } from 'vuikit/src/_core/utils/object'
 
 /* This component supports both local as synced
   activeItem state, reason for a data and a prop. */

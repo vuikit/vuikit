@@ -1,9 +1,10 @@
 import { on } from 'vuikit/src/_core/utils/event'
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { isRtl } from 'vuikit/src/_core/utils/env'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { isVisible } from 'vuikit/src/_core/utils/filter'
 import { toggleClass } from 'vuikit/src/_core/utils/class'
-import { isObject, noop, assign } from 'vuikit/src/_core/utils/lang'
+import { isObject, noop } from 'vuikit/src/_core/utils/lang'
 
 const NAMESPACE = '__vkMargin'
 

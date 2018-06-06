@@ -1,10 +1,9 @@
 import { Grid } from 'vuikit/src/grid'
 import { Drop } from 'vuikit/src/drop'
 
-import { get } from 'vuikit/src/_core/utils/misc'
 import { query } from 'vuikit/src/_core/utils/selector'
-import { assign } from 'vuikit/src/_core/utils/lang'
 import { isTouch } from 'vuikit/src/_core/utils/touch'
+import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
 
 export default {

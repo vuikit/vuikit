@@ -1,6 +1,6 @@
 import { ElFormIconLink } from '../elements'
 
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {

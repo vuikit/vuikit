@@ -4,10 +4,11 @@
 
 /* eslint-disable prefer-promise-reject-errors */
 import {attr} from './attr'
+import {assign} from './object'
 import {Promise} from './promise'
 import {once, trigger} from './event'
 import {css, propName} from './style'
-import {assign, startsWith, toNodes} from './lang'
+import {startsWith, toNodes} from './lang'
 import {addClass, hasClass, removeClass, removeClasses} from './class'
 
 export function transition (element, props, duration = 400, timing = 'linear') {

@@ -1,5 +1,5 @@
 import core from './core'
-import { assign } from 'vuikit/src/_core/utils/lang'
+import { assign } from 'vuikit/src/_core/utils/object'
 import { Transition } from 'vuikit/src/_core/components/transition'
 
 import { TAB_ID } from '../constants'

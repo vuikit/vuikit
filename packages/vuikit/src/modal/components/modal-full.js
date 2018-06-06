@@ -1,4 +1,4 @@
-import { get } from 'vuikit/src/_core/utils/misc'
+import { get } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 import core from '../core'
