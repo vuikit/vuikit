@@ -60,7 +60,7 @@ function getOptions (ctx) {
   const { value } = ctx.binding
 
   if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-magin -> Object expected as configuration', ctx.vnode.context)
+    warn('[VkMargin]: An Object is expected as configuration', ctx.vnode.context)
   }
 
   const options = assign({

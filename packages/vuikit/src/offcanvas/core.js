@@ -19,9 +19,9 @@ export default {
 
     if (process.env.NODE_ENV !== 'production') {
       if (!this.$refs.content) {
-        warn('vk-offcanas -> The `div.uk-offcanvas-content` element was not detected.', this)
+        warn('[VkOffcanas]: The `div.uk-offcanvas-content` element was not detected.', this)
       } else if (!isBody(this.$refs.content.parentNode)) {
-        tip('vk-offcanas -> The `div.uk-offcanvas-content` element should be placed as a direct child of the body.', this)
+        tip('[VkOffcanas]: The `div.uk-offcanvas-content` element should be placed as a direct child of the body.', this)
       }
     }
   }

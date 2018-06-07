@@ -38,7 +38,7 @@ export default {
     }, filterItems(this).map((node, index) => {
 
       if (process.env.NODE_ENV !== 'production' && !node.fnOptions) {
-        warn('vk-subvnav -> components must be functional', this)
+        warn('[VkSubvnav]: the child components must be functional.', this)
       }
 
       const key = get(node, 'data.key', index)

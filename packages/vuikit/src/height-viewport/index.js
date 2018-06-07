@@ -39,7 +39,7 @@ function getOptions (ctx) {
   const { value, modifiers } = ctx.binding
 
   if (process.env.NODE_ENV !== 'production' && value && !isObject(value)) {
-    warn('v-vk-height-viewport -> Object expected as configuration', ctx.vnode.context)
+    warn('[VkHeightViewport]: An Object is expected as configuration.', ctx.vnode.context)
   }
 
   const options = assign({

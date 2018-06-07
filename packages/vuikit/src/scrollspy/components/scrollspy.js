@@ -149,7 +149,7 @@ export default {
 
     // warn if using multiple elements
     if (process.env.NODE_ENV !== 'production' && children.length > 1) {
-      warn('vk-scrollspy can only be used on a single element', this.$parent)
+      warn('[VkScrollspy]: This component can only be applied to a single element', this.$parent)
     }
 
     return children[0]

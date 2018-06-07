@@ -5,8 +5,6 @@ import { TAB_ID } from '../constants'
 /* This component supports both local as synced
   activeTab state, reason for a data and a prop. */
 
-const isNotProd = process.env.NODE_ENV !== 'production'
-
 export default {
   props: {
     activeTab: {},
@@ -42,7 +40,9 @@ export default {
       return filterTabs(this)
         .filter((node, index) => {
           if (!node.componentOptions) {
-            isNotProd && warn(`vk-tabs -> failed to process '${node.tag}', seems is not a stateful component`, this)
+            if (process.env.NODE_ENV !== 'production') {
+              warn(`[VkTabs]: failed to process '${node.tag}', it must be a stateful component.`, this)
+            }
             return false
           }
 

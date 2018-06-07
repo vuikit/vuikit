@@ -61,7 +61,7 @@ export default {
     }, nodes.map(node => {
       if (!node.fnOptions) {
         process.env.NODE_ENV !== 'production' &&
-          warn(`vk-pagination -> ${node.tag} component is not functional`, this)
+          warn(`[VkPagination]: ${node.tag} component is not functional`, this)
 
         return
       }

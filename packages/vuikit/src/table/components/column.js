@@ -27,11 +27,11 @@ export default {
 
     if (process.env.NODE_ENV !== 'production' && props.sortable) {
       if (!parent.sortedBy) {
-        warn(`vk-table -> 'sortedBy' prop undefined.`, parent)
+        warn(`[VkTable]: The 'sortedBy' prop is undefined.`, parent)
       }
 
       if (!props.head || !props.cell) {
-        warn(`vk-table-column -> 'head' and 'cell' props are required on sortable columns.`, parent)
+        warn(`[VkTableColumn]: The 'head' and 'cell' props are required for a sortable column.`, parent)
       }
     }
 

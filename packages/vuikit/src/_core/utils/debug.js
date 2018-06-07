@@ -15,7 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   warn = (msg, vm) => {
     if (hasConsole) {
-      console.error(`[Vuikit warn]: ${msg}` + (
+      console.error(`${msg}` + (
         vm ? generateComponentTrace(vm) : ''
       ))
     }
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 
   tip = (msg, vm) => {
     if (hasConsole) {
-      console.warn(`[Vuikit tip]: ${msg}` + (
+      console.warn(`${msg}` + (
         vm ? generateComponentTrace(vm) : ''
       ))
     }

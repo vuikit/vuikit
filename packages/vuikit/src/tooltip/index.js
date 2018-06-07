@@ -280,7 +280,7 @@ function getOptions (ctx) {
     const { position: pos } = options
 
     if (!(/^(top|bottom)-(left|right)$/.test(pos) || /^(top|bottom|left|right)$/.test(pos))) {
-      warn(`v-vk-tooltip -> '${pos}' is not a valid position value`, ctx.vnode)
+      warn(`[VkTooltip]: Invalid position: '${pos}'.`, ctx.vnode)
     }
   }
 

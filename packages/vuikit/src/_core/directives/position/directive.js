@@ -29,11 +29,11 @@ function position (ctx) {
   const { target, position, offset, boundary, flip, mainClass } = props
 
   if (process.env.NODE_ENV !== 'production' && !position.match(/^((top|bottom)-(left|center|right))|((left|right)-(top|center|bottom))$/)) {
-    warn(`v-position -> '${position}' -> no valid position`, vnode)
+    warn(`[Vuikit v-position]: Invalid position: '${position}'.`, vnode)
   }
 
   if (process.env.NODE_ENV !== 'production' && (!target || !target.tagName)) {
-    warn(`v-position -> no valid target`, vnode)
+    warn(`[Vuikit v-position]: Invalid target.`, vnode)
   }
 
   let [dir, align] = position.split('-')
@@ -90,7 +90,7 @@ function getOptions (ctx) {
   const { value } = ctx.binding
 
   if (process.env.NODE_ENV !== 'production' && (isUndefined(value) || !isObject(value))) {
-    warn('v-position -> configuration is missing or is not an Object', vnode.context)
+    warn('[Vuikit v-position]: Configuration is missing or is not an Object.', vnode.context)
   }
 
   const options = assign({

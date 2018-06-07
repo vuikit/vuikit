@@ -7,8 +7,6 @@ import MessageTransition from '../transition'
 
 import { ElNotification, ElNotificationMessage, ElNotificationClose } from '../elements'
 
-const isNotProd = process.env.NODE_ENV !== 'production'
-
 export default {
   name: 'VkNotification',
   directives: { MessageDirective },
@@ -22,7 +20,9 @@ export default {
       default: () => [],
       validator: val => {
         if (!val.every(m => isObject(m) || isString(m))) {
-          isNotProd && warn('vk-notification -> each message is expected as Object or String')
+          if (process.env.NODE_ENV !== 'production') {
+            warn('[VkNotification]: Each message is expected as Object or String')
+          }
           return false
         }
 
@@ -77,7 +77,9 @@ export default {
 
       for (let i = 0; i < values.length; i++) {
         if (isDuplicated(values[i])) {
-          isNotProd && tip('vk-notification -> duplicate messages are filtered out, consider adding a unique `key` to those.')
+          if (process.env.NODE_ENV !== 'production') {
+            tip('[VkNotification]: Duplicate messages are filtered out, consider adding a unique `key` to those.')
+          }
           continue
         }
 
