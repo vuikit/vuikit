@@ -12,7 +12,7 @@ import { run, remove, write, minifyJS } from '@miljan/build'
 
 run(async () => {
   await BuildLibrary()
-  // await BuildDist()
+  await BuildDist()
 })
 
 async function BuildLibrary () {

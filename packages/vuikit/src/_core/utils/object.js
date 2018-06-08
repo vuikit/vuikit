@@ -1,4 +1,5 @@
-import { isObject, isString } from './lang'
+const isString = str => typeof str === 'string'
+const isObject = obj => obj !== null && typeof obj === 'object'
 
 // Creates an object composed of the picked object properties
 export function pick (obj, paths) {
