@@ -3,7 +3,8 @@ import { assign } from 'vuikit/src/_core/utils/object'
 export default {
   props: {
     sortedBy: {
-      type: Object
+      type: Object,
+      default: () => ({})
     }
   },
   methods: {
