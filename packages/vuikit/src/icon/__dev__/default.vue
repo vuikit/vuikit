@@ -7,6 +7,7 @@
       <div>
         <h3>icon</h3>
         <vk-icon icon="check" />
+        <vk-icon :icon="$options.IconCheck" />
         <vk-icon icon="check" ratio="3.5" />
         <vk-icon icon="file" width="10" height="10" />
         <vk-icon icon="home" viewBox="6 6 16 16" />
@@ -35,5 +36,16 @@
       </div>
     </vk-grid>
 
+    <h2>Icon as component</h2>
+    <vk-icon :icon="$options.IconCheck" />
+
   </div>
 </template>
+
+<script>
+import IconCheck from '@vuikit/icons/check'
+
+export default {
+  IconCheck
+}
+</script>

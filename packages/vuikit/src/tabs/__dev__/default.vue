@@ -18,7 +18,7 @@
         </vk-tabs>
       </div>
 
-      <div>
+      <!-- <div>
         <h2>Animation</h2>
 
         <vk-tabs animation="fade">
@@ -43,9 +43,9 @@
         </vk-tabs>
         <p>Current Tab: {{ activeTab }}</p>
         <vk-button size="small" @click="activeTab = 'tab-1'">Set Tab 1</vk-button>
-      </div>
+      </div> -->
     </vk-grid>
-
+<!--
     <h2>Alignment</h2>
 
     <vk-grid class="uk-child-width-1-3@m">
@@ -145,7 +145,7 @@
         Content 4
       </vk-tabs-item>
       <vk-tabs-item title="Disabled" disabled />
-    </vk-tabs>
+    </vk-tabs> -->
 
   </div>
 </template>

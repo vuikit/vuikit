@@ -13,7 +13,7 @@ export default {
       default: false
     }
   },
-  render (h, { props, data, children }) {
+  render (h, { props, data, children: icon }) {
     const { active, href, target } = props
 
     return h('li', mergeData(data, {
@@ -21,7 +21,7 @@ export default {
     }), [
       h(ElIconLink, {
         attrs: { href, target }
-      }, children)
+      }, icon)
     ])
   }
 }

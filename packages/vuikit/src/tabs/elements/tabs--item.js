@@ -6,7 +6,6 @@ const { ElIcon } = IconElements
 export default {
   functional: true,
   props: {
-    icon: {},
     title: {
       type: String,
       required: true
@@ -20,8 +19,9 @@ export default {
       default: false
     }
   },
-  render (h, { props, data, listeners, children }) {
-    const { active, disabled, title, icon } = props
+  render (h, { props, data, listeners, slots }) {
+    const _slots = slots()
+    const { active, disabled, title } = props
 
     delete data.on
 
@@ -33,11 +33,11 @@ export default {
     }), [
       h('a', { on: listeners }, [
         title,
-        icon && h(ElIcon, {
+        _slots.icon && h(ElIcon, {
           class: 'uk-margin-small-left'
-        }, [ icon ])
+        }, [ _slots.icon ])
       ]),
-      children
+      _slots.default
     ])
   }
 }

@@ -1,8 +1,9 @@
+import { isString } from 'vuikit/src/_core/utils/lang'
+
 export default {
   functional: true,
   props: {
     icon: {
-      type: String,
       required: true
     },
     ratio: {
@@ -12,11 +13,11 @@ export default {
   },
   render (h, { data, props }) {
     const { icon, ratio } = props
-    const { width, height, viewBox } = data.attrs || {}
+    const attrs = data.attrs || {}
 
-    const Icon = h(`vk-icons-${icon}`, {
-      attrs: { width, height, viewBox }
-    })
+    const Icon = isString(icon)
+      ? h(`vk-icons-${icon}`, { attrs })
+      : h(icon, { attrs })
 
     if (ratio !== 1) {
       Icon.data.attrs.width *= ratio

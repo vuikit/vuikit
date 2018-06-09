@@ -6,7 +6,6 @@ const { ElIcon } = IconElements
 export default {
   functional: true,
   props: {
-    icon: {},
     href: String,
     target: String,
     title: {
@@ -20,12 +19,9 @@ export default {
       default: false
     }
   },
-  render (h, { props, data, children }) {
+  render (h, { props, data, children, slots }) {
+    const _slots = slots()
     const { active, title, subtitle, icon, href, target } = props
-
-    const Icon = icon && h(ElIcon, {
-      class: 'uk-margin-small-right'
-    }, [ icon ])
 
     const Subtitle = subtitle && h('div', [ title, h('div', {
       class: 'uk-navbar-subtitle'
@@ -37,7 +33,9 @@ export default {
       h('a', {
         attrs: { href, target }
       }, [
-        Icon,
+        _slots.icon && h(ElIcon, {
+          class: 'uk-margin-small-right'
+        }, [ icon ]),
         Subtitle || title
       ]),
       children

@@ -13,6 +13,7 @@
    - Added `vk-dropdown-nav`.
    - Added `vk-subnav-item-dropdown-nav`.
    - Removed `vk-nav-dropdown`.
+ - Allow `vk-icon-*` to receive the icon as a component.
 
 ## 0.8.5 (May 29, 2018)
 

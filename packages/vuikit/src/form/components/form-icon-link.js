@@ -1,19 +1,16 @@
-import { ElFormIconLink } from '../elements'
-
 import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
+
+import { core } from 'vuikit/src/icon'
+import { ElFormIconLink } from '../elements'
 
 export default {
   functional: true,
   name: 'VkFormIconLink',
-  props: assign({}, ElFormIconLink.props, {
-    icon: String
-  }),
+  props: assign({}, core.props, ElFormIconLink.props),
   render (h, { props, data, attrs }) {
-    const Icon = h(`vk-icons-${props.icon}`, { attrs })
-
     return h(ElFormIconLink, mergeData(data, { props }), [
-      Icon
+      h(core, { attrs: data.attrs, props })
     ])
   }
 }
