@@ -3,7 +3,7 @@ const isObject = obj => obj !== null && typeof obj === 'object'
 
 // Creates an object composed of the picked object properties
 export function pick (obj, paths) {
-  return Object.keys(paths)
+  return paths
     .map(k => k in obj ? {[k]: obj[k]} : {})
     .reduce((res, o) => assign(res, o), {})
 }
