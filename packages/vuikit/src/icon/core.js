@@ -1,3 +1,4 @@
+import { assign } from 'vuikit/src/_core/utils/object'
 import { isString } from 'vuikit/src/_core/utils/lang'
 
 export default {
@@ -17,7 +18,8 @@ export default {
 
     const Icon = isString(icon)
       ? h(`vk-icons-${icon}`, { attrs })
-      : h(icon, { attrs })
+      // copy with assign to avoid altering the prop
+      : h(assign({}, icon), { attrs })
 
     if (ratio !== 1) {
       Icon.data.attrs.width *= ratio
