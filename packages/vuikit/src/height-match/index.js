@@ -1,3 +1,9 @@
-import directive from './directive'
+import HeightMatch from './directive'
 
-export default directive
+export { HeightMatch }
+
+export default {
+  install (Vue, { prefix = 'Vk' } = {}) {
+    Vue.directive(`${prefix}HeightMatch`, HeightMatch)
+  }
+}

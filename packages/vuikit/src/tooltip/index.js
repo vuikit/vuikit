@@ -1,3 +1,9 @@
-import directive from './directive'
+import Tooltip from './directive'
 
-export default directive
+export { Tooltip }
+
+export default {
+  install (Vue, { prefix = 'Vk' } = {}) {
+    Vue.directive(`${prefix}Tooltip`, Tooltip)
+  }
+}

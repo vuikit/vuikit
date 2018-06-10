@@ -1,3 +1,9 @@
-import directive from './directive'
+import Margin from './directive'
 
-export default directive
+export { Margin }
+
+export default {
+  install (Vue, { prefix = 'Vk' } = {}) {
+    Vue.directive(`${prefix}Margin`, Margin)
+  }
+}

@@ -6,12 +6,12 @@ const Vuikit = {
   components,
   directives,
 
-  install (Vue) {
+  install (Vue, { prefix = 'Vk' } = {}) {
     each(components, (def, name) => {
-      Vue.component(`Vk${name}`, def)
+      Vue.component(`${prefix}${name}`, def)
     })
     each(directives, (def, name) => {
-      Vue.directive(`Vk${name}`, def)
+      Vue.directive(`${prefix}${name}`, def)
     })
   }
 }

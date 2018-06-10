@@ -1,3 +1,9 @@
-import directive from './directive'
+import HeightViewport from './directive'
 
-export default directive
+export { HeightViewport }
+
+export default {
+  install (Vue, { prefix = 'Vk' } = {}) {
+    Vue.directive(`${prefix}HeightViewport`, HeightViewport)
+  }
+}
