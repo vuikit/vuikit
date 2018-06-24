@@ -41,11 +41,15 @@ export default {
         beforeEnter (el) {
           instance.$emit(SHOW)
 
-          const scrollbarWidth = width(win) - docEl.offsetWidth
+          const scrollbarWidth = instance.getScrollbarWidth()
+
           css(docEl, 'overflowY', instance.flipped && scrollbarWidth && instance.overlay
             ? 'scroll'
             : ''
           )
+
+          // freeze content width/height
+          width(instance.$refs.content, width(win) - scrollbarWidth)
         },
         enter (el, done) {
           height(el) // force reflow

@@ -58,11 +58,15 @@ export default {
         beforeEnter (el) {
           instance.$emit(SHOW)
 
-          const scrollbarWidth = width(win) - docEl.offsetWidth
+          const scrollbarWidth = instance.getScrollbarWidth()
+
           css(docEl, 'overflowY', scrollbarWidth && instance.overlay
             ? 'scroll'
             : ''
           )
+
+          // freeze content width/height
+          width(instance.$refs.content, width(win) - scrollbarWidth)
         },
         afterEnter (el) {
           instance.$emit(SHOWN)

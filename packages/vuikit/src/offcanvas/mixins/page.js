@@ -5,7 +5,6 @@ import { win, docEl, body } from 'vuikit/src/_core/utils/env'
 import { addClass, removeClass, hasClass } from 'vuikit/src/_core/utils/class'
 
 let scroll
-let scrollbarWidth
 
 export default {
   props: {
@@ -19,11 +18,13 @@ export default {
     }
   },
   methods: {
+    getScrollbarWidth () {
+      return width(win) - docEl.offsetWidth
+    },
     setPage () {
       const contentEl = queryContentEl()
 
       // save scroll initial values
-      scrollbarWidth = getScrollbarWidth()
       scroll = scroll || getScroll()
 
       addClass(docEl, 'uk-offcanvas-page')
@@ -36,11 +37,6 @@ export default {
 
       if (this.overlay) {
         addClass(body, 'uk-offcanvas-overlay')
-      }
-
-      // freeze content width/height
-      width(contentEl, width(win) - scrollbarWidth)
-      if (this.overlay) {
         height(contentEl, height(win))
       }
 
@@ -83,10 +79,6 @@ export default {
 function getContentScroll () {
   const { scrollLeft: x, scrollTop: y } = queryContentEl()
   return { x, y }
-}
-
-function getScrollbarWidth () {
-  return width(win) - docEl.offsetWidth
 }
 
 function getScroll () {
