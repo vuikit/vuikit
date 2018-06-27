@@ -3,6 +3,7 @@
 ## NEXT
 
  - Added `vk-form`.
+ - Added `vk-list`.
  - Added `vk-table-filter` and `vk-table-pagination` components.
  - Refactored `vk-modal` (breaking changes).
  - Renamed `vk-table-column` `title` prop as `head`.
