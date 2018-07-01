@@ -28,14 +28,14 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "build": "node -r @std/esm scripts/build.js",
-    "postbuild": "node -r @std/esm scripts/copyright.js",
-    "pull": "node -r @std/esm scripts/pull.js",
-    "custom": "node -r @std/esm scripts/custom.js"
+    "build": "node -r esm scripts/build.js",
+    "postbuild": "node -r esm scripts/copyright.js",
+    "pull": "node -r esm scripts/pull.js",
+    "custom": "node -r esm scripts/custom.js"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.26.0",
+    "esm": "^3.0.58",
     "globby": "^8.0.1",
     "rollup": "^0.58.2",
     "rollup-plugin-buble": "^0.19.2",
@@ -43,8 +43,8 @@
     "rollup-plugin-node-resolve": "^3.2.0",
     "uikit": "^3.0.0-beta.42"
   },
-  "@std/esm": {
-    "mode": "js",
+  "esm": {
+    "mode": "all",
     "cjs": true
   }
 }

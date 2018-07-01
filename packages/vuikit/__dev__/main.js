@@ -10,6 +10,9 @@ Vue.use(VueRouter)
 Vue.use(Vuikit)
 Vue.use(VuikitIcons)
 
+// register Story components
+Vue.component('StoryPositions', require('./components/story-positions.vue').default)
+
 const router = new VueRouter({
   history: true,
   linkActiveClass: 'uk-active',

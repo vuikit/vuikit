@@ -1,14 +1,16 @@
-import rollup from 'rollup'
 import path from 'path'
 import globby from 'globby'
 import buble from 'rollup-plugin-buble'
-import cleanup from 'rollup-plugin-cleanup'
-import commonjs from 'rollup-plugin-commonjs'
+import cjs from 'rollup-plugin-commonjs'
+import vue from 'rollup-plugin-vue'
 import replace from 'rollup-plugin-replace'
-import nodeResolve from 'rollup-plugin-node-resolve'
+import cleanup from 'rollup-plugin-cleanup'
+import resolve from 'rollup-plugin-node-resolve'
 import replaceInFile from 'replace-in-file'
 
 import { run, remove, write, minifyJS } from '@miljan/build'
+
+const rollup = require('rollup')
 
 run(async () => {
   await BuildLibrary()
@@ -43,7 +45,7 @@ async function BuildLibrary () {
       output: {
         format: 'es'
       },
-      external: id => /vuikit\/src\/_core\/utils/.test(id)
+      external: id => /^vuikit\/src\/_core\/utils/.test(id)
     })
   }))
 
@@ -55,9 +57,8 @@ async function BuildLibrary () {
         format: 'es'
       },
       external (id) {
-        const isInput = input === id
         const isRelative = /^\.\//.test(id) || /_core\/util/.test(id)
-        return !isInput && isRelative
+        return input !== id && isRelative
       }
     })
   }))
@@ -71,10 +72,7 @@ async function BuildLibrary () {
       output: {
         format: 'es'
       },
-      external: id => {
-        const isInternal = RegExp(`vuikit/src/${component}`).test(id) || /^(\.|\.\.)\//.test(id)
-        return input !== id && !isInternal
-      }
+      external: id => /^vuikit\/src/.test(id)
     })
   }))
 
@@ -142,11 +140,16 @@ async function compile (input, dest, opts = {}, env) {
     input,
     ...opts,
     plugins: [
-      nodeResolve({
+      resolve({
         jsnext: true,
-        main: true
+        main: true,
+        browser: true,
+        extensions: [ '.js', '.vue' ]
       }),
-      commonjs(),
+      cjs(),
+      vue({
+        css: false
+      }),
       buble(),
       cleanup()
     ]

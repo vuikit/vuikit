@@ -20,18 +20,18 @@
     "src"
   ],
   "scripts": {
-    "build": "node -r @std/esm scripts/build.js",
-    "postbuild": "node -r @std/esm scripts/copyright.js"
+    "build": "node -r esm scripts/build.js",
+    "postbuild": "node -r esm scripts/copyright.js"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.26.0",
+    "esm": "^3.0.58",
     "less": "^3.0.1",
     "less-plugin-clean-css": "^1.5.1",
     "uikit": "^3.0.0-beta.40"
   },
-  "@std/esm": {
-    "mode": "js",
+  "esm": {
+    "mode": "all",
     "cjs": true
   }
 }
