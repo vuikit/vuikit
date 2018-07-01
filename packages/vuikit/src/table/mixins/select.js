@@ -4,14 +4,14 @@ export default {
       type: String,
       default: 'id'
     },
-    selectedRows: {
-      type: Array,
-      default: () => []
-    },
     selectable: {
       type: [Boolean, String],
       default: false,
       validator: v => !v || /single/.test(v) || v === true
+    },
+    selectedRows: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {

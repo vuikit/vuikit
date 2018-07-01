@@ -241,16 +241,6 @@ export default [
     component: require('../src/table/__dev__/default').default
   },
   {
-    name: 'table-slots',
-    path: '/table-slots',
-    component: require('../src/table/__dev__/slots').default
-  },
-  {
-    name: 'table-misc',
-    path: '/table-misc',
-    component: require('../src/table/__dev__/misc').default
-  },
-  {
     name: 'tabs',
     path: '/tabs',
     component: require('../src/tabs/__dev__/default').default

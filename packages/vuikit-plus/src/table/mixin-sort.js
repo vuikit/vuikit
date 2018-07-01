@@ -1,4 +1,4 @@
-import { assign } from 'vuikit/src/_core/utils/object'
+import { assign } from 'vuikit/lib/core/utils/object'
 
 export default {
   props: {
