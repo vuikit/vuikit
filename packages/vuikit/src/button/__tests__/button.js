@@ -4,7 +4,6 @@ import { createRenderer } from 'vue-server-renderer'
 import Test from '../__dev__/default.vue'
 
 describe('VkButton', () => {
-
   it('matches snapshot', async () => {
     const renderer = createRenderer()
     const wrapper = mount(Test)
@@ -12,5 +11,4 @@ describe('VkButton', () => {
     const str = await renderer.renderToString(wrapper.vm)
     expect(str).toMatchSnapshot()
   })
-
 })
