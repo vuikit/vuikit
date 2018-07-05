@@ -24,6 +24,22 @@ function _get (obj, path) {
   return path.split('.').reduce((acc, val) => acc && acc[val], obj)
 }
 
+export function has (obj, path) {
+  return get(obj, path) !== undefined
+}
+
+export function set (obj, path, value) {
+  var keys = Array.isArray(path) ? path : path.split('.')
+  for (var i = 0; i < keys.length - 1; i++) {
+    var key = keys[i]
+
+    if (!hasOwn(obj, key)) obj[key] = {}
+    obj = obj[key]
+  }
+  obj[keys[i]] = value
+  return value
+}
+
 // Assigns own enumerable string keyed properties of source objects to the
 // destination object. Source objects are applied from left to right.
 // Subsequent sources overwrite property assignments of previous sources.
