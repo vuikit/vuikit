@@ -110,6 +110,10 @@ export function isUndefined (value) {
   return value === void 0
 }
 
+export function isDefined (value) {
+  return !isUndefined(value)
+}
+
 export function toBoolean (value) {
   return isBoolean(value)
     ? value
@@ -201,7 +205,6 @@ export function pointInRect (point, rect) {
 export const Dimensions = {
 
   ratio (dimensions, prop, value) {
-
     const aProp = prop === 'width' ? 'height' : 'width'
 
     return {
