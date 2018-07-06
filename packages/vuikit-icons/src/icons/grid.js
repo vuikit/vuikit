@@ -20,18 +20,19 @@ export default {
       height *= ratio
     }
 
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'vk-icons-grid',
-        width,
-        height,
-        viewBox,
-        ratio
-      },
-      domProps: {
-        innerHTML: '<rect x="2" y="2" width="3" height="3" /><rect x="8" y="2" width="3" height="3" /><rect x="14" y="2" width="3" height="3" /><rect x="2" y="8" width="3" height="3" /><rect x="8" y="8" width="3" height="3" /><rect x="14" y="8" width="3" height="3" /><rect x="2" y="14" width="3" height="3" /><rect x="8" y="14" width="3" height="3" /><rect x="14" y="14" width="3" height="3" />'
-      }
-    })
+    data.attrs = {
+      version: '1.1',
+      meta: 'vk-icons-grid',
+      width,
+      height,
+      viewBox,
+      ratio
+    }
+
+    data.domProps = {
+      innerHTML: '<rect x="2" y="2" width="3" height="3" /><rect x="8" y="2" width="3" height="3" /><rect x="14" y="2" width="3" height="3" /><rect x="2" y="8" width="3" height="3" /><rect x="8" y="8" width="3" height="3" /><rect x="14" y="8" width="3" height="3" /><rect x="2" y="14" width="3" height="3" /><rect x="8" y="14" width="3" height="3" /><rect x="14" y="14" width="3" height="3" />'
+    }
+
+    return h('svg', data)
   }
 }

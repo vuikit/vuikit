@@ -20,18 +20,19 @@ export default {
       height *= ratio
     }
 
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'vk-icons-folder',
-        width,
-        height,
-        viewBox,
-        ratio
-      },
-      domProps: {
-        innerHTML: '<polygon fill="none" stroke="#000" points="9.5 5.5 8.5 3.5 1.5 3.5 1.5 16.5 18.5 16.5 18.5 5.5" />'
-      }
-    })
+    data.attrs = {
+      version: '1.1',
+      meta: 'vk-icons-folder',
+      width,
+      height,
+      viewBox,
+      ratio
+    }
+
+    data.domProps = {
+      innerHTML: '<polygon fill="none" stroke="#000" points="9.5 5.5 8.5 3.5 1.5 3.5 1.5 16.5 18.5 16.5 18.5 5.5" />'
+    }
+
+    return h('svg', data)
   }
 }

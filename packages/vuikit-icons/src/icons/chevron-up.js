@@ -20,18 +20,19 @@ export default {
       height *= ratio
     }
 
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'vk-icons-chevron-up',
-        width,
-        height,
-        viewBox,
-        ratio
-      },
-      domProps: {
-        innerHTML: '<polyline fill="none" stroke="#000" stroke-width="1.03" points="4 13 10 7 16 13" />'
-      }
-    })
+    data.attrs = {
+      version: '1.1',
+      meta: 'vk-icons-chevron-up',
+      width,
+      height,
+      viewBox,
+      ratio
+    }
+
+    data.domProps = {
+      innerHTML: '<polyline fill="none" stroke="#000" stroke-width="1.03" points="4 13 10 7 16 13" />'
+    }
+
+    return h('svg', data)
   }
 }

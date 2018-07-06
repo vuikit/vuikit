@@ -1,9 +1,10 @@
 import path from 'path'
 import globby from 'globby'
-import rollup from 'rollup'
 import buble from 'rollup-plugin-buble'
 import cleanup from 'rollup-plugin-cleanup'
 import { remove, run, write, minifyJS } from '@miljan/build'
+
+const rollup = require('rollup')
 
 run(async () => {
   await remove('dist')

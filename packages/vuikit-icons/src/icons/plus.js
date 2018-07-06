@@ -20,18 +20,19 @@ export default {
       height *= ratio
     }
 
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'vk-icons-plus',
-        width,
-        height,
-        viewBox,
-        ratio
-      },
-      domProps: {
-        innerHTML: '<rect x="9" y="1" width="1" height="17" /><rect x="1" y="9" width="17" height="1" />'
-      }
-    })
+    data.attrs = {
+      version: '1.1',
+      meta: 'vk-icons-plus',
+      width,
+      height,
+      viewBox,
+      ratio
+    }
+
+    data.domProps = {
+      innerHTML: '<rect x="9" y="1" width="1" height="17" /><rect x="1" y="9" width="17" height="1" />'
+    }
+
+    return h('svg', data)
   }
 }

@@ -20,18 +20,19 @@ export default {
       height *= ratio
     }
 
-    return h('svg', {
-      attrs: {
-        version: '1.1',
-        meta: 'vk-icons-settings',
-        width,
-        height,
-        viewBox,
-        ratio
-      },
-      domProps: {
-        innerHTML: '<ellipse fill="none" stroke="#000" cx="6.11" cy="3.55" rx="2.11" ry="2.15" /><ellipse fill="none" stroke="#000" cx="6.11" cy="15.55" rx="2.11" ry="2.15" /><circle fill="none" stroke="#000" cx="13.15" cy="9.55" r="2.15" /><rect x="1" y="3" width="3" height="1" /><rect x="10" y="3" width="8" height="1" /><rect x="1" y="9" width="8" height="1" /><rect x="15" y="9" width="3" height="1" /><rect x="1" y="15" width="3" height="1" /><rect x="10" y="15" width="8" height="1" />'
-      }
-    })
+    data.attrs = {
+      version: '1.1',
+      meta: 'vk-icons-settings',
+      width,
+      height,
+      viewBox,
+      ratio
+    }
+
+    data.domProps = {
+      innerHTML: '<ellipse fill="none" stroke="#000" cx="6.11" cy="3.55" rx="2.11" ry="2.15" /><ellipse fill="none" stroke="#000" cx="6.11" cy="15.55" rx="2.11" ry="2.15" /><circle fill="none" stroke="#000" cx="13.15" cy="9.55" r="2.15" /><rect x="1" y="3" width="3" height="1" /><rect x="10" y="3" width="8" height="1" /><rect x="1" y="9" width="8" height="1" /><rect x="15" y="9" width="3" height="1" /><rect x="1" y="15" width="3" height="1" /><rect x="10" y="15" width="8" height="1" />'
+    }
+
+    return h('svg', data)
   }
 }
