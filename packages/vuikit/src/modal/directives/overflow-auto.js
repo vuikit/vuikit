@@ -7,12 +7,12 @@ import { addClass } from 'vuikit/src/_core/utils/class'
 export default {
   bind (el, binding, vnode) {
     el.vkModalOverflowAutoOff = on(window, 'resize', () =>
-      update(el, binding, vnode)
+      binding.value && update(el, binding, vnode)
     )
   },
   componentUpdated (el, binding, vnode) {
     vnode.context.$nextTick(() =>
-      update(el, binding, vnode)
+      binding.value && update(el, binding, vnode)
     )
   },
   unbind (el) {

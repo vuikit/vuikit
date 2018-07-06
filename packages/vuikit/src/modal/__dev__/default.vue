@@ -13,6 +13,13 @@
         <vk-button @click="centered = true">Centered</vk-button>
       </p>
 
+      <h2>Full</h2>
+
+      <p v-vk-margin>
+        <vk-button @click="full = true">Full</vk-button>
+        <vk-button @click="fullSplit = true">Full Split</vk-button>
+      </p>
+
       <vk-modal
         :show.sync="show"
       >
@@ -64,6 +71,29 @@
 
     </div>
 
+    <vk-modal-full
+      :show.sync="full"
+    >
+      <vk-modal-close large @click="full = false"/>
+      <div class="uk-width-xxlarge uk-padding-large">
+        <h1>Headline</h1>
+        <p>{{ lorem }}</p>
+      </div>
+    </vk-modal-full>
+
+    <vk-modal-full
+      :show.sync="fullSplit"
+    >
+      <vk-modal-close large @click="fullSplit = false"/>
+      <vk-grid class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle">
+        <div class="uk-background-cover" style="background-image: url('/images/photo.jpg');" v-vk-height-viewport></div>
+        <div class="uk-padding-large">
+          <h1>Headline</h1>
+          <p>{{ lorem }}</p>
+        </div>
+      </vk-grid>
+    </vk-modal-full>
+
     <div class="uk-section uk-section-muted uk-section-small uk-margin">
       <div class="uk-float-left">Left</div>
       <div class="uk-float-right">Right</div>
@@ -71,7 +101,7 @@
     </div>
 
     <div class="uk-container">
-      <p v-for="n in 10">{{ lorem }}</p>
+      <p v-for="n in 10" :key="n">{{ lorem }}</p>
     </div>
 
   </div>
@@ -85,6 +115,8 @@ export default {
     scrollable: false,
     expanded: false,
     centered: false,
+    full: false,
+    fullSplit: false,
     lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
   })
 }

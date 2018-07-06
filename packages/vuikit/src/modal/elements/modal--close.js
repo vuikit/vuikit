@@ -15,7 +15,7 @@ export default {
     const { large } = props
 
     const def = {
-      class: [`uk-close uk-icon`, {
+      class: [`uk-close uk-icon uk-modal-close-default`, {
         'uk-close-large': large
       }],
       attrs: {

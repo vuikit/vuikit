@@ -166,11 +166,6 @@ export default [
     component: require('../src/modal/__dev__/default').default
   },
   {
-    name: 'modal-full',
-    path: '/modal-full',
-    component: require('../src/modal/__dev__/full').default
-  },
-  {
     name: 'nav',
     path: '/nav',
     component: require('../src/nav/__dev__/default').default
