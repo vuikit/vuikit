@@ -1,3 +1,4 @@
 .esm-cache/
 node_modules/
 dist/
+lib/
