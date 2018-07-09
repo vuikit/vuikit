@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { warn } from 'vuikit/src/_core/utils/debug'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isFunction } from 'vuikit/src/_core/utils/lang'
 import mixinProps from 'vuikit/src/_core/mixins/props'
@@ -82,14 +83,25 @@ export default {
     mapColumnNode (node) {
       const data = node.data || {}
 
+      const headRender = get(node, 'fnOptions.headRender')
+      const cellRender = get(node, 'fnOptions.cellRender')
+
+      if (!headRender) {
+        warn(`[Vuikit Table]: The Column defined by ${node.tag} component has not set a headRender`, this)
+      }
+
+      if (!cellRender) {
+        warn(`[Vuikit Table]: The Column defined by ${node.tag} component has not set a cellRender`, this)
+      }
+
       return {
         props: data.props || {},
         slots: {
           static: data.staticSlots || {},
           scoped: data.scopedSlots || {}
         },
-        headRender: node.fnOptions.headRender,
-        cellRender: node.fnOptions.cellRender
+        headRender,
+        cellRender
       }
     }
   }
