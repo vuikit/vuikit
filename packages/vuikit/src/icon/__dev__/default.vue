@@ -32,7 +32,7 @@
 
       <div>
         <h3>icon-image</h3>
-        <vk-icon-image src="/avatar.jpg" />
+        <vk-icon-image src="/images/avatar.jpg" />
       </div>
     </vk-grid>
 
