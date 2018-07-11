@@ -2,9 +2,9 @@
   <div class="uk-padding">
     <ul class="uk-list">
       <router-link v-for="route in $router.options.routes"
-        :key="route.name"
+        :key="route.path"
         tag="li"
-        :to="{ name: route.name }"
+        :to="{ path: route.path }"
       >
         <a>{{ route.path }}</a>
       </router-link>
