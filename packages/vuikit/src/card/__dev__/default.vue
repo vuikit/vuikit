@@ -83,7 +83,7 @@
             <div slot="header">
               <vk-card-title>Title</vk-card-title>
             </div>
-            <div slot="body">
+            <div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
             </div>
             <div slot="footer">
@@ -96,9 +96,9 @@
 
           <vk-card>
             <div slot="media-top">
-              <img src="/light.jpg" alt="">
+              <img src="/images/light.jpg" alt="">
             </div>
-            <div slot="body">
+            <div>
               <vk-card-title>Title</vk-card-title>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
             </div>
@@ -117,11 +117,11 @@
             <div slot="header">
               <vk-card-title>Title</vk-card-title>
             </div>
-            <div slot="body">
+            <div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
             </div>
             <div slot="media-bottom">
-              <img src="/dark.jpg" alt="">
+              <img src="/images/dark.jpg" alt="">
             </div>
           </vk-card>
 
@@ -130,9 +130,9 @@
 
           <vk-card>
             <div slot="header">
-              <div class="uk-grid-small uk-flex-middle" uk-grid>
+              <div class="uk-grid uk-grid-small uk-flex-middle">
                 <div class="uk-width-auto">
-                  <img class="uk-border-circle" src="/avatar.jpg" width="50" alt="">
+                  <img class="uk-border-circle" src="/images/avatar.jpg" width="50" alt="">
                 </div>
                 <div  class="uk-width-expand">
                   <h3 class="uk-card-title uk-margin-remove-bottom">Title</h3>
@@ -141,9 +141,9 @@
               </div>
             </div>
             <div slot="media">
-              <img src="/light.jpg" alt="">
+              <img src="/images/light.jpg" alt="">
             </div>
-            <div slot="body">
+            <div>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
             </div>
           </vk-card>
