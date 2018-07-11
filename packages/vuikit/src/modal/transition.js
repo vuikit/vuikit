@@ -16,11 +16,12 @@ export default {
           modal.setPage()
         },
         enter (el, done) {
-          modal.open = true
-
-          // force redraw, necessary
-          el.offsetWidth // eslint-disable-line
-          once(el, 'transitionend', done, false, e => e.target === el)
+          // using setTimeout as a workaround for appear and for edge
+          // situations when the wrapper component hasn't been rendered yet
+          setTimeout(() => {
+            modal.open = true
+            once(el, 'transitionend', done, false, e => e.target === el)
+          }, 0)
         },
         afterEnter () {
           modal.$emit(SHOWN)
