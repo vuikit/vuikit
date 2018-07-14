@@ -3,24 +3,23 @@
 
     <h1>Nav</h1>
 
-    <vk-grid class="uk-child-width-1-4@m">
-      <div>
-        <h2>Default</h2>
-        <nav-demo />
-      </div>
+    <nav-demo />
 
+    <h2>Styles</h2>
+
+    <vk-grid class="uk-margin-large uk-child-width-1-2@s uk-child-width-1-3@m">
       <div>
-        <h2>Primary</h2>
+        <h3>Primary</h3>
         <nav-demo type="primary" />
       </div>
 
       <div>
-        <h2>Blank</h2>
+        <h3>Blank</h3>
         <nav-demo type="blank" />
       </div>
 
       <div>
-        <h2>Center</h2>
+        <h3>Center</h3>
         <nav-demo center />
       </div>
     </vk-grid>

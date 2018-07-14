@@ -2,15 +2,9 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  render (h, { data, props }) {
+  render (h, { data, children }) {
     return h('li', mergeData(data, {
       class: 'uk-nav-header'
-    }), props.title)
+    }), children)
   }
 }

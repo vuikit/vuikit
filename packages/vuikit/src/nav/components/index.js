@@ -1,6 +1,6 @@
-export { default as NavItem } from './nav--item'
+export { default as Nav } from './nav'
+export { default as NavItem } from './nav-item'
+export { default as NavItemParent } from './nav-item-parent'
+export { default as NavItemHeader } from './nav-item-header'
 
-export { ElNav as Nav } from '../elements'
 export { ElNavItemDivider as NavItemDivider } from '../elements'
-export { ElNavItemHeader as NavItemHeader } from '../elements'
-export { ElNavItemParent as NavItemParent } from '../elements'
