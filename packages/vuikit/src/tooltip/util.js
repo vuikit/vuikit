@@ -36,6 +36,10 @@ export function bindEvents (el) {
 }
 
 function toggleIn (el) {
+  if (!el[NAMESPACE]) {
+    return
+  }
+
   const { cls, position, animation, duration } = el[NAMESPACE].options
 
   // allow canceling the toggle
@@ -72,6 +76,10 @@ function toggleIn (el) {
 }
 
 function toggleOut (el) {
+  if (!el[NAMESPACE]) {
+    return
+  }
+
   const { tooltip } = el[NAMESPACE]
   const { animation, duration } = el[NAMESPACE].options
 
@@ -100,6 +108,10 @@ function toggleOut (el) {
 }
 
 function show (el) {
+  if (!el[NAMESPACE]) {
+    return
+  }
+
   const { delay } = el[NAMESPACE].options
   const { state, title } = el[NAMESPACE]
 
