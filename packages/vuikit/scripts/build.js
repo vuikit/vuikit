@@ -147,9 +147,7 @@ async function compile (input, dest, opts = {}, env) {
         extensions: [ '.js', '.vue' ]
       }),
       cjs(),
-      vue({
-        css: false
-      }),
+      vue({}),
       buble(),
       cleanup()
     ]
