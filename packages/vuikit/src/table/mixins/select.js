@@ -1,39 +1,21 @@
+import { includes } from 'vuikit/src/_core/utils/lang'
+
 export default {
   props: {
-    rowKey: {
-      type: String,
-      default: 'id'
-    },
-    selectable: {
-      type: [Boolean, String],
-      default: false,
-      validator: v => !v || /single/.test(v) || v === true
-    },
     selectedRows: {
       type: Array,
       default: () => []
     }
   },
   methods: {
+    getSelectionRowId (row) {
+      return row['id']
+    },
     selectRow (row) {
-      const id = row[this.rowKey]
-
-      if (!this.selectable) {
-        return
-      }
-
-      if (this.selectable === 'single') {
-        this.updateRowSelection([id])
-        return
-      }
-
-      const selectedRows = [...this.selectedRows]
-
-      selectedRows.push(id)
-      this.updateRowSelection(selectedRows)
+      this.updateRowSelection([...this.selectedRows, this.getSelectionRowId(row)])
     },
     unselectRow (row) {
-      const id = row[this.rowKey]
+      const id = this.getSelectionRowId(row)
       const index = this.selectedRows.indexOf(id)
       const selectedRows = [...this.selectedRows]
 
@@ -49,14 +31,13 @@ export default {
       let selectedRows = []
 
       if (!this.allRowsSelected) {
-        selectedRows = this.data.map(row => row[this.rowKey])
+        selectedRows = this.data.map(row => this.getSelectionRowId(row))
       }
 
       this.updateRowSelection(selectedRows)
     },
     isRowSelected (row) {
-      return Boolean(this.selectedRows
-        .filter(id => JSON.stringify(id) === JSON.stringify(row[this.rowKey])).length)
+      return includes(this.selectedRows, this.getSelectionRowId(row))
     },
     updateRowSelection (selectedRows) {
       this.$emit('update:selectedRows', selectedRows)
@@ -64,7 +45,7 @@ export default {
   },
   computed: {
     allRowsSelected () {
-      if (this.selectedRows && this.selectedRows.length < this.data.length) {
+      if (this.selectedRows.length < this.data.length) {
         return false
       }
 

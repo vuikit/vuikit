@@ -57,6 +57,11 @@ export default {
     headless: {
       type: Boolean,
       default: false
+    },
+    selectable: {
+      type: [Boolean, String],
+      default: false,
+      validator: v => !v || /single/.test(v) || v === true
     }
   },
   computed: {
@@ -68,6 +73,18 @@ export default {
     }
   },
   methods: {
+    selectRow (row) {
+      if (!this.selectable) {
+        return
+      }
+
+      const id = this.getSelectionRowId(row)
+      const selection = this.selectable === 'single'
+        ? [id]
+        : [...this.selectedRows, id]
+
+      this.updateRowSelection(selection)
+    },
     resolveRowClass (row) {
       return isFunction(this.rowClass)
         ? this.rowClass(row)
