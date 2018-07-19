@@ -13,19 +13,16 @@ MouseTracker.prototype = {
   position: null,
 
   init () {
-
     this.positions = []
     this.position = null
 
     let ticking = false
     this.unbind = on(document, 'mousemove', e => {
-
       if (ticking) {
         return
       }
 
       setTimeout(() => {
-
         const time = Date.now()
         const {length} = this.positions
 
@@ -44,7 +41,6 @@ MouseTracker.prototype = {
 
       ticking = true
     })
-
   },
 
   cancel () {
@@ -54,7 +50,6 @@ MouseTracker.prototype = {
   },
 
   movesTo (target) {
-
     if (this.positions.length < 2) {
       return false
     }

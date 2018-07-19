@@ -29,7 +29,6 @@ export function hasClass (element, cls) {
 }
 
 export function toggleClass (element, ...args) {
-
   if (!args.length) {
     return
   }
@@ -47,7 +46,6 @@ export function toggleClass (element, ...args) {
         : (classList[(!isUndefined(force) ? force : !classList.contains(args[i])) ? 'add' : 'remove'](args[i]))
     }
   })
-
 }
 
 function apply (element, args, fn) {

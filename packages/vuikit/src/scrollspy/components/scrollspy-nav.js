@@ -49,7 +49,6 @@ export default {
         data.active = false
 
         this.targets.every((el, i) => {
-
           const {top} = offset(el)
           const last = i + 1 === this.targets.length
 

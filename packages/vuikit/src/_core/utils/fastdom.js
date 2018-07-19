@@ -26,7 +26,6 @@ export const fastdom = {
   },
 
   flush () {
-
     runTasks(this.reads)
     runTasks(this.writes.splice(0, this.writes.length))
 
@@ -35,7 +34,6 @@ export const fastdom = {
     if (this.reads.length || this.writes.length) {
       scheduleFlush()
     }
-
   }
 
 }

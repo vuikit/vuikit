@@ -5,7 +5,6 @@
 import {isFunction, isObject, isUndefined, toNode, toNodes} from './lang'
 
 export function attr (element, name, value) {
-
   if (isObject(name)) {
     for (const key in name) {
       attr(element, key, name[key])
@@ -18,7 +17,6 @@ export function attr (element, name, value) {
     return element && element.getAttribute(name)
   } else {
     toNodes(element).forEach(element => {
-
       if (isFunction(value)) {
         value = value.call(element, attr(element, name))
       }
@@ -30,7 +28,6 @@ export function attr (element, name, value) {
       }
     })
   }
-
 }
 
 export function hasAttr (element, name) {

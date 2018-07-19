@@ -29,16 +29,13 @@ export default {
       let instance = this
 
       if (parents) {
-
         do {
           if (instance._fastdom_ready) {
             instance._fastdomUpdate(e)
           }
           instance = instance.$parent()
         } while (instance)
-
       } else {
-
         apply(instance, instance => {
           if (instance._fastdom_ready) {
             instance._fastdomUpdate(e)
@@ -65,7 +62,6 @@ export default {
 
         if (read && !includes(fastdom.reads, reads[i])) {
           reads[i] = fastdom.read(() => {
-
             const result = read.call(this, this[DATA], e)
 
             if (result === false && write) {

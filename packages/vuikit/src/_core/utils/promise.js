@@ -30,7 +30,6 @@ const PENDING = 2
 const async = win && 'setImmediate' in window ? setImmediate : setTimeout
 
 function PromiseFn (executor) {
-
   this.state = PENDING
   this.value = undefined
   this.deferred = []

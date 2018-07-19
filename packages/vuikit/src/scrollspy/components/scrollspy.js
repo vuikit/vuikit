@@ -66,7 +66,6 @@ export default {
     {
       read (els) {
         this.elements.forEach((el, i) => {
-
           let elData = els[i]
 
           if (!elData || elData.el !== el) {
@@ -89,7 +88,6 @@ export default {
           const cls = elData.toggles[i] || elData.toggles[0]
 
           if (elData.show && !elData.inview && !elData.timer) {
-
             const show = () => {
               css(el, 'visibility', '')
               addClass(el, inViewClass)
@@ -110,9 +108,7 @@ export default {
             }
 
             index++
-
           } else if (!elData.show && elData.inview && this.repeat) {
-
             if (elData.timer) {
               clearTimeout(elData.timer)
               delete elData.timer

@@ -10,7 +10,6 @@ import {isArray, isFunction, isString, toNode, toNodes} from './lang'
 export const win = typeof window !== 'undefined' && window
 
 export function on (...args) {
-
   let [target, type, selector, listener, useCapture] = getArgs(args)
 
   target = toEventTarget(target)
@@ -33,7 +32,6 @@ export function off (target, type, listener, useCapture = false) {
 }
 
 export function once (...args) {
-
   const [element, type, selector, listener, useCapture, condition] = getArgs(args)
   const off = on(element, type, selector, e => {
     const result = !condition || condition(e)
@@ -63,7 +61,6 @@ export function createEvent (e, bubbles = true, cancelable = false, detail) {
 }
 
 function getArgs (args) {
-
   if (isString(args[0])) {
     args[0] = find(args[0])
   }
@@ -76,7 +73,6 @@ function getArgs (args) {
 
 function delegate (element, selector, listener) {
   return e => {
-
     const {target} = e
     const current = selector[0] === '>'
       ? findAll(selector, element).reverse().filter(element => within(target, element))[0]
@@ -114,16 +110,12 @@ export function toEventTargets (target) {
 }
 
 export function preventClick () {
-
   const timer = setTimeout(once(document, 'click', e => {
-
     e.preventDefault()
     e.stopImmediatePropagation()
 
     clearTimeout(timer)
-
   }, true))
 
   trigger(document, 'touchcancel')
-
 }

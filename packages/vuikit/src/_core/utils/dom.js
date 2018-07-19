@@ -38,7 +38,6 @@ export function index (element, ref) {
 }
 
 export function getIndex (i, elements, current = 0, finite = false) {
-
   elements = toNodes(elements)
 
   const {length} = elements
@@ -74,7 +73,6 @@ export function html (parent, html) {
 }
 
 export function prepend (parent, element) {
-
   parent = toNode(parent)
 
   if (!parent.hasChildNodes()) {
@@ -116,7 +114,6 @@ export function remove (element) {
 }
 
 export function wrapAll (element, structure) {
-
   structure = toNode(before(element, structure))
 
   while (structure.firstChild) {
@@ -148,7 +145,6 @@ const fragmentRE = /^\s*<(\w+|!)[^>]*>/
 const singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>)?$/
 
 export function fragment (html) {
-
   const matches = singleTagRE.exec(html)
   if (matches) {
     return document.createElement(matches[1])
@@ -162,11 +158,9 @@ export function fragment (html) {
   }
 
   return container.childNodes.length > 1 ? toNodes(container.childNodes) : container.firstChild
-
 }
 
 export function apply (node, fn) {
-
   if (!node || node.nodeType !== 1) {
     return
   }

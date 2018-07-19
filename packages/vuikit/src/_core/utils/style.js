@@ -25,11 +25,8 @@ const cssNumber = {
 }
 
 export function css (element, property, value) {
-
   return toNodes(element).map(element => {
-
     if (isString(property)) {
-
       property = propName(property)
 
       if (isUndefined(value)) {
@@ -39,24 +36,19 @@ export function css (element, property, value) {
       } else {
         element.style[property] = isNumeric(value) && !cssNumber[property] ? `${value}px` : value
       }
-
     } else if (isArray(property)) {
-
       const styles = getStyles(element)
 
       return property.reduce((props, property) => {
         props[property] = styles[propName(property)]
         return props
       }, {})
-
     } else if (isObject(property)) {
       each(property, (value, property) => css(element, property, value))
     }
 
     return element
-
   })[0]
-
 }
 
 export function getStyles (element, pseudoElt) {
@@ -71,9 +63,7 @@ export function getStyle (element, property, pseudoElt) {
 const vars = {}
 
 export function getCssVar (name) {
-
   if (!(name in vars)) {
-
     /* usage in css: .var-name:before { content:"xyz" } */
 
     const element = append(document.documentElement, document.createElement('div'))
@@ -81,24 +71,19 @@ export function getCssVar (name) {
     addClass(element, `var-${name}`)
 
     try {
-
       vars[name] = getStyle(element, 'content', ':before').replace(/^["'](.*)["']$/, '$1')
       vars[name] = JSON.parse(vars[name])
-
     } catch (e) {}
 
     document.documentElement.removeChild(element)
-
   }
 
   return vars[name]
-
 }
 
 const cssProps = {}
 
 export function propName (name) {
-
   let ret = cssProps[name]
   if (!ret) {
     ret = cssProps[name] = vendorPropName(name) || name

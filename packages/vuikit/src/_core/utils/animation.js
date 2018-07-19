@@ -12,10 +12,8 @@ import {startsWith, toNodes} from './lang'
 import {addClass, hasClass, removeClass, removeClasses} from './class'
 
 export function transition (element, props, duration = 400, timing = 'linear') {
-
   return Promise.all(toNodes(element).map(element =>
     new Promise((resolve, reject) => {
-
       for (const name in props) {
         const value = css(element, name)
         if (value === '') {
@@ -42,10 +40,8 @@ export function transition (element, props, duration = 400, timing = 'linear') {
         'transition-duration': `${duration}ms`,
         'transition-timing-function': timing
       }, props))
-
     })
   ))
-
 }
 
 export const Transition = {
@@ -71,10 +67,8 @@ const animationPrefix = 'uk-animation-'
 const clsCancelAnimation = 'uk-cancel-animation'
 
 export function animate (element, animation, duration = 200, origin, out) {
-
   return Promise.all(toNodes(element).map(element =>
     new Promise((resolve, reject) => {
-
       if (hasClass(element, clsCancelAnimation)) {
         requestAnimationFrame(() =>
           Promise.resolve().then(() =>
@@ -87,7 +81,6 @@ export function animate (element, animation, duration = 200, origin, out) {
       let cls = `${animation} ${animationPrefix}${out ? 'leave' : 'enter'}`
 
       if (startsWith(animation, animationPrefix)) {
-
         if (origin) {
           cls += ` uk-transform-origin-${origin}`
         }
@@ -95,13 +88,11 @@ export function animate (element, animation, duration = 200, origin, out) {
         if (out) {
           cls += ` ${animationPrefix}reverse`
         }
-
       }
 
       reset()
 
       once(element, 'animationend animationcancel', ({type}) => {
-
         let hasReset = false
 
         if (type === 'animationcancel') {
@@ -122,7 +113,6 @@ export function animate (element, animation, duration = 200, origin, out) {
             requestAnimationFrame(() => removeClass(element, clsCancelAnimation))
           }
         })
-
       }, false, ({target}) => element === target)
 
       css(element, 'animationDuration', `${duration}ms`)
@@ -132,10 +122,8 @@ export function animate (element, animation, duration = 200, origin, out) {
         css(element, 'animationDuration', '')
         removeClasses(element, `${animationPrefix}\\S*`)
       }
-
     })
   ))
-
 }
 
 const inProgress = new RegExp(`${animationPrefix}(enter|leave)`)

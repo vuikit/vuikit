@@ -24,7 +24,6 @@ export function findAll (selector, context) {
 }
 
 function _query (selector, context = document, queryFn) {
-
   if (!selector || !isString(selector)) {
     return null
   }
@@ -34,21 +33,17 @@ function _query (selector, context = document, queryFn) {
   let removes
 
   if (isContextSelector(selector)) {
-
     removes = []
 
     selector = selector.split(',').map((selector, i) => {
-
       let ctx = context
 
       selector = selector.trim()
 
       if (selector[0] === '!') {
-
         const selectors = selector.substr(1).trim().split(' ')
         ctx = closest(context.parentNode, selectors[0])
         selector = selectors.slice(1).join(' ')
-
       }
 
       if (!ctx) {
@@ -61,27 +56,18 @@ function _query (selector, context = document, queryFn) {
       }
 
       return `#${escape(ctx.id)} ${selector}`
-
     }).filter(Boolean).join(',')
 
     context = document
-
   }
 
   try {
-
     return context[queryFn](selector)
-
   } catch (e) {
-
     return null
-
   } finally {
-
     removes && removes.forEach(remove => remove())
-
   }
-
 }
 
 const contextSelectorRe = /(^|,)\s*[!>+~]/
@@ -104,13 +90,11 @@ export function closest (element, selector) {
     let ancestor = this
 
     do {
-
       if (matches(ancestor, selector)) {
         return ancestor
       }
 
       ancestor = ancestor.parentNode
-
     } while (ancestor && ancestor.nodeType === 1)
   }
 
@@ -128,7 +112,6 @@ export function parents (element, selector) {
   let parent = toNode(element).parentNode
 
   while (parent && parent.nodeType === 1) {
-
     if (matches(parent, selector)) {
       elements.push(parent)
     }

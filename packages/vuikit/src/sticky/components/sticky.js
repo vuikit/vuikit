@@ -84,7 +84,6 @@ export default {
   fastdom: [
     {
       write () {
-
         const { placeholder, widthElement } = this.$refs
         const outerHeight = (this.isActive ? placeholder : this.$el).offsetHeight
 
@@ -128,7 +127,6 @@ export default {
         }
       },
       write ({visible, scroll}, {dir} = {}) {
-
         if (scroll < 0 || !visible || this.disabled || this.showOnUp && !dir) {
           return
         }
@@ -137,7 +135,6 @@ export default {
           scroll < this.stickAt ||
           this.showOnUp && (scroll <= this.stickAt || dir === 'down' || dir === 'up' && !this.isActive && scroll <= this.bottomOffset)
         ) {
-
           if (!this.isActive) {
             return
           }
@@ -150,17 +147,12 @@ export default {
           } else {
             this.hide()
           }
-
         } else if (this.isActive) {
-
           this.update()
-
         } else if (this.animation) {
-
           Animation.cancel(this.$el)
           this.show()
           Animation.in(this.$el, `uk-animation-${this.animation}`).catch(noop)
-
         } else {
           this.show()
         }
@@ -203,11 +195,9 @@ export default {
       })
 
       if (hasClass(this.$selTarget, clsActive)) {
-
         if (!active) {
           this.$emit(INACTIVE)
         }
-
       } else if (active) {
         this.$emit(ACTIVE)
       }
@@ -287,7 +277,6 @@ export default {
 }
 
 function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
-
   let value = $props[prop]
 
   // required coerce as the value can be both String and Boolean
@@ -300,20 +289,14 @@ function parseProp (prop, { $props, $el, [`${prop}Offset`]: propOffset }) {
   }
 
   if (isNumeric(value)) {
-
     return propOffset + toFloat(value)
-
   } else if (isString(value) && /^-?\d+vh$/.test(value)) {
-
     return height(window) * toFloat(value) / 100
-
   } else {
-
     const el = value === true ? $el.parentNode : query(value, $el)
 
     if (el) {
       return offset(el).top + el.offsetHeight
     }
-
   }
 }

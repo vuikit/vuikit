@@ -14,7 +14,6 @@ const dirs = {
 }
 
 export function positionAt (element, target, elAttach, targetAttach, elOffset, targetOffset, flip, boundary) {
-
   elAttach = getPos(elAttach)
   targetAttach = getPos(targetAttach)
 
@@ -44,7 +43,6 @@ export function positionAt (element, target, elAttach, targetAttach, elOffset, t
 
   if (flip) {
     each(dirs, ([dir, align, alignFlip], prop) => {
-
       if (!(flip === true || includes(flip, dir))) {
         return
       }
@@ -62,7 +60,6 @@ export function positionAt (element, target, elAttach, targetAttach, elOffset, t
           : 0
 
       if (position[align] < boundary[align] || position[align] + dim[prop] > boundary[alignFlip]) {
-
         const centerOffset = dim[prop] / 2
         const centerTargetOffset = targetAttach[dir] === 'center' ? -targetDim[prop] / 2 : 0
 
@@ -70,11 +67,9 @@ export function positionAt (element, target, elAttach, targetAttach, elOffset, t
           apply(centerOffset, centerTargetOffset) ||
                     apply(-centerOffset, -centerTargetOffset)
         ) || apply(elemOffset, targetOffset)
-
       }
 
       function apply (elemOffset, targetOffset) {
-
         const newVal = position[align] + elemOffset + targetOffset - elOffset[dir] * 2
 
         if (newVal >= boundary[align] && newVal + dim[prop] <= boundary[alignFlip]) {
@@ -90,9 +85,7 @@ export function positionAt (element, target, elAttach, targetAttach, elOffset, t
 
           return true
         }
-
       }
-
     })
   }
 
@@ -102,11 +95,9 @@ export function positionAt (element, target, elAttach, targetAttach, elOffset, t
 }
 
 export function offset (element, coordinates) {
-
   element = toNode(element)
 
   if (coordinates) {
-
     const currentOffset = offset(element)
     const pos = css(element, 'position');
 
@@ -126,13 +117,11 @@ export function offset (element, coordinates) {
 }
 
 function getDimensions (element) {
-
   element = toNode(element)
 
   const {pageYOffset: top, pageXOffset: left} = window(element)
 
   if (isWindow(element)) {
-
     const height = element.innerHeight
     const width = element.innerWidth
 
@@ -185,7 +174,6 @@ export function position (element) {
 }
 
 function offsetParent (element) {
-
   let parent = toNode(element).offsetParent
 
   while (parent && css(parent, 'position') === 'static') {
@@ -201,11 +189,9 @@ export const width = dimension('width')
 function dimension (prop) {
   const propName = ucfirst(prop)
   return (element, value) => {
-
     element = toNode(element)
 
     if (isUndefined(value)) {
-
       if (isWindow(element)) {
         return element[`inner${propName}`]
       }
@@ -219,16 +205,12 @@ function dimension (prop) {
       value = value === 'auto' ? element[`offset${propName}`] : toFloat(value) || 0
 
       return getContentSize(prop, element, value)
-
     } else {
-
       css(element, prop, !value && value !== 0
         ? ''
         : getContentSize(prop, element, value) + 'px'
       )
-
     }
-
   }
 }
 
@@ -251,7 +233,6 @@ function moveTo (position, attach, dim, factor) {
 }
 
 function getPos (pos) {
-
   const x = /left|center|right/
   const y = /top|center|bottom/
 
@@ -272,7 +253,6 @@ function getPos (pos) {
 }
 
 function getOffsets (offsets, width, height) {
-
   const [x, y] = (offsets || '').split(' ')
 
   return {
@@ -297,7 +277,6 @@ export function flipPosition (pos) {
 }
 
 export function isInView (element, top = 0, left = 0) {
-
   element = toNode(element)
 
   const win = window(element)
@@ -310,7 +289,6 @@ export function isInView (element, top = 0, left = 0) {
 }
 
 export function scrolledOver (element) {
-
   element = toNode(element)
 
   const win = window(element)
@@ -328,9 +306,7 @@ function positionTop (element) {
   let top = 0
 
   do {
-
     top += element.offsetTop
-
   } while ((element = element.offsetParent))
 
   return top
