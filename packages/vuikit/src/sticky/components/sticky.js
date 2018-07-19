@@ -85,10 +85,9 @@ export default {
     {
       write () {
         const { placeholder, widthElement } = this.$refs
-        const outerHeight = (this.isActive ? placeholder : this.$el).offsetHeight
 
         css(placeholder, assign(
-          {height: css(this.$el, 'position') !== 'absolute' ? outerHeight : ''},
+          {height: css(this.$el, 'position') !== 'absolute' ? this.outerHeight : ''},
           css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
         ))
 
@@ -101,14 +100,10 @@ export default {
         this.width = widthElement.offsetWidth
         attr(widthElement, 'hidden', this.isActive ? null : '')
 
-        this.topOffset = offset(this.isActive ? placeholder : this.$el).top
-        this.bottomOffset = this.topOffset + outerHeight
+        this.topOffset = offset(this.isActive ? this.$refs.placeholder : this.$el).top
+        this.bottomOffset = this.topOffset + this.outerHeight
 
-        const bottom = parseProp('bottom', this)
-
-        this.stickAt = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset
-        this.stickUntil = bottom && bottom - outerHeight
-        this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
+        this.setBoundaries()
 
         if (this.isActive) {
           this.update()
@@ -127,6 +122,8 @@ export default {
         }
       },
       write ({visible, scroll}, {dir} = {}) {
+        this.setBoundaries()
+
         if (scroll < 0 || !visible || this.disabled || this.showOnUp && !dir) {
           return
         }
@@ -177,6 +174,13 @@ export default {
       removeClass(this.$el, clsFixed, clsBelow)
       css(this.$el, { position: '', top: '', width: '' })
       attr(this.$refs.placeholder, 'hidden', '')
+    },
+    setBoundaries () {
+      const bottom = parseProp('bottom', this)
+
+      this.stickAt = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset
+      this.stickUntil = bottom && bottom - this.outerHeight
+      this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
     },
     update () {
       const { clsFixed, clsBelow, clsActive } = this.$options.classMapping
