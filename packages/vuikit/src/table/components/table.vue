@@ -36,6 +36,7 @@
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isFunction } from 'vuikit/src/_core/utils/lang'
+import { select } from 'vuikit/src/_core/helpers/selection'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 import core from '../core'
@@ -79,11 +80,10 @@ export default {
       }
 
       const id = this.getSelectionRowId(row)
-      const selection = this.selectable === 'single'
+      this.updateRowSelection(this.selectable === 'single'
         ? [id]
-        : [...this.selectedRows, id]
-
-      this.updateRowSelection(selection)
+        : select(this.selectedRows, id)
+      )
     },
     resolveRowClass (row) {
       return isFunction(this.rowClass)

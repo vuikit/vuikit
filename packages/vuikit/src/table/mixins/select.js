@@ -1,4 +1,4 @@
-import { includes } from 'vuikit/src/_core/utils/lang'
+import { select, unselect, isSelected } from 'vuikit/src/_core/helpers/selection'
 
 export default {
   props: {
@@ -12,20 +12,17 @@ export default {
       return row['id']
     },
     selectRow (row) {
-      this.updateRowSelection([...this.selectedRows, this.getSelectionRowId(row)])
+      this.updateRowSelection(
+        select(this.selectedRows, this.getSelectionRowId(row))
+      )
     },
     unselectRow (row) {
-      const id = this.getSelectionRowId(row)
-      const index = this.selectedRows.indexOf(id)
-      const selectedRows = [...this.selectedRows]
-
-      selectedRows.splice(index, 1)
-      this.updateRowSelection(selectedRows)
+      this.updateRowSelection(
+        unselect(this.selectedRows, this.getSelectionRowId(row))
+      )
     },
     toggleRowSelection (row) {
-      this.isRowSelected(row)
-        ? this.unselectRow(row)
-        : this.selectRow(row)
+      this.isRowSelected(row) ? this.unselectRow(row) : this.selectRow(row)
     },
     toggleRowsSelection () {
       let selectedRows = []
@@ -37,7 +34,7 @@ export default {
       this.updateRowSelection(selectedRows)
     },
     isRowSelected (row) {
-      return includes(this.selectedRows, this.getSelectionRowId(row))
+      return isSelected(this.selectedRows, this.getSelectionRowId(row))
     },
     updateRowSelection (selectedRows) {
       this.$emit('update:selectedRows', selectedRows)

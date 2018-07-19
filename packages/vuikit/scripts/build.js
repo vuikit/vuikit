@@ -36,7 +36,7 @@ async function BuildLibrary () {
     })
   }))
 
-  resources = await globby('src/_core/{assets,mixins}/*.js')
+  resources = await globby('src/_core/{assets,mixins,helpers}/*.js')
   await Promise.all(resources.map(async input => {
     const name = path.basename(input, '.js')
     const folder = path.dirname(input).replace('src/_core/', '')
