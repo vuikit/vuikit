@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import IconTrash from '@vuikit/icons/trash'
+import IconTrash from '@vuikit/icons/lib/trash'
 
 export default {
   icon: IconTrash,

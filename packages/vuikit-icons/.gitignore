@@ -1,2 +1,5 @@
-/*.js
+custom/*.js
+custom/*.svg
+
+lib/
 dist/

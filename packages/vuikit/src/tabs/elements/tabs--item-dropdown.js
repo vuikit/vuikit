@@ -1,7 +1,7 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
-import IconMore from '@vuikit/icons/more'
-import IconTriangeDown from '@vuikit/icons/triangle-down'
+import IconMore from '@vuikit/icons/lib/more'
+import IconTriangeDown from '@vuikit/icons/lib/triangle-down'
 import { elements as IconElements } from 'vuikit/src/icon'
 
 const { ElIcon } = IconElements

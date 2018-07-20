@@ -1,5 +1,5 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import IconTriangeDown from '@vuikit/icons/triangle-down'
+import IconTriangeDown from '@vuikit/icons/lib/triangle-down'
 
 export default {
   functional: true,

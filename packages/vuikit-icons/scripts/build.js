@@ -15,7 +15,7 @@ run(async () => {
   await Promise.all(resources.map(async icon => {
     const basename = path.basename(icon)
 
-    return compile(icon, basename, {
+    return compile(icon, `lib/${basename}`, {
       output: {
         format: 'cjs'
       }

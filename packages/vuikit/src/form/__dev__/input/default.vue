@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import VkIconsUser from '@vuikit/icons/user'
-import VkIconsLink from '@vuikit/icons/link'
+import VkIconsUser from '@vuikit/icons/lib/user'
+import VkIconsLink from '@vuikit/icons/lib/link'
 
 export default {
   components: {

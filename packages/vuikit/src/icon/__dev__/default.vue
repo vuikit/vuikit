@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import IconCheck from '@vuikit/icons/check'
+import IconCheck from '@vuikit/icons/lib/check'
 
 export default {
   IconCheck
