@@ -31,7 +31,7 @@ function toUpper (_, c) {
 }
 
 export function ucfirst (str) {
-  return str.length ? toUpper(null, str.charAt(0)) + str.slice(1) : ''
+  return (str && str.length) ? toUpper(null, str.charAt(0)) + str.slice(1) : ''
 }
 
 const strPrototype = String.prototype
