@@ -72,6 +72,9 @@ export default {
     isActive: false
   }),
   computed: {
+    outerWidth () {
+      return (this.isActive ? this.$refs.placeholder : this.$el).offsetWidth
+    },
     outerHeight () {
       return (this.isActive ? this.$refs.placeholder : this.$el).offsetHeight
     },
@@ -87,7 +90,10 @@ export default {
         const { placeholder, widthElement } = this.$refs
 
         css(placeholder, assign(
-          {height: css(this.$el, 'position') !== 'absolute' ? this.outerHeight : ''},
+          {
+            width: css(this.$el, 'position') !== 'absolute' ? this.outerWidth : '',
+            height: css(this.$el, 'position') !== 'absolute' ? this.outerHeight : ''
+          },
           css(this.$el, ['marginTop', 'marginBottom', 'marginLeft', 'marginRight'])
         ))
 
