@@ -27,8 +27,6 @@ Vue.use(VuikitIcons)
 | Package | Version | Description |
 |---|---|---|
 | [`vuikit`](packages/vuikit) | [![NPM version](https://img.shields.io/npm/v/vuikit.svg?style=flat-square)](https://npmjs.org/package/vuikit) | Main package |
-| [`vuikit-core`](packages/vuikit-core) | [![NPM version](https://img.shields.io/npm/v/@vuikit/core.svg?style=flat-square)](https://npmjs.org/package/@vuikit/core) | Core resources |
-| [`vuikit-utils`](packages/vuikit-utils) | [![NPM version](https://img.shields.io/npm/v/@vuikit/utils.svg?style=flat-square)](https://npmjs.org/package/@vuikit/utils) | Common utils |
 | [`vuikit-icons`](packages/vuikit-icons) | [![NPM version](https://img.shields.io/npm/v/@vuikit/icons.svg?style=flat-square)](https://npmjs.org/package/@vuikit/icons) | Icons collection |
 | [`vuikit-theme`](packages/vuikit-theme) | [![NPM version](https://img.shields.io/npm/v/@vuikit/theme.svg?style=flat-square)](https://npmjs.org/package/@vuikit/theme) | Default theme |
 
