@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "esm": "^3.0.70",
-    "less": "^3.7.1",
+    "esm": "^3.0.72",
+    "less": "^3.8.0",
     "less-plugin-clean-css": "^1.5.1",
-    "uikit": "^3.0.0-rc.9"
+    "uikit": "^3.0.0-rc.10"
   },
   "esm": {
     "mode": "all",
