@@ -1,44 +1,40 @@
-<template>
-  <ElCard v-bind="pickComponentProps($props, 'ElCard')">
-
-    <slot name="top"/>
-
-    <ElCardMediaTop v-if="$slots['media-top']">
-      <slot name="media-top"/>
-    </ElCardMediaTop>
-    <ElCardBadge v-if="$slots.badge">
-      <slot name="badge"/>
-    </ElCardBadge>
-    <ElCardHeader v-if="$slots.header">
-      <slot name="header"/>
-    </ElCardHeader>
-    <ElCardMedia v-if="$slots['media']">
-      <slot name="media"/>
-    </ElCardMedia>
-    <ElCardBody v-if="$slots.default">
-      <slot/>
-    </ElCardBody>
-    <ElCardFooter v-if="$slots.footer">
-      <slot name="footer"/>
-    </ElCardFooter>
-    <ElCardMediaBottom v-if="$slots['media-bottom']">
-      <slot name="media-bottom"/>
-    </ElCardMediaBottom>
-
-    <slot name="bottom"/>
-
-  </ElCard>
-</template>
-
 <script>
-import { assign } from 'vuikit/src/_core/utils/object'
-
 import * as elements from '../elements'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 export default {
+  functional: true,
+  name: 'VkCard',
   mixins: [mixinProps],
-  components: assign({}, elements),
-  props: elements.ElCard.props
+  props: elements.ElCard.props,
+  render (h, { data, slots }) {
+    const _slots = slots()
+
+    return h(elements.ElCard, data, [
+      _slots.top,
+      _slots['media-top'] && h(elements.ElCardMediaTop, [
+        _slots['media-top']
+      ]),
+      _slots['badge'] && h(elements.ElCardBadge, [
+        _slots['badge']
+      ]),
+      _slots['header'] && h(elements.ElCardHeader, [
+        _slots['header']
+      ]),
+      _slots['media'] && h(elements.ElCardMedia, [
+        _slots['media']
+      ]),
+      _slots['default'] && h(elements.ElCardBody, [
+        _slots['default']
+      ]),
+      _slots['footer'] && h(elements.ElCardFooter, [
+        _slots['footer']
+      ]),
+      _slots['media-bottom'] && h(elements.ElCardMediaBottom, [
+        _slots['media-bottom']
+      ]),
+      _slots['bottom']
+    ])
+  }
 }
 </script>
