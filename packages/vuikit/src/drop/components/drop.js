@@ -14,7 +14,7 @@ import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/ut
 
 import { ElDrop } from '../elements'
 import { mixinTree } from '../mixins'
-import { Transition } from 'vuikit/src/_core/components/transition'
+import { Transition } from 'vuikit/src/transition'
 
 import { SHOW, HIDE } from '../constants'
 
@@ -140,7 +140,7 @@ export default {
 
     return h(Transition, {
       props: {
-        name: [animation],
+        name: animation,
         duration: duration
       }
     }, [

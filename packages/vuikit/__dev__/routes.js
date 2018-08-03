@@ -5,10 +5,6 @@ export default [
   },
 
   {
-    path: '/core/components/transition',
-    component: require('../src/_core/components/transition/__dev__/default').default
-  },
-  {
     path: '/core/directives/position',
     component: require('../src/_core/directives/position/__dev__/default').default
   },
@@ -221,6 +217,10 @@ export default [
   {
     path: '/tooltip',
     component: require('../src/tooltip/__dev__/default').default
+  },
+  {
+    path: '/transition',
+    component: require('../src/transition/__dev__/default').default
   },
 
   {
