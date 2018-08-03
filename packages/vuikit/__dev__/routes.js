@@ -183,6 +183,10 @@ export default [
     component: require('../src/scrollspy/__dev__/default').default
   },
   {
+    path: '/section',
+    component: require('../src/section/__dev__/default').default
+  },
+  {
     path: '/scrollspy-nav',
     component: require('../src/scrollspy/__dev__/nav').default
   },
