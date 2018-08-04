@@ -1,4 +1,3 @@
-import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 import { VkDrop } from 'vuikit/src/drop'
@@ -10,11 +9,11 @@ export default {
   render (h, { props, data, children }) {
     const items = children.filter(node => node.tag === 'li')
 
-    return h(VkDrop, mergeData({}, data, {
-      props: assign({}, props, {
+    return h(VkDrop, mergeData({}, data, { props }, {
+      props: {
         mainClass: 'uk-dropdown',
         mainElement: VkDropdownElNav
-      })
+      }
     }), items)
   }
 }

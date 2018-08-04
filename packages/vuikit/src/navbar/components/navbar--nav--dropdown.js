@@ -1,5 +1,6 @@
 import { VkGrid } from 'vuikit/src/grid'
 import { VkDrop } from 'vuikit/src/drop'
+import { VkDropdownEl } from 'vuikit/src/dropdown'
 
 import { query } from 'vuikit/src/_core/utils/selector'
 import { isTouch } from 'vuikit/src/_core/utils/touch'
@@ -7,6 +8,7 @@ import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
 
 export default {
+  name: 'VkNavbarNavDropbar',
   props: {
     title: {
       type: String,
@@ -121,6 +123,7 @@ export default {
             ? 'bottom-justify'
             : `bottom-${align}`,
           mainClass: 'uk-navbar-dropdown',
+          mainElement: VkDropdownEl,
           flip: justified ? 'x' : undefined,
           boundary: '!nav', // closest nav
           boundaryAlign: justified || navbarAligned

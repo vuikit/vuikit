@@ -19,6 +19,7 @@ import { VkTransition } from 'vuikit/src/transition'
 import { SHOW, HIDE } from '../constants'
 
 export default {
+  name: 'VkDrop',
   mixins: [ mixinEvents, mixinTree ],
   directives: {
     VkRoot,

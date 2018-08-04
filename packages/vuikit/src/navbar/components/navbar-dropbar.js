@@ -10,6 +10,7 @@ import { VkNavbarElDropbar } from '../elements'
 let activeDrops
 
 export default {
+  name: 'VkNavbarDropbar',
   props: {
     mode: {
       type: String,
