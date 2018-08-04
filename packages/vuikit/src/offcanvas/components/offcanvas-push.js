@@ -10,6 +10,7 @@ import { VkOffcanvasEl, VkOffcanvasElBar } from '../elements'
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
+  name: 'VkOffcanvasPush',
   extends: Offcanvas,
   data: () => ({
     open: false

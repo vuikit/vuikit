@@ -32,6 +32,7 @@ import VkModalOverflowAuto from '../directives/overflow-auto'
 import { SHOWN, HIDDEN } from '../constants'
 
 export default {
+  name: 'VkModal',
   extends: core,
   components: assign({}, elements),
   mixins: [ mixinProps, mixinActive ],

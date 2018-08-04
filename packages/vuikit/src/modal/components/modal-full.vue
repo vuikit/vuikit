@@ -19,6 +19,7 @@ import * as elements from '../elements'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 export default {
+  name: 'VkModalFull',
   extends: core,
   mixins: [ mixinProps ],
   components: assign({}, elements),

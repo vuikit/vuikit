@@ -1,4 +1,3 @@
-<script>
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
@@ -47,4 +46,3 @@ function resolveCellValue (row, cell) {
     ? cell(row)
     : get(row, cell)
 }
-</script>

@@ -12,6 +12,7 @@ import MixinEvents from 'vuikit/src/_core/mixins/events'
 import MixinFastdom from 'vuikit/src/_core/mixins/fastdom'
 
 export default {
+  name: 'VkScrollspyNav',
   abstract: true,
   mixins: [MixinEvents, MixinFastdom],
   props: {

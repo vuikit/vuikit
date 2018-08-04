@@ -7,7 +7,7 @@ import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
-  name: 'Pagination',
+  name: 'VkPagination',
   directives: { VkMargin },
   props: assign({}, VkPaginationEl.props, {
     // the active page

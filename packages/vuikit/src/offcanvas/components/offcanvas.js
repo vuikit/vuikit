@@ -8,6 +8,7 @@ import { VkOffcanvasEl, VkOffcanvasElBar } from '../elements'
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
+  name: 'VkOffcanvas',
   inheritAttrs: false,
   extends: core,
   mixins: [ mixinPage, mixinActive ],

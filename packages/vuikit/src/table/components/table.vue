@@ -44,6 +44,7 @@ import * as elements from '../elements'
 import { mixinSelect } from '../mixins'
 
 export default {
+  name: 'VkTable',
   extends: core,
   components: assign({}, elements),
   mixins: [mixinSelect, mixinProps],

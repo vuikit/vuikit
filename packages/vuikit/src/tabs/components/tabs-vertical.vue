@@ -35,6 +35,7 @@ import { VkTransition } from 'vuikit/src/transition'
 import { VkTabsElVertical, VkTabsElTab } from '../elements'
 
 export default {
+  name: 'VkTabsVertical',
   extends: core,
   mixins: [mixinProps],
   props: assign({}, VkTabsElVertical.props, {

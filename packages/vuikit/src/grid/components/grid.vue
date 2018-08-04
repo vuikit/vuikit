@@ -17,6 +17,7 @@ import { VkMargin } from 'vuikit/src/margin'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 export default {
+  name: 'VkGrid',
   mixins: [mixinProps],
   components: { VkGridEl },
   directives: { VkMargin },

@@ -21,6 +21,7 @@ import MixinFastdom from 'vuikit/src/_core/mixins/fastdom'
 import { ACTIVE, INACTIVE } from '../constants'
 
 export default {
+  name: 'VkSticky',
   abstract: true,
   mixins: [MixinEvents, MixinFastdom],
   props: {

@@ -7,6 +7,7 @@ import { get, assign } from 'vuikit/src/_core/utils/object'
   activeItem state, reason for a data and a prop. */
 
 export default {
+  name: 'VkSubnav',
   props: assign({}, VkSubnavEl.props, {
     activeItem: {}
   }),

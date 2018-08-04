@@ -1,4 +1,3 @@
-<script>
 import * as elms from '../elements'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
@@ -36,4 +35,3 @@ export default {
     ])
   }
 }
-</script>

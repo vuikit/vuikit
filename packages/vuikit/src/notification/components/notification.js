@@ -8,6 +8,7 @@ import MessageTransition from '../transition'
 import { VkNotificationEl, VkNotificationElMessage, VkNotificationElClose } from '../elements'
 
 export default {
+  name: 'VkNotification',
   directives: { MessageDirective },
   props: assign({}, VkNotificationEl.props, {
     timeout: {
