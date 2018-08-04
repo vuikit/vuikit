@@ -50,7 +50,7 @@
 
     <vk-grid class="uk-child-width-1-3@m">
       <div>
-        <vk-tabs-vertical alignment="left">
+        <vk-tabs-vertical align="left">
           <vk-tabs-item title="Left">
             Content
           </vk-tabs-item>
@@ -60,7 +60,7 @@
         </vk-tabs-vertical>
       </div>
       <div>
-        <vk-tabs-vertical alignment="right">
+        <vk-tabs-vertical align="right">
           <vk-tabs-item title="Right">
             Content
           </vk-tabs-item>

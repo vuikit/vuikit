@@ -50,7 +50,7 @@
 
     <vk-grid class="uk-child-width-1-3@m">
       <div>
-        <vk-tabs alignment="center">
+        <vk-tabs align="center">
           <vk-tabs-item title="Center">
             Content
           </vk-tabs-item>
@@ -60,7 +60,7 @@
         </vk-tabs>
       </div>
       <div>
-        <vk-tabs alignment="right">
+        <vk-tabs align="right">
           <vk-tabs-item title="Right">
             Content
           </vk-tabs-item>
@@ -70,7 +70,7 @@
         </vk-tabs>
       </div>
       <div>
-        <vk-tabs alignment="justify">
+        <vk-tabs align="justify">
           <vk-tabs-item title="Justify">
             Content
           </vk-tabs-item>

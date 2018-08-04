@@ -1,67 +1,56 @@
 import { get } from 'vuikit/src/_core/utils/object'
-import { warn } from 'vuikit/src/_core/utils/debug'
-import { TAB_ID } from './constants'
 
 /* This component supports both local as synced
   activeTab state, reason for a data and a prop. */
 
 export default {
   props: {
-    activeTab: {},
-    animation: {
-      type: String,
-      default: ''
-    },
-    keepAlive: {
-      type: Boolean,
-      default: false
-    }
+    activeTab: {}
   },
-  data: vm => ({
-    state: {
-      activeTab: vm.activeTab || filterTabs(vm).shift().data.key || 0
-    }
+  data: () => ({
+    activeKey: 0
   }),
-  watch: {
-    activeTab (val) {
-      this.state.activeTab = val
-    }
-  },
   computed: {
-    activeTabContent: {
+    tabs: {
       get () {
-        return filterTabs(this).filter(node => this.isActive(node.data[TAB_ID]))[0]
+        let nodes = get(this, '$slots.default', [])
+
+        // filter out text nodes
+        nodes = nodes.filter(n => n.tag || (n.isComment && n.asyncFactory))
+
+        // enforce key, default to index if not provided
+        nodes.forEach((n, i) => { n.key = get(n, 'data.key', i) })
+
+        return nodes.map(this.mapTabNode)
+      },
+      cache: false
+    },
+    activeTabNode: {
+      get () {
+        return get(this, '$slots.default', []).filter(tab => tab.key === this.activeKey)[0]
       },
       cache: false
     }
   },
+  watch: {
+    activeTab (key) {
+      this.activeKey = key
+    }
+  },
   methods: {
-    getTabs () {
-      return filterTabs(this)
-        .filter((node, index) => {
-          if (!node.componentOptions) {
-            if (process.env.NODE_ENV !== 'production') {
-              warn(`[VkTabs]: failed to process '${node.tag}', it must be a stateful component.`, this)
-            }
-            return false
-          }
-
-          // the key must be set for the animation to work
-          node.key = get(node, 'data.key', index)
-          node.data[TAB_ID] = node.key
-          return true
-        })
+    setAsActive (key) {
+      this.activeKey = key
+      this.$emit('update:activeTab', key)
     },
-    setActiveTab (id) {
-      this.state.activeTab = id
-      this.$emit('update:activeTab', id)
+    isActive (key) {
+      return this.activeKey === key
     },
-    isActive (id) {
-      return JSON.stringify(this.state.activeTab) === JSON.stringify(id)
+    mapTabNode (node, index) {
+      return ({
+        key: node.key,
+        props: node.componentOptions.propsData,
+        tabRender: node.componentOptions.Ctor.options.tabRender
+      })
     }
   }
-}
-
-function filterTabs (vm) {
-  return vm.$slots.default.filter(n => n.tag)
 }

@@ -18,8 +18,8 @@ export default {
 
     return h('ul', mergeData(data, {
       class: ['uk-tab', {
-        'uk-tab-bottom': flipped,
         'uk-child-width-expand': align === 'justify',
+        'uk-tab-bottom uk-margin-bottom-remove uk-margin-top': flipped,
         [`uk-flex-${align}`]: /^(right|center)$/.test(align)
       }]
     }), children)
