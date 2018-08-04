@@ -1,9 +1,9 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { ElPaginationPageNext } from '../elements'
+import { VkPaginationElPageNext } from '../elements'
 
 export default {
   functional: true,
-  props: ElPaginationPageNext.props,
+  props: VkPaginationElPageNext.props,
   render (h, { data, props, parent }) {
     const { title, expanded } = props
 
@@ -16,7 +16,7 @@ export default {
       }))
     }
 
-    return h(ElPaginationPageNext, {
+    return h(VkPaginationElPageNext, {
       props: {
         title,
         expanded,

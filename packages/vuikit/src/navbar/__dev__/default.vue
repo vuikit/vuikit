@@ -26,7 +26,7 @@
           <h2>Transparent</h2>
 
           <div class="uk-margin uk-position-relative uk-light">
-            <canvas class="uk-background-cover" style="background-image: url('/dark.jpg')" width="1000" height="200"></canvas>
+            <canvas class="uk-background-cover" style="background-image: url('/images/dark.jpg')" width="1000" height="200"></canvas>
             <div class="uk-position-top">
 
               <vk-navbar transparent>
@@ -50,7 +50,7 @@
           </div>
 
           <div class="uk-margin uk-position-relative uk-dark">
-            <canvas class="uk-background-cover" style="background-image: url('/light.jpg')" width="1000" height="200"></canvas>
+            <canvas class="uk-background-cover" style="background-image: url('/images/light.jpg')" width="1000" height="200"></canvas>
             <div class="uk-position-top">
 
               <vk-navbar transparent>

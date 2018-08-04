@@ -1,3 +1,3 @@
-export { ElButton as Button } from './elements'
-export { ElButtonLink as ButtonLink } from './elements'
-export { ElButtonGroup as ButtonGroup } from './elements'
+export { VkButtonEl as VkButton } from './elements'
+export { VkButtonElLink as VkButtonLink } from './elements'
+export { VkButtonElGroup as VkButtonGroup } from './elements'

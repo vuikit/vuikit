@@ -1,13 +1,11 @@
-import { ElInput } from '../elements'
+import { VkInputEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElInput, {
-  name: 'VkFormInput',
+export default assign({}, VkInputEl, {
   props: ['value'],
   render (h, { props, data }) {
-
     const def = mergeData({}, data, {
       props,
       domProps: {
@@ -26,6 +24,6 @@ export default assign({}, ElInput, {
       }
     }
 
-    return h(ElInput, def)
+    return h(VkInputEl, def)
   }
 })

@@ -1,20 +1,19 @@
-import { Drop } from 'vuikit/src/drop'
 import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
-import { ElDropdownNav } from '../elements'
+import { VkDrop } from 'vuikit/src/drop'
+import { VkDropdownElNav } from '../elements'
 
 export default {
   functional: true,
-  name: 'VkDropdownNav',
-  props: Drop.props,
+  props: VkDrop.props,
   render (h, { props, data, children }) {
     const items = children.filter(node => node.tag === 'li')
 
-    return h(Drop, mergeData({}, data, {
+    return h(VkDrop, mergeData({}, data, {
       props: assign({}, props, {
         mainClass: 'uk-dropdown',
-        mainElement: ElDropdownNav
+        mainElement: VkDropdownElNav
       })
     }), items)
   }

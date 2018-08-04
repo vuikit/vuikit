@@ -1,7 +1,5 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { elements as IconElements } from 'vuikit/src/icon'
-
-const { ElIcon } = IconElements
+import { VkIconEl } from 'vuikit/src/icon'
 
 export default {
   functional: true,
@@ -33,7 +31,7 @@ export default {
     }), [
       h('a', { on: listeners }, [
         title,
-        _slots.icon && h(ElIcon, {
+        _slots.icon && h(VkIconEl, {
           class: 'uk-margin-small-left'
         }, [ _slots.icon ])
       ]),

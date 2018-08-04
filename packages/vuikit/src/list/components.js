@@ -1,1 +1,1 @@
-export { ElList as List } from './elements'
+export { VkListEl as VkList } from './elements'

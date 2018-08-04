@@ -1,3 +1,3 @@
-export { default as ElSubnav } from './subnav'
-export { default as ElSubnavItem } from './subnav--item'
-export { default as ElSubnavItemDropdown } from './subnav--item-dropdown'
+export { default as VkSubnavEl } from './subnav'
+export { default as VkSubnavElItem } from './subnav--item'
+export { default as VkSubnavElItemDropdown } from './subnav--item-dropdown'

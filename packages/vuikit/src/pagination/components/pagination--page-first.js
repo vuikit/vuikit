@@ -1,9 +1,9 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { ElPaginationPagePrev } from '../elements'
+import { VkPaginationElPagePrev } from '../elements'
 
 export default {
   functional: true,
-  props: ElPaginationPagePrev.props,
+  props: VkPaginationElPagePrev.props,
   render (h, { data, props, parent }) {
     const { title, expanded } = props
 
@@ -16,7 +16,7 @@ export default {
       }))
     }
 
-    return h(ElPaginationPagePrev, {
+    return h(VkPaginationElPagePrev, {
       props: {
         title,
         expanded,

@@ -2,14 +2,14 @@ import { docEl } from 'vuikit/src/_core/utils/env'
 import { assign } from 'vuikit/src/_core/utils/object'
 import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 
-import { ElModal } from './elements'
-import ModalTransition from './transition'
+import { VkModalEl } from './elements'
+import VkModalTransition from './transition'
 
 export default {
   components: {
-    ModalTransition
+    VkModalTransition
   },
-  props: assign({}, ElModal.props, {
+  props: assign({}, VkModalEl.props, {
     show: {
       type: Boolean,
       default: false

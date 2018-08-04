@@ -1,3 +1,3 @@
-export { default as ElNotification } from './notification'
-export { default as ElNotificationClose } from './notification--close'
-export { default as ElNotificationMessage } from './notification--message'
+export { default as VkNotificationEl } from './notification'
+export { default as VkNotificationElClose } from './notification--close'
+export { default as VkNotificationElMessage } from './notification--message'

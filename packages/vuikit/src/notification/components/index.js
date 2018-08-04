@@ -1,1 +1,1 @@
-export { default as Notification } from './notification'
+export { default as VkNotification } from './notification'

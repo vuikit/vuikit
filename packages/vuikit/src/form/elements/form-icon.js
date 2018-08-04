@@ -1,7 +1,5 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { elements as IconElements } from 'vuikit/src/icon'
-
-const { ElIcon, ElIconLink } = IconElements
+import { VkIconEl, VkIconElLink } from 'vuikit/src/icon'
 
 export default {
   functional: true,
@@ -12,7 +10,7 @@ export default {
   render (h, { props, data, children }) {
     const { flipped, linkTag } = props
 
-    return h(linkTag ? ElIconLink : ElIcon, mergeData(data, {
+    return h(linkTag ? VkIconElLink : VkIconEl, mergeData(data, {
       class: ['uk-form-icon', {
         'uk-form-icon-flip': flipped
       }]

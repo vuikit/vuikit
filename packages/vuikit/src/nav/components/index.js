@@ -1,6 +1,6 @@
-export { default as Nav } from './nav'
-export { default as NavItem } from './nav-item'
-export { default as NavItemParent } from './nav-item-parent'
-export { default as NavItemHeader } from './nav-item-header'
+export { default as VkNav } from './nav'
+export { default as VkNavItem } from './nav--item'
+export { default as VkNavItemParent } from './nav--item-parent'
+export { default as VkNavItemHeader } from './nav--item-header'
 
-export { ElNavItemDivider as NavItemDivider } from '../elements'
+export { VkNavElItemDivider as VkNavItemDivider } from '../elements'

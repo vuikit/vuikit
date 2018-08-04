@@ -1,2 +1,2 @@
-export { default as Scrollspy } from './scrollspy'
-export { default as ScrollspyNav } from './scrollspy-nav'
+export { default as VkScrollspy } from './scrollspy'
+export { default as VkScrollspyNav } from './scrollspy-nav'

@@ -5,9 +5,7 @@ export * from './components'
 
 export default {
   components,
-  install (Vue, { prefix = 'Vk' } = {}) {
-    each(components, (def, name) => {
-      Vue.component(`${prefix}${name}`, def)
-    })
+  install (Vue) {
+    each(components, (def, name) => Vue.component(name, def))
   }
 }

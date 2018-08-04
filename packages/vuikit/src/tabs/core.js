@@ -1,6 +1,6 @@
 import { get } from 'vuikit/src/_core/utils/object'
 import { warn } from 'vuikit/src/_core/utils/debug'
-import { TAB_ID } from '../constants'
+import { TAB_ID } from './constants'
 
 /* This component supports both local as synced
   activeTab state, reason for a data and a prop. */

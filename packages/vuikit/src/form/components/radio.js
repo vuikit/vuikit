@@ -1,10 +1,9 @@
-import { ElRadio } from '../elements'
+import { VkRadioEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElRadio, {
-  name: 'VkFormRadio',
+export default assign({}, VkRadioEl, {
   props: {
     label: String
   },
@@ -32,7 +31,7 @@ export default assign({}, ElRadio, {
       }
     }
 
-    const radio = h(ElRadio, def)
+    const radio = h(VkRadioEl, def)
 
     if (label) {
       return h('label', [

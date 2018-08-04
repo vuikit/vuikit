@@ -1,9 +1,7 @@
-<script>
-import { ElNavItemHeader } from '../elements'
+import { VkNavElItemHeader } from '../elements'
 
 export default {
   functional: true,
-  name: 'VkNavItemHeader',
   props: {
     title: {
       type: String,
@@ -11,7 +9,6 @@ export default {
     }
   },
   render (h, { props, data }) {
-    return h(ElNavItemHeader, data, props.title)
+    return h(VkNavElItemHeader, data, props.title)
   }
 }
-</script>

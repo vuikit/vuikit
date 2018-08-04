@@ -5,7 +5,6 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 const animationPrefix = 'uk-animation-'
 
 export default {
-  name: 'VkTransition',
   functional: true,
   props: {
     name: {

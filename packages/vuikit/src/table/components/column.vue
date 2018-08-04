@@ -3,12 +3,11 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isUndefined, isFunction } from 'vuikit/src/_core/utils/lang'
 
-import { ElTableTd, ElTableTh } from '../elements'
+import { VkTableElTd, VkTableElTh } from '../elements'
 
 export default {
   functional: true,
-  name: 'VkTableColumn',
-  props: assign({}, ElTableTh.props, ElTableTd.props, {
+  props: assign({}, VkTableElTh.props, VkTableElTd.props, {
     head: String,
     cell: [String, Function]
   }),

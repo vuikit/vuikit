@@ -1,8 +1,6 @@
 import IconToggle from './navbar--toggle--icon'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { elements as IconElements } from 'vuikit/src/icon'
-
-const { ElIcon } = IconElements
+import { VkIconEl } from 'vuikit/src/icon'
 
 export default {
   functional: true,
@@ -19,7 +17,7 @@ export default {
   render (h, { props, data, children }) {
     const { icon, title } = props
 
-    const Icon = icon && h(ElIcon, {
+    const Icon = icon && h(VkIconEl, {
       class: 'uk-navbar-toggle-icon'
     }, [ h(IconToggle) ])
 

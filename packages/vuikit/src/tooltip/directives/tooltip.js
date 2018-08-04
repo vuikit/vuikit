@@ -1,7 +1,7 @@
 import { hasAttr, attr } from 'vuikit/src/_core/utils/attr'
 
-import { NAMESPACE } from './constants'
-import { getOptions, bindEvents, _hide } from './util'
+import { NAMESPACE } from '../constants'
+import { getOptions, bindEvents, _hide } from '../util'
 
 export default {
   bind (el, binding, vnode) {

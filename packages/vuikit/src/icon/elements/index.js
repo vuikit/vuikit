@@ -1,4 +1,4 @@
-export { default as ElIcon } from './icon'
-export { default as ElIconLink } from './icon-link'
-export { default as ElIconButton } from './icon-button'
-export { default as ElIconImage } from './icon-image'
+export { default as VkIconEl } from './icon'
+export { default as VkIconElLink } from './icon-link'
+export { default as VkIconElButton } from './icon-button'
+export { default as VkIconElImage } from './icon-image'

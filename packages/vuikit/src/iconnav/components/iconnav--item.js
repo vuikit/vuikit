@@ -2,14 +2,13 @@ import { assign } from 'vuikit/src/_core/utils/object'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 import { core } from 'vuikit/src/icon'
-import { ElIconnavItem } from '../elements'
+import { VkIconnavElItem } from '../elements'
 
 export default {
-  name: 'VkIconnavItem',
   functional: true,
-  props: assign({}, core.props, ElIconnavItem.props),
+  props: assign({}, core.props, VkIconnavElItem.props),
   render (h, { data, props }) {
-    return h(ElIconnavItem, mergeData(data, { props }), [
+    return h(VkIconnavElItem, mergeData(data, { props }), [
       h(core, { attrs: data.attrs, props })
     ])
   }

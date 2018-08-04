@@ -1,9 +1,11 @@
-import Tooltip from './directive'
+import { each } from 'vuikit/src/_core/utils/object'
+import * as directives from './directives'
 
-export { Tooltip }
+export * from './directives'
 
 export default {
-  install (Vue, { prefix = 'Vk' } = {}) {
-    Vue.directive(`${prefix}Tooltip`, Tooltip)
+  directives,
+  install (Vue) {
+    each(directives, (def, name) => Vue.directive(name, def))
   }
 }

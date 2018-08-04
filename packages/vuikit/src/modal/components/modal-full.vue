@@ -1,13 +1,13 @@
 <template>
-  <ModalTransition appear>
-    <ElModalFull
+  <VkModalTransition appear>
+    <VkModalElFull
       :class="{ 'uk-open': open }"
       v-show="show"
-      v-bind="pickComponentProps($props, 'ElModalFull')"
+      v-bind="pickComponentProps($props, 'VkModalElFull')"
     >
       <slot/>
-    </ElModalFull>
-  </ModalTransition>
+    </VkModalElFull>
+  </VkModalTransition>
 </template>
 
 <script>
@@ -19,14 +19,13 @@ import * as elements from '../elements'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 export default {
-  name: 'VkModalFull',
   extends: core,
   mixins: [ mixinProps ],
   components: assign({}, elements),
   beforeUpdate () {
     // workaround to add a default modifier class to the close button
     (this.$slots.default || []).forEach(node => {
-      if (get(node, 'fnOptions.name') === 'ElModalClose') {
+      if (get(node, 'fnOptions.name') === 'VkModalElClose') {
         node.data = mergeData(node.data, { class: 'uk-modal-close-full' })
       }
     })

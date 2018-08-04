@@ -1,4 +1,4 @@
-import { ElSubnav } from '../elements'
+import { VkSubnavEl } from '../elements'
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { get, assign } from 'vuikit/src/_core/utils/object'
@@ -7,8 +7,7 @@ import { get, assign } from 'vuikit/src/_core/utils/object'
   activeItem state, reason for a data and a prop. */
 
 export default {
-  name: 'VkSubnav',
-  props: assign({}, ElSubnav.props, {
+  props: assign({}, VkSubnavEl.props, {
     activeItem: {}
   }),
   data: vm => ({
@@ -33,10 +32,9 @@ export default {
     }
   },
   render (h) {
-    return h(ElSubnav, {
+    return h(VkSubnavEl, {
       props: this.$props
     }, filterItems(this).map((node, index) => {
-
       if (process.env.NODE_ENV !== 'production' && !node.fnOptions) {
         warn('[VkSubvnav]: the child components must be functional.', this)
       }

@@ -1,4 +1,4 @@
-export { ElIconnav as Iconnav } from '../elements'
-export { ElIconnavVertical as IconnavVertical } from '../elements'
+export { VkIconnavEl as VkIconnav } from '../elements'
+export { VkIconnavElVertical as VkIconnavVertical } from '../elements'
 
-export { default as IconnavItem } from './iconnav--item'
+export { default as VkIconnavItem } from './iconnav--item'

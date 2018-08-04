@@ -1,1 +1,1 @@
-export { default as ElSection } from './section'
+export { default as VkSectionEl } from './section'

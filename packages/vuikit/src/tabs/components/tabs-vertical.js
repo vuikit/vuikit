@@ -1,14 +1,13 @@
-import core from './core'
+import core from '../core'
 import { assign } from 'vuikit/src/_core/utils/object'
-import { Transition } from 'vuikit/src/transition'
+import { VkTransition } from 'vuikit/src/transition'
 
 import { TAB_ID } from '../constants'
-import { ElTabsVertical } from '../elements'
+import { VkTabsElVertical } from '../elements'
 
 export default {
-  name: 'VkTabsVertical',
   extends: core,
-  props: ElTabsVertical.props,
+  props: VkTabsElVertical.props,
   render (h) {
     const { align, animation, keepAlive, $props } = this
 
@@ -33,11 +32,11 @@ export default {
     }, [
       // tabs
       h('div', { class: 'uk-width-auto' }, [
-        h(ElTabsVertical, { props: $props }, Tabs)
+        h(VkTabsElVertical, { props: $props }, Tabs)
       ]),
       // content
       h('div', { class: 'uk-width-expand' }, [
-        h(Transition, {
+        h(VkTransition, {
           props: { name: animation }
         }, [
           keepAlive

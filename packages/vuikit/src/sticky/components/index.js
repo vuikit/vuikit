@@ -1,1 +1,1 @@
-export { default as Sticky } from './sticky'
+export { default as VkSticky } from './sticky'

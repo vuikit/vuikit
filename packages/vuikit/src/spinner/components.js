@@ -1,1 +1,1 @@
-export { ElSpinner as Spinner } from './elements'
+export { VkSpinnerEl as VkSpinner } from './elements'

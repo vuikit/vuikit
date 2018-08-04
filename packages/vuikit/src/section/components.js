@@ -1,1 +1,1 @@
-export { ElSection as Section } from './elements'
+export { VkSectionEl as VkSection } from './elements'

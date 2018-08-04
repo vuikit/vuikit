@@ -4,12 +4,11 @@ import { win, docEl } from 'vuikit/src/_core/utils/env'
 
 import core from '../core'
 import { mixinPage, mixinActive } from '../mixins'
-import { ElOffcanvas, ElOffcanvasBar } from '../elements'
+import { VkOffcanvasEl, VkOffcanvasElBar } from '../elements'
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
   inheritAttrs: false,
-  name: 'VkOffcanvas',
   extends: core,
   mixins: [ mixinPage, mixinActive ],
   created () {
@@ -32,7 +31,7 @@ export default {
   render (h) {
     const instance = this
 
-    const content = h(ElOffcanvas, {
+    const content = h(VkOffcanvasEl, {
       props: this.$props,
       class: {
         'uk-open': this.show
@@ -42,7 +41,7 @@ export default {
         value: this.show
       }]
     }, [
-      h(ElOffcanvasBar, {
+      h(VkOffcanvasElBar, {
         ref: 'bar',
         class: {
           'uk-offcanvas-none': this.show

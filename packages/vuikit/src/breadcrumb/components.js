@@ -1,2 +1,2 @@
-export { ElBreadcrumb as Breadcrumb } from './elements'
-export { ElBreadcrumbItem as BreadcrumbItem } from './elements'
+export { VkBreadcrumbEl as VkBreadcrumb } from './elements'
+export { VkBreadcrumbElItem as VkBreadcrumbItem } from './elements'

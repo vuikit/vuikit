@@ -1,5 +1,5 @@
-import { Grid } from 'vuikit/src/grid'
-import { Drop } from 'vuikit/src/drop'
+import { VkGrid } from 'vuikit/src/grid'
+import { VkDrop } from 'vuikit/src/drop'
 
 import { query } from 'vuikit/src/_core/utils/selector'
 import { isTouch } from 'vuikit/src/_core/utils/touch'
@@ -7,7 +7,6 @@ import { assign, get } from 'vuikit/src/_core/utils/object'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
 
 export default {
-  name: 'VkNavbarNavDropdown',
   props: {
     title: {
       type: String,
@@ -29,12 +28,12 @@ export default {
       type: Boolean,
       default: false
     },
-    mode: Drop.props.mode,
-    offset: Drop.props.offset,
-    animation: Drop.props.animation,
-    duration: Drop.props.duration,
-    delayShow: Drop.props.delayShow,
-    delayHide: Drop.props.delayHide
+    mode: VkDrop.props.mode,
+    offset: VkDrop.props.offset,
+    animation: VkDrop.props.animation,
+    duration: VkDrop.props.duration,
+    delayShow: VkDrop.props.delayShow,
+    delayHide: VkDrop.props.delayHide
   },
   computed: {
     navbar () {
@@ -88,7 +87,7 @@ export default {
 
     return h('li', [
       h('a', [Subtitle || title]),
-      h(Drop, {
+      h(VkDrop, {
         on: {
           show: (e) => {
             this.$forceUpdate()
@@ -128,7 +127,7 @@ export default {
         })
       }, [
         colCount >= 2
-          ? h(Grid, {
+          ? h(VkGrid, {
             class: [
               'uk-navbar-dropdown-grid',
               `uk-child-width-1-${colCount}${colCount > 2 ? '@m' : ''}`

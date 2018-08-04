@@ -1,13 +1,11 @@
-import { ElSelect } from '../elements'
+import { VkSelectEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElSelect, {
-  name: 'VkFormSelect',
+export default assign({}, VkSelectEl, {
   props: ['value'],
   render (h, { props, data, children }) {
-
     const def = mergeData({}, data, {
       props,
       // using v-model as it does some magic
@@ -37,6 +35,6 @@ export default assign({}, ElSelect, {
       }
     }
 
-    return h(ElSelect, def, children)
+    return h(VkSelectEl, def, children)
   }
 })

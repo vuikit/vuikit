@@ -1,1 +1,1 @@
-export { default as ElGrid } from './grid'
+export { default as VkGridEl } from './grid'

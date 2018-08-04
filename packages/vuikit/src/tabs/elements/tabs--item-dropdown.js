@@ -2,9 +2,7 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 import IconMore from '@vuikit/icons/lib/more'
 import IconTriangeDown from '@vuikit/icons/lib/triangle-down'
-import { elements as IconElements } from 'vuikit/src/icon'
-
-const { ElIcon } = IconElements
+import { VkIconEl } from 'vuikit/src/icon'
 
 export default {
   functional: true,
@@ -33,8 +31,8 @@ export default {
       }
     }), [
       h('a', [
-        title || h(ElIcon, [ h(IconMore) ]),
-        title && h(ElIcon, {
+        title || h(VkIconEl, [ h(IconMore) ]),
+        title && h(VkIconEl, {
           class: 'uk-margin-small-left'
         }, [
           h(IconTriangeDown)

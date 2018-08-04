@@ -1,1 +1,1 @@
-export { default as ElDrop } from './drop'
+export { default as VkDropEl } from './drop'

@@ -1,23 +1,23 @@
 <template>
-  <ModalTransition appear>
-    <ElModal
+  <VkModalTransition appear>
+    <VkModalEl
       :class="{ 'uk-open': open }"
       v-show="show"
-      v-bind="pickComponentProps($props, 'ElModal')"
+      v-bind="pickComponentProps($props, 'VkModalEl')"
       v-vk-modal-overflow-auto="scrollable"
     >
-      <ElModalHeader v-if="$slots.header">
+      <VkModalElHeader v-if="$slots.header">
         <slot name="header"/>
-      </ElModalHeader>
+      </VkModalElHeader>
       <slot name="dialog" v-if="$slots.dialog"/> <!-- for customizations -->
-      <ElModalBody v-if="$slots.default">
+      <VkModalElBody v-if="$slots.default">
         <slot/>
-      </ElModalBody>
-      <ElModalFooter v-if="$slots.footer">
+      </VkModalElBody>
+      <VkModalElFooter v-if="$slots.footer">
         <slot name="footer"/>
-      </ElModalFooter>
-    </ElModal>
-  </ModalTransition>
+      </VkModalElFooter>
+    </VkModalEl>
+  </VkModalTransition>
 </template>
 
 <script>
@@ -32,7 +32,6 @@ import VkModalOverflowAuto from '../directives/overflow-auto'
 import { SHOWN, HIDDEN } from '../constants'
 
 export default {
-  name: 'VkModal',
   extends: core,
   components: assign({}, elements),
   mixins: [ mixinProps, mixinActive ],

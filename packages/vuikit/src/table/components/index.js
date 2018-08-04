@@ -1,2 +1,2 @@
-export { default as Table } from './table'
-export { default as TableColumn } from './column'
+export { default as VkTable } from './table'
+export { default as VkTableColumn } from './column'

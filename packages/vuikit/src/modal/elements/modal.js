@@ -1,9 +1,8 @@
-import ElModalDialog from './modal--dialog'
+import VkModalElDialog from './modal--dialog'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,
-  name: 'ElModal',
   props: {
     // vertically expands the modal
     expanded: {
@@ -29,7 +28,7 @@ export default {
       }
     }), [
 
-      h(ElModalDialog, {
+      h(VkModalElDialog, {
         class: {
           'uk-margin-auto-vertical': centered
         }

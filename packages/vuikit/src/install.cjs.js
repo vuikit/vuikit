@@ -5,14 +5,9 @@ import * as directives from './directives.js'
 const Vuikit = {
   components,
   directives,
-
-  install (Vue, { prefix = 'Vk' } = {}) {
-    each(components, (def, name) => {
-      Vue.component(`${prefix}${name}`, def)
-    })
-    each(directives, (def, name) => {
-      Vue.directive(`${prefix}${name}`, def)
-    })
+  install (Vue) {
+    each(components, (def, name) => Vue.component(name, def))
+    each(directives, (def, name) => Vue.directive(name, def))
   }
 }
 

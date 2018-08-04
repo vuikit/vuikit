@@ -1,5 +1,8 @@
 <template functional>
-  <li class="uk-parent">
+  <li
+    :class="['uk-parent', data.staticClass]"
+    v-on="listeners"
+  >
     <a :href="props.href" :target="props.target">
       {{ props.title }}
     </a>
@@ -12,7 +15,6 @@
 <script>
 export default {
   functional: true,
-  name: 'VkNavItemParent',
   props: {
     href: String,
     target: String,

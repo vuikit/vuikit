@@ -1,13 +1,11 @@
-import { ElTextarea } from '../elements'
+import { VkTextareaEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElTextarea, {
-  name: 'VkFormTextarea',
+export default assign({}, VkTextareaEl, {
   props: ['value'],
   render (h, { props, data }) {
-
     const def = mergeData({}, data, {
       props,
       domProps: {
@@ -26,6 +24,6 @@ export default assign({}, ElTextarea, {
       }
     }
 
-    return h(ElTextarea, def)
+    return h(VkTextareaEl, def)
   }
 })

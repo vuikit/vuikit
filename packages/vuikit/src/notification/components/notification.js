@@ -5,12 +5,11 @@ import { isObject, isString } from 'vuikit/src/_core/utils/lang'
 import MessageDirective from '../directives/message'
 import MessageTransition from '../transition'
 
-import { ElNotification, ElNotificationMessage, ElNotificationClose } from '../elements'
+import { VkNotificationEl, VkNotificationElMessage, VkNotificationElClose } from '../elements'
 
 export default {
-  name: 'VkNotification',
   directives: { MessageDirective },
-  props: assign({}, ElNotification.props, {
+  props: assign({}, VkNotificationEl.props, {
     timeout: {
       type: Number,
       default: 5000
@@ -29,7 +28,7 @@ export default {
         return true
       }
     },
-    status: ElNotificationMessage.props.status
+    status: VkNotificationElMessage.props.status
   }),
   computed: {
     $messages () {
@@ -102,12 +101,12 @@ export default {
 
     const MessageSlot = get(this, '$scopedSlots.default', msg => msg.message)
 
-    return h(ElNotification, {
+    return h(VkNotificationEl, {
       props: { position }
     }, [
       h(MessageTransition, [
         this.$messages.map((msg, index) =>
-          h(ElNotificationMessage, {
+          h(VkNotificationElMessage, {
             key: this.getMessageId(msg),
             props: msg,
             directives: [{
@@ -119,7 +118,7 @@ export default {
             }
           }, [
             MessageSlot(msg),
-            h(ElNotificationClose)
+            h(VkNotificationElClose)
           ])
         )
       ])

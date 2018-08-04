@@ -5,8 +5,8 @@ import ElButton from './button'
 const { htmlType, ...props } = ElButton.props
 
 export default {
-  functional: true,
   props,
+  functional: true,
   render (h, { props, data, children }) {
     const { active, type, size } = props
 

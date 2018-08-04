@@ -1,17 +1,19 @@
 import { each } from 'vuikit/src/_core/utils/object'
 
+import core from './core'
 import * as elements from './elements'
 import * as components from './components'
 
-export { elements }
+export { core }
+export * from './elements'
 export * from './components'
 
 export default {
   elements,
   components,
-  install (Vue, { prefix = 'Vk' } = {}) {
+  install (Vue) {
     each(components, (def, name) => {
-      Vue.component(`${prefix}${name}`, def)
+      Vue.component(name, def)
     })
   }
 }

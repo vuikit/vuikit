@@ -4,12 +4,11 @@ import { win, docEl } from 'vuikit/src/_core/utils/env'
 import { width, height } from 'vuikit/src/_core/utils/dimensions'
 
 import Offcanvas from './offcanvas'
-import { ElOffcanvas, ElOffcanvasBar } from '../elements'
+import { VkOffcanvasEl, VkOffcanvasElBar } from '../elements'
 
 import { SHOW, SHOWN, HIDE, HIDDEN } from '../constants'
 
 export default {
-  name: 'VkOffcanvasSlide',
   extends: Offcanvas,
   data: () => ({
     open: false
@@ -21,7 +20,7 @@ export default {
     const inheritClass = this.$vnode.data.staticClass
     delete this.$vnode.data.staticClass
 
-    const content = h(ElOffcanvas, {
+    const content = h(VkOffcanvasEl, {
       props: this.$props,
       class: {
         'uk-open': this.open
@@ -31,7 +30,7 @@ export default {
         value: this.show
       }]
     }, [
-      h(ElOffcanvasBar, {
+      h(VkOffcanvasElBar, {
         ref: 'bar',
         props: { animated: true },
         class: [inheritClass, 'uk-offcanvas-slide']

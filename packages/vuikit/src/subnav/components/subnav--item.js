@@ -1,17 +1,15 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { ElSubnavItem } from '../elements'
+import { VkSubnavElItem } from '../elements'
 
 export default {
-  name: 'VkSubnavItem',
   functional: true,
-  props: ElSubnavItem.props,
+  props: VkSubnavElItem.props,
   render (h, { props, data, parent }) {
-
     if (data.rerendering) {
       delete data.class
     }
 
-    return h(ElSubnavItem, mergeData(data, { props }, {
+    return h(VkSubnavElItem, mergeData(data, { props }, {
       rerender: true,
       on: {
         click: e => {

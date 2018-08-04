@@ -1,13 +1,11 @@
-import { ElRange } from '../elements'
+import { VkRangeEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElRange, {
-  name: 'VkFormRange',
+export default assign({}, VkRangeEl, {
   props: ['value'],
   render (h, { props, data, _n: toNumber }) {
-
     const def = mergeData({}, data, {
       domProps: {
         value: props.value
@@ -30,6 +28,6 @@ export default assign({}, ElRange, {
       }
     }
 
-    return h(ElRange, def)
+    return h(VkRangeEl, def)
   }
 })

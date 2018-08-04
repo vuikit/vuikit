@@ -1,18 +1,16 @@
 <template>
-  <ElNav v-bind="pickComponentProps($props, 'ElNav')">
+  <VkNavEl v-bind="pickComponentProps($props, 'VkNavEl')">
     <slot/>
-  </ElNav>
+  </VkNavEl>
 </template>
 
 <script>
-import { assign } from 'vuikit/src/_core/utils/object'
 import mixinProps from 'vuikit/src/_core/mixins/props'
-import * as elements from '../elements'
+import { VkNavEl } from '../elements'
 
 export default {
-  name: 'VkNav',
   mixins: [mixinProps],
-  components: assign({}, elements),
-  props: assign({}, elements.ElNav.props)
+  components: { VkNavEl },
+  props: VkNavEl.props
 }
 </script>

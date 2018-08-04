@@ -1,7 +1,5 @@
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-import { elements as IconElements } from 'vuikit/src/icon'
-
-const { ElIconLink } = IconElements
+import { VkIconElLink } from 'vuikit/src/icon'
 
 export default {
   functional: true,
@@ -19,7 +17,7 @@ export default {
     return h('li', mergeData(data, {
       class: { 'uk-active': active }
     }), [
-      h(ElIconLink, {
+      h(VkIconElLink, {
         attrs: { href, target }
       }, icon)
     ])

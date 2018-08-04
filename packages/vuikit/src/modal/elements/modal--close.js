@@ -4,7 +4,7 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,
-  name: 'ElModalClose',
+  name: 'VkModalElClose', // required for a workaround used in the component
   props: {
     large: {
       type: Boolean,

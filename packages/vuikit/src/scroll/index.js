@@ -1,9 +1,11 @@
-import Scroll from './directive'
+import { each } from 'vuikit/src/_core/utils/object'
+import * as directives from './directives'
 
-export { Scroll }
+export * from './directives'
 
 export default {
-  install (Vue, { prefix = 'Vk' } = {}) {
-    Vue.directive(`${prefix}Scroll`, Scroll)
+  directives,
+  install (Vue) {
+    each(directives, (def, name) => Vue.directive(name, def))
   }
 }

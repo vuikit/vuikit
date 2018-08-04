@@ -1,15 +1,17 @@
 <template>
   <div class="uk-padding">
 
-    <el-range/>
+    <vk-range-el/>
 
   </div>
 </template>
 
 <script>
-import * as components from '../../elements'
+import * as elements from '../elements'
 
 export default {
-  components
+  components: {
+    ...elements
+  }
 }
 </script>

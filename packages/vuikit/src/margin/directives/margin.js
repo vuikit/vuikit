@@ -1,7 +1,7 @@
 import { on } from 'vuikit/src/_core/utils/event'
-import { update } from './util'
+import { update } from '../util'
 
-const NAMESPACE = '__vkHeightMatch'
+const NAMESPACE = '__vkMargin'
 
 export default {
   bind (el, binding, vnode) {

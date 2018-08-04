@@ -1,3 +1,4 @@
+import { on } from 'vuikit/src/_core/utils/event'
 import { css } from 'vuikit/src/_core/utils/style'
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { query } from 'vuikit/src/_core/utils/selector'
@@ -5,10 +6,39 @@ import { assign } from 'vuikit/src/_core/utils/object'
 import { height, offset } from 'vuikit/src/_core/utils/dimensions'
 import { isObject, isNumeric, isString, toFloat, endsWith } from 'vuikit/src/_core/utils/lang'
 
+const NAMESPACE = '__vkHeightViewport'
+
+export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+  },
+  inserted (el, binding, vnode) {
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+    el[NAMESPACE].unbind = on(window, 'resize', () =>
+      update(el, { binding, vnode })
+    )
+  },
+  componentUpdated (el, binding, vnode) {
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+  },
+  unbind (el) {
+    if (!el[NAMESPACE]) {
+      return
+    }
+
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
+  }
+}
+
 /**
  * Copyright (c) 2013-2018 YOOtheme GmbH, getuikit.com
  */
-export function update (el, ctx) {
+function update (el, ctx) {
   const opts = getOptions(ctx)
 
   css(el, 'boxSizing', 'border-box')
@@ -18,7 +48,6 @@ export function update (el, ctx) {
   let offsetTop = 0
 
   if (opts.expand) {
-
     css(el, {height: '', minHeight: ''})
 
     const diff = viewport - offsetHeight(document.documentElement)
@@ -26,9 +55,7 @@ export function update (el, ctx) {
     if (diff > 0) {
       minHeight = offsetHeight(el) + diff
     }
-
   } else {
-
     const { top } = offset(el)
 
     if (top < viewport / 2 && opts.offsetTop) {
@@ -36,26 +63,17 @@ export function update (el, ctx) {
     }
 
     if (opts.offsetBottom === true) {
-
       offsetTop += offsetHeight(el.nextElementSibling)
-
     } else if (isNumeric(opts.offsetBottom)) {
-
       offsetTop += (viewport / 100) * opts.offsetBottom
-
     } else if (opts.offsetBottom && endsWith(opts.offsetBottom, 'px')) {
-
       offsetTop += toFloat(opts.offsetBottom)
-
     } else if (isString(opts.offsetBottom)) {
-
       offsetTop += offsetHeight(query(opts.offsetBottom, el))
-
     }
 
     // on mobile devices (iOS and Android) window.innerHeight !== 100vh
     minHeight = offsetTop ? `calc(100vh - ${offsetTop}px)` : '100vh'
-
   }
 
   if (!minHeight) {

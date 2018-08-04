@@ -1,5 +1,5 @@
 import { isNumber } from 'vuikit/src/_core/utils/lang'
-import { ElPaginationPage } from '../elements'
+import { VkPaginationElPage } from '../elements'
 
 export default {
   functional: true,
@@ -18,7 +18,7 @@ export default {
       const isPage = isNumber(page)
 
       return isPage
-        ? h(ElPaginationPage, {
+        ? h(VkPaginationElPage, {
           props: {
             title: page,
             active: currentPage === page

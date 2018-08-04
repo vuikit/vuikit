@@ -5,12 +5,11 @@ import { isVisible } from 'vuikit/src/_core/utils/filter'
 import { Transition } from 'vuikit/src/_core/utils/animation'
 import { noop, toFloat } from 'vuikit/src/_core/utils/lang'
 
-import { ElNavbarDropbar } from '../elements'
+import { VkNavbarElDropbar } from '../elements'
 
 let activeDrops
 
 export default {
-  name: 'VkNavbarDropbar',
   props: {
     mode: {
       type: String,
@@ -79,7 +78,7 @@ export default {
       class: 'uk-position-relative'
     }, [
       this.$slots.default,
-      h(ElNavbarDropbar, {
+      h(VkNavbarElDropbar, {
         ref: 'dropbar',
         props: {
           slide: this.mode === 'slide'

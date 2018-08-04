@@ -1,11 +1,41 @@
 import { $$ } from 'vuikit/src/_core/utils/core'
+import { on } from 'vuikit/src/_core/utils/event'
 import { css } from 'vuikit/src/_core/utils/style'
 import { attr } from 'vuikit/src/_core/utils/attr'
 import { assign } from 'vuikit/src/_core/utils/object'
 import { isVisible } from 'vuikit/src/_core/utils/filter'
 import { isUndefined, isString } from 'vuikit/src/_core/utils/lang'
 
-export function update (el, ctx) {
+const NAMESPACE = '__vkHeightMatch'
+
+export default {
+  bind (el, binding, vnode) {
+    el[NAMESPACE] = {}
+  },
+  inserted (el, binding, vnode) {
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+    el[NAMESPACE].unbind = on(window, 'resize', () =>
+      update(el, { binding, vnode })
+    )
+  },
+  componentUpdated (el, binding, vnode) {
+    vnode.context.$nextTick(() =>
+      update(el, { binding, vnode })
+    )
+  },
+  unbind (el) {
+    if (!el[NAMESPACE]) {
+      return
+    }
+
+    el[NAMESPACE].unbind()
+    delete el[NAMESPACE]
+  }
+}
+
+function update (el, ctx) {
   const opts = getOptions(ctx)
   let elements = $$(opts.target, el)
 
@@ -45,7 +75,6 @@ function getRows (elements, row) {
   let lastOffset = false
 
   return elements.reduce((rows, el) => {
-
     if (lastOffset !== el.offsetTop) {
       rows.push([el])
     } else {
@@ -55,7 +84,6 @@ function getRows (elements, row) {
     lastOffset = el.offsetTop
 
     return rows
-
   }, [])
 }
 

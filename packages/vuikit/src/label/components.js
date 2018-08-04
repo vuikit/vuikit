@@ -1,1 +1,1 @@
-export { ElLabel as Label } from './elements'
+export { VkLabelEl as VkLabel } from './elements'

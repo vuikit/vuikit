@@ -4,15 +4,14 @@ import core from './core'
 import * as elements from './elements'
 import * as components from './components'
 
-export { elements, core }
+export { core }
+export * from './elements'
 export * from './components'
 
 export default {
   elements,
   components,
-  install (Vue, { prefix = 'Vk' } = {}) {
-    each(components, (def, name) => {
-      Vue.component(`${prefix}${name}`, def)
-    })
+  install (Vue) {
+    each(components, (def, name) => Vue.component(name, def))
   }
 }

@@ -1,27 +1,26 @@
 <template>
-  <ElGrid
-    v-bind="pickComponentProps($props, 'ElGrid')"
+  <VkGridEl
+    v-bind="pickComponentProps($props, 'VkGridEl')"
     v-vk-margin="{ margin, firstColumn, onUpdate }"
   >
     <slot/>
-  </ElGrid>
+  </VkGridEl>
 </template>
 
 <script>
 import { assign } from 'vuikit/src/_core/utils/object'
 import { toggleClass } from 'vuikit/src/_core/utils/class'
 
-import { ElGrid } from '../elements'
-import { Margin as VkMargin } from 'vuikit/src/margin'
+import { VkGridEl } from '../elements'
+import { VkMargin } from 'vuikit/src/margin'
 
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 export default {
-  name: 'VkGrid',
   mixins: [mixinProps],
-  components: { ElGrid },
+  components: { VkGridEl },
   directives: { VkMargin },
-  props: assign({}, ElGrid.props, {
+  props: assign({}, VkGridEl.props, {
     margin: {
       type: String,
       default: 'uk-grid-margin'

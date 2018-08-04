@@ -1,3 +1,3 @@
-export { default as ElButton } from './button'
-export { default as ElButtonLink } from './button-link'
-export { default as ElButtonGroup } from './button-group'
+export { default as VkButtonEl } from './button'
+export { default as VkButtonElLink } from './button-link'
+export { default as VkButtonElGroup } from './button-group'

@@ -1,1 +1,1 @@
-export { default as ElLabel } from './label'
+export { default as VkLabelEl } from './label'

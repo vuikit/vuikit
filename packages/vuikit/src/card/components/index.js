@@ -1,12 +1,12 @@
-export { default as Card } from './card'
+export { default as VkCard } from './card'
 
-export { ElCardTitle as CardTitle } from '../elements'
-export { ElCardBadge as CardBadge } from '../elements'
+export { VkCardElTitle as VkCardTitle } from '../elements'
+export { VkCardElBadge as VkCardBadge } from '../elements'
 
-export { ElCardHeader as CardHeader } from '../elements'
-export { ElCardBody as CardBody } from '../elements'
-export { ElCardFooter as CardFooter } from '../elements'
+export { VkCardElHeader as VkCardHeader } from '../elements'
+export { VkCardElBody as VkCardBody } from '../elements'
+export { VkCardElFooter as VkCardFooter } from '../elements'
 
-export { ElCardMedia as CardMedia } from '../elements'
-export { ElCardMediaTop as CardMediaTop } from '../elements'
-export { ElCardMediaBottom as CardMediaBottom } from '../elements'
+export { VkCardElMedia as VkCardMedia } from '../elements'
+export { VkCardElMediaTop as VkCardMediaTop } from '../elements'
+export { VkCardElMediaBottom as VkCardMediaBottom } from '../elements'

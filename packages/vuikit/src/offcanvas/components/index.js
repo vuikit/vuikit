@@ -1,7 +1,7 @@
-export { default as Offcanvas } from './offcanvas'
-export { default as OffcanvasPush } from './offcanvas-push'
-export { default as OffcanvasSlide } from './offcanvas-slide'
-export { default as OffcanvasReveal } from './offcanvas-reveal'
+export { default as VkOffcanvas } from './offcanvas'
+export { default as VkOffcanvasPush } from './offcanvas-push'
+export { default as VkOffcanvasSlide } from './offcanvas-slide'
+export { default as VkOffcanvasReveal } from './offcanvas-reveal'
 
-export { ElOffcanvasClose as OffcanvasClose } from '../elements'
-export { ElOffcanvasContent as OffcanvasContent } from '../elements'
+export { VkOffcanvasElClose as VkOffcanvasClose } from '../elements'
+export { VkOffcanvasElContent as VkOffcanvasContent } from '../elements'

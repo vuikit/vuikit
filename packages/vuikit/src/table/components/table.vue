@@ -1,35 +1,35 @@
 <template>
-  <ElTable v-bind="pickComponentProps($props, 'ElTable')">
+  <VkTableEl v-bind="pickComponentProps($props, 'VkTableEl')">
     <thead v-if="!headless">
-      <ElTableTr>
-        <ElTableTh v-for="(col, i) in columns" :key="i"
-          v-bind="pickComponentProps(col.props, 'ElTableTh')"
+      <VkTableElTr>
+        <VkTableElTh v-for="(col, i) in columns" :key="i"
+          v-bind="pickComponentProps(col.props, 'VkTableElTh')"
         >
           <component
             :is="{ functional: true, render: col.headRender }"
             v-bind="col.props"
           />
-        </ElTableTh>
-      </ElTableTr>
+        </VkTableElTh>
+      </VkTableElTr>
     </thead>
     <tbody>
-      <ElTableTr v-for="(row, rowIndex) in data" :key="rowIndex"
+      <VkTableElTr v-for="(row, rowIndex) in data" :key="rowIndex"
         :class="resolveRowClass(row)"
         :active="isRowSelected(row)"
         @click="onRowClick($event, row)"
       >
-        <ElTableTd v-for="(col, colIndex) in columns" :key="colIndex"
-          v-bind="pickComponentProps(col.props, 'ElTableTd')"
+        <VkTableElTd v-for="(col, colIndex) in columns" :key="colIndex"
+          v-bind="pickComponentProps(col.props, 'VkTableElTd')"
         >
           <component :is="{ functional: true, render: col.cellRender }"
             :row="row"
             :slots="col.slots"
             v-bind="col.props"
           />
-        </ElTableTd>
-      </ElTableTr>
+        </VkTableElTd>
+      </VkTableElTr>
     </tbody>
-  </ElTable>
+  </VkTableEl>
 </template>
 
 <script>
@@ -44,7 +44,6 @@ import * as elements from '../elements'
 import { mixinSelect } from '../mixins'
 
 export default {
-  name: 'VkTable',
   extends: core,
   components: assign({}, elements),
   mixins: [mixinSelect, mixinProps],

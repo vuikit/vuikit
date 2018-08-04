@@ -1,1 +1,1 @@
-export { default as ElList } from './list'
+export { default as VkListEl } from './list'

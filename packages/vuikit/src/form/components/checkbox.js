@@ -1,10 +1,9 @@
-import { ElCheckbox } from '../elements'
+import { VkCheckboxEl } from '../elements'
 
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { assign, get } from 'vuikit/src/_core/utils/object'
 
-export default assign({}, ElCheckbox, {
-  name: 'VkFormCheckbox',
+export default assign({}, VkCheckboxEl, {
   props: {
     label: String
   },
@@ -62,7 +61,7 @@ export default assign({}, ElCheckbox, {
       }
     }
 
-    const checkbox = h(ElCheckbox, def)
+    const checkbox = h(VkCheckboxEl, def)
 
     if (label) {
       return h('label', [

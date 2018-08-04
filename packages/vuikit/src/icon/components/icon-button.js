@@ -1,14 +1,13 @@
 import { assign } from 'vuikit/src/_core/utils/object'
 
 import core from '../core'
-import { ElIconButton } from '../elements'
+import { VkIconElButton } from '../elements'
 
 export default {
-  name: 'VkIconButton',
   functional: true,
-  props: assign({}, core.props, ElIconButton.props),
+  props: assign({}, core.props, VkIconElButton.props),
   render (h, { data, props }) {
-    return h(ElIconButton, data, [
+    return h(VkIconElButton, data, [
       h(core, { attrs: data.attrs, props })
     ])
   }

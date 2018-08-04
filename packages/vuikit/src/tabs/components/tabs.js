@@ -1,17 +1,16 @@
 import { assign } from 'vuikit/src/_core/utils/object'
 
 import EventsMixin from 'vuikit/src/_core/mixins/events'
-import { Transition } from 'vuikit/src/transition'
+import { VkTransition } from 'vuikit/src/transition'
 
-import core from './core'
-import { ElTabs } from '../elements'
+import core from '../core'
+import { VkTabsEl } from '../elements'
 import { TAB_ID } from '../constants'
 
 export default {
-  name: 'VkTabs',
   extends: core,
   mixins: [EventsMixin],
-  props: ElTabs.props,
+  props: VkTabsEl.props,
   render (h) {
     const { flipped, animation, keepAlive, $props } = this
 
@@ -36,11 +35,11 @@ export default {
         'uk-flex uk-flex-column-reverse': flipped
       }
     }, [
-      h(ElTabs, { props: $props }, Tabs),
+      h(VkTabsEl, { props: $props }, Tabs),
       h('div', {
         class: { 'uk-margin': flipped }
       }, [
-        h(Transition, {
+        h(VkTransition, {
           props: { name: animation }
         }, [
           keepAlive

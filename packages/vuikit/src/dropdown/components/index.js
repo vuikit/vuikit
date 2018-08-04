@@ -1,2 +1,2 @@
-export { default as Dropdown } from './dropdown'
-export { default as DropdownNav } from './dropdown-nav'
+export { default as VkDropdown } from './dropdown'
+export { default as VkDropdownNav } from './dropdown-nav'

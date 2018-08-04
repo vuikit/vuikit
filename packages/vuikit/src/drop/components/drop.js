@@ -12,14 +12,13 @@ import { offset as getOffset } from 'vuikit/src/_core/utils/dimensions'
 import { addClass, removeClass } from 'vuikit/src/_core/utils/class'
 import { isRtl, pointerEnter, pointerLeave, hasTouch } from 'vuikit/src/_core/utils/env'
 
-import { ElDrop } from '../elements'
+import { VkDropEl } from '../elements'
 import { mixinTree } from '../mixins'
-import { Transition } from 'vuikit/src/transition'
+import { VkTransition } from 'vuikit/src/transition'
 
 import { SHOW, HIDE } from '../constants'
 
 export default {
-  name: 'VkDrop',
   mixins: [ mixinEvents, mixinTree ],
   directives: {
     VkRoot,
@@ -73,7 +72,7 @@ export default {
     },
     mainElement: {
       type: Object,
-      default: () => ElDrop
+      default: () => VkDropEl
     }
   },
   data: () => ({
@@ -138,7 +137,7 @@ export default {
       ]
     }
 
-    return h(Transition, {
+    return h(VkTransition, {
       props: {
         name: animation,
         duration: duration

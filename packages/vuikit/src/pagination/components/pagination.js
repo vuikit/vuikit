@@ -1,6 +1,6 @@
-import { ElPagination } from '../elements'
 import Matrix from 'vuikit/src/_core/utils/pagination-matrix'
-import { Margin as VkMargin } from 'vuikit/src/margin'
+import { VkPaginationEl } from '../elements'
+import { VkMargin } from 'vuikit/src/margin'
 
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { assign } from 'vuikit/src/_core/utils/object'
@@ -9,7 +9,7 @@ import { mergeData } from 'vuikit/src/_core/utils/vue'
 export default {
   name: 'Pagination',
   directives: { VkMargin },
-  props: assign({}, ElPagination.props, {
+  props: assign({}, VkPaginationEl.props, {
     // the active page
     page: {
       type: Number,
@@ -53,7 +53,7 @@ export default {
   render (h) {
     const nodes = (this.$slots.default || []).filter(node => node.tag)
 
-    return h(ElPagination, {
+    return h(VkPaginationEl, {
       props: this.$props,
       directives: [{
         name: 'vk-margin'
