@@ -9,8 +9,7 @@ export default {
   functional: true,
   props: {
     name: {
-      type: [String, Object],
-      required: true
+      type: [String, Object]
     },
     duration: {
       type: [Number, String],
@@ -26,14 +25,15 @@ export default {
     }
   },
   render (h, { props, listeners, children }) {
-    const { name, duration, origin } = props
-    const { enter, leave } = isObject(name) ? name : { enter: name, leave: name }
+    const { origin } = props
+    const animation = coerce(props.name)
+    const duration = coerce(props.duration)
 
     let cls = ''
 
-    if (duration === 'fast') {
-      cls += ` ${animationPrefix}fast`
-    }
+    // if (duration === 'fast') {
+    //   cls += ` ${animationPrefix}fast`
+    // }
 
     if (origin) {
       cls += ` uk-transform-origin-${origin}`
@@ -46,26 +46,34 @@ export default {
         mode: props.mode,
         type: 'animation',
         enterClass: '',
-        enterActiveClass: `${animationPrefix}${enter}${cls}`,
+        enterActiveClass: `${animationPrefix}${animation.enter}${cls}`,
         enterToClass: '',
         leaveClass: '',
-        leaveActiveClass: `${animationPrefix}${leave} uk-animation-reverse${cls}`,
+        leaveActiveClass: `${animationPrefix}${animation.leave} uk-animation-reverse${cls}`,
         leaveToClass: ''
       },
       on: {
-        beforeEnter: setDuration,
-        beforeLeave: setDuration,
+        beforeEnter (el) {
+          setDuration(el, animation.enter ? duration.enter : 0)
+        },
+        beforeLeave (el) {
+          setDuration(el, animation.leave ? duration.leave : 0)
+        },
         afterEnter: reset,
         afterLeave: reset
       }
     }), children)
 
-    function setDuration (el) {
+    function setDuration (el, duration) {
       css(el, 'animationDuration', `${duration}ms`)
     }
 
     function reset (el) {
       css(el, 'animationDuration', '')
+    }
+
+    function coerce (obj) {
+      return isObject(obj) ? obj : { enter: obj, leave: obj }
     }
   }
 }
