@@ -1,8 +1,5 @@
-import { css } from 'vuikit/src/_core/utils/style'
-import { isObject } from 'vuikit/src/_core/utils/lang'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
-
-const animationPrefix = 'uk-animation-'
+import { setDuration, reset, coerceProps } from '../util'
 
 export default {
   functional: true,
@@ -25,17 +22,26 @@ export default {
   },
   render (h, { props, listeners, children }) {
     const { origin } = props
-    const animation = coerce(props.name)
-    const duration = coerce(props.duration)
+    const { animation, duration } = coerceProps(props)
 
-    let cls = ''
-
-    // if (duration === 'fast') {
-    //   cls += ` ${animationPrefix}fast`
-    // }
+    const cls = {
+      enter: `uk-animation-${animation.enter}`,
+      leave: `uk-animation-${animation.leave} uk-animation-reverse`
+    }
 
     if (origin) {
-      cls += ` uk-transform-origin-${origin}`
+      cls.enter += ` uk-transform-origin-${origin}`
+      cls.leave += ` uk-transform-origin-${origin}`
+    }
+
+    if (duration.enter === 'fast') {
+      cls.enter += ` uk-animation-fast`
+      duration.enter = undefined
+    }
+
+    if (duration.leave === 'fast') {
+      cls.leave += ` uk-animation-fast`
+      duration.leave = undefined
     }
 
     return h('transition', mergeData({
@@ -45,34 +51,26 @@ export default {
         mode: props.mode,
         type: 'animation',
         enterClass: '',
-        enterActiveClass: `${animationPrefix}${animation.enter}${cls}`,
+        enterActiveClass: cls.enter,
         enterToClass: '',
         leaveClass: '',
-        leaveActiveClass: `${animationPrefix}${animation.leave} uk-animation-reverse${cls}`,
+        leaveActiveClass: cls.leave,
         leaveToClass: ''
       },
       on: {
         beforeEnter (el) {
-          setDuration(el, animation.enter ? duration.enter : 0)
+          if (duration.enter !== undefined) {
+            setDuration(el, duration.enter)
+          }
         },
         beforeLeave (el) {
-          setDuration(el, animation.leave ? duration.leave : 0)
+          if (duration.leave !== undefined) {
+            setDuration(el, duration.leave)
+          }
         },
         afterEnter: reset,
         afterLeave: reset
       }
     }), children)
-
-    function setDuration (el, duration) {
-      css(el, 'animationDuration', `${duration}ms`)
-    }
-
-    function reset (el) {
-      css(el, 'animationDuration', '')
-    }
-
-    function coerce (obj) {
-      return isObject(obj) ? obj : { enter: obj, leave: obj }
-    }
   }
 }
