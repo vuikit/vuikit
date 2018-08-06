@@ -27,7 +27,7 @@
             <vk-card hover type="primary">
               <template slot="badge">Hot</template>
               <div>
-                <vk-card-title>Hover</vk-card-title>
+                <vk-card-title>Primary Hover</vk-card-title>
                 <p>Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <p v-vk-margin>
                   <a class="uk-button uk-button-default" href="#">Button</a>

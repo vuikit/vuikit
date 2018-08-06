@@ -1,14 +1,15 @@
 import * as elms from '../elements'
 import mixinProps from 'vuikit/src/_core/mixins/props'
+import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
   functional: true,
   mixins: [mixinProps],
   props: elms.VkCardEl.props,
-  render (h, { data, slots }) {
+  render (h, { data, props, slots }) {
     const _slots = slots()
 
-    return h(elms.VkCardEl, data, [
+    return h(elms.VkCardEl, mergeData(data, { props }), [
       _slots.top,
       _slots['media-top'] && h(elms.VkCardElMediaTop, [
         _slots['media-top']
