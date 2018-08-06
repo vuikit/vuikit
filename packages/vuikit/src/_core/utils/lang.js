@@ -57,6 +57,12 @@ export function includes (obj, search) {
 
 export const {isArray} = Array
 
+export function castArray (obj) {
+  return isArray(obj)
+    ? obj
+    : [obj]
+}
+
 export function isFunction (obj) {
   return typeof obj === 'function'
 }
