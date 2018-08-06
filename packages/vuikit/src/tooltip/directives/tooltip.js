@@ -23,6 +23,7 @@ export default {
   },
   componentUpdated (el, binding, vnode) {
     el[NAMESPACE].options = getOptions({ binding })
+    el[NAMESPACE].title = el[NAMESPACE].options.title || el[NAMESPACE].attrTitle
   },
   unbind (el, binding, vnode) {
     if (!el[NAMESPACE]) {
