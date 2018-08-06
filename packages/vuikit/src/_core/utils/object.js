@@ -29,15 +29,21 @@ export function has (obj, path) {
 }
 
 export function set (obj, path, value) {
-  var keys = Array.isArray(path) ? path : path.split('.')
+  const reference = obj
+  const keys = Array.isArray(path) ? path : path.split('.')
+
+  // create path
   for (var i = 0; i < keys.length - 1; i++) {
-    var key = keys[i]
+    const key = keys[i]
 
     if (!hasOwn(obj, key)) obj[key] = {}
     obj = obj[key]
   }
+
+  // set value
   obj[keys[i]] = value
-  return value
+
+  return reference
 }
 
 // Assigns own enumerable string keyed properties of source objects to the
