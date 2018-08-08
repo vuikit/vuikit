@@ -9,7 +9,7 @@
   },
   "homepage": "https://vuikit.js.org/",
   "bugs": "https://github.com/vuikit/vuikit/issues",
-  "main": "dist/vuikit.min.css",
+  "main": "dist/vuikit.css",
   "keywords": [
     "vue",
     "uikit",
