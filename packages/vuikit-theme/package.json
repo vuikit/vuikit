@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/theme",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Vuikit default theme based on UIkit",
   "license": "MIT",
   "author": {
@@ -9,7 +9,7 @@
   },
   "homepage": "https://vuikit.js.org/",
   "bugs": "https://github.com/vuikit/vuikit/issues",
-  "main": "dist/vuikit.min.css",
+  "main": "dist/vuikit.css",
   "keywords": [
     "vue",
     "uikit",
