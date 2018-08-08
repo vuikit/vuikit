@@ -1,6 +1,7 @@
 export * from './breadcrumb/components'
 export * from './button/components'
 export * from './card/components'
+export * from './container/components'
 export * from './drop/components'
 export * from './dropdown/components'
 export * from './form/components'
