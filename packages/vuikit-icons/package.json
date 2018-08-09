@@ -35,13 +35,13 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "esm": "^3.0.72",
+    "esm": "^3.0.74",
     "globby": "^8.0.1",
-    "rollup": "^0.63.4",
+    "rollup": "^0.64.1",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.2.0",
-    "uikit": "^3.0.0-rc.10"
+    "uikit": "^3.0.0-rc.11"
   },
   "esm": {
     "mode": "all",
