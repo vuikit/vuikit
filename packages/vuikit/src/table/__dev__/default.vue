@@ -8,30 +8,24 @@
       <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
+    <h1>Row Active fn</h1>
+
+    <vk-table :data="data" :fnRowActive="row => true">
+      <vk-table-column head="Id" cell="id" width="shrinked"/>
+      <vk-table-column head="Name" cell="name"/>
+    </vk-table>
+
+    <h1>Row Class</h1>
+
+    <vk-table :data="data" :fnRowClass="row => 'uk-text-warning'">
+      <vk-table-column head="Id" cell="id" width="shrinked"/>
+      <vk-table-column head="Name" cell="name"/>
+    </vk-table>
+
     <h2>Headless</h2>
 
     <vk-table :data="data" headless>
       <vk-table-column cell="name" width="expanded" head="Name"/>
-    </vk-table>
-
-    <h2>Selectable</h2>
-
-    <vk-table
-      selectable
-      :data="data"
-      :selected-rows.sync="selectionSingle"
-    >
-      <vk-table-column head="Name" cell="name"/>
-    </vk-table>
-
-    <h2>Single Row Selectable</h2>
-
-    <vk-table
-      selectable="single"
-      :data="data"
-      :selected-rows.sync="selection"
-    >
-      <vk-table-column head="Name" cell="name"/>
     </vk-table>
 
     <h2>Slots</h2>

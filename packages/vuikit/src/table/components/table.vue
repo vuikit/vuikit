@@ -14,9 +14,10 @@
     </thead>
     <tbody>
       <VkTableElTr v-for="(row, rowIndex) in data" :key="rowIndex"
-        :class="resolveRowClass(row)"
-        :active="isRowSelected(row)"
-        @click="onRowClick($event, row)"
+        :class="fnRowClass(row)"
+        :active="fnRowActive(row)"
+        @click="emitRowClickEvent('rowClick', row, $event)"
+        @dblclick="emitRowClickEvent('rowDblclick', row, $event)"
       >
         <VkTableElTd v-for="(col, colIndex) in columns" :key="colIndex"
           v-bind="pickComponentProps(col.props, 'VkTableElTd')"
@@ -35,34 +36,31 @@
 <script>
 import { warn } from 'vuikit/src/_core/utils/debug'
 import { assign, get } from 'vuikit/src/_core/utils/object'
-import { isFunction } from 'vuikit/src/_core/utils/lang'
-import { select } from 'vuikit/src/_core/helpers/selection'
 import mixinProps from 'vuikit/src/_core/mixins/props'
 
 import core from '../core'
 import * as elements from '../elements'
-import { mixinSelect } from '../mixins'
 
 export default {
   name: 'VkTable',
   extends: core,
   components: assign({}, elements),
-  mixins: [mixinSelect, mixinProps],
+  mixins: [mixinProps],
   props: {
     divided: {
       default: true
-    },
-    rowClass: {
-      type: Function
     },
     headless: {
       type: Boolean,
       default: false
     },
-    selectable: {
-      type: [Boolean, String],
-      default: false,
-      validator: v => !v || /single/.test(v) || v === true
+    fnRowClass: {
+      type: Function,
+      default: () => ''
+    },
+    fnRowActive: {
+      type: Function,
+      default: () => false
     }
   },
   computed: {
@@ -74,29 +72,6 @@ export default {
     }
   },
   methods: {
-    selectRow (row) {
-      if (!this.selectable) {
-        return
-      }
-
-      const id = this.getSelectionRowId(row)
-      this.updateRowSelection(this.selectable === 'single'
-        ? [id]
-        : select(this.selectedRows, id)
-      )
-    },
-    resolveRowClass (row) {
-      return isFunction(this.rowClass)
-        ? this.rowClass(row)
-        : this.rowClass
-    },
-    onRowClick (e, row) {
-      const isIgnoredTag = tag => /^(A|BUTTON)$/.test(tag)
-
-      if (!isIgnoredTag(e.target.tagName)) {
-        this.toggleRowSelection(row)
-      }
-    },
     mapColumnNode (node) {
       const data = node.data || {}
 

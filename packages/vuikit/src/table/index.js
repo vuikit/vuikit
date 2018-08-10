@@ -1,11 +1,10 @@
 import { each } from 'vuikit/src/_core/utils/object'
 
 import core from './core'
-import * as mixins from './mixins'
 import * as elements from './elements'
 import * as components from './components'
 
-export { core, mixins }
+export { core }
 export * from './elements'
 export * from './components'
 

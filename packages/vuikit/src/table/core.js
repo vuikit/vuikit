@@ -7,5 +7,14 @@ export default {
       type: Array, // [{ ...row }, ]
       required: true
     }
-  })
+  }),
+  methods: {
+    emitRowClickEvent (name, row, event) {
+      const isIgnoredTag = tag => /^(A|BUTTON)$/.test(tag)
+
+      if (!isIgnoredTag(event.target.tagName)) {
+        this.$emit(name, row, event)
+      }
+    }
+  }
 }
