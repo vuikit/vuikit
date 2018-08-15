@@ -33,7 +33,6 @@ export default {
 
     const modal = h(ElementModalFull, def, [
       h(ElementModalDialog, {
-        class: 'uk-flex uk-flex-center uk-flex-middle',
         directives: [{
           name: 'vk-height-viewport'
         }]
