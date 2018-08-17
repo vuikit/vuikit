@@ -12,10 +12,7 @@ export default {
     }), [
 
       h(VkModalElDialog, {
-        class: 'uk-flex uk-flex-center uk-flex-middle',
-        directives: [{
-          name: 'vk-height-viewport'
-        }]
+        class: 'uk-height-viewport'
       }, children)
 
     ])

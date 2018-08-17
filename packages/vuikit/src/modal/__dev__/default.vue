@@ -75,9 +75,11 @@
       :show.sync="full"
     >
       <vk-modal-close large @click="full = false"/>
-      <div class="uk-width-xxlarge uk-padding-large">
-        <h1>Headline</h1>
-        <p>{{ lorem }}</p>
+      <div class="uk-flex uk-flex-center uk-flex-middle uk-height-1-1">
+        <div class="uk-width-xxlarge uk-padding-large">
+          <h1>Headline</h1>
+          <p>{{ lorem }}</p>
+        </div>
       </div>
     </vk-modal-full>
 
