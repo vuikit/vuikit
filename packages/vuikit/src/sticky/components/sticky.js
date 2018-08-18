@@ -106,9 +106,6 @@ export default {
         this.width = widthElement.offsetWidth
         attr(widthElement, 'hidden', this.isActive ? null : '')
 
-        this.topOffset = offset(this.isActive ? this.$refs.placeholder : this.$el).top
-        this.bottomOffset = this.topOffset + this.outerHeight
-
         this.setBoundaries()
 
         if (this.isActive) {
@@ -184,6 +181,9 @@ export default {
     setBoundaries () {
       const bottom = parseProp('bottom', this)
 
+      // recalculate on scroll (important), resize or any change
+      this.topOffset = offset(this.isActive ? this.$refs.placeholder : this.$el).top
+      this.bottomOffset = this.topOffset + this.outerHeight
       this.stickAt = Math.max(toFloat(parseProp('top', this)), this.topOffset) - this.offset
       this.stickUntil = bottom && bottom - this.outerHeight
       this.inactive = this.media && !window.matchMedia(toMedia(this.media)).matches
