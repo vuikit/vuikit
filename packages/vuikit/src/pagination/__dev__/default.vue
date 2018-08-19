@@ -6,79 +6,65 @@
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first />
-      <vk-pagination-page-prev />
-      <vk-pagination-pages />
-      <vk-pagination-page-next />
-      <vk-pagination-page-last />
+      <vk-pagination-page-first slot="prev"/>
+      <vk-pagination-page-prev slot="prev"/>
+      <vk-pagination-page-next slot="next"/>
+      <vk-pagination-page-last slot="next"/>
     </vk-pagination>
 
     <vk-pagination
-      align="center"
+      aligned="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first />
-      <vk-pagination-page-prev />
-      <vk-pagination-pages />
-      <vk-pagination-page-next />
-      <vk-pagination-page-last />
+      <vk-pagination-page-first slot="prev"/>
+      <vk-pagination-page-prev slot="prev"/>
+      <vk-pagination-page-next slot="next"/>
+      <vk-pagination-page-last slot="next"/>
     </vk-pagination>
 
     <vk-pagination
-      align="right"
+      aligned="right"
       :page.sync="page"
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first />
-      <vk-pagination-page-prev />
-      <vk-pagination-pages />
-      <vk-pagination-page-next />
-      <vk-pagination-page-last />
+      <vk-pagination-page-first slot="prev"/>
+      <vk-pagination-page-prev slot="prev"/>
+      <vk-pagination-pages/>
+      <vk-pagination-page-next slot="next"/>
+      <vk-pagination-page-last slot="next"/>
     </vk-pagination>
 
     <h2>Layout</h2>
     <vk-pagination
-      align="center"
+      aligned="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first />
-      <vk-pagination-page-prev />
-      <vk-pagination-page-next />
-      <vk-pagination-page-last />
+      <vk-pagination-page-first slot="prev"/>
+      <vk-pagination-page-prev slot="prev"/>
+      <vk-pagination-page-next slot="next"/>
+      <vk-pagination-page-last slot="next"/>
     </vk-pagination>
 
     <vk-pagination
-      align="center"
+      aligned="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
-    >
-      <vk-pagination-pages />
-    </vk-pagination>
+    />
 
     <vk-pagination
-      align="center"
+      aligned="center"
       :page.sync="page"
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-prev />
-      <vk-pagination-pages />
-      <vk-pagination-page-next />
-    </vk-pagination>
-
-    <vk-pagination
-      :page.sync="page"
-      :total="200"
-      :perPage="10"
-    >
-      <vk-pagination-page-prev title="Previous" expanded />
-      <vk-pagination-page-next title="Next" expanded />
+      <vk-pagination-page-prev slot="prev"/>
+      <vk-pagination-page-next slot="next"/>
     </vk-pagination>
 
     <vk-pagination
@@ -86,8 +72,19 @@
       :total="200"
       :perPage="10"
     >
-      <vk-pagination-page-first title="First" expanded />
-      <vk-pagination-page-last title="Last" expanded />
+      <vk-pagination-page-prev slot="prev" text="Previous" expanded/>
+      <vk-pagination-page-next slot="next" text="Next" expanded/>
+    </vk-pagination>
+
+    <vk-pagination
+      hidePages
+      aligned="center"
+      :page.sync="page"
+      :total="200"
+      :perPage="10"
+    >
+      <vk-pagination-page-first slot="prev" text="First" expanded/>
+      <vk-pagination-page-last slot="next" text="Last" expanded/>
     </vk-pagination>
 
   </div>
