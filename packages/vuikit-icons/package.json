@@ -35,7 +35,9 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "esm": "^3.0.74",
+    "@vue/cli-plugin-eslint": "^3.0.1",
+    "@vue/eslint-config-standard": "^3.0.1",
+    "esm": "^3.0.79",
     "globby": "^8.0.1",
     "rollup": "^0.64.1",
     "rollup-plugin-buble": "^0.19.2",

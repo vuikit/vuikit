@@ -25,7 +25,9 @@
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "esm": "^3.0.74",
+    "@vue/cli-plugin-eslint": "^3.0.1",
+    "@vue/eslint-config-standard": "^3.0.1",
+    "esm": "^3.0.79",
     "less": "^3.8.1",
     "less-plugin-clean-css": "^1.5.1",
     "uikit": "^3.0.0-rc.11"
