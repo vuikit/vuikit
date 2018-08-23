@@ -1,4 +1,4 @@
-import IconSpinner from '../assets/icon-spinner'
+import Icon from '../assets/spinner'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {
@@ -12,7 +12,7 @@ export default {
     return h('div', mergeData(data, {
       class: ['uk-icon', 'uk-spinner']
     }), [
-      h(IconSpinner, { props })
+      h(Icon, { props })
     ])
   }
 }

@@ -1,4 +1,4 @@
-import IconClose from 'vuikit/src/_core/assets/icon-close'
+import IconClose from 'vuikit/src/_core/assets/close'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 import { VkIconElLink } from 'vuikit/src/icon'
 

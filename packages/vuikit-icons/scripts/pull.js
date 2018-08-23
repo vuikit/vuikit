@@ -13,7 +13,7 @@ run(async () => {
   })
 
   await buildIndex({
-    src: 'src/icons/*.js',
+    src: 'src/icons/*.vue',
     dest: 'src/icons/index.js'
   })
 })

@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/icons",
-  "version": "0.9.0",
+  "version": "0.9.0-next",
   "description": "UIkit icons as Vue functional components",
   "license": "MIT",
   "author": {
@@ -42,7 +42,9 @@
     "rollup": "^0.64.1",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-cleanup": "^3.0.0",
-    "rollup-plugin-node-resolve": "^3.2.0",
+    "rollup-plugin-commonjs": "^9.1.5",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-vue": "^4.3.2",
     "uikit": "^3.0.0-rc.11"
   },
   "esm": {

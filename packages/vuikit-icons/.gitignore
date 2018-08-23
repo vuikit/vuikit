@@ -1,5 +1,5 @@
-custom/*.js
-custom/*.svg
+custom/*
+!custom/README.md
 
 lib/
 dist/

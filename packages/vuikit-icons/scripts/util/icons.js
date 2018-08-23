@@ -34,7 +34,7 @@ export async function compile ({ src, dest, tmpl }) {
     })
 
     // save file
-    await write(`${dest}/${name}.js`, content)
+    await write(`${dest}/${name}.vue`, content)
 
     icons.push({ content, name })
   }
@@ -78,8 +78,7 @@ export async function buildIndex ({ src, dest }) {
 function getIconName (iconPath) {
   let name
 
-  name = path.basename(iconPath)
-  name = name.replace('.js', '')
+  name = path.basename(iconPath, '.vue')
   name = camelize(`Icon-${name}`)
 
   return name

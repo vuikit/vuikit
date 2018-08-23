@@ -1,4 +1,4 @@
-import Icon from '../assets/icon-prev'
+import Icon from '../assets/pagination-prev'
 import { VkIconEl } from 'vuikit/src/icon'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 

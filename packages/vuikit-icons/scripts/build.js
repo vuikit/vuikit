@@ -1,21 +1,27 @@
 import path from 'path'
 import globby from 'globby'
+import cjs from 'rollup-plugin-commonjs'
+import vue from 'rollup-plugin-vue'
 import buble from 'rollup-plugin-buble'
 import cleanup from 'rollup-plugin-cleanup'
+import resolve from 'rollup-plugin-node-resolve'
 import { remove, run, write, minifyJS } from '@miljan/build'
 
 const rollup = require('rollup')
 
+process.env.NODE_ENV = 'production'
+
 run(async () => {
   await remove('dist')
+  await remove('lib')
 
   // Compile Lib
   const resources = await globby(['src/icons/*', '!index.js'])
 
   await Promise.all(resources.map(async icon => {
-    const basename = path.basename(icon)
+    const basename = path.basename(icon, '.vue')
 
-    return compile(icon, `lib/${basename}`, {
+    return compile(icon, `lib/${basename}.js`, {
       output: {
         format: 'cjs'
       }
@@ -66,6 +72,14 @@ async function compile (input, dest, opts = {}) {
     input,
     output: opts.output,
     plugins: [
+      resolve({
+        jsnext: true,
+        main: true,
+        browser: true,
+        extensions: [ '.js', '.vue' ]
+      }),
+      cjs(),
+      vue({}),
       buble(),
       cleanup()
     ]

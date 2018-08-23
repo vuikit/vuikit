@@ -1,5 +1,5 @@
-import IconClose from 'vuikit/src/_core/assets/icon-close'
-import IconCloseLarge from 'vuikit/src/_core/assets/icon-close-large'
+import IconClose from 'vuikit/src/_core/assets/close'
+import IconCloseLarge from 'vuikit/src/_core/assets/close-large'
 import { mergeData } from 'vuikit/src/_core/utils/vue'
 
 export default {

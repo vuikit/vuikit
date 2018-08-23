@@ -12,6 +12,8 @@ import { run, remove, write, minifyJS } from '@miljan/build'
 
 const rollup = require('rollup')
 
+process.env.NODE_ENV = 'production'
+
 run(async () => {
   await BuildLibrary()
   await BuildDist()
@@ -36,9 +38,9 @@ async function BuildLibrary () {
     })
   }))
 
-  resources = await globby('src/_core/{assets,mixins,helpers}/*.js')
+  resources = await globby('src/_core/{assets,mixins,helpers}/*.{js,vue}')
   await Promise.all(resources.map(async input => {
-    const name = path.basename(input, '.js')
+    const name = path.basename(input).replace(/\.(vue|js)/, '')
     const folder = path.dirname(input).replace('src/_core/', '')
 
     return compile(input, `lib/core/${folder}/${name}.js`, {
