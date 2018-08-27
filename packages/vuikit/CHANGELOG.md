@@ -1,8 +1,11 @@
 # Changelog
 
-## WIP
+## 0.8.6
 
  - Fixed `vk-modal-close` events binding.
+ - Fixed `vk-tooltip` title update.
+ - Fixed icons display on IE.
+ - Removed `vk-modal-full` styling classes.
 
 ## 0.8.5 (May 29, 2018)
 
