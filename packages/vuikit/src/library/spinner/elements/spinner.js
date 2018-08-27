@@ -1,4 +1,4 @@
-import Icon from './spinner--icon'
+import Icon from '../assets/spinner'
 import { mergeData } from 'vuikit/src/util/vue'
 
 export default {

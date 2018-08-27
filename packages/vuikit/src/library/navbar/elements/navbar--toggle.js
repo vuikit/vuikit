@@ -1,4 +1,4 @@
-import IconToggle from './navbar--toggle--icon'
+import IconToggle from '../assets/navbar-toggle'
 import { mergeData } from 'vuikit/src/util/vue'
 import { ElementIcon } from 'vuikit/src/library/icon'
 

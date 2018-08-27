@@ -1,4 +1,4 @@
-import IconClose from 'vuikit/src/icons/close-icon'
+import IconClose from 'vuikit/src/icons/close'
 import IconCloseLarge from 'vuikit/src/icons/close-large'
 import { mergeData } from 'vuikit/src/util/vue'
 
