@@ -1,11 +1,15 @@
 import path from 'path'
 import globby from 'globby'
 import rollup from './util/rollup'
+import vue from 'rollup-plugin-vue'
 import buble from 'rollup-plugin-buble'
 import cleanup from 'rollup-plugin-cleanup'
 import replaceInFile from 'replace-in-file'
+import nodeResolve from 'rollup-plugin-node-resolve'
 
 import { run, task, remove, write } from '@miljan/build'
+
+process.env.NODE_ENV = 'production'
 
 run(async () => {
   await remove('lib')
@@ -52,7 +56,7 @@ run(async () => {
   })
 
   await task('Compile Icons', async () => {
-    let resources = await globby('src/icons/*.js')
+    let resources = await globby('src/icons/*.vue')
 
     return Promise.all(resources.map(async input => {
       const basename = path.basename(input)
@@ -95,6 +99,10 @@ async function compile (input, dest, opts = {}) {
       return !isInternal.test(id) // eslint-disable-line
     }),
     plugins: [
+      nodeResolve({
+        extensions: [ '.js', '.json', '.vue' ]
+      }),
+      vue(),
       buble(),
       cleanup()
     ]

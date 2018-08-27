@@ -1,10 +1,13 @@
 import rollup from './util/rollup'
+import vue from 'rollup-plugin-vue'
 import buble from 'rollup-plugin-buble'
 import replace from 'rollup-plugin-replace'
 import cleanup from 'rollup-plugin-cleanup'
 import nodeResolve from 'rollup-plugin-node-resolve'
 
 import { run, remove, write, task, minifyJS } from '@miljan/build'
+
+process.env.NODE_ENV = 'production'
 
 run(async () => {
   await remove('dist')
@@ -69,8 +72,9 @@ async function compile (opts, dest) {
     external: opts.external,
     plugins: [
       nodeResolve({
-        extensions: [ '.js', '.json' ]
+        extensions: [ '.js', '.json', '.vue' ]
       }),
+      vue(),
       buble(),
       cleanup()
     ]
