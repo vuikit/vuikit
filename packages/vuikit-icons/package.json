@@ -29,23 +29,23 @@
   },
   "homepage": "https://github.com/vuikit/vuikit",
   "scripts": {
-    "build": "node -r @std/esm scripts/build.js",
-    "postbuild": "node -r @std/esm scripts/copyright.js",
-    "pull": "node -r @std/esm scripts/pull-icons.js",
-    "custom": "node -r @std/esm scripts/custom.js"
+    "build": "node -r esm scripts/build.js",
+    "postbuild": "node -r esm scripts/copyright.js",
+    "pull": "node -r esm scripts/pull-icons.js",
+    "custom": "node -r esm scripts/custom.js"
   },
   "devDependencies": {
-    "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.25.2",
+    "@miljan/build": "^0.4.4",
+    "esm": "^3.0.80",
     "globby": "^8.0.1",
-    "rollup": "^0.57.0",
+    "rollup": "^0.65.0",
     "rollup-plugin-buble": "^0.19.2",
-    "rollup-plugin-cleanup": "^2.0.0",
-    "rollup-plugin-node-resolve": "^3.2.0",
-    "uikit": "^3.0.0-beta.40"
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "uikit": "^3.0.0-rc.12"
   },
-  "@std/esm": {
-    "mode": "js",
+  "esm": {
+    "mode": "all",
     "cjs": true
   }
 }

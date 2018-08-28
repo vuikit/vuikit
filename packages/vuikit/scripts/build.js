@@ -68,7 +68,6 @@ async function compile (opts, dest) {
   const config = {
     input: opts.input,
     output: opts.output,
-    format: opts.format,
     external: opts.external,
     plugins: [
       nodeResolve({

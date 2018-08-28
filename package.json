@@ -5,20 +5,20 @@
   ],
   "scripts": {
     "dev": "cd packages/vuikit && yarn dev",
-    "build": "node -r @std/esm scripts/build.js"
+    "build": "node -r esm scripts/build.js"
   },
   "devDependencies": {
-    "@miljan/build": "^0.4.2",
-    "@std/esm": "^0.25.2",
-    "eslint": "^4.18.2",
+    "@miljan/build": "^0.4.4",
+    "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-html": "^4.0.2",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-standard": "^3.0.1"
+    "eslint-plugin-html": "^4.0.5",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "esm": "^3.0.80"
   },
-  "@std/esm": {
+  "esm": {
     "mode": "js",
     "cjs": true
   }

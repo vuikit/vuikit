@@ -6,7 +6,7 @@ const nodeResolve = require('rollup-plugin-node-resolve')
 /*
  * Rollup bundler wrapper
  */
-module.exports = async (_config, options) => {
+export default async (_config, options) => {
   const plugins = [
     nodeResolve({
       jsnext: true,
