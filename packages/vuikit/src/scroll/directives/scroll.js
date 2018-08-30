@@ -1,6 +1,6 @@
 import { on } from 'vuikit/src/_core/utils/event'
 import { escape } from 'vuikit/src/_core/utils/selector'
-import { getOptions, matches } from '../util'
+import { getOptions, matches, scrollTo } from '../util'
 
 const NAMESPACE = '__vkScroll'
 
