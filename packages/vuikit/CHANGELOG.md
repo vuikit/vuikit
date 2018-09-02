@@ -1,8 +1,13 @@
 # Changelog
 
-## WIP
+## 0.8.9 (Sep 2, 2018)
 
+ - Reverted changes.
  - Fixed `vk-modal-close` events binding.
+
+## 0.8.6 - 0.8.8
+
+ - Failed attempt to fix IE icons display.
 
 ## 0.8.5 (May 29, 2018)
 
