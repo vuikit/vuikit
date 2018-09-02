@@ -1,6 +1,10 @@
 # Changelog
 
-## 0.8.6
+## 0.8.7 - 0.8.8 (Sep 2, 2018)
+
+ - Fixed build regression
+
+## 0.8.6 (Aug 27, 2018)
 
  - Fixed `vk-modal-close` events binding.
  - Fixed `vk-tooltip` title update.
