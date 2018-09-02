@@ -59,8 +59,8 @@ run(async () => {
     let resources = await globby('src/icons/*.vue')
 
     return Promise.all(resources.map(async input => {
-      const basename = path.basename(input)
-      return compile(input, `lib/icons/${basename}`)
+      const basename = path.basename(input, '.vue')
+      return compile(input, `lib/icons/${basename}.js`)
     }))
   })
 
