@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.8.10 (Sep 3, 2018)
+
+ - Added `src` back as part of the npm package.
+
 ## 0.8.9 (Sep 2, 2018)
 
  - Reverted changes.

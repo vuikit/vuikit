@@ -1,6 +1,6 @@
 {
   "name": "vuikit",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "A responsive Vue UI library for web site interfaces based on UIkit",
   "license": "MIT",
   "author": {
@@ -19,8 +19,9 @@
     "vuikit"
   ],
   "files": [
-    "lib/**/*.js",
-    "dist/*.js"
+    "src",
+    "dist/*.js",
+    "lib/**/*.js"
   ],
   "scripts": {
     "dev": "start-storybook -s ./.storybook/static -p 6006",
