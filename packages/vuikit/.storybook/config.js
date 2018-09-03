@@ -17,13 +17,11 @@ Vue.component('StoryPositions', require('./components/story-positions').default)
 Vue.use(Vuikit)
 Vue.use(VuikitIcons)
 
-// automatically import all stories.js file in __dev__ folders
-const core = require.context('../src/core', true, /__dev__\/index.js$/)
-const library = require.context('../src/library', true, /__dev__\/index.js$/)
+// automatically import all stories
+const stories = require.context('../tests', true, /stories\/index.js$/)
 
 function loadStories() {
-  core.keys().forEach(filename => core(filename))
-  library.keys().forEach(filename => library(filename))
+  stories.keys().forEach(filename => stories(filename))
 }
 
 configure(loadStories, module)
