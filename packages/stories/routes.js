@@ -1,17 +1,14 @@
 // https://webpack.js.org/guides/dependency-management/#require-context
 const requireModule = require.context(
-  // Search for files in
-  '../src',
-  // Search for files in subdirectories
+  './stories',
   true,
-  // Include any .js files that are not unit tests
-  /__dev__\/[a-z\\-]*\.vue$/
+  /[a-z\\-]*\.vue$/
 )
 
 export default [
   {
     path: '/',
-    component: require('.').default
+    component: require('./index').default
   },
 
   ...requireModule.keys().map(fileName => {

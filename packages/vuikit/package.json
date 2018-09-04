@@ -3,27 +3,18 @@
   "version": "0.9.0-beta2",
   "scripts": {
     "build": "node -r esm scripts/build.js",
-    "dev": "vue-cli-service serve __dev__/main.js",
-    "postbuild": "node -r esm scripts/copyright.js",
-    "test:unit": "vue-cli-service test:unit"
+    "postbuild": "node -r esm scripts/copyright.js"
   },
   "dependencies": {
     "vue": "^2.5.17"
   },
   "devDependencies": {
     "@miljan/build": "^0.4.2",
-    "@vue/cli-plugin-babel": "^3.0.1",
-    "@vue/cli-plugin-eslint": "^3.0.1",
-    "@vue/cli-plugin-unit-jest": "^3.0.1",
-    "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-standard": "^3.0.1",
-    "@vue/test-utils": "^1.0.0-beta.24",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.4.2",
     "date-fns": "^1.29.0",
     "esm": "^3.0.79",
     "globby": "^8.0.1",
-    "lodash": "^4.17.4",
     "replace-in-file": "^3.4.2",
     "rollup": "^0.64.1",
     "rollup-plugin-alias": "^1.4.0",
@@ -33,9 +24,6 @@
     "rollup-plugin-node-resolve": "^3.2.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-vue": "^4.3.2",
-    "uikit": "^3.0.0-rc.11",
-    "vue-router": "^3.0.1",
-    "vue-server-renderer": "^2.5.17",
     "vue-template-compiler": "^2.5.17"
   },
   "homepage": "https://vuikit.js.org/",

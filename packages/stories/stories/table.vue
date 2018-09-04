@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import data from './data.json'
+import data from './_data.json'
 
 export default {
   data: () => ({

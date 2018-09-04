@@ -1,0 +1,16 @@
+{
+  "name": "@vuikit/stories",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve main.js"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^3.0.1",
+    "babel-jest": "^23.4.2",
+    "lodash": "^4.17.4",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1",
+    "vue-server-renderer": "^2.5.17"
+  }
+}

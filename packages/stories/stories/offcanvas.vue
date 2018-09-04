@@ -100,8 +100,8 @@
 </template>
 
 <script>
-import DemoNav from './_nav.vue'
-import DemoIcons from './_icons.vue'
+import DemoNav from './offcanvas_nav.vue'
+import DemoIcons from './offcanvas_icons.vue'
 
 export default {
   components: {

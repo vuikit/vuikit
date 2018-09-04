@@ -124,15 +124,18 @@
 </template>
 
 <script>
-import Panel from './_panel.js'
-import GridDemo from './_grid.vue'
-import GridDividerDemo from './_divider.vue'
+import GridDemo from './grid_grid.vue'
+import GridDividerDemo from './grid_divider.vue'
 
 export default {
   components: {
     GridDemo,
     GridDividerDemo,
-    Panel
+    Panel: {
+      functional: true,
+      render: (h, { children }) =>
+        h('div', { class: 'uk-panel' }, children)
+    }
   }
 }
 </script>

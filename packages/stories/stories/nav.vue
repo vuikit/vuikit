@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import NavDemo from './_nav.vue'
+import NavDemo from './nav_nav.vue'
 
 export default {
   components: {

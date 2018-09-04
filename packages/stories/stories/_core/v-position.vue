@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import VkPosition from '../index'
+import VkPosition from 'vuikit/src/_core/directives/position/index'
 
 export default {
   directives: {
