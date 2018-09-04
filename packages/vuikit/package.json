@@ -41,6 +41,7 @@
     "vuikit"
   ],
   "files": [
+    "src",
     "dist/*.js",
     "lib/**/*.js"
   ],
