@@ -4,7 +4,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "cd packages/vuikit && yarn dev",
     "build": "node -r esm scripts/build.js"
   },
   "devDependencies": {
