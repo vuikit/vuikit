@@ -4,7 +4,6 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn --cwd packages/vuikit dev",
     "build": "node -r @std/esm scripts/build.js"
   },
   "devDependencies": {
