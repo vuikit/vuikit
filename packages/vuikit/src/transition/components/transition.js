@@ -18,7 +18,8 @@ export default {
     mode: {
       type: String,
       default: 'out-in'
-    }
+    },
+    appear: Boolean
   },
   render (h, { props, listeners, children }) {
     const { origin } = props
@@ -49,6 +50,7 @@ export default {
     }, {
       props: {
         mode: props.mode,
+        appear: props.appear,
         type: 'animation',
         enterClass: '',
         enterActiveClass: cls.enter,
