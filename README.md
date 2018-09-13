@@ -4,6 +4,10 @@
 
 A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on the [UIkit](https://getuikit.com/) framework.
 
+> If you are enjoying Vuikit and want to support the project consider making a small [donation](https://www.paypal.me/MiljanAleksic). It means a lot :)
+
+# Getting Started
+
 ```vue
 <script>
 import Vue from 'vue'
@@ -36,7 +40,7 @@ Until a v1.0.0 is reached, breaking changes will be released with a new minor ve
 
 ## Acknowledgments
 
-A special thanks goes to:
+A special thanks to:
 
  - [ZOOlanders](https://zoolanders.com/) for sponsoring Vuikit.
  - [YOOtheme](https://yootheme.com/) for creating and open sourcing UIkit.
