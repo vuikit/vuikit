@@ -2,7 +2,7 @@
 
 # Vuikit
 
-A responsive [Vue](https://vuejs.org/) UI library for web site interfaces based on the [UIkit](https://getuikit.com/) framework.
+A responsive [Vue](https://vuejs.org/) 2 UI library for web site interfaces based on the [UIkit](https://getuikit.com/) 3 framework.
 
 ```vue
 <script>
