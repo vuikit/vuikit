@@ -1,6 +1,6 @@
 {
   "name": "@vuikit/theme",
-  "version": "0.9.0",
+  "version": "0.9.0-beta",
   "description": "Vuikit default theme based on UIkit",
   "license": "MIT",
   "author": {
