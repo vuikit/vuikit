@@ -29,7 +29,10 @@ export default {
         'uk-disabled': disabled
       }
     }), [
-      h('a', { on: listeners }, [
+      h('a', {
+        on: listeners,
+        href: '#'
+      }, [
         title,
         icon && h(ElementIcon, {
           class: 'uk-margin-small-left'
